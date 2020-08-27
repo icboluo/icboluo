@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
+ * 返回值枚举项
+ *
  * @author icboluo
  */
 

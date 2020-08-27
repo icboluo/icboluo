@@ -5,6 +5,8 @@ import lombok.Getter;
 
 
 /**
+ * 异常枚举项
+ *
  * @author icboluo
  */
 
@@ -12,6 +14,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ExceptionEnum {
     // 枚举项必须写在类的最前面
+    /**
+     * 价格不能为空
+     */
     PRICE_CANNOT_BE_NULL(400, "价格不能为空"),
     INVALID_FILE_TYPE(400, "无效的文件类型！"),
     INVALID_PARAM_ERROR(400, "无效的请求参数！"),

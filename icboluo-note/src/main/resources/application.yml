@@ -1,5 +1,5 @@
 server:
-  port: 1514
+  port: 7020
 spring:
   application:
     name: icboluo-note
