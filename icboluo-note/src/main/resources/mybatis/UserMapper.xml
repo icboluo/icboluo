@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icboluo.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.icboluo.object.dataobject.UserDO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="code" jdbcType="INTEGER" property="code"/>
+        <result column="gmt_creat" jdbcType="TIMESTAMP" property="gmtCreat"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="name" jdbcType="CHAR" property="name"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="tel" jdbcType="INTEGER" property="tel"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, code, gmt_creat, gmt_modified, `name`, nick_name,password, tel
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectCountByNameAndPassword" resultType="java.lang.Integer">
+        select count(0)
+        from user
+        where name = #{name}
+          and password = #{password}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.icboluo.object.dataobject.UserDO"
+            useGeneratedKeys="true">
+        insert into user (code, gmt_creat, gmt_modified,
+                          `name`, nick_name, password, tel)
+        values (#{code,jdbcType=INTEGER}, #{gmtCreat,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+                #{name,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                #{tel,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.icboluo.object.dataobject.UserDO"
+            useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="gmtCreat != null">
+                gmt_creat,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreat != null">
+                #{gmtCreat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=CHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.object.dataobject.UserDO">
+        update user
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreat != null">
+                gmt_creat = #{gmtCreat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=CHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.icboluo.object.dataobject.UserDO">
+        update user
+        set code         = #{code,jdbcType=INTEGER},
+            gmt_creat    = #{gmtCreat,jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            `name`       = #{name,jdbcType=CHAR},
+            nick_name    = #{nickName,jdbcType=VARCHAR},
+            password     = #{password,jdbcType=VARCHAR},
+            tel          = #{tel,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

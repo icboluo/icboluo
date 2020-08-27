@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <modules>
+        <module>icboluo-common</module>
+        <module>icboluo-test</module>
+    </modules>
+
+    <groupId>com.icboluo</groupId>
+    <artifactId>icboluo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>icboluo</name>
+    <!--    申明是一个父工程-->
+    <packaging>pom</packaging>
+
+    <!--统一管理jar包和版本-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>14</java.version>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
+        <junit.version>4.12</junit.version>
+        <log4j.version>1.2.12</log4j.version>
+        <lombok.version>1.18.12</lombok.version>
+        <mysql.version>8.0.20</mysql.version>
+        <druid.verison>1.1.22</druid.verison>
+        <mybatis.spring.boot.verison>2.1.1</mybatis.spring.boot.verison>
+        <nacos.verison>2.2.1.RELEASE</nacos.verison>
+        <swagger.verison>2.9.2</swagger.verison>
+        <pagehelper.verison>1.2.10</pagehelper.verison>
+        <alibaba.dependencies.verison>2.2.1.RELEASE</alibaba.dependencies.verison>
+        <easyexcel.verison>2.1.6</easyexcel.verison>
+    </properties>
+
+    <!--    子模块继承以后，提供作用：锁定版本+子modlue不用写groupId和version-->
+    <!--    只是申明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>${nacos.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${alibaba.dependencies.verison}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--            引这个依赖才可以选择多个mysql driver class name-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.verison}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

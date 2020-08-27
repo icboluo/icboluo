@@ -1,0 +1,30 @@
+server:
+  port: 1514
+spring:
+  application:
+    name: icboluo-note
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/note?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+mybatis:
+  configuration:
+    #    自动小驼峰映射
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/*Mapper.xml
+logging:
+  level:
+    com.icboluo.note.dao: debug
+read-excel-entity:
+  excel-path: database.xlsx
+  general-sql-path: creat.sql
+  sheet-name:
+write-excel-entity:
+  general-excel-path: database.xlsx
+  database: note
+  table_name:
