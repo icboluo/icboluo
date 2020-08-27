@@ -1,6 +1,6 @@
 package com.icboluo.se.exception;
 
-import com.icboluo.common.IcBoLuoException;
+import com.icboluo.util.IcBoLuoException;
 
 import java.io.*;
 

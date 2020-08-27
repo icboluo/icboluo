@@ -10,7 +10,7 @@ import java.util.Arrays;
  *
  * @author icboluo
  */
- class InsertSort {
+class InsertSort {
     public static void main(String[] args) {
         int[] arr = {101, 34, 119, 1};
         //m1(arr);
@@ -18,7 +18,7 @@ import java.util.Arrays;
         long cur1 = System.currentTimeMillis();
         m2(RandomHelper.getRandom(80000));
         long cur2 = System.currentTimeMillis();
-       DateHelper.parseTimeStampToSecond(cur2 - cur1);
+        DateHelper.parseTimeStampToSecond(cur2 - cur1);
     }
 
     private static void m2(int[] arr) {

@@ -1,7 +1,7 @@
 package com.icboluo.se.lambda;
 
-import com.icboluo.common.IcBoLuoException;
 import com.icboluo.dataobject.Student;
+import com.icboluo.util.IcBoLuoException;
 import org.junit.Test;
 
 import java.util.*;
