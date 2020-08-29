@@ -1,9 +1,6 @@
 package com.icboluo.test;
 
-import com.icboluo.ee.tomcat.Day01.optimize03.Demo01;
 import lombok.Data;
-
-import java.util.HashSet;
 
 /**
  * integer i,j=100; i==j? 正确，虽然是引用数据类型，单在127以内，是去常量池中去找，不是去创建对象

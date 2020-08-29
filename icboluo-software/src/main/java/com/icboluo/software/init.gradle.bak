@@ -1,0 +1,34 @@
+package com.icboluo
+
+allprojects{
+    repositories {
+        mavenLocal()
+        def REPOSITORY_URL = 'https://repo.spring.io/milestone'
+        def ALI_REPOSITORY_URL = 'http://maven.aliyun.com/nexus/content/groups/public/'
+        def ALIY_JCENTER_URL = 'http://maven.aliyun.com/nexus/content/repositories/jcenter/'
+
+//	def wx_r='https://bintray.com/wechat-sdk-team/maven'
+       def M_REPOSITORY_URL = 'https://repo1.maven.org/maven2'
+       all { ArtifactRepository repo ->
+            if(repo instanceof MavenArtifactRepository){
+                def url = repo.url.toString()
+                if (url.startsWith('https://repo1.maven.org/maven2') || url.startsWith('https://jcenter.bintray.com/')) {
+                    project.logger.lifecycle "Repository ${repo.url} replaced by $REPOSITORY_URL."
+                    remove repo
+                }
+            }
+        }
+        maven {
+            url REPOSITORY_URL
+        }
+
+       //maven {
+        //  url M_REPOSITORY_URL
+     //  }
+         maven {
+          url ALI_REPOSITORY_URL
+          url ALIY_JCENTER_URL
+        }
+        mavenCentral()
+    }
+}

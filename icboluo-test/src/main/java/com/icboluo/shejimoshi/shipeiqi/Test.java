@@ -1,6 +1,6 @@
 package com.icboluo.shejimoshi.shipeiqi;
 
- class Test {
+class Test {
     public static void main(String[] args) {
         Phone phone = new Phone();
         VoltageAdapter adapter = new VoltageAdapter();
