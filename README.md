@@ -14,16 +14,16 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
-#技术选型
+# 技术选型
 
-##前后端分离+cloud
+## 前后端分离+cloud
 
 选择原因
 
 1.不会写前端，不分离以前用mvc写起来恶心\
 2.cloud扩展性高
 
-##mvc+spring+mybatis
+## mvc+spring+mybatis
 
 选择原因
 
@@ -37,18 +37,18 @@ boot是spring一站式解决方案，要用spring，如果和boot搭配会
 
 简化spring的使用难度，简化配置，提供快速启动器
 
-##maven
+## maven
 
 选择原因
 
 1.虽然看起来啰嗦但是看习惯了，而且好多官网都是maven写的，copy方便\
 2.gradle写的不咋好
 
-##nacos
+## nacos
 
 功能：注册中心、配置中心
 
-###注册中心替代品
+### 注册中心替代品
 
 cap(consistency强一致性 availability可用性（所有的请求都会收到响应） parti n tolerance 分区容错性)
 
@@ -73,7 +73,7 @@ consul：go写的
 consul是分布式服务发现和配置管理系统
 
 
-###配置中心替代品
+### 配置中心替代品
 
 
 
@@ -111,13 +111,13 @@ consul是分布式服务发现和配置管理系统
 
 
 
-#项目介绍
+# 项目介绍
 
-##common
+## common
 
 包含一些 common和util
 
-##note
+## note
 
 包含note和excel
 
@@ -125,13 +125,15 @@ TODO
 
 分离2个模块
 
-##software
+## software
 
 TODO
 
-包含java软件环境的安装 
+包含java软件环境的安装
 
-##test
+其中部分属于.xmind 文件，.md文件图片读不出来，建议在本地打开使用
+
+## test
 
 从hello world到framework
 
@@ -139,13 +141,27 @@ TODO
 
 分离补充为多个模块
 
-##user
+## user
 
 提供对外访问的接口
 
-##sql
+## sql
 
 提供sql的访问方式和sql的一些相关问题
+
+包含：jdbc jdbc template c3p0 druid
+
+## nacos-config
+
+配置中心
+
+TODO
+
+并没有在其他服务中使用配置中心的文件
+
+## gateway
+
+网关：路由转发+过滤器
 
 
 

@@ -1,11 +1,15 @@
 package com.icboluo.test;
 
+import java.util.Scanner;
+
 /**
  * @author icboluo
  * @date 2020-08-03 14:01
  */
 public class shiwu {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int i = scanner.nextInt();
         //事物常见的并发问题
         String 丢失更新 = "撤销一个事物的时候，其他的线程如果已经把事物提交，会覆盖已提交的数据";
         String 脏读 = "读到一个事物未commit的数据";
@@ -13,8 +17,8 @@ public class shiwu {
         String 幻读 = "第一个线程去更新全表，第二个线程去新增一个，发现更新全表没有全部实现（重点是新增和删除）";
         //spring事物的隔离级别
         String 数据库默认级别 = "DEFAULT";
-        String 未提交读 = "脏读、虚读/幻读、不可重复读都可能发生";
-        String 已提交读 = "不可重复读和虚读有可能发生（锁定正在读取的行）";
+        String 读未提交 = "脏读、虚读/幻读、不可重复读都可能发生";
+        String 读已提交 = "不可重复读和虚读有可能发生（锁定正在读取的行）";
         String 可重复读 = "幻读可能发生（锁定读取的所有行）";
         String 串型化的 = "避免以上所有问题（锁表）";
         //事务特性

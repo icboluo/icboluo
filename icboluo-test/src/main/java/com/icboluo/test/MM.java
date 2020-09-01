@@ -2,6 +2,9 @@ package com.icboluo.test;
 
 import lombok.Data;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * integer i,j=100; i==j? 正确，虽然是引用数据类型，单在127以内，是去常量池中去找，不是去创建对象
  * 什么时候使用匿名内部类？？
@@ -16,6 +19,24 @@ import lombok.Data;
  */
 @Data
 public class MM {
-    public static void main(String[] args) {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int count= -1;
+        int countNum= -1;
+        Set<Integer> set=new HashSet();
+        while(sc.hasNext()){
+            if(count==countNum){
+                countNum=sc.nextInt();
+                count++;
+                continue;
+            }
+
+            set.add(sc.nextInt());
+            count++;
+        }
+
+
     }
+
+
 }
