@@ -2,7 +2,7 @@ package com.icboluo.se.file;
 
 import com.icboluo.common.AbstractFilePathConstant;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileFilter;

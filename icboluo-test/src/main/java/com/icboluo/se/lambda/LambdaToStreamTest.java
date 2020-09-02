@@ -1,7 +1,7 @@
 package com.icboluo.se.lambda;
 
 import com.icboluo.dataobject.Student;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.*;

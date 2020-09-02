@@ -14,6 +14,15 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+# 命名规范
+
+## 服务名
+
+这个项目每个服务的spring.application.name和artifactId是一样的
+
+每个服务的stater名称是取消icboluo前缀的大驼峰式
+
+
 # 技术选型
 
 ## 前后端分离+cloud
@@ -149,7 +158,11 @@ TODO
 
 提供sql的访问方式和sql的一些相关问题
 
-包含：jdbc jdbc template c3p0 druid
+包含：jdbc JdbcTemplate 自定义连接池 c3p0 druid 
+
+TODO
+
+其中tomcat部分未拆分
 
 ## nacos-config
 
@@ -162,6 +175,13 @@ TODO
 ## gateway
 
 网关：路由转发+过滤器
+
+# 项目更新计划
+
+## 更新设计模式内容
+
+
+
 
 
 

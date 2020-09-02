@@ -18,7 +18,6 @@ public class Practice12 {
         int blue = ra.nextInt(16) + 1;
         for (Integer red : hs) {
             System.out.print(red + "red");
-
         }
         System.out.println("\n"+blue + "blue");
     }

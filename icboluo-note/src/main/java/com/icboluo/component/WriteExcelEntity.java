@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author icboluo
  * @date 2020/6/18 16:09
  */
-@ConfigurationProperties("write-excel-entity")
+@ConfigurationProperties(prefix = "write-excel-entity")
 @Data
 public class WriteExcelEntity {
     /**

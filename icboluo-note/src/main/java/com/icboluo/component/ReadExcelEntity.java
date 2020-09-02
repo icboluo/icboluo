@@ -2,11 +2,12 @@ package com.icboluo.component;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author icboluo
  */
-@ConfigurationProperties("read-excel-entity")
+@ConfigurationProperties(prefix = "read-excel-entity")
 @Data
 public class ReadExcelEntity {
     /**

@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  * @date 2020-08-30 14:45
  */
 @Slf4j
-public class Demo01 {
+class Demo01 {
     public static void main(String[] args) throws Exception {
 //        多用于配置文件
         Class<?> clazz1 = Class.forName("com.icboluo.reflect.Person");

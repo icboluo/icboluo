@@ -21,11 +21,11 @@ import java.util.List;
 public class R {
 
     public static Response correct() {
-        return new SingleResponse(ReEnum.OPERATION_SUCCESSFUL);
+        return new SingleResponse<>(ReEnum.OPERATION_SUCCESSFUL);
     }
 
     public static Response correct(ReEnum reEnum) {
-        return new SingleResponse(reEnum);
+        return new SingleResponse<>(reEnum);
     }
 
     /**
@@ -35,26 +35,30 @@ public class R {
      * @return 响应类
      */
     public static Response correct(String message) {
-        return new SingleResponse(ReEnum.OPERATION_SUCCESSFUL.getCode(), message);
+        return new SingleResponse<>(ReEnum.OPERATION_SUCCESSFUL.getCode(), message);
+    }
+
+    public static Response correct(String data, ReEnum reEnum) {
+        return new SingleResponse<>(data, reEnum);
     }
 
     public static <T> Response correct(T t) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("object", t);
-        return new SingleResponse(jsonObject, ReEnum.OPERATION_SUCCESSFUL);
+        return new SingleResponse<>(jsonObject, ReEnum.OPERATION_SUCCESSFUL);
     }
 
     public static <T> Response correct(List<T> list) {
-        return new SingleResponse(getJsonObject(list), ReEnum.OPERATION_SUCCESSFUL);
+        return new SingleResponse<>(getJsonObject(list), ReEnum.OPERATION_SUCCESSFUL);
     }
 
     public static Response correct(List... lists) {
         JSONObject jsonObject = getJsonObject(lists);
-        return new SingleResponse(jsonObject, ReEnum.OPERATION_SUCCESSFUL);
+        return new SingleResponse<>(jsonObject, ReEnum.OPERATION_SUCCESSFUL);
     }
 
     public static <T> Response correct(List<T> list, ReEnum reEnum) {
-        return new SingleResponse(getJsonObject(list), reEnum);
+        return new SingleResponse<>(getJsonObject(list), reEnum);
     }
 
     public static <T, D> Response correct(T t, List<D> list) {
@@ -65,31 +69,31 @@ public class R {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("object", t);
         jsonObject.put("list", list);
-        return new SingleResponse(jsonObject, reEnum);
+        return new SingleResponse<>(jsonObject, reEnum);
     }
 
     public static Response error() {
-        return new SingleResponse(ReEnum.ERROR);
+        return new SingleResponse<>(ReEnum.ERROR);
     }
 
     public static Response error(String errMsg) {
-        return new SingleResponse(ReEnum.ERROR.getCode(), errMsg);
+        return new SingleResponse<>(ReEnum.ERROR.getCode(), errMsg);
     }
 
     public static Response error(int code, String errMsg) {
-        return new SingleResponse(code, errMsg);
+        return new SingleResponse<>(code, errMsg);
     }
 
     public static Response error(int code, Exception e) {
-        return new SingleResponse(code, e.getMessage());
+        return new SingleResponse<>(code, e.getMessage());
     }
 
     public static Response error(ReEnum errEnum) {
-        return new SingleResponse(errEnum);
+        return new SingleResponse<>(errEnum);
     }
 
     public static Response error(Exception e) {
-        return new SingleResponse(ReEnum.ERROR.getCode(), e.getMessage());
+        return new SingleResponse<>(ReEnum.ERROR.getCode(), e.getMessage());
     }
 
     /**

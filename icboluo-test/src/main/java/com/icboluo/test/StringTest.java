@@ -2,7 +2,7 @@ package com.icboluo.test;
 
 import com.icboluo.dataobject.Student;
 import lombok.NonNull;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

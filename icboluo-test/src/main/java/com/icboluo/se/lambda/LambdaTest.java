@@ -3,7 +3,7 @@ package com.icboluo.se.lambda;
 import com.icboluo.dataobject.Student;
 import com.icboluo.se.lambda.predicatecom.FilterStudentByAge;
 import com.icboluo.se.lambda.predicatecom.FilterStudentByName;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

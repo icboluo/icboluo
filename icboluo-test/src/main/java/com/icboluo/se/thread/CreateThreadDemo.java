@@ -1,7 +1,5 @@
 package com.icboluo.se.thread;
 
-import org.junit.Test;
-
 /**
  * 线程池的5种状态：
  * new出来 创建状态

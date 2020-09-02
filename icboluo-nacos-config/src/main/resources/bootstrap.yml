@@ -10,4 +10,5 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yaml
+#        在nacos配置中心的dataId是下面的
 #   ${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}

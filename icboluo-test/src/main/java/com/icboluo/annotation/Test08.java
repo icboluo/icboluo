@@ -20,7 +20,9 @@ class Test08 {
         System.out.println(className + "-----" + methodName);
 
         Class<?> cls = Class.forName(className);
-        Object obj = cls.newInstance();
+/*        过时了
+        Object obj = cls.newInstance();*/
+        Object obj = cls.getDeclaredConstructor().newInstance();
         Method method = cls.getMethod(methodName);
         method.invoke(obj);
 

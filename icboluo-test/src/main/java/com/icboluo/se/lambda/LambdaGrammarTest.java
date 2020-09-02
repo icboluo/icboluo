@@ -1,7 +1,8 @@
 package com.icboluo.se.lambda;
 
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.Consumer;

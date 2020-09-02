@@ -61,6 +61,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--        Spring Boot配置注解执行器配置，配置之后ConfigurationProperties文件会在yml文件中有书写提示，
+        不会报警告，不配也没什么关系-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>

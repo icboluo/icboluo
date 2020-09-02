@@ -1,5 +1,5 @@
 server:
-  port: 7020
+  port: 1514
 spring:
   application:
     name: icboluo-note
@@ -25,6 +25,6 @@ read-excel-entity:
   general-sql-path: creat.sql
   sheet-name:
 write-excel-entity:
-  general-excel-path: database.xlsx
+  excel-path: database.xlsx
   database: note
-  table_name:
+  table-name:
