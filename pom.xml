@@ -10,7 +10,13 @@
     </parent>
     <modules>
         <module>icboluo-common</module>
+        <module>icboluo-gateway</module>
+        <module>icboluo-nacos-config</module>
+        <module>icboluo-note</module>
+        <module>icboluo-software</module>
+        <module>icboluo-sql</module>
         <module>icboluo-test</module>
+        <module>icboluo-user</module>
     </modules>
 
     <groupId>com.icboluo</groupId>
@@ -40,7 +46,7 @@
         <alibaba.fastjson.verison>1.2.70</alibaba.fastjson.verison>
     </properties>
 
-    <!--    子模块继承以后，提供作用：锁定版本+子modlue不用写groupId和version-->
+    <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->
     <!--    只是申明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖-->
     <dependencyManagement>
         <dependencies>
