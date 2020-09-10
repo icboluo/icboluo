@@ -1,6 +1,7 @@
 package com.icboluo.annotation;
 
 /**
+ * Java引用数据类型的四大类：class类、interface接口、enum枚举、annotation注解
  * 注解的功能：
  * 1.进行编译检查:override
  * 2.生成doc文档，就是api文档：

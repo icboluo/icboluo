@@ -12,13 +12,18 @@ import java.lang.annotation.*;
  * @date 2020-08-29 20:58
  */
 /*
+注解只可以修饰
 type：作用于类上
     method：方法上
-    field：作用于方法上
+    field：作用于属性上
+    CONSTRUCTOR：构造方法上
  */
 @Target(value = {ElementType.ANNOTATION_TYPE})
 /*
 当前被描述的注解，会保留到class字节码文件中，并被jvm读取到
+source：编译器有效
+class：字节码文件阶段
+runtime：程序运行时期都有效，常用作框架注解设置
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

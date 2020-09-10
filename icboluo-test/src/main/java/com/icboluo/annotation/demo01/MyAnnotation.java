@@ -1,4 +1,4 @@
-package com.icboluo.se.annotation.demo01;
+package com.icboluo.annotation.demo01;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

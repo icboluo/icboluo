@@ -8,6 +8,7 @@
         <version>2.3.3.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+<!--    必须在这个modules里面加各个module，否则编译器无法识别改module为一个项目-->
     <modules>
         <module>icboluo-common</module>
         <module>icboluo-gateway</module>
@@ -30,8 +31,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>14</java.version>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.12</log4j.version>
         <lombok.version>1.18.12</lombok.version>
