@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
  * @date 2020-08-29 22:28
  */
 @Slf4j
-public class TestCheck09 {
+class TestCheck09 {
     public static void main(String[] args) {
         Calculator cal = new Calculator();
         Class<? extends Calculator> clazz = cal.getClass();

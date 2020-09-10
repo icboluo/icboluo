@@ -4,6 +4,8 @@ import com.icboluo.common.ExceptionEnum;
 import lombok.Getter;
 
 /**
+ * 公共异常
+ *
  * @author icboluo
  */
 @Getter

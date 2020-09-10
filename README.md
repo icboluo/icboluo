@@ -20,7 +20,7 @@ Here are some ideas to get you started:
 
 这个项目每个服务的spring.application.name和artifactId是一样的
 
-每个服务的stater名称是取消icboluo前缀的大驼峰式
+每个服务的stater名称是取消icboluo前缀的大驼峰式，有application后缀
 
 
 # 技术选型
@@ -59,7 +59,7 @@ boot是spring一站式解决方案，要用spring，如果和boot搭配会
 
 ### 注册中心替代品
 
-cap(consistency强一致性 availability可用性（所有的请求都会收到响应） parti n tolerance 分区容错性)
+cap(consistency强一致性 availability可用性（所有的请求都会收到响应） partition tolerance 分区容错性)
 
 eureka ap ,zookeeper、consul cp，nacos 可ap可cp
 
@@ -119,12 +119,13 @@ consul是分布式服务发现和配置管理系统
 2.从spring容器取出来在接口调用出使用
 
 
-
 # 项目介绍
 
 ## common
 
 包含一些 common和util
+
+公共异常，返回值都在这里面定义
 
 ## note
 
@@ -135,8 +136,6 @@ TODO
 分离2个模块
 
 ## software
-
-TODO
 
 包含java软件环境的安装
 

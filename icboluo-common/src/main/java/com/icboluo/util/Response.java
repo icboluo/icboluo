@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * 公共返回值
+ *
  * @author icboluo
  */
 @Data

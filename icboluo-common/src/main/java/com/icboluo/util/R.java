@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author icboluo
  */
-@SuppressWarnings("unused,unchecked,rawtypes")
+@SuppressWarnings("unused,rawtypes")
 public class R {
 
     public static Response correct() {

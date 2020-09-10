@@ -22,6 +22,7 @@ type：作用于类上
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Inherited//使用该注解的子类也相当于有该注解
- @interface MyAnnotation05 {
+@Inherited
+//使用该注解的子类也相当于有该注解
+@interface MyAnnotation05 {
 }
