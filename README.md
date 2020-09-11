@@ -387,7 +387,152 @@ allkeys-lfu（least frequently used）：
     appendfsync everysec  #每秒钟同步一次，redis性能基本没有什么影响，显示地将多个写命令同步到硬盘
     appendfsync no        #让操作系统决定何时进行同步
 
+### 混合持久化
 
+TODO
+
+## redis事务
+
+TODO
+
+##  缓存穿透
+
+大量请求的key不在缓存中，请求直接到数据库是上；比如黑客制造大量key去访问
+
+解决办法：
+
+参数校验：id不能小于0，邮箱格式等等校验
+
+缓存无效的key，并设置过期时间：必须设置过期时间（否则会缓存会存储大量key，容易被攻击）；如果key变化频繁，不能从根本上解决问题
+
+布隆过滤器：把所有可能出现的key值放到布隆过滤器中，请求进来，先进行布隆过滤器再经过cache和db
+
+缺点 ：小概率会误判，判断是否存在是用hash，不同的字符串hash值可能相等
+
+## 缓存雪崩
+
+缓存在同一时间大面积失效，后面的请求都直接落到数据库上，造成数据库短时间内承受大量请求
+
+出现场景：
+    cache服务宕机，所有请求都到数据库上；
+    一些热点数据，在某一时刻大量失效，比如秒杀系统没有进行热点缓存
+
+解决方案：
+    采用redis集群，避免单机服务器出现问题，整个缓存服务不可用；限流，避免处理大量请求
+    设置不同的失效时间，比如随机时间；设置热点缓存永不失效
+    
+## 缓存和数据库数据的一致性
+    
+对于 旁路缓存模式：write 写入db成功，删除cache失败
+
+缩短缓存失效时间，这样缓存容易失效就回去db去加载；治标不治本，对于先删cache再写db不适合
+
+增加cache更新重试机制，如果cache服务不可用，就隔一段时间再试一次；如果多次重试均失败，可以把更新失败的key存到队列中，
+
+等cache服务可用的时候，再将缓存中对应的key删除
+
+## git
+
+git远端回滚提交记录
+
+1.reset返回到这次提交时候的代码，再强制提交
+
+2.revert将选中的git记录作为要回滚的记录，然后再次commit回滚，再强制提交
+    
+## 异常定位
+
+启动项目各种异常，检查依赖，可能是依赖问题
+    
+## @WebFilter 用于将一个类声明为过滤器，该注解将会在部署时被容器处理，容器将根据具体的属性配置将相应的类部署为过滤器
+
+Filter的创建和销毁由WEB服务器负责
+
+Filter的创建
+
+web 应用程序启动时，web 服务器将创建Filter 的实例对象，并调用其init方法，完成对象的初始化功能，从而为后续的用户请求作好拦截的准备工作
+
+filter对象只会创建一次，init方法也只会执行一次。通过init方法的参数，可获得代表当前filter配置信息的FilterConfig对象。
+
+Filter的销毁
+
+Web容器调用destroy方法销毁Filter。destroy方法在Filter的生命周期中仅执行一次。在destroy方法中，可以释放过滤器使用的资源
+
+## web服务增加拦截器
+
+WebMvcConfigure配置类是spring内部的一种配置方式，用Javabean代替传统xml配置进行针对框架个性化定制
+
+可以自定义一些Handler，Interceptor，ViewResolver，MessageConverter
+    
+基于java-based方式的spring mvc配置，需要创建一个配置类并实现WebMvcConfigurer接口
+
+实现方式：
+
+重写WebMvcConfigurerAdapter的方法来添加自定义拦截器，消息转换器等 官方标记过时
+
+继承WebMvcConfigurationSupport
+
+实现WebMvcConfigurer 推荐
+
+## spring容器
+
+spring容器可以理解为创建obj的地方，当然，还负责对象的整个生命周期：创建、装配、销毁
+
+而这里对象的创建管理的控制权都交给了Spring容器，所以这是一种控制权的反转，称为IOC容器
+
+## @Primary
+
+多个bean当作容器候选者的时候，被该注解修饰的bean会成为首选者
+
+## idea链接mysql
+
+1.通过联网下载驱动
+
+2.找到本地mysql的jar包，配置驱动就可以了
+
+# 监听器、过滤器、拦截器
+
+## context-param
+
+一些初始化的配置，放在context-param中，被监听器加载
+
+## 监听器 listener
+
+对项目起监听作用，能感知包括request（请求域）、session（会话域）和application（应用程序）的初始化和属性的变换
+
+使用场景：需要监听到项目中的一些信息，并且不需要对流程进行更改
+
+监听当前在线人数；系统初始化的时候，获得项目的绝对路径
+
+## 过滤器 filter
+
+对请求进行过滤，作用于servlet之前，依赖于servlet
+
+使用场景：需要过滤掉部分信息，只保留一部分
+
+请求编码转换；日志记录（所有对网站发起请求的地址）；未登陆用户做判断；
+
+## servlet
+
+对request和response进行处理的容器
+
+## 拦截器 interceptor
+
+对请求和返回进行拦截，在servlet内部
+
+可以作用于：请求到达controller之前、controller层到视图渲染层之间、视图渲染和出servlet之前
+
+使用场景：对流程进行更改，做相关记录
+
+对全局进行日志处理；记录部分调用的时间
+
+## 过滤器和拦截器的区别
+
+过滤器基于函数回调，拦截器基于反射
+
+过滤器是servlet规范制定的，只能在web应用中；spring容器的拦截器不依赖于servlet
+
+进入过滤器，执行 doFilter 方法----》进入servlet 执行mvc的doService方法（servlet的service方法）
+----》mvc请求分发----》进入拦截器 执行controller之前调用
 
 
 
