@@ -1,4 +1,4 @@
-package com.icboluo.frame;
+package com.icboluo;
 /*
 AOP：Aspect Oriented Programming《方面，以...为方向，》：
 把重复代码抽取出来，使用的时候，利用动态代理在不修改源码的基础上增强

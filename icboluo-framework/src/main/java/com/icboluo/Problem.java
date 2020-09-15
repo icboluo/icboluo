@@ -1,4 +1,4 @@
-package com.icboluo.frame;
+package com.icboluo;
 
 public class Problem {
         /*

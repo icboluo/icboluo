@@ -1,4 +1,4 @@
-package com.icboluo.frame;
+package com.icboluo;
 /*
 mybatis-config.xml：全局配置文件（核心配置文件）作用：配置数据源（配置数据库连接信息）
 <configuration>

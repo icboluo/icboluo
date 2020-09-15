@@ -1,4 +1,4 @@
-package com.icboluo.frame;
+package com.icboluo;
 /*
   boot其最主要作用就是帮我们快速的构建庞大的spring项目，并且尽可能的
 减少一切xml配置，做到开箱即用，迅速上手，让我们关注与业务而非配置。

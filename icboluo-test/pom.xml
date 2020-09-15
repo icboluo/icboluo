@@ -65,6 +65,11 @@
             <artifactId>jakarta.activation</artifactId>
             <version>1.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.2</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,4 +1,4 @@
-package com.icboluo.frame;
+package com.icboluo;
 /*
 Spring1:
    IoC（Inversion of Control 控制反转）： 将对象创建权利交给Spring工厂进行管理
