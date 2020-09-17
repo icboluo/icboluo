@@ -1,4 +1,4 @@
-package com.icboluo.validate;
+package com.icboluo.common;
 
 
 /**

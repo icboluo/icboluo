@@ -1,4 +1,4 @@
-package com.icboluo.convertor;
+package com.icboluo.common;
 
 /**
  * 客户端对象、领域对象、数据对象的转换器

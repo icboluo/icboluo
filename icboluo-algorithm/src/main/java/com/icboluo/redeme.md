@@ -1,0 +1,2 @@
+leetcode 中的类名命名以github上的资源LeetCodeAnimation开始，因为不能以数字开始命名，所以用_做开始标记
+文件名后半部分是功能描述
