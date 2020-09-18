@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * 公共返回值
@@ -24,7 +23,7 @@ import java.util.List;
  * 　　<groupId>com.github.pagehelper</groupId>
  * 　　<artifactId>pagehelper</artifactId>
  * 　　</dependency>
- *
+ * <p>
  * 可是导包了又要依赖数据库，所以需要分离
  *
  * @author icboluo
@@ -32,7 +31,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("unchecked,rawtypes")
+//@SuppressWarnings("unchecked,rawtypes")
 public class Response implements Serializable {
     private static final long serialVersionUID = 3840949955410953654L;
     /**
@@ -94,8 +93,8 @@ public class Response implements Serializable {
 
     private PageInfo buildPageInfo(Object data) {
         if (this.isCollection(data)) {
-            List arrayListData = (ArrayList) data;
-            return new PageInfo(arrayListData);
+//            new PageInfo((ArrayList) data) 也可以
+            return PageInfo.of((ArrayList) data);
         } else {
             throw new IcBoLuoException("干嘛将不是collection的数据传进来让构建pageInfo?");
         }

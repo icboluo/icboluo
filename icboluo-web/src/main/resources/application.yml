@@ -1,2 +1,5 @@
 server:
   port: 7788
+spring:
+  application:
+    name: icboluo-web

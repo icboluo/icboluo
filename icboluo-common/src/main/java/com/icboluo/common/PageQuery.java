@@ -1,4 +1,4 @@
-package com.icboluo.object.query;
+package com.icboluo.common;
 
 import lombok.Data;
 

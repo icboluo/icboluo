@@ -21,5 +21,6 @@ public class WebInterceptorController {
     public String getUserCode() {
         String userCode = UserContext.getUserCode();
         return userCode;
+
     }
 }
