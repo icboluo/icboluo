@@ -37,4 +37,50 @@ public class ArrayHelper {
         }
         return newArr;
     }
+
+    /**
+     * 竖着打印数组
+     * <p>
+     * arr 0  1  0  2  1  0  1  3  2  1  2  1
+     * 3                       ||
+     * 2           ||          || ||    ||
+     * 1     ||    || ||    || || || || || ||
+     * inx 0  1  2  3  4  5  6  7  8  9  10  11
+     *
+     * @param arr 数组存放每个柱子的高度
+     */
+    public static void endwaysPrint(int[] arr) {
+        System.out.print("arr ");
+        for (int j : arr) {
+            System.out.print(j + "  ");
+        }
+        System.out.println();
+        int maxVal = findMaxVal(arr);
+        for (int r = maxVal; r > 0; r--) {
+            for (int c = 0; c < arr.length; c++) {
+                if (c == 0) {
+                    System.out.print(" " + r + "  ");
+                }
+                if (arr[c] - r + 1 > 0) {
+                    System.out.print("|| ");
+                } else {
+                    System.out.print("   ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.print("inx ");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(i + "  ");
+        }
+        System.out.println();
+    }
+
+    public static int findMaxVal(int[] arr) {
+        int max = Integer.MIN_VALUE;
+        for (int v : arr) {
+            max = Math.max(v, max);
+        }
+        return max;
+    }
 }

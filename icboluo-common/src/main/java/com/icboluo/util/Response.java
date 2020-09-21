@@ -31,7 +31,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@SuppressWarnings("unchecked,rawtypes")
+@SuppressWarnings("unchecked,rawtypes")
 public class Response implements Serializable {
     private static final long serialVersionUID = 3840949955410953654L;
     /**

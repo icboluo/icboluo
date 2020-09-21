@@ -33,6 +33,10 @@ Here are some ideas to get you started:
 
 2.cloud扩展性高
 
+## 日志
+
+用spring的日志，花花绿绿的挺好看
+
 ## mvc+spring+mybatis
 
 选择原因
