@@ -14,7 +14,7 @@ public class IcBoLuoException extends RuntimeException {
     /**
      * 状态码
      */
-    private int status;
+    private final int status;
 
     public IcBoLuoException() {
         super();

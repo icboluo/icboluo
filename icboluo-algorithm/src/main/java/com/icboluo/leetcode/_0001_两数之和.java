@@ -9,7 +9,6 @@ import java.util.Arrays;
 public class _0001_两数之和 {
     public static void main(String[] args) {
         int[] arr = {2, 7, 11, 15};
-
         int[] res = twoSum(arr, 9);
         System.out.println(Arrays.toString(res));
     }
