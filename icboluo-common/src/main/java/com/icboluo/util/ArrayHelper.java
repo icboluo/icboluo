@@ -22,6 +22,21 @@ public class ArrayHelper {
         }
     }
 
+    public static void reverse(int[] arr) {
+        int left = 0;
+        int right = arr.length - 1;
+        reverse(arr, left, right);
+    }
+
+    private static void reverse(int[] arr, int left, int right) {
+        int temp;
+        while (left < right) {
+            temp = arr[left];
+            arr[left++] = arr[right];
+            arr[right--] = temp;
+        }
+    }
+
     /**
      * 反转二维数组
      *

@@ -6,8 +6,14 @@ package com.icboluo.common;
  * @author icboluo
  * @date 2020-09-27 19:12
  */
+
 public class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
+
+    public TreeNode(int val) {
+        this.val = val;
+    }
+
 }

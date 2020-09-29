@@ -1,31 +1,26 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.zero;
 
 /**
  * @author icboluo
- * @date 2020-09-27 20:34
+ * @date 2020-09-27 20:48
  */
-public class _0003_无重复字符的最长子串 {
+public class _0005_最长回文串 {
     public static void main(String[] args) {
-        String str = "abcabcbb";
+        String str = "babad";
         char[] chars = str.toCharArray();
         m1(chars);
     }
 
     /**
-     * 双层for循环
-     *
+     * 双层for循环，每一个比较，记录最大值
      * @param chars
-     * @return
      */
     private static void m1(char[] chars) {
-
     }
 
     /**
-     * 双指针，把不重复的内如括起来，找到最大的区域返回即可
-     *
+     * todo 马拉车、中心拓扑、动态规划
      * @param chars
-     * @return
      */
     private static void m2(char[] chars) {
 

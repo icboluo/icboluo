@@ -43,4 +43,12 @@ public class ListNode {
         this.val = header.next.val;
         this.next = header.next.next;
     }
+
+    public ListNode end() {
+        ListNode cur = this;
+        while (cur.next != null) {
+            cur = cur.next;
+        }
+        return cur;
+    }
 }

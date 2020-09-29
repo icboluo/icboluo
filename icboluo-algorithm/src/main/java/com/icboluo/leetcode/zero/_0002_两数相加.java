@@ -1,4 +1,4 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.zero;
 
 import com.icboluo.common.ListNode;
 
