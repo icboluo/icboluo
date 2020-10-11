@@ -1,5 +1,8 @@
 package com.icboluo.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 操作数组的工具类
  * row代表行，column代表列
@@ -28,7 +31,14 @@ public class ArrayHelper {
         reverse(arr, left, right);
     }
 
-    private static void reverse(int[] arr, int left, int right) {
+    /**
+     * 反转数组
+     *
+     * @param arr   要反转的数组
+     * @param left  数组开始反转索引
+     * @param right 数组结束反转索引
+     */
+    public static void reverse(int[] arr, int left, int right) {
         int temp;
         while (left < right) {
             temp = arr[left];
@@ -91,6 +101,12 @@ public class ArrayHelper {
         System.out.println();
     }
 
+    /**
+     * 查询数组中最大值
+     *
+     * @param arr 数组
+     * @return 数组中的最大值
+     */
     public static int findMaxVal(int[] arr) {
         int max = Integer.MIN_VALUE;
         for (int v : arr) {
@@ -99,9 +115,30 @@ public class ArrayHelper {
         return max;
     }
 
+    /**
+     * 交换数组中元素的位置
+     *
+     * @param arr 数组
+     * @param i   要交换的第一个索引
+     * @param j   要交换的第二个索引
+     */
     public static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
+    }
+
+    /**
+     * 将数组存储到map中，如果map中已经出现，就+1
+     *
+     * @param arr 数组
+     * @return k 数组元素，v 出现次数
+     */
+    public static Map<Integer, Integer> toMap(int[] arr) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i : arr) {
+            map.put(i, map.getOrDefault(i, 1));
+        }
+        return map;
     }
 }
