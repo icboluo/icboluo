@@ -9,6 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>icboluo-note</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>com.icboluo</groupId>

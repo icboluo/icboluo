@@ -7,7 +7,6 @@
         <groupId>com.icboluo</groupId>
         <artifactId>icboluo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <artifactId>icboluo-nacos-config</artifactId>
 

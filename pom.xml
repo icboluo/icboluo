@@ -7,6 +7,9 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.3.RELEASE</version>
+<!--        relativePath元素中的地址–>本地仓库–>远程仓库-->
+<!--        如为空值将始终从仓库中获取，不从本地路径获取-->
+<!--        设定一个空值将始终从仓库中获取，不从本地路径获取，子模块禁止添加这个-->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <!--    必须在这个modules里面加各个module，否则编译器无法识别改module为一个项目-->
