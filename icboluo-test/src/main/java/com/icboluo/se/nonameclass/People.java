@@ -1,7 +1,5 @@
 package com.icboluo.se.nonameclass;
 
-import lombok.AllArgsConstructor;
-
 /**
  * @author icboluo
  * @date 2020-08-11 10:44
@@ -40,6 +38,11 @@ class People {
         }
         return new Woman();
     }
+
+    /**
+     * Java文档中是这样描述static内部类的：一旦内部类使用static修饰，那么此时这个内部类就升级为顶级类
+     * 也就是说，除了写在一个类的内部以外，static内部类具备所有外部类的特性
+     */
     static class Inner {
         public Inner() {
 

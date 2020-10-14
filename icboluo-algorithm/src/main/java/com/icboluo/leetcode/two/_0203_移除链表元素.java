@@ -12,6 +12,6 @@ public class _0203_移除链表元素 {
         m(listNode, 6);
     }
 
-    private static void m(ListNode listNode, int i) {
+    private static void m(ListNode listNode, int n) {
     }
 }

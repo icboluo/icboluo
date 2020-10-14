@@ -1,7 +1,5 @@
 package com.icboluo;
-/**
- * @author lp
- */ /*
+/*
 Springmvc:Model View Controller 模型视图控制器
 Model:封装应用的状态，并实现应用的功能
 View:提供界面来与用户进行人机交互
@@ -33,13 +31,6 @@ mvc用jstl写就是c:foreach
 拦截器,spring中和过滤器差不多的东西，但不拦截静态页面
 impl...HandlerInterceptor ：preHandle，postHandle，afterCompletion
 
-一个请求匹配前端控制器 DispatcherServlet 的请求映射路径(在 web.xml中指定), WEB 容器将该请求转交给 DispatcherServlet 处理
-DispatcherServlet 接收到请求后, 将根据 请求信息 交给 处理器映射器 （HandlerMapping）
-HandlerMapping 根据用户的url请求 查找匹配该url的 Handler，并返回一个执行链
-DispatcherServlet 再请求 处理器适配器(HandlerAdapter) 调用相应的 Handler 进行处理并返回 ModelAndView 给 DispatcherServlet
-DispatcherServlet 将 ModelAndView 请求 ViewReslover（视图解析器）解析，返回具体 View
-DispatcherServlet 对 View 进行渲染视图（即将模型数据填充至视图中）
-DispatcherServlet 将页面响应给用户
  */
 public class Springmvc {
 }
