@@ -23,8 +23,8 @@ public class WebContextInterceptor extends HandlerInterceptorAdapter {
 
     //TODO    使用匿名内部类 + 实例化代码块儿 = 使用两个大括号进行初始化
     {
-        exclude.add("PoPraybillController.initialize");
-        exclude.add("PoOrderController.initialize");
+        exclude.add("aController.initialize");
+        exclude.add("bController.initialize");
     }
 
     @Override

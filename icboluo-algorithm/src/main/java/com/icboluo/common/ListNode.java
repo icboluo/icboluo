@@ -7,8 +7,8 @@ package com.icboluo.common;
  * @date 2020-09-23 20:57
  */
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
     public ListNode(int val) {
         this.val = val;
@@ -19,6 +19,11 @@ public class ListNode {
         return "ListNode{" +
                 "val=" + val +
                 '}';
+    }
+
+    public ListNode() {
+        this.val = 0;
+        this.next = null;
     }
 
     public void print() {
@@ -35,9 +40,8 @@ public class ListNode {
     public ListNode(int... arr) {
         ListNode header = new ListNode(0);
         ListNode pre = header;
-        for (int i = 0; i < arr.length; i++) {
-            ListNode cur = new ListNode(arr[i]);
-            pre.next = cur;
+        for (int j : arr) {
+            pre.next = new ListNode(j);
             pre = pre.next;
         }
         this.val = header.next.val;
@@ -50,5 +54,18 @@ public class ListNode {
             cur = cur.next;
         }
         return cur;
+    }
+
+    public ListNode reverse() {
+        ListNode cur = this;
+        ListNode pre = new ListNode();
+        ListNode next;
+        while (cur != null) {
+            next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.util.ObjectUtils;
  * @author icboluo
  */
 public class UserContext {
-    private static ThreadLocal<AdminUser> userContext = new ThreadLocal();
+    private static final ThreadLocal<AdminUser> userContext = new ThreadLocal<>();
 
     @AllArgsConstructor
     private static class AdminUser {
@@ -16,9 +16,7 @@ public class UserContext {
     }
 
     public static String getUserCode() {
-        boolean isNull = userContext == null
-                || ObjectUtils.isEmpty(userContext.get())
-                || ObjectUtils.isArray(userContext.get().userCode);
+        boolean isNull = ObjectUtils.isEmpty(userContext.get()) || ObjectUtils.isArray(userContext.get().userCode);
         if (isNull) {
             throw new IcBoLuoException("No userCode in Context");
         }
