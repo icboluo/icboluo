@@ -27,7 +27,7 @@
 
 3.测试：在jdk安装目录下面的bin目录里面运行
 
-```java
+```
 javac.exe
 ```
 
@@ -58,7 +58,7 @@ javac.exe
 
 5. idea设置，修改run
 
-   ```java
+   ```
    -DarchetypeCatalog=internal
    ```
 
@@ -72,7 +72,7 @@ javac.exe
 
    ![image-20200628144134176](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200628144134176.png)
 
-   ```java
+   ```
    bin：gradle.bat 用gradle构建项目
    caches:放一下jar包
    其他的是一些运行环境和jar包
@@ -118,7 +118,7 @@ javac.exe
 
 3. 在jdk安装目录下面的bin目录里面运行
 
-   ```java
+   ```
    javac.exe
    ```
 
@@ -197,7 +197,7 @@ npm install axios
 
 ## 8.nacos
 
-https://github.com/alibaba/nacos/releases下载压缩包解压进入bin目录双击就可以启动了
+`https://github.com/alibaba/nacos/releases`下载压缩包解压进入bin目录双击就可以启动了
 
 ## 9.sentinel
 

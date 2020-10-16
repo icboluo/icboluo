@@ -24,7 +24,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.3.2.RELEASE</version>
+        </dependency>
+        <!--        web应用必须加这个监视器，虽然不影响使用，但是应该交给spring管理
+        而且，idea集成boot应用，需要web监视器来监视web应用，更好的使用例如http client功能
+        可以在 endpoints（端口）中刷新几个试试看-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
