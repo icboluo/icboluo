@@ -12,6 +12,10 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+#        不使用nacos的配置中心配置覆盖本地配置
+#        enabled: false
+#        不把自己注册到注册中心的地址
+        register-enabled: false
 mybatis:
   configuration:
     #    自动小驼峰映射
