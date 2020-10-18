@@ -2,6 +2,7 @@ server:
   port: 3377
 spring:
   application:
+    #    nacos 的dataId配这个就可以了
     name: icboluo-nacos-config
   cloud:
     nacos:
