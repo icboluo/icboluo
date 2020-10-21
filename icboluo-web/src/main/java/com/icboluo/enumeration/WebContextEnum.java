@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.enumeration;
 
 /**
  * @author icboluo

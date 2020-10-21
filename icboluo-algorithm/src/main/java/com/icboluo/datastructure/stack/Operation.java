@@ -17,10 +17,10 @@ public class Operation {
             case "/" -> DIV;
             default -> 0;
         };*/
-        if (operation.equals("+") || operation.equals("-")) {
+        if ("+".equals(operation) || "-".equals(operation)) {
             return 1;
         }
-        if (operation.equals("*") || operation.equals("/")) {
+        if ("*".equals(operation) || "/".equals(operation)) {
             return 2;
         }
         return 0;

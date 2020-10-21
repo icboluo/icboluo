@@ -1,4 +1,6 @@
-package com.icboluo;
+package com.icboluo.annotation;
+
+import com.icboluo.enumeration.WebContextEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

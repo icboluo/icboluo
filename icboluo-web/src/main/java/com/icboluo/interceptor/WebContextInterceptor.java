@@ -1,8 +1,8 @@
 package com.icboluo.interceptor;
 
 import com.icboluo.HttpConstant;
-import com.icboluo.WebContextAnno;
-import com.icboluo.WebContextEnum;
+import com.icboluo.annotation.WebContextAnno;
+import com.icboluo.enumeration.WebContextEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -23,8 +23,8 @@ public class WebContextInterceptor extends HandlerInterceptorAdapter {
 
     //TODO    使用匿名内部类 + 实例化代码块儿 = 使用两个大括号进行初始化
     {
-        exclude.add("aController.initialize");
-        exclude.add("bController.initialize");
+        exclude.add("aController.init");
+        exclude.add("bController.init");
     }
 
     @Override
@@ -43,7 +43,6 @@ public class WebContextInterceptor extends HandlerInterceptorAdapter {
         if (webContextAnno != null) {
             if (WebContextEnum.WEB.equals(webContextAnno.service())) {
                 String userCode = request.getHeader(HttpConstant.USER_CODE);
-                userCode = "temp";
                 UserContext.set(userCode);
             }
         }

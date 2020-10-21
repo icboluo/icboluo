@@ -8,6 +8,7 @@ class IcboluoNacosConfigApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

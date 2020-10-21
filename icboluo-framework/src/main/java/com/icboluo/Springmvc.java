@@ -15,10 +15,7 @@ public ModelAndView test3() {
         }
 @ResponseStatus(value=HttpStatus.OK)不响应view就相应状态
 public void test18(Model model，HttpServletRequest request, HttpServletResponse response, HttpSession session，@RequestParam(value="name")String name) {...接受servlet对象
-@RequestParam(value=””, required=true/false, defaultValue=””)
-@RequestParam比之@PathVariable的区别是不需要在注解中使用占位符{xxx}
-@GetMapping：相当于@RequestMapping（method = RequestMethod.GET）
-@PostMapping@PutMapping@DeleteMapping
+@RequestParam@PathVariable@GetMapping@PostMapping@PutMapping@DeleteMapping
 @CookieValue(value="JSESSIONID",required = false)String jsessionid获取cookie数据
 mvc用jstl写就是c:foreach
 @ResponseBody	是把Controller方法返回值转化为JSON，称为序列化

@@ -6,9 +6,6 @@ pom中管理jdk版本：
 <properties>
     <java.version>1.8</java.version>
 </properties>
-springboot 通关main函数启动
-main函数中的内容是：  SpringApplication.run(DemoApplication.class, args）；
-可以不用手写，直接spring initializr（spring初始化器）启动
 - @Configuration：声明一个类作为配置类，代替xml文件
 - @Bean：声明在方法上，将方法的返回值加入Bean容器，代替<bean>标签，spring会自动调用bean
 - @Value：属性注入，将制定配置文件中的属性注入到变量中

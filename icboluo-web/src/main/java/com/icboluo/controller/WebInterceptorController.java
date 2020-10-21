@@ -1,9 +1,8 @@
-package com.icboluo;
+package com.icboluo.controller;
 
-import com.icboluo.common.ReEnum;
+import com.icboluo.annotation.WebContextAnno;
+import com.icboluo.enumeration.WebContextEnum;
 import com.icboluo.interceptor.UserContext;
-import com.icboluo.util.R;
-import com.icboluo.util.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -4,10 +4,9 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * @author icboluo
@@ -50,22 +49,20 @@ public class DateHelper {
     }
 
     /**
-     * @param date Fri Apr 03 13:10:05 CST 2020
+     * @param dateTime 2020-10-21T21:15:33.464696200
      * @return 2020-04-03 13:08:41
      */
-    public static String dateFormat(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(date);
+    public static String dateFormat(LocalDateTime dateTime) {
+        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     /**
-     * @param date    Fri Apr 03 13:10:05 CST 2020
+     * @param dateTime    2020-10-21T21:15:33.464696200
      * @param pattern yyyy-MM-dd HH:mm:ss
      * @return 2020-04-03 13:08:41
      */
-    public static String dateFormat(Date date, String pattern) {
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        return sdf.format(date);
+    public static String dateFormat(LocalDateTime dateTime, String pattern) {
+        return dateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
     /**
@@ -93,13 +90,10 @@ public class DateHelper {
     }
 
     /**
-     * 将时间戳解析成日期对象
-     *
-     * @param l 1589450630
-     * @return for example: Thu May 14 18:03:50 CST 2020
+     * @param timeStamp 1589450630
+     * @return for example: 2020-10-21T21:42:13
      */
-    public static Date parseTimeStampToDate(Long l) {
-        String substring = String.valueOf(l).substring(0, 10);
-        return new Date(l);
+    public static LocalDateTime parseTimeStampToDate(Long timeStamp) {
+        return LocalDateTime.ofEpochSecond(timeStamp / 1000, 0, ZoneOffset.ofHours(8));
     }
 }
