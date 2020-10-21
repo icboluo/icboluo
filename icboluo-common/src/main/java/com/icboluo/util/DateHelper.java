@@ -5,6 +5,8 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -36,8 +38,7 @@ public class DateHelper {
      * @return 2020-04-03 13:24:29
      */
     public static String getCurrentDateFormat() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(System.currentTimeMillis());
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     /**
@@ -45,8 +46,7 @@ public class DateHelper {
      * @return 2020-04-03 13:24:29
      */
     public static String getCurrentDateFormat(String pattern) {
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        return sdf.format(System.currentTimeMillis());
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
     }
 
     /**

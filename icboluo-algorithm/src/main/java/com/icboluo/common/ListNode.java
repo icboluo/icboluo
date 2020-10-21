@@ -1,5 +1,7 @@
 package com.icboluo.common;
 
+import java.util.Stack;
+
 /**
  * 单链表节点，为了做算法简单，只用节点做单链表，并不进行方法抽取
  *
@@ -56,7 +58,12 @@ public class ListNode {
         return cur;
     }
 
-    public ListNode reverse() {
+    /**
+     * 修改指向反转，和新建链表的代码是相似的
+     *
+     * @return 反转后的链表
+     */
+    public ListNode reverse1() {
         ListNode cur = this;
         ListNode pre = new ListNode();
         ListNode next;
@@ -67,5 +74,84 @@ public class ListNode {
             cur = next;
         }
         return pre;
+    }
+
+    /**
+     * 新建链表，每次将旧链表的元素放到新链表的最前面
+     *
+     * @return 反转后的链表
+     */
+    public ListNode reverse2() {
+        ListNode cur = this;
+        ListNode newHeader = new ListNode();
+        ListNode next;
+        while (cur != null) {
+            next = cur.next;
+//            将头节点的next放到cur后面
+            cur.next = newHeader.next;
+//            将头节点的next设置成cur
+            newHeader.next = cur;
+            cur = next;
+        }
+        return newHeader.next;
+    }
+
+    /**
+     * 1,2,3,4,5
+     *
+     * @param a 2
+     * @param b 4
+     * @return 1, 4, 3, 2, 5
+     */
+    public ListNode reverse3(int a, int b) {
+        ListNode header = this;
+        ListNode aPre = null;
+        ListNode aCur = this;
+        for (int i = 0; i < a - 1; i++) {
+            aPre = aCur;
+            aCur = aCur.next;
+        }
+//        cur=2
+        ListNode bPre = aPre;
+        ListNode bCur = aCur;
+        ListNode next = null;
+        for (int i = 0; i < b - a + 1; i++) {
+            next = bCur.next;
+            bCur.next = bPre;
+            bPre = bCur;
+            bCur = next;
+        }
+//        这里因为已经到5了，所以应该指向pre节点
+        aPre.next = bPre;
+        aCur.next = next;
+        return header;
+    }
+
+    public int length() {
+        ListNode cur = this;
+        int length = 0;
+        while (cur != null) {
+            length++;
+            cur = cur.next;
+        }
+        return length;
+    }
+
+    /**
+     * <p></>1.将链表反转，然后打印
+     * <p></>2.遍历链表，将链表中的元素存到stack中，打印
+     */
+    public void reversePrint() {
+        ListNode cur = this;
+        Stack<ListNode> stack = new Stack<>();
+        while (cur != null) {
+            stack.push(cur);
+            cur = cur.next;
+        }
+        System.out.print("cur ");
+        while (!stack.isEmpty()) {
+            System.out.print("->" + stack.pop());
+        }
+        System.out.println();
     }
 }
