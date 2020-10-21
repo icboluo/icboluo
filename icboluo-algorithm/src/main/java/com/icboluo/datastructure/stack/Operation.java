@@ -10,12 +10,19 @@ public class Operation {
     private static int DIV = 2;
 
     public static int getValue(String operation) {
-        return switch (operation) {
+/*        return switch (operation) {
             case "+" -> ADD;
             case "-" -> SUB;
             case "*" -> MUL;
             case "/" -> DIV;
             default -> 0;
-        };
+        };*/
+        if (operation.equals("+") || operation.equals("-")) {
+            return 1;
+        }
+        if (operation.equals("*") || operation.equals("/")) {
+            return 2;
+        }
+        return 0;
     }
 }

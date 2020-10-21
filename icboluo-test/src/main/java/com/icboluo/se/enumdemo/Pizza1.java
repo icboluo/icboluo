@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * @author ic菠萝
  */
- class Pizza1 {
+class Pizza1 {
     @Getter
     private PizzaStatus status;
 
@@ -42,10 +42,15 @@ import lombok.Getter;
      * @return 时间
      */
     public int getDeliveryTimeInDays() {
-        return switch (status) {
-            case ORDERED -> 5;
-            case READY -> 2;
-            case DELIVERED -> 0;
-        };
+        if (status.equals(PizzaStatus.ORDERED)) {
+            return 5;
+        }
+        if (status.equals(PizzaStatus.READY)) {
+            return 2;
+        }
+        if (status.equals(PizzaStatus.DELIVERED)) {
+            return 0;
+        }
+        return -1;
     }
 }

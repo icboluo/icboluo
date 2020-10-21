@@ -6,9 +6,10 @@ package com.icboluo.designpattern.ocp5;
  */
 class GraphicEditor {
     public void drawShape(Shape shape) {
-        switch (shape.myType) {
-            case 1 -> drawRectangle(shape);
-            case 2 -> drawCircle(shape);
+        if (shape.myType == 1) {
+            drawRectangle(shape);
+        } else if (shape.myType == 2) {
+            drawCircle(shape);
         }
     }
 

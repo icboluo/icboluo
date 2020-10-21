@@ -43,7 +43,7 @@ public class PolandNotation {
         List<String> s2 = new ArrayList<>();
         for (String item : list) {
             //如果是一个数
-            if (item.matches("\\d+")){
+            if (item.matches("\\d+")) {
                 s2.add(item);
             } else if ("(".equals(item)) {
                 s1.push(item);
@@ -52,8 +52,7 @@ public class PolandNotation {
                     s2.add(s1.pop());
                 }
                 s1.pop();
-            }
-            else {
+            } else {
                 while (s1.size() != 0 && Operation.getValue(s1.peek()) >= Operation.getValue(item)) {
                     s2.add(s1.pop());
                 }
@@ -103,13 +102,14 @@ public class PolandNotation {
             } else {
                 int num2 = Integer.parseInt(stack.pop());
                 int num1 = Integer.parseInt(stack.pop());
-                int result = switch (s) {
+/*                int result = switch (s) {
                     case "+" -> num1 + num2;
                     case "-" -> num1 - num2;
                     case "*" -> num1 * num2;
                     case "/" -> num1 / num2;
                     default -> throw new RuntimeException("运算符有误");
-                };
+                };*/
+                int result = 10;
                 stack.push("" + result);
             }
         }

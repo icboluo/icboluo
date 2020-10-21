@@ -40,14 +40,14 @@ public class ListNode {
     }
 
     public ListNode(int... arr) {
-        ListNode header = new ListNode(0);
-        ListNode pre = header;
+        ListNode head = new ListNode(0);
+        ListNode pre = head;
         for (int j : arr) {
             pre.next = new ListNode(j);
             pre = pre.next;
         }
-        this.val = header.next.val;
-        this.next = header.next.next;
+        this.val = head.next.val;
+        this.next = head.next.next;
     }
 
     public ListNode end() {
@@ -83,17 +83,17 @@ public class ListNode {
      */
     public ListNode reverse2() {
         ListNode cur = this;
-        ListNode newHeader = new ListNode();
+        ListNode reverseHead = new ListNode();
         ListNode next;
         while (cur != null) {
             next = cur.next;
 //            将头节点的next放到cur后面
-            cur.next = newHeader.next;
+            cur.next = reverseHead.next;
 //            将头节点的next设置成cur
-            newHeader.next = cur;
+            reverseHead.next = cur;
             cur = next;
         }
-        return newHeader.next;
+        return reverseHead.next;
     }
 
     /**
@@ -104,7 +104,7 @@ public class ListNode {
      * @return 1, 4, 3, 2, 5
      */
     public ListNode reverse3(int a, int b) {
-        ListNode header = this;
+        ListNode head = this;
         ListNode aPre = null;
         ListNode aCur = this;
         for (int i = 0; i < a - 1; i++) {
@@ -124,7 +124,7 @@ public class ListNode {
 //        这里因为已经到5了，所以应该指向pre节点
         aPre.next = bPre;
         aCur.next = next;
-        return header;
+        return head;
     }
 
     public int length() {
