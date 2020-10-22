@@ -9,7 +9,8 @@ import com.icboluo.common.ListNode;
 public class _0019_删除链表的倒数第N {
     public static void main(String[] args) {
         ListNode listNode = new ListNode(1, 2, 3, 4, 5);
-        ListNode res = m2(listNode, 2);
+        ListNode res = m1(listNode, 2);
+        listNode.print();
     }
 
     /**
@@ -20,7 +21,13 @@ public class _0019_删除链表的倒数第N {
      * @return
      */
     private static ListNode m1(ListNode listNode, int n) {
-        return null;
+        int length = listNode.length();
+        ListNode pre = listNode;
+        for (int i = 0; i < length - n-1; i++) {
+            pre = pre.next;
+        }
+        pre.next = pre.next.next;
+        return listNode;
     }
 
     /**

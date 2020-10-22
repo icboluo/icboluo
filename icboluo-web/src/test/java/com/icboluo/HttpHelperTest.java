@@ -17,7 +17,8 @@ class HttpHelperTest {
     @Test
     void sendGet() {
         String url = "http://localhost:7010/user/getUserNameById";
-        HttpHelper.sendGet(url, "id", "7");
+        String id = HttpHelper.sendGet(url, "id", "7");
+        System.out.println("id = " + id);
     }
 
     @Test

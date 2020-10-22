@@ -1,6 +1,7 @@
 package com.icboluo;
 
 import com.icboluo.util.IcBoLuoException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -15,11 +16,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
@@ -39,9 +38,10 @@ public class HttpHelper {
      * @param paramName  param name
      * @param paramValue param value
      */
-    public static void sendGet(String url, String paramName, String paramValue) {
+    public static String sendGet(String url, String paramName, String paramValue) {
         url = url + "/?" + paramName + "=" + paramValue;
-        sendGet(url);
+        return sendGet(url);
+
     }
 
     /**
@@ -49,7 +49,8 @@ public class HttpHelper {
      *
      * @param httpUrl 完整url地址
      */
-    private static void sendGet(String httpUrl) {
+    @SneakyThrows
+    private static String sendGet(String httpUrl) {
         CloseableHttpClient client = HttpClients.createDefault();
         try (client) {
             URL url = new URL(httpUrl);
@@ -63,10 +64,7 @@ public class HttpHelper {
 //                如果关闭response就读不到里面的entity了，所以这个result写到里面
                 result = EntityUtils.toString(entity);
             }
-            System.out.println(result);
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-            throw new IcBoLuoException(e.getMessage());
+            return result;
         }
     }
 
@@ -78,6 +76,7 @@ public class HttpHelper {
      * @param paramValue param value
      * @return result
      */
+    @SneakyThrows
     public static String sendPost(String url, String paramName, String paramValue) {
 
         //设置参数
@@ -114,9 +113,6 @@ public class HttpHelper {
                 }
             }
             return sb.toString();
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-            throw new IcBoLuoException(e.getMessage());
         }
     }
 }

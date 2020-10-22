@@ -18,7 +18,11 @@ public class _0003_无重复字符的最长子串 {
      * @return
      */
     private static void m1(char[] chars) {
+        for (int i = 0; i < chars.length - 1; i++) {
+            for (int j = i + 1; j < chars.length; j++) {
 
+            }
+        }
     }
 
     /**

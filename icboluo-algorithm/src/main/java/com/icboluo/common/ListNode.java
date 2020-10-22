@@ -87,9 +87,9 @@ public class ListNode {
         ListNode next;
         while (cur != null) {
             next = cur.next;
-//            将头节点的next放到cur后面
+//            将新链表的数据放到当前节点后面
             cur.next = reverseHead.next;
-//            将头节点的next设置成cur
+//           将当前的节点做为头节点
             reverseHead.next = cur;
             cur = next;
         }
