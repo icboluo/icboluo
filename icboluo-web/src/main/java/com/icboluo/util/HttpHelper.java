@@ -1,7 +1,5 @@
-package com.icboluo;
+package com.icboluo.util;
 
-import com.icboluo.util.IcBoLuoException;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -49,8 +47,8 @@ public class HttpHelper {
      *
      * @param httpUrl 完整url地址
      */
-    @SneakyThrows
-    private static String sendGet(String httpUrl) {
+//    @SneakyThrows
+    private static String sendGet(String httpUrl)   {
         CloseableHttpClient client = HttpClients.createDefault();
         try (client) {
             URL url = new URL(httpUrl);
@@ -65,6 +63,8 @@ public class HttpHelper {
                 result = EntityUtils.toString(entity);
             }
             return result;
+        } catch (Exception e) {
+            return null;
         }
     }
 
@@ -76,7 +76,7 @@ public class HttpHelper {
      * @param paramValue param value
      * @return result
      */
-    @SneakyThrows
+//    @SneakyThrows
     public static String sendPost(String url, String paramName, String paramValue) {
 
         //设置参数
@@ -113,6 +113,8 @@ public class HttpHelper {
                 }
             }
             return sb.toString();
+        } catch (Exception e) {
+            return null;
         }
     }
 }
