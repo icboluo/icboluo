@@ -83,7 +83,7 @@ public class ExcelHelper {
      * @param response
      */
     public static void download(HttpServletResponse response) throws IOException {
-        HttpHelper.writeDownloadData(response);
+        HttpHelper.writeDownloadData(response, "test.xlsx");
         ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream()).build();
  /*           WriteSheet writeSheet = EasyExcel.writerSheet(0, "sheet名称").head(IcOnhandnumExVO.class).build();
             excelWriter.write(list, writeSheet);*/

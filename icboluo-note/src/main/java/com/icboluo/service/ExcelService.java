@@ -177,9 +177,11 @@ public class ExcelService {
                 .collect(Collectors.toList());
         WriteSheet writeSheet;
         String fileName = writeExcelEntity.getExcelPath();
+//        registerConverter 可以注册转换器，对java数据和excel数据的转换做约定，例如 local date time 的转换
         ExcelWriter excelWriter = EasyExcel.write(fileName).build();
         for (int i = 0; i < sheetList.size(); i++) {
             SheetVO sheetVO = sheetList.get(i);
+
             HorizontalCellStyleStrategy horizontalCellStyleStrategy = ExcelHelper.setCellStyle();
             writeSheet = EasyExcel.writerSheet(i, sheetVO.getSheetName())
                     .registerWriteHandler(horizontalCellStyleStrategy).head(RowVO.class).build();

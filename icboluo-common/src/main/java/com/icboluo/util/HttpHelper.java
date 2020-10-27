@@ -1,6 +1,5 @@
 package com.icboluo.util;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -13,6 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,10 +24,22 @@ import java.util.List;
 
 /**
  * @author icboluo
+ * @date 2020/10/27 22:56
  */
-@Slf4j
 public class HttpHelper {
 
+    /**
+     * 下载的时候，给http响应里面写入对应类型参数
+     *
+     * @param response
+     * @param fileName text.xlsx
+     */
+    public static void writeDownloadData(HttpServletResponse response, String fileName) {
+        //设置ConetentType CharacterEncoding Header,需要在excelWriter.write()之前设置
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+        response.setContentType("mutipart/form-data");
+    }
 
     /**
      * 发送get请求

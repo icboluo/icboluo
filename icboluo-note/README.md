@@ -15,25 +15,20 @@ ssm
 3.  找到启动类启动
 4.  打开浏览器访问
 
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 码云特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+#excel和mysql相互转换的工具
+>依赖alibaba EasyExcel
+##可以初步使用了
+#####还是有很多bug需要更改，以后遇到不能识别的再说吧
+##1.excel导成建表语句
+###导入模板不需要固定，是根据第二行的列名来取值的
+###excel导入模板
+####前3个字段为必填，没有处理不填的情况
+| 列名 |  字段类型 |  长度  | 是否为空  |  默认值 |  备注 |
+| ---- |   ---- |----|----|----|----|
+| id   |       char  |   36   | NO | null| 主键 |
+|      |          |      |  |
+|      |          |      |  |
+##2.下载excel模板
+### 用java代码直接生成excel
+##3.mysql生成数据库文档
+https://github.com/alibaba/easyexcel/blob/master/docs/API.md
