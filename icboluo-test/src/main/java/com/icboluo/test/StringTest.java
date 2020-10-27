@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class StringTest {
     List<Student> stus = Arrays.asList(
@@ -33,19 +35,6 @@ public class StringTest {
         String s4 = s3 + "c";
     }
 
-    /**
-     * 求数组中每个元素是否对称
-     */
-    @Test
-    public void test2() {
-        String[] arr = {"010", "3223", "666", "7890987", "123123"};
-        for (String str : arr) {
-            StringBuilder sb = new StringBuilder(str);
-            if (sb.reverse().toString().equals(str)) {
-                System.out.println("sb = " + sb);
-            }
-        }
-    }
 
     @Test
     public void test() {
@@ -66,7 +55,9 @@ public class StringTest {
     }
 
 
-
+    /**
+     * substring 包头不包尾
+     */
     @Test
     public void test15() {
         String s = "sdata=%7B%22waveoryid%22%3";
@@ -82,27 +73,6 @@ public class StringTest {
         System.out.println("format = " + format);
     }
 
-    @Test
-    public void test17() {
-//将数组长度为偶数的数组进行倒序排序，并打印(不准新建数组，不准用工具类打印)
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
-
-    }
-
-    @Test
-    public void test18() {
-        for (int i = 1; i < 10; i++) {
-            for (int j = 1; j < 10; j++) {
-                if (j <= i) {
-                    System.out.print(i + "*" + j + "=" + i * j + " ");
-                    if (i == j) {
-                        System.out.println();
-                    }
-                }
-            }
-        }
-    }
 
     @Test
     public void test19() {
@@ -145,7 +115,7 @@ public class StringTest {
         for (Integer temp : list) {
             if (tempList.contains(temp)) {
                 System.out.println(temp);
-            }else {
+            } else {
                 tempList.add(temp);
             }
         }
@@ -156,22 +126,6 @@ public class StringTest {
         String s = "465.00500";
         Object bigDecimal = new BigDecimal(s).setScale(2, RoundingMode.HALF_UP).toString();
         System.out.println("format = " + bigDecimal);
-    }
-
-
-    @Test
-    public void test24() {
-        List<Integer> list = digui(10);
-        System.out.println("list = " + list);
-    }
-
-    private final List<Integer> dd = new ArrayList<>();
-    private List<Integer> digui(int i) {
-        if (i == 1) {
-            return dd;
-        }
-        dd.add(i);
-       return digui(i - 1);
     }
 
     @Test

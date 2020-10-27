@@ -165,6 +165,10 @@ TODO
 
 分离2个模块
 
+## se
+
+包含se内容
+
 ## software
 
 包含java软件环境的安装
