@@ -44,16 +44,16 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.12</log4j.version>
-        <lombok.version>1.18.12</lombok.version>
+        <lombok.version>1.18.16</lombok.version>
         <mysql.version>8.0.21</mysql.version>
         <druid.verison>1.1.23</druid.verison>
         <mybatis.spring.boot.verison>2.1.1</mybatis.spring.boot.verison>
-        <nacos.verison>2.2.2.RELEASE</nacos.verison>
+        <nacos.verison>2.2.3.RELEASE</nacos.verison>
         <swagger.verison>3.0.0</swagger.verison>
         <pagehelper.verison>1.3.0</pagehelper.verison>
-        <alibaba.dependencies.verison>2.2.1.RELEASE</alibaba.dependencies.verison>
+        <alibaba.dependencies.verison>2.2.3.RELEASE</alibaba.dependencies.verison>
         <easyexcel.verison>2.2.6</easyexcel.verison>
-        <alibaba.fastjson.verison>1.2.73</alibaba.fastjson.verison>
+        <alibaba.fastjson.verison>1.2.74</alibaba.fastjson.verison>
     </properties>
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->
