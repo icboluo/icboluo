@@ -7,6 +7,7 @@ package com.icboluo.shejimoshi.factory.simplefactory;
 public class APizza extends Pizza {
     @Override
     public void prepare() {
+
         System.out.println(" a pizza 准备好了");
     }
 }
