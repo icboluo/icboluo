@@ -12,6 +12,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author icboluo
+ */
 @Profile("!prod") // 非 prod 环境，生效
 @EnableSwagger2
 @Configuration

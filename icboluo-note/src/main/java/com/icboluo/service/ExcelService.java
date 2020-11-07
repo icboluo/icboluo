@@ -199,6 +199,7 @@ public class ExcelService {
         if (excelWriter == null) {
             throw new IcBoLuoException("走这就完蛋了");
         }
+//        主要不是为了关闭流，写的时候必须write，否则写不出来，write的时候必须finish
         // 千万别忘记finish 会帮忙关闭流
         excelWriter.finish();
     }

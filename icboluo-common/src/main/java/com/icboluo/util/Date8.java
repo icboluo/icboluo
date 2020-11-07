@@ -56,5 +56,7 @@ public class Date8 {
 //        LocalDateTime of4 = LocalDateTime.of(1991, Month.OCTOBER, 8, 20, 30, 150);
 //        1991-10-12T08:20:30
         LocalDateTime parse2 = LocalDateTime.parse("1991-10-12 08:20:30", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        parse.minusDays(3);
     }
 }
