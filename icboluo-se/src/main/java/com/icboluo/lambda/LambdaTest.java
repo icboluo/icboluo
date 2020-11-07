@@ -1,8 +1,8 @@
-package com.icboluo.se.lambda;
+package com.icboluo.lambda;
 
 import com.icboluo.dataobject.Student;
-import com.icboluo.se.lambda.predicatecom.FilterStudentByAge;
-import com.icboluo.se.lambda.predicatecom.FilterStudentByName;
+import com.icboluo.lambda.predicatecom.FilterStudentByAge;
+import com.icboluo.lambda.predicatecom.FilterStudentByName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

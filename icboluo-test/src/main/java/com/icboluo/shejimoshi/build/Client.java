@@ -6,6 +6,12 @@ package com.icboluo.shejimoshi.build;
  */
 public class Client {
     public static void main(String[] args) {
-
+        CommonHouseBuilder commonHouseBuilder = new CommonHouseBuilder();
+        HouseDirect houseDirect = new HouseDirect(commonHouseBuilder);
+        House house = houseDirect.constructHouse();
+        HighHouse highHouse = new HighHouse();
+        houseDirect.setHb(highHouse);
+        house = houseDirect.constructHouse();
+        System.out.println(house);
     }
 }

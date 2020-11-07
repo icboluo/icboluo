@@ -1,4 +1,4 @@
-package com.icboluo.se.lambda;
+package com.icboluo.lambda;
 
 import com.icboluo.dataobject.Student;
 import com.icboluo.util.IcBoLuoException;
