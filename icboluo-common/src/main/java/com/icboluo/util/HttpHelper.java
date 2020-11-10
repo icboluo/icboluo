@@ -14,7 +14,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -112,19 +111,10 @@ public class HttpHelper {
             if (code != 200) {
                 throw new IcBoLuoException("状态码异常");
             }
-            StringBuilder sb = new StringBuilder();
-            String line;
             try (response) {
                 InputStream is = response.getEntity().getContent();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-                try (br) {
-                    while ((line = br.readLine()) != null) {
-//                        拼接换行
-                        sb.append(line).append(System.lineSeparator());
-                    }
-                }
+                return IOHelper.readBufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             }
-            return sb.toString();
         }
     }
 }

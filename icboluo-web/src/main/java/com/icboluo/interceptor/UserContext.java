@@ -15,15 +15,19 @@ public class UserContext {
         String userCode;
     }
 
-    public static String getUserCode() {
+    public static String userCode() {
+        validate();
+        return userContext.get().userCode;
+    }
+
+    private static void validate() {
         boolean isNull = ObjectUtils.isEmpty(userContext.get()) || ObjectUtils.isArray(userContext.get().userCode);
         if (isNull) {
             throw new IcBoLuoException("No userCode in Context");
         }
-        return userContext.get().userCode;
     }
 
-    public static void set(String userCode) {
+    static void set(String userCode) {
         AdminUser adminUser = new AdminUser(userCode);
         userContext.set(adminUser);
     }

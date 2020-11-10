@@ -8,7 +8,6 @@ import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.StringUtils;
@@ -136,27 +135,13 @@ public class ExcelHelper {
         if (file.getName().endsWith("xls")) {
             try {
                 workbook = new HSSFWorkbook(is);
-            } catch (OfficeXmlFileException e) {
-                try {
-                    is = FileHelper.getInputStream(file);
-                    workbook = new XSSFWorkbook(is);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else if (file.getName().endsWith("xlsx")) {
             try {
                 workbook = new XSSFWorkbook(is);
-            } catch (OfficeXmlFileException e) {
-                try {
-                    is = FileHelper.getInputStream(file);
-                    workbook = new HSSFWorkbook(is);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            } catch (IOException e) {
+            }  catch (IOException e) {
                 e.printStackTrace();
             }
         }

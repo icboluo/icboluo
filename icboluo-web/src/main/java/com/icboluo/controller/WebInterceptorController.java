@@ -1,5 +1,6 @@
 package com.icboluo.controller;
 
+import com.icboluo.annotation.RequestBodyParam;
 import com.icboluo.annotation.UserCode;
 import com.icboluo.annotation.WebContextAnno;
 import com.icboluo.enumeration.WebContextEnum;
@@ -20,11 +21,16 @@ public class WebInterceptorController {
 
     @GetMapping("/getUserCode")
     public String getUserCode() {
-        return UserContext.getUserCode();
+        return UserContext.userCode();
     }
 
     @GetMapping("/userCodeAnnotation")
     public String userCodeAnnotation(@UserCode String userCode) {
+        return userCode;
+    }
+
+    @GetMapping("/bodyParam")
+    public String bodyParam(@RequestBodyParam String userCode) {
         return userCode;
     }
 

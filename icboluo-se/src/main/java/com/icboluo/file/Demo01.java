@@ -1,8 +1,9 @@
 package com.icboluo.file;
 
+import com.icboluo.util.IOHelper;
+
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * <p>字节流会遇到无法解决汉字读取的问题：
@@ -14,28 +15,18 @@ import java.util.Arrays;
  * @author icboluo
  * @date 2020-08-10 14:03
  */
- class Demo01 {
+class Demo01 {
     public static void main(String[] args) throws IOException {
 //      创建一个文件输入流对象
         FileInputStream in = new FileInputStream("a.txt");
 
-//      读取数据
-        int read;
-//      in.read()：一个字节一个字节实现数据的读取
-        while ((read = in.read()) != -1) {
-//          输出的数据内容是根据类型来判断.
-            System.out.println((char) read);
-        }
+        StringBuilder stringBuilder = IOHelper.readFileInputStream(in);
+        System.out.println(stringBuilder);
         in.close();
 
         FileInputStream in2 = new FileInputStream("a.txt");
-        byte[] buf = new byte[8];
-        int len;
-//      in.read(buf); 一个字节数组一个字节数组实现数据读取.
-        while ((len = in2.read(buf)) != -1) {
-            System.out.println(Arrays.toString(buf));
-            System.out.println(len);
-        }
+        StringBuilder stringBuilder1 = IOHelper.readFileInputStream2(in2);
+        System.out.println(stringBuilder1);
         in2.close();
     }
 }

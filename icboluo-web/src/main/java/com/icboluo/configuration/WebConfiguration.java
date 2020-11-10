@@ -1,6 +1,7 @@
 package com.icboluo.configuration;
 
 import com.icboluo.interceptor.WebContextInterceptor;
+import com.icboluo.resolver.RequestBodyParamResolver;
 import com.icboluo.resolver.UserCodeResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new UserCodeResolver());
+        resolvers.add(new RequestBodyParamResolver());
     }
 
     /**
