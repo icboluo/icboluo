@@ -1,6 +1,8 @@
 package com.icboluo.shejimoshi.adapter.classadapter;
 
 /**
+ * 被适配的类
+ *
  * @author icboluo
  * @date 2020/11/7 21:21
  */

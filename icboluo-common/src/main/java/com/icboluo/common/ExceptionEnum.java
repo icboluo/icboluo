@@ -47,7 +47,12 @@ public enum ExceptionEnum {
     INVALID_ORDER_STATUS(500, "订单状态不正确！"),
     STOCK_NOT_ENOUGH_ERROR(500, "库存不足！"),
 
-    UNAUTHORIZED(401, "登录失效或未登录！");
+    UNAUTHORIZED(401, "登录失效或未登录！"),
+    ENUM_DEFINED_ERROR(550, "枚举定义异常"),
+    STATUS_VALUE_ERROR(560, "状态值异常"),
+    STATUS_VALUE_NOT_FOUND(561, "状态值不存在"),
+    ;
     private final int status;
+
     private final String message;
 }
