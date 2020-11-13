@@ -1,8 +1,7 @@
 package com.icboluo;
 /*
 Spring1:
-   IoC（Inversion of Control 控制反转）： 将对象创建权利交给Spring工厂进行管理
-   AOP（Aspect Oriented Programming 面向切面编程），基于动态代理的功能增强方式
+
 
 
 Inversion of Control:去掉三层架构中的new
@@ -43,22 +42,16 @@ Dependency Injection（依赖注入）：构造方法注入、setter方法注入
 @PreDestroy
 相当于：<bean id="" class="" init-method="" destroy-method="" />
 
-@Component《组件》 放在类上，把该类放进bean中，并设置其id（value）值
-   @Controller @Service @Repository《仓库》
-@Autowired注入：先直接找子类，找的多了按id找
-   @Qualifier改id
-   @Resource两者合一
-   @Value注入url exa：
-      @Value("${jdbc.url}")
-       private String name;
+
+
 
 @Configuration（AnnotationApplicationContext.......class）：想要替换applicationContext创建的类上注解
 @ComponentScan:<context:component-scan base-package="cn.itcast"></context:component-scan>
 @Bean:将方法的返回值作为一个bean,并且放入spring容器。 exa：配置jdbc（用@value跨类调用）
 @PropertySource：加载properties中的资源
-@Import：用于导入其他配置类
 
-@RunWith（SpringJUnit4ClassRunner.class）：替换掉junit的运行器,换成一个可以初始化spring容器的运行器。
+
+
 @ContextConfiguration（locations={"classpath：......"}）：加载配置类或者xml配置文件
  */
 public class Spring1 {

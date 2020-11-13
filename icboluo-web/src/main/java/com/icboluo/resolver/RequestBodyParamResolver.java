@@ -10,6 +10,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
+import java.lang.reflect.Parameter;
 
 /**
  * @author icboluo
@@ -25,6 +26,12 @@ public class RequestBodyParamResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest hsr = webRequest.getNativeRequest(HttpServletRequest.class);
         BufferedReader reader = hsr.getReader();
-        return IOHelper.readBufferedReader(reader);
+        String s = IOHelper.readBufferedReader(reader);
+        RequestBodyParam parameterAnnotation = parameter.getParameterAnnotation(RequestBodyParam.class);
+        Parameter webParameter = parameter.getParameter();
+        String webParameterName = webParameter.getName();
+
+        String name = parameterAnnotation.name();
+        return null;
     }
 }

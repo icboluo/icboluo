@@ -1,6 +1,6 @@
 package com.icboluo.util;
 
-import com.icboluo.common.ExceptionEnum;
+import com.icboluo.enumerate.ExceptionEnum;
 import lombok.Getter;
 
 /**

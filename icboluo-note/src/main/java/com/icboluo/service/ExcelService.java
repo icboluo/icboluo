@@ -288,4 +288,7 @@ public class ExcelService {
         }
         return s.replace("'", "\\'");
     }
+
+    public void read2(String excelPath, String sheetName) {
+    }
 }

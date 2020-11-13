@@ -1,4 +1,4 @@
-package com.icboluo.common;
+package com.icboluo.enumerate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

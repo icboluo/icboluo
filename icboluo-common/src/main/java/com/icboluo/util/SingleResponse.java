@@ -1,7 +1,7 @@
 
 package com.icboluo.util;
 
-import com.icboluo.common.ReEnum;
+import com.icboluo.enumerate.ReEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

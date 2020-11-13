@@ -1,7 +1,7 @@
 package com.icboluo.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.icboluo.common.ReEnum;
+import com.icboluo.enumerate.ReEnum;
 
 import java.util.Collection;
 import java.util.List;

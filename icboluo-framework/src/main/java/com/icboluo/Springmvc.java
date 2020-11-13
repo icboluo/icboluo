@@ -1,6 +1,6 @@
 package com.icboluo;
 /*
-Springmvc:Model View Controller 模型视图控制器
+
 Model:封装应用的状态，并实现应用的功能
 View:提供界面来与用户进行人机交互
 Controller:控制应用程序的流程和处理用户所发出的请求

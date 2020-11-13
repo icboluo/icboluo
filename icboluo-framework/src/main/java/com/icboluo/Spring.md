@@ -1,0 +1,35 @@
+
+
+##  IoC（Inversion of Control 控制反转）：
+
+将对象创建权利交给Spring工厂进行管理
+ 
+##  AOP（Aspect Oriented Programming 面向切面编程）:
+
+基于动态代理的功能增强方式
+
+## 名词/注解
+
+@Import：用于导入其他配置类
+
+@RunWith（SpringJUnit4ClassRunner.class）：替换掉junit的运行器,换成一个可以初始化spring容器的运行器。
+
+@Component《组件》 放在类上，把该类放进bean中，并设置其id（value）值
+
+@Controller @Service @Repository《仓库》
+
+@Autowired注入：先直接找子类，找的多了按id找
+
+@Qualifier改id
+
+@Resource两者合一
+   
+@Value注入url exa：
+      
+      @Value("${jdbc.url}")
+       private String name;
+       
+@Configuration
+
+    声明一个类作为配置类，代替xml文件
+    相当于传统的xml配置文件，如果有些第三方库需要用到xml文件，建议仍然通过@Configuration类作为项目的配置主类——可以使用@ImportResource注解加载xml配置文件

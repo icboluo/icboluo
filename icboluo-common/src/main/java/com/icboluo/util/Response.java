@@ -3,7 +3,7 @@ package com.icboluo.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.icboluo.common.ReEnum;
+import com.icboluo.enumerate.ReEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

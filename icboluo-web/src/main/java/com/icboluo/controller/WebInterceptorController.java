@@ -8,6 +8,7 @@ import com.icboluo.interceptor.UserContext;
 import com.icboluo.util.StudentUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -30,7 +31,9 @@ public class WebInterceptorController {
     }
 
     @GetMapping("/bodyParam")
-    public String bodyParam(@RequestBodyParam String userCode) {
+    public String bodyParam(@RequestBodyParam(required = false) String userCode, @RequestBodyParam(required = false) String id,
+                            @RequestParam(required = false) String abc
+    ) {
         return userCode;
     }
 

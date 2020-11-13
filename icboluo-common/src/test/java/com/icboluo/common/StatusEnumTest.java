@@ -1,5 +1,7 @@
 package com.icboluo.common;
 
+import com.icboluo.enumerate.LanguageEnum;
+import com.icboluo.enumerate.StatusEnum;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

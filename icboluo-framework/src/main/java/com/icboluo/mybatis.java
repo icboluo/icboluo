@@ -43,14 +43,7 @@ mapper标签:配置各类声明，namespace防止crud语句的唯一标识被重
     <select id="queryUserById" resultType="com.task.mybatis.pojo.User">全局缩短名字后可直接用User，也可以引用自定义的resultmap id
 select * ,user_name as userName from tb_user where id=#{id};sql可以分开写
     </select> 、update 、insert 、delete
-  	   1、#{}预编译，就是sql中一个？传参一个怎么接受都可以全部都是行参，传参多了用@Param("userName") String userName
-       2、${}非预编译（直接的sql拼接，不能防止sql注入）exa：select * from ${tableName}这个不行只能用默认的${value},用@param，
-@Param("tableName") String tableName.从java到sql就好接受数据了，${tableName},表名是动态的，这个$传字符串需要手动添加''
-        resultType:结果集类型
-      	parameterType：插入语句的参数类型，使用动态代理之后，需要和mapper接口中的参数类型一致，可以省略。
-  		useGeneratedKeys：开启主键自增回显，将自增长的主键值回显到形参中（即封装到User对象中）
-  		keyColumn：数据库中主键的字段名称
-  		keyProperty：pojo中主键对应的属性
+
   	<resultMap id="userResultMap" type="User" autoMapping="true"extends="a">自动映射自动填写自己没写的代码，如果resultmap别的地方也要用，使用extends不用id
            <!--配置主键映射关系column《圆柱》：数据库语句中的名字（as过后的），property《所有权》自己写的名字-->
            <id column="id" property="id"></id>
@@ -70,8 +63,8 @@ select * ,user_name as userName from tb_user where id=#{id};sql可以分开写
      </sql>
      SELECT <include refid="SqlMapper.selectSQL"></include> FROM tb_user从其他xml中获取sql
     sql可以用<if>  choose when otherwise<otherwise>所有不满足条件才执行执行
-    <where>去多的and和or<set>去，号
-    <foreach collection="ids" item="id" separator="," open="("    close=")">#{id}</foreach>
+
+
 
 
 引入log日志2个步骤：

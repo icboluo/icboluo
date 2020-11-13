@@ -44,4 +44,10 @@ public class ExcelController {
         excelService.write(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
     }
 
+    @GetMapping("/read2")
+    @ApiOperation(value = "将excel文档读成建表语句")
+    public void read2() {
+        excelService.read2(excelPath, readExcelEntity.getSheetName());
+    }
+
 }
