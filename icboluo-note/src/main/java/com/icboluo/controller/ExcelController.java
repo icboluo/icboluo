@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author icboluo
@@ -50,4 +51,9 @@ public class ExcelController {
         excelService.read2(excelPath, readExcelEntity.getSheetName());
     }
 
+    @GetMapping("/write2")
+    @ApiOperation(value = "将数据库写成excel文档")
+    public void write2(HttpServletResponse response) {
+        excelService.write2(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
+    }
 }

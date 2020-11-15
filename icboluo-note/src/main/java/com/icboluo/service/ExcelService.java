@@ -291,4 +291,7 @@ public class ExcelService {
 
     public void read2(String excelPath, String sheetName) {
     }
+
+    public void write2(String database, String tableName) {
+    }
 }

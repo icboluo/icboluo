@@ -1,5 +1,6 @@
 server:
   port: 7010
+
 spring:
   application:
     name: icboluo-user
@@ -8,3 +9,5 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         register-enabled: false
+
+
