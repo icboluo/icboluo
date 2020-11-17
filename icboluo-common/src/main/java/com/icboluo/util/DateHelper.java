@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * @author icboluo
@@ -14,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 @Data
 @Slf4j
 public class DateHelper {
+
+    public static final ThreadLocal<List<LocalDateTime>> userContext = new ThreadLocal<>();
 
     /**
      * 经过一年的时间戳增加值
@@ -95,5 +98,8 @@ public class DateHelper {
      */
     public static LocalDateTime parseTimeStampToDate(Long timeStamp) {
         return LocalDateTime.ofEpochSecond(timeStamp / 1000, 0, ZoneOffset.ofHours(8));
+    }
+    public void dd() {
+
     }
 }

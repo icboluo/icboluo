@@ -37,22 +37,16 @@ Dependency Injection（依赖注入）：构造方法注入、setter方法注入
    init-method：指定类中的初始化方法名称(生命周期相关)
    destroy-method：指定类中销毁方法名称(生命周期相关)
 
-@Scope
-@PostConstruct
-@PreDestroy
-相当于：<bean id="" class="" init-method="" destroy-method="" />
 
 
 
 
-@Configuration（AnnotationApplicationContext.......class）：想要替换applicationContext创建的类上注解
-@ComponentScan:<context:component-scan base-package="cn.itcast"></context:component-scan>
-@Bean:将方法的返回值作为一个bean,并且放入spring容器。 exa：配置jdbc（用@value跨类调用）
-@PropertySource：加载properties中的资源
 
 
 
-@ContextConfiguration（locations={"classpath：......"}）：加载配置类或者xml配置文件
+
+
+
  */
 public class Spring1 {
 }

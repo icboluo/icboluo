@@ -8,8 +8,9 @@ import com.icboluo.interceptor.UserContext;
 import com.icboluo.util.StudentUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 
 /**
  * @author icboluo
@@ -31,10 +32,17 @@ public class WebInterceptorController {
     }
 
     @GetMapping("/bodyParam")
-    public String bodyParam(@RequestBodyParam(required = false) String userCode, @RequestBodyParam(required = false) String id,
-                            @RequestParam(required = false) String abc
+    public String bodyParam(@RequestBodyParam(required = false) String id, @RequestBodyParam(required = false) String name,
+                            @RequestBodyParam(required = false) String code
     ) {
-        return userCode;
+        return id + name + code;
+    }
+
+    @GetMapping("/localDateTime")
+    public LocalDateTime localDateTime() {
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("now = " + now);
+        return now;
     }
 
     @GetMapping("/studentTest")

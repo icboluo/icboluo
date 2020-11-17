@@ -7,7 +7,6 @@ pom中管理jdk版本：
     <java.version>1.8</java.version>
 </properties>
 - @Configuration：声明一个类作为配置类，代替xml文件
-- @Bean：声明在方法上，将方法的返回值加入Bean容器，代替<bean>标签，spring会自动调用bean
 - @Value：属性注入，将制定配置文件中的属性注入到变量中
 - @PropertySource：(性质来源)指定外部属性文件，一般用classpath指定路劲
 spring的属性注入：SpringBoot强调的是约定大于配置，因此遵循约定，我们就能节省很多配置：

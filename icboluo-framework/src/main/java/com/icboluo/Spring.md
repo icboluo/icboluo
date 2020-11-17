@@ -33,3 +33,25 @@
 
     声明一个类作为配置类，代替xml文件
     相当于传统的xml配置文件，如果有些第三方库需要用到xml文件，建议仍然通过@Configuration类作为项目的配置主类——可以使用@ImportResource注解加载xml配置文件
+    
+@PropertySource：加载properties中的资源
+
+@Configuration（AnnotationApplicationContext.......class）：想要替换applicationContext创建的类上注解
+
+@ComponentScan:<context:component-scan base-package="cn.itcast"></context:component-scan>
+
+@Bean:
+
+    将方法的返回值作为一个bean,并且放入spring容器。 exa：配置jdbc（用@value跨类调用）
+    
+    声明在方法上，将方法的返回值加入Bean容器，代替<bean>标签，spring会自动调用bean
+
+
+@ContextConfiguration（locations={"classpath：......"}）：加载配置类或者xml配置文件
+
+@Scope
+@PostConstruct
+@PreDestroy
+相当于：<bean id="" class="" init-method="" destroy-method="" />
+
+
