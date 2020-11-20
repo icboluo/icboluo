@@ -8,6 +8,7 @@ import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.object.businessobject.Student;
 import com.icboluo.service.ExcelService;
+import com.icboluo.util.BeanHelper;
 import com.icboluo.util.HttpHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -80,5 +81,17 @@ public class ExcelController {
         WriteSheet ws = EasyExcel.writerSheet(0, "aaa").build();
         ew.write(list, ws);
         ew.finish();
+
+    }
+
+    public static void main(String[] args) {
+        ss(Student.class);
+    }
+    private static  <T> void ss(Class<T> clazz) {
+        Student student = new Student();
+        student.setAge(18);
+        student.setId("22");
+        T t = BeanHelper.copyProperties(student, clazz);
+        System.out.println("t = " + t);
     }
 }
