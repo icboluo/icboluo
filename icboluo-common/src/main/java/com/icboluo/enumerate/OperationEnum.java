@@ -13,6 +13,7 @@ public enum OperationEnum {
      */
     SAVE("save", "保存操作", 1),
     COMMIT("commit", "提交操作", 1),
+    CREATE("create", "创建操作", 1),
     ;
     /**
      * 英文描述
