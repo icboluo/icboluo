@@ -114,12 +114,13 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.verison}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>asm</artifactId>
-                        <groupId>org.ow2.asm</groupId>
-                    </exclusion>
-                </exclusions>
+<!--                禁止删这个包，会导致 cglib包找不到，导出异常-->
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <artifactId>asm</artifactId>-->
+<!--                        <groupId>org.ow2.asm</groupId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>

@@ -1,15 +1,11 @@
 package com.icboluo.controller;
 
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.metadata.WriteSheet;
 import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.object.businessobject.Student;
 import com.icboluo.service.ExcelService;
-import com.icboluo.util.BeanHelper;
-import com.icboluo.util.HttpHelper;
+import com.icboluo.util.ExcelHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,29 +65,12 @@ public class ExcelController {
 
     @GetMapping("www")
     public void www(HttpServletResponse response) throws IOException {
-        List<Student> list = new ArrayList<>();
+        List<Student> data = new ArrayList<>();
         Student student = new Student();
         student.setAge(18);
         student.setId("22");
-        list.add(student);
-        List<String> strings = Arrays.asList("id", "code", "name");
-        HttpHelper.writeDownloadData(response, "aaa.xlsx");
-        ExcelWriter ew = EasyExcel.write(response.getOutputStream(), Student.class)
-                .build();
-        WriteSheet ws = EasyExcel.writerSheet(0, "aaa").build();
-        ew.write(list, ws);
-        ew.finish();
-
-    }
-
-    public static void main(String[] args) {
-        ss(Student.class);
-    }
-    private static  <T> void ss(Class<T> clazz) {
-        Student student = new Student();
-        student.setAge(18);
-        student.setId("22");
-        T t = BeanHelper.copyProperties(student, clazz);
-        System.out.println("t = " + t);
+        data.add(student);
+        List<String> strings = Arrays.asList("name", "id", "age");
+        ExcelHelper.exportExcel(response, strings, Student.class, data);
     }
 }

@@ -2,9 +2,12 @@ package com.icboluo.util;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -16,10 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -141,7 +148,7 @@ public class ExcelHelper {
         } else if (file.getName().endsWith("xlsx")) {
             try {
                 workbook = new XSSFWorkbook(is);
-            }  catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -221,5 +228,37 @@ public class ExcelHelper {
             value = String.valueOf(cell.getBooleanCellValue());
         }
         return value;
+    }
+
+    @SneakyThrows(Exception.class)
+    public static <T> void exportExcel(HttpServletResponse response, List<String> titleId, Class<T> clazz, List<T> data) {
+        HttpHelper.writeDownloadData(response, "aaa.xlsx");
+        setProper(clazz, titleId);
+        ExcelWriter ew = EasyExcel.write(response.getOutputStream(), clazz).includeColumnFiledNames(titleId).build();
+        WriteSheet ws = EasyExcel.writerSheet("aa").build();
+        ew.write(data, ws);
+        ew.finish();
+    }
+
+    private static <T> void setProper(Class<T> clazz, List<String> titleId) throws NoSuchFieldException, IllegalAccessException {
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            for (int i = 0; i < titleId.size(); i++) {
+                if (!titleId.get(i).equals(field.getName())) {
+                    continue;
+                }
+                ExcelProperty ep = field.getAnnotation(ExcelProperty.class);
+                //获取 stu 这个代理实例所持有的 InvocationHandler
+                InvocationHandler ih = Proxy.getInvocationHandler(ep);
+                // 获取 AnnotationInvocationHandler 的 memberValues 字段
+                Field hField = ih.getClass().getDeclaredField("memberValues");
+                // 因为这个字段事 private final 修饰，所以要打开权限
+                hField.setAccessible(true);
+                // 获取 memberValues
+                Map memberValues = (Map) hField.get(ih);
+                memberValues.put("index", i);
+                log.warn("index={},name={}", i, field.getName());
+            }
+        }
     }
 }

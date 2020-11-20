@@ -10,15 +10,19 @@ import lombok.Data;
 @Data
 public class Student {
 
-    @ExcelProperty(value = "name", index = 2)
+    @ExcelProperty
+    private String id;
+
+    @ExcelProperty
+    private String code;
+
+    @ExcelProperty
     private String name;
 
     @ExcelProperty
     private Integer age;
 
-    @ExcelProperty(value = "code", index = 1)
-    private String code;
 
-    @ExcelProperty(value = "id", index = 0)
-    private String id;
+
+
 }
