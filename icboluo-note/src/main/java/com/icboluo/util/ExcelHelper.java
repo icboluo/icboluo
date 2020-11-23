@@ -230,7 +230,7 @@ public class ExcelHelper {
         return value;
     }
 
-    @SneakyThrows(Exception.class)
+    @SneakyThrows(IOException.class)
     public static <T> void exportExcel(HttpServletResponse response, List<String> titleId, Class<T> clazz, List<T> data) {
         HttpHelper.writeDownloadData(response, "aaa.xlsx");
         setProper(clazz, titleId);
@@ -240,7 +240,8 @@ public class ExcelHelper {
         ew.finish();
     }
 
-    private static <T> void setProper(Class<T> clazz, List<String> titleId) throws NoSuchFieldException, IllegalAccessException {
+    @SneakyThrows({NoSuchFieldException.class, IllegalAccessException.class})
+    private static <T> void setProper(Class<T> clazz, List<String> titleId) {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             for (int i = 0; i < titleId.size(); i++) {
