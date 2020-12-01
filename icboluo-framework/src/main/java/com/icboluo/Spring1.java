@@ -2,8 +2,6 @@ package com.icboluo;
 /*
 Spring1:
 
-
-
 Inversion of Control:去掉三层架构中的new
     old：factory加载资源文件：private static ResourceBundle rb = ResourceBundle.getBundle("beans");
              new时由  factory.getbean  替代
@@ -36,15 +34,6 @@ Dependency Injection（依赖注入）：构造方法注入、setter方法注入
       prototype :多例的
    init-method：指定类中的初始化方法名称(生命周期相关)
    destroy-method：指定类中销毁方法名称(生命周期相关)
-
-
-
-
-
-
-
-
-
 
 
  */

@@ -55,3 +55,18 @@
 相当于：<bean id="" class="" init-method="" destroy-method="" />
 
 
+Joinpoint 连接点
+
+PointCut 切点
+
+Advice 增强
+
+增强里面有各种通知
+
+Target 目标对象
+
+Weaving 织入
+
+Proxy 代理类
+
+Aspect 切面
