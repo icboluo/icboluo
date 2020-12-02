@@ -25,8 +25,8 @@ logging:
   level:
     com.icboluo.note.dao: debug
 read-excel-entity:
-  excel-path: database.xlsx
-  general-sql-path: creat.sql
+  excel-path: icboluo-note/database.xlsx
+  general-sql-path: icboluo-note/creat.sql
   sheet-name:
 write-excel-entity:
   excel-path: database.xlsx

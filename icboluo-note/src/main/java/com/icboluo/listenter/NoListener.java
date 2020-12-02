@@ -11,14 +11,14 @@ import java.util.List;
 /**
  * @author lp
  */
-public class RowDataListener extends AnalysisEventListener<NoModelRowCO> {
+public class NoListener extends AnalysisEventListener<NoModelRowCO> {
 
     public List<NoModelRowCO> list = new ArrayList<>();
 
     /**
      * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
      */
-    public RowDataListener() {
+    public NoListener() {
     }
 
     /**

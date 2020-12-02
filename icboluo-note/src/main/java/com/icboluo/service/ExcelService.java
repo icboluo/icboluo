@@ -3,16 +3,19 @@ package com.icboluo.service;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.icboluo.annotation.EasyExcelAlias;
 import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.dao.ColumnMapper;
+import com.icboluo.listenter.NoModelDataListener;
 import com.icboluo.listenter.RowDataListener;
+import com.icboluo.object.clientobject.NoModelRowCO;
 import com.icboluo.object.businessobject.RowBO;
 import com.icboluo.object.businessobject.SheetBO;
-import com.icboluo.object.clientobject.RowCO;
 import com.icboluo.object.dataobject.RowDO;
 import com.icboluo.object.viewobject.RowVO;
 import com.icboluo.object.viewobject.SheetVO;
@@ -20,12 +23,17 @@ import com.icboluo.util.BeanHelper;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.FileHelper;
 import com.icboluo.util.IcBoLuoException;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,6 +43,7 @@ import java.util.stream.Stream;
  */
 @Service
 @Transactional
+@Slf4j
 public class ExcelService {
     @Resource
     private ColumnMapper excelMapper;
@@ -50,7 +59,7 @@ public class ExcelService {
      * @param sheet        sheet的名称
      */
     public void read(String filePathName, String sheet) {
-        List<SheetBO> list = readExcel(filePathName, sheet);
+        List<SheetBO> list = this.readExcel(filePathName, sheet);
         this.toSql(list);
     }
 
@@ -68,42 +77,6 @@ public class ExcelService {
         this.toExcel(list);
     }
 
-    /**
-     * 把excel数据读成容器数据
-     *
-     * @param filePathName 文件地址+名称
-     * @param sheet        sheet名称
-     * @return 保存excel数据的容器
-     */
-    private List<SheetBO> readExcel(String filePathName, String sheet) {
-        ExcelReader excelReader = null;
-        List<SheetBO> list = new ArrayList<>();
-        try {
-            excelReader = EasyExcel.read(filePathName).build();
-            List<ReadSheet> readSheets = excelReader.excelExecutor().sheetList();
-            for (int i = 0; i < readSheets.size(); i++) {
-                RowDataListener listener = new RowDataListener();
-                ReadSheet readSheet = EasyExcel
-                        .readSheet(i).head(RowCO.class).registerReadListener(listener).build();
-                excelReader.read(readSheet);
-
-                SheetBO sheetBO = new SheetBO();
-                String sheetName = readSheets.get(i).getSheetName();
-                sheetBO.setTableName(sheetName);
-                List<RowCO> rowCOS = listener.list;
-                this.buildExcelBO(sheetBO, rowCOS);
-                list.add(sheetBO);
-                if (!StringUtils.isEmpty(sheet) && sheet.equals(sheetName)) {
-                    break;
-                }
-            }
-        } finally {
-            if (excelReader != null) {
-                excelReader.finish();
-            }
-        }
-        return list;
-    }
 
     /**
      * 将lists数据放到bo中
@@ -111,16 +84,10 @@ public class ExcelService {
      * @param sheetBO sheet对象
      * @param rowCOS  一个sheet
      */
-    private void buildExcelBO(SheetBO sheetBO, List<RowCO> rowCOS) {
+    private void buildExcelBO(SheetBO sheetBO, List<NoModelRowCO> rowCOS) {
         List<RowBO> list = new ArrayList<>();
-        for (RowCO rowCO : rowCOS) {
+        for (NoModelRowCO rowCO : rowCOS) {
             RowBO rowBO = BeanHelper.copyProperties(rowCO, RowBO.class);
-            if (rowCO.getColumnName() != null) {
-                rowBO.setColumnName(rowCO.getColumnName());
-            }
-            if (rowCO.getColumnName2() != null) {
-                rowBO.setColumnName(rowCO.getColumnName2());
-            }
             list.add(rowBO);
         }
         sheetBO.setList(list);
@@ -289,7 +256,83 @@ public class ExcelService {
         return s.replace("'", "\\'");
     }
 
-    public void read2(String excelPath, String sheetName) {
+    /**
+     * 把excel数据读成容器数据
+     *
+     * @param excelPath 文件地址+名称
+     * @param sheet     sheet名称
+     * @return 保存excel数据的容器
+     */
+    public List<SheetBO> readExcel(String excelPath, String sheet) {
+        NoModelDataListener headListener = readHead(excelPath);
+        Class<NoModelRowCO> clazz = NoModelRowCO.class;
+        this.buildClass(headListener.getHead(), clazz);
+
+        List<SheetBO> list = new ArrayList<>();
+        ExcelReader er = EasyExcel.read(excelPath).build();
+        List<ReadSheet> readSheets = er.excelExecutor().sheetList();
+        for (int i = 0; i < readSheets.size(); i++) {
+            RowDataListener listener = new RowDataListener();
+            ReadSheet rs = EasyExcel
+                    .readSheet(i)
+                    .head(NoModelRowCO.class)
+                    .registerReadListener(listener).build();
+            er.read(rs);
+            er.finish();
+
+            SheetBO sheetBO = new SheetBO();
+            String sheetName = readSheets.get(i).getSheetName();
+            sheetBO.setTableName(sheetName);
+            List<NoModelRowCO> rowCOS = listener.list;
+            this.buildExcelBO(sheetBO, rowCOS);
+            list.add(sheetBO);
+        }
+        return list;
+    }
+
+    private NoModelDataListener readHead(String excelPath) {
+        ExcelReader er = EasyExcel.read(excelPath).build();
+        NoModelDataListener listener = new NoModelDataListener();
+        ReadSheet rs = EasyExcel
+                .readSheet(0)
+                .headRowNumber(0)
+                .registerReadListener(listener)
+                .build();
+        er.read(rs);
+        er.finish();
+        return listener;
+    }
+
+    @SneakyThrows({NoSuchFieldException.class, IllegalAccessException.class})
+    private <T> void buildClass(List<String> head, Class<T> clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+        for (int i = 0; i < head.size(); i++) {
+            String cell = head.get(i);
+            boolean haveMatch = false;
+            for (Field field : fields) {
+                EasyExcelAlias eea = field.getAnnotation(EasyExcelAlias.class);
+                String[] alias = eea.alias();
+                boolean isContains = Arrays.asList(alias).contains(cell);
+                if (!isContains) {
+                    continue;
+                }
+                ExcelProperty ep = field.getAnnotation(ExcelProperty.class);
+                //获取 ep 这个代理实例所持有的 InvocationHandler
+                InvocationHandler ih = Proxy.getInvocationHandler(ep);
+                // 获取 AnnotationInvocationHandler 的 memberValues 字段
+                Field hField = ih.getClass().getDeclaredField("memberValues");
+                // 因为这个字段事 private final 修饰，所以要打开权限
+                hField.setAccessible(true);
+                // 获取 memberValues
+                Map memberValues = (Map) hField.get(ih);
+                memberValues.put("index", i);
+                haveMatch = true;
+                break;
+            }
+            if (!haveMatch) {
+                log.error("{}不匹配", cell);
+            }
+        }
     }
 
     public void write2(String database, String tableName) {
