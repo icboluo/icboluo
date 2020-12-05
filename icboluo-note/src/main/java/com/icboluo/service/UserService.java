@@ -1,6 +1,6 @@
 package com.icboluo.service;
 
-import com.icboluo.dao.UserMapper;
+import com.icboluo.mapper.UserMapper;
 import com.icboluo.object.dataobject.UserDO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

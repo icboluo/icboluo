@@ -1,7 +1,7 @@
 package com.icboluo.controller;
 
 import com.icboluo.enumerate.ReEnum;
-import com.icboluo.dao.TimeNoteMapper;
+import com.icboluo.mapper.TimeNoteMapper;
 import com.icboluo.object.clientobject.TimeNoteCO;
 import com.icboluo.object.dataobject.TimeNoteDO;
 import com.icboluo.object.query.TimeNoteQuery;

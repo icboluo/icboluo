@@ -6,6 +6,8 @@ import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.object.businessobject.Student;
 import com.icboluo.service.ExcelService;
 import com.icboluo.util.ExcelHelper;
+import com.icboluo.util.R;
+import com.icboluo.util.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,21 +42,24 @@ public class ExcelController {
     private String excelPath;
 
     @GetMapping("/read")
-    @ApiOperation(value = "将excel文档读成建表语句")
-    public void read() {
-        excelService.read(excelPath, readExcelEntity.getSheetName());
+    @ApiOperation(value = "将数据库excel文档读成建表语句")
+    public Response read() {
+        excelService.readDbDocument(excelPath, readExcelEntity.getSheetName());
+        return R.correct();
     }
 
     @GetMapping("/write")
     @ApiOperation(value = "将数据库写成excel文档")
-    public void write() {
+    public Response write() {
         excelService.write(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
+        return R.correct();
     }
 
     @GetMapping("/write2")
     @ApiOperation(value = "将数据库写成excel文档")
-    public void write2(HttpServletResponse response) {
+    public Response write2(HttpServletResponse response) {
         excelService.write2(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
+        return R.correct();
     }
 
     @GetMapping("www")

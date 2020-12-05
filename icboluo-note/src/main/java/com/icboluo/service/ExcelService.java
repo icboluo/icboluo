@@ -10,10 +10,10 @@ import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.icboluo.annotation.EasyExcelAlias;
 import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
-import com.icboluo.dao.ColumnMapper;
-import com.icboluo.listenter.NoModelDataListener;
+import com.icboluo.mapper.ColumnMapper;
+import com.icboluo.listenter.HeadDataListener;
 import com.icboluo.listenter.RowDataListener;
-import com.icboluo.object.clientobject.NoModelRowCO;
+import com.icboluo.object.clientobject.RowCO;
 import com.icboluo.object.businessobject.RowBO;
 import com.icboluo.object.businessobject.SheetBO;
 import com.icboluo.object.dataobject.RowDO;
@@ -58,7 +58,7 @@ public class ExcelService {
      * @param filePathName 文件地址+名称
      * @param sheet        sheet的名称
      */
-    public void read(String filePathName, String sheet) {
+    public void readDbDocument(String filePathName, String sheet) {
         List<SheetBO> list = this.readExcel(filePathName, sheet);
         this.toSql(list);
     }
@@ -84,9 +84,9 @@ public class ExcelService {
      * @param sheetBO sheet对象
      * @param rowCOS  一个sheet
      */
-    private void buildExcelBO(SheetBO sheetBO, List<NoModelRowCO> rowCOS) {
+    private void buildExcelBO(SheetBO sheetBO, List<RowCO> rowCOS) {
         List<RowBO> list = new ArrayList<>();
-        for (NoModelRowCO rowCO : rowCOS) {
+        for (RowCO rowCO : rowCOS) {
             RowBO rowBO = BeanHelper.copyProperties(rowCO, RowBO.class);
             list.add(rowBO);
         }
@@ -264,8 +264,8 @@ public class ExcelService {
      * @return 保存excel数据的容器
      */
     public List<SheetBO> readExcel(String excelPath, String sheet) {
-        NoModelDataListener headListener = readHead(excelPath);
-        Class<NoModelRowCO> clazz = NoModelRowCO.class;
+        HeadDataListener headListener = readHead(excelPath);
+        Class<RowCO> clazz = RowCO.class;
         this.buildClass(headListener.getHead(), clazz);
 
         List<SheetBO> list = new ArrayList<>();
@@ -275,24 +275,25 @@ public class ExcelService {
             RowDataListener listener = new RowDataListener();
             ReadSheet rs = EasyExcel
                     .readSheet(i)
-                    .head(NoModelRowCO.class)
-                    .registerReadListener(listener).build();
+                    .head(RowCO.class)
+                    .registerReadListener(listener)
+                    .build();
             er.read(rs);
             er.finish();
 
             SheetBO sheetBO = new SheetBO();
             String sheetName = readSheets.get(i).getSheetName();
             sheetBO.setTableName(sheetName);
-            List<NoModelRowCO> rowCOS = listener.list;
+            List<RowCO> rowCOS = listener.list;
             this.buildExcelBO(sheetBO, rowCOS);
             list.add(sheetBO);
         }
         return list;
     }
 
-    private NoModelDataListener readHead(String excelPath) {
+    private HeadDataListener readHead(String excelPath) {
         ExcelReader er = EasyExcel.read(excelPath).build();
-        NoModelDataListener listener = new NoModelDataListener();
+        HeadDataListener listener = new HeadDataListener();
         ReadSheet rs = EasyExcel
                 .readSheet(0)
                 .headRowNumber(0)

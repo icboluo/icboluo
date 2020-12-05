@@ -1,7 +1,7 @@
 package com.icboluo.service;
 
 import com.icboluo.common.Constant;
-import com.icboluo.dao.MonthTimeMapper;
+import com.icboluo.mapper.MonthTimeMapper;
 import com.icboluo.object.dataobject.MonthTimeDO;
 import org.springframework.stereotype.Service;
 

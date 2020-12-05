@@ -23,7 +23,7 @@ mybatis:
   mapper-locations: mybatis/*Mapper.xml
 logging:
   level:
-    com.icboluo.note.dao: debug
+    com.icboluo.note: debug
 read-excel-entity:
   excel-path: icboluo-note/database.xlsx
   general-sql-path: icboluo-note/creat.sql

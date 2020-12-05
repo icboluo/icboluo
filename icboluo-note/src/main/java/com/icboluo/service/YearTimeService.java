@@ -1,7 +1,7 @@
 package com.icboluo.service;
 
 import com.icboluo.common.Constant;
-import com.icboluo.dao.YearTimeMapper;
+import com.icboluo.mapper.YearTimeMapper;
 import com.icboluo.object.dataobject.YearTimeDO;
 import org.springframework.stereotype.Service;
 

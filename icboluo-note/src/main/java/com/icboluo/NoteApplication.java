@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author icboluo
  */
 @SpringBootApplication
-@MapperScan("com.icboluo.dao")
+@MapperScan("com.icboluo.mapper")
 @EnableDiscoveryClient
 @EnableConfigurationProperties({ReadExcelEntity.class, WriteExcelEntity.class})
 @EnableFeignClients
