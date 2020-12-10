@@ -12,5 +12,6 @@ public class LogDemo {
     public static void main(String[] args) {
         log.error("错误,只有一行，不会抛出异常");
         log.error("记录一行error，抛出错误日志", new IcBoLuoException());
+//        log.error("记录一行error，抛出错误日志", e);
     }
 }

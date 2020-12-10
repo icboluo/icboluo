@@ -21,6 +21,9 @@ date and time api 是jdk1.8以后的date api
 2、${}非预编译（直接的sql拼接，不能防止sql注入）exa：select * from ${tableName}这个不行只能用默认的${value},用@param，
 @Param("tableName") String tableName.从java到sql就好接受数据了，${tableName},表名是动态的，这个$传字符串需要手动添加''
 
+$符号也有一定的用途，常用作写公共的sql，这个不是占位符，就相当于字符串拼接，可以使
+sql更加动态
+
 ## 名词/标签
 
 resultType:结果集类型
@@ -37,4 +40,4 @@ keyProperty：pojo中主键对应的属性
 
 <set>去，号
 
- <foreach collection="ids" item="id" separator="," open="("    close=")">#{id}</foreach>
+<foreach collection="ids" item="id" separator="," open="("    close=")">#{id}</foreach>

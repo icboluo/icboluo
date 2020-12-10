@@ -16,7 +16,6 @@ public abstract class HouseBuilder {
 
     public abstract void buildRoofed();
 
-
     public House buildHouse() {
         return house;
     }

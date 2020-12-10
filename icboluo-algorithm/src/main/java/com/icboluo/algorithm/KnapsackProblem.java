@@ -2,8 +2,6 @@ package com.icboluo.algorithm;
 
 import com.icboluo.util.ArrayHelper;
 
-import java.util.Arrays;
-
 /**
  * 背包问题
  *
@@ -21,12 +19,8 @@ public class KnapsackProblem {
         //物品的个数
         int n = val.length;
 
-        int[][] v = new int[n + 1][m + 1];
         int[][] path = new int[n + 1][m + 1];
-        for (int i = 0; i < v.length; i++) {
-            v[i][0] = 0;
-        }
-        Arrays.fill(v[0], 0);
+        int[][] v = ArrayHelper.initArr(n + 1, m + 1);
 
         for (int i = 1; i < v.length; i++) {
             for (int j = 1; j < v[0].length; j++) {

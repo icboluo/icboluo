@@ -1,5 +1,6 @@
 package com.icboluo.util;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -140,5 +141,14 @@ public class ArrayHelper {
             map.put(i, map.getOrDefault(i, 1));
         }
         return map;
+    }
+
+    public static int[][] initArr(int n, int m) {
+        int[][] v = new int[n][m];
+        for (int i = 0; i < v.length; i++) {
+            v[i][0] = 1;
+        }
+        Arrays.fill(v[0], 0);
+        return v;
     }
 }

@@ -29,15 +29,11 @@ public class WebContextInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HandlerMethod handlerMethod;
-        try {
-            handlerMethod = (HandlerMethod) handler;
-        } catch (Exception e) {
-            log.error("handler 转换失败", e);
-            e.printStackTrace();
+        if (!(handler instanceof HandlerMethod)) {
+            log.error("handler 转换失败{}", handler);
             return super.preHandle(request, response, handler);
         }
-
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
         WebContextAnno webContextAnno = handlerMethod.getBeanType().getAnnotation(WebContextAnno.class);
 
         if (webContextAnno != null) {
