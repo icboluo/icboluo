@@ -1,11 +1,14 @@
 package com.icboluo.object;
 
+import lombok.Data;
+
 /**
  * 档案视图对象
  *
  * @author icboluo
  * @date 2020/12/3 21:40
  */
+@Data
 public class ArchivesVO {
 
     /**

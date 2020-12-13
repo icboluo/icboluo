@@ -4,6 +4,7 @@ package com.icboluo.file;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -15,9 +16,6 @@ import java.io.Serializable;
 class Student implements Serializable {
     private int age;
     private String name;
-
-    /**
-     * 表示该类的序列化版本号永远是，不知道写了有啥用
-     */
+    @Serial
     private static final long serialVersionUID = 4983659706961705248L;
 }

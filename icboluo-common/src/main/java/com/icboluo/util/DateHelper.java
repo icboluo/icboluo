@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class DateHelper {
 
-    public static final ThreadLocal<List<LocalDateTime>> userContext = new ThreadLocal<>();
+    public static final ThreadLocal<List<LocalDateTime>> USER_CONTEXT = new ThreadLocal<>();
 
     /**
      * 经过一年的时间戳增加值

@@ -1,6 +1,6 @@
 package com.icboluo.nonameclass;
 
-import com.icboluo.common.print.PrintInterface;
+import com.icboluo.common.PrintInterface;
 
 /**
  * @author icboluo

@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.common.constant;
 
 /**
  * @author icboluo

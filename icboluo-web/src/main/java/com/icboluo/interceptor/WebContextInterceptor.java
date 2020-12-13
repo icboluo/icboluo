@@ -1,8 +1,8 @@
 package com.icboluo.interceptor;
 
-import com.icboluo.HttpConstant;
+import com.icboluo.common.constant.HttpConstant;
 import com.icboluo.annotation.WebContextAnno;
-import com.icboluo.enumeration.WebContextEnum;
+import com.icboluo.common.enumeration.WebContextEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -35,12 +35,10 @@ public class WebContextInterceptor extends HandlerInterceptorAdapter {
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         WebContextAnno webContextAnno = handlerMethod.getBeanType().getAnnotation(WebContextAnno.class);
-
-        if (webContextAnno != null) {
-            if (WebContextEnum.WEB.equals(webContextAnno.service())) {
-                String userCode = request.getHeader(HttpConstant.USER_CODE);
-                UserContext.set(userCode);
-            }
+        webContextAnno = webContextAnno == null ? handlerMethod.getBeanType().getAnnotation(WebContextAnno.class) : webContextAnno;
+        if (webContextAnno == null || !WebContextEnum.WEB.equals(webContextAnno.service())) {
+            String userCode = request.getHeader(HttpConstant.USER_CODE);
+            UserContext.set(userCode);
         }
         return super.preHandle(request, response, handler);
     }

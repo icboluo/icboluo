@@ -1,4 +1,4 @@
-package com.icboluo.common.print;
+package com.icboluo.common;
 
 /**
  * @author icboluo
@@ -8,6 +8,4 @@ public interface PrintInterface {
     default void print() {
     }
 
-    default void print(String msg) {
-    }
 }

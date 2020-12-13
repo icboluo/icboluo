@@ -1,9 +1,10 @@
 package com.icboluo.controller;
 
+import com.icboluo.annotation.RecordTime;
 import com.icboluo.annotation.RequestBodyParam;
 import com.icboluo.annotation.UserCode;
 import com.icboluo.annotation.WebContextAnno;
-import com.icboluo.enumeration.WebContextEnum;
+import com.icboluo.common.enumeration.WebContextEnum;
 import com.icboluo.interceptor.UserContext;
 import com.icboluo.util.StudentUtil;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +19,12 @@ import java.time.LocalDateTime;
  */
 @RestController
 @RequestMapping("webInterceptor")
-@WebContextAnno(service = WebContextEnum.WEB)
+//@WebContextAnno(service = WebContextEnum.WEB)
 public class WebInterceptorController {
 
     @GetMapping("/getUserCode")
+    @WebContextAnno(service = WebContextEnum.WEB)
+    @RecordTime
     public String getUserCode() {
         return UserContext.userCode();
     }

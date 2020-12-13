@@ -47,11 +47,6 @@ public enum StatusEnum {
 
     private static final EnumSet<StatusEnum> ALL_SET = EnumSet.allOf(StatusEnum.class);
 
-    public static String findNameByStatusLanguage(Integer status, LanguageEnum language) {
-        Optional<StatusEnum> e = findByStatus(status);
-        return chooseByLanguage(language, e);
-    }
-
     public static <T> String findNameByStatusLanguage(T status, LanguageEnum language) {
         Optional<StatusEnum> e = findByStatus(status);
         return chooseByLanguage(language, e);
@@ -68,7 +63,7 @@ public enum StatusEnum {
      * @param status 状态
      * @return 定义的枚举类型
      */
-    public static Optional<StatusEnum> findByStatus(Integer status) {
+    private static Optional<StatusEnum> findByStatus(Integer status) {
 //        校验写到底层会让所有的方法都通过校验，但是也会损耗性能（在这里的校验只是相当于移动到底层）
         validateStatusUniqueness();
         return ALL_SET.stream()
