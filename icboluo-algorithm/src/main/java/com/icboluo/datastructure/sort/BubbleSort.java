@@ -1,6 +1,7 @@
 package com.icboluo.datastructure.sort;
 
 import com.icboluo.util.DateHelper;
+import com.icboluo.util.TimeRecord;
 import com.icboluo.util.RandomHelper;
 
 import java.util.Arrays;
@@ -12,13 +13,17 @@ import java.util.Arrays;
  */
 class BubbleSort {
     public static void main(String[] args) {
+        TimeRecord.start();
         int[] arr = {3, 9, -1, 10, -2};
         //m1(arr);
         m2(arr);
         long cur1 = System.currentTimeMillis();
-        m2(RandomHelper.getRandom(80000));
+        m2(RandomHelper.getRandom(40000));
+        TimeRecord.record("第二次排序");
         long cur2 = System.currentTimeMillis();
         DateHelper.parseTimeStampToSecond(cur2 - cur1);
+        m2(RandomHelper.getRandom(40000));
+        TimeRecord.build();
     }
 
     private static void m2(int[] arr) {
