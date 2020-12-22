@@ -1,8 +1,6 @@
 package com.icboluo.util;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 操作数组的工具类
@@ -143,6 +141,13 @@ public class ArrayHelper {
         return map;
     }
 
+    /**
+     * 初始化一个为default的二维数组
+     *
+     * @param n 行数
+     * @param m 列数
+     * @return 初始化后的二维数组
+     */
     public static int[][] initArr(int n, int m) {
         int[][] v = new int[n][m];
         for (int i = 0; i < v.length; i++) {
@@ -150,5 +155,30 @@ public class ArrayHelper {
         }
         Arrays.fill(v[0], 0);
         return v;
+    }
+
+    /**
+     * 生成递增的数组，第一个值从1开始
+     *
+     * @param max 数组的最大值
+     * @return 生成的递增数组
+     */
+    public static int[] generateIncrementArr(int max) {
+        int[] arr = new int[max];
+        for (int i = 0; i < max; i++) {
+            arr[i] = i + 1;
+        }
+        return arr;
+    }
+
+    /**
+     * todo delete
+     *
+     * @param arr
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> toList(T[] arr) {
+        return Arrays.asList(arr);
     }
 }

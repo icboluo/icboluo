@@ -53,7 +53,6 @@ public class HttpHelper {
     public static String sendGet(String url, String paramName, String paramValue) {
         url = url + "/?" + paramName + "=" + paramValue;
         return sendGet(url);
-
     }
 
     /**
