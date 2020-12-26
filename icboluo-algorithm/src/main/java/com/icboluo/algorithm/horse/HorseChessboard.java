@@ -1,7 +1,6 @@
 package com.icboluo.algorithm.horse;
 
 import com.icboluo.util.ArrayHelper;
-import com.icboluo.util.DateHelper;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,10 +30,7 @@ public class HorseChessboard {
         int column = 1;
         int[][] chessboard = new int[x][y];
         visited = new boolean[x * y];
-        long start = System.currentTimeMillis();
         traversalChessboard(chessboard, row - 1, column - 1, 1);
-        long end = System.currentTimeMillis();
-        DateHelper.parseTimeStampToSecond(end - start);
         ArrayHelper.print(chessboard);
     }
 

@@ -1,6 +1,5 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.DateHelper;
 import com.icboluo.util.RandomHelper;
 
 /**
@@ -12,11 +11,8 @@ import com.icboluo.util.RandomHelper;
     public static void main(String[] args) {
         //int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
         int[] arr = RandomHelper.getRandom(8000000);
-        long start = System.currentTimeMillis();
         int[] temp = new int[arr.length];
         mergeSort(arr,0,arr.length-1, temp);
-        long end = System.currentTimeMillis();
-        DateHelper.parseTimeStampToSecond(end - start);
         //System.out.println(Arrays.toString(arr));
 
     }

@@ -1,6 +1,5 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.DateHelper;
 import com.icboluo.util.RandomHelper;
 
 import java.util.Arrays;
@@ -15,10 +14,7 @@ import java.util.Arrays;
         int[] arr = {101, 34, 119, 1};
         //selectSort(arr);
         selectSort2(arr);
-        long cur1 = System.currentTimeMillis();
         selectSort2(RandomHelper.getRandom(80000));
-        long cur2 = System.currentTimeMillis();
-        DateHelper.parseTimeStampToSecond(cur2 - cur1);
     }
 
     private static void selectSort2(int[] arr) {

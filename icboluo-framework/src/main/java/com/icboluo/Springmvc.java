@@ -1,7 +1,5 @@
 package com.icboluo;
 /*
-
-
 使用需要log4j.properties日志
 InternalResourceViewResolver：《内部的，资源，..，溶解》视图解析器的一种，ModelAndView..setviewname可配合增加前缀和后缀
 @RequestMapping(value="/show3.do" method={RequestMethod.POST，...}，params=”!userId”)可以用？和*，也可以用/{name}/占位符

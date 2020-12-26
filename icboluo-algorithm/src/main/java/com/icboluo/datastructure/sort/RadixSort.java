@@ -1,6 +1,5 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.DateHelper;
 import com.icboluo.util.RandomHelper;
 
 import java.util.Arrays;
@@ -17,12 +16,7 @@ class RadixSort {
         int[] arr = {53, 3, 542, 748, 14, 214};
         //8千万*11个桶*4个字节/1024/1024/1024=3.3g
         int[] random = RandomHelper.getRandom(80000000);
-        long start = System.currentTimeMillis();
         m2(random);
-        long end = System.currentTimeMillis();
-        DateHelper.parseTimeStampToSecond(end - start);
-
-
     }
 
     private static void m2(int[] arr) {

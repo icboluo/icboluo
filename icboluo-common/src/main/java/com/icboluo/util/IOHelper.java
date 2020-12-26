@@ -10,6 +10,35 @@ import java.util.Arrays;
  * @date 2020/11/10 22:15
  */
 public class IOHelper {
+
+    /**
+     * inputStream转outputStream
+     *
+     * @param in
+     * @return
+     * @throws Exception
+     */
+    public ByteArrayOutputStream parse(final InputStream in) throws Exception {
+        final ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
+        int ch;
+        while ((ch = in.read()) != -1) {
+            swapStream.write(ch);
+        }
+        return swapStream;
+    }
+
+    /**
+     * outputStream转inputStream
+     *
+     * @param out
+     * @return
+     */
+    public ByteArrayInputStream parse(final OutputStream out) {
+        ByteArrayOutputStream baos = (ByteArrayOutputStream) out;
+        final ByteArrayInputStream swapStream = new ByteArrayInputStream(baos.toByteArray());
+        return swapStream;
+    }
+
     /**
      * @param bufferedReader 文件字符缓冲流
      * @return read result
