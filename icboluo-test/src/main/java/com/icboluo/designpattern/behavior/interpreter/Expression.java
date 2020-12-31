@@ -1,4 +1,4 @@
-package com.icboluo.designpattern.interpreter;
+package com.icboluo.designpattern.behavior.interpreter;
 
 import java.util.HashMap;
 
