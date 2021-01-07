@@ -1,7 +1,8 @@
 package com.icboluo.sheji.guanchazhe;
 
-import com.icboluo.common.print.Print01;
-import com.icboluo.common.print.Print02;
+
+import com.icboluo.sheji.Print01;
+import com.icboluo.sheji.Print02;
 
 /**
  * @author icboluo

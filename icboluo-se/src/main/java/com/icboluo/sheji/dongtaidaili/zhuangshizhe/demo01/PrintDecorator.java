@@ -1,6 +1,7 @@
 package com.icboluo.sheji.dongtaidaili.zhuangshizhe.demo01;
 
-import com.icboluo.common.print.PrintInterface;
+
+import com.icboluo.sheji.PrintInterface;
 
 /**
  * @author icboluo

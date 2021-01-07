@@ -1,6 +1,6 @@
 package com.icboluo.sheji.dongtaidaili.dtdl;
 
-import com.icboluo.common.print.PrintInterface;
+import com.icboluo.sheji.PrintInterface;
 import lombok.AllArgsConstructor;
 
 import java.lang.reflect.InvocationHandler;

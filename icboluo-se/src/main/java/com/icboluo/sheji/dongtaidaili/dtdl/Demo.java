@@ -1,7 +1,7 @@
 package com.icboluo.sheji.dongtaidaili.dtdl;
 
-import com.icboluo.common.print.Print01;
-import com.icboluo.common.print.PrintInterface;
+import com.icboluo.sheji.Print01;
+import com.icboluo.sheji.PrintInterface;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;

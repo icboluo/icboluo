@@ -1,6 +1,6 @@
 package com.icboluo.sheji.guanchazhe;
 
-import com.icboluo.common.print.PrintInterface;
+import com.icboluo.sheji.PrintInterface;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
