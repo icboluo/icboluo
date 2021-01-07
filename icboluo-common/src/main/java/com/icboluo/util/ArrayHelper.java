@@ -170,15 +170,4 @@ public class ArrayHelper {
         }
         return arr;
     }
-
-    /**
-     * todo delete
-     *
-     * @param arr
-     * @param <T>
-     * @return
-     */
-    public static <T> List<T> toList(T[] arr) {
-        return Arrays.asList(arr);
-    }
 }
