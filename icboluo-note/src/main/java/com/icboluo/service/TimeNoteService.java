@@ -6,7 +6,7 @@ import com.icboluo.object.dataobject.TimeNoteDO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author icboluo
@@ -23,7 +23,7 @@ public class TimeNoteService {
             timeNoteDO.setFinishTime(Math.max(timeNote.getFinishTime() - 1, 0));
         }
         timeNoteDO.setId(id);
-        timeNoteDO.setGmtModified(new Date());
+        timeNoteDO.setGmtModified(LocalDateTime.now());
         return timeNoteDO;
     }
 }

@@ -3,8 +3,10 @@ package com.icboluo.mapper;
 import com.icboluo.object.dataobject.UserDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 

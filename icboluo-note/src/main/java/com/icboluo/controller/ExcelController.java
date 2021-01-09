@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,13 +56,13 @@ public class ExcelController {
 
     @GetMapping("/write2")
     @ApiOperation(value = "将数据库写成excel文档")
-    public Response write2(HttpServletResponse response) {
+    public Response write2() {
         excelService.write2(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
         return R.correct();
     }
 
     @GetMapping("www")
-    public void www(HttpServletResponse response) throws IOException {
+    public void www(HttpServletResponse response) {
         List<Student> data = new ArrayList<>();
         Student student = new Student();
         student.setAge(18);

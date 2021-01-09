@@ -9,7 +9,7 @@ import com.icboluo.object.viewobject.NoteVO;
 import com.icboluo.util.BeanHelper;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author icboluo
@@ -22,7 +22,7 @@ public class TimeNoteConvertor implements Convertor<TimeNoteDO, TimeNoteDO, Time
         weekTimeDO.setId(null);
         weekTimeDO.setGmtCreate(null);
         weekTimeDO.setGmtFirstCreate(timeNoteDO.getGmtCreate());
-        weekTimeDO.setGmtModified(new Date());
+        weekTimeDO.setGmtModified(LocalDateTime.now());
         weekTimeDO.setFinishTime(0);
         return weekTimeDO;
     }

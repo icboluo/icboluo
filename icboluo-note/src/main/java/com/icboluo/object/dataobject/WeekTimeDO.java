@@ -1,17 +1,18 @@
 package com.icboluo.object.dataobject;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
- * week_time
- *
- * @author icboluo
+ * @author 
+ * 
  */
 @Data
 public class WeekTimeDO implements Serializable {
+    /**
+     * id
+     */
     private Integer id;
 
     /**
@@ -29,13 +30,25 @@ public class WeekTimeDO implements Serializable {
      */
     private Integer finishTime;
 
+    /**
+     * 所属范围
+     */
     private String belongToScope;
 
-    private Date gmtCreate;
+    /**
+     * 创建时间
+     */
+    private LocalDateTime gmtCreate;
 
-    private Date gmtFirstCreate;
+    /**
+     * 源头数据创建时间
+     */
+    private LocalDateTime gmtFirstCreate;
 
-    private Date gmtModified;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime gmtModified;
 
     private static final long serialVersionUID = 1L;
 }

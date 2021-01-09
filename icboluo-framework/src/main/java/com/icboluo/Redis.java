@@ -157,7 +157,6 @@ public class Redis {
             e.printStackTrace();
             return false;
         }
-
     }
 
     /**

@@ -10,7 +10,7 @@ import com.icboluo.object.viewobject.NoteVO;
 import com.icboluo.util.BeanHelper;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author icboluo
@@ -22,7 +22,7 @@ public class WeekTimeConvertor implements Convertor<WeekTimeDO, WeekTimeDO, Week
         MonthTimeDO monthTimeDO = BeanHelper.copyProperties(weekTimeDO, MonthTimeDO.class);
         monthTimeDO.setId(null);
         monthTimeDO.setGmtCreate(null);
-        monthTimeDO.setGmtModified(new Date());
+        monthTimeDO.setGmtModified(LocalDateTime.now());
         monthTimeDO.setFinishTime(0);
         return monthTimeDO;
     }

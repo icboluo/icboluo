@@ -3,14 +3,17 @@ package com.icboluo.object.dataobject;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
- * finish
- * @author lp
+ * @author 
+ * 
  */
 @Data
 public class FinishDO implements Serializable {
+    /**
+     * id
+     */
     private Integer id;
 
     /**
@@ -23,13 +26,25 @@ public class FinishDO implements Serializable {
      */
     private String result;
 
+    /**
+     * 所属范围
+     */
     private String belongToScope;
 
-    private Date gmtCreate;
+    /**
+     * 创建时间
+     */
+    private LocalDateTime gmtCreate;
 
-    private Date gmtFirstCreate;
+    /**
+     * 源头数据创建时间
+     */
+    private LocalDateTime gmtFirstCreate;
 
-    private Date gmtModified;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime gmtModified;
 
     private static final long serialVersionUID = 1L;
 }

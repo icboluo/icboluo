@@ -1,6 +1,5 @@
 server:
   port: 7010
-
 spring:
   application:
     name: icboluo-user

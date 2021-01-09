@@ -1,113 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.OnlyReadMapper">
-    <resultMap id="BaseResultMap" type="com.icboluo.object.dataobject.OnlyReadDO">
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="problem" jdbcType="VARCHAR" property="problem"/>
-        <result column="result" jdbcType="VARCHAR" property="result"/>
-        <result column="finish_time" jdbcType="INTEGER" property="finishTime"/>
-        <result column="belong_to_scope" jdbcType="VARCHAR" property="belongToScope"/>
-        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
-        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-        id, problem, `result`, finish_time, belong_to_scope, gmt_create, gmt_modified
-    </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from only_read
-        where id = #{id,jdbcType=INTEGER}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete
-        from only_read
-        where id = #{id,jdbcType=INTEGER}
-    </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.icboluo.object.dataobject.OnlyReadDO"
-            useGeneratedKeys="true">
-        insert into only_read (problem, `result`, finish_time,
-                               belong_to_scope, gmt_create, gmt_modified)
-        values (#{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{finishTime,jdbcType=INTEGER},
-                #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
-    </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id"
-            parameterType="com.icboluo.object.dataobject.OnlyReadDO"
-            useGeneratedKeys="true">
-        insert into only_read
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="problem != null">
-                problem,
-            </if>
-            <if test="result != null">
-                `result`,
-            </if>
-            <if test="finishTime != null">
-                finish_time,
-            </if>
-            <if test="belongToScope != null">
-                belong_to_scope,
-            </if>
-            <if test="gmtCreate != null">
-                gmt_create,
-            </if>
-            <if test="gmtModified != null">
-                gmt_modified,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="problem != null">
-                #{problem,jdbcType=VARCHAR},
-            </if>
-            <if test="result != null">
-                #{result,jdbcType=VARCHAR},
-            </if>
-            <if test="finishTime != null">
-                #{finishTime,jdbcType=INTEGER},
-            </if>
-            <if test="belongToScope != null">
-                #{belongToScope,jdbcType=VARCHAR},
-            </if>
-            <if test="gmtCreate != null">
-                #{gmtCreate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="gmtModified != null">
-                #{gmtModified,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.object.dataobject.OnlyReadDO">
-        update only_read
-        <set>
-            <if test="problem != null">
-                problem = #{problem,jdbcType=VARCHAR},
-            </if>
-            <if test="result != null">
-                `result` = #{result,jdbcType=VARCHAR},
-            </if>
-            <if test="finishTime != null">
-                finish_time = #{finishTime,jdbcType=INTEGER},
-            </if>
-            <if test="belongToScope != null">
-                belong_to_scope = #{belongToScope,jdbcType=VARCHAR},
-            </if>
-            <if test="gmtCreate != null">
-                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="gmtModified != null">
-                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.icboluo.object.dataobject.OnlyReadDO">
-        update only_read
-        set problem         = #{problem,jdbcType=VARCHAR},
-            `result`        = #{result,jdbcType=VARCHAR},
-            finish_time     = #{finishTime,jdbcType=INTEGER},
-            belong_to_scope = #{belongToScope,jdbcType=VARCHAR},
-            gmt_create      = #{gmtCreate,jdbcType=TIMESTAMP},
-            gmt_modified    = #{gmtModified,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
+  <resultMap id="BaseResultMap" type="com.icboluo.object.dataobject.OnlyReadDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="problem" jdbcType="VARCHAR" property="problem" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="finish_time" jdbcType="INTEGER" property="finishTime" />
+    <result column="belong_to_scope" jdbcType="VARCHAR" property="belongToScope" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, problem, `result`, finish_time, belong_to_scope, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from only_read
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from only_read
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.icboluo.object.dataobject.OnlyReadDO">
+    insert into only_read (id, problem, `result`, 
+      finish_time, belong_to_scope, gmt_create, 
+      gmt_modified)
+    values (#{id,jdbcType=INTEGER}, #{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, 
+      #{finishTime,jdbcType=INTEGER}, #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.icboluo.object.dataobject.OnlyReadDO">
+    insert into only_read
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="problem != null">
+        problem,
+      </if>
+      <if test="result != null">
+        `result`,
+      </if>
+      <if test="finishTime != null">
+        finish_time,
+      </if>
+      <if test="belongToScope != null">
+        belong_to_scope,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="problem != null">
+        #{problem,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="finishTime != null">
+        #{finishTime,jdbcType=INTEGER},
+      </if>
+      <if test="belongToScope != null">
+        #{belongToScope,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.object.dataobject.OnlyReadDO">
+    update only_read
+    <set>
+      <if test="problem != null">
+        problem = #{problem,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+        `result` = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="finishTime != null">
+        finish_time = #{finishTime,jdbcType=INTEGER},
+      </if>
+      <if test="belongToScope != null">
+        belong_to_scope = #{belongToScope,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icboluo.object.dataobject.OnlyReadDO">
+    update only_read
+    set problem = #{problem,jdbcType=VARCHAR},
+      `result` = #{result,jdbcType=VARCHAR},
+      finish_time = #{finishTime,jdbcType=INTEGER},
+      belong_to_scope = #{belongToScope,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

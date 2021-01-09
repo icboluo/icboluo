@@ -9,7 +9,7 @@ import com.icboluo.object.viewobject.NoteVO;
 import com.icboluo.util.BeanHelper;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author icboluo
@@ -21,7 +21,7 @@ public class YearTimeConvertor implements Convertor<YearTimeDO, YearTimeDO, Year
         FinishDO finishDO = BeanHelper.copyProperties(yearTimeDO, FinishDO.class);
         finishDO.setId(null);
         finishDO.setGmtCreate(null);
-        finishDO.setGmtModified(new Date());
+        finishDO.setGmtModified(LocalDateTime.now());
         return finishDO;
 
     }

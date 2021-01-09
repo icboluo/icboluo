@@ -1,1 +1,13 @@
-
+server:
+  port: 1110
+spring:
+  application:
+    name: icboluo-sql
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        register-enabled: false
+  redis:
+    host: 127.0.0.1
+    port: 6379

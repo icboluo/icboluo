@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
 /**
@@ -79,25 +81,25 @@ public class NoteService {
         YearTimeDO yearTimeDO;
         if (timeNoteDOList.isEmpty()) {
             timeNoteDO = new TimeNoteDO();
-            timeNoteDO.setGmtModified(new Date());
+            timeNoteDO.setGmtModified(LocalDateTime.now());
         } else {
             timeNoteDO = timeNoteDOList.get(0);
         }
         if (weekTimeDOList.isEmpty()) {
             weekTimeDO = new WeekTimeDO();
-            weekTimeDO.setGmtModified(new Date());
+            weekTimeDO.setGmtModified(LocalDateTime.now());
         } else {
             weekTimeDO = weekTimeDOList.get(0);
         }
         if (monthTimeDOList.isEmpty()) {
             monthTimeDO = new MonthTimeDO();
-            monthTimeDO.setGmtModified(new Date());
+            monthTimeDO.setGmtModified(LocalDateTime.now());
         } else {
             monthTimeDO = monthTimeDOList.get(0);
         }
         if (yearTimeDOList.isEmpty()) {
             yearTimeDO = new YearTimeDO();
-            yearTimeDO.setGmtModified(new Date());
+            yearTimeDO.setGmtModified(LocalDateTime.now());
         } else {
             yearTimeDO = yearTimeDOList.get(0);
         }
@@ -125,10 +127,10 @@ public class NoteService {
     private List<YearTimeDO> deleteUnqualifiedObj4(List<YearTimeDO> list) {
         int i = 0;
         for (YearTimeDO yearTimeDO : list) {
-            Date gmtModified = yearTimeDO.getGmtModified();
-            long shoudTime = gmtModified.getTime() + Constant.YEAR_TIME_INTERVAL;
+            LocalDateTime gmtModified = yearTimeDO.getGmtModified();
+            long shouldTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + Constant.YEAR_TIME_INTERVAL;
             long time = System.currentTimeMillis();
-            if (time < shoudTime) {
+            if (time < shouldTime) {
                 break;
             }
             i++;
@@ -146,10 +148,11 @@ public class NoteService {
      * @return vo obj
      */
     private NoteVO getMinTime(TimeNoteDO timeNoteDO, WeekTimeDO weekTimeDO, MonthTimeDO monthTimeDO, YearTimeDO yearTimeDO) {
-        long time1 = timeNoteDO.getGmtModified().getTime() + Constant.TIME_NOTE_INTERVAL;
-        long time2 = weekTimeDO.getGmtModified().getTime() + Constant.WEEK_TIME_INTERVAL;
-        long time3 = monthTimeDO.getGmtModified().getTime() + Constant.MONTH_TIME_INTERVAL;
-        long time4 = yearTimeDO.getGmtModified().getTime() + Constant.YEAR_TIME_INTERVAL;
+        long time1 = timeNoteDO.getGmtModified().toEpochSecond(ZoneOffset.ofHours(8)) + Constant.TIME_NOTE_INTERVAL;
+        long time2 = weekTimeDO.getGmtModified().toEpochSecond(ZoneOffset.ofHours(8)) + Constant.WEEK_TIME_INTERVAL;
+        long time3 = monthTimeDO.getGmtModified().toEpochSecond(ZoneOffset.ofHours(8)) + Constant.MONTH_TIME_INTERVAL;
+        long time4 = yearTimeDO.getGmtModified().toEpochSecond(ZoneOffset.ofHours(8)) + Constant.YEAR_TIME_INTERVAL;
+
         List<Long> list = new ArrayList<>();
         list.add(time1);
         list.add(time2);
@@ -185,8 +188,8 @@ public class NoteService {
     private List<MonthTimeDO> deleteUnqualifiedObj3(List<MonthTimeDO> list) {
         int i = 0;
         for (MonthTimeDO monthTimeDO : list) {
-            Date gmtModified = monthTimeDO.getGmtModified();
-            long planTime = gmtModified.getTime() + Constant.MONTH_TIME_INTERVAL;
+            LocalDateTime gmtModified = monthTimeDO.getGmtModified();
+            long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + Constant.MONTH_TIME_INTERVAL;
             long time = System.currentTimeMillis();
             if (time < planTime) {
                 break;
@@ -205,8 +208,8 @@ public class NoteService {
     private List<TimeNoteDO> deleteUnqualifiedObj1(List<TimeNoteDO> list) {
         int i = 0;
         for (TimeNoteDO timeNoteDO : list) {
-            Date gmtModified = timeNoteDO.getGmtModified();
-            long planTime = gmtModified.getTime() + Constant.TIME_NOTE_INTERVAL;
+            LocalDateTime gmtModified = timeNoteDO.getGmtModified();
+            long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + Constant.TIME_NOTE_INTERVAL;
             long time = System.currentTimeMillis();
             if (time < planTime) {
                 break;
@@ -225,8 +228,8 @@ public class NoteService {
     private List<WeekTimeDO> deleteUnqualifiedObj2(List<WeekTimeDO> list) {
         int i = 0;
         for (WeekTimeDO weekTimeDO : list) {
-            Date gmtModified = weekTimeDO.getGmtModified();
-            long planTime = gmtModified.getTime() + Constant.WEEK_TIME_INTERVAL;
+            LocalDateTime gmtModified = weekTimeDO.getGmtModified();
+            long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + Constant.WEEK_TIME_INTERVAL;
             long time = System.currentTimeMillis();
             if (time < planTime) {
                 break;
@@ -289,7 +292,7 @@ public class NoteService {
                 yearTimeMapper.updateByPrimaryKeySelective(yearTime);
             }
         }
-        log.debug(type + " update success");
+        log.debug(type + " upLocalDateTime success");
     }
 
     /**
@@ -351,30 +354,30 @@ public class NoteService {
         if (Constant.TIME_TYPE.equals(type)) {
             TimeNoteDO timeNoteDO = new TimeNoteDO();
             timeNoteDO.setId(id);
-            timeNoteDO.setGmtModified(new Date());
+            timeNoteDO.setGmtModified(LocalDateTime.now());
             timeNoteMapper.updateByPrimaryKeySelective(timeNoteDO);
         } else if (Constant.WEEK_TYPE.equals(type)) {
             WeekTimeDO weekTimeDO = new WeekTimeDO();
             weekTimeDO.setId(id);
-            weekTimeDO.setGmtModified(new Date());
+            weekTimeDO.setGmtModified(LocalDateTime.now());
             weekTimeMapper.updateByPrimaryKeySelective(weekTimeDO);
         } else if (Constant.MONTH_TYPE.equals(type)) {
             MonthTimeDO monthTimeDO = new MonthTimeDO();
             monthTimeDO.setId(id);
-            monthTimeDO.setGmtModified(new Date());
+            monthTimeDO.setGmtModified(LocalDateTime.now());
             monthTimeMapper.updateByPrimaryKeySelective(monthTimeDO);
         } else if (Constant.YEAR_TYPE.equals(type)) {
             YearTimeDO yearTimeDO = new YearTimeDO();
             yearTimeDO.setId(id);
-            yearTimeDO.setGmtModified(new Date());
+            yearTimeDO.setGmtModified(LocalDateTime.now());
             yearTimeMapper.updateByPrimaryKeySelective(yearTimeDO);
         }
     }
 
     /**
-     * update belongToScope problem and result
+     * upLocalDateTime belongToScope problem and result
      *
-     * @param timeNoteCO update obj
+     * @param timeNoteCO upLocalDateTime obj
      * @param map        k is id type
      */
     public void update(TimeNoteCO timeNoteCO, Map<String, String> map) {
@@ -391,7 +394,7 @@ public class NoteService {
             if (!StringUtils.isEmpty(timeNoteCO.getResult())) {
                 timeNoteDO.setResult(timeNoteCO.getResult());
             }
-            timeNoteDO.setGmtModified(new Date());
+            timeNoteDO.setGmtModified(LocalDateTime.now());
             timeNoteMapper.updateByPrimaryKeySelective(timeNoteDO);
         } else if (Constant.WEEK_TYPE.equals(type)) {
             WeekTimeDO weekTimeDO = weekTimeMapper.selectByPrimaryKey(id);
@@ -404,7 +407,7 @@ public class NoteService {
             if (!StringUtils.isEmpty(timeNoteCO.getResult())) {
                 weekTimeDO.setResult(timeNoteCO.getResult());
             }
-            weekTimeDO.setGmtModified(new Date());
+            weekTimeDO.setGmtModified(LocalDateTime.now());
             weekTimeMapper.updateByPrimaryKeySelective(weekTimeDO);
         } else if (Constant.MONTH_TYPE.equals(type)) {
             MonthTimeDO monthTimeDO = monthTimeMapper.selectByPrimaryKey(id);
@@ -417,7 +420,7 @@ public class NoteService {
             if (!StringUtils.isEmpty(timeNoteCO.getResult())) {
                 monthTimeDO.setResult(timeNoteCO.getResult());
             }
-            monthTimeDO.setGmtModified(new Date());
+            monthTimeDO.setGmtModified(LocalDateTime.now());
             monthTimeMapper.updateByPrimaryKeySelective(monthTimeDO);
         }
     }

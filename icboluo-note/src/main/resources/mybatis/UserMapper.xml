@@ -12,7 +12,7 @@
         <result column="tel" jdbcType="INTEGER" property="tel"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, code, gmt_creat, gmt_modified, `name`, nick_name,password, tel
+        id, code, gmt_creat, gmt_modified, `name`, nick_name, `password`, tel
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -20,30 +20,25 @@
         from user
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="selectCountByNameAndPassword" resultType="java.lang.Integer">
-        select count(0)
-        from user
-        where name = #{name}
-          and password = #{password}
-    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from user
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.icboluo.object.dataobject.UserDO"
-            useGeneratedKeys="true">
-        insert into user (code, gmt_creat, gmt_modified,
-                          `name`, nick_name, password, tel)
-        values (#{code,jdbcType=INTEGER}, #{gmtCreat,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
-                #{name,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-                #{tel,jdbcType=INTEGER})
+    <insert id="insert" parameterType="com.icboluo.object.dataobject.UserDO">
+        insert into user (id, code, gmt_creat,
+                          gmt_modified, `name`, nick_name,
+                          `password`, tel)
+        values (#{id,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, #{gmtCreat,jdbcType=TIMESTAMP},
+                #{gmtModified,jdbcType=TIMESTAMP}, #{name,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR}, #{tel,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id"
-            parameterType="com.icboluo.object.dataobject.UserDO"
-            useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.icboluo.object.dataobject.UserDO">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
             <if test="code != null">
                 code,
             </if>
@@ -60,13 +55,16 @@
                 nick_name,
             </if>
             <if test="password != null">
-                password,
+                `password`,
             </if>
             <if test="tel != null">
                 tel,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
             <if test="code != null">
                 #{code,jdbcType=INTEGER},
             </if>
@@ -109,7 +107,7 @@
                 nick_name = #{nickName,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
+                `password` = #{password,jdbcType=VARCHAR},
             </if>
             <if test="tel != null">
                 tel = #{tel,jdbcType=INTEGER},
@@ -124,8 +122,15 @@
             gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
             `name`       = #{name,jdbcType=CHAR},
             nick_name    = #{nickName,jdbcType=VARCHAR},
-            password     = #{password,jdbcType=VARCHAR},
+            `password`   = #{password,jdbcType=VARCHAR},
             tel          = #{tel,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="selectCountByNameAndPassword" resultType="java.lang.Integer">
+        select count(0)
+        from user
+        where name = #{name}
+          and password = #{password}
+    </select>
 </mapper>

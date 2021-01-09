@@ -12,7 +12,8 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id,problem, `result`, finish_time, belong_to_scope, gmt_create,gmt_first_create, gmt_modified
+        id, problem, `result`, finish_time, belong_to_scope, gmt_create, gmt_first_create,
+    gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -25,19 +26,20 @@
         from week_time
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.icboluo.object.dataobject.WeekTimeDO"
-            useGeneratedKeys="true">
-        insert into week_time (problem, `result`, finish_time,
-                               belong_to_scope, gmt_first_create, gmt_create, gmt_modified)
-        values (#{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{finishTime,jdbcType=INTEGER},
-                #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+    <insert id="insert" parameterType="com.icboluo.object.dataobject.WeekTimeDO">
+        insert into week_time (id, problem, `result`,
+                               finish_time, belong_to_scope, gmt_create,
+                               gmt_first_create, gmt_modified)
+        values (#{id,jdbcType=INTEGER}, #{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR},
+                #{finishTime,jdbcType=INTEGER}, #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
                 #{gmtFirstCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id"
-            parameterType="com.icboluo.object.dataobject.WeekTimeDO"
-            useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.icboluo.object.dataobject.WeekTimeDO">
         insert into week_time
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
             <if test="problem != null">
                 problem,
             </if>
@@ -61,6 +63,9 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
             <if test="problem != null">
                 #{problem,jdbcType=VARCHAR},
             </if>
@@ -122,6 +127,7 @@
             gmt_modified     = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
     <select id="selectAll" resultMap="BaseResultMap">
         select *
         from week_time

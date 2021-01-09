@@ -1,16 +1,18 @@
 package com.icboluo.object.dataobject;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
- * @author
- *
+ * @author 
+ * 
  */
 @Data
 public class OnlyReadDO implements Serializable {
+    /**
+     * id
+     */
     private Integer id;
 
     /**
@@ -28,11 +30,20 @@ public class OnlyReadDO implements Serializable {
      */
     private Integer finishTime;
 
+    /**
+     * 所属范围
+     */
     private String belongToScope;
 
-    private Date gmtCreate;
+    /**
+     * 创建时间
+     */
+    private LocalDateTime gmtCreate;
 
-    private Date gmtModified;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime gmtModified;
 
     private static final long serialVersionUID = 1L;
 }

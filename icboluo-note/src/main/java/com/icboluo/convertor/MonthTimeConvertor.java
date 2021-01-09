@@ -10,7 +10,7 @@ import com.icboluo.object.viewobject.NoteVO;
 import com.icboluo.util.BeanHelper;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author icboluo
@@ -22,7 +22,7 @@ public class MonthTimeConvertor implements Convertor<MonthTimeDO, MonthTimeDO, M
         YearTimeDO yearTimeDO = BeanHelper.copyProperties(monthTime, YearTimeDO.class);
         yearTimeDO.setId(null);
         yearTimeDO.setGmtCreate(null);
-        yearTimeDO.setGmtModified(new Date());
+        yearTimeDO.setGmtModified(LocalDateTime.now());
         yearTimeDO.setFinishTime(0);
         return yearTimeDO;
     }

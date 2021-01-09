@@ -13,9 +13,6 @@
     <sql id="Base_Column_List">
         id, problem, `result`, finish_time, belong_to_scope, gmt_create, gmt_modified
     </sql>
-    <sql id="alias_base_column_list">
-        tn.id, tn.problem, tn.`result`, tn.finish_time, tn.belong_to_scope, tn.gmt_create, tn.gmt_modified
-    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -27,25 +24,29 @@
         from time_note
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.icboluo.object.dataobject.TimeNoteDO"
-            useGeneratedKeys="true">
-        insert into time_note (problem, `result`, finish_time,
-                               belong_to_scope, gmt_create, gmt_modified)
-        values (#{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{finishTime,jdbcType=INTEGER},
-                #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+    <insert id="insert" parameterType="com.icboluo.object.dataobject.TimeNoteDO">
+        insert into time_note (id, problem, `result`,
+                               finish_time, belong_to_scope, gmt_create,
+                               gmt_modified)
+        values (#{id,jdbcType=INTEGER}, #{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR},
+                #{finishTime,jdbcType=INTEGER}, #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+                #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id"
-            parameterType="com.icboluo.object.dataobject.TimeNoteDO"
-            useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="com.icboluo.object.dataobject.TimeNoteDO">
         insert into time_note
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
             <if test="problem != null">
                 problem,
             </if>
             <if test="result != null">
                 `result`,
             </if>
-            finish_time,
+            <if test="finishTime != null">
+                finish_time,
+            </if>
             <if test="belongToScope != null">
                 belong_to_scope,
             </if>
@@ -57,13 +58,18 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
             <if test="problem != null">
                 #{problem,jdbcType=VARCHAR},
             </if>
             <if test="result != null">
                 #{result,jdbcType=VARCHAR},
             </if>
-            0,
+            <if test="finishTime != null">
+                #{finishTime,jdbcType=INTEGER},
+            </if>
             <if test="belongToScope != null">
                 #{belongToScope,jdbcType=VARCHAR},
             </if>
@@ -109,6 +115,7 @@
             gmt_modified    = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
     <select id="selectAll" resultType="com.icboluo.object.dataobject.TimeNoteDO">
         select
         <include refid="Base_Column_List"/>

@@ -3,22 +3,37 @@ package com.icboluo.object.dataobject;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
- * @author
- *
+ * @author 
+ * 
  */
 @Data
 public class UserDO implements Serializable {
+    /**
+     * id
+     */
     private Integer id;
 
+    /**
+     * code
+     */
     private Integer code;
 
-    private Date gmtCreat;
+    /**
+     * 创建时间
+     */
+    private LocalDateTime gmtCreat;
 
-    private Date gmtModified;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime gmtModified;
 
+    /**
+     * 名称
+     */
     private String name;
 
     /**
@@ -26,6 +41,9 @@ public class UserDO implements Serializable {
      */
     private String nickName;
 
+    /**
+     * 密码
+     */
     private String password;
 
     /**
