@@ -23,7 +23,8 @@ mybatis:
   mapper-locations: mybatis/*Mapper.xml
 logging:
   level:
-    com.icboluo.note: debug
+#    level 后面直接跟日志级别会启动报错
+    com.icboluo: debug
 read-excel-entity:
   excel-path: icboluo-note/database.xlsx
   general-sql-path: icboluo-note/creat.sql
