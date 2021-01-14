@@ -21,6 +21,7 @@ import java.util.*;
 
 /**
  * 提供树结构，用作菜单展示
+ *
  * @author icboluo
  * @date 2020-09-18 00:32
  */
@@ -53,11 +54,11 @@ public class HuToolTest {
 //转换为日期对象
         String dateStr = "2017-05-06";
         Date date = Convert.toDate(dateStr);
-        System.out.println("转换为日期对象: "+date);
+        System.out.println("转换为日期对象: " + date);
 //转换为列表
         String[] strArr = {"a", "b", "c", "d"};
         List<String> strList = Convert.toList(String.class, strArr);
-        System.out.println("转换为列表: "+strList);
+        System.out.println("转换为列表: " + strList);
     }
 
     @Test
@@ -149,9 +150,8 @@ public class HuToolTest {
         System.out.println("names = " + names);
         List<Object> types = EnumUtil.getFieldValues(StatusEnum.class, "chinese");
         System.out.println("types = " + types);
-        Map<String,StatusEnum> enumMap = EnumUtil.getEnumMap(StatusEnum.class);
+        Map<String, StatusEnum> enumMap = EnumUtil.getEnumMap(StatusEnum.class);
         System.out.println("enumMap = " + enumMap);
         Map<String, Object> enumMap2 = EnumUtil.getNameFieldMap(StatusEnum.class, "type");
-
     }
 }

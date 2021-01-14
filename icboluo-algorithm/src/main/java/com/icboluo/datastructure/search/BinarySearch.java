@@ -14,8 +14,8 @@ class BinarySearch {
         int[] arr = {1, 8, 10, 89, 1000, 1000, 1000, 1000, 1234};
         int resIndex = m1(arr, 0, arr.length - 1, 9);
         List<Integer> integers = m2(arr, 0, arr.length - 1, 1000);
-        System.out.println("integers = " + integers);
         System.out.println("resIndex = " + resIndex);
+        System.out.println("integers = " + integers);
     }
 
     private static int m1(int[] arr, int left, int right, int findValue) {
@@ -59,5 +59,4 @@ class BinarySearch {
             return list;
         }
     }
-
 }

@@ -1,8 +1,11 @@
 package com.icboluo.sheji.shenchanxiaofei;
 
+/**
+ * @author icboluo
+ */
 public class Producter implements Runnable {
 
-    private SyncStack stack;
+    private final SyncStack stack;
 
     public Producter(SyncStack stack) {
         this.stack = stack;

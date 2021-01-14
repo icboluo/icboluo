@@ -4,7 +4,6 @@ package com.icboluo.test;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * @author icboluo
@@ -26,23 +25,6 @@ public class NumberTest {
         // cls -> int
         Class<Integer> cls = Integer.TYPE;
         System.out.println("cls = " + cls);
-    }
-
-
-    /**
-     * BigDecimal除法如果除不尽，需要第3个参数
-     */
-    @Test
-    public void test2() {
-        String s = "11";
-        BigDecimal bd = new BigDecimal("50");
-        //BigDecimal divide = bd.divide(new BigDecimal(s), 2, BigDecimal.ROUND_HALF_UP);
-    }
-
-    @Test
-    public void test3() {
-        String s = new Date().toString();
-        System.out.println("s = " + s);
     }
 
     @Test

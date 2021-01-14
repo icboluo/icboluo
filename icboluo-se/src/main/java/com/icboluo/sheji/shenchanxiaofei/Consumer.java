@@ -2,7 +2,7 @@ package com.icboluo.sheji.shenchanxiaofei;
 
 public class Consumer implements Runnable {
 
-    private SyncStack stack;
+    private final SyncStack stack;
 
     public Consumer(SyncStack stack) {
         this.stack = stack;

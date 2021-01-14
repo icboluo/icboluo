@@ -10,7 +10,8 @@ public class TransferDemo {
         Connection connection = MyJdbcUtil.getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            connection.setAutoCommit(false);//手动开启事物
+            //手动开启事物
+            connection.setAutoCommit(false);
             //转账500
             String sql1 = "update account set money=money-?where name=?";
             preparedStatement = connection.prepareStatement(sql1);

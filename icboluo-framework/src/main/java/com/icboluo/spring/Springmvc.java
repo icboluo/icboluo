@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.spring;
 /*
 使用需要log4j.properties日志
 InternalResourceViewResolver：《内部的，资源，..，溶解》视图解析器的一种，ModelAndView..setviewname可配合增加前缀和后缀

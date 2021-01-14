@@ -54,17 +54,6 @@ public class StringTest {
         });
     }
 
-
-    /**
-     * substring 包头不包尾
-     */
-    @Test
-    public void test15() {
-        String s = "sdata=%7B%22waveoryid%22%3";
-        String substring = s.substring(6);
-        System.out.println("substring = " + substring);
-    }
-
     @Test
     public void test16() {
         BigDecimal bd = new BigDecimal("52.79999923706055");

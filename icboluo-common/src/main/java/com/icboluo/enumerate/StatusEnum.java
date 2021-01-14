@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.EnumSet;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -86,8 +87,8 @@ public enum StatusEnum {
      */
     private static void validateStatusUniqueness() {
         long count = ALL_SET.stream()
-                .filter(e -> e.getStatus() != null)
                 .map(StatusEnum::getStatus)
+                .filter(Objects::nonNull)
                 .distinct()
                 .count();
         if (count != ALL_SET.size()) {

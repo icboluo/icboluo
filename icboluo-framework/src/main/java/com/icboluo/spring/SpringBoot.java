@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.spring;
 /*
   boot其最主要作用就是帮我们快速的构建庞大的spring项目，并且尽可能的
 减少一切xml配置，做到开箱即用，迅速上手，让我们关注与业务而非配置。
@@ -16,8 +16,6 @@ spring的属性注入：SpringBoot强调的是约定大于配置，因此遵循�
 属性读取类激活的2中方式:
 在属性读取类（jdbc.properties）中添加@Component（组成）注解
 在配置类上使用@EnableConfigurationProperties(JdbcProperties.class)
-
-
  */
 public class SpringBoot {
 }

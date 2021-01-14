@@ -17,12 +17,12 @@
 以JAVA_HOME为例：
 
 1. 将java的安装目录配成系统变量
-
-   ![image-20200630102200416](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200630102200416.png)
-
+   
+   ![img_3.png](software安装与配置/img_3.png)
+   
 2. 将系统变量引入path路径
 
-![image-20200630101917807](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200630101917807.png)
+   ![img_2.png](software安装与配置/img_2.png)
 
 3.测试：在jdk安装目录下面的bin目录里面运行
 
@@ -34,14 +34,14 @@ javac.exe
 
 1. 百度maven（建议下载压缩包）直接解压，按下面的步骤来就行了
 
-2. 修改maven的依赖下载地址，在config文件中修改，就是把53行的代码复制在注视外，修补一下
+2. 修改maven的依赖下载地址，在config文件中修改，就是把53行的代码复制在注释外，修补一下
 
-   ![image-20200628142914209](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200628142914209.png)
-
+   ![img_4.png](software安装与配置/img_4.png)
+   
 3. 修改下载源地址（默认的下载源是外网的，效率低，用阿里云覆盖）
 
-   ![image-20200628143100790](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200628143100790.png)
-
+   ![img_5.png](software安装与配置/img_5.png)
+   
    ```
    <mirror>
        <id>alimaven</id>
@@ -53,15 +53,13 @@ javac.exe
 
 5. idea设置，修改idea和maven的链接关系
 
-   ![image-20200815233029191](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200815233029191.png)
+   ![img_6.png](software安装与配置/img_6.png)
 
 5. idea设置，修改run
 
    ```
    -DarchetypeCatalog=internal
    ```
-
-   ![image-20200629165609681](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200629165609681.png)
 
 6. 实测用idea这样配的话，不写MAVEN_HOME也没有什么关系
 
@@ -76,8 +74,6 @@ javac.exe
    caches:放一下jar包
    其他的是一些运行环境和jar包
    ```
-
-   
 
 2. 配置idea gradle为下面这样
 
@@ -111,21 +107,21 @@ javac.exe
 
 ## 4.jdk
 
-1. 安装jdk14，直接官网下载压缩包解压
+1. 安装jdk15，直接官网下载压缩包解压
 
 2. 配置环境变量(JAVA_HOME)
 
 3. 在jdk安装目录下面的bin目录里面运行
 
-   ```
-   javac.exe
-   ```
+```
+javac.exe
+```
 
 ## 5.redis
 
 1. 虚拟机里面安装redis 我安装的目录是
 ```
-   cd usr/local/bin/redis-6.0.5/
+cd usr/local/bin/redis-6.0.5/
 ```
 
 2. 使用下面的命令启动redis
@@ -156,6 +152,7 @@ npm 是 nodejs 的包管理和分发工具。它可以让 javascript 开发者�
 node -v
 npm -v
 ```
+3.注意安装完成在cmd中可以检验是否安装成功，但是idea需要重新启动一下
 
 ## 7.vue
 
@@ -174,7 +171,6 @@ npm config get registry
 ```
 npm config set registry https://registry.npmjs.org
 ```
-
 
 安装vue命令（全局）：需要先配镜像
 ```

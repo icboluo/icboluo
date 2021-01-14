@@ -1,10 +1,38 @@
-package com.icboluo;
+package com.icboluo.spring;
 /*
-AOP：Aspect Oriented Programming《方面，以...为方向，》：
-把重复代码抽取出来，使用的时候，利用动态代理在不修改源码的基础上增强
-动态代理技术：要开始功能的增强了，就创建这个代理对象，对目标对象进行功能的增强。不可见
-1、基于接口的JDK官方的动态代理（优先使用）要求：被代理类最少实现一个接口
-2、基于子类的第三方的cglib的动态代理 要求：被代理类不能用final修饰的类
+
+    old：factory加载资源文件：private static ResourceBundle rb = ResourceBundle.getBundle("beans");
+             new时由  factory.getbean  替代
+    spring：applicationContext <bean>将serviceimpl 放在bean中
+                  加载配置文件，获取serviceimpl
+ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+
+1、默认无参构造实例化bean
+2、静态工厂方法实例化bean：把静态方发返回的值放在bean中
+class后面加factory-method
+
+3、实例工厂方法实例化bean：非静态方法返回的值放在bean中
+先和无参一样bean实例化，再用新的bean中factory-bean接收，factory-method写入方法
+
+Dependency Injection（依赖注入）：构造方法注入、setter方法注入、p名称空间注入（基于set）等
+构造函数注入属性值：涉及的标签 constructor-arg， set 方法注入 标签：Property《性质》
+      index:指定参数在构造函数参数列表的索引位置
+      name:指定参数在构造函数中的名称,指定给谁赋值
+      value:它能赋的值是基本数据类型和 String 类型
+      ref:它能赋的值是其他 bean 类型，也就是说，必须得是在配置文件中配置过的 bean
+
+复杂注入 用<...<property>获取list...的name
+
+<context:property-placeholder location 加载外部资源文件
+<context《环境》 component-scan base-package扫描包下所有对应注解
+<bean>属性：
+   scope：指定对象的作用范围
+      singleton :默认值，单例的
+      prototype :多例的
+   init-method：指定类中的初始化方法名称(生命周期相关)
+   destroy-method：指定类中销毁方法名称(生命周期相关)
+
 
  <aop:config>配置AOP
  <aop:aspect id="logAdvice" ref="logger">配置切面，ref:引用通知类

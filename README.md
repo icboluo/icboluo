@@ -173,13 +173,13 @@ TODO
 
 包含java软件环境的安装
 
-其中部分属于.xmind 文件，.md文件图片读不出来，建议在本地打开使用
+其中部分属于.xmind 文件
 
 ## sql
 
 提供sql的访问方式和sql的一些相关问题
 
-包含：jdbc JdbcTemplate 自定义连接池 c3p0 druid 
+包含：jdbc JdbcTemplate 自定义连接池 c3p0 druid redis
 
 TODO
 
@@ -203,7 +203,7 @@ TODO
 
 mvc 的拦截器配置
 
-spring 的切面
+spring aop
 
 
 # 项目更新计划

@@ -27,7 +27,7 @@ runtime：程序运行时期都有效，常用作框架注解设置
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Inherited
 //使用该注解的子类也相当于有该注解
+@Inherited
 @interface MyAnnotation05 {
 }

@@ -65,7 +65,5 @@ class Demo01 {
         Method eat = clazz1.getMethod("eat");
         Person person1 = new Person();
         eat.invoke(person1);
-
-
     }
 }
