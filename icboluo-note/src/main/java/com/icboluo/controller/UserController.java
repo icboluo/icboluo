@@ -22,10 +22,13 @@ import java.util.ArrayList;
 @Api(tags = "用户")
 @Slf4j
 public class UserController {
+
     @Resource
     private UserService userService;
+
     @Resource
     private UserFeign userFeign;
+
     @Resource
     private RestTemplate restTemplate;
 

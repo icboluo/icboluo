@@ -2,12 +2,12 @@ package com.icboluo.object.dataobject;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @author 
- * 
+ * @author
  */
 @Data
 public class MonthTimeDO implements Serializable {
@@ -51,5 +51,6 @@ public class MonthTimeDO implements Serializable {
      */
     private LocalDateTime gmtModified;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

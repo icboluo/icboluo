@@ -1,4 +1,4 @@
-package com.icboluo.annotation;
+package com.icboluo.annotation.demo_check;
 
 /**
  * @author icboluo

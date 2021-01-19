@@ -4,6 +4,8 @@ import com.icboluo.object.dataobject.SoftwarePasswordDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface SoftwarePasswordMapper {
@@ -18,4 +20,11 @@ public interface SoftwarePasswordMapper {
     int updateByPrimaryKeySelective(SoftwarePasswordDO record);
 
     int updateByPrimaryKey(SoftwarePasswordDO record);
+
+    /**
+     * 批量新增
+     *
+     * @param list 新增的数据
+     */
+    void insertBatch(List<SoftwarePasswordDO> list);
 }

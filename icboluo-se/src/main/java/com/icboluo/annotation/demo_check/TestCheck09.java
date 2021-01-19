@@ -1,4 +1,4 @@
-package com.icboluo.annotation;
+package com.icboluo.annotation.demo_check;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -13,12 +13,10 @@ import java.util.concurrent.TimeUnit;
  * @author icboluo
  * @date 2020/12/17 21:27
  */
-public abstract class AbstractRedis {
+public abstract class AbstractRedis<T> {
 
     @Resource
-    private RedisTemplate redisTemplate;
-
-    private TimeUnit defaultTimeUnit;
+    private RedisTemplate<String, T> redisTemplate;
 
 
     /**
@@ -78,9 +76,5 @@ public abstract class AbstractRedis {
                 redisTemplate.delete(CollectionUtils.arrayToList(key));
             }
         }
-    }
-
-    public void seconds(long time) {
-        this.defaultTimeUnit = TimeUnit.SECONDS;
     }
 }

@@ -9,5 +9,5 @@ import java.lang.annotation.Annotation;
  * @author icboluo
  * @date 2020-08-29 18:11
  */
- interface MyAnnotation03 extends Annotation {
+interface MyAnnotation03 extends Annotation {
 }

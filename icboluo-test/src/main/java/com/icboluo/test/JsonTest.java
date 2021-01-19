@@ -1,15 +1,7 @@
 package com.icboluo.test;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.icboluo.dataobject.Student;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * json 转换为对象 ：
@@ -29,27 +21,5 @@ public class JsonTest {
         //ClassCastException
         JSONObject data = jsonObject.getJSONObject("data");
         System.out.println("data = " + data);
-
     }
-
-    @Test
-    public void test3() {
-        ArrayList<Student> students = new ArrayList<>();
-        students.add(new Student());
-        students.add(new Student());
-        students.add(new Student());
-        String s = JSON.toJSONString(students);
-        List<Student> students1 = JSONArray.parseArray(s, Student.class);
-        System.out.println("students1 = " + students1);
-        Student student = new Student();
-    }
-
-    @Test
-    public void test4() {
-        Student student = new Student();
-        String s = JSON.toJSONString(student);
-        Student student1 = JSONObject.parseObject(s, student.getClass());
-        System.out.println("student1 = " + student1);
-    }
-
 }

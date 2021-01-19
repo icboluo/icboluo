@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author icboluo
  */
 @Component
-public class StringRedis<T> extends AbstractRedis {
+public class StringRedis<T> extends AbstractRedis<T> {
 
     @Resource
     private RedisTemplate<String, T> redisTemplate;

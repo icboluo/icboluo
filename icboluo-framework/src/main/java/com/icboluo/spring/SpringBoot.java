@@ -1,7 +1,13 @@
 package com.icboluo.spring;
-/*
-  boot其最主要作用就是帮我们快速的构建庞大的spring项目，并且尽可能的
-减少一切xml配置，做到开箱即用，迅速上手，让我们关注与业务而非配置。
+
+import javax.annotation.Resource;
+
+/**
+ * boot其最主要作用就是帮我们快速的构建庞大的spring项目，并且尽可能的
+ * 减少一切xml配置，做到开箱即用，迅速上手，让我们关注与业务而非配置。
+ *
+ * @author icboluo
+ */ /*
 pom中管理jdk版本：
 <properties>
     <java.version>1.8</java.version>
@@ -18,4 +24,16 @@ spring的属性注入：SpringBoot强调的是约定大于配置，因此遵循�
 在配置类上使用@EnableConfigurationProperties(JdbcProperties.class)
  */
 public class SpringBoot {
+
+    private static Sp sp;
+
+    /**
+     * set方法注入
+     *
+     * @param sp 需要注入的静态变量
+     */
+    @Resource
+    private void setSp(Sp sp) {
+        SpringBoot.sp = sp;
+    }
 }

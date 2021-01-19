@@ -1,4 +1,4 @@
-package com.icboluo.annotation;
+package com.icboluo.annotation.demo02;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

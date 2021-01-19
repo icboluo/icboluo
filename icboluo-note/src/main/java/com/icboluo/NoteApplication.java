@@ -17,11 +17,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author icboluo
  */
 @SpringBootApplication
-//        (
-//                exclude = {
-//                        DataSourceAutoConfiguration.class,
-//                        DataSourceTransactionManagerAutoConfiguration.class,
-//                })
+/*        (
+                exclude = {
+                        DataSourceAutoConfiguration.class,
+                        DataSourceTransactionManagerAutoConfiguration.class,
+                })*/
 @MapperScan("com.icboluo.mapper")
 @EnableDiscoveryClient
 @EnableConfigurationProperties({ReadExcelEntity.class, WriteExcelEntity.class})

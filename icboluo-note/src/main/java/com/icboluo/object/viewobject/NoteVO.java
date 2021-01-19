@@ -1,13 +1,52 @@
 package com.icboluo.object.viewobject;
 
-import com.icboluo.object.dataobject.TimeNoteDO;
+import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * @author icboluo
  */
 @Data
-public class NoteVO extends TimeNoteDO {
+@Builder
+public class NoteVO {
+
+    /**
+     * id
+     */
+    private Integer id;
+
+    /**
+     * 问题
+     */
+    private String problem;
+
+    /**
+     * 结果
+     */
+    private String result;
+
+    /**
+     * 完成次数
+     */
+    private Integer finishTime;
+
+    /**
+     * 所属范围
+     */
+    private String belongToScope;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime gmtCreate;
+
+    /**
+     * 修改时间
+     */
+    private LocalDateTime gmtModified;
+
     /**
      * 每天剩余数量
      */
