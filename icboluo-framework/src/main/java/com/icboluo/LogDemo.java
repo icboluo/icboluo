@@ -17,7 +17,9 @@ public class LogDemo {
         log.error("记录一行error，抛出错误日志", new IcBoLuoException());
 //        log.error("记录一行error，抛出错误日志", e);
 /*
-       日志最差实践：logging->level->root->debug：这种写法会将所有的debug级别以上的日志打印出来，不管是内部还是外部包
+        日志的级别从高到低：error->warn->info->error
+        spring 打印日志的默认级别：info
+       日志最差实践：logging->level->root->debug：这种写法会将所有的debug级别以上的日志打印出来，不管是内部还是外部包，例如redis包的日志
        如果要对包进行日志级别设置，并对包内的子包进行其他日志级别设置，可以使用 / *: debug写法
        需要注意：项目的启动模式和日志级别是毫无关系的
 */

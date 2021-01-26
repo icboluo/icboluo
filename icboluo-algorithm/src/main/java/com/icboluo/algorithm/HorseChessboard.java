@@ -1,4 +1,4 @@
-package com.icboluo.algorithm.horse;
+package com.icboluo.algorithm;
 
 import com.icboluo.util.ArrayHelper;
 
