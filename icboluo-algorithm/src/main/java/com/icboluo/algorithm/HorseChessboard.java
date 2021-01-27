@@ -26,11 +26,9 @@ public class HorseChessboard {
     public static void main(String[] args) {
         x = 8;
         y = 8;
-        int row = 1;
-        int column = 1;
         int[][] chessboard = new int[x][y];
         visited = new boolean[x * y];
-        traversalChessboard(chessboard, row - 1, column - 1, 1);
+        traversalChessboard(chessboard, 0, 0, 1);
         ArrayHelper.print(chessboard);
     }
 
@@ -54,6 +52,7 @@ public class HorseChessboard {
                 traversalChessboard(chessboard, p.y, p.x, step + 1);
             }
         }
+//        撤销选择
         if (step < x * y && !finished) {
             chessboard[row][column] = 0;
             visited[row * x + column] = false;

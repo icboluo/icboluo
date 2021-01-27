@@ -1,4 +1,4 @@
-package com.icboluo.algorithm;
+package com.icboluo.algorithm.method;
 
 /**
  * 双指针分为 fast slow指针和 left right指针

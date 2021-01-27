@@ -1,4 +1,4 @@
-package com.icboluo.algorithm;
+package com.icboluo.algorithm.method;
 
 /**
  * 大致解题思路：

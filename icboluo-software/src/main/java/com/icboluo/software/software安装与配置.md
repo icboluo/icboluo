@@ -138,6 +138,8 @@ yum -y install gcc-c++; yum install make;
 
 3.windows安装的时候，直接下载压缩包，然后解压就可以了
 
+windows下redis启动命令：redis-server redis.windows.conf
+
 ## 6.nodejs
 
 Node.js是一个Javascript运行环境(runtime)；
@@ -192,7 +194,7 @@ npm install axios
 
 ## 8.nacos
 
-`https://github.com/alibaba/nacos/releases`下载压缩包解压进入bin目录双击就可以启动了
+https://github.com/alibaba/nacos/releases 下载压缩包解压进入bin目录双击就可以启动了
 
 ## 9.sentinel
 

@@ -35,12 +35,12 @@ public class RedisLogAspect {
         String declaringTypeName = signature.getDeclaringTypeName();
 //        如果日志里面用函数，不管日志级别是什么，后面的占位符中的函数都会执行
 //        启动模式和日志级别毫无关系
-        log.debug("method : {}.{}({})", getClassName(declaringTypeName), methodName, argsToString(args));
+        log.debug("==>  Method: {}.{}({})", getClassName(declaringTypeName), methodName, argsToString(args));
     }
 
     @AfterReturning(returning = "ret", pointcut = "redisLog()")
     public void doAfterReturning(Object ret) {
-        log.debug("return : {}", ret);
+        log.debug("<==  Return: {}", ret);
     }
 
     private String argsToString(Object[] args) {

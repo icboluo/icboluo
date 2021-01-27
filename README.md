@@ -29,7 +29,7 @@ Here are some ideas to get you started:
 
 选择原因
 
-1.不会写前端，不分离以前用mvc写起来恶心
+1.前段代码没写
 
 2.cloud扩展性高
 

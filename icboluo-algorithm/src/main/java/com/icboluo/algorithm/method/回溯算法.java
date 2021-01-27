@@ -1,4 +1,4 @@
-package com.icboluo.algorithm;
+package com.icboluo.algorithm.method;
 
 /**
  * 参数：选择列表，路径

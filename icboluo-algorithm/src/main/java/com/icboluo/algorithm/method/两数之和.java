@@ -1,4 +1,4 @@
-package com.icboluo.algorithm;
+package com.icboluo.algorithm.method;
 
 /**
  * 求两数之和等于target
