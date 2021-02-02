@@ -2,6 +2,7 @@ package com.icboluo.redis;
 
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -11,16 +12,41 @@ import java.util.List;
  *
  * @author icboluo
  */
-public class ListRedis<T> extends AbstractRedis {
+@Component
+@SuppressWarnings("unused")
+public class ListRedis<T> extends AbstractRedis<T> {
 
     @Resource
     private RedisTemplate<String, T> redisTemplate;
-
+    /**
+     * todo 这里注入的时候有时需要先注入 name='redisTemplate' 这里不需要为什么
+     */
     @Resource
     private ListOperations<String, T> listOperations;
+
     @SuppressWarnings("unused")
     private void example() {
         ListOperations<String, T> listOperations = redisTemplate.opsForList();
+    }
+
+    public List<T> get(String key) {
+        return this.get(key, 0, -1);
+    }
+
+    /**
+     * 通过索引 获取list中的值
+     *
+     * @param key   键
+     * @param index 索引
+     * @return index>=0时， 0 表头，1 第二个元素...；index<0时，-1，表尾，-2倒数第二个元素，依次类推
+     */
+    public T get(String key, long index) {
+        try {
+            return listOperations.index(key, index);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -29,9 +55,9 @@ public class ListRedis<T> extends AbstractRedis {
      * @param key   键
      * @param start 开始
      * @param end   结束  0 到 -1代表所有值
-     * @return
+     * @return 获得的元素List
      */
-    public List<T> lGet(String key, long start, long end) {
+    public List<T> get(String key, long start, long end) {
         try {
             return listOperations.range(key, start, end);
         } catch (Exception e) {
@@ -44,9 +70,9 @@ public class ListRedis<T> extends AbstractRedis {
      * 获取list缓存的长度
      *
      * @param key 键
-     * @return
+     * @return size 大小
      */
-    public Long lGetListSize(String key) {
+    public Long size(String key) {
         try {
             return listOperations.size(key);
         } catch (Exception e) {
@@ -55,30 +81,15 @@ public class ListRedis<T> extends AbstractRedis {
         }
     }
 
-    /**
-     * 通过索引 获取list中的值
-     *
-     * @param key   键
-     * @param index 索引  index>=0时， 0 表头，1 第二个元素，依次类推；index<0时，-1，表尾，-2倒数第二个元素，依次类推
-     * @return
-     */
-    public T lGetIndex(String key, long index) {
-        try {
-            return listOperations.index(key, index);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     /**
      * 将list放入缓存
      *
      * @param key   键
      * @param value 值
-     * @return
+     * @return 是否新增成功
      */
-    public Boolean lSet(String key, T value) {
+    public Boolean add(String key, T value) {
         try {
             listOperations.rightPush(key, value);
             return true;
@@ -94,9 +105,9 @@ public class ListRedis<T> extends AbstractRedis {
      * @param key   键
      * @param value 值
      * @param time  时间(秒)
-     * @return
+     * @return 是否新增成功
      */
-    public Boolean lSet(String key, T value, long time) {
+    public Boolean add(String key, T value, long time) {
         try {
             listOperations.rightPush(key, value);
             if (time > 0) {
@@ -114,9 +125,9 @@ public class ListRedis<T> extends AbstractRedis {
      *
      * @param key   键
      * @param value 值
-     * @return
+     * @return 是否新增成功
      */
-    public Boolean lSet(String key, List<T> value) {
+    public Boolean addAll(String key, List<T> value) {
         try {
             listOperations.rightPushAll(key, value);
             return true;
@@ -132,9 +143,9 @@ public class ListRedis<T> extends AbstractRedis {
      * @param key   键
      * @param value 值
      * @param time  时间(秒)
-     * @return
+     * @return 是否新增成功
      */
-    public Boolean lSet(String key, List<T> value, long time) {
+    public Boolean addAll(String key, List<T> value, long time) {
         try {
             listOperations.rightPushAll(key, value);
             if (time > 0) {
@@ -153,9 +164,9 @@ public class ListRedis<T> extends AbstractRedis {
      * @param key   键
      * @param index 索引
      * @param value 值
-     * @return
+     * @return 是否更新成功
      */
-    public Boolean lUpdateIndex(String key, long index, T value) {
+    public Boolean set(String key, long index, T value) {
         try {
             listOperations.set(key, index, value);
             return true;
@@ -163,6 +174,11 @@ public class ListRedis<T> extends AbstractRedis {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+    public Long remove(String key, T value) {
+        return this.remove(key, value, 1);
     }
 
     /**
@@ -173,7 +189,7 @@ public class ListRedis<T> extends AbstractRedis {
      * @param value 值
      * @return 移除的个数
      */
-    public Long lRemove(String key, long count, T value) {
+    public Long remove(String key, T value, long count) {
         try {
             return listOperations.remove(key, count, value);
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.icboluo.redis;
 
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.Objects;
 /**
  * @author icboluo
  */
+@Component
 public class LockRedis extends AbstractRedis {
 
     private static final String LOCK_PREFIX = null;

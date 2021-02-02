@@ -2,6 +2,7 @@ package com.icboluo.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Set;
@@ -11,7 +12,8 @@ import java.util.Set;
  *
  * @author icboluo
  */
-public class SetRedis<T> extends AbstractRedis {
+@Component
+public class SetRedis<T> extends AbstractRedis<T> {
 
     @Resource
     private RedisTemplate<String, T> redisTemplate;

@@ -2,14 +2,18 @@ package com.icboluo.redis;
 
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Map;
 
-/**哈希类型相关操作
+/**
+ * 哈希类型相关操作
+ *
  * @author icboluo
  */
-public class HashRedis<T> extends AbstractRedis {
+@Component
+public class HashRedis<T> extends AbstractRedis<T> {
 
     @Resource
     private RedisTemplate redisTemplate;

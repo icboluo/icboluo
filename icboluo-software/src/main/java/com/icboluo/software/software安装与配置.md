@@ -138,7 +138,11 @@ yum -y install gcc-c++; yum install make;
 
 3.windows安装的时候，直接下载压缩包，然后解压就可以了
 
-windows下redis启动命令：redis-server redis.windows.conf
+windows下redis启动命令：
+
+```
+redis-server redis.windows.conf
+```
 
 ## 6.nodejs
 
