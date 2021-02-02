@@ -16,7 +16,7 @@ import java.util.Map;
 public class HashRedis<T> extends AbstractRedis<T> {
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, T> redisTemplate;
 
     @Resource
     private HashOperations<String, String, T> hashOperations;
