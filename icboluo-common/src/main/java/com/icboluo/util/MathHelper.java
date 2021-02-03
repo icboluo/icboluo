@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
+ * 包装类型比较大小的时候不要用equals，用compare
+ *
  * @author icboluo
  * @date 2020/12/2 20:29
  */

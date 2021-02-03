@@ -10,6 +10,7 @@ import java.util.Optional;
 
 /**
  * 状态值枚举，包含了对状态值的相关操作
+ * 枚举用equals比较可能相等，用==比较，不同的枚举类型值不会相等
  *
  * @author icboluo
  * @date 2020/11/12 20:29
@@ -66,6 +67,7 @@ public enum StatusEnum {
      */
     private static Optional<StatusEnum> findByStatus(Integer status) {
 //        校验写到底层会让所有的方法都通过校验，但是也会损耗性能（在这里的校验只是相当于移动到底层）
+//        校验并不一定需要写到最上层，有的时候需要准备校验参数，数据要写到函数内部
         validateStatusUniqueness();
         return ALL_SET.stream()
                 .filter(e -> e.status.equals(status))

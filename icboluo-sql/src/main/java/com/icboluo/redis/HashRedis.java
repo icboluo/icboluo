@@ -1,7 +1,6 @@
 package com.icboluo.redis;
 
 import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,9 +13,6 @@ import java.util.Map;
  */
 @Component
 public class HashRedis<T> extends AbstractRedis<T> {
-
-    @Resource
-    private RedisTemplate<String, T> redisTemplate;
 
     @Resource
     private HashOperations<String, String, T> hashOperations;

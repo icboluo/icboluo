@@ -35,11 +35,11 @@ public class RedisController {
 
     @GetMapping("/add")
     public Long add() {
-        return stringRedis.increment("add", 1L);
+        return stringRedis.increment("add", Long.class);
     }
 
     @GetMapping("/decr")
     public Long decr() {
-        return stringRedis.decrease("add", 1L);
+        return stringRedis.decrease("add", Long.class);
     }
 }

@@ -1,10 +1,13 @@
 package com.icboluo.redis;
 
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.support.atomic.RedisAtomicDouble;
+import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
+import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -12,10 +15,8 @@ import java.util.concurrent.TimeUnit;
  * @author icboluo
  */
 @Component
+@SuppressWarnings("unused")
 public class StringRedis<T> extends AbstractRedis<T> {
-
-    @Resource
-    private RedisTemplate<String, T> redisTemplate;
 
     @Resource
     private ValueOperations<String, T> valueOperations;
@@ -82,30 +83,73 @@ public class StringRedis<T> extends AbstractRedis<T> {
         }
     }
 
+    public Integer increment(String key) {
+        return increment(key, 1, Integer.class);
+    }
+
+    public <G extends Number> G increment(String key, Class<G> g) {
+        return increment(key, g.cast(1), g);
+    }
+
     /**
      * 递增操作
+     * valueOperations.increment(key, delta);
      *
      * @param key   键
      * @param delta 递增因子
+     * @param g     要转化的数据类型
+     * @param <G>   泛型类型
      * @return 递增之后的值
      */
-    public Long increment(String key, long delta) {
-        if (delta < 0) {
+    public <G extends Number> G increment(String key, G delta, Class<G> g) {
+        if (delta.intValue() < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
-        return valueOperations.increment(key, delta);
+        if (g == Long.class) {
+            RedisAtomicLong redisAtomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            return g.cast(redisAtomicLong.addAndGet((Long) delta));
+        } else if (g == Integer.class) {
+            RedisAtomicInteger redisAtomicInteger = new RedisAtomicInteger(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            return g.cast(redisAtomicInteger.addAndGet((Integer) delta));
+        } else if (g == Double.class) {
+            RedisAtomicDouble redisAtomicDouble = new RedisAtomicDouble(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            return g.cast(redisAtomicDouble.addAndGet((Double) delta));
+        }
+        return null;
+    }
+
+    public Integer decrease(String key) {
+        return decrease(key, 1, Integer.class);
+    }
+
+    public <G extends Number> G decrease(String key, Class<G> g) {
+        return decrease(key, g.cast(1), g);
     }
 
     /**
      * 递减操作
+     * valueOperations.increment(key, -delta);
      *
-     * @param key 键
+     * @param key   键
+     * @param delta 递减因子
+     * @param g     要转化的数据类型
+     * @param <G>   泛型类型
      * @return 递减之后的值
      */
-    public Long decrease(String key, long delta) {
-        if (delta < 0) {
+    public <G extends Number> G decrease(String key, G delta, Class<G> g) {
+        if (delta.intValue() < 0) {
             throw new RuntimeException("递减因子必须大于0");
         }
-        return valueOperations.increment(key, -delta);
+        if (g == Long.class) {
+            RedisAtomicLong redisAtomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            return g.cast(redisAtomicLong.addAndGet(-delta.longValue()));
+        } else if (g == Integer.class) {
+            RedisAtomicInteger redisAtomicInteger = new RedisAtomicInteger(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            return g.cast(redisAtomicInteger.addAndGet(-delta.intValue()));
+        } else if (g == Double.class) {
+            RedisAtomicDouble redisAtomicDouble = new RedisAtomicDouble(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            return g.cast(redisAtomicDouble.addAndGet(-delta.doubleValue()));
+        }
+        return null;
     }
 }

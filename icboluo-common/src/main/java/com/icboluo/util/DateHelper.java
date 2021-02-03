@@ -3,9 +3,9 @@ package com.icboluo.util;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,5 +73,26 @@ public class DateHelper {
      */
     public static LocalDateTime parseTimeStampToDate(Long timeStamp) {
         return LocalDateTime.ofEpochSecond(timeStamp / 1000, 0, ZoneOffset.ofHours(8));
+    }
+
+    public static Date localDateTimeToDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static LocalDateTime dateToLocalDateTime(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    /**
+     * 这天的最后一秒
+     *
+     * @param localDate 天数
+     * @return 这天的最后时间
+     */
+    public static LocalDateTime finalTime(LocalDate localDate) {
+        LocalTime maxTime = LocalTime.MAX;
+        return LocalDateTime.of(localDate, maxTime);
     }
 }

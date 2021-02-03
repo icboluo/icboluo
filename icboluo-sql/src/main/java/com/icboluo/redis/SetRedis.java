@@ -1,6 +1,5 @@
 package com.icboluo.redis;
 
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +13,6 @@ import java.util.Set;
  */
 @Component
 public class SetRedis<T> extends AbstractRedis<T> {
-
-    @Resource
-    private RedisTemplate<String, T> redisTemplate;
 
     @Resource
     private SetOperations<String, T> setOperations;

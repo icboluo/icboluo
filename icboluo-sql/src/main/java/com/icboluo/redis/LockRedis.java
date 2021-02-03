@@ -1,10 +1,8 @@
 package com.icboluo.redis;
 
 import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
@@ -16,9 +14,6 @@ public class LockRedis extends AbstractRedis {
     private static final String LOCK_PREFIX = null;
 
     private long LOCK_EXPIRE;
-
-    @Resource
-    private RedisTemplate redisTemplate;
 
 
     /**

@@ -1,7 +1,6 @@
 package com.icboluo.redis;
 
 import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,9 +14,6 @@ import java.util.List;
 @Component
 @SuppressWarnings("unused")
 public class ListRedis<T> extends AbstractRedis<T> {
-
-    @Resource
-    private RedisTemplate<String, T> redisTemplate;
     /**
      * todo 这里注入的时候有时需要先注入 name='redisTemplate' 这里不需要为什么
      */
@@ -89,7 +85,7 @@ public class ListRedis<T> extends AbstractRedis<T> {
      * @param value 值
      * @return 是否新增成功
      */
-    public Boolean add(String key, T value) {
+    public boolean add(String key, T value) {
         try {
             listOperations.rightPush(key, value);
             return true;
@@ -107,7 +103,7 @@ public class ListRedis<T> extends AbstractRedis<T> {
      * @param time  时间(秒)
      * @return 是否新增成功
      */
-    public Boolean add(String key, T value, long time) {
+    public boolean add(String key, T value, long time) {
         try {
             listOperations.rightPush(key, value);
             if (time > 0) {
@@ -127,7 +123,7 @@ public class ListRedis<T> extends AbstractRedis<T> {
      * @param value 值
      * @return 是否新增成功
      */
-    public Boolean addAll(String key, List<T> value) {
+    public boolean addAll(String key, List<T> value) {
         try {
             listOperations.rightPushAll(key, value);
             return true;
@@ -145,7 +141,7 @@ public class ListRedis<T> extends AbstractRedis<T> {
      * @param time  时间(秒)
      * @return 是否新增成功
      */
-    public Boolean addAll(String key, List<T> value, long time) {
+    public boolean addAll(String key, List<T> value, long time) {
         try {
             listOperations.rightPushAll(key, value);
             if (time > 0) {
@@ -166,7 +162,7 @@ public class ListRedis<T> extends AbstractRedis<T> {
      * @param value 值
      * @return 是否更新成功
      */
-    public Boolean set(String key, long index, T value) {
+    public boolean set(String key, long index, T value) {
         try {
             listOperations.set(key, index, value);
             return true;
@@ -177,8 +173,9 @@ public class ListRedis<T> extends AbstractRedis<T> {
     }
 
 
-    public Long remove(String key, T value) {
-        return this.remove(key, value, 1);
+    public boolean remove(String key, T value) {
+        Long count = remove(key, value, 1);
+        return count.compareTo(1L) == 0;
     }
 
     /**
