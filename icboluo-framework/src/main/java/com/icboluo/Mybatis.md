@@ -54,3 +54,11 @@ pageHelper可以暂时不执行，实现是先用PageHelper.getLocalPage 把数�
 mysql如果需要批量新增，可以用foreach标签或者case when，第一种的效率是可以接受的（需要开启批量操作）， foreach标签操作新增的时候有一个小问题，就是不能selective，不能利用到数据库的默认值
 
 mybatis新增的时候，如果是自增主键，设置开启主键自增回显，会将主键写进参数中
+
+## PageInfo
+
+如果分页list中的对象更改，需要将PageInfo的数据先缓存起来，然后重新组装PageInfo
+
+## Count
+
+mysql的count方法如果效率过低可以重写，重写的sql可以和以前的sql有些差距，只需要计算总数即可

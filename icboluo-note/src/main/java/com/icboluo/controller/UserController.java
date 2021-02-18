@@ -2,8 +2,8 @@ package com.icboluo.controller;
 
 import com.icboluo.feign.UserFeign;
 import com.icboluo.service.UserService;
-import com.icboluo.util.R;
-import com.icboluo.util.Response;
+import com.icboluo.util.response.R;
+import com.icboluo.util.response.Response;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

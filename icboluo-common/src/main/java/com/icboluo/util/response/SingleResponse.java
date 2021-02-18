@@ -1,5 +1,5 @@
 
-package com.icboluo.util;
+package com.icboluo.util.response;
 
 import com.icboluo.enumerate.ReEnum;
 import lombok.Getter;

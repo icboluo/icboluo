@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
+ * PostConstruct 代表的是创建对象后调用
+ * Profile 代表的是某个环境生效
+ * 他们2个毫无关系，各自有自己的生效场景，如果类都不生效，创建对象就更不可能了
+ *
  * @author icboluo
  * @date 2020/10/27 00:06
  */

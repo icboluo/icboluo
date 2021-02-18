@@ -1,11 +1,24 @@
 package com.icboluo.util;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
 
 /**
  * @author icboluo
  */
 public class FileHelper {
+
+    /**
+     * 静默删除
+     * 递归删除
+     *
+     * @param file 要删除的文件
+     */
+    public static void delete(File file) {
+        FileUtils.deleteQuietly(file);
+    }
+
     public static void write(String data, String filePath) {
         FileWriter fw;
         try {

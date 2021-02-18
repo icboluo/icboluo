@@ -170,4 +170,27 @@ public class ArrayHelper {
         }
         return arr;
     }
+
+    /**
+     * 最长递增子序列（Longest Increasing Subsequence，简写 LIS）
+     *
+     * @param arr 带查找数组
+     * @return 最长递增子序列的长度
+     */
+    public static int lis(int[] arr) {
+        int[] dp = new int[arr.length];
+        dp[0] = 1;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < i; j++) {
+//                只有后面比前面大的时候需要更新
+                if (arr[i] > arr[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                } else {
+//                    当然也可以给数组初始化1的值
+                    dp[i] = Math.max(dp[i], 1);
+                }
+            }
+        }
+        return findMaxVal(arr);
+    }
 }

@@ -31,6 +31,8 @@
 @Resource两者合一
    
 @Value注入url exa：
+
+    属性注入，将制定配置文件中的属性注入到变量中
       
       @Value("${jdbc.url}")
        private String name;

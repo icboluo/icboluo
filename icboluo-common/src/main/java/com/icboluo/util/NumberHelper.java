@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 数字比较大小不要用equals，用compare
+ *
  * @author icboluo
  * @date 2020/12/19 20:02
  */

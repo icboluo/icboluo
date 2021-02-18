@@ -1,4 +1,4 @@
-package com.icboluo.util;
+package com.icboluo.util.response;
 
 import com.alibaba.fastjson.JSONObject;
 import com.icboluo.enumerate.ReEnum;
@@ -50,6 +50,10 @@ public class R {
 
     public static <T> Response correct(List<T> list) {
         return new SingleResponse<>(getJsonObject(list), ReEnum.OPERATION_SUCCESSFUL);
+    }
+
+    public static <T> Response correct(Collection<T> list) {
+        return new CollResponse<>(list, ReEnum.OPERATION_SUCCESSFUL);
     }
 
     public static Response correct(List... lists) {

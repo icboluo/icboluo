@@ -6,9 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -89,5 +87,17 @@ public class BeanHelper {
         Optional<T> first = list.stream()
                 .findFirst();
         return first.orElse(null);
+    }
+
+    public static boolean allIsNull(Object... arr) {
+        return Arrays.stream(arr)
+                .map(Objects::isNull)
+                .reduce(true, (a, b) -> a && b);
+    }
+
+    public static boolean allNotNull(Object... arr) {
+        return Arrays.stream(arr)
+                .map(Objects::nonNull)
+                .reduce(true, (a, b) -> a && b);
     }
 }

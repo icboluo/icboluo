@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * 可以使用联想搜索
  * 状态值枚举，包含了对状态值的相关操作
  * 枚举用equals比较可能相等，用==比较，不同的枚举类型值不会相等
  *

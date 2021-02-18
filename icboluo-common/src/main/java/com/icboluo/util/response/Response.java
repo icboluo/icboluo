@@ -1,9 +1,10 @@
 
-package com.icboluo.util;
+package com.icboluo.util.response;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.enumerate.ReEnum;
+import com.icboluo.util.IcBoLuoException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
