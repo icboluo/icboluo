@@ -191,6 +191,6 @@ public class ArrayHelper {
                 }
             }
         }
-        return findMaxVal(arr);
+        return findMaxVal(dp);
     }
 }

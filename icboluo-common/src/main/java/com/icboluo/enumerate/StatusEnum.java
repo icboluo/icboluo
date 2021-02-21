@@ -12,6 +12,8 @@ import java.util.Optional;
  * 可以使用联想搜索
  * 状态值枚举，包含了对状态值的相关操作
  * 枚举用equals比较可能相等，用==比较，不同的枚举类型值不会相等
+ * switch中可以使用枚举
+ * 常量比较方式用equals
  *
  * @author icboluo
  * @date 2020/11/12 20:29
@@ -31,6 +33,9 @@ public enum StatusEnum {
     PROCESSED("Processed", "已处理", 8),
     IN_MAINTENANCE("In maintenance", "维护中", 9),
     IN_IMPLEMENTATION("In implementation", "实施中", 10),
+    QX("In implementation", "取消", 10),
+    GB("In implementation", "关闭", 10),
+    DGB("In implementation", "待关闭", 10),
     ;
 
     /**

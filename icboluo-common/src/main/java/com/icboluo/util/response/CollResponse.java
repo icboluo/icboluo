@@ -1,8 +1,7 @@
 package com.icboluo.util.response;
 
 import com.icboluo.enumerate.ReEnum;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Collection;
 
@@ -10,13 +9,12 @@ import java.util.Collection;
  * @author icboluo
  * @date 2021-14-18 21:14
  */
+@Data
 public class CollResponse<T> extends Response {
 
     /**
      * 数据
      */
-    @Getter
-    @Setter
     private Collection<T> data;
 
     public CollResponse(ReEnum reEnum) {

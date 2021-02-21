@@ -2,20 +2,19 @@
 package com.icboluo.util.response;
 
 import com.icboluo.enumerate.ReEnum;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * @author icboluo
  */
 @NoArgsConstructor
+@Data
 public class SingleResponse<T> extends Response {
+
     /**
      * 数据
      */
-    @Getter
-    @Setter
     private T data;
 
     public SingleResponse(ReEnum reEnum) {

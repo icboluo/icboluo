@@ -15,15 +15,20 @@ public class SpringIoc {
     @Resource
     private ArchivesVO archivesVO;
 
-/*    singleton ArchivesVO() {
-//单例注入
+    /**
+     * 相当于
+     */
+/*    private ArchivesVO archives = getArchivesVO();
+
+    private singleton getArchivesVO() {
+        // 单例注入 map：ioc容器
         if (map.get(ArchivesVO) == null) {
             map.put(new ArchivesVO());
         }
         return map.get(ArchivesVO);
-    }*/
+    }
 
-/*    prototype ArchivesVO() {
+    private prototype getArchivesVO() {
 //多例注入
         return new ArchivesVO();
     }*/
