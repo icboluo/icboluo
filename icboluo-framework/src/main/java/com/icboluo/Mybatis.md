@@ -62,3 +62,9 @@ mybatis新增的时候，如果是自增主键，设置开启主键自增回显�
 ## Count
 
 mysql的count方法如果效率过低可以重写，重写的sql可以和以前的sql有些差距，只需要计算总数即可
+
+## 标签
+
+mybaits if标签中 "test=date !=null and date !=''",不能这样写，不等于空字符串只针对于String类型
+
+Integer collection 均不能这样写

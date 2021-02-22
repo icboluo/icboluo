@@ -62,19 +62,24 @@
 @PreDestroy
 相当于：<bean id="" class="" init-method="" destroy-method="" />
 
+postConstruct 在创建对象后执行，整个系统中只执行一次，可以用来系统启动初始化某些属性
 
-Joinpoint 连接点
+ 
+Joinpoint 连接点 连接点表示应用执行过程中能够插入切面的一个点，
+这个点可以是方法的调用、异常的抛出。在 Spring AOP 中，连接点总是方法的调用
 
-PointCut 切点
+PointCut 切点 可以插入增强处理的连接点
 
-Advice 增强
+Advice 通知  AOP 框架中的增强处理。通知描述了切面何时执行以及如何执行增强处理
 
 增强里面有各种通知
 
 Target 目标对象
 
-Weaving 织入
+Weaving 织入 将增强处理添加到目标对象中，并创建一个被增强的对象，这个过程就是织入
 
 Proxy 代理类
 
-Aspect 切面
+Aspect 切面 切面是通知和切点的结合
+
+引入（Introduction）：引入允许我们向现有的类添加新的方法或者属性
