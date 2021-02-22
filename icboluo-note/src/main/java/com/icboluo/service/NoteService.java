@@ -14,19 +14,20 @@ import com.icboluo.object.viewobject.NoteVO;
 import com.icboluo.util.BeanHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author lp
  */
 @Service
-@Transactional
 @Slf4j
 public class NoteService {
     @Resource
@@ -58,7 +59,6 @@ public class NoteService {
     @Resource
     private YearTimeService yearTimeService;
 
-
     /**
      * 查询第一个应该解决的问题
      *
@@ -70,43 +70,18 @@ public class NoteService {
         List<WeekTimeDO> weekTimeDOS = weekTimeMapper.selectAll(query);
         List<MonthTimeDO> monthTimeDOS = monthTimeMapper.selectAll();
         List<YearTimeDO> yearTimeDOS = yearTimeMapper.selectAll();
-        List<TimeNoteDO> timeNoteDOList = deleteUnqualifiedObj1(timeNoteDOS);
-        List<WeekTimeDO> weekTimeDOList = deleteUnqualifiedObj2(weekTimeDOS);
-        List<MonthTimeDO> monthTimeDOList = deleteUnqualifiedObj3(monthTimeDOS);
-        List<YearTimeDO> yearTimeDOList = deleteUnqualifiedObj4(yearTimeDOS);
+        List<NoteVO> noteList1 = deleteUnqualifiedObj(timeNoteDOS, TimeNoteDO::getGmtModified, Constant.TIME_NOTE_INTERVAL, timeNoteConvertor::toView);
+        List<NoteVO> noteList2 = deleteUnqualifiedObj(weekTimeDOS, WeekTimeDO::getGmtModified, Constant.WEEK_TIME_INTERVAL, weekTimeConvertor::toView);
+        List<NoteVO> noteList3 = deleteUnqualifiedObj(monthTimeDOS, MonthTimeDO::getGmtModified, Constant.MONTH_TIME_INTERVAL, monthTimeConvertor::toView);
+        List<NoteVO> noteList4 = deleteUnqualifiedObj(yearTimeDOS, YearTimeDO::getGmtModified, Constant.YEAR_TIME_INTERVAL, yearTimeConvertor::toView);
 
-        TimeNoteDO timeNoteDO;
-        WeekTimeDO weekTimeDO;
-        MonthTimeDO monthTimeDO;
-        YearTimeDO yearTimeDO;
-        if (timeNoteDOList.isEmpty()) {
-            timeNoteDO = new TimeNoteDO();
-            timeNoteDO.setGmtModified(LocalDateTime.now());
-        } else {
-            timeNoteDO = timeNoteDOList.get(0);
-        }
-        if (weekTimeDOList.isEmpty()) {
-            weekTimeDO = new WeekTimeDO();
-            weekTimeDO.setGmtModified(LocalDateTime.now());
-        } else {
-            weekTimeDO = weekTimeDOList.get(0);
-        }
-        if (monthTimeDOList.isEmpty()) {
-            monthTimeDO = new MonthTimeDO();
-            monthTimeDO.setGmtModified(LocalDateTime.now());
-        } else {
-            monthTimeDO = monthTimeDOList.get(0);
-        }
-        if (yearTimeDOList.isEmpty()) {
-            yearTimeDO = new YearTimeDO();
-            yearTimeDO.setGmtModified(LocalDateTime.now());
-        } else {
-            yearTimeDO = yearTimeDOList.get(0);
-        }
-        NoteVO noteVO = getMinTime(timeNoteDO, weekTimeDO, monthTimeDO, yearTimeDO);
-        noteVO.setTimeNoteAmount(timeNoteDOList.size());
-        noteVO.setWeekTimeAmount(weekTimeDOList.size());
-        noteVO.setMonthTimeAmount(monthTimeDOList.size());
+        NoteVO noteVO = Stream.of(noteList1, noteList2, noteList3, noteList4)
+                .flatMap(Collection::stream)
+                .min(Comparator.comparing(NoteVO::getGmtModified))
+                .orElse(new NoteVO());
+        noteVO.setTimeNoteAmount(noteList1.size());
+        noteVO.setWeekTimeAmount(noteList2.size());
+        noteVO.setMonthTimeAmount(noteList3.size());
         return noteVO;
     }
 
@@ -119,125 +94,27 @@ public class NoteService {
     }
 
     /**
-     * 删除不合格对象
-     *
-     * @param list year whole
-     * @return qualified obj
-     */
-    private List<YearTimeDO> deleteUnqualifiedObj4(List<YearTimeDO> list) {
-        int i = 0;
-        for (YearTimeDO yearTimeDO : list) {
-            LocalDateTime gmtModified = yearTimeDO.getGmtModified();
-            long shouldTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + Constant.YEAR_TIME_INTERVAL;
-            long time = System.currentTimeMillis();
-            if (time < shouldTime) {
-                break;
-            }
-            i++;
-        }
-        return list.subList(0, i);
-    }
-
-    /**
-     * 比较对象中时间值最小的
-     *
-     * @param timeNoteDO  time obj
-     * @param weekTimeDO  week obj
-     * @param monthTimeDO month obj
-     * @param yearTimeDO  year obj
-     * @return vo obj
-     */
-    private NoteVO getMinTime(TimeNoteDO timeNoteDO, WeekTimeDO weekTimeDO, MonthTimeDO monthTimeDO, YearTimeDO yearTimeDO) {
-        long time1 = timeNoteDO.getGmtModified().toEpochSecond(ZoneOffset.ofHours(8)) + Constant.TIME_NOTE_INTERVAL;
-        long time2 = weekTimeDO.getGmtModified().toEpochSecond(ZoneOffset.ofHours(8)) + Constant.WEEK_TIME_INTERVAL;
-        long time3 = monthTimeDO.getGmtModified().toEpochSecond(ZoneOffset.ofHours(8)) + Constant.MONTH_TIME_INTERVAL;
-        long time4 = yearTimeDO.getGmtModified().toEpochSecond(ZoneOffset.ofHours(8)) + Constant.YEAR_TIME_INTERVAL;
-
-        List<Long> list = new ArrayList<>();
-        list.add(time1);
-        list.add(time2);
-        list.add(time3);
-        list.add(time4);
-        long min = Long.MAX_VALUE;
-        int type = 0;
-        for (int i = 0; i < 4; i++) {
-            if (min > list.get(i)) {
-                min = list.get(i);
-                type = i + 1;
-            }
-        }
-        NoteVO noteVO = null;
-        if (1 == type) {
-            noteVO = timeNoteConvertor.toView(timeNoteDO);
-        } else if (2 == type) {
-            noteVO = weekTimeConvertor.toView(weekTimeDO);
-        } else if (3 == type) {
-            noteVO = monthTimeConvertor.toView(monthTimeDO);
-        } else if (4 == type) {
-            noteVO = yearTimeConvertor.toView(yearTimeDO);
-        }
-        return noteVO;
-    }
-
-    /**
-     * 删除不合格的对象
-     *
-     * @param list month whole
-     * @return qualified list
-     */
-    private List<MonthTimeDO> deleteUnqualifiedObj3(List<MonthTimeDO> list) {
-        int i = 0;
-        for (MonthTimeDO monthTimeDO : list) {
-            LocalDateTime gmtModified = monthTimeDO.getGmtModified();
-            long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + Constant.MONTH_TIME_INTERVAL;
-            long time = System.currentTimeMillis();
-            if (time < planTime) {
-                break;
-            }
-            i++;
-        }
-        return list.subList(0, i);
-    }
-
-    /**
      * todo
      * 删除不合格(时间上不满足的情况)对象
      *
      * @param list time whole list
      * @return qualified list
      */
-    private List<TimeNoteDO> deleteUnqualifiedObj1(List<TimeNoteDO> list) {
-        int i = 0;
-        for (TimeNoteDO timeNoteDO : list) {
-            LocalDateTime gmtModified = timeNoteDO.getGmtModified();
-            long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + Constant.TIME_NOTE_INTERVAL;
-            long time = System.currentTimeMillis();
-            if (time < planTime) {
-                break;
-            }
-            i++;
-        }
-        return list.subList(0, i);
-    }
-
-    /**
-     * 删除不合格对象
-     *
-     * @param list week whole list
-     * @return qualified list
-     */
-    private List<WeekTimeDO> deleteUnqualifiedObj2(List<WeekTimeDO> list) {
-        int i = 0;
-        for (WeekTimeDO weekTimeDO : list) {
-            LocalDateTime gmtModified = weekTimeDO.getGmtModified();
-            long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + Constant.WEEK_TIME_INTERVAL;
-            long time = System.currentTimeMillis();
-            if (time < planTime) {
-                break;
-            }
-            i++;
-        }
-        return list.subList(0, i);
+    private <T> List<NoteVO> deleteUnqualifiedObj(List<T> list, Function<T, LocalDateTime> getGmtModified, long timeInterval, Function<T, NoteVO> convertor) {
+        return list.stream()
+                .filter(o -> {
+                    LocalDateTime gmtModified = getGmtModified.apply(o);
+                    long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + timeInterval;
+                    long time = System.currentTimeMillis();
+                    return time > planTime;
+                })
+                .map(o -> {
+                    NoteVO vo = convertor.apply(o);
+                    LocalDateTime gmtModified = getGmtModified.apply(o);
+                    long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + timeInterval;
+                    vo.setShouldFinishTime(planTime);
+                    return vo;
+                }).collect(Collectors.toList());
     }
 
     /**

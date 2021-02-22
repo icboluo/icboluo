@@ -48,6 +48,11 @@ public class NoteVO {
     private LocalDateTime gmtModified;
 
     /**
+     * 应该完成时间
+     */
+    private long shouldFinishTime;
+
+    /**
      * 每天剩余数量
      */
     private int timeNoteAmount;

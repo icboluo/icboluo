@@ -4,6 +4,8 @@ import lombok.NonNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
+import java.util.OptionalInt;
 
 /**
  * 包装类型比较大小的时候不要用equals，用compare
@@ -81,5 +83,15 @@ public class MathHelper {
             res = new BigDecimal(mTemp);
         }
         return res;
+    }
+
+    private static int max(int... arr) {
+        OptionalInt max = Arrays.stream(arr).max();
+        return max.orElse(Integer.MIN_VALUE);
+    }
+
+    private static int min(int... arr) {
+        OptionalInt min = Arrays.stream(arr).min();
+        return min.orElse(Integer.MAX_VALUE);
     }
 }

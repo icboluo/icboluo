@@ -153,10 +153,6 @@ TODO
 
 包含note和excel
 
-TODO
-
-分离2个模块
-
 ## se
 
 包含se内容
@@ -173,17 +169,9 @@ TODO
 
 包含：jdbc JdbcTemplate 自定义连接池 c3p0 druid redis
 
-TODO
-
-其中tomcat部分未拆分
-
 ## test
 
-从hello world到framework
-
-TODO
-
-分离补充为多个模块
+测试代码
 
 ## user
 
@@ -203,7 +191,7 @@ spring aop
 
 ## 更新leetcode题目
 
-## spring MessageResource 国际化
+## spring MessageSource 国际化
 
 
 
