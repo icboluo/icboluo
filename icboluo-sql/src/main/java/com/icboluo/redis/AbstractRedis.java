@@ -137,4 +137,8 @@ public abstract class AbstractRedis<T> {
         }
         return g;
     }
+
+    public void type(String key) {
+        redisTemplate.type(key);
+    }
 }

@@ -1,11 +1,14 @@
 package com.icboluo.object;
 
+import lombok.Data;
+
 /**
  * 物料的视图对象，比档案对象对了数量字段
  *
  * @author icboluo
  * @date 2020/12/3 21:39
  */
+@Data
 public class MaterialsVO {
 
     /**

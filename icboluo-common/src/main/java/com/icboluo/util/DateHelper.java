@@ -86,7 +86,7 @@ public class DateHelper {
     }
 
     /**
-     * 这天的最后一秒
+     * 这天的最后一秒，在数据库中因为数据库精度不够，会进一
      *
      * @param localDate 天数
      * @return 这天的最后时间

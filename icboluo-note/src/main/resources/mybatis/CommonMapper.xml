@@ -10,4 +10,13 @@
             and ${endTime}>=${dbTime}
         </if>
     </sql>
+
+    <sql id="date">
+        <if test="${startTime}!=null}">
+            and unix_timestamp(${dbTime})>=unix_timestamp(${startTime})
+        </if>
+        <if test="${endTime}!=null">
+            and unix_timestamp(date_add(${endTime},interval 1 day))>=unix_timestamp(${dbTime})
+        </if>
+    </sql>
 </mapper>
