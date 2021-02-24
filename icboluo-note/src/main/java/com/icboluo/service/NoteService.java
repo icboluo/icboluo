@@ -14,7 +14,6 @@ import com.icboluo.object.viewobject.NoteVO;
 import com.icboluo.util.BeanHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -66,14 +65,14 @@ public class NoteService {
      * @return vo obj
      */
     public NoteVO selectOne(TimeNoteQuery query) {
-        List<TimeNoteDO> timeNoteDOS = timeNoteMapper.selectAll(query);
-        List<WeekTimeDO> weekTimeDOS = weekTimeMapper.selectAll(query);
-        List<MonthTimeDO> monthTimeDOS = monthTimeMapper.selectAll();
-        List<YearTimeDO> yearTimeDOS = yearTimeMapper.selectAll();
-        List<NoteVO> noteList1 = deleteUnqualifiedObj(timeNoteDOS, TimeNoteDO::getGmtModified, Constant.TIME_NOTE_INTERVAL, timeNoteConvertor::toView);
-        List<NoteVO> noteList2 = deleteUnqualifiedObj(weekTimeDOS, WeekTimeDO::getGmtModified, Constant.WEEK_TIME_INTERVAL, weekTimeConvertor::toView);
-        List<NoteVO> noteList3 = deleteUnqualifiedObj(monthTimeDOS, MonthTimeDO::getGmtModified, Constant.MONTH_TIME_INTERVAL, monthTimeConvertor::toView);
-        List<NoteVO> noteList4 = deleteUnqualifiedObj(yearTimeDOS, YearTimeDO::getGmtModified, Constant.YEAR_TIME_INTERVAL, yearTimeConvertor::toView);
+        List<TimeNoteDO> timeList = timeNoteMapper.selectAll(query);
+        List<WeekTimeDO> weekList = weekTimeMapper.selectAll(query);
+        List<MonthTimeDO> monthList = monthTimeMapper.selectAll();
+        List<YearTimeDO> yearList = yearTimeMapper.selectAll();
+        List<NoteVO> noteList1 = deleteUnqualifiedObj(timeList, TimeNoteDO::getGmtModified, Constant.TIME_NOTE_INTERVAL, timeNoteConvertor::toView);
+        List<NoteVO> noteList2 = deleteUnqualifiedObj(weekList, WeekTimeDO::getGmtModified, Constant.WEEK_TIME_INTERVAL, weekTimeConvertor::toView);
+        List<NoteVO> noteList3 = deleteUnqualifiedObj(monthList, MonthTimeDO::getGmtModified, Constant.MONTH_TIME_INTERVAL, monthTimeConvertor::toView);
+        List<NoteVO> noteList4 = deleteUnqualifiedObj(yearList, YearTimeDO::getGmtModified, Constant.YEAR_TIME_INTERVAL, yearTimeConvertor::toView);
 
         NoteVO noteVO = Stream.of(noteList1, noteList2, noteList3, noteList4)
                 .flatMap(Collection::stream)
@@ -263,41 +262,23 @@ public class NoteService {
         Integer id = Integer.valueOf(map.get("id"));
         if (Constant.TIME_TYPE.equals(type)) {
             TimeNoteDO timeNoteDO = timeNoteMapper.selectByPrimaryKey(id);
-            if (!StringUtils.isEmpty(timeNoteCO.getBelongToScope())) {
-                timeNoteDO.setBelongToScope(timeNoteCO.getBelongToScope());
-            }
-            if (!StringUtils.isEmpty(timeNoteCO.getProblem())) {
-                timeNoteDO.setProblem(timeNoteCO.getProblem());
-            }
-            if (!StringUtils.isEmpty(timeNoteCO.getResult())) {
-                timeNoteDO.setResult(timeNoteCO.getResult());
-            }
+            BeanHelper.notEmptyThenSet(timeNoteCO, timeNoteDO, TimeNoteCO::getBelongToScope, TimeNoteDO::setBelongToScope);
+            BeanHelper.notEmptyThenSet(timeNoteCO, timeNoteDO, TimeNoteCO::getProblem, TimeNoteDO::setProblem);
+            BeanHelper.notEmptyThenSet(timeNoteCO, timeNoteDO, TimeNoteCO::getResult, TimeNoteDO::setResult);
             timeNoteDO.setGmtModified(LocalDateTime.now());
             timeNoteMapper.updateByPrimaryKeySelective(timeNoteDO);
         } else if (Constant.WEEK_TYPE.equals(type)) {
             WeekTimeDO weekTimeDO = weekTimeMapper.selectByPrimaryKey(id);
-            if (!StringUtils.isEmpty(timeNoteCO.getBelongToScope())) {
-                weekTimeDO.setBelongToScope(timeNoteCO.getBelongToScope());
-            }
-            if (!StringUtils.isEmpty(timeNoteCO.getProblem())) {
-                weekTimeDO.setProblem(timeNoteCO.getProblem());
-            }
-            if (!StringUtils.isEmpty(timeNoteCO.getResult())) {
-                weekTimeDO.setResult(timeNoteCO.getResult());
-            }
+            BeanHelper.notEmptyThenSet(timeNoteCO, weekTimeDO, TimeNoteCO::getBelongToScope, WeekTimeDO::setBelongToScope);
+            BeanHelper.notEmptyThenSet(timeNoteCO, weekTimeDO, TimeNoteCO::getProblem, WeekTimeDO::setProblem);
+            BeanHelper.notEmptyThenSet(timeNoteCO, weekTimeDO, TimeNoteCO::getResult, WeekTimeDO::setResult);
             weekTimeDO.setGmtModified(LocalDateTime.now());
             weekTimeMapper.updateByPrimaryKeySelective(weekTimeDO);
         } else if (Constant.MONTH_TYPE.equals(type)) {
             MonthTimeDO monthTimeDO = monthTimeMapper.selectByPrimaryKey(id);
-            if (!StringUtils.isEmpty(timeNoteCO.getBelongToScope())) {
-                monthTimeDO.setBelongToScope(timeNoteCO.getBelongToScope());
-            }
-            if (!StringUtils.isEmpty(timeNoteCO.getProblem())) {
-                monthTimeDO.setProblem(timeNoteCO.getProblem());
-            }
-            if (!StringUtils.isEmpty(timeNoteCO.getResult())) {
-                monthTimeDO.setResult(timeNoteCO.getResult());
-            }
+            BeanHelper.notEmptyThenSet(timeNoteCO, monthTimeDO, TimeNoteCO::getBelongToScope, MonthTimeDO::setBelongToScope);
+            BeanHelper.notEmptyThenSet(timeNoteCO, monthTimeDO, TimeNoteCO::getProblem, MonthTimeDO::setProblem);
+            BeanHelper.notEmptyThenSet(timeNoteCO, monthTimeDO, TimeNoteCO::getResult, MonthTimeDO::setResult);
             monthTimeDO.setGmtModified(LocalDateTime.now());
             monthTimeMapper.updateByPrimaryKeySelective(monthTimeDO);
         }

@@ -5,8 +5,11 @@ import com.icboluo.enumerate.ExceptionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -99,5 +102,11 @@ public class BeanHelper {
         return Arrays.stream(arr)
                 .map(Objects::nonNull)
                 .reduce(true, (a, b) -> a && b);
+    }
+
+    public static <S, T, F> void notEmptyThenSet(S source, T target, Function<S, F> get, BiConsumer<T, F> set) {
+        if (!ObjectUtils.isEmpty(get.apply(source))) {
+            set.accept(target, get.apply(source));
+        }
     }
 }
