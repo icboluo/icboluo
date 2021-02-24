@@ -9,7 +9,7 @@ import java.util.Arrays;
  *
  * @author icboluo
  */
- class SelectSort {
+class SelectSort {
     public static void main(String[] args) {
         int[] arr = {101, 34, 119, 1};
         //selectSort(arr);

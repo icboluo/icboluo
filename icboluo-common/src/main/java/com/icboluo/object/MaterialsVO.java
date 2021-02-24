@@ -1,6 +1,8 @@
 package com.icboluo.object;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 物料的视图对象，比档案对象对了数量字段
@@ -9,19 +11,14 @@ import lombok.Data;
  * @date 2020/12/3 21:39
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MaterialsVO {
 
     /**
-     * <p/>取db中id
-     * <p/>如果不是和db交互，取唯一不可读字段
+     * d
      */
     private String id;
-
-    /**
-     * <p/>取db中可读编码
-     * <p/>如果不是和db交互，取唯一可读字段
-     */
-    private String code;
 
     /**
      * 名称

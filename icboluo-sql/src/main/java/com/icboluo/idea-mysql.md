@@ -28,3 +28,13 @@ group by 和order by的时候，很容易造成效率低下，可以对count语�
 联合索引的效率和普通索引的效率一致
 
 uuid类型的主键，使用的时候用索引；自增类型的主键，使用的时候不用使用索引
+
+## 特殊sql
+
+SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business WHERE id=1
+
+查询，如果第一个结果为空，用第二个参数，如果第二个为空用下一个...
+
+分组中可以使用，先求和，再求总和
+
+使用场景：暂无，分组求和再代码中写更简单

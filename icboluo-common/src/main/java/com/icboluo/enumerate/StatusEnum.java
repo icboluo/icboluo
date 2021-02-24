@@ -37,6 +37,10 @@ public enum StatusEnum {
     GB("In implementation", "关闭", 10),
     YGB("In implementation", "已关闭", 10),
     DGB("In implementation", "待关闭", 10),
+    BH("In implementation", "驳回", 10),
+    YBH("In implementation", "已驳回", 10),
+    DJS("In implementation", "待接受", 10),
+    CJ("In implementation", "创建", 10),
     ;
 
     /**

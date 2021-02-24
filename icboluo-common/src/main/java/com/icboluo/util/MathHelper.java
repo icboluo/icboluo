@@ -70,7 +70,6 @@ public class MathHelper {
         return dividePercentage(molecular, denominator, null, null);
     }
 
-
     private static <T> BigDecimal toBigDecimal(@NonNull T number) {
         BigDecimal res = null;
         if (number instanceof BigDecimal) {
@@ -85,12 +84,12 @@ public class MathHelper {
         return res;
     }
 
-    private static int max(int... arr) {
+    public static int max(int... arr) {
         OptionalInt max = Arrays.stream(arr).max();
         return max.orElse(Integer.MIN_VALUE);
     }
 
-    private static int min(int... arr) {
+    public static int min(int... arr) {
         OptionalInt min = Arrays.stream(arr).min();
         return min.orElse(Integer.MAX_VALUE);
     }

@@ -5,21 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 档案视图对象
- *
  * @author icboluo
- * @date 2020/12/3 21:40
+ * @date 2021-47-24 21:47
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArchivesVO {
-
+public class GenericArchives<T> {
     /**
      * d
      */
-    private String id;
-
+    private T id;
 
     /**
      * 名称

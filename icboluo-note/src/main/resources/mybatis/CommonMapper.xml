@@ -4,19 +4,20 @@
 
     <sql id="dateTime">
         <if test="${startTime}!=null}">
-            and ${dbTime}>=${startTime}
+            and ${dbTime}>=#{${startTime}}
         </if>
         <if test="${endTime}!=null">
-            and ${endTime}>=${dbTime}
+            and #{${endTime}}>=${dbTime}
         </if>
     </sql>
 
+    <!--    日期比较大小，选择到天数-->
     <sql id="date">
         <if test="${startTime}!=null}">
-            and unix_timestamp(${dbTime})>=unix_timestamp(${startTime})
+            and unix_timestamp(${dbTime})>=unix_timestamp(#{${startTime}})
         </if>
         <if test="${endTime}!=null">
-            and unix_timestamp(date_add(${endTime},interval 1 day))>=unix_timestamp(${dbTime})
+            and unix_timestamp(date_add(#{${endTime}},interval 1 day))>unix_timestamp(${dbTime})
         </if>
     </sql>
 </mapper>
