@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.util.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

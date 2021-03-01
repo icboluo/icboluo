@@ -66,7 +66,6 @@ public class HuToolTest {
         ArchivesVO brand = new ArchivesVO();
         brand.setId(1L + "");
         brand.setName("华为");
-        brand.setCode(0 + "");
 //Bean转Map
         Map<String, Object> map = BeanUtil.beanToMap(brand);
         log.info("beanUtil bean to map:{}", map);

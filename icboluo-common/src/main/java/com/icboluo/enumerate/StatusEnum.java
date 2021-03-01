@@ -14,6 +14,7 @@ import java.util.Optional;
  * 枚举用equals比较可能相等，用==比较，不同的枚举类型值不会相等
  * switch中可以使用枚举
  * 常量比较方式用equals
+ * 常量等请加toString 方法，要不然打出来的日志无法识别
  *
  * @author icboluo
  * @date 2020/11/12 20:29
@@ -41,6 +42,7 @@ public enum StatusEnum {
     YBH("In implementation", "已驳回", 10),
     DJS("In implementation", "待接受", 10),
     CJ("In implementation", "创建", 10),
+    WC("In implementation", "完成", 10),
     ;
 
     /**

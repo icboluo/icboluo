@@ -1,4 +1,4 @@
-package com.icboluo.redis;
+package com.icboluo.util.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -8,6 +8,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * 项目日志 切面
@@ -19,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class RedisLogAspect {
 
-    @Pointcut("execution(public * com.icboluo.redis.*.*(..))")
+    @Pointcut("execution(public * com.icboluo.util.redis.*.*(..))")
     public void redisLog() {
     }
 
@@ -40,19 +45,53 @@ public class RedisLogAspect {
 
     @AfterReturning(returning = "ret", pointcut = "redisLog()")
     public void doAfterReturning(Object ret) {
-        log.debug("<==  Return: {}", ret);
+        if (!log.isDebugEnabled()) {
+            return;
+        }
+        log.debug("<==  Return: {}", toLogString(ret));
     }
 
     private String argsToString(Object[] args) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < args.length; i++) {
+            Object temp = args[i];
+            String arg = toString(temp);
             if (i != args.length - 1) {
-                sb.append(args[i]).append(", ");
+                sb.append(arg).append(", ");
             } else {
-                sb.append(args[i]);
+                sb.append(arg);
             }
         }
         return sb.toString();
+    }
+
+    private String toLogString(Object address) {
+        if (address == null) {
+            return null;
+        }
+        if (address instanceof Optional) {
+            address = ((Optional) address).get();
+        }
+        if (address.getClass().isArray()) {
+            address = ((Object[]) address).length;
+        }
+        if (address instanceof Collection) {
+            address = ((Collection) address).size();
+        }
+        if (address instanceof Map) {
+            address = ((Map) address).size();
+        }
+        return address.toString();
+    }
+
+    private String toString(Object address) {
+        if (address == null) {
+            return null;
+        }
+        if (address.getClass().isArray()) {
+            address = Arrays.toString((Object[]) address);
+        }
+        return address.toString();
     }
 
     private String getClassName(String declaringTypeName) {

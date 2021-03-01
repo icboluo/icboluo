@@ -1,11 +1,13 @@
 package com.icboluo.common;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * @author icboluo
  */
 @Getter
+@ToString
 public class Constant {
 
     /**
@@ -96,4 +98,6 @@ public class Constant {
      * year 完成失败之后剩余完成次数
      */
     public static final int YEAR_NOT_FINISH_TIME = 0;
+
+    public static final String unit = "unit";
 }

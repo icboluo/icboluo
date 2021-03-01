@@ -55,6 +55,8 @@ mysql如果需要批量新增，可以用foreach标签或者case when，第一�
 
 mybatis新增的时候，如果是自增主键，设置开启主键自增回显，会将主键写进参数中
 
+mybatis中的item.id是用实体类中的get方法做映射的，相同的，java可以用get方法生成属性名
+
 ## PageInfo
 
 如果分页list中的对象更改，需要将PageInfo的数据先缓存起来，然后重新组装PageInfo

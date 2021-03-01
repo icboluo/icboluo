@@ -1,4 +1,4 @@
-package com.icboluo.redis;
+package com.icboluo.util.redis;
 
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Component;

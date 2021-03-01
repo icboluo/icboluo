@@ -6,6 +6,10 @@ import java.util.Set;
 
 /**
  * 数字比较大小不要用equals，用compare
+ * <p>
+ * Integer中有一个缓存区，缓存-128 127之间的数值可以用==比较，缓存的上限可以在jvm中调整
+ * 这个区间刚好能够存储1个字节的数据，（相反数用补码）
+ * 其实定义一个int i=1，其实是用了Integer.valOf 的方法
  *
  * @author icboluo
  * @date 2020/12/19 20:02

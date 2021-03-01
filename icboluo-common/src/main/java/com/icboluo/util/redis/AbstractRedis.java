@@ -1,15 +1,19 @@
-package com.icboluo.redis;
+package com.icboluo.util.redis;
 
 import com.icboluo.util.DateHelper;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 
 /**
@@ -25,9 +29,11 @@ import java.util.function.Supplier;
  */
 @SuppressWarnings("unused")
 public abstract class AbstractRedis<T> {
-
+    /**
+     * todo 这个直接用list redis 去调用的话会是空，应该怎么处理呢
+     */
     @Resource
-    RedisTemplate<String, T> redisTemplate;
+    public RedisTemplate<String, T> redisTemplate;
 
 
     /**
@@ -114,8 +120,7 @@ public abstract class AbstractRedis<T> {
 
     /**
      * todo 其他更新缓存策略
-     * Read/Write Through Pattern 读写穿透
-     * 服务端把 cache 视为主要数据存储，从中读取数据并将数据写入其中
+     * Cache Aside Pattern（旁路缓存模式）
      *
      * @param cacheOperation 缓存操作
      * @param dbOperation    数据库操作
@@ -123,14 +128,14 @@ public abstract class AbstractRedis<T> {
      * @param <G>            返回值类型
      * @return 要查询数据
      */
-    public <G> G rtp(Supplier<G> cacheOperation, Supplier<G> dbOperation, Consumer<G> cacheCallBack) {
+    public <G> G rCap(Supplier<G> cacheOperation, Supplier<G> dbOperation, Consumer<G> cacheCallBack) {
         G g = null;
         try {
             g = cacheOperation.get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (g == null) {
+        if (ObjectUtils.isEmpty(g)) {
 //            如果找不到，先从db中读出来写到缓存中
             g = dbOperation.get();
             cacheCallBack.accept(g);
@@ -140,5 +145,18 @@ public abstract class AbstractRedis<T> {
 
     public void type(String key) {
         redisTemplate.type(key);
+    }
+
+    public Set<String> keys(String commonPreKey) {
+        return redisTemplate.keys(commonPreKey + ":" + "*");
+    }
+
+    public void delKeys(String... commonPreKey) {
+        Set<String> keys = Arrays.stream(commonPreKey)
+                .map(this::keys)
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+        del(keys);
     }
 }
