@@ -70,7 +70,7 @@ public class RedisLogAspect {
             return null;
         }
         if (address instanceof Optional) {
-            address = ((Optional) address).get();
+            address = ((Optional) address).orElseGet(null);
         }
         if (address.getClass().isArray()) {
             address = ((Object[]) address).length;

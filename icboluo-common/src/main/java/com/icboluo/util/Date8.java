@@ -11,22 +11,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class Date8 {
     public static void main(String[] args) {
-//        2020-10-14
-        LocalDate nowDate = LocalDate.now();
-        int year = nowDate.getYear();
-        int month = nowDate.getMonthValue();
-        int day = nowDate.getDayOfMonth();
-
-//        23:08:33.628881100
-        LocalTime nowTime = LocalTime.now();
-        int hour = nowTime.getHour();
-        int minute = nowTime.getMinute();
-        int second = nowTime.getSecond();
-//       毫秒：628881100
-        int nano = nowTime.getNano();
-
-//      2020-10-14T23:09:52.497111800
-        LocalDateTime nowDateTime = LocalDateTime.now();
 
 //        1991-10-12
         LocalDate localDate = LocalDate.of(1991, 10, 12);

@@ -26,6 +26,8 @@ import java.util.Collection;
  * 　　</dependency>
  * <p>
  * 可是导包了又要依赖数据库，所以需要分离
+ * <p>
+ * optional导致依赖不能被子项目所共享，删除optional，子项目可以使用到就不会报错
  *
  * @author icboluo
  */

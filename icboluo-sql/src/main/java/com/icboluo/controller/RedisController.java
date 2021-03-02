@@ -1,6 +1,8 @@
 package com.icboluo.controller;
 
 import com.icboluo.util.redis.StringRedis;
+import com.icboluo.util.response.R;
+import com.icboluo.util.response.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,13 +31,22 @@ public class RedisController {
     }
 
     @GetMapping("/redisSet")
-    public boolean redisSet() {
-        return stringRedis.set("test", "this test");
+    public Response redisSet() {
+        boolean set = stringRedis.set("test", "this test");
+        return R.correct(set);
     }
 
     @GetMapping("/add")
     public Long add() {
         return stringRedis.increment("add", Long.class);
+    }
+
+    @GetMapping("/expireAt")
+    public Response expireAt() {
+        LocalDateTime localDateTime = LocalDateTime.now().plusSeconds(10);
+        Long add = stringRedis.incrementExpireAt("add", Long.class, localDateTime);
+        Long expire = stringRedis.getExpire("add");
+        return R.correct(add);
     }
 
     @GetMapping("/decr")

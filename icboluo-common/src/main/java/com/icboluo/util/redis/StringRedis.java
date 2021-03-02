@@ -1,5 +1,7 @@
 package com.icboluo.util.redis;
 
+import com.icboluo.util.DateHelper;
+import org.springframework.data.redis.core.BoundKeyOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.support.atomic.RedisAtomicDouble;
 import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
@@ -7,9 +9,11 @@ import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * @author icboluo
@@ -84,16 +88,29 @@ public class StringRedis<T> extends AbstractRedis<T> {
     }
 
     public Integer increment(String key) {
-        return increment(key, 1, Integer.class);
+        return incrementExpireAt(key, Integer.class, null);
     }
 
     public <G extends Number> G increment(String key, Class<G> g) {
-        return increment(key, g.cast(1), g);
+        return incrementExpireAt(key, g, null);
+    }
+
+    public Integer incrementExpireAt(String key, LocalDateTime localDateTime) {
+        return incrementExpireAt(key, Integer.class, localDateTime);
+    }
+
+    public <G extends Number> G incrementExpireAt(String key, Class<G> g, LocalDateTime localDateTime) {
+        Consumer<BoundKeyOperations<String>> expireAt = null;
+        if (localDateTime != null) {
+            expireAt = (operation) -> operation.expireAt(DateHelper.localDateTimeToDate(localDateTime));
+        }
+        return incrementExpireAt(key, g.cast(1L), g, expireAt);
     }
 
     /**
      * 递增操作
      * valueOperations.increment(key, delta);
+     * 过期时间是可以设置的，可是为什么有的情况下，用atomic的时候，会在redis中找不到键值
      *
      * @param key   键
      * @param delta 递增因子
@@ -101,29 +118,50 @@ public class StringRedis<T> extends AbstractRedis<T> {
      * @param <G>   泛型类型
      * @return 递增之后的值
      */
-    public <G extends Number> G increment(String key, G delta, Class<G> g) {
+    public <G extends Number> G incrementExpireAt(String key, G delta, Class<G> g, Consumer<BoundKeyOperations<String>> expireAt) {
         if (delta.intValue() < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
         if (g == Long.class) {
             RedisAtomicLong redisAtomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            if (expireAt != null) {
+                expireAt.accept(redisAtomicLong);
+            }
             return g.cast(redisAtomicLong.addAndGet((Long) delta));
         } else if (g == Integer.class) {
             RedisAtomicInteger redisAtomicInteger = new RedisAtomicInteger(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            if (expireAt != null) {
+                expireAt.accept(redisAtomicInteger);
+            }
             return g.cast(redisAtomicInteger.addAndGet((Integer) delta));
         } else if (g == Double.class) {
             RedisAtomicDouble redisAtomicDouble = new RedisAtomicDouble(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            if (expireAt != null) {
+                expireAt.accept(redisAtomicDouble);
+            }
             return g.cast(redisAtomicDouble.addAndGet((Double) delta));
         }
         return null;
     }
 
     public Integer decrease(String key) {
-        return decrease(key, 1, Integer.class);
+        return decrease(key, null);
     }
 
     public <G extends Number> G decrease(String key, Class<G> g) {
-        return decrease(key, g.cast(1), g);
+        return decreaseExpireAt(key, g, null);
+    }
+
+    public Integer decreaseExpireAt(String key, LocalDateTime localDateTime) {
+        return decreaseExpireAt(key, Integer.class, localDateTime);
+    }
+
+    public <G extends Number> G decreaseExpireAt(String key, Class<G> g, LocalDateTime localDateTime) {
+        Consumer<BoundKeyOperations<String>> expireAt = null;
+        if (localDateTime != null) {
+            expireAt = (operation) -> operation.expireAt(DateHelper.localDateTimeToDate(localDateTime));
+        }
+        return decreaseExpireAt(key, g.cast(1), g, expireAt);
     }
 
     /**
@@ -136,18 +174,27 @@ public class StringRedis<T> extends AbstractRedis<T> {
      * @param <G>   泛型类型
      * @return 递减之后的值
      */
-    public <G extends Number> G decrease(String key, G delta, Class<G> g) {
+    public <G extends Number> G decreaseExpireAt(String key, G delta, Class<G> g, Consumer<BoundKeyOperations<String>> expireAt) {
         if (delta.intValue() < 0) {
             throw new RuntimeException("递减因子必须大于0");
         }
         if (g == Long.class) {
             RedisAtomicLong redisAtomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            if (expireAt != null) {
+                expireAt.accept(redisAtomicLong);
+            }
             return g.cast(redisAtomicLong.addAndGet(-delta.longValue()));
         } else if (g == Integer.class) {
             RedisAtomicInteger redisAtomicInteger = new RedisAtomicInteger(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            if (expireAt != null) {
+                expireAt.accept(redisAtomicInteger);
+            }
             return g.cast(redisAtomicInteger.addAndGet(-delta.intValue()));
         } else if (g == Double.class) {
             RedisAtomicDouble redisAtomicDouble = new RedisAtomicDouble(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+            if (expireAt != null) {
+                expireAt.accept(redisAtomicDouble);
+            }
             return g.cast(redisAtomicDouble.addAndGet(-delta.doubleValue()));
         }
         return null;

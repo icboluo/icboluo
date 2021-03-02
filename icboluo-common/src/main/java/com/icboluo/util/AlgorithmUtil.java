@@ -9,6 +9,7 @@ import java.util.function.Function;
  * @date 2021-26-24 21:26
  */
 public class AlgorithmUtil {
+
     public static void main(String[] args) {
         int res = a(1);
         Integer integer = cacheAlgorithm(
@@ -31,4 +32,5 @@ public class AlgorithmUtil {
         map.put(key, val);
         return val;
     }
+
 }
