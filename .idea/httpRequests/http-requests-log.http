@@ -1,3 +1,87 @@
+GET http://localhost:1110/redisSet
+
+<> 2021-03-02T210522.200.json
+
+###
+
+GET http://localhost:1110/redisSet
+
+<> 2021-03-02T210421.200.json
+
+###
+
+GET http://localhost:1110/expireAt
+
+<> 2021-03-02T203018.200.json
+
+###
+
+GET http://localhost:1514/unit/selectByCode?code=001
+
+<> 2021-03-02T202609.200.json
+
+###
+
+GET http://localhost:1110/expireAt
+
+<> 2021-03-02T201802.200.json
+
+###
+
+GET http://localhost:1110/expireAt
+
+<> 2021-03-02T201738.200.json
+
+###
+
+GET http://localhost:1110/expireAt
+
+<> 2021-03-02T201418.500.json
+
+###
+
+GET http://localhost:1110/expireAt
+
+<> 2021-03-02T201312.500.json
+
+###
+
+GET http://localhost:1110/expireAt
+
+<> 2021-03-02T201148.500.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-03-02T200825.200.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-03-02T200824.200.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-03-02T200811.200.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-03-02T200552.500.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-03-02T195828.500.json
+
+###
+
 GET http://localhost:1514/unit/getAll
 
 <> 2021-03-01T235326.200.json
@@ -224,78 +308,6 @@ GET http://localhost:1514/selectProblem
 GET http://localhost:1514/selectProblem
 
 <> 2021-02-02T205919.500.json
-
-###
-
-GET http://localhost:1110/listRedis/size
-
-###
-
-GET http://localhost:1110/listRedis/size
-
-###
-
-GET http://localhost:1110/listRedis/size
-
-###
-
-GET http://localhost:1110/listRedis/size
-
-###
-
-GET http://localhost:1110/listRedis/add
-
-<> 2021-02-02T132633.200.json
-
-###
-
-GET http://localhost:1110/listRedis/add
-
-<> 2021-02-02T132603.200.json
-
-###
-
-GET http://localhost:1110/listRedis/remove
-
-<> 2021-02-02T132558.200.json
-
-###
-
-GET http://localhost:1110/listRedis/remove
-
-<> 2021-02-02T132451.200.json
-
-###
-
-GET http://localhost:1110/listRedis/add
-
-<> 2021-02-02T132019.200.json
-
-###
-
-GET http://localhost:1110/listRedis/update
-
-<> 2021-02-02T131932.200.json
-
-###
-
-GET http://localhost:1110/listRedis/add
-
-<> 2021-02-02T131209.200.json
-
-###
-
-GET http://localhost:1110/listRedis/add
-
-<> 2021-02-02T125929.200.json
-
-###
-
-GET http://localhost:1110/listRedis/add
-
-###
-
-GET http://localhost:1110/listRedis/add
 
 ###
 

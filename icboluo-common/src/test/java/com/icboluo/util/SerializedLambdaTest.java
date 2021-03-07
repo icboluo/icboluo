@@ -1,9 +1,8 @@
 package com.icboluo.util;
 
 import com.icboluo.object.ArchivesVO;
+import com.icboluo.util.serialize.SerializedLambda;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SerializedLambdaTest {
 

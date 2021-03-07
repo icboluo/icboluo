@@ -1,4 +1,4 @@
-package com.icboluo.util;
+package com.icboluo.util.serialize;
 
 import java.io.Serializable;
 

@@ -5,8 +5,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-
 /**
  * 获取spring上下文
  * 如果注入的bean中含有可变的成员变量，因为单例的原因，成员变量被共享，如果不要共享，可以使用new 去使用
@@ -23,7 +21,6 @@ public class SpringUtil implements ApplicationContextAware {
     private static ApplicationContext context;
 
     @Override
-    @Resource
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         context = applicationContext;
     }

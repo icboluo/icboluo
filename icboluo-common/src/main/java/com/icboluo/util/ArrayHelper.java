@@ -1,6 +1,11 @@
 package com.icboluo.util;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 操作数组的工具类
@@ -192,5 +197,24 @@ public class ArrayHelper {
             }
         }
         return findMaxVal(dp);
+    }
+
+    public static <T, V> List<T> sort(List<T> list, Function<T, V> function, V[] arr) {
+        return list.stream()
+                .sorted((a, b) -> {
+//                    这里设置的值是-1，其他的元素会在前面显示
+                    int aInx = -1;
+                    int bInx = -1;
+                    for (int i = 0; i < arr.length; i++) {
+                        if (arr[i].equals(function.apply(a))) {
+                            aInx = i;
+                        }
+                        if (arr[i].equals(function.apply(b))) {
+                            bInx = i;
+                        }
+                    }
+                    return aInx - bInx;
+                })
+                .collect(Collectors.toList());
     }
 }
