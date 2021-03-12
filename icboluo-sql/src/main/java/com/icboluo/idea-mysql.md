@@ -38,3 +38,7 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 分组中可以使用，先求和，再求总和
 
 使用场景：暂无，分组求和再代码中写更简单
+
+## 建表
+
+表字段用业务+字段属性...不要只用单纯的字段属性，不要觉得字段过长，这样，使用过程比较清晰

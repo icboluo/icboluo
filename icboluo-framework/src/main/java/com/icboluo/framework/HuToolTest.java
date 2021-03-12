@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.framework;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.bean.BeanUtil;

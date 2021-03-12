@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author icboluo
  */
 @Component
-public class LockRedis extends AbstractRedis {
+public class RedisLock extends AbstractRedis {
 
     private static final String LOCK_PREFIX = null;
 

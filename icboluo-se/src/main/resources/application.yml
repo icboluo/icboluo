@@ -1,1 +1,5 @@
-
+server:
+  port: 7536
+spring:
+  application:
+    name: icboluo-se

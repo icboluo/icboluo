@@ -1,7 +1,7 @@
 package com.icboluo.config;
 
 import com.icboluo.common.Constant;
-import com.icboluo.util.redis.ListRedis;
+import com.icboluo.util.redis.RedisList;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +17,11 @@ import javax.annotation.Resource;
 public class RedisCacheConfig {
 
     @Resource
-    private ListRedis listRedis;
+    private RedisList redisList;
 
     @PostConstruct
     public void del() {
-        listRedis.del(Constant.unit);
-        listRedis.delKeys(Constant.unit);
+        redisList.del(Constant.unit);
+        redisList.delKeys(Constant.unit);
     }
 }

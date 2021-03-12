@@ -1,1 +1,5 @@
-
+server:
+  port: 7874
+spring:
+  application:
+    name: icboluo-framework

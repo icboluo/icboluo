@@ -12,7 +12,7 @@ import java.util.Set;
  * @author icboluo
  */
 @Component
-public class SetRedis<T> extends AbstractRedis<T> {
+public class RedisSet<T> extends AbstractRedis<T> {
 
     @Resource
     private SetOperations<String, T> setOperations;

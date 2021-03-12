@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Component
 @SuppressWarnings("unused")
-public class ListRedis<T> extends AbstractRedis<T> {
+public class RedisList<T> extends AbstractRedis<T> {
     /**
      * todo 这里注入的时候有时需要先注入 name='redisTemplate' 这里不需要为什么
      */

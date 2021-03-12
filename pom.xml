@@ -48,15 +48,24 @@
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.12</log4j.version>
         <lombok.version>1.18.16</lombok.version>
-        <mysql.version>8.0.21</mysql.version>
-        <druid.verison>1.1.23</druid.verison>
+        <!--        todo 8.0.23-->
+        <mysql.version>[8.0.22,)</mysql.version>
+        <druid.verison>1.2.5</druid.verison>
         <mybatis.spring.boot.verison>2.1.1</mybatis.spring.boot.verison>
-        <nacos.verison>2.2.3.RELEASE</nacos.verison>
+        <nacos.verison>2.2.5.RELEASE</nacos.verison>
         <swagger.verison>3.0.0</swagger.verison>
-        <pagehelper.verison>1.3.0</pagehelper.verison>
-        <alibaba.dependencies.verison>2.2.3.RELEASE</alibaba.dependencies.verison>
-        <easyexcel.verison>2.2.6</easyexcel.verison>
-        <alibaba.fastjson.verison>1.2.74</alibaba.fastjson.verison>
+        <pagehelper.version>1.3.0</pagehelper.version>
+        <alibaba.dependencies.verison>2.2.5.RELEASE</alibaba.dependencies.verison>
+        <easyexcel.version>2.2.7</easyexcel.version>
+        <alibaba.fastjson.verison>1.2.75</alibaba.fastjson.verison>
+        <cloud.dependencies.version>Hoxton.SR10</cloud.dependencies.version>
+        <httpcore.version>4.4.14</httpcore.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <validation.api.version>2.0.1.Final</validation.api.version>
+        <hibernate.validator.version>7.0.1.Final</hibernate.validator.version>
+        <jakarta.activation.version>2.0.0</jakarta.activation.version>
+        <hutool.all.version>[5.4.2,)</hutool.all.version>
+        <common.io.version>2.8.0</common.io.version>
     </properties>
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->
@@ -64,10 +73,19 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${cloud.dependencies.version}</version>
+                <type>pom</type>
+                <!--                scope 标签代表 依赖范围控制哪些依赖在哪些classpath 中可用，哪些依赖包含在一个应用中-->
+                <!--                import仅支持在<dependencyManagement>中的类型依赖项上。它表示要在指定的POM <dependencyManagement>部分中用有效的依赖关系列表替换的依赖关系。该scope类型的依赖项实际上不会参与限制依赖项的可传递性-->
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
                 <version>${nacos.verison}</version>
-                <!--                排除的依赖在maven中显示为灰色-->
+                <!--                排除的依赖在maven中显示为灰色，代表jar包没有引用进来-->
                 <exclusions>
                     <exclusion>
                         <artifactId>jsr305</artifactId>
@@ -83,13 +101,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.verison}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.SR8</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -112,13 +123,14 @@
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper.verison}</version>
+                <version>${pagehelper.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
-                <version>${easyexcel.verison}</version>
+                <version>${easyexcel.version}</version>
                 <!--                禁止删这个包，会导致 cglib包找不到，导出异常-->
+
                 <!--                <exclusions>-->
                 <!--                    <exclusion>-->
                 <!--                        <artifactId>asm</artifactId>-->
@@ -130,6 +142,56 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${alibaba.fastjson.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcore.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <!--jsr 303-->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation.api.version}</version>
+            </dependency>
+            <!-- hibernate validator-->
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.activation</groupId>
+                <artifactId>jakarta.activation</artifactId>
+                <version>${jakarta.activation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${common.io.version}</version>
+            </dependency>
+            <!--        包含javax.servlet.http.HttpServletResponse -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>4.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-qual</artifactId>
+                <version>3.11.0</version>
+                <scope>compile</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

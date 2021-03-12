@@ -20,7 +20,7 @@ import java.util.function.Consumer;
  */
 @Component
 @SuppressWarnings("unused")
-public class StringRedis<T> extends AbstractRedis<T> {
+public class RedisString<T> extends AbstractRedis<T> {
 
     @Resource
     private ValueOperations<String, T> valueOperations;

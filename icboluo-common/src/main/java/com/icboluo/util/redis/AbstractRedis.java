@@ -1,6 +1,7 @@
 package com.icboluo.util.redis;
 
 import com.icboluo.util.DateHelper;
+import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.ObjectUtils;
 
@@ -104,22 +105,23 @@ public abstract class AbstractRedis<T> {
      *
      * @param key 可以传一个值 或多个
      */
-    public void del(String... key) {
+    public Long del(String... key) {
         if (key != null && key.length > 0) {
             if (key.length == 1) {
-                redisTemplate.delete(key[0]);
+                Boolean delete = redisTemplate.delete(key[0]);
+                return Boolean.TRUE.equals(delete) ? 1L : 0;
             } else {
-                redisTemplate.delete(Arrays.asList(key));
+                return redisTemplate.delete(Arrays.asList(key));
             }
         }
+        return 0L;
     }
 
-    public void del(Collection<String> keys) {
-        redisTemplate.delete(keys);
+    public Long del(Collection<String> keys) {
+        return redisTemplate.delete(keys);
     }
 
     /**
-     * todo 其他更新缓存策略
      * Cache Aside Pattern（旁路缓存模式）
      *
      * @param cacheOperation 缓存操作
@@ -143,20 +145,37 @@ public abstract class AbstractRedis<T> {
         return g;
     }
 
-    public void type(String key) {
-        redisTemplate.type(key);
+    /**
+     * Cache Aside Pattern（旁路缓存模式）
+     *
+     * @param dbUpdate 更新数据库操作
+     * @param cacheDel 缓存删除操作
+     */
+    public void wCap(Procedure dbUpdate, Procedure cacheDel) {
+        dbUpdate.run();
+        cacheDel.run();
     }
 
+    public void type(String key) {
+        DataType type = redisTemplate.type(key);
+    }
+
+    /**
+     * keys命令大数据亮容易卡死
+     *
+     * @param commonPreKey
+     * @return
+     */
     public Set<String> keys(String commonPreKey) {
         return redisTemplate.keys(commonPreKey + ":" + "*");
     }
 
-    public void delKeys(String... commonPreKey) {
+    public Long delKeys(String... commonPreKey) {
         Set<String> keys = Arrays.stream(commonPreKey)
                 .map(this::keys)
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
-        del(keys);
+        return del(keys);
     }
 }

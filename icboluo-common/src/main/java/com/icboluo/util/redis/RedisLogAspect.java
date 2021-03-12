@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 项目日志 切面
@@ -52,17 +53,12 @@ public class RedisLogAspect {
     }
 
     private String argsToString(Object[] args) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            Object temp = args[i];
-            String arg = toString(temp);
-            if (i != args.length - 1) {
-                sb.append(arg).append(", ");
-            } else {
-                sb.append(arg);
-            }
+        if (args == null || args.length == 0) {
+            return null;
         }
-        return sb.toString();
+        return Arrays.stream(args)
+                .map(this::toString)
+                .collect(Collectors.joining(", "));
     }
 
     private String toLogString(Object address) {
@@ -70,7 +66,12 @@ public class RedisLogAspect {
             return null;
         }
         if (address instanceof Optional) {
-            address = ((Optional) address).orElseGet(null);
+            Optional opt = (Optional) address;
+            if (opt.isPresent()) {
+                address = (opt).get();
+            } else {
+                return null;
+            }
         }
         if (address.getClass().isArray()) {
             address = ((Object[]) address).length;

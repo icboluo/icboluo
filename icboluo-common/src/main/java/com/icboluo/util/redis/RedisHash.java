@@ -12,7 +12,7 @@ import java.util.Map;
  * @author icboluo
  */
 @Component
-public class HashRedis<T> extends AbstractRedis<T> {
+public class RedisHash<T> extends AbstractRedis<T> {
 
     @Resource
     private HashOperations<String, String, T> hashOperations;
