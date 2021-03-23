@@ -55,10 +55,6 @@ public class HuToolTest {
         String dateStr = "2017-05-06";
         Date date = Convert.toDate(dateStr);
         System.out.println("转换为日期对象: " + date);
-//转换为列表
-        String[] strArr = {"a", "b", "c", "d"};
-        List<String> strList = Convert.toList(String.class, strArr);
-        System.out.println("转换为列表: " + strList);
     }
 
     @Test
@@ -134,12 +130,6 @@ public class HuToolTest {
 //将以连接符号分隔的字符串再转换为列表
         List<String> splitList = StrUtil.split(joinStr, ',');
         log.info("collUtil split:{}", splitList);
-//创建新的Map、Set、List
-        HashMap<Object, Object> newMap = CollUtil.newHashMap();
-        HashSet<Object> newHashSet = CollUtil.newHashSet();
-        ArrayList<Object> newList = CollUtil.newArrayList();
-//判断列表是否为空
-        CollUtil.isEmpty(list);
     }
 
     @Test

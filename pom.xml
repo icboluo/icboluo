@@ -42,13 +42,12 @@
     <!-- maven仓库地址   https://mvnrepository.com/ -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>15</java.version>
+        <java.version>16</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.12</log4j.version>
-        <lombok.version>1.18.16</lombok.version>
-        <!--        todo 8.0.23-->
+        <lombok.version>[1.18.16,]</lombok.version>
         <mysql.version>[8.0.22,)</mysql.version>
         <druid.verison>1.2.5</druid.verison>
         <mybatis.spring.boot.verison>2.1.1</mybatis.spring.boot.verison>

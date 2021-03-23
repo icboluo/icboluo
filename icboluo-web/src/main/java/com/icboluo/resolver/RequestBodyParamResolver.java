@@ -13,17 +13,12 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.lang.reflect.Parameter;
-import java.lang.reflect.Type;
 
 /**
  * @author icboluo
  * @date 2020/10/22 19:25
  */
 public class RequestBodyParamResolver implements HandlerMethodArgumentResolver {
-
-    private JSONObject requestBody = null;
-
-    private boolean isGetBodyParam = false;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -44,20 +39,13 @@ public class RequestBodyParamResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest hsr = webRequest.getNativeRequest(HttpServletRequest.class);
         BufferedReader reader = hsr.getReader();
-        if (!isGetBodyParam) {
-            String body = IOHelper.readBufferedReader(reader);
-            requestBody = JSON.parseObject(body);
-            isGetBodyParam = true;
-        }
+        String body = IOHelper.readBufferedReader(reader);
+        JSONObject requestBody = JSON.parseObject(body);
         RequestBodyParam parameterAnnotation = parameter.getParameterAnnotation(RequestBodyParam.class);
         Parameter webParameter = parameter.getParameter();
         String parameterName = webParameter.getName();
-        String name = parameterAnnotation.name();
         Object o = requestBody.get(parameterName);
-        Type genericParameterType = parameter.getGenericParameterType();
-        Type nestedGenericParameterType = parameter.getNestedGenericParameterType();
-        Class<?> nestedParameterType = parameter.getNestedParameterType();
         Class<?> parameterType = parameter.getParameterType();
-        return o;
+        return JSON.parseObject(JSON.toJSONString(o), parameterType);
     }
 }
