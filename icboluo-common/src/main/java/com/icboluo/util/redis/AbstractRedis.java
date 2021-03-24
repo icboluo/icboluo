@@ -48,30 +48,18 @@ public abstract class AbstractRedis<T> {
         return expire(key, time, TimeUnit.SECONDS);
     }
 
-    public boolean expire(String key, long time, TimeUnit timeUnit) {
-        try {
-            if (time > 0) {
-                Boolean b = redisTemplate.expire(key, time, timeUnit);
-                return Boolean.TRUE.equals(b);
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public Boolean expire(String key, long time, TimeUnit timeUnit) {
+        if (time > 0) {
+            return redisTemplate.expire(key, time, timeUnit);
         }
+        return true;
     }
 
-    public boolean expireAt(String key, LocalDateTime localDateTime) {
-        try {
-            if (localDateTime.compareTo(LocalDateTime.now()) > 0) {
-                Boolean b = redisTemplate.expireAt(key, DateHelper.localDateTimeToDate(localDateTime));
-                return Boolean.TRUE.equals(b);
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public Boolean expireAt(String key, LocalDateTime localDateTime) {
+        if (localDateTime.compareTo(LocalDateTime.now()) > 0) {
+            return redisTemplate.expireAt(key, DateHelper.localDateTimeToDate(localDateTime));
         }
+        return true;
     }
 
     /**
@@ -90,14 +78,8 @@ public abstract class AbstractRedis<T> {
      * @param key 键
      * @return true 存在 false不存在
      */
-    public boolean containsKey(String key) {
-        try {
-            Boolean b = redisTemplate.hasKey(key);
-            return Boolean.TRUE.equals(b);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public Boolean containsKey(String key) {
+        return redisTemplate.hasKey(key);
     }
 
     /**
@@ -114,7 +96,7 @@ public abstract class AbstractRedis<T> {
                 return redisTemplate.delete(Arrays.asList(key));
             }
         }
-        return 0L;
+        return null;
     }
 
     public Long del(Collection<String> keys) {

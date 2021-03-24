@@ -4,9 +4,7 @@
 
 2.找到本地mysql的jar包，配置驱动就可以了
 
-mysql union 作用就是拼接上面查询出的结果和下面查询出的结果，
-
-查询结果不变，数据量增加
+mysql union 作用就是拼接上面查询出的结果和下面查询出的结果， 查询结果不变，数据量增加
 
 ctrl shift r 全局搜索 可以搜索数据库中的表的使用
 
@@ -32,6 +30,18 @@ uuid类型的主键，使用的时候用索引；自增类型的主键，使用�
 
 mysql全表扫描对应explain中的all，是对数据进行一行一行的扫描
 
+## left join
+
+- left join and 中的and是先进行右表筛选，再进行总数据匹配，如果筛选结果为空，则left join的整个右表数据为空
+- 业务中常进行整个数据筛选，用where比left join合适
+
+## or
+
+> or链接的时候，只有全部加索引索引才会生效，不建议用or；修改方式：
+
+- 同字段用in代替
+- 不同字段用union拼接
+
 ## 特殊sql
 
 SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business WHERE id=1
@@ -45,11 +55,6 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 ## 建表
 
 表字段用业务+字段属性...不要只用单纯的字段属性，不要觉得字段过长，这样，使用过程比较清晰
-
-## left join
-
-- left join and 中的and是先进行右表筛选，再进行总数据匹配，如果筛选结果为空，则left join的整个右表数据为空
-- 业务中常进行整个数据筛选，用where比left join合适
 
 ## 最佳实践
 

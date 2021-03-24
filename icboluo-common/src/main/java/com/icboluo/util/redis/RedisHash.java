@@ -19,7 +19,7 @@ public class RedisHash<T> extends AbstractRedis<T> {
 
     @SuppressWarnings("unused")
     private void example() {
-        HashOperations hashOperations = redisTemplate.opsForHash();
+        HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
     }
 
 

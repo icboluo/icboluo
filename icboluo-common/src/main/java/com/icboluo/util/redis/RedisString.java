@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -49,16 +50,9 @@ public class RedisString<T> extends AbstractRedis<T> {
      *
      * @param key   键
      * @param value 值
-     * @return true成功 false失败
      */
-    public boolean set(String key, T value) {
-        try {
-            valueOperations.set(key, value);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public void set(String key, T value) {
+        valueOperations.set(key, value);
     }
 
     /**
@@ -67,24 +61,21 @@ public class RedisString<T> extends AbstractRedis<T> {
      * @param key   键
      * @param value 值
      * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
-     * @return true成功 false 失败
      */
-    public boolean set(String key, T value, long time) {
-        return set(key, value, time, TimeUnit.SECONDS);
+    public void set(String key, T value, long time) {
+        set(key, value, time, TimeUnit.SECONDS);
     }
 
-    public boolean set(String key, T value, long time, TimeUnit timeUnit) {
-        try {
-            if (time > 0) {
-                valueOperations.set(key, value, time, timeUnit);
-            } else {
-                set(key, value);
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public void set(String key, T value, long time, TimeUnit timeUnit) {
+        if (time > 0) {
+            valueOperations.set(key, value, time, timeUnit);
+        } else {
+            set(key, value);
         }
+    }
+
+    public void set(Map<String, T> map) {
+        valueOperations.multiSet(map);
     }
 
     public Integer increment(String key) {

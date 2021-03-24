@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class Date8 {
     public static void main(String[] args) {
-
 //        1991-10-12
         LocalDate localDate = LocalDate.of(1991, 10, 12);
         LocalDate localDate1 = LocalDate.ofYearDay(1991, localDate.getDayOfYear());

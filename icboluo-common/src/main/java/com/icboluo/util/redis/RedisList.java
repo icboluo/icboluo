@@ -37,12 +37,7 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @return index>=0时， 0 表头，1 第二个元素...；index<0时，-1，表尾，-2倒数第二个元素，依次类推
      */
     public T get(String key, long index) {
-        try {
-            return listOperations.index(key, index);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return listOperations.index(key, index);
     }
 
     /**
@@ -54,12 +49,7 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @return 获得的元素List
      */
     public List<T> get(String key, long start, long end) {
-        try {
-            return listOperations.range(key, start, end);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return listOperations.range(key, start, end);
     }
 
     /**
@@ -69,12 +59,7 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @return size 大小
      */
     public Long size(String key) {
-        try {
-            return listOperations.size(key);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0L;
-        }
+        return listOperations.size(key);
     }
 
 
@@ -85,14 +70,8 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @param value 值
      * @return 是否新增成功
      */
-    public boolean add(String key, T value) {
-        try {
-            listOperations.rightPush(key, value);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public Long add(String key, T value) {
+        return listOperations.rightPush(key, value);
     }
 
     /**
@@ -103,17 +82,12 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @param time  时间(秒)
      * @return 是否新增成功
      */
-    public boolean add(String key, T value, long time) {
-        try {
-            listOperations.rightPush(key, value);
-            if (time > 0) {
-                expire(key, time);
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public Long add(String key, T value, long time) {
+        Long add = this.add(key, value);
+        if (time > 0) {
+            boolean expire = expire(key, time);
         }
+        return add;
     }
 
     /**
@@ -123,14 +97,8 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @param value 值
      * @return 是否新增成功
      */
-    public boolean addAll(String key, List<T> value) {
-        try {
-            listOperations.rightPushAll(key, value);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public Long addAll(String key, List<T> value) {
+        return listOperations.rightPushAll(key, value);
     }
 
     /**
@@ -141,17 +109,12 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @param time  时间(秒)
      * @return 是否新增成功
      */
-    public boolean addAll(String key, List<T> value, long time) {
-        try {
-            listOperations.rightPushAll(key, value);
-            if (time > 0) {
-                expire(key, time);
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public Long addAll(String key, List<T> value, long time) {
+        Long aLong = listOperations.rightPushAll(key, value);
+        if (time > 0) {
+            boolean expire = expire(key, time);
         }
+        return aLong;
     }
 
     /**
@@ -162,20 +125,13 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @param value 值
      * @return 是否更新成功
      */
-    public boolean set(String key, long index, T value) {
-        try {
-            listOperations.set(key, index, value);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public void set(String key, long index, T value) {
+        listOperations.set(key, index, value);
     }
 
 
-    public boolean remove(String key, T value) {
-        Long count = remove(key, value, 1);
-        return count.compareTo(1L) == 0;
+    public Long remove(String key, T value) {
+        return remove(key, value, 1);
     }
 
     /**
@@ -187,11 +143,6 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @return 移除的个数
      */
     public Long remove(String key, T value, long count) {
-        try {
-            return listOperations.remove(key, count, value);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0L;
-        }
+        return listOperations.remove(key, count, value);
     }
 }

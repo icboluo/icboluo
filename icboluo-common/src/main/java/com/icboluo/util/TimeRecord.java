@@ -19,19 +19,19 @@ import java.util.Map;
 public class TimeRecord {
 
     /**
-     * 记录是第几次操作
-     */
-    private static Integer operationTime;
-
-    /**
      * 记录每次的操作时间
      */
     private static List<Long> times;
-
+    /**
+     * 每次操作消耗内存
+     */
+    private static List<Long> rams;
     /**
      * 记录第key个节点到第key+1个节点执行的功能，用于打印日志
      */
     private static Map<Integer, String> recordMsgMap;
+
+    private static Runtime runtime;
 
     public static void start() {
         start(null);
@@ -39,13 +39,15 @@ public class TimeRecord {
 
     public static void start(String msg) {
         log.warn("计时开始");
-        operationTime = 0;
         recordMsgMap = new HashMap<>();
         if (!StringUtils.isEmpty(msg)) {
-            recordMsgMap.put(operationTime, msg);
+            recordMsgMap.put(0, msg);
         }
         times = new ArrayList<>();
+        rams = new ArrayList<>();
+        runtime = Runtime.getRuntime();
         times.add(System.currentTimeMillis());
+        rams.add(runtime.maxMemory() - runtime.freeMemory());
     }
 
     /**
@@ -59,15 +61,15 @@ public class TimeRecord {
         long now = System.currentTimeMillis();
         long preTime = times.get(times.size() - 1);
         times.add(now);
-        String preMsg = recordMsgMap.get(operationTime);
+        times.add(runtime.maxMemory() - runtime.freeMemory());
+        String preMsg = recordMsgMap.get(times.size());
         if (StringUtils.isEmpty(preMsg)) {
-            log.warn("第{}个节点到下一个节点共消耗 {} 毫秒时间", operationTime, now - preTime);
+            log.warn("第{}个节点到下一个节点共消耗 {} 毫秒时间", times.size()-1, now - preTime);
         } else {
             log.warn("功能：{} 消耗的时间为 {} 毫秒", preMsg, now - preTime);
         }
-        operationTime++;
         if (!StringUtils.isEmpty(msg)) {
-            recordMsgMap.put(operationTime, msg);
+            recordMsgMap.put(times.size(), msg);
         }
     }
 
@@ -75,6 +77,7 @@ public class TimeRecord {
         record();
         Long allTime = times.get(times.size() - 1) - times.get(0);
         log.warn("整个程序耗时 {} 毫秒", allTime);
+
         Long preTime = times.get(0);
         Long time;
         long maxTime = 0L;

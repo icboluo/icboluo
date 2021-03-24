@@ -21,18 +21,19 @@ public class ListRedisController {
     private RedisList<Integer> redisList;
 
     @GetMapping("/add")
-    public Boolean add() {
+    public Long add() {
         List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(7);
         list.add(10);
-        Boolean add = redisList.add("list:one", 1);
+        Long add = redisList.add("list:one", 1);
         return redisList.addAll("list:integer", list);
     }
 
     @GetMapping("/update")
     public Boolean update() {
-        return redisList.set("list:integer", 0, 77);
+        redisList.set("list:integer", 0, 77);
+        return true;
     }
 
     @GetMapping("/remove")

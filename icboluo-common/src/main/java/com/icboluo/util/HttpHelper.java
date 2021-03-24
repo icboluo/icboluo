@@ -38,7 +38,7 @@ public class HttpHelper {
      */
     public static void writeDownloadData(HttpServletResponse response, String fileName) {
         //设置ConetentType CharacterEncoding Header,需要在excelWriter.write()之前设置
-        response.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName);
         response.setContentType("mutipart/form-data");
     }
