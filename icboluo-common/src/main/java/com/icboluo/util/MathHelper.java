@@ -74,11 +74,9 @@ public class MathHelper {
         BigDecimal res = null;
         if (number instanceof BigDecimal) {
             res = (BigDecimal) number;
-        } else if (number instanceof Integer) {
-            Integer mTemp = (Integer) number;
+        } else if (number instanceof Integer mTemp) {
             res = new BigDecimal(mTemp);
-        } else if (number instanceof Long) {
-            Long mTemp = (Long) number;
+        } else if (number instanceof Long mTemp) {
             res = new BigDecimal(mTemp);
         }
         return res;

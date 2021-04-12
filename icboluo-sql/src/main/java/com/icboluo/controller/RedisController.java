@@ -20,8 +20,8 @@ public class RedisController {
     private RedisString<String> redisString;
 
     @GetMapping("/redisSetWithTime")
-    public boolean redisSetWithTime() {
-        return redisString.set("test", "this test", 10, TimeUnit.SECONDS);
+    public void redisSetWithTime() {
+        redisString.set("test", "this test", 10, TimeUnit.SECONDS);
     }
 
     @GetMapping("/redisGet")
@@ -32,8 +32,8 @@ public class RedisController {
 
     @GetMapping("/redisSet")
     public Response redisSet() {
-        boolean set = redisString.set("test", "this test");
-        return R.correct(set);
+        redisString.set("test", "this test");
+        return R.correct();
     }
 
     @GetMapping("/add")

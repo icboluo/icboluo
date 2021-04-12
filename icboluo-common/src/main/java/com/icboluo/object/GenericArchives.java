@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GenericArchives<T> {
+public class GenericArchives<I,N> {
     /**
-     * d
+     * id
      */
-    private T id;
+    private I id;
 
     /**
      * 名称
      */
-    private String name;
+    private N name;
 
 }

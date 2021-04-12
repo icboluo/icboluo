@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ArchivesVO {
 
     /**
-     * d
+     * id
      */
     private String id;
 

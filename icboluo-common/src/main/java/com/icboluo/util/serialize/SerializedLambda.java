@@ -1,5 +1,6 @@
 package com.icboluo.util.serialize;
 
+import com.icboluo.funInterface.SerialFunction;
 import org.springframework.util.StringUtils;
 
 import java.io.*;
@@ -19,8 +20,14 @@ public class SerializedLambda implements Serializable {
 
     private String implMethodName;
 
-    //获取索性名的方法
-    public static <T> String getColumnName(SFunction<T, ?> column) {
+    /**
+     * 获取索性名的方法
+     *
+     * @param column
+     * @param <T>
+     * @return
+     */
+    public static <T> String getColumnName(SerialFunction<T, ?> column) {
         return resolveFieldName(resolveFunc(column).getImplMethodName());
     }
 
@@ -30,7 +37,7 @@ public class SerializedLambda implements Serializable {
      * @param lambda lambda对象
      * @return 返回解析后的 SerializedLambda
      */
-    public static SerializedLambda resolve(SFunction lambda) {
+    public static SerializedLambda resolve(SerialFunction lambda) {
         if (!lambda.getClass().isSynthetic()) {
             throw new RuntimeException("该方法仅能传入 lambda 表达式产生的合成类");
         }
@@ -82,8 +89,8 @@ public class SerializedLambda implements Serializable {
      * @param <T>  类型，被调用的 Function 对象的目标类型
      * @return 返回解析后的结果
      */
-    public static <T> SerializedLambda resolveFunc(SFunction<T, ?> func) {
-        Class clazz = func.getClass();
+    public static <T> SerializedLambda resolveFunc(SerialFunction<T, ?> func) {
+        Class<? extends SerialFunction> clazz = func.getClass();
         return Optional.ofNullable(FUNC_CACHE.get(clazz))
                 .map(WeakReference::get)
                 .orElseGet(() -> {
@@ -120,7 +127,7 @@ public class SerializedLambda implements Serializable {
      * @return 转换好的字符串
      */
     public static String firstToLowerCase(String param) {
-        if (StringUtils.isEmpty(param)) {
+        if (StringUtils.hasText(param)) {
             return "";
         }
         return param.substring(0, 1).toLowerCase() + param.substring(1);
@@ -134,6 +141,4 @@ public class SerializedLambda implements Serializable {
     public String getImplMethodName() {
         return implMethodName;
     }
-
-
 }

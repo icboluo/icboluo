@@ -179,7 +179,7 @@ public class ArrayHelper {
     /**
      * 最长递增子序列（Longest Increasing Subsequence，简写 LIS）
      *
-     * @param arr 带查找数组
+     * @param arr 待查找数组
      * @return 最长递增子序列的长度
      */
     public static int lis(int[] arr) {

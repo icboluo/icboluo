@@ -85,8 +85,6 @@ select * ,user_name as userName from tb_user where id=#{id};sql可以分开写
         可优化为：userDao2Mapper = sqlSession.getMapper(UserDao2Mapper.class);会通过动态代理生成一个代理的实现类
        要求namespace和param一致
 
-
-
  */
 public class mybatis {
 

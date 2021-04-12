@@ -3,7 +3,7 @@ package com.icboluo.common;
 import lombok.Data;
 
 /**
- * @author lp
+ * @author icboluo
  */
 @Data
 public class PageQuery {

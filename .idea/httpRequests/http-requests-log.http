@@ -1,3 +1,7 @@
+GET http://localhost:7788/webInterceptor/userCodeAnnotation
+
+###
+
 GET http://localhost:3377/config/info
 
 <> 2021-03-12T211326.200.txt
@@ -302,12 +306,6 @@ GET http://localhost:1514/user/ddd
 GET http://localhost:1514/selectProblem
 
 <> 2021-02-02T210032.200.json
-
-###
-
-GET http://localhost:1514/selectProblem
-
-<> 2021-02-02T205932.500.json
 
 ###
 

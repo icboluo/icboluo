@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.List;
 
@@ -94,5 +95,15 @@ public class DateHelper {
     public static LocalDateTime finalTime(LocalDate localDate) {
         LocalTime maxTime = LocalTime.MAX;
         return LocalDateTime.of(localDate, maxTime);
+    }
+
+    /**
+     * 本月的最后一天
+     *
+     * @param localDate 当前日期
+     * @return 本月的最后一天队应的日期
+     */
+    public static LocalDate lastDayOfMonth(LocalDate localDate) {
+        return localDate.with(TemporalAdjusters.lastDayOfMonth());
     }
 }
