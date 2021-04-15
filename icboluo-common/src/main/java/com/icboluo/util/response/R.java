@@ -2,7 +2,9 @@ package com.icboluo.util.response;
 
 import com.alibaba.fastjson.JSONObject;
 import com.icboluo.enumerate.ReEnum;
+import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +21,8 @@ import java.util.List;
  * @author icboluo
  */
 @SuppressWarnings("unused,rawtypes")
-public class R {
+@Data
+public class R implements Serializable {
 
     public static Response correct() {
         return new SingleResponse<>(ReEnum.OPERATION_SUCCESSFUL);

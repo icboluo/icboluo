@@ -66,7 +66,7 @@ public class HuToolTest {
         Map<String, Object> map = BeanUtil.beanToMap(brand);
         log.info("beanUtil bean to map:{}", map);
 //Map转Bean
-        ArchivesVO mapBrand = BeanUtil.mapToBean(map, ArchivesVO.class, false);
+        ArchivesVO mapBrand = BeanUtil.toBean(map, ArchivesVO.class);
         log.info("beanUtil map to bean:{}", mapBrand);
 //Bean属性拷贝
         ArchivesVO copyBrand = new ArchivesVO();

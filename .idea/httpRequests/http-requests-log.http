@@ -1,3 +1,39 @@
+GET http://localhost:1110/rest/uuid
+
+<> 2021-04-14T000457.500.json
+
+###
+
+GET http://localhost:1110/rest/uuid
+
+<> 2021-04-14T000221.500.json
+
+###
+
+GET http://localhost:1110/rest/uuid
+
+<> 2021-04-13T235936.500.json
+
+###
+
+GET http://localhost:1110/rest/uuid
+
+<> 2021-04-13T235842.500.json
+
+###
+
+GET http://localhost:1110/rest/uuid
+
+<> 2021-04-13T235628.500.json
+
+###
+
+GET http://localhost:1110/rest/uuid
+
+<> 2021-04-13T235609.500.json
+
+###
+
 GET http://localhost:7788/webInterceptor/userCodeAnnotation
 
 ###
@@ -265,47 +301,6 @@ Content-Type: application/json
 }
 
 <> 2021-02-27T004317.400.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-Content-Type: application/json
-
-{
-  "customerEmail": "123"
-}
-
-<> 2021-02-27T004209.400.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-
-<> 2021-02-27T004118.400.json
-
-###
-
-GET http://localhost:1514/user/restTemplate/getUserNameById?id=13
-
-<> 2021-02-02T211725.200.json
-
-###
-
-GET http://localhost:1514/user/restTemplate/getUserNameById?id=13
-
-<> 2021-02-02T211630.500.json
-
-###
-
-GET http://localhost:1514/user/ddd
-
-<> 2021-02-02T211332.200.json
-
-###
-
-GET http://localhost:1514/selectProblem
-
-<> 2021-02-02T210032.200.json
 
 ###
 

@@ -12,6 +12,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -38,8 +39,9 @@ public class HttpHelper {
      */
     public static void writeDownloadData(HttpServletResponse response, String fileName) {
         //设置ConetentType CharacterEncoding Header,需要在excelWriter.write()之前设置
-        response.setCharacterEncoding("UTF-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName);
         response.setContentType("mutipart/form-data");
     }
 
