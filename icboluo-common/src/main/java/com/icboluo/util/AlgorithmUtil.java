@@ -32,5 +32,4 @@ public class AlgorithmUtil {
         map.put(key, val);
         return val;
     }
-
 }

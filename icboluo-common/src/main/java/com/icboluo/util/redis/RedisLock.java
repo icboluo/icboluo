@@ -13,7 +13,7 @@ public class RedisLock extends AbstractRedis {
 
     private static final String LOCK_PREFIX = null;
 
-    private long LOCK_EXPIRE;
+    private long lockExpire;
 
 
     /**
@@ -25,11 +25,10 @@ public class RedisLock extends AbstractRedis {
      */
     public boolean lock(String key) {
         String lock = LOCK_PREFIX + key;
-        // 利用lambda表达式
         return (Boolean) redisTemplate.execute((RedisCallback<Object>) redisConnection -> {
-            long expireAt = System.currentTimeMillis() + LOCK_EXPIRE + 1;
+            long expireAt = System.currentTimeMillis() + lockExpire + 1;
             Boolean acquire = redisConnection.setNX(lock.getBytes(), String.valueOf(expireAt).getBytes());
-            if (acquire) {
+            if (Objects.equals(acquire, Boolean.TRUE)) {
                 return true;
             } else {
                 byte[] value = redisConnection.get(lock.getBytes());
@@ -37,7 +36,7 @@ public class RedisLock extends AbstractRedis {
                     long expireTime = Long.parseLong(new String(value));
                     if (expireTime < System.currentTimeMillis()) {
                         // 如果锁已经过期
-                        byte[] oldValue = redisConnection.getSet(lock.getBytes(), String.valueOf(System.currentTimeMillis() + LOCK_EXPIRE + 1).getBytes());
+                        byte[] oldValue = redisConnection.getSet(lock.getBytes(), String.valueOf(System.currentTimeMillis() + lockExpire + 1).getBytes());
                         // 防止死锁
                         return Long.parseLong(new String(oldValue)) < System.currentTimeMillis();
                     }

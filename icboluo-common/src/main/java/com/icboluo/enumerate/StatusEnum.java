@@ -20,7 +20,8 @@ import java.util.Optional;
  * @date 2020/11/12 20:29
  */
 @AllArgsConstructor
-public enum StatusEnum {
+@Getter
+public enum StatusEnum implements EnumInter {
     /**
      * 自由态
      */
@@ -48,17 +49,17 @@ public enum StatusEnum {
     /**
      * 英文描述
      */
-    private final String english;
+    private final String en;
     /**
      * 中文描述
      */
-    private final String chinese;
+    private final String zh;
     /**
      * 状态值，禁止为null
      * <p/>用的包装类型，没有使用基本类型
      */
     @Getter
-    private final Integer status;
+    private final Integer id;
 
     private static final EnumSet<StatusEnum> ALL_SET = EnumSet.allOf(StatusEnum.class);
 
@@ -69,7 +70,7 @@ public enum StatusEnum {
 
     private static String chooseByLanguage(LanguageEnum language, Optional<StatusEnum> e) {
         StatusEnum statusEnum = e.orElseThrow(() -> new IcBoLuoException(ExceptionEnum.STATUS_VALUE_NOT_FOUND));
-        return LanguageEnum.CHINESE == language ? statusEnum.chinese : statusEnum.english;
+        return LanguageEnum.CHINESE == language ? statusEnum.zh : statusEnum.en;
     }
 
     /**
@@ -83,7 +84,7 @@ public enum StatusEnum {
 //        校验并不一定需要写到最上层，有的时候需要准备校验参数，数据要写到函数内部
         validateStatusUniqueness();
         return ALL_SET.stream()
-                .filter(e -> e.status.equals(status))
+                .filter(e -> e.id.equals(status))
                 .findAny();
     }
 
@@ -102,7 +103,7 @@ public enum StatusEnum {
      */
     private static void validateStatusUniqueness() {
         long count = ALL_SET.stream()
-                .map(StatusEnum::getStatus)
+                .map(StatusEnum::getId)
                 .filter(Objects::nonNull)
                 .distinct()
                 .count();

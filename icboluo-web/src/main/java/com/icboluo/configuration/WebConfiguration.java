@@ -29,7 +29,9 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> excludeList = excludePathPatterns();
 //        UserContextInterceptor userContextInterceptor = (UserContextInterceptor) ApplicationContextHelper.getBean(UserContextInterceptor.class);
-        registry.addInterceptor(getUserContextInterceptor()).addPathPatterns(includePathPatterns()).excludePathPatterns(excludeList);
+        registry.addInterceptor(getUserContextInterceptor())
+                .addPathPatterns(includePathPatterns())
+                .excludePathPatterns(excludeList);
     }
 
     @Override
@@ -82,7 +84,8 @@ public class WebConfiguration implements WebMvcConfigurer {
                 "/getUserName",
                 "/subLedger/**",
                 "/webInterceptor/**",
-                "/test/**"
+                "/test/**",
+                "/rest/**",
         };
         ArrayList<String> list = new ArrayList<>();
         Collections.addAll(list, includeArray);
@@ -99,7 +102,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                 "/error/**",
                 "/static/**",
                 "/resource/**",
-                "/public/**"
+                "/public/**",
         };
         ArrayList<String> list = new ArrayList<>();
         Collections.addAll(list, excludeArray);

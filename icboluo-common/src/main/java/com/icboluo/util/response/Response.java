@@ -73,8 +73,7 @@ public class Response implements Serializable {
         if (this.isCollection(oldData)) {
             pageInfo = this.buildPageInfo(oldData);
             response.setData(pageInfo);
-        } else if (oldData instanceof JSONObject) {
-            JSONObject jsonObjectData = (JSONObject) oldData;
+        } else if (oldData instanceof JSONObject jsonObjectData) {
             int pageTimeCount = 0;
             for (String s : jsonObjectData.keySet()) {
                 if (s.contains("list")) {

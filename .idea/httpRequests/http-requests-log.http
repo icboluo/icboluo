@@ -1,306 +1,296 @@
-GET http://localhost:1110/rest/uuid
+GET http://localhost:7788/async/simple
 
-<> 2021-04-14T000457.500.json
+<> 2021-04-20T003806.200.json
+
+###
+
+GET http://localhost:7788/async/simple
+
+<> 2021-04-20T003759.200.json
+
+###
+
+GET http://localhost:7788/async/simple
+
+###
+
+GET http://localhost:7788/async/simple
+
+<> 2021-04-20T003303.200.json
+
+###
+
+GET http://localhost:7788/rest/map
+
+<> 2021-04-20T003251.200.json
+
+###
+
+GET http://localhost:7788/rest/integer
+
+<> 2021-04-20T003250.200.json
+
+###
+
+GET http://localhost:7788/rest/uuid
+
+<> 2021-04-20T003247.200.json
+
+###
+
+GET http://localhost:7788/rest/map
+
+<> 2021-04-20T002709.200.json
+
+###
+
+GET http://localhost:7788/rest/integer
+
+<> 2021-04-20T002704.200.json
+
+###
+
+GET http://localhost:7788/rest/uuid
+
+<> 2021-04-20T002656.200.json
+
+###
+
+GET http://localhost:7788/rest/uuid
+
+<> 2021-04-20T002650.200.json
+
+###
+
+GET http://localhost:7788/rest/uuid
+
+<> 2021-04-20T002425.200.json
+
+###
+
+GET http://localhost:7788/rest/uuid
+
+<> 2021-04-20T002417.200.json
+
+###
+
+GET http://localhost:7788/rest/uuid
+
+<> 2021-04-20T002348.200.json
 
 ###
 
 GET http://localhost:1110/rest/uuid
 
-<> 2021-04-14T000221.500.json
+<> 2021-04-20T001146.200.json
+
+###
+
+GET http://localhost:1110/rest/integer
+
+<> 2021-04-20T001142.200.json
+
+###
+
+GET http://localhost:1110/rest/map
+
+<> 2021-04-20T001140.200.json
+
+###
+
+GET http://localhost:1110/rest/map
+
+<> 2021-04-20T001135.200.json
+
+###
+
+GET http://localhost:1110/rest/map
+
+<> 2021-04-20T001022.200.json
 
 ###
 
 GET http://localhost:1110/rest/uuid
 
-<> 2021-04-13T235936.500.json
+<> 2021-04-20T001002.200.json
+
+###
+
+GET http://localhost:1110/rest/integer
+
+<> 2021-04-20T000944.200.json
 
 ###
 
 GET http://localhost:1110/rest/uuid
 
-<> 2021-04-13T235842.500.json
+<> 2021-04-20T000907.200.json
+
+###
+
+GET http://localhost:1110/rest/map
+
+<> 2021-04-20T000905.200.json
+
+###
+
+GET http://localhost:1110/rest/integer
+
+<> 2021-04-20T000902.200.json
 
 ###
 
 GET http://localhost:1110/rest/uuid
 
-<> 2021-04-13T235628.500.json
+<> 2021-04-20T000858.200.json
+
+###
+
+GET http://localhost:1110/rest/map
+
+<> 2021-04-19T235244.200.json
+
+###
+
+GET http://localhost:1110/rest/integer
+
+<> 2021-04-19T235238.200.json
 
 ###
 
 GET http://localhost:1110/rest/uuid
 
-<> 2021-04-13T235609.500.json
+<> 2021-04-19T235235.500.json
 
 ###
 
-GET http://localhost:7788/webInterceptor/userCodeAnnotation
+GET http://localhost:1110/rest/integer
+
+<> 2021-04-19T235232.200.json
 
 ###
 
-GET http://localhost:3377/config/info
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-12T211326.200.txt
-
-###
-
-GET http://localhost:1110/redisSet
-
-<> 2021-03-02T210522.200.json
+<> 2021-04-19T235200.200.txt
 
 ###
 
-GET http://localhost:1110/redisSet
+GET http://localhost:1110/rest/integer
 
-<> 2021-03-02T210421.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2021-03-02T203018.200.json
+<> 2021-04-19T235159.200.json
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
+GET http://localhost:1110/rest/integer
 
-<> 2021-03-02T202609.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2021-03-02T201802.200.json
+<> 2021-04-19T235156.200.json
 
 ###
 
-GET http://localhost:1110/expireAt
+GET http://localhost:1110/rest/map
 
-<> 2021-03-02T201738.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2021-03-02T201418.500.json
+<> 2021-04-19T235112.200.json
 
 ###
 
-GET http://localhost:1110/expireAt
+GET http://localhost:1110/rest/integer
 
-<> 2021-03-02T201312.500.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2021-03-02T201148.500.json
+<> 2021-04-19T235102.200.json
 
 ###
 
-GET http://localhost:1110/add
+GET http://localhost:1110/rest/integer
 
-<> 2021-03-02T200825.200.json
-
-###
-
-GET http://localhost:1110/add
-
-<> 2021-03-02T200824.200.json
+<> 2021-04-19T234836.200.json
 
 ###
 
-GET http://localhost:1110/add
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-02T200811.200.json
-
-###
-
-GET http://localhost:1110/add
-
-<> 2021-03-02T200552.500.json
+<> 2021-04-19T234829.200.txt
 
 ###
 
-GET http://localhost:1110/add
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-02T195828.500.json
-
-###
-
-GET http://localhost:1514/unit/getAll
-
-<> 2021-03-01T235326.200.json
+<> 2021-04-19T234253.200.json
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T235324.200.json
-
-###
-
-GET http://localhost:1514/unit/selectByCode?code=001
-
-<> 2021-03-01T234956.200.json
+<> 2021-04-19T234208.500.json
 
 ###
 
-GET http://localhost:1514/unit/getAll
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T233014.200.json
-
-###
-
-GET http://localhost:1514/unit/selectByCode?code=001
-
-<> 2021-03-01T233013.200.json
+<> 2021-04-19T234159.500.json
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
-
-<> 2021-03-01T231903.500.json
+GET http://localhost:1110/rest/uuid
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T231843.500.json
-
-###
-
-GET http://localhost:1514/unit/selectByCode?code=001
-
-<> 2021-03-01T231758.500.json
+<> 2021-04-19T232734.500.json
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T231615.200.json
-
-###
-
-GET http://localhost:1514/unit/selectByCode?code=001
-
-<> 2021-03-01T231556.200.json
+<> 2021-04-19T232709.500.json
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T231259.200.json
-
-###
-
-GET http://localhost:1514/unit/selectByCode?code=001
-
-<> 2021-03-01T231246.200.json
+<> 2021-04-19T232630.200.txt
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T230942.200.json
-
-###
-
-GET http://localhost:1514/unit/selectByCode?code=001
-
-<> 2021-03-01T230846.200.json
+<> 2021-04-19T232529.200.txt
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
+GET http://localhost:1110/rest/uuid
+
+<> 2021-04-19T232143.200.txt
 
 ###
 
-GET http://localhost:1514/unit/selectByCode?code=001
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T230717.500.json
-
-###
-
-GET http://localhost:1514/unit/selectByCode?code=001
-
-<> 2021-03-01T230032.200.json
+<> 2021-04-19T231956.200.txt
 
 ###
 
-GET http://localhost:1514/unit/selectByCode
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T230016.400.json
-
-###
-
-GET http://localhost:1514/unit/selectByCode
-
-<> 2021-03-01T225956.400.json
+<> 2021-04-19T231832.200.txt
 
 ###
 
-GET http://localhost:1514/unit/getAll
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T225002.200.json
-
-###
-
-GET http://localhost:1514/unit/getAll
-
-<> 2021-03-01T224443.200.json
+<> 2021-04-19T231732.200.txt
 
 ###
 
-GET http://localhost:1514/unit/getAll
+GET http://localhost:7788/async/simple
 
-<> 2021-03-01T224324.200.json
-
-###
-
-GET http://localhost:1514/unit/getAll
-
-<> 2021-03-01T224311.200.json
+<> 2021-04-19T231638.200.json
 
 ###
 
-GET http://localhost:1514/unit/getAll
+GET http://localhost:1110/rest/uuid
 
-<> 2021-03-01T224210.200.json
-
-###
-
-GET http://localhost:1514/unit/getAll
-
-<> 2021-03-01T221435.200.json
-
-###
-
-GET http://localhost:1514/unit/getAll
-
-<> 2021-03-01T221327.200.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-Content-Type: application/json
-
-{
-  "customerEmail": "123"
-}
-
-<> 2021-02-27T004345.400.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-Content-Type: application/json
-
-{
-  "customerEmail": "123"
-}
-
-<> 2021-02-27T004317.400.json
+<> 2021-04-19T231623.200.txt
 
 ###
 

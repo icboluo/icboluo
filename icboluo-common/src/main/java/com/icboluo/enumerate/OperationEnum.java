@@ -1,13 +1,15 @@
 package com.icboluo.enumerate;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author icboluo
  */
 
 @AllArgsConstructor
-public enum OperationEnum {
+@Getter
+public enum OperationEnum implements EnumInter {
     /**
      * 自由态
      */
@@ -18,13 +20,13 @@ public enum OperationEnum {
     /**
      * 英文描述
      */
-    private final String english;
+    private final String en;
     /**
      * 中文描述
      */
-    private final String chinese;
+    private final String zh;
     /**
      * 状态值
      */
-    private final Integer status;
+    private final Integer id;
 }

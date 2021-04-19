@@ -23,7 +23,7 @@
             <artifactId>fastjson</artifactId>
         </dependency>
         <dependency>
-<!--            这个如果加 optional标签，会导致子项目中没有这个类，运行报错-->
+            <!--            这个如果加 optional标签，会导致子项目中没有这个类，运行报错-->
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <exclusions>

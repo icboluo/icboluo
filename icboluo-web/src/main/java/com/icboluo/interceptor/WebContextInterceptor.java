@@ -1,11 +1,11 @@
 package com.icboluo.interceptor;
 
-import com.icboluo.common.constant.HttpConstant;
 import com.icboluo.annotation.WebContextAnno;
+import com.icboluo.common.constant.HttpConstant;
 import com.icboluo.common.enumeration.WebContextEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +16,7 @@ import java.util.List;
  * @author icboluo
  */
 @Slf4j
-public class WebContextInterceptor extends HandlerInterceptorAdapter {
-
+public class WebContextInterceptor implements HandlerInterceptor {
 
     private final List<String> exclude = new ArrayList<>();
 
@@ -29,24 +28,23 @@ public class WebContextInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (!(handler instanceof HandlerMethod)) {
+        if (!(handler instanceof HandlerMethod handlerMethod)) {
             log.error("handler 转换失败{}", handler);
-            return super.preHandle(request, response, handler);
+            return HandlerInterceptor.super.preHandle(request, response, handler);
         }
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
         WebContextAnno webContextAnno = handlerMethod.getBeanType().getAnnotation(WebContextAnno.class);
         webContextAnno = webContextAnno == null ? handlerMethod.getBeanType().getAnnotation(WebContextAnno.class) : webContextAnno;
         if (webContextAnno == null || !WebContextEnum.WEB.equals(webContextAnno.service())) {
             String userCode = request.getHeader(HttpConstant.USER_CODE);
             UserContext.set(userCode);
         }
-        return super.preHandle(request, response, handler);
+        return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         UserContext.remove();
-        super.afterCompletion(request, response, handler, ex);
+        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }
 

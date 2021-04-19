@@ -27,7 +27,8 @@ public class TimeRecord {
      */
     private static List<Long> rams;
     /**
-     * 记录第key个节点到第key+1个节点执行的功能，用于打印日志
+     * 用于记录日志
+     * 第3个节点记录第3个日志
      */
     private static Map<Integer, String> recordMsgMap;
 
@@ -39,15 +40,15 @@ public class TimeRecord {
 
     public static void start(String msg) {
         log.warn("计时开始");
-        recordMsgMap = new HashMap<>();
-        if (!StringUtils.isEmpty(msg)) {
-            recordMsgMap.put(0, msg);
-        }
         times = new ArrayList<>();
         rams = new ArrayList<>();
         runtime = Runtime.getRuntime();
         times.add(System.currentTimeMillis());
         rams.add(runtime.maxMemory() - runtime.freeMemory());
+        recordMsgMap = new HashMap<>();
+        if (StringUtils.hasText(msg)) {
+            recordMsgMap.put(0, msg);
+        }
     }
 
     /**
@@ -60,16 +61,16 @@ public class TimeRecord {
     public static void record(String msg) {
         long now = System.currentTimeMillis();
         long preTime = times.get(times.size() - 1);
-        times.add(now);
-        times.add(runtime.maxMemory() - runtime.freeMemory());
-        String preMsg = recordMsgMap.get(times.size());
-        if (StringUtils.isEmpty(preMsg)) {
-            log.warn("第{}个节点到下一个节点共消耗 {} 毫秒时间", times.size()-1, now - preTime);
-        } else {
+        String preMsg = recordMsgMap.get(times.size() - 1);
+        if (StringUtils.hasText(preMsg)) {
             log.warn("功能：{} 消耗的时间为 {} 毫秒", preMsg, now - preTime);
+        } else {
+            log.warn("第{}个节点到下一个节点共消耗 {} 毫秒时间", times.size() - 1, now - preTime);
         }
-        if (!StringUtils.isEmpty(msg)) {
-            recordMsgMap.put(times.size(), msg);
+        times.add(now);
+        rams.add(runtime.maxMemory() - runtime.freeMemory());
+        if (StringUtils.hasText(msg)) {
+            recordMsgMap.put(times.size()-1, msg);
         }
     }
 
@@ -79,19 +80,19 @@ public class TimeRecord {
         log.warn("整个程序耗时 {} 毫秒", allTime);
 
         Long preTime = times.get(0);
-        Long time;
+        Long curTime;
         long maxTime = 0L;
         int maxAfterIndex = 0;
-        for (int i = 0; i < times.size(); i++) {
-            time = times.get(i);
-            if (time - preTime > maxTime) {
+        for (int i = 1; i < times.size(); i++) {
+            curTime = times.get(i);
+            if (curTime - preTime > maxTime) {
                 maxAfterIndex = i;
-                maxTime = time - preTime;
+                maxTime = curTime - preTime;
             }
-            preTime = time;
+            preTime = curTime;
         }
         String rate = MathHelper.dividePercentage(maxTime, allTime);
         String msg = recordMsgMap.get(maxAfterIndex - 1);
-        log.warn("第{}个节点到下一个节点消耗时间最久为 {} 毫秒，功能是：{}，占总时间 {}", maxAfterIndex - 1, msg, maxTime, rate);
+        log.warn("第{}个节点到下一个节点消耗时间最久为 {} 毫秒，功能是：{}，占总时间 {}", maxAfterIndex - 1, maxTime, msg, rate);
     }
 }
