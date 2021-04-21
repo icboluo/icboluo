@@ -119,9 +119,7 @@ consul是分布式服务发现和配置管理系统
 
 # 项目介绍
 
-## algorithm
-
-算法
+## algorithm 算法
 
 包含 基础数据结构 data structure和常用算法
 
@@ -132,6 +130,9 @@ consul是分布式服务发现和配置管理系统
 包含一些 common和util
 
 公共异常，返回值都在这里面定义
+
+> 本意上是想提供公共功能的支持，对第三方包依赖达到较少，可是部分功能会依赖到第三方包
+> 所以现在的做法是引入了部分依赖
 
 ## framework
 
@@ -151,7 +152,9 @@ TODO
 
 ## note
 
-包含note和excel
+> note 笔记本，提供笔记本的功能支持
+
+> excel 提供mysql和excel互相转换的支持
 
 ## se
 
@@ -181,17 +184,22 @@ TODO
 
 提供 web 层的功能：
 
-mvc 的拦截器配置
+* mvc 的拦截器配置
+* spring aop
 
-spring aop
+# 项目更新计划（内容不分先后）
 
-# 项目更新计划
-
-## 更新策略模式内容 配合lambda
+## 更新策略模式内容 配合lambda，状态模式内容
 
 ## 更新leetcode题目
 
 ## spring MessageSource 国际化
+
+## 更新业务基础代码支持
+
+## 更新异常返回值处理机制
+
+## 更新对easy code代码生成器的支持
 
 
 

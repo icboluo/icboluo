@@ -46,7 +46,6 @@ public class HuToolTest {
         //输出: 壹拾贰万叁仟肆佰伍拾陆元零壹分
 
 //转换为字符串
-        int i = 1;
         String aStr = Convert.toStr(a);
 //转换为指定类型数组
         String[] b = {"1", "2", "3", "4"};

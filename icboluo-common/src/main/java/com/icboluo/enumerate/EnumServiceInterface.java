@@ -12,7 +12,7 @@ public interface EnumServiceInterface {
 
     Set<EnumInter> allSet();
 
-    default <T> String findEnumById(T id) {
+    default <T> String findEnumNameById(T id) {
         if (id == null) {
             return null;
         }
