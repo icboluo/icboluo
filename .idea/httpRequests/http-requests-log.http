@@ -1,3 +1,31 @@
+GET http://localhost:7788/webInterceptor/validate
+
+<> 2021-04-25T001025.400.json
+
+###
+
+GET http://localhost:7788/webInterceptor/localDateTime
+
+<> 2021-04-25T000954.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/getUserCode
+
+<> 2021-04-25T000936.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/getUserCode
+
+###
+
+GET http://localhost:7788/async/simple
+
+<> 2021-04-24T212425.200.json
+
+###
+
 GET http://localhost:7788/async/simple
 
 <> 2021-04-20T003806.200.json
@@ -261,36 +289,6 @@ GET http://localhost:1110/rest/uuid
 GET http://localhost:1110/rest/uuid
 
 <> 2021-04-19T232143.200.txt
-
-###
-
-GET http://localhost:1110/rest/uuid
-
-<> 2021-04-19T231956.200.txt
-
-###
-
-GET http://localhost:1110/rest/uuid
-
-<> 2021-04-19T231832.200.txt
-
-###
-
-GET http://localhost:1110/rest/uuid
-
-<> 2021-04-19T231732.200.txt
-
-###
-
-GET http://localhost:7788/async/simple
-
-<> 2021-04-19T231638.200.json
-
-###
-
-GET http://localhost:1110/rest/uuid
-
-<> 2021-04-19T231623.200.txt
 
 ###
 

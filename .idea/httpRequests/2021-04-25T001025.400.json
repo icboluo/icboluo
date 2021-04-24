@@ -1,0 +1,11 @@
+{
+  "code": 0,
+  "message": "操作成功",
+  "data": {
+    "timestamp": 1619280625591,
+    "status": 400,
+    "error": "Bad Request",
+    "message": "",
+    "path": "/webInterceptor/validate"
+  }
+}

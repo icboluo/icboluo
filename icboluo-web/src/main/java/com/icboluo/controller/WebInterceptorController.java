@@ -4,6 +4,7 @@ import com.icboluo.annotation.RecordTime;
 import com.icboluo.annotation.RequestBodyParam;
 import com.icboluo.annotation.UserCode;
 import com.icboluo.annotation.WebContextAnno;
+import com.icboluo.common.ResponseResult;
 import com.icboluo.common.enumeration.WebContextEnum;
 import com.icboluo.dataobject.OrderCO;
 import com.icboluo.interceptor.UserContext;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
  */
 @RestController
 @RequestMapping("webInterceptor")
+@ResponseResult
 //@WebContextAnno(service = WebContextEnum.WEB)
 public class WebInterceptorController {
 

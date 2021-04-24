@@ -2,7 +2,7 @@ package com.icboluo.enumerate;
 
 import org.springframework.util.CollectionUtils;
 
-import java.util.Set;
+import java.util.EnumSet;
 
 /**
  * @author icboluo
@@ -10,21 +10,24 @@ import java.util.Set;
  */
 public interface EnumServiceInterface {
 
-    Set<EnumInter> allSet();
+    EnumSet<? extends EnumInter> allSet();
 
     default <T> String findEnumNameById(T id) {
+        EnumInter enumById = findEnumById(id);
+        return enumById.getEn();
+    }
+
+    default <T> EnumInter findEnumById(T id) {
         if (id == null) {
             return null;
         }
-        Set<EnumInter> set = allSet();
+        EnumSet<? extends EnumInter> set = allSet();
         if (CollectionUtils.isEmpty(set)) {
             return null;
         }
-
         return set.stream()
                 .filter(um -> um.getId().equals(id.toString()))
                 .findAny()
-                .map(EnumInter::getEn)
                 .orElse(null);
     }
 }
