@@ -104,9 +104,22 @@ public class BeanHelper {
                 .reduce(true, (a, b) -> a && b);
     }
 
+    public static <T> boolean allIsNullOrEquals(T a, T b) {
+        if (a == null && b == null) {
+            return true;
+        }
+        return a != null && a.equals(b);
+    }
+
     public static <S, T, F> void notEmptyThenSet(S source, T target, Function<S, F> get, BiConsumer<T, F> set) {
         if (!ObjectUtils.isEmpty(get.apply(source))) {
             set.accept(target, get.apply(source));
+        }
+    }
+
+    public static <T> void notNullToAddAll(List<T> source, List<T> target) {
+        if (CollectionUtils.isEmpty(source)) {
+            target.addAll(source);
         }
     }
 }
