@@ -59,3 +59,7 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 ## 最佳实践
 
 - 对公共sql的更改需要在mapper接口上增加注释，更改公共sql的时候，需要merge，不准直接copy覆盖
+
+## 索引
+
+必定出现的left join 中需要加上索引，不一定出现的不需要加，where条件同理

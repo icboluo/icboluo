@@ -28,6 +28,7 @@ public class WebConfiguration22 implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 //        因为在所有的 HttpMessageConverter 实例集合中，StringHttpMessageConverter 要比其它的 Converter 排得靠前一些。
 //        我们需要将处理 Object 类型的 HttpMessageConverter 放得靠前一些，这可以在 Configuration 类中完成
+//        TODO 这个映射好像不对
         converters.add(0, new MappingJackson2HttpMessageConverter());
     }
 

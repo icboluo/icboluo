@@ -13,7 +13,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-/**
+/**TODO map 的k，v转换/pagehelper转换的支持
+ *
  * @author icboluo
  */
 @Slf4j
@@ -102,6 +103,11 @@ public class BeanHelper {
         return Arrays.stream(arr)
                 .map(Objects::nonNull)
                 .reduce(true, (a, b) -> a && b);
+    }
+
+    public static boolean haveNull(Object... arr) {
+        return Arrays.stream(arr)
+                .allMatch(Objects::isNull);
     }
 
     public static <T> boolean allIsNullOrEquals(T a, T b) {

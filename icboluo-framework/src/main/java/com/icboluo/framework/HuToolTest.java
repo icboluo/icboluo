@@ -1,5 +1,6 @@
 package com.icboluo.framework;
 
+import cn.hutool.Hutool;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
@@ -36,6 +37,7 @@ public class HuToolTest {
         Snowflake snowflake = IdUtil.getSnowflake(1, 1);
         long l = snowflake.nextId();
         System.out.println("l = " + l);
+        Hutool.printAllUtils();
     }
 
     @Test
