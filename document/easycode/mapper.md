@@ -10,7 +10,7 @@ $!callback.setSavePath($tool.append($tableInfo.savePath, "/mapper"))
     #set($pk = $tableInfo.pkColumn.get(0))
 #end
 
-#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}dao;
+#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}mapper;
 
 import $!{tableInfo.savePackageName}.entity.$!{tableInfo.name};
 import org.apache.ibatis.annotations.Param;

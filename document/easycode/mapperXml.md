@@ -13,7 +13,7 @@ $!callback.setSavePath($tool.append($modulePath, "/src/main/resources/mapper"))
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="$!{tableInfo.savePackageName}.dao.$!{tableInfo.name}Dao">
+<mapper namespace="$!{tableInfo.savePackageName}.dao.$!{tableInfo.name}Mapper">
 
     <resultMap id="$!{tableInfo.name}Map" type="$!{tableInfo.savePackageName}.entity.$!{tableInfo.name}" >
 #foreach($column in $tableInfo.fullColumn)
