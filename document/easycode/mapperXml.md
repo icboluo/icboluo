@@ -22,7 +22,7 @@ $!callback.setSavePath($tool.append($modulePath, "/src/main/resources/mapper"))
     </resultMap>
     <sql id="Base_Column_List">
         #allSqlColumn()
-    <sql/>
+    </sql>
     <!--查询单个-->
     <select id="queryById" resultMap="$!{tableInfo.name}Map">
         select
