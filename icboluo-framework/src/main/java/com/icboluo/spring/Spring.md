@@ -4,6 +4,8 @@
 
 去掉三层架构中的new
 
+set注入一次只能注入单个bean(可以用来给静态变量附初始化值)？
+
 ## AOP（Aspect Oriented Programming 面向切面编程）:
 
 基于动态代理的功能增强方式
