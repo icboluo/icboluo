@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icboluo.mapper.FundDataMapper">
+
+    <resultMap id="FundDataMap" type="com.icboluo.entity.FundData">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="fundId" column="fund_id" jdbcType="VARCHAR"/>
+        <result property="increaseRateDay" column="increase_rate_day" jdbcType="VARCHAR"/>
+        <result property="subscribeStatus" column="subscribe_status" jdbcType="VARCHAR"/>
+        <result property="netValueDate" column="net_value_date" jdbcType="TIMESTAMP"/>
+        <result property="netAssetValue" column="net_asset_value" jdbcType="VARCHAR"/>
+        <result property="netValueCumulative" column="net_value_cumulative" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value, net_value_cumulative, create_time, update_time    </sql>
+    <!--查询单个-->
+    <select id="queryById" resultMap="FundDataMap">
+        select
+        <include refid="Base_Column_List"/>
+        from note.fund_data
+        where id = #{id}
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" resultMap="FundDataMap">
+        select
+        <include refid="Base_Column_List"/>
+        from note.fund_data
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAllByData" resultMap="FundDataMap">
+        select
+        <include refid="Base_Column_List"/>
+        from note.fund_data
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="fundId != null and fundId != ''">
+                and fund_id = #{fundId}
+            </if>
+            <if test="increaseRateDay != null and increaseRateDay != ''">
+                and increase_rate_day = #{increaseRateDay}
+            </if>
+            <if test="subscribeStatus != null and subscribeStatus != ''">
+                and subscribe_status = #{subscribeStatus}
+            </if>
+            <if test="netValueDate != null">
+                and net_value_date = #{netValueDate}
+            </if>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                and net_asset_value = #{netAssetValue}
+            </if>
+            <if test="netValueCumulative != null and netValueCumulative != ''">
+                and net_value_cumulative = #{netValueCumulative}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into note.fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+                                   net_value_cumulative, create_time, update_time)
+        values (#{fundId}, #{increaseRateDay}, #{subscribeStatus}, #{netValueDate}, #{netAssetValue},
+                #{netValueCumulative}, #{createTime}, #{updateTime})
+    </insert>
+
+    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
+        insert into note.fund_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fundId != null and fundId != ''">
+                fund_id ,
+            </if>
+            <if test="increaseRateDay != null and increaseRateDay != ''">
+                increase_rate_day ,
+            </if>
+            <if test="subscribeStatus != null and subscribeStatus != ''">
+                subscribe_status ,
+            </if>
+            <if test="netValueDate != null">
+                net_value_date ,
+            </if>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                net_asset_value ,
+            </if>
+            <if test="netValueCumulative != null and netValueCumulative != ''">
+                net_value_cumulative ,
+            </if>
+            <if test="createTime != null">
+                create_time ,
+            </if>
+            <if test="updateTime != null">
+                update_time ,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fundId != null and fundId != ''">
+                #{fundId},
+            </if>
+            <if test="increaseRateDay != null and increaseRateDay != ''">
+                #{increaseRateDay},
+            </if>
+            <if test="subscribeStatus != null and subscribeStatus != ''">
+                #{subscribeStatus},
+            </if>
+            <if test="netValueDate != null">
+                #{netValueDate},
+            </if>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                #{netAssetValue},
+            </if>
+            <if test="netValueCumulative != null and netValueCumulative != ''">
+                #{netValueCumulative},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into note.fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+        net_value_cumulative, create_time, update_time)
+        values
+        <foreach collection="list" item="entity" separator=",">
+            (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.subscribeStatus}, #{entity.netValueDate},
+            #{entity.netAssetValue}, #{entity.netValueCumulative}, #{entity.createTime}, #{entity.updateTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into note.fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+        net_value_cumulative, create_time, update_time)
+        values
+        <foreach collection="list" item="entity" separator=",">
+            (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.subscribeStatus}, #{entity.netValueDate},
+            #{entity.netAssetValue}, #{entity.netValueCumulative}, #{entity.createTime}, #{entity.updateTime})
+        </foreach>
+        on duplicate key update
+        fund_id = values(fund_id) , increase_rate_day = values(increase_rate_day) , subscribe_status =
+        values(subscribe_status) , net_value_date = values(net_value_date) , net_asset_value = values(net_asset_value) ,
+        net_value_cumulative = values(net_value_cumulative) , create_time = values(create_time) , update_time =
+        values(update_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update note.fund_data
+        <set>
+            <if test="fundId != null and fundId != ''">
+                fund_id = #{fundId},
+            </if>
+            <if test="increaseRateDay != null and increaseRateDay != ''">
+                increase_rate_day = #{increaseRateDay},
+            </if>
+            <if test="subscribeStatus != null and subscribeStatus != ''">
+                subscribe_status = #{subscribeStatus},
+            </if>
+            <if test="netValueDate != null">
+                net_value_date = #{netValueDate},
+            </if>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                net_asset_value = #{netAssetValue},
+            </if>
+            <if test="netValueCumulative != null and netValueCumulative != ''">
+                net_value_cumulative = #{netValueCumulative},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from note.fund_data
+        where id = #{id}
+    </delete>
+
+</mapper>
+

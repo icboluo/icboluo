@@ -13,7 +13,7 @@ $!callback.setSavePath($tool.append($tableInfo.savePath, "/service/impl"))
 #if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}service.impl;
 
 import $!{tableInfo.savePackageName}.entity.$!{tableInfo.name};
-import $!{tableInfo.savePackageName}.mapper.$!{tableInfo.name}Dao;
+import $!{tableInfo.savePackageName}.mapper.$!{tableInfo.name}Mapper;
 import $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ import java.util.List;
 @Service
 public class $!{tableName} implements $!{tableInfo.name}Service {
     @Resource
-    private $!{tableInfo.name}Dao $!tool.firstLowerCase($!{tableInfo.name})Dao;
+    private $!{tableInfo.name}Mapper $!tool.firstLowerCase($!{tableInfo.name})Mapper;
 
     /**
      * 通过ID查询单条数据
@@ -39,7 +39,7 @@ public class $!{tableName} implements $!{tableInfo.name}Service {
      */
     @Override
     public $!{tableInfo.name} queryById($!pk.shortType $!pk.name) {
-        return this.$!{tool.firstLowerCase($!{tableInfo.name})}Dao.queryById($!pk.name);
+        return this.$!{tool.firstLowerCase($!{tableInfo.name})}Mapper.queryById($!pk.name);
     }
 
     /**
@@ -50,7 +50,7 @@ public class $!{tableName} implements $!{tableInfo.name}Service {
      */
     @Override
     public $!{tableInfo.name} insert($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name})) {
-        this.$!{tool.firstLowerCase($!{tableInfo.name})}Dao.insert($!tool.firstLowerCase($!{tableInfo.name}));
+        this.$!{tool.firstLowerCase($!{tableInfo.name})}Mapper.insert($!tool.firstLowerCase($!{tableInfo.name}));
         return $!tool.firstLowerCase($!{tableInfo.name});
     }
 
@@ -62,7 +62,7 @@ public class $!{tableName} implements $!{tableInfo.name}Service {
      */
     @Override
     public $!{tableInfo.name} update($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name})) {
-        this.$!{tool.firstLowerCase($!{tableInfo.name})}Dao.update($!tool.firstLowerCase($!{tableInfo.name}));
+        this.$!{tool.firstLowerCase($!{tableInfo.name})}Mapper.update($!tool.firstLowerCase($!{tableInfo.name}));
         return this.queryById($!{tool.firstLowerCase($!{tableInfo.name})}.get$!tool.firstUpperCase($pk.name)());
     }
 
@@ -74,7 +74,7 @@ public class $!{tableName} implements $!{tableInfo.name}Service {
      */
     @Override
     public boolean deleteById($!pk.shortType $!pk.name) {
-        return this.$!{tool.firstLowerCase($!{tableInfo.name})}Dao.deleteById($!pk.name) > 0;
+        return this.$!{tool.firstLowerCase($!{tableInfo.name})}Mapper.deleteById($!pk.name) > 0;
     }
 }
 ```

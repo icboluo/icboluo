@@ -1,92 +1,110 @@
-```
-##定义初始变量
-#set($tableName = $tool.append($tableInfo.name, "Mapper"))
-##设置回调
-$!callback.setFileName($tool.append($tableName, ".java"))
-$!callback.setSavePath($tool.append($tableInfo.savePath, "/mapper"))
+```sql
+##引入mybatis支持
+$!mybatisSupport
+
+##设置保存名称与保存位置
+$!callback.setFileName($tool.append($!{tableInfo.name}, "Mapper.xml"))
+$!callback.setSavePath($tool.append($modulePath, "/src/main/resources/mapper"))
 
 ##拿到主键
 #if(!$tableInfo.pkColumn.isEmpty())
     #set($pk = $tableInfo.pkColumn.get(0))
 #end
 
-#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}mapper;
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="$!{tableInfo.savePackageName}.dao.$!{tableInfo.name}Mapper">
 
-import $!{tableInfo.savePackageName}.entity.$!{tableInfo.name};
-import org.apache.ibatis.annotations.Param;
-import java.util.List;
+    <resultMap id="$!{tableInfo.name}Map" type="$!{tableInfo.savePackageName}.entity.$!{tableInfo.name}" >
+#foreach($column in $tableInfo.fullColumn)
+        <result property="$!column.name" column="$!column.obj.name" jdbcType="$!column.ext.jdbcType"/>
+#end
+    </resultMap>
+    <sql id="Base_Column_List">
+        #allSqlColumn()
+    </sql>
+    <!--查询单个-->
+    <select id="queryById" resultMap="$!{tableInfo.name}Map">
+        select
+         <include refid="Base_Column_List"/>
+        from $!{tableInfo.obj.parent.name}.$!tableInfo.obj.name
+        where $!pk.obj.name = #{$!pk.name}
+    </select>
 
-/**
- * $!{tableInfo.comment}($!{tableInfo.name})表数据库访问层
- *
- * @author $!author
- * @since $!time.currTime()
- */
-public interface $!{tableName} {
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="$!{tableInfo.name}Map">
+        select
+         <include refid="Base_Column_List"/>
+        from $!{tableInfo.obj.parent.name}.$!tableInfo.obj.name
+        <where>
+#foreach($column in $tableInfo.fullColumn)
+            <if test="$!column.name != null#if($column.type.equals("java.lang.String")) and $!column.name != ''#end">
+                and $!column.obj.name = #{$!column.name}
+            </if>
+#end
+        </where>
+    </select>
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param $!pk.name 主键
-     * @return 实例对象
-     */
-    $!{tableInfo.name} queryById($!pk.shortType $!pk.name);
-
-    /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param $!tool.firstLowerCase($!{tableInfo.name}) 实例对象
-     * @return 对象列表
-     */
-    List<$!{tableInfo.name}> queryAll($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}));
-
-    /**
-     * 新增数据
-     *
-     * @param $!tool.firstLowerCase($!{tableInfo.name}) 实例对象
-     * @return 影响行数
-     */
-    int insert($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}));
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="$!pk.name" useGeneratedKeys="true">
+        insert into $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}(#foreach($column in $tableInfo.otherColumn)$!column.obj.name#if($velocityHasNext), #end#end)
+        values (#foreach($column in $tableInfo.otherColumn)#{$!{column.name}}#if($velocityHasNext), #end#end)
+    </insert>
     
-    /**
-     * 新增数据
-     *
-     * @param $!tool.firstLowerCase($!{tableInfo.name}) 实例对象
-     * @return 影响行数
-     */
-    int insertSelective($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}));
+    <insert id="insertSelective" keyProperty="$!pk.name" useGeneratedKeys="true">
+        insert into $!{tableInfo.obj.parent.name}.${tableInfo.obj.name}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+#foreach($column in $tableInfo.otherColumn)
+            <if test="$!column.name != null#if($column.type.equals("java.lang.String")) and $!column.name != ''#end">
+                $!column.obj.name ,
+            </if>
+#end
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+#foreach($column in $tableInfo.otherColumn)
+            <if test="$!column.name != null#if($column.type.equals("java.lang.String")) and $!column.name != ''#end">
+                 #{$!column.name},
+            </if>
+#end
+        </trim>
+    </insert>
 
-    /**
-     * 批量新增数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<$!{tableInfo.name}> 实例对象列表
-     * @return 影响行数
-     */
-    int insertBatch(List<$!{tableInfo.name}> entities);
+    <insert id="insertBatch" keyProperty="$!pk.name" useGeneratedKeys="true">
+        insert into $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}(#foreach($column in $tableInfo.otherColumn)$!column.obj.name#if($velocityHasNext), #end#end)
+        values
+        <foreach collection="list" item="entity" separator=",">
+        (#foreach($column in $tableInfo.otherColumn)#{entity.$!{column.name}}#if($velocityHasNext), #end#end)
+        </foreach>
+    </insert>
 
-    /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<$!{tableInfo.name}> 实例对象列表
-     * @return 影响行数
-     */
-    int insertOrUpdateBatch(List<$!{tableInfo.name}> entities);
+    <insert id="insertOrUpdateBatch" keyProperty="$!pk.name" useGeneratedKeys="true">
+        insert into $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}(#foreach($column in $tableInfo.otherColumn)$!column.obj.name#if($velocityHasNext), #end#end)
+        values
+        <foreach collection="list" item="entity" separator=",">
+            (#foreach($column in $tableInfo.otherColumn)#{entity.$!{column.name}}#if($velocityHasNext), #end#end)
+        </foreach>
+        on duplicate key update
+         #foreach($column in $tableInfo.otherColumn)$!column.obj.name = values($!column.obj.name) #if($velocityHasNext), #end#end
+    </insert>
 
-    /**
-     * 修改数据
-     *
-     * @param $!tool.firstLowerCase($!{tableInfo.name}) 实例对象
-     * @return 影响行数
-     */
-    int update($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}));
+    <!--通过主键修改数据-->
+    <update id="update">
+        update $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}
+        <set>
+#foreach($column in $tableInfo.otherColumn)
+            <if test="$!column.name != null#if($column.type.equals("java.lang.String")) and $!column.name != ''#end">
+                $!column.obj.name = #{$!column.name},
+            </if>
+#end
+        </set>
+        where $!pk.obj.name = #{$!pk.name}
+    </update>
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param $!pk.name 主键
-     * @return 影响行数
-     */
-    int deleteById($!pk.shortType $!pk.name);
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name} where $!pk.obj.name = #{$!pk.name}
+    </delete>
 
-}
+</mapper>
+
 ```

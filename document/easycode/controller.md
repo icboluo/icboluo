@@ -24,7 +24,7 @@ import javax.annotation.Resource;
  * @since $!time.currTime()
  */
 @RestController
-@RequestMapping("$!tool.firstLowerCase($tableInfo.name)")
+@RequestMapping("/$!tool.firstLowerCase($tableInfo.name)")
 public class $!{tableName} {
     /**
      * 服务对象
@@ -38,7 +38,7 @@ public class $!{tableName} {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
+    @GetMapping("/selectOne")
     public $!{tableInfo.name} selectOne($!pk.shortType id) {
         return this.$!{tool.firstLowerCase($tableInfo.name)}Service.queryById(id);
     }
