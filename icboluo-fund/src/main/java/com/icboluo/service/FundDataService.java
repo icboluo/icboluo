@@ -1,6 +1,8 @@
 package com.icboluo.service;
 
 import com.icboluo.entity.FundData;
+import com.icboluo.object.FundDataVO;
+import com.icboluo.object.query.FundDataQuery;
 
 import java.util.List;
 
@@ -44,4 +46,7 @@ public interface FundDataService {
      */
     boolean deleteById(Long id);
 
+    List<FundData> selectByQuery(FundDataQuery query);
+
+    FundDataVO cal(String fundId);
 }

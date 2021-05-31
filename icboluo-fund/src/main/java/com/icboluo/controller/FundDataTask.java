@@ -12,9 +12,9 @@ import com.icboluo.object.bo.FundCompleteDateBO;
 import com.icboluo.object.bo.FundDateBO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @author icboluo
  * @date 2021-33-27 22:33
  */
-@Component
+//@Component
 @Slf4j
 public class FundDataTask {
 
@@ -53,8 +53,8 @@ public class FundDataTask {
     public static FundCompleteBO testDepartmentList1(String fundId) {
         Integer pageIndex = 1;
         Integer pageSize = 20;
-        String startTime = "2021-05-20";
-        String endTime = "2021-05-27";
+        String startTime = "2021-01-01";
+        String endTime = LocalDate.now().toString();
         String referer = "http://fundf10.eastmoney.com/f10/jjjz_" + fundId + ".html";
         long time = System.currentTimeMillis();
         String url = "http://api.fund.eastmoney.com/f10/lsjz?callback=jQuery18306596328894644803_1571038362181&" +

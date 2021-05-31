@@ -83,5 +83,6 @@ public interface FundAttentionMapper {
      */
     int deleteById(String id);
 
+    FundAttention selectByFundIdDim(String fundId);
 }
 

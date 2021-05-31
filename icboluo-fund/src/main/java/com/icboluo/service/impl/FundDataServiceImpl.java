@@ -1,12 +1,18 @@
 package com.icboluo.service.impl;
 
+import com.icboluo.entity.FundAttention;
 import com.icboluo.entity.FundData;
+import com.icboluo.mapper.FundAttentionMapper;
 import com.icboluo.mapper.FundDataMapper;
+import com.icboluo.object.FundDataVO;
+import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.service.FundDataService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * (FundData)表服务实现类
@@ -18,6 +24,8 @@ import java.util.List;
 public class FundDataServiceImpl implements FundDataService {
     @Resource
     private FundDataMapper fundDataMapper;
+    @Resource
+    private FundAttentionMapper fundAttentionMapper;
 
     /**
      * 通过ID查询单条数据
@@ -63,5 +71,26 @@ public class FundDataServiceImpl implements FundDataService {
     @Override
     public boolean deleteById(Long id) {
         return this.fundDataMapper.deleteById(id) > 0;
+    }
+
+    @Override
+    public List<FundData> selectByQuery(FundDataQuery query) {
+        return fundDataMapper.selectByQuery(query);
+    }
+
+    @Override
+    public FundDataVO cal(String fundId) {
+        FundAttention fundAttention = fundAttentionMapper.selectByFundIdDim(fundId);
+        String id = fundAttention.getId();
+        List<FundData> list = fundDataMapper.selectByFundId(id);
+        DoubleSummaryStatistics summaryStatistics = list.stream()
+                .map(FundData::getIncreaseRateDay)
+                .collect(Collectors.summarizingDouble(Double::valueOf));
+        return FundDataVO.builder()
+                .count(summaryStatistics.getCount())
+                .avg(summaryStatistics.getAverage())
+                .min(summaryStatistics.getMin())
+                .max(summaryStatistics.getMax())
+                .build();
     }
 }

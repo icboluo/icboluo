@@ -65,6 +65,19 @@
             </if>
         </where>
     </select>
+    <select id="selectByQuery" resultType="com.icboluo.entity.FundData">
+        select * from fund_data
+        <where>
+            <if test="fundId != null and fundId != ''">
+                and fund_id = #{fundId}
+            </if>
+        </where>
+    </select>
+    <select id="selectByFundId" resultType="com.icboluo.entity.FundData">
+        select *
+        from fund_data
+        where fund_id = #{fundId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">

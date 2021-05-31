@@ -1,3 +1,39 @@
+GET http://localhost:8888/fundData/init
+
+<> 2021-05-31T231055.200.json
+
+###
+
+GET http://localhost:8888/fundData/init
+
+<> 2021-05-31T222009.200.json
+
+###
+
+GET http://localhost:8888/fundData/init
+
+<> 2021-05-31T222004.200.json
+
+###
+
+GET http://localhost:8888/fundData/selectOne?id=1
+
+<> 2021-05-31T221939.200.json
+
+###
+
+GET http://localhost:8888/fundData/init
+
+<> 2021-05-31T221903.500.json
+
+###
+
+GET http://localhost:8888/fundData/init
+
+<> 2021-05-31T221851.500.json
+
+###
+
 GET http://localhost:8888/fundData/selectOne?id=1
 
 ###
@@ -247,42 +283,6 @@ GET http://localhost:1110/rest/integer
 GET http://localhost:1110/rest/uuid
 
 <> 2021-04-19T235235.500.json
-
-###
-
-GET http://localhost:1110/rest/integer
-
-<> 2021-04-19T235232.200.json
-
-###
-
-GET http://localhost:1110/rest/uuid
-
-<> 2021-04-19T235200.200.txt
-
-###
-
-GET http://localhost:1110/rest/integer
-
-<> 2021-04-19T235159.200.json
-
-###
-
-GET http://localhost:1110/rest/integer
-
-<> 2021-04-19T235156.200.json
-
-###
-
-GET http://localhost:1110/rest/map
-
-<> 2021-04-19T235112.200.json
-
-###
-
-GET http://localhost:1110/rest/integer
-
-<> 2021-04-19T235102.200.json
 
 ###
 

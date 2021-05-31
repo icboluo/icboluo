@@ -33,6 +33,16 @@
             </if>
         </where>
     </select>
+    <select id="selectByFundIdDim" resultType="com.icboluo.entity.FundAttention">
+        select
+        <include refid="Base_Column_List"/>
+        from note.fund_attention
+        <where>
+            <if test="fundId != null and fundId != ''">
+                and id = #{fundId}
+            </if>
+        </where>
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">

@@ -1,6 +1,7 @@
 package com.icboluo.mapper;
 
 import com.icboluo.entity.FundData;
+import com.icboluo.object.query.FundDataQuery;
 
 import java.util.List;
 
@@ -83,5 +84,8 @@ public interface FundDataMapper {
      */
     int deleteById(Long id);
 
+    List<FundData> selectByQuery(FundDataQuery query);
+
+    List<FundData> selectByFundId(String id);
 }
 

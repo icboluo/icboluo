@@ -1,5 +1,6 @@
 package com.icboluo.controller;
 
+import com.icboluo.common.ResponseResult;
 import com.icboluo.entity.FundAttention;
 import com.icboluo.service.FundAttentionService;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/fundAttention")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@ResponseResult
 public class FundAttentionController {
     /**
      * 服务对象
