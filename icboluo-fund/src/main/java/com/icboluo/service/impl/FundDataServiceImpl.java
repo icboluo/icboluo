@@ -4,8 +4,9 @@ import com.icboluo.entity.FundAttention;
 import com.icboluo.entity.FundData;
 import com.icboluo.mapper.FundAttentionMapper;
 import com.icboluo.mapper.FundDataMapper;
-import com.icboluo.object.FundDataVO;
 import com.icboluo.object.query.FundDataQuery;
+import com.icboluo.object.vo.FundDataCalVO;
+import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
 import org.springframework.stereotype.Service;
 
@@ -74,19 +75,19 @@ public class FundDataServiceImpl implements FundDataService {
     }
 
     @Override
-    public List<FundData> selectByQuery(FundDataQuery query) {
+    public List<FundDataVO> selectByQuery(FundDataQuery query) {
         return fundDataMapper.selectByQuery(query);
     }
 
     @Override
-    public FundDataVO cal(String fundId) {
+    public FundDataCalVO cal(String fundId) {
         FundAttention fundAttention = fundAttentionMapper.selectByFundIdDim(fundId);
         String id = fundAttention.getId();
         List<FundData> list = fundDataMapper.selectByFundId(id);
         DoubleSummaryStatistics summaryStatistics = list.stream()
                 .map(FundData::getIncreaseRateDay)
                 .collect(Collectors.summarizingDouble(Double::valueOf));
-        return FundDataVO.builder()
+        return FundDataCalVO.builder()
                 .count(summaryStatistics.getCount())
                 .avg(summaryStatistics.getAverage())
                 .min(summaryStatistics.getMin())

@@ -7,7 +7,7 @@
         <artifactId>icboluo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>fund</artifactId>
+    <artifactId>icboluo-fund</artifactId>
     <name>icboluo-fund</name>
 
     <dependencies>

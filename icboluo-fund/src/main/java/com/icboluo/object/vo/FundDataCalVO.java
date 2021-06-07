@@ -1,4 +1,4 @@
-package com.icboluo.object;
+package com.icboluo.object.vo;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class FundDataVO {
+public class FundDataCalVO {
 
     private Long count;
 

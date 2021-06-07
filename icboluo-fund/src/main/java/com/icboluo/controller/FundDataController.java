@@ -4,8 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.ResponseResult;
 import com.icboluo.entity.FundData;
-import com.icboluo.object.FundDataVO;
+import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.query.FundDataQuery;
+import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,14 +45,14 @@ public class FundDataController {
     }
 
     @GetMapping("/init")
-    public PageInfo<FundData> init(FundDataQuery query) {
+    public PageInfo<FundDataVO> init(FundDataQuery query) {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
-        List<FundData> fundDataList = fundDataService.selectByQuery(query);
+        List<FundDataVO> fundDataList = fundDataService.selectByQuery(query);
         return PageInfo.of(fundDataList);
     }
 
     @GetMapping("cal")
-    public FundDataVO cal(String fundId) {
+    public FundDataCalVO cal(String fundId) {
         return fundDataService.cal(fundId);
     }
 }

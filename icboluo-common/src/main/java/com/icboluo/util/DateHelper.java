@@ -97,6 +97,10 @@ public class DateHelper {
         return LocalDateTime.of(localDate, maxTime);
     }
 
+    public static LocalDateTime firstTime(LocalDate localDate) {
+        LocalTime minTime = LocalTime.MIN;
+        return LocalDateTime.of(localDate, minTime);
+    }
     /**
      * 本月的最后一天
      *

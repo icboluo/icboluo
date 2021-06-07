@@ -27,15 +27,22 @@ $!callback.setSavePath($tool.append($modulePath, "/src/main/resources/mapper"))
     <select id="queryById" resultMap="$!{tableInfo.name}Map">
         select
          <include refid="Base_Column_List"/>
-        from $!{tableInfo.obj.parent.name}.$!tableInfo.obj.name
+        from $!tableInfo.obj.name
         where $!pk.obj.name = #{$!pk.name}
     </select>
 
-    <!--通过实体作为筛选条件查询-->
+    <!--查询所有-->
     <select id="queryAll" resultMap="$!{tableInfo.name}Map">
         select
          <include refid="Base_Column_List"/>
-        from $!{tableInfo.obj.parent.name}.$!tableInfo.obj.name
+        from $!tableInfo.obj.name
+    </select>
+    
+        <!--通过实体作为筛选条件查询-->
+    <select id="queryAllByData" resultMap="$!{tableInfo.name}Map">
+        select
+         <include refid="Base_Column_List"/>
+        from $!tableInfo.obj.name
         <where>
 #foreach($column in $tableInfo.fullColumn)
             <if test="$!column.name != null#if($column.type.equals("java.lang.String")) and $!column.name != ''#end">
@@ -47,21 +54,21 @@ $!callback.setSavePath($tool.append($modulePath, "/src/main/resources/mapper"))
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="$!pk.name" useGeneratedKeys="true">
-        insert into $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}(#foreach($column in $tableInfo.otherColumn)$!column.obj.name#if($velocityHasNext), #end#end)
-        values (#foreach($column in $tableInfo.otherColumn)#{$!{column.name}}#if($velocityHasNext), #end#end)
+        insert into $!{tableInfo.obj.name}(#foreach($column in $tableInfo.fullColumn)$!column.obj.name#if($velocityHasNext), #end#end)
+        values (#foreach($column in $tableInfo.fullColumn)#{$!{column.name}}#if($velocityHasNext), #end#end)
     </insert>
     
     <insert id="insertSelective" keyProperty="$!pk.name" useGeneratedKeys="true">
-        insert into $!{tableInfo.obj.parent.name}.${tableInfo.obj.name}
+        insert into ${tableInfo.obj.name}
         <trim prefix="(" suffix=")" suffixOverrides=",">
-#foreach($column in $tableInfo.otherColumn)
+#foreach($column in $tableInfo.fullColumn)
             <if test="$!column.name != null#if($column.type.equals("java.lang.String")) and $!column.name != ''#end">
                 $!column.obj.name ,
             </if>
 #end
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-#foreach($column in $tableInfo.otherColumn)
+#foreach($column in $tableInfo.fullColumn)
             <if test="$!column.name != null#if($column.type.equals("java.lang.String")) and $!column.name != ''#end">
                  #{$!column.name},
             </if>
@@ -70,28 +77,28 @@ $!callback.setSavePath($tool.append($modulePath, "/src/main/resources/mapper"))
     </insert>
 
     <insert id="insertBatch" keyProperty="$!pk.name" useGeneratedKeys="true">
-        insert into $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}(#foreach($column in $tableInfo.otherColumn)$!column.obj.name#if($velocityHasNext), #end#end)
+        insert into $!{tableInfo.obj.name}(#foreach($column in $tableInfo.fullColumn)$!column.obj.name#if($velocityHasNext), #end#end)
         values
         <foreach collection="list" item="entity" separator=",">
-        (#foreach($column in $tableInfo.otherColumn)#{entity.$!{column.name}}#if($velocityHasNext), #end#end)
+        (#foreach($column in $tableInfo.fullColumn)#{entity.$!{column.name}}#if($velocityHasNext), #end#end)
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="$!pk.name" useGeneratedKeys="true">
-        insert into $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}(#foreach($column in $tableInfo.otherColumn)$!column.obj.name#if($velocityHasNext), #end#end)
+        insert into $!{tableInfo.obj.name}(#foreach($column in $tableInfo.fullColumn)$!column.obj.name#if($velocityHasNext), #end#end)
         values
         <foreach collection="list" item="entity" separator=",">
-            (#foreach($column in $tableInfo.otherColumn)#{entity.$!{column.name}}#if($velocityHasNext), #end#end)
+            (#foreach($column in $tableInfo.fullColumn)#{entity.$!{column.name}}#if($velocityHasNext), #end#end)
         </foreach>
         on duplicate key update
-         #foreach($column in $tableInfo.otherColumn)$!column.obj.name = values($!column.obj.name) #if($velocityHasNext), #end#end
+         #foreach($column in $tableInfo.fullColumn)$!column.obj.name = values($!column.obj.name) #if($velocityHasNext), #end#end
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}
+        update $!{tableInfo.obj.name}
         <set>
-#foreach($column in $tableInfo.otherColumn)
+#foreach($column in $tableInfo.fullColumn)
             <if test="$!column.name != null#if($column.type.equals("java.lang.String")) and $!column.name != ''#end">
                 $!column.obj.name = #{$!column.name},
             </if>
@@ -102,7 +109,7 @@ $!callback.setSavePath($tool.append($modulePath, "/src/main/resources/mapper"))
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name} where $!pk.obj.name = #{$!pk.name}
+        delete from $!{tableInfo.obj.name} where $!pk.obj.name = #{$!pk.name}
     </delete>
 
 </mapper>
