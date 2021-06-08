@@ -1,6 +1,8 @@
 package com.icboluo.mapper;
 
 import com.icboluo.entity.FundAttention;
+import com.icboluo.object.query.FundAttentionQuery;
+import com.icboluo.object.vo.FundAttentionVO;
 
 import java.util.List;
 
@@ -84,5 +86,7 @@ public interface FundAttentionMapper {
     int deleteById(String id);
 
     FundAttention selectByFundIdDim(String fundId);
+
+    List<FundAttentionVO> selectByQuery(FundAttentionQuery query);
 }
 

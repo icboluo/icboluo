@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 28/05/2021 00:24:35
+ Date: 09/06/2021 01:46:22
 */
 
 SET NAMES utf8mb4;
@@ -22,12 +22,24 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `fund_info`;
 CREATE TABLE `fund_info`  (
-  `id` int NOT NULL COMMENT 'id',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'id',
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of fund_info
 -- ----------------------------
+INSERT INTO `fund_info` VALUES ('001186', NULL);
+INSERT INTO `fund_info` VALUES ('001230', NULL);
+INSERT INTO `fund_info` VALUES ('001302', NULL);
+INSERT INTO `fund_info` VALUES ('003844', NULL);
+INSERT INTO `fund_info` VALUES ('005827', NULL);
+INSERT INTO `fund_info` VALUES ('160221', '国泰有色');
+INSERT INTO `fund_info` VALUES ('161032', '煤炭');
+INSERT INTO `fund_info` VALUES ('161122', '生物LOF');
+INSERT INTO `fund_info` VALUES ('161725', '白酒基金');
+INSERT INTO `fund_info` VALUES ('164402', '中航军工');
+INSERT INTO `fund_info` VALUES ('320007', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

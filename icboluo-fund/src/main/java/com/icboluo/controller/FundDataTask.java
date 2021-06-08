@@ -86,7 +86,7 @@ public class FundDataTask {
         }
     }
 
-    //    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void asyncFundInfo() {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
         List<FundInfo> list = new ArrayList<>();

@@ -43,6 +43,11 @@
             </if>
         </where>
     </select>
+    <select id="selectByQuery" resultType="com.icboluo.object.vo.FundAttentionVO">
+        select fa.id, fi.name
+        from fund_attention fa
+                 left join fund_info fi on fa.id = fi.id
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">

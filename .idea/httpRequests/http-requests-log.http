@@ -1,3 +1,9 @@
+GET http://localhost:8888/fundAttention/init
+
+<> 2021-06-09T004414.200.json
+
+###
+
 GET http://localhost:8888/fundData/init
 
 <> 2021-05-31T231055.200.json
@@ -277,12 +283,6 @@ GET http://localhost:1110/rest/map
 GET http://localhost:1110/rest/integer
 
 <> 2021-04-19T235238.200.json
-
-###
-
-GET http://localhost:1110/rest/uuid
-
-<> 2021-04-19T235235.500.json
 
 ###
 

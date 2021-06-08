@@ -2,6 +2,8 @@ package com.icboluo.service.impl;
 
 import com.icboluo.entity.FundAttention;
 import com.icboluo.mapper.FundAttentionMapper;
+import com.icboluo.object.query.FundAttentionQuery;
+import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
 import org.springframework.stereotype.Service;
 
@@ -63,5 +65,10 @@ public class FundAttentionServiceImpl implements FundAttentionService {
     @Override
     public boolean deleteById(String id) {
         return this.fundAttentionMapper.deleteById(id) > 0;
+    }
+
+    @Override
+    public List<FundAttentionVO> init(FundAttentionQuery query) {
+        return fundAttentionMapper.selectByQuery(query);
     }
 }

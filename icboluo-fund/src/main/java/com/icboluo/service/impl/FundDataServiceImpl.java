@@ -87,11 +87,35 @@ public class FundDataServiceImpl implements FundDataService {
         DoubleSummaryStatistics summaryStatistics = list.stream()
                 .map(FundData::getIncreaseRateDay)
                 .collect(Collectors.summarizingDouble(Double::valueOf));
+        int incrIncr = 0;
+        int incrDecr = 0;
+        int decrIncr = 0;
+        int decrDecr = 0;
+        for (int i = 0; i < list.size() - 1; i++) {
+            FundData fundData = list.get(i);
+            if (Double.parseDouble(fundData.getIncreaseRateDay()) > 0) {
+                if (Double.parseDouble(list.get(i + 1).getIncreaseRateDay()) > 0) {
+                    incrIncr++;
+                } else {
+                    incrDecr++;
+                }
+            } else {
+                if (Double.parseDouble(list.get(i + 1).getIncreaseRateDay()) > 0) {
+                    decrIncr++;
+                } else {
+                    decrDecr++;
+                }
+            }
+        }
         return FundDataCalVO.builder()
                 .count(summaryStatistics.getCount())
                 .avg(summaryStatistics.getAverage())
                 .min(summaryStatistics.getMin())
                 .max(summaryStatistics.getMax())
+                .incrIncr(incrIncr)
+                .incrDecr(incrDecr)
+                .decrIncr(decrIncr)
+                .decrDecr(decrDecr)
                 .build();
     }
 }

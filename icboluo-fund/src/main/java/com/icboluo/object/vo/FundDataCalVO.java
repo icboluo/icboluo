@@ -18,4 +18,9 @@ public class FundDataCalVO {
     private Double max;
 
     private Double avg;
+
+    private Integer incrIncr;
+    private Integer incrDecr;
+    private Integer decrIncr;
+    private Integer decrDecr;
 }
