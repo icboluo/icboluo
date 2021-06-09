@@ -3,6 +3,9 @@ package com.icboluo.object.vo;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.DayOfWeek;
+import java.util.Map;
+
 /**
  * @author icboluo
  * @date 2021-27-01 0:27
@@ -23,4 +26,7 @@ public class FundDataCalVO {
     private Integer incrDecr;
     private Integer decrIncr;
     private Integer decrDecr;
+
+    private Map<DayOfWeek, Double> weekMap;
+    private Map<Integer, Double> monthMap;
 }

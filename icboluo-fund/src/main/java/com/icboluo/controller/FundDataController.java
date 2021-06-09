@@ -55,4 +55,10 @@ public class FundDataController {
     public FundDataCalVO cal(String fundId) {
         return fundDataService.cal(fundId);
     }
+
+    @GetMapping("/simCal")
+    public Double simCal(Double source, Double target) {
+        double divide = target - source;
+        return divide / source * 100;
+    }
 }

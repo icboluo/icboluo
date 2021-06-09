@@ -51,7 +51,7 @@ public class FundDataTask {
     @Scheduled(cron = "0 * * * * ?")
     public void asyncFundData() {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
-        LocalDate startTime = LocalDate.of(2021, 1, 1);
+        LocalDate startTime = LocalDate.of(2020, 1, 1);
 
         for (FundAttention fundAttention : fundAttentions) {
             String fundId = fundAttention.getId();
@@ -60,7 +60,7 @@ public class FundDataTask {
                 int countPage = 1;
                 LocalDate temp = startTime;
                 while (LocalDate.now().isAfter(temp)) {
-                    temp = temp.plusDays(15);
+                    temp = temp.plusDays(21);
                     countPage++;
                 }
                 this.addFundData(fundAttention, startTime, LocalDate.now(), countPage);
@@ -72,7 +72,7 @@ public class FundDataTask {
                 int countPage = 1;
                 LocalDate temp = startTime;
                 while (dbFundAsync.getEndTime().isAfter(DateHelper.firstTime(temp))) {
-                    temp = temp.plusDays(15);
+                    temp = temp.plusDays(21);
                     countPage++;
                 }
                 this.addFundData(fundAttention, startTime, LocalDate.now(), countPage);
@@ -86,7 +86,7 @@ public class FundDataTask {
         }
     }
 
-    @Scheduled(cron = "0 * * * * ?")
+//    @Scheduled(cron = "0 * * * * ?")
     public void asyncFundInfo() {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
         List<FundInfo> list = new ArrayList<>();
@@ -109,7 +109,7 @@ public class FundDataTask {
                 .build();
         for (int i = 0; i < countPage; i++) {
             fundDataGetBO.setPageNum(i + 1);
-            fundDataGetBO.setPageSize(21);
+            fundDataGetBO.setPageSize(15);
             FundCompleteBO fundComplete = httpFundData(fundDataGetBO);
             FundCompleteDateBO data = fundComplete.getData();
             List<FundDateBO> fundDateList = data.getFundDateList();

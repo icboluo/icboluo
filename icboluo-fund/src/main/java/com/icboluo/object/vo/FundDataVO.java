@@ -2,6 +2,7 @@ package com.icboluo.object.vo;
 
 import lombok.Data;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 /**
@@ -48,6 +49,8 @@ public class FundDataVO {
     private LocalDateTime updateTime;
 
     private String fundName;
+
+    private DayOfWeek dayOfWeek;
 
     private static final long serialVersionUID = 153984695114811407L;
 }
