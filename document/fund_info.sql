@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 09/06/2021 01:46:22
+ Date: 22/06/2021 01:30:00
 */
 
 SET NAMES utf8mb4;
@@ -30,15 +30,16 @@ CREATE TABLE `fund_info`  (
 -- ----------------------------
 -- Records of fund_info
 -- ----------------------------
-INSERT INTO `fund_info` VALUES ('001186', NULL);
 INSERT INTO `fund_info` VALUES ('001230', NULL);
 INSERT INTO `fund_info` VALUES ('001302', NULL);
 INSERT INTO `fund_info` VALUES ('003844', NULL);
+INSERT INTO `fund_info` VALUES ('004856', NULL);
 INSERT INTO `fund_info` VALUES ('005827', NULL);
 INSERT INTO `fund_info` VALUES ('160221', '国泰有色');
 INSERT INTO `fund_info` VALUES ('161032', '煤炭');
 INSERT INTO `fund_info` VALUES ('161122', '生物LOF');
 INSERT INTO `fund_info` VALUES ('161725', '白酒基金');
+INSERT INTO `fund_info` VALUES ('162605', '景顺鼎益');
 INSERT INTO `fund_info` VALUES ('164402', '中航军工');
 INSERT INTO `fund_info` VALUES ('320007', NULL);
 

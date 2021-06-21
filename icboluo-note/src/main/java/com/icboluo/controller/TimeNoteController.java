@@ -1,5 +1,6 @@
 package com.icboluo.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.mapper.TimeNoteMapper;
 import com.icboluo.object.clientobject.TimeNoteCO;
@@ -17,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ import java.util.Map;
  */
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/timeNote")
 @Api(tags = "笔记本")
 public class TimeNoteController {
     @Resource
@@ -34,6 +37,16 @@ public class TimeNoteController {
     private NoteService noteService;
     @Resource
     private TimeNoteValidate timeNoteValidate;
+
+
+    @GetMapping("/init")
+    @ApiOperation(value = "初始化")
+    public Response init(TimeNoteQuery query) {
+        NoteVO noteVO = noteService.selectOne(query);
+        List<NoteVO> list = new ArrayList<>();
+        list.add(noteVO);
+        return R.correct(PageInfo.of(list));
+    }
 
     @GetMapping("/selectProblem")
     @ApiOperation(value = "查询第一个问题")

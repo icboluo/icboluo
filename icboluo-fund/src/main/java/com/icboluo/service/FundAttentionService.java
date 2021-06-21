@@ -47,4 +47,6 @@ public interface FundAttentionService {
     boolean deleteById(String id);
 
     List<FundAttentionVO> init(FundAttentionQuery query);
+
+    void delete(String id);
 }

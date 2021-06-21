@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 09/06/2021 01:46:37
+ Date: 22/06/2021 01:30:16
 */
 
 SET NAMES utf8mb4;
@@ -29,15 +29,16 @@ CREATE TABLE `fund_attention`  (
 -- ----------------------------
 -- Records of fund_attention
 -- ----------------------------
-INSERT INTO `fund_attention` VALUES ('001186');
 INSERT INTO `fund_attention` VALUES ('001230');
 INSERT INTO `fund_attention` VALUES ('001302');
 INSERT INTO `fund_attention` VALUES ('003844');
+INSERT INTO `fund_attention` VALUES ('004856');
 INSERT INTO `fund_attention` VALUES ('005827');
 INSERT INTO `fund_attention` VALUES ('160221');
 INSERT INTO `fund_attention` VALUES ('161032');
 INSERT INTO `fund_attention` VALUES ('161122');
 INSERT INTO `fund_attention` VALUES ('161725');
+INSERT INTO `fund_attention` VALUES ('162605');
 INSERT INTO `fund_attention` VALUES ('164402');
 INSERT INTO `fund_attention` VALUES ('320007');
 

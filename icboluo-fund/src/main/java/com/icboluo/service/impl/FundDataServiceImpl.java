@@ -8,8 +8,10 @@ import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
+import com.icboluo.util.BeanHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.time.DayOfWeek;
@@ -86,10 +88,16 @@ public class FundDataServiceImpl implements FundDataService {
     }
 
     @Override
-    public FundDataCalVO cal(String fundId) {
+    public FundDataCalVO cal(String fundId, String startTime) {
         FundAttention fundAttention = fundAttentionMapper.selectByFundIdDim(fundId);
-        String id = fundAttention.getId();
-        List<FundData> list = fundDataMapper.selectByFundId(id);
+        FundDataQuery query = new FundDataQuery();
+        query.setFundId(fundId);
+        query.setStartTime(startTime);
+        List<FundDataVO> findList = fundDataMapper.selectByQuery(query);
+        List<FundData> list = findList.stream()
+                .filter(item -> !ObjectUtils.isEmpty(item.getIncreaseRateDay()))
+                .map(item -> BeanHelper.copyProperties(item, FundData.class))
+                .collect(Collectors.toList());
         DoubleSummaryStatistics summaryStatistics = list.stream()
                 .map(FundData::getIncreaseRateDay)
                 .collect(Collectors.summarizingDouble(Double::valueOf));
@@ -99,14 +107,15 @@ public class FundDataServiceImpl implements FundDataService {
         int decrDecr = 0;
         for (int i = 0; i < list.size() - 1; i++) {
             FundData fundData = list.get(i);
+            String nextRate = list.get(i + 1).getIncreaseRateDay();
             if (Double.parseDouble(fundData.getIncreaseRateDay()) > 0) {
-                if (Double.parseDouble(list.get(i + 1).getIncreaseRateDay()) > 0) {
+                if (Double.parseDouble(nextRate) > 0) {
                     incrIncr++;
                 } else {
                     incrDecr++;
                 }
             } else {
-                if (Double.parseDouble(list.get(i + 1).getIncreaseRateDay()) > 0) {
+                if (Double.parseDouble(nextRate) > 0) {
                     decrIncr++;
                 } else {
                     decrDecr++;

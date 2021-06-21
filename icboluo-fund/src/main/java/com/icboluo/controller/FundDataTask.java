@@ -17,8 +17,10 @@ import com.icboluo.object.bo.FundCompleteDateBO;
 import com.icboluo.object.bo.FundDataGetBO;
 import com.icboluo.object.bo.FundDateBO;
 import com.icboluo.util.DateHelper;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -26,13 +28,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * @author icboluo
  * @date 2021-33-27 22:33
  */
-//@Component
+@Component
 @Slf4j
 public class FundDataTask {
 
@@ -51,42 +54,42 @@ public class FundDataTask {
     @Scheduled(cron = "0 * * * * ?")
     public void asyncFundData() {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
-        LocalDate startTime = LocalDate.of(2020, 1, 1);
+        List<FundAsyncRecord> recordList = fundAsyncRecordMapper.queryAll();
+        Map<String, FundAsyncRecord> recordMap = recordList.stream()
+                .collect(Collectors.groupingBy(FundAsyncRecord::getId,
+                        Collectors.collectingAndThen(Collectors.toList(), li -> li.get(0))));
+        LocalDate startTime = LocalDate.of(2018, 1, 1);
 
         for (FundAttention fundAttention : fundAttentions) {
             String fundId = fundAttention.getId();
-            FundAsyncRecord dbFundAsync = fundAsyncRecordMapper.queryById(fundId);
+            FundAsyncRecord dbFundAsync = recordMap.get(fundId);
+            boolean haveUpdateFundData = false;
             if (dbFundAsync == null) {
-                int countPage = 1;
-                LocalDate temp = startTime;
-                while (LocalDate.now().isAfter(temp)) {
-                    temp = temp.plusDays(21);
-                    countPage++;
-                }
-                this.addFundData(fundAttention, startTime, LocalDate.now(), countPage);
+                syncFundData(fundId, startTime, LocalDate.now());
+                haveUpdateFundData = true;
             } else {
-//                如果数据库中的开始时间比较小
-                if (dbFundAsync.getStartTime().compareTo(DateHelper.firstTime(startTime)) < 0) {
-                    continue;
+//            如果数据库中的开始时间比较大
+                if (dbFundAsync.getStartTime().toLocalDate().compareTo(startTime) > 0) {
+                    syncFundData(fundId, startTime, dbFundAsync.getStartTime().toLocalDate());
+                    haveUpdateFundData = true;
                 }
-                int countPage = 1;
-                LocalDate temp = startTime;
-                while (dbFundAsync.getEndTime().isAfter(DateHelper.firstTime(temp))) {
-                    temp = temp.plusDays(21);
-                    countPage++;
+//            如果数据库结束时间比现在小
+                if (dbFundAsync.getEndTime().toLocalDate().compareTo(LocalDate.now()) < 0) {
+                    syncFundData(fundId, dbFundAsync.getEndTime().toLocalDate(), LocalDate.now());
+                    haveUpdateFundData = true;
                 }
-                this.addFundData(fundAttention, startTime, LocalDate.now(), countPage);
-                this.addFundData(fundAttention, startTime, LocalDate.now(), countPage);
             }
-            FundAsyncRecord fundAsyncRecord = new FundAsyncRecord();
-            fundAsyncRecord.setId(fundId);
-            fundAsyncRecord.setStartTime(DateHelper.firstTime(startTime));
-            fundAsyncRecord.setEndTime(DateHelper.firstTime(LocalDate.now()));
-            fundAsyncRecordMapper.insertOrUpdateBatch(Collections.singletonList(fundAsyncRecord));
+            if (haveUpdateFundData) {
+                FundAsyncRecord fundAsyncRecord = new FundAsyncRecord();
+                fundAsyncRecord.setId(fundId);
+                fundAsyncRecord.setStartTime(DateHelper.firstTime(startTime));
+                fundAsyncRecord.setEndTime(DateHelper.firstTime(LocalDate.now()));
+                fundAsyncRecordMapper.insertOrUpdateBatch(Collections.singletonList(fundAsyncRecord));
+            }
         }
     }
 
-//    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void asyncFundInfo() {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
         List<FundInfo> list = new ArrayList<>();
@@ -100,8 +103,20 @@ public class FundDataTask {
         fundInfoMapper.insertOrUpdateBatch(list);
     }
 
-    private void addFundData(FundAttention fundAttention, LocalDate startTime, LocalDate endTime, int countPage) {
-        String fundId = fundAttention.getId();
+    private void syncFundData(@NonNull String fundId, @NonNull LocalDate start, @NonNull LocalDate end) {
+        if (start.isAfter(end)) {
+            return;
+        }
+        int countPage = 1;
+        LocalDate temp = start;
+        while (end.isAfter(temp)) {
+            temp = temp.plusDays(21);
+            countPage++;
+        }
+        this.addFundData(fundId, start, end, countPage);
+    }
+
+    private void addFundData(String fundId, LocalDate startTime, LocalDate endTime, int countPage) {
         FundDataGetBO fundDataGetBO = FundDataGetBO.builder()
                 .fundId(fundId)
                 .startTime(startTime.toString())

@@ -77,6 +77,9 @@
             <if test="fundId != null and fundId != ''">
                 and fd.fund_id = #{fundId}
             </if>
+            <if test="startTime != null">
+                and fd.net_value_date >= #{startTime}
+            </if>
         </where>
         order by fd.net_value_date desc
     </select>
@@ -207,6 +210,11 @@
         delete
         from fund_data
         where id = #{id}
+    </delete>
+    <delete id="deleteByFundId">
+        delete
+        from fund_data
+        where fund_id = #{fundId}
     </delete>
 
 </mapper>

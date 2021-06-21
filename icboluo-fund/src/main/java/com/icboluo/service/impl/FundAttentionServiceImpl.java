@@ -1,7 +1,10 @@
 package com.icboluo.service.impl;
 
 import com.icboluo.entity.FundAttention;
+import com.icboluo.mapper.FundAsyncRecordMapper;
 import com.icboluo.mapper.FundAttentionMapper;
+import com.icboluo.mapper.FundDataMapper;
+import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
@@ -20,6 +23,12 @@ import java.util.List;
 public class FundAttentionServiceImpl implements FundAttentionService {
     @Resource
     private FundAttentionMapper fundAttentionMapper;
+    @Resource
+    private FundInfoMapper fundInfoMapper;
+    @Resource
+    private FundDataMapper fundDataMapper;
+    @Resource
+    private FundAsyncRecordMapper fundAsyncRecordMapper;
 
     /**
      * 通过ID查询单条数据
@@ -70,5 +79,13 @@ public class FundAttentionServiceImpl implements FundAttentionService {
     @Override
     public List<FundAttentionVO> init(FundAttentionQuery query) {
         return fundAttentionMapper.selectByQuery(query);
+    }
+
+    @Override
+    public void delete(String id) {
+        deleteById(id);
+        fundAsyncRecordMapper.deleteById(id);
+        fundDataMapper.deleteByFundId(id);
+        fundInfoMapper.deleteById(id);
     }
 }

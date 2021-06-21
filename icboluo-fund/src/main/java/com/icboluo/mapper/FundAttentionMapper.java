@@ -88,5 +88,6 @@ public interface FundAttentionMapper {
     FundAttention selectByFundIdDim(String fundId);
 
     List<FundAttentionVO> selectByQuery(FundAttentionQuery query);
+
 }
 

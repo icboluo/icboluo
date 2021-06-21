@@ -52,8 +52,8 @@ public class FundDataController {
     }
 
     @GetMapping("cal")
-    public FundDataCalVO cal(String fundId) {
-        return fundDataService.cal(fundId);
+    public FundDataCalVO cal(String fundId, String startTime) {
+        return fundDataService.cal(fundId, startTime);
     }
 
     @GetMapping("/simCal")

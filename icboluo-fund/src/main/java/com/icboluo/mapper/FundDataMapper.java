@@ -88,5 +88,7 @@ public interface FundDataMapper {
     List<FundDataVO> selectByQuery(FundDataQuery query);
 
     List<FundData> selectByFundId(String id);
+
+    void deleteByFundId(String fundId);
 }
 

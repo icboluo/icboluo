@@ -49,5 +49,5 @@ public interface FundDataService {
 
     List<FundDataVO> selectByQuery(FundDataQuery query);
 
-    FundDataCalVO cal(String fundId);
+    FundDataCalVO cal(String fundId, String startTime);
 }

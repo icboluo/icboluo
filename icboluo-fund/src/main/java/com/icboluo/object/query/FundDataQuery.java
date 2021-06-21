@@ -11,4 +11,9 @@ import lombok.Data;
 public class FundDataQuery extends PageQuery {
 
     private String fundId;
+
+    /**
+     * TODO TO LOCAL DATE TIME
+     */
+    private String startTime;
 }

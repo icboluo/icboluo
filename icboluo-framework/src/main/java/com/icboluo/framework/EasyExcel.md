@@ -14,3 +14,7 @@ easy excel 执行完成之后必须使用finish
 
 ## EasyExcel可以转换成poi使用
 
+## 导入类
+
+excel导入的时候，要注意区分header和body数据，如果用统一的对象接受导入数据，可能存在body和header数据格式不匹配
+

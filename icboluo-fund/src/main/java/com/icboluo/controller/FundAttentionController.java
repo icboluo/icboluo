@@ -48,4 +48,9 @@ public class FundAttentionController {
         List<FundAttentionVO> list = fundAttentionService.init(query);
         return PageInfo.of(list);
     }
+
+    @GetMapping("/delete")
+    public void delete(String id) {
+        fundAttentionService.delete(id);
+    }
 }
