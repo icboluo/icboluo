@@ -1,5 +1,6 @@
 package com.icboluo.mapper;
 
+import com.icboluo.MyBaseMapper;
 import com.icboluo.entity.FundAttention;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-05-27 23:04:59
  */
-public interface FundAttentionMapper {
+public interface FundAttentionMapper extends MyBaseMapper<FundAttention> {
 
     /**
      * 通过ID查询单条数据
@@ -76,14 +77,6 @@ public interface FundAttentionMapper {
      * @return 影响行数
      */
     int update(FundAttention fundAttention);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 影响行数
-     */
-    int deleteById(String id);
 
     FundAttention selectByFundIdDim(String fundId);
 

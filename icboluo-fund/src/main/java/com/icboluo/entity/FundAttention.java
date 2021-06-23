@@ -1,8 +1,8 @@
 package com.icboluo.entity;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * (FundAttention)实体类

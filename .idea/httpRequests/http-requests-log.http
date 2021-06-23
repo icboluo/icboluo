@@ -1,3 +1,21 @@
+GET http://localhost:8888/fundAttention/selectAll
+
+<> 2021-06-23T215337.200.json
+
+###
+
+GET http://localhost:8888/fundAttention/delete?id=123456
+
+<> 2021-06-23T214945.200.json
+
+###
+
+GET http://localhost:8888/fundAttention/selectOne?id=320007
+
+<> 2021-06-23T214536.200.json
+
+###
+
 GET http://localhost:8888/fundAttention/delete?id=001186
 
 <> 2021-06-22T010148.200.json
@@ -265,24 +283,6 @@ GET http://localhost:1110/rest/integer
 GET http://localhost:1110/rest/uuid
 
 <> 2021-04-20T000907.200.json
-
-###
-
-GET http://localhost:1110/rest/map
-
-<> 2021-04-20T000905.200.json
-
-###
-
-GET http://localhost:1110/rest/integer
-
-<> 2021-04-20T000902.200.json
-
-###
-
-GET http://localhost:1110/rest/uuid
-
-<> 2021-04-20T000858.200.json
 
 ###
 

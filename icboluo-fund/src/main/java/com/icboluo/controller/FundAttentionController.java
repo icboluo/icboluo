@@ -3,6 +3,7 @@ package com.icboluo.controller;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.ResponseResult;
 import com.icboluo.entity.FundAttention;
+import com.icboluo.mapper.FundAttentionMapper;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
@@ -31,6 +32,9 @@ public class FundAttentionController {
     @Resource
     private FundAttentionService fundAttentionService;
 
+    @Resource
+    private FundAttentionMapper fundAttentionMapper;
+
     /**
      * 通过主键查询单条数据
      *
@@ -39,7 +43,8 @@ public class FundAttentionController {
      */
     @GetMapping("/selectOne")
     public FundAttention selectOne(String id) {
-        return this.fundAttentionService.queryById(id);
+        FundAttention fundAttention = fundAttentionMapper.selectByPrimaryKey(id);
+        return fundAttention;
     }
 
     @GetMapping("/init")
@@ -51,6 +56,11 @@ public class FundAttentionController {
 
     @GetMapping("/delete")
     public void delete(String id) {
-        fundAttentionService.delete(id);
+        fundAttentionMapper.deleteByPrimaryKey(id);
+    }
+
+    @GetMapping("/selectAll")
+    public void selectAll() {
+        List<FundAttention> fundAttentions = fundAttentionMapper.selectAll();
     }
 }
