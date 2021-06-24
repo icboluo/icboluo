@@ -15,20 +15,6 @@
     </resultMap>
     <sql id="Base_Column_List">
         id, fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value, net_value_cumulative, create_time, update_time    </sql>
-    <!--查询单个-->
-    <select id="queryById" resultMap="FundDataMap">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_data
-        where id = #{id}
-    </select>
-
-    <!--查询所有-->
-    <select id="queryAll" resultMap="FundDataMap">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_data
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAllByData" resultMap="FundDataMap">
@@ -91,63 +77,6 @@
         values (#{fundId}, #{increaseRateDay}, #{subscribeStatus}, #{netValueDate}, #{netAssetValue},
                 #{netValueCumulative}, #{createTime}, #{updateTime})
     </insert>
-
-    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_data
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="fundId != null and fundId != ''">
-                fund_id ,
-            </if>
-            <if test="increaseRateDay != null and increaseRateDay != ''">
-                increase_rate_day ,
-            </if>
-            <if test="subscribeStatus != null and subscribeStatus != ''">
-                subscribe_status ,
-            </if>
-            <if test="netValueDate != null">
-                net_value_date ,
-            </if>
-            <if test="netAssetValue != null and netAssetValue != ''">
-                net_asset_value ,
-            </if>
-            <if test="netValueCumulative != null and netValueCumulative != ''">
-                net_value_cumulative ,
-            </if>
-            <if test="createTime != null">
-                create_time ,
-            </if>
-            <if test="updateTime != null">
-                update_time ,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="fundId != null and fundId != ''">
-                #{fundId},
-            </if>
-            <if test="increaseRateDay != null and increaseRateDay != ''">
-                #{increaseRateDay},
-            </if>
-            <if test="subscribeStatus != null and subscribeStatus != ''">
-                #{subscribeStatus},
-            </if>
-            <if test="netValueDate != null">
-                #{netValueDate},
-            </if>
-            <if test="netAssetValue != null and netAssetValue != ''">
-                #{netAssetValue},
-            </if>
-            <if test="netValueCumulative != null and netValueCumulative != ''">
-                #{netValueCumulative},
-            </if>
-            <if test="createTime != null">
-                #{createTime},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime},
-            </if>
-        </trim>
-    </insert>
-
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
         net_value_cumulative, create_time, update_time)
@@ -204,13 +133,6 @@
         </set>
         where id = #{id}
     </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete
-        from fund_data
-        where id = #{id}
-    </delete>
     <delete id="deleteByFundId">
         delete
         from fund_data

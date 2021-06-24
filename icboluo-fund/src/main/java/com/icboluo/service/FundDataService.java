@@ -32,14 +32,6 @@ public interface FundDataService {
     FundData insert(FundData fundData);
 
     /**
-     * 修改数据
-     *
-     * @param fundData 实例对象
-     * @return 实例对象
-     */
-    FundData update(FundData fundData);
-
-    /**
      * 通过主键删除数据
      *
      * @param id 主键

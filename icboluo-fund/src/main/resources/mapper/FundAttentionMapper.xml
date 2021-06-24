@@ -6,21 +6,9 @@
         <result property="id" column="id" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id    </sql>
-    <!--查询单个-->
-    <select id="queryById" resultMap="FundAttentionMap">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_attention
-        where id = #{id}
-    </select>
+        id
+    </sql>
 
-    <!--查询所有-->
-    <select id="queryAll" resultMap="FundAttentionMap">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_attention
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAllByData" resultMap="FundAttentionMap">
@@ -55,14 +43,6 @@
         values ()
     </insert>
 
-    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_attention
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-        </trim>
-    </insert>
-
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into fund_attention()
         values
@@ -79,14 +59,6 @@
         </foreach>
         on duplicate key update
     </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update fund_attention
-        <set>
-        </set>
-        where id = #{id}
-    </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">

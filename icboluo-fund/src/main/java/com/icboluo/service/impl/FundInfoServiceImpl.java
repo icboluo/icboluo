@@ -6,7 +6,6 @@ import com.icboluo.service.FundInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * (FundInfo)表服务实现类
@@ -38,20 +37,8 @@ public class FundInfoServiceImpl implements FundInfoService {
      */
     @Override
     public FundInfo insert(FundInfo fundInfo) {
-        this.fundInfoMapper.insert(fundInfo);
+        this.fundInfoMapper.insert2(fundInfo);
         return fundInfo;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param fundInfo 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public FundInfo update(FundInfo fundInfo) {
-        this.fundInfoMapper.update(fundInfo);
-        return this.queryById(fundInfo.getId());
     }
 
     /**

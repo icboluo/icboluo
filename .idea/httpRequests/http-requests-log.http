@@ -1,3 +1,7 @@
+GET http://localhost:8888/fundInfo/add
+
+###
+
 GET http://localhost:8888/fundAttention/selectAll
 
 <> 2021-06-23T215337.200.json
@@ -277,12 +281,6 @@ GET http://localhost:1110/rest/uuid
 GET http://localhost:1110/rest/integer
 
 <> 2021-04-20T000944.200.json
-
-###
-
-GET http://localhost:1110/rest/uuid
-
-<> 2021-04-20T000907.200.json
 
 ###
 

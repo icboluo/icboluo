@@ -2,8 +2,6 @@ package com.icboluo.service;
 
 import com.icboluo.entity.FundInfo;
 
-import java.util.List;
-
 /**
  * (FundInfo)表服务接口
  *
@@ -27,14 +25,6 @@ public interface FundInfoService {
      * @return 实例对象
      */
     FundInfo insert(FundInfo fundInfo);
-
-    /**
-     * 修改数据
-     *
-     * @param fundInfo 实例对象
-     * @return 实例对象
-     */
-    FundInfo update(FundInfo fundInfo);
 
     /**
      * 通过主键删除数据

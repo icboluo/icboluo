@@ -42,18 +42,6 @@ public class FundAsyncRecordServiceImpl implements FundAsyncRecordService {
     }
 
     /**
-     * 修改数据
-     *
-     * @param fundAsyncRecord 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public FundAsyncRecord update(FundAsyncRecord fundAsyncRecord) {
-        this.fundAsyncRecordMapper.update(fundAsyncRecord);
-        return this.queryById(fundAsyncRecord.getId());
-    }
-
-    /**
      * 通过主键删除数据
      *
      * @param id 主键

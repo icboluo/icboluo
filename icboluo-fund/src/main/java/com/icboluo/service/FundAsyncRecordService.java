@@ -2,8 +2,6 @@ package com.icboluo.service;
 
 import com.icboluo.entity.FundAsyncRecord;
 
-import java.util.List;
-
 /**
  * (FundAsyncRecord)表服务接口
  *
@@ -27,14 +25,6 @@ public interface FundAsyncRecordService {
      * @return 实例对象
      */
     FundAsyncRecord insert(FundAsyncRecord fundAsyncRecord);
-
-    /**
-     * 修改数据
-     *
-     * @param fundAsyncRecord 实例对象
-     * @return 实例对象
-     */
-    FundAsyncRecord update(FundAsyncRecord fundAsyncRecord);
 
     /**
      * 通过主键删除数据

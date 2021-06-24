@@ -56,18 +56,6 @@ public class FundDataServiceImpl implements FundDataService {
     }
 
     /**
-     * 修改数据
-     *
-     * @param fundData 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public FundData update(FundData fundData) {
-        this.fundDataMapper.update(fundData);
-        return this.queryById(fundData.getId());
-    }
-
-    /**
      * 通过主键删除数据
      *
      * @param id 主键

@@ -7,22 +7,7 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name    </sql>
-    <!--查询单个-->
-    <select id="queryById" resultMap="FundInfoMap">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_info
-        where id = #{id}
-    </select>
-
-    <!--查询所有-->
-    <select id="queryAll" resultMap="FundInfoMap">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_info
-    </select>
-
+        id, name   </sql>
     <!--通过实体作为筛选条件查询-->
     <select id="queryAllByData" resultMap="FundInfoMap">
         select
@@ -44,26 +29,6 @@
         values (#{id}, #{name})
     </insert>
 
-    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_info
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null and id != ''">
-                id ,
-            </if>
-            <if test="name != null and name != ''">
-                name ,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null and id != ''">
-                #{id},
-            </if>
-            <if test="name != null and name != ''">
-                #{name},
-            </if>
-        </trim>
-    </insert>
-
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into fund_info(id, name)
         values
@@ -81,27 +46,5 @@
         on duplicate key update
         id = values(id) , name = values(name)
     </insert>
-
-    <!--通过主键修改数据-->
-    <update id="update">
-        update fund_info
-        <set>
-            <if test="id != null and id != ''">
-                id = #{id},
-            </if>
-            <if test="name != null and name != ''">
-                name = #{name},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete
-        from fund_info
-        where id = #{id}
-    </delete>
-
 </mapper>
 

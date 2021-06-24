@@ -3,13 +3,15 @@ package com.icboluo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * @author icboluo
  * @date 2021-36-23 21:36
  */
-public interface MyBaseMapper<T> extends BaseMapper<T> {
+@SuppressWarnings("all")
+public interface MyBaseMapper<T> extends BaseMapper<T>{
     /**
      * 通过主键删除数据
      *
@@ -20,7 +22,12 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
         return deleteById(id);
     }
 
-    int insertSelective(T record);
+    @Override
+    int insert(T entity);
+
+    default int insertSelective(T record) {
+        return insert(record);
+    }
 
     default T selectByPrimaryKey(Serializable id) {
         return selectById(id);
@@ -30,7 +37,15 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
         return selectById(id);
     }
 
+    default List<T> selectByIds(Collection<? extends Serializable> ids) {
+        return selectBatchIds(ids);
+    }
+
     default List<T> selectAll() {
+        return selectList(null);
+    }
+
+    default List<T> queryAll() {
         return selectList(null);
     }
 
