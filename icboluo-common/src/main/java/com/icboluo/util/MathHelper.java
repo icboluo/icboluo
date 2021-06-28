@@ -91,4 +91,22 @@ public class MathHelper {
         OptionalInt min = Arrays.stream(arr).min();
         return min.orElse(Integer.MAX_VALUE);
     }
+
+    public static Boolean byteToBoolean(Byte by) {
+        if (by == null) {
+            return null;
+        }
+        return switch (by) {
+            case 0 -> false;
+            case 1 -> true;
+            default -> null;
+        };
+    }
+
+    public static Byte booleanToByte(Boolean bool) {
+        if (bool == null) {
+            return null;
+        }
+        return bool ? Byte.valueOf("1") : Byte.valueOf("0");
+    }
 }
