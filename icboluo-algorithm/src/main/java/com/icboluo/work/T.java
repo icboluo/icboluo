@@ -1,6 +1,8 @@
 package com.icboluo.work;
 
-import com.icboluo.common.ListNode;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author icboluo
@@ -8,8 +10,9 @@ import com.icboluo.common.ListNode;
  */
 public class T {
     public static void main(String[] args) {
-        ListNode listNode = new ListNode(1, 2, 3, 4, 5);
-        System.out.println(listNode.end());
+        HashMap<String, String> map = new HashMap<>();
+        Map<String, String> collect = map.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     }
 }

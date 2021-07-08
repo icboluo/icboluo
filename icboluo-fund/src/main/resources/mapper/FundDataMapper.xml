@@ -14,7 +14,8 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value, net_value_cumulative, create_time, update_time    </sql>
+        id, fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value, net_value_cumulative, create_time, update_time
+    </sql>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAllByData" resultMap="FundDataMap">
@@ -28,7 +29,7 @@
             <if test="fundId != null and fundId != ''">
                 and fund_id = #{fundId}
             </if>
-            <if test="increaseRateDay != null and increaseRateDay != ''">
+            <if test="increaseRateDay != null">
                 and increase_rate_day = #{increaseRateDay}
             </if>
             <if test="subscribeStatus != null and subscribeStatus != ''">
@@ -37,10 +38,10 @@
             <if test="netValueDate != null">
                 and net_value_date = #{netValueDate}
             </if>
-            <if test="netAssetValue != null and netAssetValue != ''">
+            <if test="netAssetValue != null">
                 and net_asset_value = #{netAssetValue}
             </if>
-            <if test="netValueCumulative != null and netValueCumulative != ''">
+            <if test="netValueCumulative != null">
                 and net_value_cumulative = #{netValueCumulative}
             </if>
             <if test="createTime != null">
@@ -63,35 +64,45 @@
             <if test="fundId != null and fundId != ''">
                 and fd.fund_id = #{fundId}
             </if>
-            <if test="startTime != null">
-                and fd.net_value_date >= #{startTime}
+            <if test="startDate != null">
+                and fd.net_value_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                and fd.net_value_date <![CDATA[ <=]]> #{endDate}
             </if>
         </where>
         order by fd.net_value_date desc
     </select>
+    <select id="selectChooseDate" resultType="com.icboluo.object.vo.FundDataVO">
+        select *
+        from fund_data
+        where fund_id = #{fundId}
+          and net_value_date >= #{chooseDate}
+        order by net_value_date
+        limit #{chooseDateLength}
+    </select>
+    <select id="selectChooseAll" resultType="com.icboluo.object.vo.FundDataVO">
+        select *
+        from fund_data
+        where fund_id = #{fundId}
+        order by net_value_date
+    </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
-                              net_value_cumulative, create_time, update_time)
-        values (#{fundId}, #{increaseRateDay}, #{subscribeStatus}, #{netValueDate}, #{netAssetValue},
-                #{netValueCumulative}, #{createTime}, #{updateTime})
-    </insert>
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+        insert into note.fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
         net_value_cumulative, create_time, update_time)
         values
-        <foreach collection="list" item="entity" separator=",">
+        <foreach collection="entities" item="entity" separator=",">
             (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.subscribeStatus}, #{entity.netValueDate},
             #{entity.netAssetValue}, #{entity.netValueCumulative}, #{entity.createTime}, #{entity.updateTime})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+        insert into note.fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
         net_value_cumulative, create_time, update_time)
         values
-        <foreach collection="list" item="entity" separator=",">
+        <foreach collection="entities" item="entity" separator=",">
             (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.subscribeStatus}, #{entity.netValueDate},
             #{entity.netAssetValue}, #{entity.netValueCumulative}, #{entity.createTime}, #{entity.updateTime})
         </foreach>
@@ -102,42 +113,10 @@
         values(update_time)
     </insert>
 
-    <!--通过主键修改数据-->
-    <update id="update">
-        update fund_data
-        <set>
-            <if test="fundId != null and fundId != ''">
-                fund_id = #{fundId},
-            </if>
-            <if test="increaseRateDay != null and increaseRateDay != ''">
-                increase_rate_day = #{increaseRateDay},
-            </if>
-            <if test="subscribeStatus != null and subscribeStatus != ''">
-                subscribe_status = #{subscribeStatus},
-            </if>
-            <if test="netValueDate != null">
-                net_value_date = #{netValueDate},
-            </if>
-            <if test="netAssetValue != null and netAssetValue != ''">
-                net_asset_value = #{netAssetValue},
-            </if>
-            <if test="netValueCumulative != null and netValueCumulative != ''">
-                net_value_cumulative = #{netValueCumulative},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
     <delete id="deleteByFundId">
         delete
         from fund_data
         where fund_id = #{fundId}
     </delete>
-
 </mapper>
 

@@ -2,7 +2,9 @@ package com.icboluo.object.vo;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -22,7 +24,7 @@ public class FundDataVO {
     /**
      * 日增长率
      */
-    private String increaseRateDay;
+    private BigDecimal increaseRateDay;
     /**
      * 申购状态
      */
@@ -30,15 +32,15 @@ public class FundDataVO {
     /**
      * 净值日期
      */
-    private LocalDateTime netValueDate;
+    private LocalDate netValueDate;
     /**
      * 单位净值
      */
-    private String netAssetValue;
+    private BigDecimal netAssetValue;
     /**
      * 累计净值
      */
-    private String netValueCumulative;
+    private BigDecimal netValueCumulative;
     /**
      * 创建时间
      */

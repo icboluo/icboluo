@@ -28,12 +28,6 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_async_record(id, start_time, end_time)
-        values (#{id}, #{startTime}, #{endTime})
-    </insert>
-
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into fund_async_record(id, start_time, end_time)
         values

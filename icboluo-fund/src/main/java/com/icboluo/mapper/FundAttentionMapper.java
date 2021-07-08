@@ -24,14 +24,6 @@ public interface FundAttentionMapper extends MyBaseMapper<FundAttention> {
     List<FundAttention> queryAllByData(FundAttention fundAttention);
 
     /**
-     * 新增数据
-     *
-     * @param fundAttention 实例对象
-     * @return 影响行数
-     */
-    int insert(FundAttention fundAttention);
-
-    /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
      * @param entities List<FundAttention> 实例对象列表
@@ -46,8 +38,6 @@ public interface FundAttentionMapper extends MyBaseMapper<FundAttention> {
      * @return 影响行数
      */
     int insertOrUpdateBatch(List<FundAttention> entities);
-
-    FundAttention selectByFundIdDim(String fundId);
 
     List<FundAttentionVO> selectByQuery(FundAttentionQuery query);
 

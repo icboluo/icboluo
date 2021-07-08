@@ -2,6 +2,7 @@ package com.icboluo.mapper;
 
 import com.icboluo.MyBaseMapper;
 import com.icboluo.entity.FundData;
+import com.icboluo.object.query.FundDataChooseQuery;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataVO;
 
@@ -24,14 +25,6 @@ public interface FundDataMapper extends MyBaseMapper<FundData> {
     List<FundData> queryAllByData(FundData fundData);
 
     /**
-     * 新增数据
-     *
-     * @param fundData 实例对象
-     * @return 影响行数
-     */
-    int insert(FundData fundData);
-
-    /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
      * @param entities List<FundData> 实例对象列表
@@ -52,5 +45,9 @@ public interface FundDataMapper extends MyBaseMapper<FundData> {
     List<FundData> selectByFundId(String id);
 
     void deleteByFundId(String fundId);
+
+    List<FundDataVO> selectChooseDate(FundDataChooseQuery curQuery);
+
+    List<FundDataVO> selectChooseAll(FundDataChooseQuery curQuery);
 }
 

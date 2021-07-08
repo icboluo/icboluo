@@ -1,14 +1,14 @@
 package com.icboluo.entity;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * (FundInfo)实体类
  *
  * @author icboluo
- * @since 2021-06-08 00:57:16
+ * @since 2021-07-08 20:23:18
  */
 @Data
 public class FundInfo implements Serializable {
@@ -19,5 +19,5 @@ public class FundInfo implements Serializable {
 
     private String name;
 
-    private static final long serialVersionUID = 337747966556460862L;
+    private static final long serialVersionUID = -83256998777520315L;
 }

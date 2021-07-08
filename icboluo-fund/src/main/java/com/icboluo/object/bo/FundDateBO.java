@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.icboluo.entity.FundData;
 import lombok.Data;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -20,17 +22,17 @@ public class FundDateBO {
      * 净值日期
      */
     @JSONField(name = "FSRQ")
-    private LocalDateTime netValueDate;
+    private LocalDate netValueDate;
     /**
      * 单位净值
      */
     @JSONField(name = "DWJZ")
-    private String netAssetValue;
+    private BigDecimal netAssetValue;
     /**
      * 累计净值
      */
     @JSONField(name = "LJJZ")
-    private String netValueCumulative;
+    private BigDecimal netValueCumulative;
     private String SDATE;
     private String ACTUALSYI;
     private String NAVTYPE;
@@ -38,7 +40,7 @@ public class FundDateBO {
      * 日增长率
      */
     @JSONField(name = "JZZZL")
-    private String increaseRateDay;
+    private BigDecimal increaseRateDay;
     /**
      * 申购状态
      */

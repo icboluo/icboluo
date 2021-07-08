@@ -7,44 +7,25 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name   </sql>
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAllByData" resultMap="FundInfoMap">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_info
-        <where>
-            <if test="id != null and id != ''">
-                and id = #{id}
-            </if>
-            <if test="name != null and name != ''">
-                and name = #{name}
-            </if>
-        </where>
-    </select>
-
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_info(id, name)
-        values (#{id}, #{name})
-    </insert>
+        id, name
+    </sql>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_info(id, name)
+        insert into note.fund_info(name)
         values
-        <foreach collection="list" item="entity" separator=",">
-            (#{entity.id}, #{entity.name})
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_info(id, name)
+        insert into note.fund_info(id,name)
         values
-        <foreach collection="list" item="entity" separator=",">
-            (#{entity.id}, #{entity.name})
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id},#{entity.name})
         </foreach>
         on duplicate key update
-        id = values(id) , name = values(name)
+        name = values(name)
     </insert>
 </mapper>
 

@@ -21,6 +21,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -57,7 +58,7 @@ public class FundDataTask {
         Map<String, FundAsyncRecord> recordMap = recordList.stream()
                 .collect(Collectors.groupingBy(FundAsyncRecord::getId,
                         Collectors.collectingAndThen(Collectors.toList(), li -> li.get(0))));
-        LocalDate startTime = LocalDate.of(2018, 1, 1);
+        LocalDate startTime = LocalDate.of(2015, 1, 1);
 
         for (FundAttention fundAttention : fundAttentions) {
             String fundId = fundAttention.getId();
@@ -91,15 +92,29 @@ public class FundDataTask {
     @Scheduled(cron = "0 * * * * ?")
     public void asyncFundInfo() {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
+        List<FundInfo> fundInfos = fundInfoMapper.selectAll();
         List<FundInfo> list = new ArrayList<>();
         for (FundAttention fundAttention : fundAttentions) {
+            boolean isExistName = false;
+            for (FundInfo dbInfo : fundInfos) {
+                if (dbInfo.getId().equals(fundAttention.getId())) {
+                    if (StringUtils.hasText(dbInfo.getName())) {
+                        isExistName = true;
+                    }
+                }
+            }
+            if (isExistName) {
+                continue;
+            }
             String name = httpFundInfo(fundAttention.getId());
             FundInfo fundInfo = new FundInfo();
             fundInfo.setId(fundAttention.getId());
             fundInfo.setName(name);
             list.add(fundInfo);
         }
-        fundInfoMapper.insertOrUpdateBatch(list);
+        if (!CollectionUtils.isEmpty(list)) {
+            fundInfoMapper.insertOrUpdateBatch(list);
+        }
     }
 
     private void syncFundData(@NonNull String fundId, @NonNull LocalDate start, @NonNull LocalDate end) {
@@ -130,7 +145,9 @@ public class FundDataTask {
             List<FundData> fundDataList = fundDateList.stream()
                     .map(item -> item.businessToData(fundId))
                     .collect(Collectors.toList());
-            if (!CollectionUtils.isEmpty(fundDataList)) {
+            if (CollectionUtils.isEmpty(fundDataList)) {
+                break;
+            } else {
                 fundDataMapper.insertOrUpdateBatch(fundDataList);
             }
         }

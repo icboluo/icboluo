@@ -1,11 +1,12 @@
 package com.icboluo.service;
 
+import com.github.pagehelper.PageInfo;
 import com.icboluo.entity.FundData;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataVO;
 
-import java.util.List;
+import java.time.LocalDate;
 
 /**
  * (FundData)表服务接口
@@ -31,15 +32,7 @@ public interface FundDataService {
      */
     FundData insert(FundData fundData);
 
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    boolean deleteById(Long id);
+    PageInfo<FundDataVO> selectByQuery(FundDataQuery query);
 
-    List<FundDataVO> selectByQuery(FundDataQuery query);
-
-    FundDataCalVO cal(String fundId, String startTime);
+    FundDataCalVO cal(String fundId, LocalDate startDate);
 }

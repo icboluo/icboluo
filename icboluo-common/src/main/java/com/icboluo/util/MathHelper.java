@@ -109,4 +109,21 @@ public class MathHelper {
         }
         return bool ? Byte.valueOf("1") : Byte.valueOf("0");
     }
+
+    public static BigDecimal max(BigDecimal a, BigDecimal b) {
+        boolean aDaB = a.compareTo(b) > 0;
+        return aDaB ? a : b;
+    }
+
+    public static BigDecimal min(BigDecimal a, BigDecimal b) {
+        boolean aDaB = a.compareTo(b) > 0;
+        return aDaB ? b : a;
+    }
+
+    public static boolean belongTo(BigDecimal source, BigDecimal a, BigDecimal b) {
+        if (source.compareTo(a) == 0 && source.compareTo(b) == 0) {
+            return true;
+        }
+        return source.compareTo(a) * source.compareTo(b) == -1;
+    }
 }

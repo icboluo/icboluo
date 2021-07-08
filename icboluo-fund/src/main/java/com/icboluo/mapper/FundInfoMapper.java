@@ -22,14 +22,6 @@ public interface FundInfoMapper extends MyBaseMapper<FundInfo> {
     List<FundInfo> queryAllByData(FundInfo fundInfo);
 
     /**
-     * 新增数据
-     *
-     * @param fundInfo 实例对象
-     * @return 影响行数
-     */
-    int insert(FundInfo fundInfo);
-
-    /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
      * @param entities List<FundInfo> 实例对象列表

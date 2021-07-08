@@ -1,28 +1,20 @@
 package com.icboluo.object.query;
 
-import com.icboluo.common.PageQuery;
+import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
  * @author icboluo
- * @date 2021-03-31 22:03
+ * @date 2021-55-08 23:55
  */
 @Data
-public class FundDataQuery extends PageQuery {
+@Builder
+public class FundDataChooseQuery {
 
     private String fundId;
-
-    /**
-     * 开始日期
-     */
-    private LocalDate startDate;
-    /**
-     * 结束日期
-     */
-    private LocalDate endDate;
-
 
     /**
      * 选择的开始对比日期
@@ -34,4 +26,13 @@ public class FundDataQuery extends PageQuery {
      */
     private Integer chooseDateLength;
 
+    /**
+     * 增长率最大值,好像不能作为查询条件
+     */
+    private BigDecimal max;
+
+    /**
+     * 增长率最小值
+     */
+    private BigDecimal min;
 }

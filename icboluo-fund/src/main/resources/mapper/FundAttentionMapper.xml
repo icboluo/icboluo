@@ -21,27 +21,12 @@
             </if>
         </where>
     </select>
-    <select id="selectByFundIdDim" resultType="com.icboluo.entity.FundAttention">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_attention
-        <where>
-            <if test="fundId != null and fundId != ''">
-                and id = #{fundId}
-            </if>
-        </where>
-    </select>
+
     <select id="selectByQuery" resultType="com.icboluo.object.vo.FundAttentionVO">
         select fa.id, fi.name
         from fund_attention fa
                  left join fund_info fi on fa.id = fi.id
     </select>
-
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_attention()
-        values ()
-    </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into fund_attention()

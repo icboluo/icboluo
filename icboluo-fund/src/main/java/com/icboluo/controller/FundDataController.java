@@ -1,11 +1,10 @@
 package com.icboluo.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.ResponseResult;
 import com.icboluo.entity.FundData;
-import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.query.FundDataQuery;
+import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -46,14 +46,12 @@ public class FundDataController {
 
     @GetMapping("/init")
     public PageInfo<FundDataVO> init(FundDataQuery query) {
-        PageHelper.startPage(query.getPageNum(), query.getPageSize());
-        List<FundDataVO> fundDataList = fundDataService.selectByQuery(query);
-        return PageInfo.of(fundDataList);
+        return fundDataService.selectByQuery(query);
     }
 
     @GetMapping("cal")
-    public FundDataCalVO cal(String fundId, String startTime) {
-        return fundDataService.cal(fundId, startTime);
+    public FundDataCalVO cal(String fundId, LocalDate startDate) {
+        return fundDataService.cal(fundId, startDate);
     }
 
     @GetMapping("/simCal")

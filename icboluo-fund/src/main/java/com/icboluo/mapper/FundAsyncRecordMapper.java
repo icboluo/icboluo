@@ -22,14 +22,6 @@ public interface FundAsyncRecordMapper extends MyBaseMapper<FundAsyncRecord> {
     List<FundAsyncRecord> queryAllByData(FundAsyncRecord fundAsyncRecord);
 
     /**
-     * 新增数据
-     *
-     * @param fundAsyncRecord 实例对象
-     * @return 影响行数
-     */
-    int insert(FundAsyncRecord fundAsyncRecord);
-
-    /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
      * @param entities List<FundAsyncRecord> 实例对象列表

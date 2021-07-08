@@ -13,7 +13,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-/**TODO map 的k，v转换/pagehelper转换的支持
+/**
+ * TODO pagehelper转换的支持
  *
  * @author icboluo
  */
@@ -127,5 +128,33 @@ public class BeanHelper {
         if (CollectionUtils.isEmpty(source)) {
             target.addAll(source);
         }
+    }
+
+    public static Boolean byteToBoolean(Byte byt) {
+        if (byt == null) {
+            return null;
+        }
+        if (byt == 1) {
+            return true;
+        }
+        if (byt == 0) {
+            return false;
+        }
+        return null;
+    }
+
+    public static <SK, TK, V> Map<TK, V> mapKeyConvert(Map<SK, V> map, Function<SK, TK> keyConvert) {
+        return mapConvert(map, keyConvert, item -> item);
+    }
+
+    public static <K, SV, TV> Map<K, TV> mapValConvert(Map<K, SV> map, Function<SV, TV> valConvert) {
+        return mapConvert(map, item -> item, valConvert);
+    }
+
+    public static <SK, TK, SV, TV> Map<TK, TV> mapConvert(Map<SK, SV> map, Function<SK, TK> keyConvert, Function<SV, TV> valConvert) {
+        return map.entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> keyConvert.apply(entry.getKey()),
+                        entry -> valConvert.apply(entry.getValue())));
     }
 }

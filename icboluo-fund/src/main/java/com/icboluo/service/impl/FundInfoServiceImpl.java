@@ -37,7 +37,7 @@ public class FundInfoServiceImpl implements FundInfoService {
      */
     @Override
     public FundInfo insert(FundInfo fundInfo) {
-        this.fundInfoMapper.insert2(fundInfo);
+        this.fundInfoMapper.insert(fundInfo);
         return fundInfo;
     }
 

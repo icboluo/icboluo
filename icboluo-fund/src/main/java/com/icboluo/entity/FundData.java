@@ -1,15 +1,17 @@
 package com.icboluo.entity;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * (FundData)实体类
  *
  * @author icboluo
- * @since 2021-05-28 00:12:35
+ * @since 2021-07-08 20:38:57
  */
 @Data
 public class FundData implements Serializable {
@@ -24,7 +26,7 @@ public class FundData implements Serializable {
     /**
      * 日增长率
      */
-    private String increaseRateDay;
+    private BigDecimal increaseRateDay;
     /**
      * 申购状态
      */
@@ -32,15 +34,15 @@ public class FundData implements Serializable {
     /**
      * 净值日期
      */
-    private LocalDateTime netValueDate;
+    private LocalDate netValueDate;
     /**
      * 单位净值
      */
-    private String netAssetValue;
+    private BigDecimal netAssetValue;
     /**
      * 累计净值
      */
-    private String netValueCumulative;
+    private BigDecimal netValueCumulative;
     /**
      * 创建时间
      */
@@ -50,5 +52,5 @@ public class FundData implements Serializable {
      */
     private LocalDateTime updateTime;
 
-    private static final long serialVersionUID = 153984695114811407L;
+    private static final long serialVersionUID = 932315031704088938L;
 }
