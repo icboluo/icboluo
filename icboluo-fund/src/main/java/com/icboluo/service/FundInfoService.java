@@ -1,6 +1,6 @@
 package com.icboluo.service;
 
-import com.icboluo.entity.FundInfo;
+import com.icboluo.object.vo.FundInfoVO;
 
 /**
  * (FundInfo)表服务接口
@@ -16,22 +16,5 @@ public interface FundInfoService {
      * @param id 主键
      * @return 实例对象
      */
-    FundInfo queryById(String id);
-
-    /**
-     * 新增数据
-     *
-     * @param fundInfo 实例对象
-     * @return 实例对象
-     */
-    FundInfo insert(FundInfo fundInfo);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    boolean deleteById(String id);
-
+    FundInfoVO fundInfoInit(String id);
 }

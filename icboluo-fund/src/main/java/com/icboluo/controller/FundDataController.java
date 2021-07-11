@@ -2,9 +2,9 @@ package com.icboluo.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.ResponseResult;
-import com.icboluo.entity.FundData;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
+import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * (FundData)表控制层
@@ -33,16 +32,6 @@ public class FundDataController {
     @Resource
     private FundDataService fundDataService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("/selectOne")
-    public FundData selectOne(Long id) {
-        return this.fundDataService.queryById(id);
-    }
 
     @GetMapping("/init")
     public PageInfo<FundDataVO> init(FundDataQuery query) {
@@ -58,5 +47,10 @@ public class FundDataController {
     public Double simCal(Double source, Double target) {
         double divide = target - source;
         return divide / source * 100;
+    }
+
+    @GetMapping("/findRecentData")
+    public FundDataRecentVO findRecentData(String fundId, LocalDate myChooseDate) {
+        return fundDataService.findRecentData(fundId, myChooseDate);
     }
 }

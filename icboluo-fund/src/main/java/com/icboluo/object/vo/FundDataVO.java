@@ -50,8 +50,6 @@ public class FundDataVO {
      */
     private LocalDateTime updateTime;
 
-    private String fundName;
-
     private DayOfWeek dayOfWeek;
 
     private static final long serialVersionUID = 153984695114811407L;

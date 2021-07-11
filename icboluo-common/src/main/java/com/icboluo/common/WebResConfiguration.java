@@ -14,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.StandardCharsets;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -48,10 +49,13 @@ public class WebResConfiguration implements WebMvcConfigurer {
                 val = "";
             }
 
-            if (val instanceof LocalDateTime) {
-                val = ((LocalDateTime) val).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            if (val instanceof LocalDateTime ldt) {
+                val = ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             }
-
+            if (val instanceof DayOfWeek dayOfWeek) {
+                int value = dayOfWeek.getValue();
+                val = "星期" + value;
+            }
             return val;
         };
 

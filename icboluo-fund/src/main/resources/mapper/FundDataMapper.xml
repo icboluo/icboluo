@@ -58,8 +58,8 @@
         where fund_id = #{fundId}
     </select>
     <select id="selectByQuery" resultType="com.icboluo.object.vo.FundDataVO">
-        select fd.*,fi.name fundName from fund_data fd
-        left join fund_info fi on fd.fund_id=fi.id
+        select fd.*
+        from fund_data fd
         <where>
             <if test="fundId != null and fundId != ''">
                 and fd.fund_id = #{fundId}

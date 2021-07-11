@@ -1,9 +1,12 @@
 package com.icboluo.controller;
 
-import com.icboluo.entity.FundInfo;
-import com.icboluo.mapper.FundInfoMapper;
+import com.icboluo.common.ResponseResult;
+import com.icboluo.object.vo.FundInfoVO;
 import com.icboluo.service.FundInfoService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -15,14 +18,14 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/fundInfo")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@ResponseResult
 public class FundInfoController {
     /**
      * 服务对象
      */
     @Resource
     private FundInfoService fundInfoService;
-    @Resource
-    private FundInfoMapper fundInfoMapper;
 
     /**
      * 通过主键查询单条数据
@@ -30,16 +33,8 @@ public class FundInfoController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("/selectOne")
-    public FundInfo selectOne(String id) {
-        return this.fundInfoService.queryById(id);
+    @GetMapping("/fundInfoInit")
+    public FundInfoVO fundInfoInit(String id) {
+        return fundInfoService.fundInfoInit(id);
     }
-
-    @GetMapping("/add")
-    public void add() {
-        FundInfo fundInfo = new FundInfo();
-        fundInfo.setId("111111");
-        fundInfoMapper.insert(fundInfo);
-    }
-
 }

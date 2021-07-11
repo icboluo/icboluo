@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.icboluo.entity.FundData;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
+import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
 
 import java.time.LocalDate;
@@ -17,14 +18,6 @@ import java.time.LocalDate;
 public interface FundDataService {
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    FundData queryById(Long id);
-
-    /**
      * 新增数据
      *
      * @param fundData 实例对象
@@ -35,4 +28,6 @@ public interface FundDataService {
     PageInfo<FundDataVO> selectByQuery(FundDataQuery query);
 
     FundDataCalVO cal(String fundId, LocalDate startDate);
+
+    FundDataRecentVO findRecentData(String fundId, LocalDate myChooseDate);
 }

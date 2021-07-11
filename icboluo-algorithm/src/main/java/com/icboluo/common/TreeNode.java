@@ -1,5 +1,8 @@
 package com.icboluo.common;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * 二叉树树节点，并不对树进行方法抽取，只做算法使用
  *
@@ -24,6 +27,16 @@ public class TreeNode {
         this.val = treeNode.val;
         this.left = treeNode.left;
         this.right = treeNode.right;
+    }
+
+    /**
+     * 收集节点val
+     *
+     * @param list 节点集合
+     * @return val集合
+     */
+    public List<Integer> collectNodeVal(List<TreeNode> list) {
+        return list.stream().map(treeNode -> treeNode.val).collect(Collectors.toList());
     }
 
     private TreeNode getInstance(Integer[] arr, int index) {

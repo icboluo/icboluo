@@ -2,7 +2,9 @@ package com.icboluo.service.impl;
 
 import com.icboluo.entity.FundInfo;
 import com.icboluo.mapper.FundInfoMapper;
+import com.icboluo.object.vo.FundInfoVO;
 import com.icboluo.service.FundInfoService;
+import com.icboluo.util.BeanHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,30 +27,8 @@ public class FundInfoServiceImpl implements FundInfoService {
      * @return 实例对象
      */
     @Override
-    public FundInfo queryById(String id) {
-        return this.fundInfoMapper.queryById(id);
-    }
-
-    /**
-     * 新增数据
-     *
-     * @param fundInfo 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public FundInfo insert(FundInfo fundInfo) {
-        this.fundInfoMapper.insert(fundInfo);
-        return fundInfo;
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(String id) {
-        return this.fundInfoMapper.deleteById(id) > 0;
+    public FundInfoVO fundInfoInit(String id) {
+        FundInfo fundInfo = fundInfoMapper.queryById(id);
+        return BeanHelper.copyProperties(fundInfo, FundInfoVO.class);
     }
 }

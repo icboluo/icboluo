@@ -4,16 +4,17 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author icboluo
- * @date 2021-27-01 0:27
+ * @date 2021-06-10 1:06
  */
 @Data
 @Builder
-public class FundDataCalVO {
+public class FundDataRecentVO {
+
+    private List<FundDataVO> list;
 
     private Long count;
 
@@ -23,7 +24,5 @@ public class FundDataCalVO {
 
     private BigDecimal avg;
 
-    private Map<DayOfWeek, BigDecimal> weekMap;
-
-    private Map<Integer, BigDecimal> monthMap;
+    private BigDecimal nextAvg;
 }

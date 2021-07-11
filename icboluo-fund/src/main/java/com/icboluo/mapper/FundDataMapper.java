@@ -48,6 +48,6 @@ public interface FundDataMapper extends MyBaseMapper<FundData> {
 
     List<FundDataVO> selectChooseDate(FundDataChooseQuery curQuery);
 
-    List<FundDataVO> selectChooseAll(FundDataChooseQuery curQuery);
+    List<FundDataVO> selectChooseAll(String fundId);
 }
 
