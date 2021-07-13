@@ -5,7 +5,9 @@ import com.icboluo.entity.FundData;
 import com.icboluo.object.query.FundDataChooseQuery;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataVO;
+import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -49,5 +51,7 @@ public interface FundDataMapper extends MyBaseMapper<FundData> {
     List<FundDataVO> selectChooseDate(FundDataChooseQuery curQuery);
 
     List<FundDataVO> selectChooseAll(String fundId);
+
+    void deleteByFundIdDate(@Param("fundId") String fundId, @Param("date") LocalDate date);
 }
 

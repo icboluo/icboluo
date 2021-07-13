@@ -118,5 +118,11 @@
         from fund_data
         where fund_id = #{fundId}
     </delete>
+    <delete id="deleteByFundIdDate">
+        delete
+        from fund_data
+        where fund_id = #{fundId}
+and net_value_date=#{date}
+    </delete>
 </mapper>
 

@@ -182,6 +182,8 @@ public class FundDataServiceImpl implements FundDataService {
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .build();
+
+        fundDataMapper.deleteByFundIdDate(fundId, LocalDate.now());
         fundDataMapper.insertSelective(data);
     }
 
