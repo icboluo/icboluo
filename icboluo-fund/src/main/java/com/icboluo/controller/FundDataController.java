@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -52,5 +53,10 @@ public class FundDataController {
     @GetMapping("/findRecentData")
     public FundDataRecentVO findRecentData(String fundId, LocalDate myChooseDate) {
         return fundDataService.findRecentData(fundId, myChooseDate);
+    }
+
+    @GetMapping("/addToday")
+    public void addToday(String fundId, BigDecimal rate) {
+        fundDataService.addToday(fundId, rate);
     }
 }

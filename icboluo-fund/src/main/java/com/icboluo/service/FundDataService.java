@@ -7,6 +7,7 @@ import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -30,4 +31,6 @@ public interface FundDataService {
     FundDataCalVO cal(String fundId, LocalDate startDate);
 
     FundDataRecentVO findRecentData(String fundId, LocalDate myChooseDate);
+
+    void addToday(String fundId, BigDecimal rate);
 }

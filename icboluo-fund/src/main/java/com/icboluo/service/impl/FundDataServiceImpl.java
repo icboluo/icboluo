@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -170,6 +171,18 @@ public class FundDataServiceImpl implements FundDataService {
                 .list(res)
                 .nextAvg(BigDecimal.valueOf(summaryStatistics2.getAverage()).setScale(4, RoundingMode.HALF_UP))
                 .build();
+    }
+
+    @Override
+    public void addToday(String fundId, BigDecimal rate) {
+        FundData data = FundData.builder()
+                .fundId(fundId)
+                .increaseRateDay(rate)
+                .netValueDate(LocalDate.now())
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
+                .build();
+        fundDataMapper.insertSelective(data);
     }
 
     private List<FundDataVO> findSimChoose(List<FundDataVO> sourceList, List<FundDataVO> allList, Integer length) {

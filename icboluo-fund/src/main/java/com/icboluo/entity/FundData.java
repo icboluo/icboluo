@@ -1,5 +1,6 @@
 package com.icboluo.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
  * @since 2021-07-08 20:38:57
  */
 @Data
+@Builder
 public class FundData implements Serializable {
     /**
      * id

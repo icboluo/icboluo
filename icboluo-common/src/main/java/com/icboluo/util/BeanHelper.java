@@ -1,6 +1,8 @@
 package com.icboluo.util;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.icboluo.enumerate.ExceptionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -156,5 +158,13 @@ public class BeanHelper {
                 .collect(Collectors.toMap(
                         entry -> keyConvert.apply(entry.getKey()),
                         entry -> valConvert.apply(entry.getValue())));
+    }
+
+    public static <S,T>  PageInfo<T> pageInfoConvert(PageInfo<S> source, List<T> target) {
+        Page<T> page = new Page<>(source.getPageNum(), source.getPageSize());
+        page.setTotal(source.getTotal());
+        PageInfo<T> pageInfo = PageInfo.of(page);
+        pageInfo.setList(target);
+        return pageInfo;
     }
 }

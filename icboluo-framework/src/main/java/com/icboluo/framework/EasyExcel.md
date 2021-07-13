@@ -18,3 +18,16 @@ easy excel 执行完成之后必须使用finish
 
 excel导入的时候，要注意区分header和body数据，如果用统一的对象接受导入数据，可能存在body和header数据格式不匹配
 
+easy excel 导出需要执行final，否则导出数据失效
+
+##row
+
+row writer handler 是 easy excel 中的行处理器，可以转换为poi
+
+## cell
+
+cell. get cell style 中的风格get出来后，重新设置会覆盖以前的，相当于浅拷贝
+
+而且会影响其他单元格，因为excel中的cell style 只有几种代表
+
+设置单个cell style的时候用clone style from 这个api
