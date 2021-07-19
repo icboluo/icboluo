@@ -11,8 +11,9 @@ public class Demo {
      * 定义静态变量和静态代码块（先有静态变量）
      */
     private static Integer a;
-    {
-        a=1;
+
+    static {
+        a = 1;
     }
 
     /**
@@ -20,6 +21,7 @@ public class Demo {
      * 代码执行使，首先将class文件加载进内存（执行main之前，要将class加载到内存
      * 在完成验证、准备、解析、初始化等操作后，开始执行main函数（执行main之前需要好几步
      * 初始化步骤完成静态代码块的执行以及类静态成员变量的初始化（其中初始化步骤完成静态内容的初始化
+     *
      * @param args args
      */
     public static void main(String[] args) {
@@ -32,4 +34,10 @@ public class Demo {
         ab = new B();
     }
 
+    /**
+     * 代码块是在实例化的时候执行的，实例化时代码块运行完才运行构造函数（实例化阶段，先执行代码块，再执行构造方法
+     */
+    {
+        a = 2;
+    }
 }

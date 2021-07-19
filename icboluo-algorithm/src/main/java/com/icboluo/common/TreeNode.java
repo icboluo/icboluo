@@ -1,6 +1,7 @@
 package com.icboluo.common;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -83,5 +84,22 @@ public class TreeNode {
         return "TreeNode{" +
                 "val=" + val +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TreeNode treeNode = (TreeNode) o;
+        return val == treeNode.val ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(val);
     }
 }
