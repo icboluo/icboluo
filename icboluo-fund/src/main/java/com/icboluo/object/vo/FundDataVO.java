@@ -49,7 +49,9 @@ public class FundDataVO {
      * 更新时间
      */
     private LocalDateTime updateTime;
-
+    /**
+     * 为什么这里的不会在json转换的时候转换
+     */
     private DayOfWeek dayOfWeek;
 
     private static final long serialVersionUID = 153984695114811407L;

@@ -1,13 +1,13 @@
 package com.icboluo.util.response;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.icboluo.enumerate.ReEnum;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * 这个工具类的目的是将值写到Response这个类的对象中；
@@ -71,6 +71,14 @@ public class R implements Serializable {
         jsonObject.put("object", t);
         jsonObject.put("list", list);
         return new SingleResponse<>(jsonObject, reEnum);
+    }
+
+    public static <T, D> Response correct(String keyName,T t, PageInfo<D> pageInfo) {
+        String str = JSON.toJSONString(pageInfo);
+        JSONObject pij = JSON.parseObject(str);
+        Map<String, Object> map = new HashMap<>(Map.copyOf(pij));
+        map.put(keyName, t);
+        return new SingleResponse<>(map, ReEnum.OPERATION_SUCCESSFUL);
     }
 
     public static Response error() {

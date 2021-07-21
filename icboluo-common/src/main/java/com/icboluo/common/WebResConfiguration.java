@@ -13,8 +13,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -49,12 +52,19 @@ public class WebResConfiguration implements WebMvcConfigurer {
                 val = "";
             }
 
+            if (val instanceof LocalDate ld) {
+                val = ld.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }
             if (val instanceof LocalDateTime ldt) {
                 val = ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             }
+//          奇怪，为什么这个有时候生效有时候不生效
             if (val instanceof DayOfWeek dayOfWeek) {
                 int value = dayOfWeek.getValue();
                 val = "星期" + value;
+            }
+            if (val instanceof BigDecimal bd) {
+                val = bd.setScale(4, RoundingMode.HALF_UP);
             }
             return val;
         };

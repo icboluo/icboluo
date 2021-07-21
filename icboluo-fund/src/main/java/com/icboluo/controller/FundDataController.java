@@ -7,6 +7,8 @@ import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
+import com.icboluo.util.response.R;
+import com.icboluo.util.response.Response;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 /**
  * (FundData)表控制层
@@ -27,16 +31,18 @@ import java.time.LocalDate;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @ResponseResult
 public class FundDataController {
-    /**
-     * 服务对象
-     */
+
     @Resource
     private FundDataService fundDataService;
 
 
     @GetMapping("/init")
-    public PageInfo<FundDataVO> init(FundDataQuery query) {
-        return fundDataService.selectByQuery(query);
+    public Response init(FundDataQuery query) {
+        PageInfo<FundDataVO> pageInfo = fundDataService.selectByQuery(query);
+        Double avg = pageInfo.getList().stream()
+                .map(FundDataVO::getIncreaseRateDay)
+                .collect(Collectors.averagingDouble(BigDecimal::doubleValue));
+        return R.correct("thisPageAvg", BigDecimal.valueOf(avg), pageInfo);
     }
 
     @GetMapping("cal")
@@ -58,5 +64,10 @@ public class FundDataController {
     @GetMapping("/addToday")
     public void addToday(String fundId, BigDecimal rate) {
         fundDataService.addToday(fundId, rate);
+    }
+
+    @GetMapping("/dayOfWeekTest")
+    public DayOfWeek dayOfWeekTest() {
+        return DayOfWeek.FRIDAY;
     }
 }

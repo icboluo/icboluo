@@ -13,7 +13,6 @@ import java.util.List;
  */
 public interface FundAttentionService {
 
-
     List<FundAttentionVO> init(FundAttentionQuery query);
 
     void delete(String id);

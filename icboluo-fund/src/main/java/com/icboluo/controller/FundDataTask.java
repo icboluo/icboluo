@@ -83,7 +83,7 @@ public class FundDataTask {
                 FundAsyncRecord fundAsyncRecord = new FundAsyncRecord();
                 fundAsyncRecord.setId(fundId);
                 fundAsyncRecord.setStartTime(DateHelper.firstTime(startTime));
-                fundAsyncRecord.setEndTime(DateHelper.firstTime(LocalDate.now()));
+                fundAsyncRecord.setEndTime(DateHelper.firstTime(LocalDate.now().minusDays(1)));
                 fundAsyncRecordMapper.insertOrUpdateBatch(Collections.singletonList(fundAsyncRecord));
             }
         }

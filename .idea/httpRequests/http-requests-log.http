@@ -1,3 +1,81 @@
+GET http://localhost:8888/fundData/init
+
+<> 2021-07-22T002735.200.json
+
+###
+
+GET http://localhost:8888/fundAttention/init
+
+<> 2021-07-22T002730.200.json
+
+###
+
+GET http://localhost:8888/fundData/dayOfWeekTest
+
+<> 2021-07-22T002707.200.json
+
+###
+
+GET http://localhost:8888/fundData/init
+
+<> 2021-07-22T002600.200.json
+
+###
+
+GET http://localhost:8888/fundData/selectOne?id=1
+
+<> 2021-07-22T002556.404.json
+
+###
+
+GET http://localhost:8888/fundData/init
+
+<> 2021-07-22T002555.200.json
+
+###
+
+GET http://localhost:8888/fundData/dayOfWeekTest
+
+<> 2021-07-22T002408.200.json
+
+###
+
+GET http://localhost:8888/fundData/cal?fundId=164402
+
+<> 2021-07-22T002151.200.json
+
+###
+
+GET http://localhost:8888/fundAttention/selectAll
+
+<> 2021-07-22T002143.404.json
+
+###
+
+GET http://localhost:8888/fundAttention/selectOne?id=320007
+
+<> 2021-07-22T002135.404.json
+
+###
+
+GET http://localhost:8888/fundData/init
+
+<> 2021-07-22T002043.200.json
+
+###
+
+GET http://localhost:8888/fundAttention/init
+
+<> 2021-07-21T222002.200.json
+
+###
+
+GET http://localhost:8888/fundAttention/init
+
+<> 2021-07-21T221912.500.json
+
+###
+
 GET http://localhost:7788/rest/uuid
 
 <> 2021-07-11T230033.200.json
@@ -207,80 +285,6 @@ GET http://localhost:8888/fundData/selectOne?id=1
 GET http://localhost:8888/fundData/selectOne?id=1
 
 <> 2021-05-27T224941.500.json
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-<> 2021-05-27T224817.500.json
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-<> 2021-05-27T224711.500.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-
-<> 2021-04-25T001025.400.json
-
-###
-
-GET http://localhost:7788/webInterceptor/localDateTime
-
-<> 2021-04-25T000954.200.json
-
-###
-
-GET http://localhost:7788/webInterceptor/getUserCode
-
-<> 2021-04-25T000936.200.json
-
-###
-
-GET http://localhost:7788/webInterceptor/getUserCode
-
-###
-
-GET http://localhost:7788/async/simple
-
-<> 2021-04-24T212425.200.json
-
-###
-
-GET http://localhost:7788/async/simple
-
-<> 2021-04-20T003806.200.json
-
-###
-
-GET http://localhost:7788/async/simple
-
-<> 2021-04-20T003759.200.json
-
-###
-
-GET http://localhost:7788/async/simple
-
-###
-
-GET http://localhost:7788/async/simple
-
-<> 2021-04-20T003303.200.json
-
-###
-
-GET http://localhost:7788/rest/map
-
-<> 2021-04-20T003251.200.json
-
-###
-
-GET http://localhost:7788/rest/integer
-
-<> 2021-04-20T003250.200.json
 
 ###
 
