@@ -18,7 +18,6 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.stream.Collectors;
 
 /**
  * (FundData)表控制层
@@ -39,10 +38,9 @@ public class FundDataController {
     @GetMapping("/init")
     public Response init(FundDataQuery query) {
         PageInfo<FundDataVO> pageInfo = fundDataService.selectByQuery(query);
-        Double avg = pageInfo.getList().stream()
-                .map(FundDataVO::getIncreaseRateDay)
-                .collect(Collectors.averagingDouble(BigDecimal::doubleValue));
-        return R.correct("thisPageAvg", BigDecimal.valueOf(avg), pageInfo);
+        BigDecimal avg = pageInfo.getList().stream()
+                .collect(new MyCollector());
+        return R.correct("thisPageAvg", avg, pageInfo);
     }
 
     @GetMapping("cal")
