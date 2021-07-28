@@ -1,3 +1,45 @@
+GET http://localhost:8888/fundData/init?fundId=164402
+
+<> 2021-07-22T125540.200.json
+
+###
+
+GET http://localhost:8888/fundData/init?fundId=164402
+
+<> 2021-07-22T125537.200.json
+
+###
+
+GET http://localhost:8888/fundData/init?fundId=164402
+
+<> 2021-07-22T125344.200.json
+
+###
+
+GET http://localhost:8888/fundData/init?fundId=164402
+
+<> 2021-07-22T125306.500.json
+
+###
+
+GET http://localhost:8888/fundData/init?fundId=164402
+
+<> 2021-07-22T125227.500.json
+
+###
+
+GET http://localhost:8888/fundData/init?fundId=164402
+
+<> 2021-07-22T125153.500.json
+
+###
+
+GET http://localhost:8888/fundData/init
+
+<> 2021-07-22T125109.500.json
+
+###
+
 GET http://localhost:8888/fundData/init
 
 <> 2021-07-22T002735.200.json
@@ -247,44 +289,6 @@ GET http://localhost:8888/fundData/selectOne?id=1
 ###
 
 GET http://localhost:8888/fundData/selectOne?id=1
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-<> 2021-05-27T225412.500.json
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-<> 2021-05-27T225244.500.json
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-<> 2021-05-27T225204.500.json
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-<> 2021-05-27T225122.500.json
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-<> 2021-05-27T224941.500.json
 
 ###
 

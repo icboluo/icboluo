@@ -110,7 +110,7 @@ public class BeanHelper {
 
     public static boolean haveNull(Object... arr) {
         return Arrays.stream(arr)
-                .allMatch(Objects::isNull);
+                .anyMatch(Objects::isNull);
     }
 
     public static <T> boolean allIsNullOrEquals(T a, T b) {

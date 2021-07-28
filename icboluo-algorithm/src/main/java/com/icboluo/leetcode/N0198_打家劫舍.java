@@ -7,7 +7,7 @@ import java.util.Map;
  * @author icboluo
  * @date 2021-16-22 13:16
  */
-public class N0198 {
+public class N0198_打家劫舍 {
     public int rob(int[] nums) {
         cache = new HashMap<>();
         return robFun(nums, 0);

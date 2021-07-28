@@ -9,16 +9,13 @@ import java.util.Queue;
 
 /**
  * @author icboluo
- * @date 2021-32-03 13:32
  */
-public class Demo {
-
+public class N0102_层级遍历 {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) {
             return res;
         }
-//        定义辅助级别
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         while (!queue.isEmpty()) {

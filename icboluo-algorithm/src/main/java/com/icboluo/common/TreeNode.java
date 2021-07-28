@@ -1,7 +1,9 @@
 package com.icboluo.common;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 /**
@@ -31,12 +33,38 @@ public class TreeNode {
     }
 
     /**
+     * TODO it is error
+     *
+     * @param arr 中序遍历数组
+     * @return 树的根节点
+     */
+    public static TreeNode getLevelInstance(Integer[] arr) {
+        if (arr == null) {
+            return null;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(arr[0]);
+        queue.offer(root);
+        int index = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                index++;
+                TreeNode poll = queue.poll();
+                TreeNode cur = new TreeNode(arr[index]);
+
+            }
+        }
+        return root;
+    }
+
+    /**
      * 收集节点val
      *
      * @param list 节点集合
      * @return val集合
      */
-    public List<Integer> collectNodeVal(List<TreeNode> list) {
+    public static List<Integer> collectNodeVal(List<TreeNode> list) {
         return list.stream().map(treeNode -> treeNode.val).collect(Collectors.toList());
     }
 
@@ -95,7 +123,7 @@ public class TreeNode {
             return false;
         }
         TreeNode treeNode = (TreeNode) o;
-        return val == treeNode.val ;
+        return val == treeNode.val;
     }
 
     @Override
