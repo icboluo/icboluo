@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -113,7 +112,7 @@ public class NoteService {
                     long planTime = gmtModified.toEpochSecond(ZoneOffset.ofHours(8)) + timeInterval;
                     vo.setShouldFinishTime(planTime);
                     return vo;
-                }).collect(Collectors.toList());
+                }).toList();
     }
 
     /**

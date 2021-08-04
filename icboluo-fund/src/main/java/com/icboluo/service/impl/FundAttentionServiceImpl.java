@@ -44,7 +44,7 @@ public class FundAttentionServiceImpl implements FundAttentionService {
             List<FundData> collect = fundDataList.stream()
                     .filter(fundData -> fundData.getFundId().equals(vo.getId()))
                     .sorted((a, b) -> b.getNetValueDate().compareTo(a.getNetValueDate()))
-                    .collect(Collectors.toList());
+                    .toList();
             LocalDate now = LocalDate.now();
             Map<Integer, BigDecimal> avgMap = new HashMap<>();
             for (int i = 0; i < 5; i++) {

@@ -21,8 +21,4 @@ public class Student {
 
     @ExcelProperty
     private Integer age;
-
-
-
-
 }

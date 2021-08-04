@@ -1,6 +1,6 @@
 package com.icboluo.service;
 
-import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.annotation.ExcelProperty;
@@ -11,11 +11,9 @@ import com.icboluo.annotation.EasyExcelAlias;
 import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.mapper.ColumnMapper;
-import com.icboluo.util.listenter.HeadDataListener;
-import com.icboluo.util.listenter.RowDataListener;
-import com.icboluo.object.clientobject.RowCO;
 import com.icboluo.object.businessobject.RowBO;
 import com.icboluo.object.businessobject.SheetBO;
+import com.icboluo.object.clientobject.RowCO;
 import com.icboluo.object.dataobject.RowDO;
 import com.icboluo.object.viewobject.RowVO;
 import com.icboluo.object.viewobject.SheetVO;
@@ -23,6 +21,8 @@ import com.icboluo.util.BeanHelper;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.FileHelper;
 import com.icboluo.util.IcBoLuoException;
+import com.icboluo.util.listenter.HeadDataListener;
+import com.icboluo.util.listenter.RowDataListener;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -105,7 +105,7 @@ public class ExcelService {
         if (CollectionUtils.isEmpty(tables)) {
             throw new IcBoLuoException("数据库" + database + "中没有表");
         }
-        if (!StringUtils.isEmpty(table)) {
+        if (!StringUtils.hasText(table)) {
             if (tables.contains(table)) {
                 List<RowDO> data = excelMapper.selectTableConstruction(database, table);
                 SheetVO sheetVO = new SheetVO();
@@ -141,16 +141,16 @@ public class ExcelService {
         }
         List<SheetVO> sheetList = sheetVOS.stream()
                 .sorted(Comparator.comparing(SheetVO::getSheetName))
-                .collect(Collectors.toList());
+                .toList();
         WriteSheet writeSheet;
         String fileName = writeExcelEntity.getExcelPath();
 //        registerConverter 可以注册转换器，对java数据和excel数据的转换做约定，例如 local date time 的转换
-        ExcelWriter excelWriter = EasyExcel.write(fileName).build();
+        ExcelWriter excelWriter = EasyExcelFactory.write(fileName).build();
         for (int i = 0; i < sheetList.size(); i++) {
             SheetVO sheetVO = sheetList.get(i);
 
             HorizontalCellStyleStrategy horizontalCellStyleStrategy = ExcelHelper.setCellStyle();
-            writeSheet = EasyExcel.writerSheet(i, sheetVO.getSheetName())
+            writeSheet = EasyExcelFactory.writerSheet(i, sheetVO.getSheetName())
                     .registerWriteHandler(horizontalCellStyleStrategy).head(RowVO.class).build();
             List<RowVO> list = sheetVO.getList();
             Stream<RowVO> stream1 = list.stream()
@@ -160,7 +160,7 @@ public class ExcelService {
                     .filter(r -> !RowBO.isPrimaryKey(r.getColumnKey()))
                     .sorted(Comparator.comparing(RowVO::getColumnName));
             List<RowVO> collect = Stream.concat(stream1, stream2)
-                    .collect(Collectors.toList());
+                    .toList();
             excelWriter.write(collect, writeSheet);
         }
         if (excelWriter == null) {
@@ -194,7 +194,7 @@ public class ExcelService {
         FileHelper.write(sb.toString(), readExcelEntity.getGeneralSqlPath());
     }
 
-    public String setAsc = "    SET = utf8 COLLATE = utf8_general_ci    ";
+    private static final String SET_ASC = "    SET = utf8 COLLATE = utf8_general_ci    ";
 
     /**
      * java对象数据转换成建表语句
@@ -216,7 +216,7 @@ public class ExcelService {
             if (isPrimaryKey || !isNull) {
                 s.append("NOT   NULL  ");
             }
-            if (StringUtils.isEmpty(row.getColumnDefault())) {
+            if (StringUtils.hasText(row.getColumnDefault())) {
                 //不是主键和是可以为空的情况下才可以设置默认空值
                 if (!isPrimaryKey && isNull) {
                     s.append("DEFAULT NULL  ");
@@ -228,7 +228,7 @@ public class ExcelService {
                     s.append("DEFAULT   ").append("'").append(row.getColumnDefault()).append("'  ");
                 }
             }
-            if (!StringUtils.isEmpty(row.getColumnComment())) {
+            if (!StringUtils.hasText(row.getColumnComment())) {
                 s.append("COMMENT   ").append("'").append(row.getColumnComment()).append("'");
             }
             s.append(",\n");
@@ -236,7 +236,7 @@ public class ExcelService {
         List<String> ids = list.stream()
                 .filter(r -> RowBO.isPrimaryKey(r.getIsPrimaryKey()))
                 .map(RowBO::getColumnName)
-                .collect(Collectors.toList());
+                .toList();
         if (!CollectionUtils.isEmpty(ids)) {
             s.append("PRIMARY KEY   ").append("(");
             ids.forEach(id -> s.append("`").append(id).append("`,  "));
@@ -244,13 +244,13 @@ public class ExcelService {
                     .append("USING BTREE\n");
         }
         s.deleteCharAt(s.lastIndexOf(","));
-        s.append(")").append("ENGINE = InnoDB CHARACTER     ").append(this.setAsc)
+        s.append(")").append("ENGINE = InnoDB CHARACTER     ").append(SET_ASC)
                 .append("COMMENT = '").append(excel.getTableName()).append("'   ;");
         return s;
     }
 
     private String buildComment(String s) {
-        if (StringUtils.isEmpty(s)) {
+        if (StringUtils.hasText(s)) {
             return null;
         }
         return s.replace("'", "\\'");
@@ -269,11 +269,11 @@ public class ExcelService {
         this.buildClass(headListener.getHead(), clazz);
 
         List<SheetBO> list = new ArrayList<>();
-        ExcelReader er = EasyExcel.read(excelPath).build();
+        ExcelReader er = EasyExcelFactory.read(excelPath).build();
         List<ReadSheet> readSheets = er.excelExecutor().sheetList();
         for (int i = 0; i < readSheets.size(); i++) {
             RowDataListener listener = new RowDataListener();
-            ReadSheet rs = EasyExcel
+            ReadSheet rs = EasyExcelFactory
                     .readSheet(i)
                     .head(RowCO.class)
                     .registerReadListener(listener)
@@ -284,17 +284,17 @@ public class ExcelService {
             SheetBO sheetBO = new SheetBO();
             String sheetName = readSheets.get(i).getSheetName();
             sheetBO.setTableName(sheetName);
-            List<RowCO> rowCOS = listener.list;
-            this.buildExcelBO(sheetBO, rowCOS);
+            List<RowCO> rowClients = listener.list;
+            this.buildExcelBO(sheetBO, rowClients);
             list.add(sheetBO);
         }
         return list;
     }
 
     private HeadDataListener readHead(String excelPath) {
-        ExcelReader er = EasyExcel.read(excelPath).build();
+        ExcelReader er = EasyExcelFactory.read(excelPath).build();
         HeadDataListener listener = new HeadDataListener();
-        ReadSheet rs = EasyExcel
+        ReadSheet rs = EasyExcelFactory
                 .readSheet(0)
                 .headRowNumber(0)
                 .registerReadListener(listener)

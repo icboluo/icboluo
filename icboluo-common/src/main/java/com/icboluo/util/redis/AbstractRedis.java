@@ -1,5 +1,6 @@
 package com.icboluo.util.redis;
 
+import com.icboluo.funInterface.Procedure;
 import com.icboluo.util.DateHelper;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;

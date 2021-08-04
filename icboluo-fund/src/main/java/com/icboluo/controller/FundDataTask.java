@@ -144,7 +144,7 @@ public class FundDataTask {
             List<FundDateBO> fundDateList = data.getFundDateList();
             List<FundData> fundDataList = fundDateList.stream()
                     .map(item -> item.businessToData(fundId))
-                    .collect(Collectors.toList());
+                    .toList();
             if (CollectionUtils.isEmpty(fundDataList)) {
                 break;
             } else {

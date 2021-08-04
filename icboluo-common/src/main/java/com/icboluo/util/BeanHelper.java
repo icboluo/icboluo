@@ -16,12 +16,15 @@ import java.util.stream.Collectors;
 
 
 /**
- * TODO pagehelper转换的支持
- *
  * @author icboluo
  */
 @Slf4j
 public class BeanHelper {
+
+    private static final String CONVERT_ERR_MESSAGE = "【数据转换】数据转换出错，目标对象{}构造函数异常";
+
+    private BeanHelper() {
+    }
 
     /**
      * 将一个对象中的属性copy到另一个对象中
@@ -37,7 +40,7 @@ public class BeanHelper {
             BeanUtils.copyProperties(source, t);
             return t;
         } catch (Exception e) {
-            log.error("【数据转换】数据转换出错，目标对象{}构造函数异常", target.getName(), e);
+            log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
             throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
         }
     }
@@ -54,9 +57,9 @@ public class BeanHelper {
         try {
             return sourceList.stream()
                     .map(s -> copyProperties(s, target))
-                    .collect(Collectors.toList());
+                    .toList();
         } catch (Exception e) {
-            log.error("【数据转换】数据转换出错，目标对象{}构造函数异常", target.getName(), e);
+            log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
             throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
         }
     }
@@ -75,7 +78,7 @@ public class BeanHelper {
                     .map(s -> copyProperties(s, target))
                     .collect(Collectors.toSet());
         } catch (Exception e) {
-            log.error("【数据转换】数据转换出错，目标对象{}构造函数异常", target.getName(), e);
+            log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
             throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
         }
     }
@@ -160,7 +163,7 @@ public class BeanHelper {
                         entry -> valConvert.apply(entry.getValue())));
     }
 
-    public static <S,T>  PageInfo<T> pageInfoConvert(PageInfo<S> source, List<T> target) {
+    public static <S, T> PageInfo<T> pageInfoConvert(PageInfo<S> source, List<T> target) {
         Page<T> page = new Page<>(source.getPageNum(), source.getPageSize());
         page.setTotal(source.getTotal());
         PageInfo<T> pageInfo = PageInfo.of(page);

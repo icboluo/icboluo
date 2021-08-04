@@ -93,7 +93,7 @@ public class RedisString<T> extends AbstractRedis<T> {
     public <G extends Number> G incrementExpireAt(String key, Class<G> g, LocalDateTime localDateTime) {
         Consumer<BoundKeyOperations<String>> expireAt = null;
         if (localDateTime != null) {
-            expireAt = (operation) -> operation.expireAt(DateHelper.localDateTimeToDate(localDateTime));
+            expireAt = operation -> operation.expireAt(DateHelper.localDateTimeToDate(localDateTime));
         }
         return incrementExpireAt(key, g.cast(1L), g, expireAt);
     }
@@ -150,7 +150,7 @@ public class RedisString<T> extends AbstractRedis<T> {
     public <G extends Number> G decreaseExpireAt(String key, Class<G> g, LocalDateTime localDateTime) {
         Consumer<BoundKeyOperations<String>> expireAt = null;
         if (localDateTime != null) {
-            expireAt = (operation) -> operation.expireAt(DateHelper.localDateTimeToDate(localDateTime));
+            expireAt = operation -> operation.expireAt(DateHelper.localDateTimeToDate(localDateTime));
         }
         return decreaseExpireAt(key, g.cast(1), g, expireAt);
     }

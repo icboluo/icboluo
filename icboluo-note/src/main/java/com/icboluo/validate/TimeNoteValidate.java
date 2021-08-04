@@ -13,8 +13,8 @@ import org.springframework.util.StringUtils;
 public class TimeNoteValidate implements Validator {
 
     public void validate(TimeNoteCO obj) {
-        boolean isEmptyData = StringUtils.isEmpty(obj.getBelongToScope())
-                && StringUtils.isEmpty(obj.getProblem()) && StringUtils.isEmpty(obj.getResult());
+        boolean isEmptyData = StringUtils.hasText(obj.getBelongToScope())
+                && StringUtils.hasText(obj.getProblem()) && StringUtils.hasText(obj.getResult());
         if (isEmptyData) {
             throw new IcBoLuoException();
         }

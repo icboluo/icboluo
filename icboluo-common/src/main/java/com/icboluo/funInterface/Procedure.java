@@ -1,4 +1,4 @@
-package com.icboluo.util.redis;
+package com.icboluo.funInterface;
 
 /**
  * @author icboluo

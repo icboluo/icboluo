@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 public class RedisCacheConfig {
 
     @Resource
-    private RedisList redisList;
+    private RedisList<Object> redisList;
 
     @PostConstruct
     public void del() {

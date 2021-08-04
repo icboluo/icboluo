@@ -6,6 +6,10 @@ import java.util.Random;
  * @author icboluo
  */
 public class RandomHelper {
+
+    private RandomHelper() {
+    }
+
     /**
      * 获得随机数数组
      *

@@ -1,7 +1,7 @@
 package com.icboluo.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.page.PageMethod;
 import com.icboluo.entity.FundData;
 import com.icboluo.mapper.FundDataMapper;
 import com.icboluo.object.query.FundDataChooseQuery;
@@ -53,7 +53,7 @@ public class FundDataServiceImpl implements FundDataService {
     public PageInfo<FundDataVO> selectByQuery(FundDataQuery query) {
 //        如果不满足寻找相似的涨幅趋势条件
         if (ObjectUtils.isEmpty(query.getChooseDate()) || ObjectUtils.isEmpty(query.getChooseDateLength())) {
-            PageHelper.startPage(query.getPageNum(), query.getPageSize());
+            PageMethod.startPage(query.getPageNum(), query.getPageSize());
             List<FundDataVO> list = fundDataMapper.selectByQuery(query);
             fillView(list);
             return PageInfo.of(list);
@@ -90,12 +90,12 @@ public class FundDataServiceImpl implements FundDataService {
         List<FundData> list = findList.stream()
                 .filter(item -> !ObjectUtils.isEmpty(item.getIncreaseRateDay()))
                 .map(item -> BeanHelper.copyProperties(item, FundData.class))
-                .collect(Collectors.toList());
+                .toList();
         DoubleSummaryStatistics summaryStatistics = list.stream()
                 .map(FundData::getIncreaseRateDay)
                 .collect(Collectors.summarizingDouble(BigDecimal::doubleValue));
 
-        Map<DayOfWeek, List<FundData>> dayOfWeekMap = new HashMap<>();
+        Map<DayOfWeek, List<FundData>> dayOfWeekMap = new EnumMap<>(DayOfWeek.class);
         Map<Integer, List<FundData>> dayOfMonthMap = new HashMap<>();
         for (FundData fundData : list) {
             LocalDate netValueDate = fundData.getNetValueDate();
@@ -114,7 +114,7 @@ public class FundDataServiceImpl implements FundDataService {
             dayOfWeekMap.put(dayOfWeek, weekList);
             dayOfMonthMap.put(dayOfMonth, monthList);
         }
-        Map<DayOfWeek, BigDecimal> weekMap = new HashMap<>();
+        Map<DayOfWeek, BigDecimal> weekMap = new EnumMap<>(DayOfWeek.class);
         Map<Integer, BigDecimal> monthMap = new HashMap<>();
         for (Map.Entry<DayOfWeek, List<FundData>> entry : dayOfWeekMap.entrySet()) {
             DoubleSummaryStatistics weekList = entry.getValue().stream()
@@ -219,12 +219,10 @@ public class FundDataServiceImpl implements FundDataService {
         return res.stream()
                 .distinct()
                 .sorted((a, b) -> b.getNetValueDate().compareTo(a.getNetValueDate()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private void fillView(List<FundDataVO> list) {
-        list.forEach(data -> {
-            data.setDayOfWeek(data.getNetValueDate().getDayOfWeek());
-        });
+        list.forEach(data -> data.setDayOfWeek(data.getNetValueDate().getDayOfWeek()));
     }
 }

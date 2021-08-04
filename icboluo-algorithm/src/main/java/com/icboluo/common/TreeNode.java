@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
 /**
  * 二叉树树节点，并不对树进行方法抽取，只做算法使用
@@ -38,20 +37,31 @@ public class TreeNode {
      * @param arr 中序遍历数组
      * @return 树的根节点
      */
-    public static TreeNode getLevelInstance(Integer[] arr) {
+    public static TreeNode getLevelOrderInstance(Integer[] arr) {
         if (arr == null) {
             return null;
         }
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(arr[0]);
         queue.offer(root);
-        int index = 0;
-        while (!queue.isEmpty()) {
+        int index = 1;
+        while (index < arr.length - 1) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
-                index++;
                 TreeNode poll = queue.poll();
-                TreeNode cur = new TreeNode(arr[index]);
+                if (poll == null) {
+                    continue;
+                }
+//                如果节点是值为null，代表left or right 为null，不需要构造空子树
+                if (arr[index] != null) {
+                    poll.left = new TreeNode(arr[index]);
+                    queue.offer(poll.left);
+                }
+                if (arr[index + 1] != null) {
+                    poll.right = new TreeNode(arr[index + 1]);
+                    queue.offer(poll.right);
+                }
+                index += 2;
 
             }
         }
@@ -65,7 +75,7 @@ public class TreeNode {
      * @return val集合
      */
     public static List<Integer> collectNodeVal(List<TreeNode> list) {
-        return list.stream().map(treeNode -> treeNode.val).collect(Collectors.toList());
+        return list.stream().map(treeNode -> treeNode.val).toList();
     }
 
     private TreeNode getInstance(Integer[] arr, int index) {

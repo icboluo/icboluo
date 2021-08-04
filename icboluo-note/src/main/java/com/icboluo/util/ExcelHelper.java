@@ -1,6 +1,7 @@
 package com.icboluo.util;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.write.metadata.WriteSheet;
@@ -9,7 +10,6 @@ import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -125,7 +125,7 @@ public class ExcelHelper {
      */
     public static Workbook getWorkbook(String filePathName) {
         //判断文件
-        if (StringUtils.isEmpty(filePathName)) {
+        if (StringUtils.hasText(filePathName)) {
             log.error("文件不存在");
             return null;
         }
@@ -180,7 +180,7 @@ public class ExcelHelper {
         boolean b = true;
         for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {
             String value = getCellValue(row.getCell(i));
-            b = b && StringUtils.isEmpty(value);
+            b = b && StringUtils.hasText(value);
         }
         return !b;
     }
@@ -212,11 +212,11 @@ public class ExcelHelper {
         //字符串
         if (cellType == CellType.STRING) {
             value = cell.getStringCellValue().trim();
-            value = StringUtils.isEmpty(value) ? "" : value;
+            value = StringUtils.hasText(value) ? "" : value;
         }
         if (cellType == CellType.NUMERIC) {
             //判断日期类型
-            if (HSSFDateUtil.isCellDateFormatted(cell)) {
+            if (DateUtil.isCellDateFormatted(cell)) {
                 SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 value = dff.format(cell.getDateCellValue());
             } else {
@@ -234,8 +234,8 @@ public class ExcelHelper {
     public static <T> void exportExcel(HttpServletResponse response, List<String> titleId, Class<T> clazz, List<T> data) {
         HttpHelper.writeDownloadData(response, "aaa.xlsx");
         setProper(clazz, titleId);
-        ExcelWriter ew = EasyExcel.write(response.getOutputStream(), clazz).includeColumnFiledNames(titleId).build();
-        WriteSheet ws = EasyExcel.writerSheet("aa").build();
+        ExcelWriter ew = EasyExcelFactory.write(response.getOutputStream(), clazz).includeColumnFiledNames(titleId).build();
+        WriteSheet ws = EasyExcelFactory.writerSheet("aa").build();
         ew.write(data, ws);
         ew.finish();
     }
