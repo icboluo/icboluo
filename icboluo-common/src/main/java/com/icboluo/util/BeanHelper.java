@@ -3,6 +3,7 @@ package com.icboluo.util;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.icboluo.common.PageQuery;
 import com.icboluo.enumerate.ExceptionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -169,5 +170,30 @@ public class BeanHelper {
         PageInfo<T> pageInfo = PageInfo.of(page);
         pageInfo.setList(target);
         return pageInfo;
+    }
+
+    /**
+     * 假分页
+     *
+     * @param list    原集合
+     * @param convert 转换函数
+     * @param query   分页条件
+     * @param <S>     source
+     * @param <T>     target
+     * @param <Q>     query
+     * @return page info
+     */
+    public static <S, T, Q extends PageQuery> PageInfo<T> fakePage(List<S> list, Function<List<S>, List<T>> convert, Q query) {
+        int start = (query.getPageNum() - 1) * query.getPageSize();
+        int end = Math.min(list.size(), query.getPageSize() * query.getPageNum());
+        List<S> subList = list.subList(start, end);
+        List<T> apply = convert.apply(subList);
+        PageInfo<T> pi = PageInfo.of(apply);
+        pi.setTotal(list.size());
+        return pi;
+    }
+
+    public static <S, Q extends PageQuery> PageInfo<S> fakePage(List<S> list,Q query) {
+        return fakePage(list, a -> a, query);
     }
 }
