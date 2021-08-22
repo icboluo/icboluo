@@ -5,6 +5,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.PageQuery;
 import com.icboluo.enumerate.ExceptionEnum;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
@@ -13,6 +16,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 
@@ -20,12 +24,10 @@ import java.util.stream.Collectors;
  * @author icboluo
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BeanHelper {
 
     private static final String CONVERT_ERR_MESSAGE = "【数据转换】数据转换出错，目标对象{}构造函数异常";
-
-    private BeanHelper() {
-    }
 
     /**
      * 将一个对象中的属性copy到另一个对象中
@@ -35,13 +37,24 @@ public class BeanHelper {
      * @param <T>    类的类型
      * @return 目标对象
      */
-    public static <T> T copyProperties(Object source, Class<T> target) {
+    public static <T> T copyProperties(Object source, @NonNull Class<T> target) {
         try {
             T t = target.getDeclaredConstructor().newInstance();
             BeanUtils.copyProperties(source, t);
             return t;
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
+            throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
+        }
+    }
+
+    public static <T> T copyProperties(Object source, @NonNull Supplier<T> supplier) {
+        try {
+            T t = supplier.get();
+            BeanUtils.copyProperties(source, t);
+            return t;
+        } catch (Exception e) {
+            log.error(CONVERT_ERR_MESSAGE, supplier.getClass().getName(), e);
             throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
         }
     }
@@ -54,13 +67,24 @@ public class BeanHelper {
      * @param <T>        目标类的类型
      * @return 目标集合
      */
-    public static <T> List<T> copyWithCollection(List<?> sourceList, Class<T> target) {
+    public static <T> List<T> copyWithCollection(List<?> sourceList, @NonNull Class<T> target) {
         try {
             return sourceList.stream()
                     .map(s -> copyProperties(s, target))
                     .toList();
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
+            throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
+        }
+    }
+
+    public static <T> List<T> copyWithCollection(List<?> sourceList, @NonNull Supplier<T> supplier) {
+        try {
+            return sourceList.stream()
+                    .map(s -> copyProperties(s, supplier))
+                    .toList();
+        } catch (Exception e) {
+            log.error(CONVERT_ERR_MESSAGE, supplier.getClass().getName(), e);
             throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
         }
     }
@@ -73,7 +97,7 @@ public class BeanHelper {
      * @param <T>        目标类的类型
      * @return 目标集合
      */
-    public static <T> Set<T> copyWithCollection(Set<?> sourceList, Class<T> target) {
+    public static <T> Set<T> copyWithCollection(Set<?> sourceList, @NonNull Class<T> target) {
         try {
             return sourceList.stream()
                     .map(s -> copyProperties(s, target))
@@ -193,7 +217,7 @@ public class BeanHelper {
         return pi;
     }
 
-    public static <S, Q extends PageQuery> PageInfo<S> fakePage(List<S> list,Q query) {
+    public static <S, Q extends PageQuery> PageInfo<S> fakePage(List<S> list, Q query) {
         return fakePage(list, a -> a, query);
     }
 }

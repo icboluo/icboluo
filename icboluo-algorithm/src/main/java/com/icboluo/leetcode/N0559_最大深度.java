@@ -11,6 +11,10 @@ import java.util.Queue;
  */
 public class N0559_最大深度 {
     public int maxDepth(Node root) {
+        return maxDepth2(root);
+    }
+
+    public int maxDepth1(Node root) {
         if (root == null) {
             return 0;
         }
@@ -32,4 +36,16 @@ public class N0559_最大深度 {
         }
         return depth;
     }
+
+    public int maxDepth2(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        int max = 0;
+        for (Node child : root.children) {
+            max = Math.max(max, maxDepth2(child));
+        }
+        return max + 1;
+    }
+
 }
