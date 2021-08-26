@@ -63,6 +63,18 @@ public enum StatusEnum implements EnumInter {
 
     private static final EnumSet<StatusEnum> ALL_SET = EnumSet.allOf(StatusEnum.class);
 
+    /**
+     * 枚举的 match 方法禁止用static修饰
+     *
+     * @param code code
+     * @param <T>  code 类型
+     * @return 是否有匹配值
+     */
+    public <T> boolean match(T code) {
+        Optional<StatusEnum> byStatus = findByStatus(code);
+        return byStatus.map(opt -> opt == this).orElse(false);
+    }
+
     public static <T> String findNameByStatusLanguage(T status, LanguageEnum language) {
         Optional<StatusEnum> e = findByStatus(status);
         return chooseByLanguage(language, e);

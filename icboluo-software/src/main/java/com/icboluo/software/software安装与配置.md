@@ -99,11 +99,14 @@ javac.exe
 
    - 安装镜像的时候，一定要好好选，不要默认直接安装，要在软件选择里面改成服务器，要不然就成图形化界面了
 
-   ![image-20200630101432035](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200630101432035.png)
+   ![img.png](software安装与配置/imgxnj.png)
 
 4. 选择安装服务器客户端工具 FinalShell
 
 5. 如果主机给虚拟机分配的地址不是192.168，就还原几次默认配置就好了
+
+   vim /etc/sysconfig/network-scripts/ifcfg-ens33
+ ![img.png](software安装与配置/imgwangluo.png)
 
 ## 4.jdk
 
@@ -144,6 +147,7 @@ windows下redis启动命令：
 redis-server redis.windows.conf
 ```
 
+redis 需要开启远程访问
 ## 6.nodejs
 
 Node.js是一个Javascript运行环境(runtime)；
@@ -203,6 +207,14 @@ https://github.com/alibaba/nacos/releases 下载压缩包解压进入bin目录�
 ## 9.sentinel
 
 https://github.com/alibaba/Sentinel/releases 下载jar包
+
+
+## mysql 
+
+wget https://dev.mysql.com/get/downloads/mysql/mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz
+
+解压
+
 
 
 
