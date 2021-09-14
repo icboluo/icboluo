@@ -137,7 +137,9 @@ src/redis-server
 
 yum -y install gcc-c++; yum install make;
 
-需要配置开机启动和后台运行
+需要配置开机启动和后台运行/ 和开启远端访问
+
+目前使用的linux安装地址常用的有 /root 和 /usr/local 下面
 
 3.windows安装的时候，直接下载压缩包，然后解压就可以了
 
@@ -214,6 +216,10 @@ https://github.com/alibaba/Sentinel/releases 下载jar包
 wget https://dev.mysql.com/get/downloads/mysql/mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz
 
 解压
+
+mysql的my.cnf文件在 /etc 文件夹下面需要修改
+
+注意linux区分大小写，datadir d不要大写,网上的安装教程有的顺序是不对的，要适当调整
 
 
 

@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2021-36-23 21:36
  */
 @SuppressWarnings("all")
-public interface MyBaseMapper<T> extends BaseMapper<T>{
+public interface MyBaseMapper<T> extends BaseMapper<T> {
     /**
      * 通过主键删除数据
      *
@@ -20,6 +20,10 @@ public interface MyBaseMapper<T> extends BaseMapper<T>{
      */
     default int deleteByPrimaryKey(Serializable id) {
         return deleteById(id);
+    }
+
+    default int deleteByIds(Collection<? extends Serializable> idList) {
+        return deleteBatchIds(idList);
     }
 
     @Override
