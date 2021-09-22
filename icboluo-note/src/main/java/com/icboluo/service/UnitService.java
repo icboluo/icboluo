@@ -24,9 +24,9 @@ public class UnitService {
 
     public List<UnitDO> getAll() {
         List<UnitDO> list = redisList.rCap(
-                () -> redisList.get(Constant.unit),
+                () -> redisList.get(Constant.UNIT),
                 unitMapper::selectAll,
-                db -> redisList.addAll(Constant.unit, db)
+                db -> redisList.addAll(Constant.UNIT, db)
         );
         System.out.println(list);
         return list;
@@ -39,7 +39,7 @@ public class UnitService {
      * @return list
      */
     public List<UnitDO> selectByCode(String code) {
-        String key = Constant.unit + ":" + code;
+        String key = Constant.UNIT + ":" + code;
         List<UnitDO> list = redisList.rCap(
                 () -> redisList.get(key),
                 () -> unitMapper.selectByCode(code),

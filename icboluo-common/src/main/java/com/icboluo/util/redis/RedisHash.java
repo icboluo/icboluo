@@ -17,7 +17,7 @@ public class RedisHash<T> extends AbstractRedis<T> {
     @Resource
     private HashOperations<String, String, T> hashOperations;
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("all")
     private void example() {
         HashOperations<String, String, T> hashOperations = redisTemplate.opsForHash();
     }

@@ -1,6 +1,6 @@
 package com.icboluo.file;
 
-import com.icboluo.util.IOHelper;
+import com.icboluo.util.IoHelper;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,12 +20,12 @@ class Demo01 {
 //      创建一个文件输入流对象
         FileInputStream in = new FileInputStream("a.txt");
 
-        StringBuilder stringBuilder = IOHelper.readFileInputStream(in);
+        StringBuilder stringBuilder = IoHelper.readFileInputStream(in);
         System.out.println(stringBuilder);
         in.close();
 
         FileInputStream in2 = new FileInputStream("a.txt");
-        StringBuilder stringBuilder1 = IOHelper.readFileInputStream2(in2);
+        StringBuilder stringBuilder1 = IoHelper.readFileInputStream2(in2);
         System.out.println(stringBuilder1);
         in2.close();
     }

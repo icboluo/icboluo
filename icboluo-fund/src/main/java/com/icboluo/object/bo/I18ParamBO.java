@@ -3,6 +3,7 @@ package com.icboluo.object.bo;
 import lombok.Data;
 
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author icboluo
@@ -10,6 +11,8 @@ import java.util.List;
  */
 @Data
 public class I18ParamBO<S> {
+
+    private Function<S,String> findNameByCode;
 
     private List<S> sourceList;
 

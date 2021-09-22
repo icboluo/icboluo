@@ -26,7 +26,7 @@ public class RedisString<T> extends AbstractRedis<T> {
     @Resource
     private ValueOperations<String, T> valueOperations;
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("all")
     private void example() {
         ValueOperations<String, T> valueOperations = redisTemplate.opsForValue();
     }

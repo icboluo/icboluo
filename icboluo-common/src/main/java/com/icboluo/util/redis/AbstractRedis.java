@@ -1,6 +1,6 @@
 package com.icboluo.util.redis;
 
-import com.icboluo.funInterface.Procedure;
+import com.icboluo.function.Procedure;
 import com.icboluo.util.DateHelper;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -8,10 +8,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -120,7 +117,7 @@ public abstract class AbstractRedis<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (ObjectUtils.isEmpty(g)) {
+        if (ObjectUtils.isEmpty(g) || (g instanceof Optional<?> opt && opt.isPresent())) {
 //            如果找不到，先从db中读出来写到缓存中
             g = dbOperation.get();
             cacheCallBack.accept(g);

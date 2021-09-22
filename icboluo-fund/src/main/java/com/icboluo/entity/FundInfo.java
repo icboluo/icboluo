@@ -2,6 +2,7 @@ package com.icboluo.entity;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -19,5 +20,6 @@ public class FundInfo implements Serializable {
 
     private String name;
 
+    @Serial
     private static final long serialVersionUID = -83256998777520315L;
 }

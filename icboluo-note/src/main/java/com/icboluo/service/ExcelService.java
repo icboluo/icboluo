@@ -70,7 +70,7 @@ public class ExcelService {
      * @param table    表名
      */
     public void write(String database, String table) {
-        if (StringUtils.isEmpty(database)) {
+        if (!StringUtils.hasLength(database)) {
             throw new IcBoLuoException("数据库名称为空，不能查询数据库数据");
         }
         List<SheetVO> list = readDatabase(database, table);

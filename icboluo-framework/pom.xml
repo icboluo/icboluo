@@ -8,6 +8,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>icboluo-framework</artifactId>
+    <properties>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>

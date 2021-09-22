@@ -1,6 +1,7 @@
 package com.icboluo.util.serialize;
 
-import com.icboluo.funInterface.SerialFunction;
+import com.icboluo.function.SerialFunction;
+import com.icboluo.util.IoHelper;
 import org.springframework.util.StringUtils;
 
 import java.io.*;
@@ -15,20 +16,25 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressWarnings("unused")
 public class SerializedLambda implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 8025925345765570181L;
 
-
+    /**
+     * 实现方法名 （for example ：getName）
+     */
     private String implMethodName;
 
     /**
      * 获取索性名的方法
      *
-     * @param column
-     * @param <T>
-     * @return
+     * @param getFun 字段get方法
+     * @param <T>    对象类型
+     * @return 字段名
      */
-    public static <T> String getColumnName(SerialFunction<T, ?> column) {
-        return resolveFieldName(resolveFunc(column).getImplMethodName());
+    public static <T> String getColumnName(SerialFunction<T, ?> getFun) {
+        SerializedLambda sl = resolveFunc(getFun);
+        String implMethodName = sl.getImplMethodName();
+        return resolveFieldName(implMethodName);
     }
 
     /**
@@ -41,7 +47,8 @@ public class SerializedLambda implements Serializable {
         if (!lambda.getClass().isSynthetic()) {
             throw new RuntimeException("该方法仅能传入 lambda 表达式产生的合成类");
         }
-        try (ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(serialize(lambda))) {
+        byte[] serialize = IoHelper.serialize(lambda);
+        try (ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(serialize)) {
             @Override
             protected Class<?> resolveClass(ObjectStreamClass objectStreamClass) throws IOException, ClassNotFoundException {
                 Class<?> clazz = super.resolveClass(objectStreamClass);
@@ -55,30 +62,9 @@ public class SerializedLambda implements Serializable {
     }
 
     /**
-     * Serialize the given object to a byte array.
-     *
-     * @param object the object to serialize
-     * @return an array of bytes representing the object in a portable fashion
-     */
-    public static byte[] serialize(Object object) {
-        if (object == null) {
-            return null;
-        }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(object);
-            oos.flush();
-        } catch (IOException ex) {
-            throw new IllegalArgumentException("Failed to serialize object of type: " + object.getClass(), ex);
-        }
-        return baos.toByteArray();
-    }
-
-    /**
      * SerializedLambda 反序列化缓存
      */
-    private static final Map<Class, WeakReference<SerializedLambda>> FUNC_CACHE = new ConcurrentHashMap<>();
+    private static final Map<Class<?>, WeakReference<SerializedLambda>> FUNC_CACHE = new ConcurrentHashMap<>();
 
     /**
      * <p>
@@ -127,7 +113,7 @@ public class SerializedLambda implements Serializable {
      * @return 转换好的字符串
      */
     public static String firstToLowerCase(String param) {
-        if (StringUtils.hasText(param)) {
+        if (!StringUtils.hasText(param)) {
             return "";
         }
         return param.substring(0, 1).toLowerCase() + param.substring(1);

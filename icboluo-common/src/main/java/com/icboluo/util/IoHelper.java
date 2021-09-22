@@ -9,7 +9,28 @@ import java.util.Arrays;
  * @author icboluo
  * @date 2020/11/10 22:15
  */
-public class IOHelper {
+public class IoHelper {
+
+    /**
+     * Serialize the given object to a byte array.
+     *
+     * @param object the object to serialize
+     * @return an array of bytes representing the object in a portable fashion
+     */
+    public static byte[] serialize(Object object) {
+        if (object == null) {
+            return null;
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
+            oos.flush();
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Failed to serialize object of type: " + object.getClass(), ex);
+        }
+        return baos.toByteArray();
+    }
 
     /**
      * inputStream转outputStream

@@ -79,7 +79,7 @@ public class GlobalControllerExceptionHandler {
                     builder.append(cookie.getName()).append(":").append(cookie.getValue()).append('\n');
                 }
             }
-            log.debug("{}", builder.toString());
+            log.debug("{}", builder);
         }
         log.error("{}", e.getMessage(), e);
     }

@@ -8,7 +8,11 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>icboluo-fund</artifactId>
-    <name>icboluo-fund</name>
+
+    <properties>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>

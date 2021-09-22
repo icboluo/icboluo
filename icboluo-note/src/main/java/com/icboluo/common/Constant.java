@@ -99,5 +99,5 @@ public class Constant {
      */
     public static final int YEAR_NOT_FINISH_TIME = 0;
 
-    public static final String unit = "unit";
+    public static final String UNIT = "unit";
 }

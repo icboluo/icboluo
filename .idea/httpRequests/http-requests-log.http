@@ -1,3 +1,47 @@
+GET http://localhost:1110/add
+
+<> 2021-09-15T033905.200.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-09-15T033904.200.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-09-15T033903.200.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-09-15T033857.200.json
+
+###
+
+GET http://localhost:1110/add
+
+<> 2021-09-15T033623.200.json
+
+###
+
+GET http://localhost:1110/redisSetWithTime
+
+<> 2021-09-15T033611.200.json
+
+###
+
+GET http://localhost:1110/redisSetWithTime
+
+###
+
+GET http://localhost:1110/redisSetWithTime
+
+###
+
 GET http://localhost:8888/fundData/init?fundId=164402
 
 <> 2021-07-22T125540.200.json
@@ -245,50 +289,6 @@ GET http://localhost:1514/selectAmount
 GET http://localhost:8888/fundAttention/init
 
 <> 2021-06-09T004414.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-05-31T231055.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-05-31T222009.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-05-31T222004.200.json
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-<> 2021-05-31T221939.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-05-31T221903.500.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-05-31T221851.500.json
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
-
-###
-
-GET http://localhost:8888/fundData/selectOne?id=1
 
 ###
 

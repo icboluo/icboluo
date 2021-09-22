@@ -30,10 +30,13 @@ uuid类型的主键，使用的时候用索引；自增类型的主键，使用�
 
 mysql全表扫描对应explain中的all，是对数据进行一行一行的扫描
 
+避免数据类型转换，会使索引失效
+
 ## left join
 
 - left join and 中的and是先进行右表筛选，再进行总数据匹配，如果筛选结果为空，则left join的整个右表数据为空
 - 业务中常进行整个数据筛选，用where比left join合适
+- mysql 左模糊 like 语句可以使用 locate（相当于 substring ）等语句替代
 
 ## or
 
@@ -63,3 +66,41 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 ## 索引
 
 必定出现的left join 中需要加上索引，不一定出现的不需要加，where条件同理
+
+普通查询会用到覆盖索引，只要查询的字段都有索引就不会回表
+
+子查询无法使用索引
+
+hash算法无法范围查找，一般不用做mysql索引
+
+缺点：
+
+索引太多会增加执行计划生成时间，也会增加修改时间
+
+## 主键
+
+mysql无序主键会导致页分裂，页分裂会导致碎片数据
+
+自增主键用光就不动了，会报主键重复异常
+
+如果不指定主键，会有一个默认的row id作为主键，主键用光后更新操作会覆盖原有数据
+
+### mysql自增主键重置：
+
+删除数据：delete from crew_test
+
+删除主键数据：truncate table crew_test
+
+## select 语句
+
+select * 语句：
+
+io问题：增大网络开销 扩展性：增减字段难以控制（但是可以动态返回全部字段，有利有弊
+
+阅读问题：读起来更加简洁（指定字段读起来更加流水账
+
+索引问题：覆盖索引更可能出现（这个基本用不到吧
+
+## 字段映射
+
+tinyint == byte

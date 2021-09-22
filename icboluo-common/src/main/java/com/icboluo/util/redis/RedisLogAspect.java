@@ -27,6 +27,7 @@ public class RedisLogAspect {
 
     @Pointcut("execution(public * com.icboluo.util.redis.*.*(..))")
     public void redisLog() {
+        // TODO document why this method is empty
     }
 
 
@@ -65,10 +66,9 @@ public class RedisLogAspect {
         if (address == null) {
             return null;
         }
-        if (address instanceof Optional) {
-            Optional opt = (Optional) address;
+        if (address instanceof Optional<?> opt) {
             if (opt.isPresent()) {
-                address = (opt).get();
+                address = opt.get();
             } else {
                 return null;
             }
@@ -76,11 +76,11 @@ public class RedisLogAspect {
         if (address.getClass().isArray()) {
             address = ((Object[]) address).length;
         }
-        if (address instanceof Collection) {
-            address = ((Collection) address).size();
+        if (address instanceof Collection<?> addressColl) {
+            address = addressColl.size();
         }
-        if (address instanceof Map) {
-            address = ((Map) address).size();
+        if (address instanceof Map<?, ?> addressMap) {
+            address = addressMap.size();
         }
         return address.toString();
     }

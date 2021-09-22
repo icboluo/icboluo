@@ -1,4 +1,4 @@
-package com.icboluo.funInterface;
+package com.icboluo.function;
 
 /**
  * @author icboluo

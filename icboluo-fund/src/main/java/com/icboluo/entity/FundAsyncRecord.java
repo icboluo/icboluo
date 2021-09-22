@@ -1,9 +1,10 @@
 package com.icboluo.entity;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * (FundAsyncRecord)实体类
@@ -20,5 +21,6 @@ public class FundAsyncRecord implements Serializable {
 
     private LocalDateTime endTime;
 
+    @Serial
     private static final long serialVersionUID = -72420400963362802L;
 }

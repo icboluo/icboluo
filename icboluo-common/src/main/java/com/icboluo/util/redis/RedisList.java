@@ -20,7 +20,7 @@ public class RedisList<T> extends AbstractRedis<T> {
     @Resource
     private ListOperations<String, T> listOperations;
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("all")
     private void example() {
         ListOperations<String, T> listOperations = redisTemplate.opsForList();
     }

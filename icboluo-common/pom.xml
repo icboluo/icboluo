@@ -12,6 +12,11 @@
 
     <artifactId>icboluo-common</artifactId>
 
+    <properties>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -81,7 +86,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-<!--        仅仅只有kvvmap用到了-->
+        <!--        仅仅只有kvvmap用到了-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

@@ -21,7 +21,7 @@ public class RedisCacheConfig {
 
     @PostConstruct
     public void del() {
-        redisList.del(Constant.unit);
-        redisList.delKeys(Constant.unit);
+        redisList.del(Constant.UNIT);
+        redisList.delKeys(Constant.UNIT);
     }
 }

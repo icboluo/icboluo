@@ -17,7 +17,7 @@ public class RedisSet<T> extends AbstractRedis<T> {
     @Resource
     private SetOperations<String, T> setOperations;
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("all")
     private void example() {
         SetOperations<String, T> setOperations = redisTemplate.opsForSet();
     }

@@ -160,19 +160,6 @@ public class BeanHelper {
         }
     }
 
-    public static Boolean byteToBoolean(Byte byt) {
-        if (byt == null) {
-            return null;
-        }
-        if (byt == 1) {
-            return true;
-        }
-        if (byt == 0) {
-            return false;
-        }
-        return null;
-    }
-
     public static <SK, TK, V> Map<TK, V> mapKeyConvert(Map<SK, V> map, Function<SK, TK> keyConvert) {
         return mapConvert(map, keyConvert, item -> item);
     }
@@ -181,8 +168,9 @@ public class BeanHelper {
         return mapConvert(map, item -> item, valConvert);
     }
 
-    public static <SK, TK, SV, TV> Map<TK, TV> mapConvert(Map<SK, SV> map, Function<SK, TK> keyConvert, Function<SV, TV> valConvert) {
+    public static <SK, TK, SV, TV> Map<TK, TV> mapConvert(@NonNull Map<SK, SV> map, Function<SK, TK> keyConvert, Function<SV, TV> valConvert) {
         return map.entrySet().stream()
+                .filter(entry -> allNotNull(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toMap(
                         entry -> keyConvert.apply(entry.getKey()),
                         entry -> valConvert.apply(entry.getValue())));

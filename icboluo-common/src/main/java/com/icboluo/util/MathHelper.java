@@ -1,5 +1,7 @@
 package com.icboluo.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.math.BigDecimal;
@@ -13,6 +15,7 @@ import java.util.OptionalInt;
  * @author icboluo
  * @date 2020/12/2 20:29
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MathHelper {
     /**
      * 除法

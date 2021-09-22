@@ -114,7 +114,7 @@ public class HttpHelper {
             }
             try (response) {
                 InputStream is = response.getEntity().getContent();
-                return IOHelper.readBufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                return IoHelper.readBufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             }
         }
     }
