@@ -1,3 +1,83 @@
+GET http://localhost:1110/province/selectOne?id=3
+
+<> 2021-09-24T211144.200.json
+
+###
+
+GET http://localhost:1110/province/selectOne?id=33
+
+<> 2021-09-24T210438.200.json
+
+###
+
+GET http://localhost:1110/province/selectOne?id=33
+
+<> 2021-09-24T210233.200.json
+
+###
+
+GET http://localhost:1110/province/selectOne?id=33
+
+<> 2021-09-24T210117.500.json
+
+###
+
+GET http://localhost:1110/province/selectOne?id=33
+
+<> 2021-09-24T204650.200.json
+
+###
+
+GET http://localhost:1110/province/selectOne?id=33
+
+<> 2021-09-24T204644.200.json
+
+###
+
+GET http://localhost:1110/province/selectOne?id=123
+
+###
+
+GET http://localhost:1110/province/selectOne?id=123
+
+###
+
+GET http://localhost:1514/user/login?name=123&password=456
+
+<> 2021-09-24T200525.200.json
+
+###
+
+GET http://localhost:1514/user/login
+
+<> 2021-09-24T200504.400.json
+
+###
+
+GET http://localhost:3377/config/info
+
+<> 2021-09-24T200439.200.txt
+
+###
+
+GET http://localhost:1514/user/login
+
+<> 2021-09-24T200408.400.json
+
+###
+
+GET http://localhost:7788/webInterceptor/studentTest
+
+<> 2021-09-24T200111.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/studentTest
+
+<> 2021-09-24T195804.200.json
+
+###
+
 GET http://localhost:1110/add
 
 <> 2021-09-15T033905.200.json
@@ -207,88 +287,6 @@ GET http://localhost:8888/fundData/init
 GET http://localhost:8888/fundData/init
 
 <> 2021-07-08T215742.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T214758.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T214717.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T214505.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T214114.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T213851.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T213313.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T212911.200.json
-
-###
-
-GET http://localhost:8888/fundInfo/add
-
-###
-
-GET http://localhost:8888/fundAttention/selectAll
-
-<> 2021-06-23T215337.200.json
-
-###
-
-GET http://localhost:8888/fundAttention/delete?id=123456
-
-<> 2021-06-23T214945.200.json
-
-###
-
-GET http://localhost:8888/fundAttention/selectOne?id=320007
-
-<> 2021-06-23T214536.200.json
-
-###
-
-GET http://localhost:8888/fundAttention/delete?id=001186
-
-<> 2021-06-22T010148.200.json
-
-###
-
-GET http://localhost:1514/selectAmount
-
-<> 2021-06-20T170957.200.json
-
-###
-
-GET http://localhost:8888/fundAttention/init
-
-<> 2021-06-09T004414.200.json
 
 ###
 

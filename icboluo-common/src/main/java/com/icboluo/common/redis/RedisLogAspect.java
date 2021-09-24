@@ -1,4 +1,4 @@
-package com.icboluo.util.redis;
+package com.icboluo.common.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RedisLogAspect {
 
-    @Pointcut("execution(public * com.icboluo.util.redis.*.*(..))")
+    @Pointcut("execution(public * com.icboluo.common.redis.*.*(..))")
     public void redisLog() {
         // TODO document why this method is empty
     }

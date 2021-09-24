@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.MyBaseMapper;
+import com.icboluo.common.MyBaseMapper;
 import com.icboluo.entity.FundAsyncRecord;
 
 import java.util.List;

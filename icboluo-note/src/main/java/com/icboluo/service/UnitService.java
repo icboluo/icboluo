@@ -3,7 +3,7 @@ package com.icboluo.service;
 import com.icboluo.common.Constant;
 import com.icboluo.mapper.UnitMapper;
 import com.icboluo.object.dataobject.UnitDO;
-import com.icboluo.util.redis.RedisList;
+import com.icboluo.common.redis.RedisList;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

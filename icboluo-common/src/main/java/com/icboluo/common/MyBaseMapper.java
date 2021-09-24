@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.common;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 

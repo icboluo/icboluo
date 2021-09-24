@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icboluo.mapper.ProvinceMapper">
+
+    <resultMap id="ProvinceMap" type="com.icboluo.entity.Province" >
+    </resultMap>
+    <sql id="Base_Column_List">
+      id
+    </sql>
+
+        <!--通过实体作为筛选条件查询-->
+    <select id="queryAllByData" resultMap="ProvinceMap">
+        select
+         <include refid="Base_Column_List"/>
+        from province
+        <where>
+            <if test="proId != null">
+                and pro_id = #{proId}
+            </if>
+            <if test="proCode != null and proCode != ''">
+                and pro_code = #{proCode}
+            </if>
+            <if test="proName != null and proName != ''">
+                and pro_name = #{proName}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertBatch" keyProperty="proId" useGeneratedKeys="true">
+        insert into note.province(pro_code, pro_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.proCode}, #{entity.proName})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="proId" useGeneratedKeys="true">
+        insert into note.province(pro_code, pro_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.proCode}, #{entity.proName})
+        </foreach>
+        on duplicate key update
+         pro_code = values(pro_code) , pro_name = values(pro_name)     </insert>
+</mapper>
+

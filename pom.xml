@@ -52,13 +52,13 @@
         <mysql.version>8.0.22</mysql.version>
         <druid.verison>1.2.5</druid.verison>
         <mybatis.spring.boot.verison>2.1.1</mybatis.spring.boot.verison>
-        <nacos.verison>2.2.5.RELEASE</nacos.verison>
         <swagger.verison>3.0.0</swagger.verison>
         <pagehelper.version>1.3.0</pagehelper.version>
-        <alibaba.dependencies.verison>2.2.5.RELEASE</alibaba.dependencies.verison>
         <easyexcel.version>2.2.7</easyexcel.version>
         <alibaba.fastjson.verison>1.2.75</alibaba.fastjson.verison>
-        <cloud.dependencies.version>2020.0.2</cloud.dependencies.version>
+        <nacos.verison>2021.1</nacos.verison>
+        <alibaba.dependencies.verison>2.2.5.RELEASE</alibaba.dependencies.verison>
+        <cloud.dependencies.version>2020.0.4</cloud.dependencies.version>
         <httpcore.version>4.4.14</httpcore.version>
         <httpclient.version>4.5.13</httpclient.version>
         <validation.api.version>2.0.1.Final</validation.api.version>

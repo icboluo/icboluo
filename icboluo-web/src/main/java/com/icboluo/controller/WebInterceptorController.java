@@ -8,9 +8,7 @@ import com.icboluo.common.ResponseResult;
 import com.icboluo.common.enumeration.WebContextEnum;
 import com.icboluo.dataobject.OrderCO;
 import com.icboluo.interceptor.UserContext;
-import com.icboluo.util.StudentUtil;
-import com.icboluo.util.response.R;
-import com.icboluo.util.response.Response;
+import com.icboluo.util.StaticTestUtil;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,14 +54,12 @@ public class WebInterceptorController {
     }
 
     @GetMapping("/studentTest")
-    public String studentTest() {
-        StudentUtil.print();
-        return "ok";
+    public void studentTest() {
+        StaticTestUtil.print();
     }
 
     @GetMapping("/validate")
-    public Response validate(@Validated @RequestBody OrderCO co) {
+    public void validate(@Validated @RequestBody OrderCO co) {
         System.out.println(co);
-        return R.correct(co);
     }
 }

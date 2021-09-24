@@ -44,13 +44,5 @@
         </foreach>
         on duplicate key update
     </insert>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete
-        from fund_attention
-        where id = #{id}
-    </delete>
-
 </mapper>
 

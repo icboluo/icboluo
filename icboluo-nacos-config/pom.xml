@@ -51,6 +51,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--        spring cloud dependencies 2020.0.0版本后不再默认加载bootstrap 文件，需要手动添加依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
     </dependencies>
 
 

@@ -1,7 +1,7 @@
 package com.icboluo.config;
 
 import com.icboluo.common.Constant;
-import com.icboluo.util.redis.RedisList;
+import com.icboluo.common.redis.RedisList;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 

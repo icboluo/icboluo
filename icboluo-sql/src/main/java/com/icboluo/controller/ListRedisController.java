@@ -1,6 +1,6 @@
 package com.icboluo.controller;
 
-import com.icboluo.util.redis.RedisList;
+import com.icboluo.common.redis.RedisList;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,4 +1,4 @@
-package com.icboluo.util.redis;
+package com.icboluo.common.redis;
 
 import com.icboluo.util.DateHelper;
 import org.springframework.data.redis.core.BoundKeyOperations;

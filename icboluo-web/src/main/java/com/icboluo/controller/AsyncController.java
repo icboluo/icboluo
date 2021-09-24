@@ -3,8 +3,6 @@ package com.icboluo.controller;
 import com.icboluo.common.ResponseResult;
 import com.icboluo.service.AsyncService;
 import com.icboluo.util.IcBoLuoException;
-import com.icboluo.util.response.R;
-import com.icboluo.util.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,15 +35,13 @@ public class AsyncController {
     }
 
     @GetMapping("/sameClassTransfer")
-    public Response sameClassTransfer() {
+    public void sameClassTransfer() {
         excludeException();
-        return R.correct();
     }
 
     @GetMapping("/sameSubclassTransfer")
-    public Response sameSubclassTransfer() {
+    public void sameSubclassTransfer() {
         asyncService.linkTransferException();
-        return R.correct();
     }
 
     @Async
