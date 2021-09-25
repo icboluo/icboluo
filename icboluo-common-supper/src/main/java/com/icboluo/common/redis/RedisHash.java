@@ -72,18 +72,11 @@ public class RedisHash<T> extends AbstractRedis<T> {
      * @param key  键
      * @param map  对应多个键值
      * @param time 时间(秒)
-     * @return true成功 false失败
      */
-    public boolean hmset(String key, Map<String, T> map, long time) {
-        try {
-            hashOperations.putAll(key, map);
-            if (time > 0) {
-                expire(key, time);
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public void hmset(String key, Map<String, T> map, long time) {
+        hashOperations.putAll(key, map);
+        if (time > 0) {
+            expire(key, time);
         }
     }
 
@@ -93,16 +86,9 @@ public class RedisHash<T> extends AbstractRedis<T> {
      * @param key   键
      * @param item  项
      * @param value 值
-     * @return true 成功 false失败
      */
-    public boolean hset(String key, String item, T value) {
-        try {
-            hashOperations.put(key, item, value);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public void hset(String key, String item, T value) {
+        hashOperations.put(key, item, value);
     }
 
 //        6、向一张hash表中放入数据,如果不存在将创建并设置过期时间
@@ -114,18 +100,11 @@ public class RedisHash<T> extends AbstractRedis<T> {
      * @param item  项
      * @param value 值
      * @param time  时间(秒)  注意:如果已存在的hash表有时间,这里将会替换原有的时间
-     * @return true 成功 false失败
      */
-    public boolean hset(String key, String item, T value, long time) {
-        try {
-            hashOperations.put(key, item, value);
-            if (time > 0) {
-                expire(key, time);
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public void hset(String key, String item, T value, long time) {
+        hashOperations.put(key, item, value);
+        if (time > 0) {
+            expire(key, time);
         }
     }
 

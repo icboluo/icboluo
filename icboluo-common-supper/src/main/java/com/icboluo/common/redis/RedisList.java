@@ -15,7 +15,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class RedisList<T> extends AbstractRedis<T> {
     /**
-     * todo 这里注入的时候有时需要先注入 name='redisTemplate' 这里不需要为什么
+     * TODO 这里注入的时候有时需要先注入 name='redisTemplate' 这里不需要为什么
      */
     @Resource
     private ListOperations<String, T> listOperations;
@@ -123,7 +123,6 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @param key   键
      * @param index 索引
      * @param value 值
-     * @return 是否更新成功
      */
     public void set(String key, long index, T value) {
         listOperations.set(key, index, value);

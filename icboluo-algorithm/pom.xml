@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.icboluo</groupId>
             <artifactId>icboluo-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${common.version}</version>
         </dependency>
         <!--        这个里面包含了spring framework？-->
         <dependency>

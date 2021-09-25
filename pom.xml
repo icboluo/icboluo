@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.0</version>
+        <version>2.5.5</version>
         <!--        relativePath元素中的地址–>本地仓库–>远程仓库-->
         <!--        如为空值将始终从仓库中获取，不从本地路径获取-->
         <!--        设定一个空值将始终从仓库中获取，不从本地路径获取，子模块禁止添加这个-->
@@ -46,26 +46,38 @@
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <spring.boot.version>2.5.5</spring.boot.version>
+        <!--公共插件-->
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.12</log4j.version>
         <lombok.version>1.18.20</lombok.version>
+        <common.version>0.0.1-SNAPSHOT</common.version>
+        <!--web -->
+        <httpcore.version>4.4.14</httpcore.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <javax.servlet.version>4.0.1</javax.servlet.version>
+        <!--mapper -->
         <mysql.version>8.0.22</mysql.version>
         <druid.verison>1.2.5</druid.verison>
         <mybatis.spring.boot.verison>2.1.1</mybatis.spring.boot.verison>
-        <swagger.verison>3.0.0</swagger.verison>
+        <mybatis.plus.verison>3.4.3.1</mybatis.plus.verison>
         <pagehelper.version>1.3.0</pagehelper.version>
-        <easyexcel.version>2.2.7</easyexcel.version>
+        <!--alibaba -->
         <alibaba.fastjson.verison>1.2.75</alibaba.fastjson.verison>
-        <nacos.verison>2021.1</nacos.verison>
         <alibaba.dependencies.verison>2.2.5.RELEASE</alibaba.dependencies.verison>
-        <cloud.dependencies.version>2020.0.4</cloud.dependencies.version>
-        <httpcore.version>4.4.14</httpcore.version>
-        <httpclient.version>4.5.13</httpclient.version>
+        <nacos.verison>2021.1</nacos.verison>
+        <easyexcel.version>2.2.7</easyexcel.version>
+        <!--校验器        -->
         <validation.api.version>2.0.1.Final</validation.api.version>
         <hibernate.validator.version>7.0.1.Final</hibernate.validator.version>
-        <jakarta.activation.version>2.0.0</jakarta.activation.version>
+        <!--公共包-->
         <hutool.all.version>5.6.6</hutool.all.version>
         <common.io.version>2.8.0</common.io.version>
+        <!--cloud-->
+        <cloud.dependencies.version>2020.0.4</cloud.dependencies.version>
+
+        <swagger.verison>3.0.0</swagger.verison>
+        <jakarta.activation.version>2.0.0</jakarta.activation.version>
     </properties>
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->
@@ -184,7 +196,7 @@
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
-                <version>4.0.1</version>
+                <version>${javax.servlet.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -192,6 +204,16 @@
                 <artifactId>checker-qual</artifactId>
                 <version>3.11.0</version>
                 <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring.boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

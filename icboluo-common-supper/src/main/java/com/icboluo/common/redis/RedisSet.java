@@ -30,12 +30,7 @@ public class RedisSet<T> extends AbstractRedis<T> {
      * @return
      */
     public Set<T> get(String key) {
-        try {
-            return setOperations.members(key);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return setOperations.members(key);
     }
 
     /**

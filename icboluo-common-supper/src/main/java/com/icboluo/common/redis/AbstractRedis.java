@@ -2,6 +2,7 @@ package com.icboluo.common.redis;
 
 import com.icboluo.function.Procedure;
 import com.icboluo.util.DateHelper;
+import lombok.NonNull;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.ObjectUtils;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 public abstract class AbstractRedis<T> {
     /**
-     * todo 这个直接用list redis 去调用的话会是空，应该怎么处理呢
+     * TODO 这个直接用list redis 去调用的话会是空，应该怎么处理呢
      */
     @Resource
     public RedisTemplate<String, T> redisTemplate;
@@ -47,17 +48,17 @@ public abstract class AbstractRedis<T> {
     }
 
     public Boolean expire(String key, long time, TimeUnit timeUnit) {
-        if (time > 0) {
-            return redisTemplate.expire(key, time, timeUnit);
+        if (time <= 0) {
+            return true;
         }
-        return true;
+        return redisTemplate.expire(key, time, timeUnit);
     }
 
     public Boolean expireAt(String key, LocalDateTime localDateTime) {
-        if (localDateTime.compareTo(LocalDateTime.now()) > 0) {
-            return redisTemplate.expireAt(key, DateHelper.localDateTimeToDate(localDateTime));
+        if (localDateTime.compareTo(LocalDateTime.now()) <= 0) {
+            return true;
         }
-        return true;
+        return redisTemplate.expireAt(key, DateHelper.localDateTimeToDate(localDateTime));
     }
 
     /**
@@ -71,7 +72,19 @@ public abstract class AbstractRedis<T> {
     }
 
     /**
-     * 判断key是否存在
+     * 查询key的生命周期
+     *
+     * @param key      键 不能为null
+     * @param timeUnit 时间单位
+     * @return 时间(秒) 返回0代表为永久有效
+     */
+    public Long getKeyExpire(String key, TimeUnit timeUnit) {
+        return redisTemplate.getExpire(key, timeUnit);
+    }
+
+
+    /**
+     * 判断key是否存在 existsKey
      *
      * @param key 键
      * @return true 存在 false不存在
@@ -86,18 +99,18 @@ public abstract class AbstractRedis<T> {
      * @param key 可以传一个值 或多个
      */
     public Long del(String... key) {
-        if (key != null && key.length > 0) {
-            if (key.length == 1) {
-                Boolean delete = redisTemplate.delete(key[0]);
-                return Boolean.TRUE.equals(delete) ? 1L : 0;
-            } else {
-                return redisTemplate.delete(Arrays.asList(key));
-            }
+        if (key == null || key.length == 0) {
+            return null;
         }
-        return null;
+        if (key.length == 1) {
+            Boolean delete = redisTemplate.delete(key[0]);
+            return Boolean.TRUE.equals(delete) ? 1L : 0;
+        } else {
+            return redisTemplate.delete(Arrays.asList(key));
+        }
     }
 
-    public Long del(Collection<String> keys) {
+    public Long del(@NonNull Collection<String> keys) {
         return redisTemplate.delete(keys);
     }
 
@@ -117,7 +130,7 @@ public abstract class AbstractRedis<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (ObjectUtils.isEmpty(g) || (g instanceof Optional<?> opt && opt.isPresent())) {
+        if (ObjectUtils.isEmpty(g)) {
 //            如果找不到，先从db中读出来写到缓存中
             g = dbOperation.get();
             cacheCallBack.accept(g);
@@ -143,19 +156,49 @@ public abstract class AbstractRedis<T> {
     /**
      * keys命令大数据亮容易卡死
      *
-     * @param commonPreKey
-     * @return
+     * @param commonPreKey 公共的key前缀
+     * @return 获得所有匹配的key
      */
     public Set<String> keys(String commonPreKey) {
         return redisTemplate.keys(commonPreKey + ":" + "*");
     }
 
-    public Long delKeys(String... commonPreKey) {
+    public long delKeys(String... commonPreKey) {
         Set<String> keys = Arrays.stream(commonPreKey)
                 .map(this::keys)
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
         return del(keys);
+    }
+
+    /**
+     * 重名名key，如果newKey已经存在，则newKey的原值被覆盖
+     *
+     * @param oldKey 旧key
+     * @param newKey 新key
+     */
+    public void renameKey(String oldKey, String newKey) {
+        redisTemplate.rename(oldKey, newKey);
+    }
+
+    /**
+     * newKey不存在时才重命名
+     *
+     * @param oldKey 旧key
+     * @param newKey 新key
+     * @return 修改成功返回true
+     */
+    public boolean renameKeyNotExist(String oldKey, String newKey) {
+        return Boolean.TRUE.equals(redisTemplate.renameIfAbsent(oldKey, newKey));
+    }
+
+    /**
+     * 将key设置为永久有效
+     *
+     * @param key key
+     */
+    public void persistKey(String key) {
+        redisTemplate.persist(key);
     }
 }

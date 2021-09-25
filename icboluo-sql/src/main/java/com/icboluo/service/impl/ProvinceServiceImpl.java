@@ -3,6 +3,7 @@ package com.icboluo.service.impl;
 import com.icboluo.entity.Province;
 import com.icboluo.mapper.ProvinceMapper;
 import com.icboluo.service.ProvinceService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -25,7 +25,7 @@ public class UserProducer {
         }
     }
     @PostMapping("/postUserNameById")
-    public String postUserNameById(@RequestParam Integer id) {
+    public String postUserNameById(@RequestBody Integer id) {
         log.info("进入icboluo-user服务了");
         Objects.requireNonNull(id, "id不能为空");
         if (id <= 10) {

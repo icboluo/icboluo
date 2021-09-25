@@ -1,3 +1,7 @@
+GET http://localhost:7010/user/getUserNameById?id=51
+
+###
+
 GET http://localhost:1110/province/selectOne?id=3
 
 <> 2021-09-24T211144.200.json
@@ -281,12 +285,6 @@ GET http://localhost:8888/fundData/init
 GET http://localhost:8888/fundData/init
 
 <> 2021-07-08T215854.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T215742.200.json
 
 ###
 

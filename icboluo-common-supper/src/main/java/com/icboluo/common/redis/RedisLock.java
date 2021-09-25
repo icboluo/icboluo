@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author icboluo
  */
 @Component
-public class RedisLock extends AbstractRedis {
+public class RedisLock extends AbstractRedis<Object> {
 
     private static final String LOCK_PREFIX = null;
 
@@ -44,15 +44,5 @@ public class RedisLock extends AbstractRedis {
             }
             return false;
         });
-    }
-
-
-    /**
-     * 删除锁
-     *
-     * @param key
-     */
-    public void delete(String key) {
-        redisTemplate.delete(key);
     }
 }

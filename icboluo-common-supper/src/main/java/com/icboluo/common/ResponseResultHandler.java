@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -26,6 +27,9 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (ObjectUtils.isEmpty(sra)) {
+            return false;
+        }
         HttpServletRequest request = sra.getRequest();
         Object attribute = request.getAttribute(ResponseResultInterceptor.abc);
         ResponseResult responseResultAnn = (ResponseResult) attribute;
