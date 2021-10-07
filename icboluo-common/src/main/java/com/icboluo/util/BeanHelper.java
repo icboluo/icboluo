@@ -170,7 +170,8 @@ public class BeanHelper {
 
     public static <SK, TK, SV, TV> Map<TK, TV> mapConvert(@NonNull Map<SK, SV> map, Function<SK, TK> keyConvert, Function<SV, TV> valConvert) {
         return map.entrySet().stream()
-                .filter(entry -> allNotNull(entry.getKey(), entry.getValue()))
+                .filter(entry -> allNotNull(entry.getKey(), keyConvert.apply(entry.getKey())))
+                .filter(entry -> allNotNull(entry.getKey(), valConvert.apply(entry.getValue())))
                 .collect(Collectors.toMap(
                         entry -> keyConvert.apply(entry.getKey()),
                         entry -> valConvert.apply(entry.getValue())));

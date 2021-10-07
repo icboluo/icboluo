@@ -69,13 +69,27 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 
 普通查询会用到覆盖索引，只要查询的字段都有索引就不会回表
 
-子查询无法使用索引
+子查询的结果集无法使用索引
 
 hash算法无法范围查找，一般不用做mysql索引
 
 缺点：
 
 索引太多会增加执行计划生成时间，也会增加修改时间
+
+b+ 树 ：多路查找树
+
+b+树更适合范围查找，找到一个数据的时候，可以把data链表中的数据同时带出来
+
+b树只能通过中序遍历
+
+因为b+树可以一次查询多个数据，所以，b+树io次数远小于b树
+
+b+树的数据都在data中，查询效率比较稳定
+
+b+树非叶子节点没有data，可以把索引加载到内存中提高效率
+
+聚集索引：索引结构数据一起存放的索引：主键索引
 
 ## 主键
 
@@ -104,3 +118,15 @@ io问题：增大网络开销 扩展性：增减字段难以控制（但是可�
 ## 字段映射
 
 tinyint == byte
+
+## sql
+
+mybatis中批量sql是可以使用selective
+
+select name ,sum(money) from test group by name with rollup 
+
+先分组，分组后对聚合函数sum再聚合一次
+
+select coalesce(name，总金额;) ,sum (money) from test group by name with rollup 
+
+这样写更合适

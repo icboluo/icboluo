@@ -1,6 +1,9 @@
 package com.icboluo.common;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -20,6 +23,10 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      */
     default int deleteByPrimaryKey(Serializable id) {
         return deleteById(id);
+    }
+
+    default int deleteByPrimaryKeys(Collection<? extends Serializable> idList) {
+        return deleteBatchIds(idList);
     }
 
     default int deleteByIds(Collection<? extends Serializable> idList) {
@@ -66,4 +73,17 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
     }
 
     int updateByPrimaryKey(T record);
+
+    default int count() {
+        return count(Wrappers.emptyWrapper());
+    }
+
+    /**
+     * 根据 Wrapper 条件，查询总记录数
+     *
+     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
+     */
+    private int count(Wrapper<T> queryWrapper) {
+        return SqlHelper.retCount(this.selectCount(queryWrapper));
+    }
 }

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RedisLogAspect {
 
-    @Pointcut("execution(public * com.icboluo.common.redis.*.*(..))")
+    @Pointcut("execution(public * com.icboluo.common.redis.*.*(..))&&!execution(public * com.icboluo.common.redis.RedisConfig.*(..))")
     public void redisLog() {
         // TODO document why this method is empty
     }

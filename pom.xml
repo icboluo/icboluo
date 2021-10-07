@@ -19,6 +19,7 @@
     <modules>
         <module>icboluo-algorithm</module>
         <module>icboluo-common</module>
+        <module>icboluo-common-supper</module>
         <module>icboluo-framework</module>
         <module>icboluo-fund</module>
         <module>icboluo-gateway</module>
@@ -46,7 +47,6 @@
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <spring.boot.version>2.5.5</spring.boot.version>
         <!--公共插件-->
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.12</log4j.version>
@@ -82,6 +82,7 @@
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->
     <!--    只是申明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖-->
+    <!--    内容和plugs中的内容是一样的，不过这个表示可以让子pom继承使用，子pom使用的使用，不用继续写version-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -209,11 +210,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.verison}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-redis</artifactId>
-                <version>${spring.boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

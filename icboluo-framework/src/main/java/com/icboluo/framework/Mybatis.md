@@ -65,6 +65,8 @@ mybatis中的item.id是用实体类中的get方法做映射的，相同的，jav
 
 mysql的count方法如果效率过低可以重写，重写的sql可以和以前的sql有些差距，只需要计算总数即可
 
+mybatis的count函数可以重写
+
 ## 标签
 
 mybaits if标签中 "test=date !=null and date !=''",不能这样写，不等于空字符串只针对于String类型
