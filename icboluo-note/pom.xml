@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.icboluo</groupId>
-            <artifactId>icboluo-common</artifactId>
+            <artifactId>icboluo-supper</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

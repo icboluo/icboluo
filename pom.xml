@@ -19,7 +19,8 @@
     <modules>
         <module>icboluo-algorithm</module>
         <module>icboluo-common</module>
-        <module>icboluo-common-supper</module>
+        <module>icboluo-common/icboluo-supper</module>
+        <module>icboluo-common/icboluo-base</module>
         <module>icboluo-framework</module>
         <module>icboluo-fund</module>
         <module>icboluo-gateway</module>
