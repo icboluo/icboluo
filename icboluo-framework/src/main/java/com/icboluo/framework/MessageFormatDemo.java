@@ -1,5 +1,6 @@
 package com.icboluo.framework;
 
+
 import com.icboluo.function.CiConsumer;
 
 import java.text.MessageFormat;
@@ -15,6 +16,9 @@ public class MessageFormatDemo {
     CiConsumer<Integer, Integer, Integer> ci = (a, b, c) -> MessageFormat.format("{0} is zero,{0} is zero, {2} is two", 0, 1, 2);
 
     public static void main(String[] args) {
+        /*
+        message format 和 string。format是一样的。可以替换
+         */
         String format = MessageFormat.format("{0} is zero,{0} is zero, {2} is two", 0, 1, 2);
         System.out.println("format = " + format);
     }

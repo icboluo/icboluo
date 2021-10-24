@@ -1,4 +1,4 @@
-package com.icboluo.sheji.shenchanxiaofei;
+package com.icboluo.designpattern.productconsumer;
 
 public class Consumer implements Runnable {
 

@@ -17,13 +17,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>com.icboluo</groupId>
+            <artifactId>icboluo-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.icboluo</groupId>
-            <artifactId>icboluo-common</artifactId>
-            <version>${common.version}</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
         <!--        这个里面包含了spring framework？-->
         <dependency>

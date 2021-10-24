@@ -6,6 +6,7 @@
         <artifactId>icboluo</artifactId>
         <groupId>com.icboluo</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <!--        不加这个会编译报错-->
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

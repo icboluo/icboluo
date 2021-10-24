@@ -70,14 +70,10 @@ public class FundDataServiceImpl implements FundDataService {
             List<FundDataVO> allList = fundDataMapper.selectChooseAll(query.getFundId());
             List<FundDataVO> simChoose = findSimChoose(sourceList, allList, query.getChooseDateLength());
 
-            int start = (query.getPageNum() - 1) * query.getPageSize();
-            int end = Math.min(simChoose.size(), start + query.getPageSize());
-            List<FundDataVO> subList = simChoose.subList(start, end);
-            fillView(subList);
-            PageInfo<FundDataVO> pageInfo = new PageInfo<>();
-            pageInfo.setTotal(simChoose.size());
-            pageInfo.setList(subList);
-            return pageInfo;
+            return BeanHelper.fakePage(simChoose, a -> {
+                fillView(a);
+                return a;
+            }, query);
         }
     }
 

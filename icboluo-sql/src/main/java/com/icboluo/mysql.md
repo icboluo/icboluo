@@ -119,6 +119,8 @@ io问题：增大网络开销 扩展性：增减字段难以控制（但是可�
 
 tinyint == byte
 
+mysql 日期格式用 time stramp，不要使用 date time（date time 的日期只不过更靠前而已，但是不包含时区
+
 ## sql
 
 mybatis中批量sql是可以使用selective

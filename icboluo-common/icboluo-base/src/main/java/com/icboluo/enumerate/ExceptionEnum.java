@@ -51,6 +51,7 @@ public enum ExceptionEnum {
     ENUM_DEFINED_ERROR(550, "枚举定义异常"),
     STATUS_VALUE_ERROR(560, "状态值异常"),
     STATUS_VALUE_NOT_FOUND(561, "状态值不存在"),
+    SYSTEM_NOT_SUPPORT_EXCEPTION(601, "系统不支持异常"),
     ;
     private final int status;
 

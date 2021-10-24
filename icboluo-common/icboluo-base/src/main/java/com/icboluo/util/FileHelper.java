@@ -1,5 +1,7 @@
 package com.icboluo.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -7,6 +9,7 @@ import java.io.*;
 /**
  * @author icboluo
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileHelper {
 
     /**
@@ -20,27 +23,24 @@ public class FileHelper {
     }
 
     public static void write(String data, String filePath) {
-        FileWriter fw;
-        try {
-            fw = new FileWriter(filePath);
+        try (FileWriter fw = new FileWriter(filePath)) {
             fw.write(data);
             fw.flush();
-            fw.close();
+            /*            fw.close();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private static String read(String filePath) {
-        try {
-            FileReader fr = new FileReader(filePath);
+        try (FileReader fr = new FileReader(filePath)) {
             char[] chars = new char[1024];
             int len;
             String s = null;
             while ((len = fr.read(chars)) != -1) {
                 s = new String(chars, 0, len);
             }
-            fr.close();
+            /*fr.close();*/
             return s;
         } catch (IOException e) {
             e.printStackTrace();

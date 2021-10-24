@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author icboluo
@@ -33,8 +34,10 @@ public class WebContextInterceptor implements HandlerInterceptor {
             return HandlerInterceptor.super.preHandle(request, response, handler);
         }
         WebContextAnno webContextAnno = handlerMethod.getBeanType().getAnnotation(WebContextAnno.class);
-        webContextAnno = webContextAnno == null ? handlerMethod.getBeanType().getAnnotation(WebContextAnno.class) : webContextAnno;
-        if (webContextAnno == null || !WebContextEnum.WEB.equals(webContextAnno.service())) {
+        boolean present = Optional.ofNullable(webContextAnno)
+                .filter(wca -> WebContextEnum.WEB.equals(wca.service()))
+                .isPresent();
+        if (present) {
             String userCode = request.getHeader(HttpConstant.USER_CODE);
             UserContext.set(userCode);
         }

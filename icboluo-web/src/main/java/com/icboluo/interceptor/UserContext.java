@@ -1,12 +1,15 @@
 package com.icboluo.interceptor;
 
 import com.icboluo.util.IcBoLuoException;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
 
 /**
  * @author icboluo
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserContext {
     private static final ThreadLocal<AdminUser> USER_CONTEXT = new ThreadLocal<>();
 

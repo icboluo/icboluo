@@ -206,6 +206,10 @@ npm install axios
 
 https://github.com/alibaba/nacos/releases 下载压缩包解压进入bin目录双击就可以启动了
 
+#### 开机自启
+
+vim /lib/systemd/system/nacos.service
+
 ## 9.sentinel
 
 https://github.com/alibaba/Sentinel/releases 下载jar包
@@ -221,6 +225,18 @@ mysql的my.cnf文件在 /etc 文件夹下面需要修改
 
 注意linux区分大小写，datadir d不要大写,网上的安装教程有的顺序是不对的，要适当调整
 
+## 开机自启
+
+#### 1.将软件设置成服务，将服务加载到开机自启中
+
+chkconfig --add redis
+chkconfig --list 
+
+#### 2.编写系统启动后的脚本
+
+vim /etc/rc.d/rc.local
+
+su root service mysqld start   (su:switch user)
 
 
 

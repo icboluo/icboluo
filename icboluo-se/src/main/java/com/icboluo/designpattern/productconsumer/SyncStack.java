@@ -1,4 +1,4 @@
-package com.icboluo.sheji.shenchanxiaofei;
+package com.icboluo.designpattern.productconsumer;
 
 /**
  * 此类是（本质上：共同访问的）共享数据区域
@@ -24,7 +24,7 @@ public class SyncStack {
                 e.printStackTrace();
             }
         }
-        this.notify();//唤醒在此对象监视器上等待的单个线程 
+        this.notify();//唤醒在此对象监视器上等待的单个线程
         str[index] = sst;
         index++;
     }

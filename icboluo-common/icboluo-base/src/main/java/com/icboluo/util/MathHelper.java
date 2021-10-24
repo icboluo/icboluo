@@ -1,5 +1,6 @@
 package com.icboluo.util;
 
+import com.icboluo.enumerate.ExceptionEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -74,15 +75,15 @@ public class MathHelper {
     }
 
     private static <T> BigDecimal toBigDecimal(@NonNull T number) {
-        BigDecimal res = null;
-        if (number instanceof BigDecimal) {
-            res = (BigDecimal) number;
+        if (number instanceof BigDecimal mTemp) {
+            return mTemp;
         } else if (number instanceof Integer mTemp) {
-            res = new BigDecimal(mTemp);
+            return new BigDecimal(mTemp);
         } else if (number instanceof Long mTemp) {
-            res = new BigDecimal(mTemp);
+            return new BigDecimal(mTemp);
+        } else {
+            throw new IcBoLuoException(ExceptionEnum.SYSTEM_NOT_SUPPORT_EXCEPTION);
         }
-        return res;
     }
 
     public static int max(int... arr) {
