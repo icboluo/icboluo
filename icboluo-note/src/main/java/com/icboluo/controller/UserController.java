@@ -1,7 +1,7 @@
 package com.icboluo.controller;
 
 import com.icboluo.feign.UserFeign;
-import com.icboluo.service.UserService;
+import com.icboluo.service.impl.UserService;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import io.swagger.annotations.Api;

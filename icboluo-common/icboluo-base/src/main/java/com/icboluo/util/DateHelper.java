@@ -105,8 +105,16 @@ public class DateHelper {
      * @param timeStamp 1589450630
      * @return for example: 2020-10-21T21:42:13
      */
-    public static LocalDateTime parseTimeStampToDate(Long timeStamp) {
-        return LocalDateTime.ofEpochSecond(timeStamp / 1000, 0, ZoneOffset.ofHours(8));
+    public static LocalDateTime toDateTime(Long timeStamp) {
+        Instant instant = Instant.ofEpochMilli(timeStamp);
+        ZoneId zoneId = ZoneId.systemDefault();
+        return LocalDateTime.ofInstant(instant, zoneId);
+    }
+
+    public static long toLong(LocalDateTime localDateTime) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        Instant instant = localDateTime.atZone(zoneId).toInstant();
+        return instant.toEpochMilli();
     }
 
     public static Date localDateTimeToDate(LocalDateTime localDateTime) {
@@ -134,6 +142,7 @@ public class DateHelper {
         LocalTime minTime = LocalTime.MIN;
         return LocalDateTime.of(localDate, minTime);
     }
+
     /**
      * 本月的最后一天
      *

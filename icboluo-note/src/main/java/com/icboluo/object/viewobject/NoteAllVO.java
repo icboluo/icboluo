@@ -1,17 +1,17 @@
-package com.icboluo.object.dataobject;
+package com.icboluo.object.viewobject;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @author
- *
+ * @author icboluo
  */
 @Data
-public class TimeNoteDO implements Serializable {
+@NoArgsConstructor
+public class NoteAllVO {
+
     /**
      * id
      */
@@ -47,6 +47,25 @@ public class TimeNoteDO implements Serializable {
      */
     private LocalDateTime gmtModified;
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+    /**
+     * 应该完成时间
+     */
+    private long shouldFinishTime;
+
+    /**
+     * 每天剩余数量
+     */
+    private int timeNoteAmount;
+    /**
+     * 每周剩余数量
+     */
+    private int weekTimeAmount;
+    /**
+     * 每月剩余数量
+     */
+    private int monthTimeAmount;
+    /**
+     * 所属类型
+     */
+    private String type;
 }

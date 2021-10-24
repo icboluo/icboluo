@@ -50,20 +50,7 @@ public class NoteVO {
     /**
      * 应该完成时间
      */
-    private long shouldFinishTime;
-
-    /**
-     * 每天剩余数量
-     */
-    private int timeNoteAmount;
-    /**
-     * 每周剩余数量
-     */
-    private int weekTimeAmount;
-    /**
-     * 每月剩余数量
-     */
-    private int monthTimeAmount;
+    private LocalDateTime shouldFinishTime;
     /**
      * 所属类型
      */

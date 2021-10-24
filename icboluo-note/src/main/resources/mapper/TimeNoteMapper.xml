@@ -115,13 +115,6 @@
             gmt_modified    = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
-
-    <select id="selectAll" resultType="com.icboluo.object.dataobject.TimeNoteDO">
-        select
-        <include refid="Base_Column_List"/>
-        from time_note
-        order by gmt_modified
-    </select>
     <select id="select" resultType="com.icboluo.object.dataobject.TimeNoteDO">
         select
         <include refid="Base_Column_List"/>
@@ -131,5 +124,11 @@
         problem like concat ('%',#{file},'%')
         or result like concat ('%',#{file},'%')
         or belong_to_scope like concat ('%',#{file},'%')
+    </select>
+    <select id="selectAll" resultType="com.icboluo.object.dataobject.TimeNoteDO">
+        select
+        <include refid="Base_Column_List"/>
+        from time_note
+        order by gmt_modified
     </select>
 </mapper>

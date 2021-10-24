@@ -1,7 +1,7 @@
 package com.icboluo.controller;
 
 import com.icboluo.object.dataobject.UnitDO;
-import com.icboluo.service.UnitService;
+import com.icboluo.service.impl.UnitService;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import org.springframework.web.bind.annotation.GetMapping;

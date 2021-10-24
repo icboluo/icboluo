@@ -1,12 +1,13 @@
 package com.icboluo.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.mapper.TimeNoteMapper;
+import com.icboluo.object.clientobject.DDD;
 import com.icboluo.object.clientobject.TimeNoteCO;
 import com.icboluo.object.dataobject.TimeNoteDO;
 import com.icboluo.object.query.TimeNoteQuery;
 import com.icboluo.object.viewobject.FiledResultVO;
+import com.icboluo.object.viewobject.NoteAllVO;
 import com.icboluo.object.viewobject.NoteVO;
 import com.icboluo.service.NoteService;
 import com.icboluo.util.BeanHelper;
@@ -18,7 +19,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,23 +42,14 @@ public class TimeNoteController {
     @GetMapping("/init")
     @ApiOperation(value = "初始化")
     public Response init(TimeNoteQuery query) {
-        NoteVO noteVO = noteService.selectOne(query);
-        List<NoteVO> list = new ArrayList<>();
-        list.add(noteVO);
-        return R.correct(PageInfo.of(list));
-    }
-
-    @GetMapping("/selectProblem")
-    @ApiOperation(value = "查询第一个问题")
-    public Response selectProblem(TimeNoteQuery query) {
-        NoteVO noteVO = noteService.selectOne(query);
-        return R.correct(noteVO);
+        List<NoteVO> list = noteService.selectList(query);
+        return R.correct(BeanHelper.fakePage(list, query));
     }
 
     @GetMapping("/selectAmount")
     @ApiOperation(value = "查询问题剩余量")
     public Response selectTimeNoteAmount(TimeNoteQuery query) {
-        NoteVO noteVO = noteService.selectOne(query);
+        NoteAllVO noteVO = noteService.selectOne(query);
         int timeNoteAmount = noteVO.getTimeNoteAmount();
         int weekTimeAmount = noteVO.getWeekTimeAmount();
         int monthTimeAmount = noteVO.getMonthTimeAmount();
@@ -92,35 +83,29 @@ public class TimeNoteController {
 
     @GetMapping("/onlyUpdateTime")
     @ApiOperation(value = "只更新时间")
-    public Response onlyUpdateTime() {
-        TimeNoteQuery timeNoteQuery = new TimeNoteQuery();
-        Map<String, String> map = noteService.selectIdAndType(timeNoteQuery);
-        noteService.onlyUpdateTime(map);
-        return R.correct(ReEnum.UPDATE_SUCCESSFUL);
+    public Response onlyUpdateTime(DDD dd) {
+        noteService.onlyUpdateTime(dd);
+        return R.correct();
     }
 
     @GetMapping("/updateFinishTime")
     @ApiOperation(value = "更新为完成了一次")
-    public Response updateFinishTime() {
-        TimeNoteQuery timeNoteQuery = new TimeNoteQuery();
-        Map<String, String> map = noteService.selectIdAndType(timeNoteQuery);
-        noteService.updateFinishTime(map);
-        return R.correct(ReEnum.UPDATE_SUCCESSFUL);
+    public Response update(DDD dd) {
+        noteService.updateFinishTime(dd);
+        return R.correct();
     }
 
     @GetMapping("/updateNotFinishTime")
     @ApiOperation(value = "更新为没有完成一次")
-    public Response updateNotFinishTime() {
-        TimeNoteQuery timeNoteQuery = new TimeNoteQuery();
-        Map<String, String> map = noteService.selectIdAndType(timeNoteQuery);
-        noteService.updateNotFinishTime(map);
+    public Response updateNotFinishTime(DDD dd) {
+        noteService.updateNotFinishTime(dd);
         return R.correct(ReEnum.UPDATE_SUCCESSFUL);
     }
 
     @GetMapping("/toOnlyRead")
     @ApiOperation(value = "仅仅更新时间")
-    public Response toOnlyRead() {
-        noteService.toOnlyRead();
+    public Response toOnlyRead(DDD dd) {
+        noteService.toOnlyRead(dd);
         return R.correct(ReEnum.UPDATE_SUCCESSFUL);
     }
 

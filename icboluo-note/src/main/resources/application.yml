@@ -23,7 +23,8 @@ mybatis:
   configuration:
     #    自动小驼峰映射
     map-underscore-to-camel-case: true
-  mapper-locations: mybatis/*Mapper.xml
+  #    为什么这里指定 mybatis/*Mapper.xml不行（文件夹也改了
+  mapper-locations: mapper/*Mapper.xml
 logging:
   level:
     #    level 后面直接跟日志级别会启动报错
