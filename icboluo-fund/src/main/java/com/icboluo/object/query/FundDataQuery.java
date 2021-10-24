@@ -1,5 +1,6 @@
 package com.icboluo.object.query;
 
+
 import com.icboluo.common.PageQuery;
 import lombok.Data;
 
