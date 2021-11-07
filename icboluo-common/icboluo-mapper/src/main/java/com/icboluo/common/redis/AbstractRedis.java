@@ -121,25 +121,40 @@ public abstract class AbstractRedis<T> {
     /**
      * Cache Aside Pattern（旁路缓存模式）
      *
-     * @param cacheOperation 缓存操作
-     * @param dbOperation    数据库操作
-     * @param cacheCallBack  回调函数
-     * @param <G>            返回值类型
+     * @param cacheRead  缓存操作
+     * @param dbRead     数据库操作
+     * @param cacheWrite 回调函数
+     * @param <G>        返回值类型
      * @return 要查询数据
      */
-    public <G> G rCap(Supplier<G> cacheOperation, Supplier<G> dbOperation, Consumer<G> cacheCallBack) {
-        G g = null;
+    public <G> G rCap(Supplier<G> cacheRead, Supplier<G> dbRead, Consumer<G> cacheWrite) {
+        return rCap(null, cacheRead, dbRead, cacheWrite);
+    }
+
+    public <G> G rCapOnce(String key, Supplier<G> cacheRead, Supplier<G> dbRead, Consumer<G> cacheWrite) {
+        return rCap(key, cacheRead, dbRead, cacheWrite);
+    }
+
+    private <G> G rCap(String key, Supplier<G> cacheRead, Supplier<G> dbRead, Consumer<G> cacheWrite) {
+        G val = null;
         try {
-            g = cacheOperation.get();
+            val = cacheRead.get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (ObjectUtils.isEmpty(g)) {
+        if (ObjectUtils.isEmpty(val)) {
 //            如果找不到，先从db中读出来写到缓存中
-            g = dbOperation.get();
-            cacheCallBack.accept(g);
+            val = dbRead.get();
+            if (key == null) {
+                cacheWrite.accept(val);
+            } else {
+                synchronized (AbstractRedis.class) {
+                    del(key);
+                    cacheWrite.accept(val);
+                }
+            }
         }
-        return g;
+        return val;
     }
 
     /**
