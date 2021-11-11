@@ -218,4 +218,11 @@ public class BeanHelper {
     public static <S, Q extends PageQuery> PageInfo<S> fakePage(List<S> list, Q query) {
         return fakePage(list, a -> a, query);
     }
+
+    public static <S> PageInfo<S> fakePage(Collection<S> coll) {
+        if (coll instanceof List<S> list) {
+            return PageInfo.of(list);
+        }
+        return PageInfo.of(new ArrayList<>(coll));
+    }
 }

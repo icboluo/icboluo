@@ -54,6 +54,12 @@ public class R implements Serializable {
         return new CollResponse<>(list, ReEnum.OPERATION_SUCCESSFUL);
     }
 
+    /**
+     * 这个分页有问题
+     *
+     * @param lists 多个list元素
+     * @return 响应
+     */
     public static Response correct(List... lists) {
         return new CollResponse<>(Arrays.asList(lists), ReEnum.OPERATION_SUCCESSFUL);
     }
@@ -73,7 +79,7 @@ public class R implements Serializable {
         return new SingleResponse<>(jsonObject, reEnum);
     }
 
-    public static <T, D> Response correct(String keyName,T t, PageInfo<D> pageInfo) {
+    public static <T, D> Response correct(String keyName, T t, PageInfo<D> pageInfo) {
         String str = JSON.toJSONString(pageInfo);
         JSONObject pij = JSON.parseObject(str);
         Map<String, Object> map = new HashMap<>(Map.copyOf(pij));

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 
 /**
  * @author icboluo
@@ -63,14 +62,5 @@ public class UserController {
         } else {
             return R.error();
         }
-    }
-
-    @GetMapping("/ddd")
-    public Response dddd() {
-        ArrayList<Integer> integers = new ArrayList<>();
-        integers.add(1);
-        integers.add(2);
-        integers.add(1);
-        return R.correct(integers, integers, integers, integers).page();
     }
 }
