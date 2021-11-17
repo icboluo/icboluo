@@ -1,6 +1,6 @@
 package com.icboluo.mq.work;
 
-import com.icboluo.common.MqConstant;
+import com.icboluo.constant.MqConstant;
 import com.icboluo.util.ConnectionUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

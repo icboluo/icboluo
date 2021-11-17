@@ -1,8 +1,8 @@
 package com.icboluo.interceptor;
 
 import com.icboluo.annotation.WebContextAnno;
-import com.icboluo.common.constant.HttpConstant;
-import com.icboluo.common.enumeration.WebContextEnum;
+import com.icboluo.constant.HttpConstant;
+import com.icboluo.enumerate.ServiceNameEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -35,7 +35,7 @@ public class WebContextInterceptor implements HandlerInterceptor {
         }
         WebContextAnno webContextAnno = handlerMethod.getBeanType().getAnnotation(WebContextAnno.class);
         boolean present = Optional.ofNullable(webContextAnno)
-                .filter(wca -> WebContextEnum.WEB.equals(wca.service()))
+                .filter(wca -> ServiceNameEnum.WEB.equals(wca.service()))
                 .isPresent();
         if (present) {
             String userCode = request.getHeader(HttpConstant.USER_CODE);

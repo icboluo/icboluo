@@ -4,8 +4,8 @@ import com.icboluo.annotation.RecordTime;
 import com.icboluo.annotation.RequestBodyParam;
 import com.icboluo.annotation.UserCode;
 import com.icboluo.annotation.WebContextAnno;
-import com.icboluo.common.ResponseResult;
-import com.icboluo.common.enumeration.WebContextEnum;
+import com.icboluo.annotation.ResponseResult;
+import com.icboluo.enumerate.ServiceNameEnum;
 import com.icboluo.dataobject.OrderCO;
 import com.icboluo.interceptor.UserContext;
 import com.icboluo.util.StaticTestUtil;
@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 public class WebInterceptorController {
 
     @GetMapping("/getUserCode")
-    @WebContextAnno(service = WebContextEnum.WEB)
+    @WebContextAnno(service = ServiceNameEnum.WEB)
     @RecordTime
     public String getUserCode() {
         return UserContext.userCode();

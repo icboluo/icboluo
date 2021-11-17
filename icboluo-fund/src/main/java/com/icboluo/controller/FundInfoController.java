@@ -1,6 +1,6 @@
 package com.icboluo.controller;
 
-import com.icboluo.common.ResponseResult;
+import com.icboluo.annotation.ResponseResult;
 import com.icboluo.object.vo.FundInfoVO;
 import com.icboluo.service.FundInfoService;
 import org.springframework.web.bind.annotation.CrossOrigin;

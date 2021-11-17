@@ -1,6 +1,7 @@
 package com.icboluo.common;
 
 
+import com.icboluo.annotation.ResponseResult;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;

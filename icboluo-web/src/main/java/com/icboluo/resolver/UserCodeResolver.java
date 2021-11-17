@@ -1,6 +1,6 @@
 package com.icboluo.resolver;
 
-import com.icboluo.common.constant.HttpConstant;
+import com.icboluo.constant.HttpConstant;
 import com.icboluo.annotation.UserCode;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

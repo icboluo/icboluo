@@ -1,6 +1,6 @@
 package com.icboluo.annotation;
 
-import com.icboluo.common.enumeration.WebContextEnum;
+import com.icboluo.enumerate.ServiceNameEnum;
 
 import java.lang.annotation.*;
 
@@ -11,5 +11,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface WebContextAnno {
-    WebContextEnum service();
+    ServiceNameEnum service();
 }

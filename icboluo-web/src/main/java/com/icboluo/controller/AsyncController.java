@@ -1,6 +1,6 @@
 package com.icboluo.controller;
 
-import com.icboluo.common.ResponseResult;
+import com.icboluo.annotation.ResponseResult;
 import com.icboluo.service.AsyncService;
 import com.icboluo.util.IcBoLuoException;
 import lombok.extern.slf4j.Slf4j;

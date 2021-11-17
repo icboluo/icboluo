@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
-import com.icboluo.common.ResponseResult;
+import com.icboluo.annotation.ResponseResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

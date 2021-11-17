@@ -1,9 +1,9 @@
-package com.icboluo.common.enumeration;
+package com.icboluo.enumerate;
 
 /**
  * @author icboluo
  */
-public enum WebContextEnum {
+public enum ServiceNameEnum {
     /**
      * user 服务
      */

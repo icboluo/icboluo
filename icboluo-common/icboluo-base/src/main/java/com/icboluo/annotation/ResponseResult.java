@@ -1,4 +1,4 @@
-package com.icboluo.common;
+package com.icboluo.annotation;
 
 import java.lang.annotation.*;
 

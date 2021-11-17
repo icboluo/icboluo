@@ -1,6 +1,6 @@
 package com.icboluo.controller;
 
-import com.icboluo.common.ResponseResult;
+import com.icboluo.annotation.ResponseResult;
 import com.icboluo.common.redis.RedisString;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;

@@ -1,4 +1,4 @@
-package com.icboluo.common;
+package com.icboluo.constant;
 
 import java.text.MessageFormat;
 import java.util.function.Function;
