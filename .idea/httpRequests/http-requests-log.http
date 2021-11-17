@@ -1,3 +1,21 @@
+GET http://localhost:7788/webInterceptor/localDateTime
+
+<> 2021-11-17T232750.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/localDateTime
+
+<> 2021-11-17T232643.200.json
+
+###
+
+GET http://localhost:7788/async/simple
+
+<> 2021-11-17T231323.200.json
+
+###
+
 GET http://localhost:1514/unit/getAll
 
 <> 2021-10-25T000945.500.json
@@ -267,24 +285,6 @@ GET http://localhost:8888/fundData/cal?fundId=164402
 GET http://localhost:8888/fundData/cal?fundId=164402
 
 <> 2021-07-08T221554.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T220644.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T220529.200.json
-
-###
-
-GET http://localhost:8888/fundData/init
-
-<> 2021-07-08T215911.200.json
 
 ###
 

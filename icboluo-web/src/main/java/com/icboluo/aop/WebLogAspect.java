@@ -55,7 +55,7 @@ public class WebLogAspect {
     /**
      * 也可以精确到包级别
      */
-    @Pointcut("execution(public * com.icboluo.controller..*.*(..))")
+    @Pointcut("execution(public * com.icboluo.controller..*(..))")
     public void webLog3() {
     }
 
@@ -90,7 +90,7 @@ public class WebLogAspect {
 
             //打印日志参数
             log.info(PLATFORM_NAME + "-->request请求参数PARAM : " + paramSbf);
-        }//END if        
+        }//END if
         // 记录下请求内容
         log.info(PLATFORM_NAME + "-->request请求URL : " + request.getRequestURL().toString());
         log.info(PLATFORM_NAME + "-->request请求方法HTTP_METHOD : " + request.getMethod());
