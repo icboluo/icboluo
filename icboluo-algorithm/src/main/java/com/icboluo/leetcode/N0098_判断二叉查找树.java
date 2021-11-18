@@ -49,4 +49,26 @@ public class N0098_判断二叉查找树 {
         }
         return true;
     }
+
+    public boolean isValidBST3(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        int max = 0;
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            if (cur.left != null) {
+                stack.push(cur.left);
+            } else if (!stack.isEmpty()) {
+                TreeNode pop = stack.pop();
+                if (pop.val < max) {
+                    return false;
+                }
+//                如果栈是空
+            } else {
+                max = cur.val;
+                cur = cur.right;
+            }
+        }
+        return true;
+    }
 }

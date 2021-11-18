@@ -1,12 +1,13 @@
-package com.icboluo.leetcode.animation.zero;
+package com.icboluo.leetcode;
 
 import com.icboluo.common.ListNode;
 
 /**
  * @author icboluo
- * @date 2020-09-27 20:22
+ * @date 2021-11-18 22:56
  */
-public class _0002_两数相加 {
+public class N0002_链表2数和 {
+
     public static void main(String[] args) {
         ListNode listNode01 = new ListNode(2, 4, 3);
         ListNode listNode02 = new ListNode(5, 6, 4);
@@ -39,6 +40,26 @@ public class _0002_两数相加 {
             cur.next = new ListNode(i);
         }
         return head.next;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int w = 0;
+        ListNode root = new ListNode();
+        ListNode cur = root;
+        while (l1 != null || l2 != null) {
+            int l1Val = l1 == null ? 0 : l1.val;
+            int l2Val = l2 == null ? 0 : l2.val;
+            int total = l1Val + l2Val + w;
+            cur.next = new ListNode(total % 10);
+            w = total / 10;
+            cur = cur.next;
+            l1 = l1 == null ? null : l1.next;
+            l2 = l2 == null ? null : l2.next;
+        }
+        if (w != 0) {
+            cur.next = new ListNode(w);
+        }
+        return root.next;
     }
 
 }
