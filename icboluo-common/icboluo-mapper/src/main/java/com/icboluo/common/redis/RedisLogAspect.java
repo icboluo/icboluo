@@ -25,7 +25,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RedisLogAspect {
 
-    @Pointcut("execution(public * com.icboluo.common.redis.*.*(..))&&!execution(public * com.icboluo.common.redis.RedisConfig.*(..))")
+    @Pointcut("execution(public * com.icboluo.common.redis.*.*(..))&&!execution(public * com.icboluo.common.redis.RedisConfig.*(..))" +
+            "&&!execution(public * com.icboluo.common.redis.AbstractRedis.rCap(..))&&!execution(public * com.icboluo.common.redis.AbstractRedis.rCapOnce(..))")
     public void redisLog() {
         // Only one redis operation pointcut
     }
