@@ -9,10 +9,10 @@ import java.util.EnumSet;
  * @author icboluo
  * @date 2021-06-19 21:06
  */
-public class ColorPieceService implements EnumServiceInterface {
+public class ColorPieceService implements EnumServiceInterface<ColorPieceService.ColorEnum> {
 
     @Override
-    public EnumSet allSet() {
+    public EnumSet<ColorEnum> allSet() {
         return EnumSet.allOf(ColorEnum.class);
     }
 
