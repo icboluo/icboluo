@@ -13,6 +13,7 @@
     <artifactId>icboluo-mapper</artifactId>
 
     <properties>
+        <java.version>${java.version}</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>

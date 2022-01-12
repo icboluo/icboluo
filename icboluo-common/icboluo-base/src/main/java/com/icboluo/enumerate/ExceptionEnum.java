@@ -52,6 +52,12 @@ public enum ExceptionEnum {
     STATUS_VALUE_ERROR(560, "状态值异常"),
     STATUS_VALUE_NOT_FOUND(561, "状态值不存在"),
     SYSTEM_NOT_SUPPORT_EXCEPTION(601, "系统不支持异常"),
+
+    CUR_DATA_NOT_PERMISSION_THIS_OPERATION(500, "当前数据不允许次操作"),
+    NO_PERMISSION(500, "没有权限"),
+    NO_DATA(500, "没有数据"),
+    ERROR(500, "预料之外的异常"),
+    PARAM_ERROR(500, "参数不合法"),
     ;
     private final int status;
 
