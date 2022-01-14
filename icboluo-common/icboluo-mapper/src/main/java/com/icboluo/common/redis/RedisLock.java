@@ -1,5 +1,7 @@
 package com.icboluo.common.redis;
 
+import com.icboluo.function.Procedure;
+import lombok.SneakyThrows;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,7 @@ import java.util.Objects;
 @Component
 public class RedisLock extends AbstractRedis<Object> {
 
-    private static final String LOCK_PREFIX = null;
-
     private long lockExpire;
-
 
     /**
      * 常用的分布式锁加强版
@@ -25,8 +24,7 @@ public class RedisLock extends AbstractRedis<Object> {
      * @return 是否获取到
      */
     public boolean lock(String key) {
-        String lock = LOCK_PREFIX + key;
-        byte[] lockBytes = lock.getBytes(StandardCharsets.UTF_8);
+        byte[] lockBytes = key.getBytes(StandardCharsets.UTF_8);
         Boolean execute = redisTemplate.execute((RedisCallback<Boolean>) redisConn -> {
             long expireAt = System.currentTimeMillis() + lockExpire + 1;
             Boolean acquire = redisConn.setNX(lockBytes, String.valueOf(expireAt).getBytes());
@@ -46,5 +44,20 @@ public class RedisLock extends AbstractRedis<Object> {
             return false;
         });
         return Objects.equals(execute, Boolean.TRUE);
+    }
+
+    @SneakyThrows
+    public void queueHand(String key, int time, Procedure procedure) {
+        for (int i = 0; i < time; i++) {
+            if (!lock(key)) {
+                Thread.sleep(1000L);
+                continue;
+            }
+            try {
+                procedure.run();
+            }finally {
+                del(key);
+            }
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.icboluo.function;
 
 /**
+ * 程序
+ *
  * @author icboluo
  */
 @FunctionalInterface
