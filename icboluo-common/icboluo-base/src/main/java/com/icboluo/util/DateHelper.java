@@ -7,33 +7,42 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
-import java.util.List;
 
 /**
+ * ### 前端传输数据到后端
+ * <p>
+ * DateTimeFormat(pattern = "yyyy-MM-dd")
+ * <p>
+ * ### 后端传输数据到前端
+ * <p>
+ * JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+ * <p>
+ * 当设置全局 date format的时候，这个注解对于单个的对象属性并没有什么
+ * 作用，用下面的注解可以解决
+ * <p>
+ * JSONField(format ="yyyy-mm-dd HH:mm:ss")
+ *
  * @author icboluo
  */
 @Data
 @Slf4j
 public class DateHelper {
-
-    public static final ThreadLocal<List<LocalDateTime>> USER_CONTEXT = new ThreadLocal<>();
-
     /**
      * 经过一年的时间戳增加值
      */
-    private final Long year = 365 * 24 * 60 * 60 * 1000L;
+    private static final Long YEAR = 365 * 24 * 60 * 60 * 1000L;
     /**
      * 经过一月的时间戳增加值
      */
-    private final Long month = 30 * 24 * 60 * 60 * 1000L;
+    private static final Long MONTH = 30 * 24 * 60 * 60 * 1000L;
     /**
      * 经过一周的时间戳增加值
      */
-    private final Long week = 7 * 24 * 60 * 60 * 1000L;
+    private static final Long WEEK = 7 * 24 * 60 * 60 * 1000L;
     /**
      * 经过一天的时间戳增加值
      */
-    private final Long day = 24 * 60 * 60 * 1000L;
+    private static final Long DAY = 24 * 60 * 60 * 1000L;
 
     public static void main(String[] args) {
 //        1991-10-12

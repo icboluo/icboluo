@@ -1,4 +1,4 @@
-package com.icboluo.convertor;
+package com.icboluo.util.convertor;
 
 import com.icboluo.common.Constant;
 import com.icboluo.common.Convertor;

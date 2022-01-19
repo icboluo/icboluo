@@ -1,6 +1,5 @@
-package com.icboluo.validate;
+package com.icboluo.util.validate;
 
-import com.icboluo.common.Validator;
 import com.icboluo.object.clientobject.TimeNoteCO;
 import com.icboluo.util.IcBoLuoException;
 import org.springframework.stereotype.Component;
@@ -10,7 +9,7 @@ import org.springframework.util.StringUtils;
  * @author icboluo
  */
 @Component
-public class TimeNoteValidate implements Validator {
+public class TimeNoteValidate {
 
     public void validate(TimeNoteCO obj) {
         boolean isEmptyData = StringUtils.hasText(obj.getBelongToScope())

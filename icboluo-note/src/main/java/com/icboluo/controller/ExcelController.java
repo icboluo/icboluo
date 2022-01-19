@@ -92,15 +92,18 @@ public class ExcelController {
             return;
         }
         validateSuffix(mf);
-        InputStream is = mf.getInputStream();
-        ExcelReader er = EasyExcel.read(is).build();
-        RowDataListener listener = new RowDataListener();
-        ReadSheet rs = EasyExcel.readSheet(0).head(RowCO.class).headRowNumber(0).registerReadListener(listener).build();
-        er.read(rs);
-        List<RowCO> list = listener.list;
-        String[][] arr = validateContext(list);
-        removeErrData(list, arr);
-        list.forEach(System.out::println);
+        try (InputStream is = mf.getInputStream();) {
+            ExcelReader er = EasyExcel.read(is).build();
+            RowDataListener listener = new RowDataListener();
+            ReadSheet rs = EasyExcel.readSheet(0).head(RowCO.class).headRowNumber(0).registerReadListener(listener).build();
+            er.read(rs);
+            List<RowCO> list = listener.list;
+            String[][] arr = validateContext(list);
+            removeErrData(list, arr);
+            list.forEach(System.out::println);
+        } catch (Exception e) {
+
+        }
     }
 
     private void removeErrData(List<RowCO> list, String[][] arr) {

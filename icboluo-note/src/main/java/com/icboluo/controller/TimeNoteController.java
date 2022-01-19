@@ -13,7 +13,7 @@ import com.icboluo.service.NoteService;
 import com.icboluo.util.BeanHelper;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
-import com.icboluo.validate.TimeNoteValidate;
+import com.icboluo.util.validate.TimeNoteValidate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
