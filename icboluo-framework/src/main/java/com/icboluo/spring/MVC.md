@@ -30,5 +30,9 @@ Propertysource 指定外部属性文件
 
 @Value 属性注入,声明在属性（变量）上
 
+## PostHandler
+
+post handler 在controller报异常的时候不会执行，需要用after handler
+
 
 

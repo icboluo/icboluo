@@ -24,7 +24,7 @@ validate 异常全局处理
 
 excel导入注解校验
 
-布隆过滤器
+redis 布隆过滤器
 
 jdk自带的线程池使用
 

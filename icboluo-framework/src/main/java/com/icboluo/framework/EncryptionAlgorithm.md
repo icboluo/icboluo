@@ -9,3 +9,10 @@
 # 数字签名
 
 # 公钥证书
+
+## 鉴权可以分为
+
+> session/cookie
+> token
+> oauth
+> base64

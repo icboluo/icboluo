@@ -63,7 +63,13 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 
 - 对公共sql的更改需要在mapper接口上增加注释，更改公共sql的时候，需要merge，不准直接copy覆盖
 
+- 修改数据库字段的时候，需要修改整个xml，需要注意，不要漏掉sql
+- 使用该字段的时候，需要判断是否为null，防止npe的情况发生 
+
 ## 索引
+
+* not in 没有使用索引
+* not exist 使用到了索引
 
 必定出现的left join 中需要加上索引，不一定出现的不需要加，where条件同理
 
@@ -132,3 +138,21 @@ select name ,sum(money) from test group by name with rollup
 select coalesce(name，总金额;) ,sum (money) from test group by name with rollup 
 
 这样写更合适
+
+## mysql
+
+mysql left join 语句需要增加索引提高执行效率
+
+left join 右表的条件列上要加上索引
+
+插入数据库的数据，不需要完整的展示出来
+
+where条件中多过滤一些行，使驱动表小一点
+
+数据库设计的三大范式
+
+1.原子性
+
+2.自己做自己的事情
+
+3.不要搞别人的东西；物体加一个id就行，再加name不是搞事情，再加一连串数据，太难维护了

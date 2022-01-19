@@ -4,7 +4,7 @@ package com.icboluo.framework.类加载顺序;
  * @author icboluo
  * @date 2021-55-21 21:55
  */
-public class B extends  A{
+public class Son extends Father {
 
     private static int numB;
     private int numB2;
@@ -19,7 +19,7 @@ public class B extends  A{
         System.out.println("B的非静态代码块");
     }
 
-    public B() {
+    public Son() {
         System.out.println("B的构造器");
     }
 }

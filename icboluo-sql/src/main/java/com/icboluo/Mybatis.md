@@ -73,9 +73,18 @@ mybaits if标签中 "test=date !=null and date !=''",不能这样写，不等于
 
 Integer collection 均不能这样写
 
+mybatis 更改公共内容比如insert的时候需要增加注释，这些公共内容替换的时候要merge，不能直接替换，
+insert增加了注释，才能知道返回了id
 
+# mybatis plus
 
+mybatis plus 实体类名不能更改，是一个坑
+
+insert的时候默认不会携带主键，在Entity中配置为 Input即可
+
+# mybatis xml
 mybatis-config.xml：全局配置文件（核心配置文件）作用：配置数据源（配置数据库连接信息）
+```xml
 <configuration>
 加载外部资源文件： resource:默认引入classpath路径下的资源文件
 <properties resource="jdbc.properties"></properties>
@@ -110,10 +119,11 @@ mybatis-config.xml：全局配置文件（核心配置文件）作用：配置�
         <package name="com.task.mybatis.day02.dao"></package>
     </mappers>
 </configuration>
+```
 
-
-映射文件：xxxMapper.xml，作用：配置sql语句、参数、结果集封装类型等
+映射文件：xxxMapper.xml，作用：配置sql语句、参数、结果集封装类型等\
 mapper标签:配置各类声明，namespace防止crud语句的唯一标识被重复，需要设置空间名称
+```xml
 <mapper namespace="UserDaoMapper">
 <select id="queryUserById" resultType="com.task.mybatis.pojo.User">全局缩短名字后可直接用User，也可以引用自定义的resultmap id
 select * ,user_name as userName from tb_user where id=#{id};sql可以分开写
@@ -152,6 +162,8 @@ select * ,user_name as userName from tb_user where id=#{id};sql可以分开写
         User user = sqlSession.selectOne("UserMapper.queryUserById", 1L);
         可优化为：userDao2Mapper = sqlSession.getMapper(UserDao2Mapper.class);会通过动态代理生成一个代理的实现类
        要求namespace和param一致
+```
+
 
 
 

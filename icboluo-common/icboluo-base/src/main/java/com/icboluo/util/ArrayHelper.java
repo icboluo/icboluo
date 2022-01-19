@@ -1,11 +1,14 @@
 package com.icboluo.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.springframework.util.ObjectUtils;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 操作数组的工具类
@@ -13,6 +16,7 @@ import java.util.stream.Collectors;
  *
  * @author icboluo
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArrayHelper {
     /**
      * 打印二维数组
@@ -214,7 +218,15 @@ public class ArrayHelper {
                         }
                     }
                     return aInx - bInx;
-                })
-                .collect(Collectors.toList());
+                }).toList();
+    }
+
+    public static <T> boolean allEleIsEmpty(T[] row) {
+        for (T t : row) {
+            if (!ObjectUtils.isEmpty(t)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

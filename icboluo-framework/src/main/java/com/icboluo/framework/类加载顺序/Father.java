@@ -4,7 +4,7 @@ package com.icboluo.framework.类加载顺序;
  * @author icboluo
  * @date 2021-55-21 21:55
  */
-public class A {
+public class Father {
     private static int numA;
     private int numA2;
 
@@ -18,7 +18,7 @@ public class A {
         System.out.println("A的非静态代码块");
     }
 
-    public A() {
+    public Father() {
         System.out.println("A的构造器");
     }
 }

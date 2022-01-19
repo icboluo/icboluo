@@ -28,10 +28,10 @@ public class Demo {
 //        静态内容随着类加载只执行一次，所以只要加载过后，只执行实例化
 //        执行b的构造方法之前应该先调用静态内容
 //        调用b的静态内容之前调用a的静态内容
-        A ab = new B();
+        Father ab = new Son();
         System.out.println("---");
 //        静态内容只执行一次
-        ab = new B();
+        ab = new Son();
     }
 
     /**
