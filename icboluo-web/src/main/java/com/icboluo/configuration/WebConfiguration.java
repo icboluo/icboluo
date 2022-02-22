@@ -3,6 +3,7 @@ package com.icboluo.configuration;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.icboluo.interceptor.AuthInterceptor;
 import com.icboluo.interceptor.WebContextInterceptor;
 import com.icboluo.resolver.RequestBodyParamResolver;
 import com.icboluo.resolver.UserCodeResolver;
@@ -32,6 +33,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(getUserContextInterceptor())
                 .addPathPatterns(includePathPatterns())
                 .excludePathPatterns(excludeList);
+        registry.addInterceptor(getAuthInterceptor());
     }
 
     @Override
@@ -43,11 +45,11 @@ public class WebConfiguration implements WebMvcConfigurer {
     /**
      * 3.
      *
-     * @param converters
+     * @param converters 转换器集合
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        //1.需要先定义一个 convert 转换消息的对象;
+        // 1.需要先定义一个 convert 转换消息的对象;
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
 
         //2、添加fastJson 的配置信息，比如：是否要格式化返回的json数据;
@@ -113,5 +115,10 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Bean
     public WebContextInterceptor getUserContextInterceptor() {
         return new WebContextInterceptor();
+    }
+
+    @Bean
+    public AuthInterceptor getAuthInterceptor() {
+        return new AuthInterceptor();
     }
 }

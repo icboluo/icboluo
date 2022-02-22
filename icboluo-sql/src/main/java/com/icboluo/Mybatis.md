@@ -76,6 +76,10 @@ Integer collection 均不能这样写
 mybatis 更改公共内容比如insert的时候需要增加注释，这些公共内容替换的时候要merge，不能直接替换，
 insert增加了注释，才能知道返回了id
 
+## 修改数据库
+
+修改数据库字段后，要同步修改xml中的base sql和映射关系，否则，查出来的数据为空
+
 # mybatis plus
 
 mybatis plus 实体类名不能更改，是一个坑

@@ -58,6 +58,8 @@ public enum ExceptionEnum {
     NO_DATA(500, "没有数据"),
     ERROR(500, "预料之外的异常"),
     PARAM_ERROR(500, "参数不合法"),
+
+    ROLE_ERROR(500, "角色错误"),
     ;
     private final int status;
 

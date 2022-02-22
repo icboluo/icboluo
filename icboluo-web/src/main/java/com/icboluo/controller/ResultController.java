@@ -1,5 +1,6 @@
 package com.icboluo.controller;
 
+import com.icboluo.annotation.AuthAnno;
 import com.icboluo.annotation.ResponseResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +37,11 @@ public class ResultController {
         map.put("e", "f");
         map.put("g", "h");
         return map;
+    }
+
+    @GetMapping("/auth")
+    @AuthAnno(role = "1")
+    public Integer auth() {
+        return 11;
     }
 }
