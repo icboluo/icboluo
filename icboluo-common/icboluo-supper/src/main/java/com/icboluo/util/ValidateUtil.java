@@ -33,8 +33,9 @@ public class ValidateUtil {
      * @param propertyName
      * @param <T>
      */
-    public <T> void validateProperty(T obj, String propertyName) {
+    public static <T> Set<ConstraintViolation<T>> validateProperty(T obj, String propertyName) {
         Set<ConstraintViolation<T>> constraintViolations = VALIDATOR.validateProperty(obj, propertyName, Default.class);
+        return constraintViolations;
     }
 
     /**
@@ -44,7 +45,7 @@ public class ValidateUtil {
      * @param get
      * @param <T>
      */
-    public <T> void validateProperty(T obj, SerialFunction<T, String>... get) {
+    public static <T> void validateProperty(T obj, SerialFunction<T, String>... get) {
         for (SerialFunction<T, String> serialFunction : get) {
             String columnName = SerializedLambda.getColumnName(serialFunction);
             Set<ConstraintViolation<T>> constraintViolations = VALIDATOR.validateProperty(obj, columnName, Default.class);

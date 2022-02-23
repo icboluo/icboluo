@@ -12,12 +12,14 @@ import com.icboluo.service.impl.ExcelService;
 import com.icboluo.util.ArrayHelper;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.IcBoLuoException;
+import com.icboluo.util.ValidateUtil;
 import com.icboluo.util.listenter.RowDataListener;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,11 +29,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author icboluo
@@ -124,9 +128,28 @@ public class ExcelController {
             for (Field field : fields) {
                 field.setAccessible(true);
                 String name = field.getName();
+                Set<ConstraintViolation<RowCO>> constraintViolations = ValidateUtil.validateProperty(row, name);
+                if (!CollectionUtils.isEmpty(constraintViolations)) {
+                    List<ConstraintViolation<RowCO>> collect = constraintViolations.stream()
+                            .sorted().toList();
+                    String msg = collect.get(0).getMessage();
+                } else {
+                    String msg = validateOther();
+                }
             }
         }
         return null;
+    }
+
+    private Comparator<ConstraintViolation<RowCO>> sort() {
+        Class[] claArr = {NotNull.class, NotEmpty.class};
+        Comparator<ConstraintViolation<RowCO>> comparator = (fir, sec) -> {
+
+        };
+        return comparator;
+    }
+
+    private String validateOther() {
     }
 
     private void validateSuffix(MultipartFile mf) {

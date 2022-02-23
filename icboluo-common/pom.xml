@@ -11,9 +11,6 @@
 
     <artifactId>icboluo-common</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>icboluo-mapper</module>
-    </modules>
 
     <properties>
         <java.version>${java.version}</java.version>
