@@ -14,6 +14,9 @@ public class N0106_后序中序构建二叉树 {
     int index;
 
     public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if (inorder == null || postorder == null || inorder.length != postorder.length) {
+            return null;
+        }
         inorderMap = new HashMap<>();
         index = postorder.length - 1;
         for (int i = 0; i < inorder.length; i++) {

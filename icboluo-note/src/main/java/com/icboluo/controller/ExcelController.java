@@ -35,7 +35,6 @@ import javax.validation.constraints.NotNull;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author icboluo
@@ -142,14 +141,15 @@ public class ExcelController {
     }
 
     private Comparator<ConstraintViolation<RowCO>> sort() {
-        Class[] claArr = {NotNull.class, NotEmpty.class};
+        Class<?>[] claArr = {NotNull.class, NotEmpty.class};
         Comparator<ConstraintViolation<RowCO>> comparator = (fir, sec) -> {
-
+            return -1;
         };
         return comparator;
     }
 
     private String validateOther() {
+        return "";
     }
 
     private void validateSuffix(MultipartFile mf) {
