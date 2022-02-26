@@ -229,4 +229,14 @@ public class ArrayHelper {
         }
         return true;
     }
+
+    public static void printTable(String str) {
+        System.out.print(" ");
+        for (int i = 0; i < str.toCharArray().length; i++) {
+            System.out.println(" " + str.charAt(i));
+        }
+        for (int i = 0; i < str.length(); i++) {
+            System.out.println(str.charAt(i));
+        }
+    }
 }

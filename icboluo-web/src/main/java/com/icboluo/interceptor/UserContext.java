@@ -58,7 +58,7 @@ public class UserContext {
         }
     }
 
-    static void set(String userCode) {
+    public static void set(String userCode) {
         AdminUser adminUser = new AdminUser(userCode);
         USER_CONTEXT.set(adminUser);
     }

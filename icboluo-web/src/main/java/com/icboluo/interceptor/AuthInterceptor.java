@@ -18,7 +18,6 @@ import java.util.Optional;
 @Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod handlerMethod)) {
@@ -28,11 +27,14 @@ public class AuthInterceptor implements HandlerInterceptor {
         String role = request.getHeader("role");
         Method method = handlerMethod.getMethod();
         AuthAnno auth = method.getAnnotation(AuthAnno.class);
-        boolean present = Optional.ofNullable(auth)
-                .filter(au -> au.role().equals(role))
-                .isPresent();
-        if (!present) {
-            throw new IcBoLuoException(ExceptionEnum.ROLE_ERROR);
+        if (auth != null) {
+//             TODO 可以简化
+            boolean present = Optional.of(auth)
+                    .filter(au -> au.role().equals(role))
+                    .isPresent();
+            if (!present) {
+                throw new IcBoLuoException(ExceptionEnum.ROLE_ERROR);
+            }
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

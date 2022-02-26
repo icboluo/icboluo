@@ -28,6 +28,7 @@ public class N0104_二叉树最大深度 {
         }
         int left = maxDepth1(root.left);
         int right = maxDepth1(root.right);
+//         当三元左右均一样的时候，这里的比较大小可以使用Math.max来代替
         return left > right ? left + 1 : right + 1;
     }
 
