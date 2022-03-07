@@ -60,7 +60,8 @@ public class N0098_判断二叉查找树 {
     }
 
     /**
-     * 错误解法：树的遍历必须有左和右
+     * 错误解法：少了一层遍历，叶子节点没有考虑到
+     * 禁止写法：while else break，这个break就是while的结束条件，这样写，代码难以理解
      *
      * @param root
      * @return
@@ -69,16 +70,17 @@ public class N0098_判断二叉查找树 {
         Stack<TreeNode> stack = new Stack<>();
         int max = Integer.MIN_VALUE;
         while (true) {
+//            root 的left为空，可是root不为空啊，为什么不加入栈进行判断
             if (root.left != null) {
                 stack.push(root.left);
                 root = root.left;
             } else if (!stack.isEmpty()) {
+//                这里是一个中序遍历
                 TreeNode pop = stack.pop();
                 if (pop.val < max) {
                     return false;
                 }
                 max = pop.val;
-//                右移：每次左了再右没有意义,放下面更不可能，只能移动一次
             } else {
                 break;
             }
@@ -122,6 +124,7 @@ public class N0098_判断二叉查找树 {
             if (--k == 0) {
                 return root;
             }
+//            这里少了一层判断非空
             root = root.right;
         }
         return null;
