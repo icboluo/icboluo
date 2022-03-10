@@ -17,7 +17,7 @@ public class MessageFormatDemo {
 
     public static void main(String[] args) {
         /*
-        message format 和 string。format是一样的。可以替换
+        Message format 和 String.format是一样的。可以替换
          */
         String format = MessageFormat.format("{0} is zero,{0} is zero, {2} is two", 0, 1, 2);
         System.out.println("format = " + format);
