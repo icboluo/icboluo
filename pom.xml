@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!--    clean的时候有时候会出现 Process terminated （加工终止-->
     <parent>
@@ -59,7 +58,7 @@
         <httpclient.version>4.5.13</httpclient.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <!--mapper -->
-        <mysql.version>8.0.22</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <druid.verison>1.2.5</druid.verison>
         <mybatis.spring.boot.verison>2.1.1</mybatis.spring.boot.verison>
         <mybatis.plus.verison>3.4.3.1</mybatis.plus.verison>
