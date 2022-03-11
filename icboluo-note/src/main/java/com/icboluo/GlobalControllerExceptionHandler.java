@@ -15,11 +15,12 @@ import java.util.Enumeration;
 import java.util.Objects;
 
 /**
+ * TODO 怎么做到所有的项目都用到这个全局异常处理呢
  * 拦截异常并统一处理
  *
  * @author icboluo
  */
-@RestControllerAdvice({"com.icboluo.note"})
+@RestControllerAdvice({"com.icboluo"})
 @Slf4j
 public class GlobalControllerExceptionHandler {
     /**
