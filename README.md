@@ -29,9 +29,9 @@ Here are some ideas to get you started:
 
 选择原因
 
-1.前段代码没写
+1.前段代码写的不好
 
-2.cloud扩展性高
+2.cloud扩展性高，分离项目比较简单
 
 ## 日志
 
@@ -127,16 +127,27 @@ consul是分布式服务发现和配置管理系统
 
 ## common
 
-包含一些 common和util
+#### common-base
 
-公共异常，返回值都在这里面定义
+> 公共异常，返回值都在这里面定义
 
-> 本意上是想提供公共功能的支持，对第三方包依赖达到较少，可是部分功能会依赖到第三方包
-> 所以现在的做法是引入了部分依赖
+> 基础的工具类，引用的依赖非常少，使用的时候引入比较方便
+
+#### common-mapper
+
+sql 工具类，包含redis、mysql、mybatis plus简单的工具
+
+#### common-supper
+
+不包含mapper的较复杂工具类，引入了部分外部包
 
 ## framework
 
-框架知识点
+框架知识点,也包含一些最佳实践
+
+## fund
+
+基金服务，包含基金列表展示功能
 
 ## gateway
 

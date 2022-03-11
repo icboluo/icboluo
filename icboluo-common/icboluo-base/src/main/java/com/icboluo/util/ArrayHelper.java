@@ -4,10 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -230,6 +227,11 @@ public class ArrayHelper {
         return true;
     }
 
+    /**
+     * 打印一个表格，类似于打印一个Excel单元格
+     *
+     * @param str 字符串
+     */
     public static void printTable(String str) {
         System.out.print(" ");
         for (int i = 0; i < str.toCharArray().length; i++) {
@@ -238,5 +240,23 @@ public class ArrayHelper {
         for (int i = 0; i < str.length(); i++) {
             System.out.println(str.charAt(i));
         }
+    }
+
+    public static <T> Set<T> toSet(T[] arr) {
+        if (arr == null) {
+            return null;
+        }
+        Set<T> ans = new HashSet<>();
+        Collections.addAll(ans, arr);
+        return ans;
+    }
+
+    public static <T> List<T> toList(T[] arr) {
+        if (arr == null) {
+            return null;
+        }
+        List<T> ans = new ArrayList<>();
+        Collections.addAll(ans, arr);
+        return ans;
     }
 }

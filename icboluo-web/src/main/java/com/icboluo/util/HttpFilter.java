@@ -1,5 +1,6 @@
 package com.icboluo.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -11,6 +12,7 @@ import java.io.IOException;
  * @date 2022-02-26 19:50
  */
 @Component
+@Slf4j
 @WebFilter("/*")
 public class HttpFilter implements Filter {
     @Override
@@ -20,7 +22,7 @@ public class HttpFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
+        log.debug("in filter");
     }
 
     @Override

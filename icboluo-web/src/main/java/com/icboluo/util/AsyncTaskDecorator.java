@@ -1,23 +1,26 @@
 package com.icboluo.util;
 
 import com.icboluo.interceptor.UserContext;
-import org.springframework.core.task.TaskExecutor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.task.TaskDecorator;
 
 /**
  * @author icboluo
  * @date 2022-02-26 19:43
  */
-public class AsyncTaskDecorator implements TaskExecutor {
-
+@Slf4j
+public class AsyncTaskDecorator implements TaskDecorator {
     @Override
-    public void execute(Runnable task) {
+    public Runnable decorate(Runnable runnable) {
         try {
             UserContext.set("");
-//            runnable.run();
+            runnable.run();
         } catch (Exception e) {
-
+            log.error("async task decorator run fail,msg is", e);
         } finally {
             UserContext.remove();
         }
+        return runnable;
     }
+
 }

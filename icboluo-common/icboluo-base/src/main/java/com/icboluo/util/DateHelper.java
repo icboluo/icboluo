@@ -26,6 +26,7 @@ import java.util.Date;
  */
 @Data
 @Slf4j
+@SuppressWarnings("unused")
 public class DateHelper {
     /**
      * 经过一年的时间戳增加值
@@ -79,6 +80,8 @@ public class DateHelper {
 
 
     /**
+     * 获取当前的标准日期
+     *
      * @return 2020-04-03 13:24:29
      */
     public static String getCurrentDateFormat() {
@@ -86,6 +89,8 @@ public class DateHelper {
     }
 
     /**
+     * 获取当前的日期
+     *
      * @param pattern forExample:    yyyy-MM-dd HH:mm:ss
      * @return 2020-04-03 13:24:29
      */
@@ -94,6 +99,8 @@ public class DateHelper {
     }
 
     /**
+     * 日期格式化为标准字符串
+     *
      * @param dateTime 2020-10-21T21:15:33.464696200
      * @return 2020-04-03 13:08:41
      */
@@ -102,6 +109,8 @@ public class DateHelper {
     }
 
     /**
+     * 日期格式化成字符串
+     *
      * @param dateTime 2020-10-21T21:15:33.464696200
      * @param pattern  yyyy-MM-dd HH:mm:ss
      * @return 2020-04-03 13:08:41

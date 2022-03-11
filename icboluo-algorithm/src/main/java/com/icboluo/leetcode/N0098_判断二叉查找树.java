@@ -124,9 +124,9 @@ public class N0098_判断二叉查找树 {
             if (--k == 0) {
                 return root;
             }
-//            这里少了一层判断非空
             root = root.right;
         }
+//            这里少了一层判断非空
         return null;
     }
 

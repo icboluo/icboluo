@@ -23,12 +23,14 @@ import java.util.Objects;
 @Slf4j
 public class GlobalControllerExceptionHandler {
     /**
+     * TODO 难道真的有什么异常会绕过runtime直接到except吗
+     * <p>
      * 默认的异常处理方法，如果 e 有注解 @ResponseStatus 注解，则继续抛出，让框架处理
      *
      * @param request 请求信息
-     * @param e 异常信息
+     * @param e       异常信息
      * @return 失败的响应信息
-     * @throws Exception {@code e}
+     * @throws Exception {@code e} 最大异常
      */
     @ExceptionHandler(value = Exception.class)
     public Response defaultExceptionHandler(HttpServletRequest request, Exception e) throws Exception {
@@ -45,13 +47,13 @@ public class GlobalControllerExceptionHandler {
      * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
      *
      * @param request 请求信息
-     * @param e 异常信息
+     * @param e       异常信息
      * @return 失败的响应信息
      */
     @ExceptionHandler(value = {IcBoLuoException.class})
     public Response noteExceptionHandler(HttpServletRequest request, Exception e) {
         printLog(request, e);
-        return R.error(500,e);
+        return R.error(500, e);
     }
 
 
