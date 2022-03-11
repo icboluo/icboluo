@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!--    clean的时候有时候会出现 Process terminated （加工终止-->
     <parent>
@@ -60,8 +61,7 @@
         <!--mapper -->
         <mysql.version>8.0.28</mysql.version>
         <druid.verison>1.2.5</druid.verison>
-        <mybatis.spring.boot.verison>2.1.1</mybatis.spring.boot.verison>
-        <mybatis.plus.verison>3.4.3.1</mybatis.plus.verison>
+        <mybatis.plus.verison>3.5.1</mybatis.plus.verison>
         <pagehelper.version>1.3.0</pagehelper.version>
         <!--alibaba -->
         <alibaba.fastjson.verison>1.2.75</alibaba.fastjson.verison>
@@ -75,10 +75,11 @@
         <hutool.all.version>5.6.6</hutool.all.version>
         <common.io.version>2.8.0</common.io.version>
         <!--cloud-->
-        <cloud.dependencies.version>2020.0.4</cloud.dependencies.version>
+        <cloud.dependencies.version>2021.0.1</cloud.dependencies.version>
 
         <swagger.verison>3.0.0</swagger.verison>
         <jakarta.activation.version>2.0.0</jakarta.activation.version>
+        <guava.version>31.0.1-jre</guava.version>
     </properties>
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->
@@ -112,16 +113,21 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.verison}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${alibaba.dependencies.verison}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.verison}</version>
             </dependency>
             <!--            引这个依赖才可以选择多个mysql driver class name-->
             <dependency>
@@ -130,14 +136,14 @@
                 <version>${mysql.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${swagger.verison}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.verison}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -208,14 +214,15 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis.plus.verison}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.rabbitmq</groupId>
                 <artifactId>amqp-client</artifactId>
                 <version>5.9.0</version>
+            </dependency>
+            <!--        仅仅只有kvvmap用到了-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
