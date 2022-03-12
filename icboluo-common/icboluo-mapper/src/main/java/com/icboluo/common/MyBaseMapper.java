@@ -74,7 +74,7 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
 
     int updateByPrimaryKey(T record);
 
-    default int count() {
+    default long count() {
         return count(Wrappers.emptyWrapper());
     }
 
@@ -83,7 +83,7 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    private int count(Wrapper<T> queryWrapper) {
+    private long count(Wrapper<T> queryWrapper) {
         return SqlHelper.retCount(this.selectCount(queryWrapper));
     }
 }
