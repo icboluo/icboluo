@@ -7,7 +7,7 @@ import com.icboluo.annotation.WebContextAnno;
 import com.icboluo.annotation.ResponseResult;
 import com.icboluo.enumerate.ServiceNameEnum;
 import com.icboluo.dataobject.OrderCO;
-import com.icboluo.interceptor.UserContext;
+import com.icboluo.filterinterceptor.UserContext;
 import com.icboluo.util.StaticTestUtil;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;

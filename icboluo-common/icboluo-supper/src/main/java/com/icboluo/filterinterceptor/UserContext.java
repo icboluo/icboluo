@@ -1,6 +1,6 @@
-package com.icboluo.interceptor;
+package com.icboluo.filterinterceptor;
 
-import com.icboluo.controller.ResultController;
+import com.icboluo.controller.Demo;
 import com.icboluo.util.IcBoLuoException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,10 +32,10 @@ public class UserContext {
     /**
      * 成员方法给静态变量赋值
      *
-     * @param resultController 这个参数只是模拟DI而已，找一个spring容器中的赋值给静态变量即可
+     * @param demo 这个参数只是模拟DI而已，找一个spring容器中的赋值给静态变量即可
      */
     @Resource
-    private void setRole(ResultController resultController) {
+    private void setRole(Demo demo) {
         role = "member di set value for static field, first execution";
         log.warn(role);
     }

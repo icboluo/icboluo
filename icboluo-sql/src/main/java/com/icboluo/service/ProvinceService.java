@@ -2,6 +2,8 @@ package com.icboluo.service;
 
 import com.icboluo.entity.Province;
 
+import java.util.List;
+
 /**
  * (Province)表服务接口
  *
@@ -18,4 +20,5 @@ public interface ProvinceService {
      */
     Province queryById(Integer proId);
 
+    List<Province> selectAll();
 }

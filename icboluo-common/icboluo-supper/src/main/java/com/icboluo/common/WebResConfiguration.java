@@ -4,6 +4,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.icboluo.filterinterceptor.AuthInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -31,7 +32,8 @@ import java.util.List;
 public class WebResConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getUserContextInterceptor2());
+        registry.addInterceptor(getResResultInterceptor());
+        registry.addInterceptor(getAuthInterceptor());
     }
 
     /**
@@ -108,7 +110,12 @@ public class WebResConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public ResponseResultInterceptor getUserContextInterceptor2() {
+    public ResponseResultInterceptor getResResultInterceptor() {
         return new ResponseResultInterceptor();
+    }
+
+    @Bean
+    public AuthInterceptor getAuthInterceptor() {
+        return new AuthInterceptor();
     }
 }

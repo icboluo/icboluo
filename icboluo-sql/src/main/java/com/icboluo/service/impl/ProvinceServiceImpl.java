@@ -1,12 +1,13 @@
 package com.icboluo.service.impl;
 
+import com.icboluo.common.redis.RedisList;
 import com.icboluo.entity.Province;
 import com.icboluo.mapper.ProvinceMapper;
 import com.icboluo.service.ProvinceService;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Province)表服务实现类
@@ -18,6 +19,8 @@ import javax.annotation.Resource;
 public class ProvinceServiceImpl implements ProvinceService {
     @Resource
     private ProvinceMapper provinceMapper;
+    @Resource
+    private RedisList<Province> redisList;
 
     /**
      * 通过ID查询单条数据
@@ -27,6 +30,15 @@ public class ProvinceServiceImpl implements ProvinceService {
      */
     @Override
     public Province queryById(Integer proId) {
-        return provinceMapper.queryByIdsd(proId);
+        return provinceMapper.cacheQueryById(proId);
+    }
+
+    @Override
+    public List<Province> selectAll() {
+        String key = "province:all";
+        List<Province> provinces = provinceMapper.selectAll();
+        redisList.del(key);
+        redisList.addAll(key, provinces);
+        return provinces;
     }
 }

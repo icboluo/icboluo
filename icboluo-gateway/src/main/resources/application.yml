@@ -35,4 +35,10 @@ spring:
           #        uri: lb://note
           predicates:
             - Path=/note/lb/** #断言,路径相匹配的进行路由
+logging:
+  level:
+    com.icboluo: debug
+  pattern:
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:dd日 HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
 

@@ -40,19 +40,19 @@ public class RedisController {
 
     @GetMapping("/add")
     public Long add() {
-        return redisString.increment("add", Long.class);
+        return redisString.increment("add", 1L);
     }
 
     @GetMapping("/expireAt")
     public Response expireAt() {
         LocalDateTime localDateTime = LocalDateTime.now().plusSeconds(10);
-        Long add = redisString.incrementExpireAt("add", Long.class, localDateTime);
+        Long add = redisString.incrementExpireAt("add", 1L, localDateTime);
         Long expire = redisString.getExpire("add");
         return R.correct(add);
     }
 
     @GetMapping("/decr")
     public Long decr() {
-        return redisString.decrease("add", Long.class);
+        return redisString.decrease("add", 1L);
     }
 }

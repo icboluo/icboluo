@@ -1,6 +1,6 @@
 package com.icboluo.common.redis;
 
-import com.icboluo.util.DateHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.BoundKeyOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.support.atomic.RedisAtomicDouble;
@@ -9,17 +9,18 @@ import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 /**
  * @author icboluo
  */
 @Component
+@Slf4j
 @SuppressWarnings("unused")
 public class RedisString<T> extends AbstractRedis<T> {
 
@@ -79,23 +80,19 @@ public class RedisString<T> extends AbstractRedis<T> {
     }
 
     public Integer increment(String key) {
-        return incrementExpireAt(key, Integer.class, null);
+        return incrementExpireAt(key, Integer.class, 1, null);
     }
 
-    public <G extends Number> G increment(String key, Class<G> g) {
-        return incrementExpireAt(key, g, null);
+    public <G extends Number> G increment(String key, G delta) {
+        return incrementExpireAt(key, (Class<G>) delta.getClass(), delta, null);
     }
 
     public Integer incrementExpireAt(String key, LocalDateTime localDateTime) {
-        return incrementExpireAt(key, Integer.class, localDateTime);
+        return incrementExpireAt(key, Integer.class, 1, localDateTime);
     }
 
-    public <G extends Number> G incrementExpireAt(String key, Class<G> g, LocalDateTime localDateTime) {
-        Consumer<BoundKeyOperations<String>> expireAt = null;
-        if (localDateTime != null) {
-            expireAt = operation -> operation.expireAt(DateHelper.localDateTimeToDate(localDateTime));
-        }
-        return incrementExpireAt(key, g.cast(1L), g, expireAt);
+    public <G extends Number> G incrementExpireAt(String key, G delta, LocalDateTime localDateTime) {
+        return incrementExpireAt(key, (Class<G>) delta.getClass(), delta, localDateTime);
     }
 
     /**
@@ -104,55 +101,47 @@ public class RedisString<T> extends AbstractRedis<T> {
      * 过期时间是可以设置的，可是为什么有的情况下，用atomic的时候，会在redis中找不到键值
      *
      * @param key   键
+     * @param cla   要转化的数据类型
      * @param delta 递增因子
-     * @param g     要转化的数据类型
      * @param <G>   泛型类型
      * @return 递增之后的值
      */
-    public <G extends Number> G incrementExpireAt(String key, G delta, Class<G> g, Consumer<BoundKeyOperations<String>> expireAt) {
+    public <G extends Number> G incrementExpireAt(String key, Class<G> cla, G delta, LocalDateTime localDateTime) {
         if (delta.intValue() < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
-        if (g == Long.class) {
+        if (cla == Long.class) {
             RedisAtomicLong redisAtomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-            if (expireAt != null) {
-                expireAt.accept(redisAtomicLong);
-            }
-            return g.cast(redisAtomicLong.addAndGet((Long) delta));
-        } else if (g == Integer.class) {
+            expireAt(redisAtomicLong, localDateTime);
+            return cla.cast(redisAtomicLong.addAndGet(delta.longValue()));
+        } else if (cla == Integer.class) {
             RedisAtomicInteger redisAtomicInteger = new RedisAtomicInteger(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-            if (expireAt != null) {
-                expireAt.accept(redisAtomicInteger);
-            }
-            return g.cast(redisAtomicInteger.addAndGet((Integer) delta));
-        } else if (g == Double.class) {
+            expireAt(redisAtomicInteger, localDateTime);
+            return cla.cast(redisAtomicInteger.addAndGet(delta.intValue()));
+        } else if (cla == Double.class) {
             RedisAtomicDouble redisAtomicDouble = new RedisAtomicDouble(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-            if (expireAt != null) {
-                expireAt.accept(redisAtomicDouble);
-            }
-            return g.cast(redisAtomicDouble.addAndGet((Double) delta));
+            expireAt(redisAtomicDouble, localDateTime);
+            return cla.cast(redisAtomicDouble.addAndGet(delta.doubleValue()));
         }
+        log.error("redis decrease error, delta cla not belong to long,integer and double");
         return null;
     }
 
+
     public Integer decrease(String key) {
-        return decrease(key, null);
+        return decreaseExpireAt(key, Integer.class, 1, null);
     }
 
-    public <G extends Number> G decrease(String key, Class<G> g) {
-        return decreaseExpireAt(key, g, null);
+    public <G extends Number> G decrease(String key, G g) {
+        return decreaseExpireAt(key, (Class<G>) g.getClass(), g, null);
     }
 
     public Integer decreaseExpireAt(String key, LocalDateTime localDateTime) {
-        return decreaseExpireAt(key, Integer.class, localDateTime);
+        return decreaseExpireAt(key, Integer.class, 1, localDateTime);
     }
 
-    public <G extends Number> G decreaseExpireAt(String key, Class<G> g, LocalDateTime localDateTime) {
-        Consumer<BoundKeyOperations<String>> expireAt = null;
-        if (localDateTime != null) {
-            expireAt = operation -> operation.expireAt(DateHelper.localDateTimeToDate(localDateTime));
-        }
-        return decreaseExpireAt(key, g.cast(1), g, expireAt);
+    public <G extends Number> G decreaseExpireAt(String key, G delta, LocalDateTime localDateTime) {
+        return decreaseExpireAt(key, (Class<G>) delta.getClass(), delta, localDateTime);
     }
 
     /**
@@ -160,34 +149,38 @@ public class RedisString<T> extends AbstractRedis<T> {
      * valueOperations.increment(key, -delta);
      *
      * @param key   键
+     * @param cla   要转化的数据类型
      * @param delta 递减因子
-     * @param g     要转化的数据类型
      * @param <G>   泛型类型
      * @return 递减之后的值
      */
-    public <G extends Number> G decreaseExpireAt(String key, G delta, Class<G> g, Consumer<BoundKeyOperations<String>> expireAt) {
+    public <G extends Number> G decreaseExpireAt(String key, Class<G> cla, G delta, LocalDateTime localDateTime) {
         if (delta.intValue() < 0) {
             throw new RuntimeException("递减因子必须大于0");
         }
-        if (g == Long.class) {
+        if (cla == Long.class) {
             RedisAtomicLong redisAtomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-            if (expireAt != null) {
-                expireAt.accept(redisAtomicLong);
-            }
-            return g.cast(redisAtomicLong.addAndGet(-delta.longValue()));
-        } else if (g == Integer.class) {
+            expireAt(redisAtomicLong, localDateTime);
+            return cla.cast(redisAtomicLong.addAndGet(-delta.longValue()));
+        } else if (cla == Integer.class) {
             RedisAtomicInteger redisAtomicInteger = new RedisAtomicInteger(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-            if (expireAt != null) {
-                expireAt.accept(redisAtomicInteger);
-            }
-            return g.cast(redisAtomicInteger.addAndGet(-delta.intValue()));
-        } else if (g == Double.class) {
+            expireAt(redisAtomicInteger, localDateTime);
+            return cla.cast(redisAtomicInteger.addAndGet(-delta.intValue()));
+        } else if (cla == Double.class) {
             RedisAtomicDouble redisAtomicDouble = new RedisAtomicDouble(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-            if (expireAt != null) {
-                expireAt.accept(redisAtomicDouble);
-            }
-            return g.cast(redisAtomicDouble.addAndGet(-delta.doubleValue()));
+            expireAt(redisAtomicDouble, localDateTime);
+            return cla.cast(redisAtomicDouble.addAndGet(-delta.doubleValue()));
         }
+        log.error("redis decrease error, delta cla not belong to long,integer and double");
         return null;
+    }
+
+    private void expireAt(BoundKeyOperations<String> key, LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return;
+        }
+        Duration between = Duration.between(LocalDateTime.now(), localDateTime);
+//        过期时间取自redis,如果和服务时间不一致会出现问题,所以暂时不要使用expireAt函数
+        key.expire(between.getSeconds(), TimeUnit.SECONDS);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Province)表控制层
@@ -34,6 +35,11 @@ public class ProvinceController {
     @GetMapping("/selectOne")
     public Province selectOne(Integer id) {
         return provinceService.queryById(id);
+    }
+
+    @GetMapping("/selectAll")
+    public List<Province> selectAll() {
+        return provinceService.selectAll();
     }
 
 }

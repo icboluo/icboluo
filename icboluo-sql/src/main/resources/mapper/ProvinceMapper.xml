@@ -27,7 +27,7 @@
     </select>
 
     <insert id="insertBatch" keyProperty="proId" useGeneratedKeys="true">
-        insert into note.province(pro_code, pro_name)
+        insert into province(pro_code, pro_name)
         values
         <foreach collection="entities" item="entity" separator=",">
         (#{entity.proCode}, #{entity.proName})
@@ -35,7 +35,7 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="proId" useGeneratedKeys="true">
-        insert into note.province(pro_code, pro_name)
+        insert into province(pro_code, pro_name)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.proCode}, #{entity.proName})

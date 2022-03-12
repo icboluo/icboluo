@@ -63,37 +63,41 @@ public class RedisLogAspect {
                 .collect(Collectors.joining(", "));
     }
 
-    private String toLogString(Object address) {
-        if (address == null) {
+    private String toLogString(Object ret) {
+        if (ret == null) {
             return null;
         }
-        if (address instanceof Optional<?> opt) {
+        if (ret instanceof Optional<?> opt) {
             if (opt.isPresent()) {
-                address = opt.get();
+                ret = opt.get();
             } else {
                 return null;
             }
         }
-        if (address.getClass().isArray()) {
-            address = ((Object[]) address).length;
+        if (ret.getClass().isArray()) {
+            ret = ((Object[]) ret).length;
         }
-        if (address instanceof Collection<?> addressColl) {
-            address = addressColl.size();
+        if (ret instanceof Collection<?> addressColl) {
+            ret = addressColl.size();
         }
-        if (address instanceof Map<?, ?> addressMap) {
-            address = addressMap.size();
+        if (ret instanceof Map<?, ?> addressMap) {
+            ret = addressMap.size();
         }
-        return address.toString();
+        return ret.toString();
     }
 
-    private String toString(Object address) {
-        if (address == null) {
+    private String toString(Object args) {
+        if (args == null) {
             return null;
         }
-        if (address.getClass().isArray()) {
-            address = Arrays.toString((Object[]) address);
+        if (args.getClass().isArray()) {
+            args = Arrays.toString((Object[]) args);
         }
-        return address.toString();
+        String complete = args.toString();
+        if (complete == null || complete.length() < 100) {
+            return complete;
+        }
+        return complete.substring(0, 50) + "..." + complete.substring(complete.length() - 50);
     }
 
     private String getClassName(String declaringTypeName) {

@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.icboluo</groupId>
-            <artifactId>icboluo-mapper</artifactId>
+            <artifactId>icboluo-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

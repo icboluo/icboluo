@@ -62,6 +62,7 @@ public abstract class AbstractRedis<T> {
         if (localDateTime.compareTo(LocalDateTime.now()) <= 0) {
             return true;
         }
+//        诡异的函数,过期时间的取值竟然是redis里面,如果redis服务和本地服务时间不一致就会出现异常
         return redisTemplate.expireAt(key, DateHelper.localDateTimeToDate(localDateTime));
     }
 

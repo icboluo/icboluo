@@ -1,19 +1,17 @@
 package com.icboluo.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 /**
  * @author icboluo
  * @date 2022-02-26 19:50
  */
-@Component
+//@Component
 @Slf4j
-@WebFilter("/*")
+//@WebFilter("/*")
 public class HttpFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
