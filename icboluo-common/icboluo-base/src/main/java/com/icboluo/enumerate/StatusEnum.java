@@ -81,7 +81,7 @@ public enum StatusEnum implements EnumInter {
     }
 
     private static String chooseByLanguage(LanguageEnum language, Optional<StatusEnum> se) {
-        StatusEnum statusEnum = se.orElseThrow(() -> new IcBoLuoException(ExceptionEnum.STATUS_VALUE_NOT_FOUND));
+        StatusEnum statusEnum = se.orElseThrow(() -> new IcBoLuoException(ReEnum.STATUS_VALUE_NOT_FOUND));
         return LanguageEnum.CHINESE == language ? statusEnum.zh : statusEnum.en;
     }
 
@@ -105,7 +105,7 @@ public enum StatusEnum implements EnumInter {
         if (status instanceof String statusStr) {
             state = Integer.parseInt(statusStr);
         } else {
-            throw new IcBoLuoException(ExceptionEnum.STATUS_VALUE_ERROR);
+            throw new IcBoLuoException(ReEnum.STATUS_VALUE_ERROR);
         }
         return findByStatus(state);
     }
@@ -120,7 +120,7 @@ public enum StatusEnum implements EnumInter {
                 .distinct()
                 .count();
         if (count != ALL_SET.size()) {
-            throw new IcBoLuoException(ExceptionEnum.ENUM_DEFINED_ERROR);
+            throw new IcBoLuoException(ReEnum.ENUM_DEFINED_ERROR);
         }
     }
 }

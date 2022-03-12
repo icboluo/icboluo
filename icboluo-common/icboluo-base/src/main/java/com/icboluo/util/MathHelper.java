@@ -1,6 +1,6 @@
 package com.icboluo.util;
 
-import com.icboluo.enumerate.ExceptionEnum;
+import com.icboluo.enumerate.ReEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -82,7 +82,7 @@ public class MathHelper {
         } else if (number instanceof Long mTemp) {
             return new BigDecimal(mTemp);
         } else {
-            throw new IcBoLuoException(ExceptionEnum.SYSTEM_NOT_SUPPORT_EXCEPTION);
+            throw new IcBoLuoException(ReEnum.SYSTEM_NOT_SUPPORT_EXCEPTION);
         }
     }
 

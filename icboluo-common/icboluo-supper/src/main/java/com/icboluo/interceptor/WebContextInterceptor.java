@@ -1,4 +1,4 @@
-package com.icboluo.filterinterceptor;
+package com.icboluo.interceptor;
 
 import com.icboluo.annotation.WebContextAnno;
 import com.icboluo.constant.HttpConstant;

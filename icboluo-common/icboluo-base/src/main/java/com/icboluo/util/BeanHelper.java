@@ -4,7 +4,7 @@ package com.icboluo.util;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.PageQuery;
-import com.icboluo.enumerate.ExceptionEnum;
+import com.icboluo.enumerate.ReEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -44,7 +44,7 @@ public class BeanHelper {
             return t;
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
-            throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
+            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
         }
     }
 
@@ -55,7 +55,7 @@ public class BeanHelper {
             return t;
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, supplier.getClass().getName(), e);
-            throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
+            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
         }
     }
 
@@ -74,7 +74,7 @@ public class BeanHelper {
                     .toList();
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
-            throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
+            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
         }
     }
 
@@ -85,7 +85,7 @@ public class BeanHelper {
                     .toList();
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, supplier.getClass().getName(), e);
-            throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
+            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
         }
     }
 
@@ -104,7 +104,7 @@ public class BeanHelper {
                     .collect(Collectors.toSet());
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
-            throw new IcBoLuoException(ExceptionEnum.DATA_TRANSFER_ERROR);
+            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
         }
     }
 

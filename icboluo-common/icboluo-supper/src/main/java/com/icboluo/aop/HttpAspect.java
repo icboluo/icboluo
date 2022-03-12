@@ -47,8 +47,8 @@ public class HttpAspect {
         Object ans = joinPoint.proceed();
         long end = System.currentTimeMillis();
 //        com.icboluo.controller.ProvinceController.selectAll
-//        log.debug("请求类方法CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        log.info("Ip {}, Time {}ms Response {}\n {} {}\n{}", getIp(request), end - start, toSimpleStr(ans, 200),
+//        log.debug(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        log.info("Ip {}, Time {}ms, Response {}\n {} {}\n{}", getIp(request), end - start, toSimpleStr(ans, 200),
                 request.getMethod(), request.getRequestURI(),
                 toSimpleStr(Arrays.toString(joinPoint.getArgs()), 1000));
 

@@ -1,4 +1,4 @@
-package com.icboluo.util;
+package com.icboluo.async;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

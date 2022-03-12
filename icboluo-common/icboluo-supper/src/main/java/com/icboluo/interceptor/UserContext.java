@@ -1,4 +1,4 @@
-package com.icboluo.filterinterceptor;
+package com.icboluo.interceptor;
 
 import com.icboluo.controller.Demo;
 import com.icboluo.util.IcBoLuoException;

@@ -1,6 +1,6 @@
-package com.icboluo.util;
+package com.icboluo.async;
 
-import com.icboluo.filterinterceptor.UserContext;
+import com.icboluo.interceptor.UserContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.task.TaskDecorator;
 

@@ -1,6 +1,6 @@
 package com.icboluo.util;
 
-import com.icboluo.enumerate.ExceptionEnum;
+import com.icboluo.enumerate.ReEnum;
 import lombok.Getter;
 
 /**
@@ -26,14 +26,14 @@ public class IcBoLuoException extends RuntimeException {
         this.status = 500;
     }
 
-    public IcBoLuoException(ExceptionEnum em) {
+    public IcBoLuoException(ReEnum em) {
         super(em.getMessage());
-        this.status = em.getStatus();
+        this.status = em.getCode();
     }
 
-    public IcBoLuoException(ExceptionEnum em, Throwable throwable) {
+    public IcBoLuoException(ReEnum em, Throwable throwable) {
         super(em.getMessage(), throwable);
-        this.status = em.getStatus();
+        this.status = em.getCode();
     }
 
     public IcBoLuoException(int status, String msg) {

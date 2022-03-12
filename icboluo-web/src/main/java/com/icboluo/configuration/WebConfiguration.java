@@ -3,7 +3,7 @@ package com.icboluo.configuration;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.icboluo.filterinterceptor.WebContextInterceptor;
+import com.icboluo.interceptor.WebContextInterceptor;
 import com.icboluo.resolver.RequestBodyParamResolver;
 import com.icboluo.resolver.UserCodeResolver;
 import org.springframework.context.annotation.Bean;
