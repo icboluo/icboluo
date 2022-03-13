@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.common;
 
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.IcBoLuoException;
@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.Objects;
 
 /**
- * TODO 怎么做到所有的项目都用到这个全局异常处理呢
  * 拦截异常并统一处理
  *
  * @author icboluo
@@ -25,16 +26,21 @@ import java.util.Objects;
 @Slf4j
 public class GlobalControllerExceptionHandler {
 
+    @Resource
+    private HttpServletRequest request;
+    @Resource
+    private HttpServletResponse response;
+
     /**
      * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
      *
-     * @param request 请求信息
-     * @param e       异常信息
+     * @param e 异常信息
      * @return 失败的响应信息
      */
     @ExceptionHandler(value = {IcBoLuoException.class})
-    public Response noteExceptionHandler(HttpServletRequest request, Exception e) {
-        printLog(request, e);
+    public Response noteExceptionHandler(Exception e) {
+        printLog(e);
+        response.setStatus(500);
         return R.error(500, e);
     }
 
@@ -43,14 +49,13 @@ public class GlobalControllerExceptionHandler {
      * <p>
      * 默认的异常处理方法，如果 e 有注解 @ResponseStatus 注解，则继续抛出，让框架处理
      *
-     * @param request 请求信息
-     * @param e       异常信息
+     * @param e 异常信息
      * @return 失败的响应信息
      * @throws Exception {@code e} 最大异常
      */
     @ExceptionHandler(value = Exception.class)
-    public Response defaultExceptionHandler(HttpServletRequest request, Exception e) throws Exception {
-        printLog(request, e);
+    public Response defaultExceptionHandler(Exception e) throws Exception {
+        printLog(e);
         //如果异常上已经有 @ResponseStatus 注解，则让框架处理
         if (Objects.nonNull(AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class))) {
             throw e;
@@ -61,8 +66,8 @@ public class GlobalControllerExceptionHandler {
 
 
     @ExceptionHandler(value = RuntimeException.class)
-    public Response runtimeExceptionHandler(HttpServletRequest request, Exception e) {
-        printLog(request, e);
+    public Response runtimeExceptionHandler(Exception e) {
+        printLog(e);
         return R.error(ReEnum.UNEXPECTED_EXCEPTION);
     }
 
@@ -70,10 +75,9 @@ public class GlobalControllerExceptionHandler {
     /**
      * 打印 {@code request} 信息 和 {@code e} 信息
      *
-     * @param request 请求信息
-     * @param e       错误信息
+     * @param e 错误信息
      */
-    private void printLog(HttpServletRequest request, Throwable e) {
+    private void printLog(Throwable e) {
         if (log.isDebugEnabled()) {
             StringBuilder builder = new StringBuilder();
             builder.append("\nURL:").append(request.getRequestURL().toString()).append('\n');

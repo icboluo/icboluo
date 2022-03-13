@@ -5,7 +5,6 @@ import com.icboluo.mapper.MonsterMapper;
 import com.icboluo.service.MonsterService;
 import com.icboluo.util.RandomHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,23 +21,22 @@ public class MonsterServiceImpl implements MonsterService {
     private MonsterMapper monsterMapper;
 
     @Override
-    public void updateSelective(Monster monster) {
-        monsterMapper.updateByPrimaryKeySelective(monster);
+    public Monster nextMonster() {
+        List<Monster> list = monsterMapper.selectAll();
+        if (list.size() > 10) {
+            return list.get(0);
+        }
+        int attack = RandomHelper.interval(4, 8);
+        int blood = RandomHelper.interval(15, 30);
+        Monster monster = new Monster();
+        monster.setAttack(attack);
+        monster.setBlood(blood);
+        monsterMapper.insert(monster);
+        return monster;
     }
 
     @Override
-    public Monster nextMonster() {
-        List<Monster> list = monsterMapper.selectAll();
-        if (CollectionUtils.isEmpty(list)) {
-            int attack = RandomHelper.interval(4, 8);
-            int blood = RandomHelper.interval(15, 30);
-            Monster monster = new Monster();
-            monster.setAttack(attack);
-            monster.setBlood(blood);
-            monsterMapper.insert(monster);
-            return monster;
-        } else {
-            return list.get(0);
-        }
+    public List<Monster> allMonster() {
+        return monsterMapper.selectAll();
     }
 }

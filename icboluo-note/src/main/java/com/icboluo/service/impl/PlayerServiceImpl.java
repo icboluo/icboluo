@@ -2,9 +2,13 @@ package com.icboluo.service.impl;
 
 import com.icboluo.entity.Monster;
 import com.icboluo.entity.Player;
+import com.icboluo.entity.PlayerLevel;
 import com.icboluo.mapper.MonsterMapper;
 import com.icboluo.mapper.PlayerMapper;
+import com.icboluo.object.PlayerVO;
+import com.icboluo.service.PlayerLevelService;
 import com.icboluo.service.PlayerService;
+import com.icboluo.util.BeanHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +25,8 @@ public class PlayerServiceImpl implements PlayerService {
     private PlayerMapper playerMapper;
     @Resource
     private MonsterMapper monsterMapper;
+    @Resource
+    private PlayerLevelService playerLevelService;
 
     /**
      * 通过ID查询单条数据
@@ -29,21 +35,26 @@ public class PlayerServiceImpl implements PlayerService {
      * @return 实例对象
      */
     @Override
-    public Player queryById(Integer id) {
+    public PlayerVO queryById(Integer id) {
         Player player = playerMapper.queryById(id);
         player.setAttack(player.getAttack() + player.getLevel());
         player.setBlood(player.getBlood() + player.getLevel() * 5);
-        return player;
+
+        PlayerVO view = BeanHelper.copyProperties(player, PlayerVO::new);
+        PlayerLevel playerLevel = playerLevelService.queryById(player.getLevel());
+        view.setLevel(playerLevel.getLevel());
+        return view;
     }
 
     @Override
-    public Monster attack(Integer id, Monster monster) {
+    public void attack(Integer playerId, Integer monsterId) {
+        Monster monster = monsterMapper.queryById(monsterId);
         Integer monBlo = monster.getBlood();
         if (monBlo <= 0) {
             monsterMapper.deleteById(monster.getId());
-            return monster;
+            return;
         }
-        Player player = playerMapper.queryById(id);
+        Player player = playerMapper.queryById(playerId);
 
         Integer plaAtt = player.getAttack();
         if (player.getBlood() > 0) {
@@ -65,6 +76,5 @@ public class PlayerServiceImpl implements PlayerService {
             }
         }
         playerMapper.updateByPrimaryKeySelective(player);
-        return monster;
     }
 }

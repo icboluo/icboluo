@@ -2,6 +2,8 @@ package com.icboluo.service;
 
 import com.icboluo.entity.Monster;
 
+import java.util.List;
+
 /**
  * 玩家(Monster)表服务接口
  *
@@ -10,7 +12,7 @@ import com.icboluo.entity.Monster;
  */
 public interface MonsterService {
 
-    void updateSelective(Monster monster);
-
     Monster nextMonster();
+
+    List<Monster> allMonster();
 }

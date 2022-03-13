@@ -10,7 +10,7 @@ mybatis:
     #    自动小驼峰映射
     map-underscore-to-camel-case: true
   #    为什么这里指定 mybatis/*Mapper.xml不行（文件夹也改了
-  mapper-locations: mapper/*Mapper.xml
+  mapper-locations: mapper/*Mapper.xml.
 logging:
   level:
     #    level 后面直接跟日志级别会启动报错
@@ -26,5 +26,9 @@ write-excel-entity:
   excel-path: database.xlsx
   database: note
   table-name:
-
+mybatis-plus:
+  type-aliases-super-type:
+  global-config:
+    db-config:
+      id-type: input
 

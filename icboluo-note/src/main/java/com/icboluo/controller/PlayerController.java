@@ -2,12 +2,13 @@ package com.icboluo.controller;
 
 import com.icboluo.annotation.ResponseResult;
 import com.icboluo.entity.Monster;
-import com.icboluo.entity.Player;
+import com.icboluo.object.PlayerVO;
 import com.icboluo.service.MonsterService;
 import com.icboluo.service.PlayerService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 玩家(Player)表控制层
@@ -36,7 +37,7 @@ public class PlayerController {
      * @return 单条数据
      */
     @GetMapping("/{id}")
-    public Player queryById(@PathVariable("id") Integer id) {
+    public PlayerVO queryById(@PathVariable("id") Integer id) {
         return playerService.queryById(id);
     }
 
@@ -45,9 +46,14 @@ public class PlayerController {
         return monsterService.nextMonster();
     }
 
-    @GetMapping("/{id}/attack")
-    public Monster attack(@PathVariable("id") Integer id, Monster monster) {
-        return playerService.attack(id, monster);
+    @GetMapping("/attack")
+    public void attack(Integer playerId, Integer monsterId) {
+        playerService.attack(playerId, monsterId);
+    }
+
+    @GetMapping("/allMonster")
+    public List<Monster> allMonster() {
+        return monsterService.allMonster();
     }
 }
 

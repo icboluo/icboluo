@@ -1,7 +1,6 @@
 package com.icboluo.service;
 
-import com.icboluo.entity.Monster;
-import com.icboluo.entity.Player;
+import com.icboluo.object.PlayerVO;
 
 /**
  * 玩家(Player)表服务接口
@@ -17,7 +16,7 @@ public interface PlayerService {
      * @param id 主键
      * @return 实例对象
      */
-    Player queryById(Integer id);
+    PlayerVO queryById(Integer id);
 
-    Monster attack(Integer id, Monster monster);
+    void attack(Integer playerId, Integer monsterId);
 }
