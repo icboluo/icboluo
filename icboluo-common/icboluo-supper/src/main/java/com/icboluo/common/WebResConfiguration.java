@@ -4,8 +4,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.icboluo.converter.String2LocalDateConverter;
-import com.icboluo.converter.String2LocalDateTimeConverter;
+import com.icboluo.converter.StringToLocalDateConverter;
+import com.icboluo.converter.StringToLocalDateTimeConverter;
 import com.icboluo.interceptor.AuthInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -107,8 +107,8 @@ public class WebResConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new String2LocalDateConverter());
-        registry.addConverter(new String2LocalDateTimeConverter());
+        registry.addConverter(new StringToLocalDateConverter());
+        registry.addConverter(new StringToLocalDateTimeConverter());
     }
 
     @Bean

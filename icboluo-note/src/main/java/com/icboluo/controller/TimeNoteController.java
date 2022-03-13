@@ -1,5 +1,6 @@
 package com.icboluo.controller;
 
+import com.icboluo.annotation.ResponseResult;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.mapper.TimeNoteMapper;
 import com.icboluo.object.clientobject.DDD;
@@ -30,6 +31,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/timeNote")
 @Api(tags = "笔记本")
+@ResponseResult
 public class TimeNoteController {
     @Resource
     private TimeNoteMapper timeNoteMapper;
@@ -54,7 +56,7 @@ public class TimeNoteController {
         int weekTimeAmount = noteVO.getWeekTimeAmount();
         int monthTimeAmount = noteVO.getMonthTimeAmount();
         int totalTimeAmount = timeNoteAmount + weekTimeAmount + monthTimeAmount;
-        HashMap<String, Integer> map = new HashMap<>(4);
+        Map<String, Integer> map = new HashMap<>(4);
         map.put("timeNoteAmount", timeNoteAmount);
         map.put("weekTimeAmount", weekTimeAmount);
         map.put("monthTimeAmount", monthTimeAmount);
@@ -64,8 +66,8 @@ public class TimeNoteController {
 
     @PostMapping("/add")
     @ApiOperation(value = "增加")
-    public Response add(TimeNoteCO timeNoteCO) {
-        TimeNoteDO timeNoteDO = BeanHelper.copyProperties(timeNoteCO, TimeNoteDO.class);
+    public Response add(TimeNoteCO client) {
+        TimeNoteDO timeNoteDO = BeanHelper.copyProperties(client, TimeNoteDO.class);
         int i = timeNoteMapper.insertSelective(timeNoteDO);
         return i == 1 ? R.correct(ReEnum.ADD_SUCCESSFUL)
                 : R.error(ReEnum.ADD_ERROR);
@@ -73,46 +75,45 @@ public class TimeNoteController {
 
     @PostMapping("/update")
     @ApiOperation(value = "更新数据")
-    public Response update(TimeNoteCO timeNoteCO) {
-        timeNoteValidate.validate(timeNoteCO);
+    public void update(TimeNoteCO client) {
+        timeNoteValidate.validate(client);
         TimeNoteQuery timeNoteQuery = new TimeNoteQuery();
         Map<String, String> map = noteService.selectIdAndType(timeNoteQuery);
-        noteService.update(timeNoteCO, map);
-        return R.correct(ReEnum.UPDATE_SUCCESSFUL);
+        noteService.update(client, map);
     }
 
     @GetMapping("/onlyUpdateTime")
     @ApiOperation(value = "只更新时间")
-    public Response onlyUpdateTime(DDD dd) {
+    public void onlyUpdateTime(DDD dd) {
         noteService.onlyUpdateTime(dd);
-        return R.correct();
     }
 
     @GetMapping("/updateFinishTime")
     @ApiOperation(value = "更新为完成了一次")
-    public Response update(DDD dd) {
+    public void update(DDD dd) {
         noteService.updateFinishTime(dd);
-        return R.correct();
     }
 
     @GetMapping("/updateNotFinishTime")
     @ApiOperation(value = "更新为没有完成一次")
-    public Response updateNotFinishTime(DDD dd) {
+    public void updateNotFinishTime(DDD dd) {
         noteService.updateNotFinishTime(dd);
-        return R.correct(ReEnum.UPDATE_SUCCESSFUL);
     }
 
     @GetMapping("/toOnlyRead")
     @ApiOperation(value = "仅仅更新时间")
-    public Response toOnlyRead(DDD dd) {
+    public void toOnlyRead(DDD dd) {
         noteService.toOnlyRead(dd);
-        return R.correct(ReEnum.UPDATE_SUCCESSFUL);
     }
 
     @GetMapping("/selectByFiled")
     @ApiOperation(value = "根据字段查询")
-    public Response select(@RequestParam("filed") String file) {
-        List<FiledResultVO> list = noteService.select(file);
-        return R.correct(list);
+    public List<FiledResultVO> select(@RequestParam("filed") String file) {
+        return noteService.select(file);
+    }
+
+    @GetMapping("/updateProblem")
+    public void updateProblem() {
+
     }
 }

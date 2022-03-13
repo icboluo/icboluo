@@ -1,5 +1,6 @@
 package com.icboluo;
 
+import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
@@ -23,6 +24,20 @@ import java.util.Objects;
 @RestControllerAdvice({"com.icboluo"})
 @Slf4j
 public class GlobalControllerExceptionHandler {
+
+    /**
+     * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
+     *
+     * @param request 请求信息
+     * @param e       异常信息
+     * @return 失败的响应信息
+     */
+    @ExceptionHandler(value = {IcBoLuoException.class})
+    public Response noteExceptionHandler(HttpServletRequest request, Exception e) {
+        printLog(request, e);
+        return R.error(500, e);
+    }
+
     /**
      * TODO 难道真的有什么异常会绕过runtime直接到except吗
      * <p>
@@ -44,17 +59,11 @@ public class GlobalControllerExceptionHandler {
         return R.error(500, msg);
     }
 
-    /**
-     * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
-     *
-     * @param request 请求信息
-     * @param e       异常信息
-     * @return 失败的响应信息
-     */
-    @ExceptionHandler(value = {IcBoLuoException.class})
-    public Response noteExceptionHandler(HttpServletRequest request, Exception e) {
+
+    @ExceptionHandler(value = RuntimeException.class)
+    public Response runtimeExceptionHandler(HttpServletRequest request, Exception e) {
         printLog(request, e);
-        return R.error(500, e);
+        return R.error(ReEnum.UNEXPECTED_EXCEPTION);
     }
 
 

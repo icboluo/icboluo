@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icboluo.mapper.PlayerMapper">
+
+    <resultMap type="com.icboluo.entity.Player" id="PlayerMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="blood" column="blood" jdbcType="INTEGER"/>
+        <result property="attack" column="attack" jdbcType="INTEGER"/>
+        <result property="experience" column="experience" jdbcType="INTEGER"/>
+        <result property="totalExperience" column="total_experience" jdbcType="INTEGER"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="maxBlood" column="max_blood" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="PlayerMap">
+        select
+          id, blood, attack, experience, total_experience, level, max_blood
+        from player
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="blood != null">
+                and blood = #{blood}
+            </if>
+            <if test="attack != null">
+                and attack = #{attack}
+            </if>
+            <if test="experience != null">
+                and experience = #{experience}
+            </if>
+            <if test="totalExperience != null">
+                and total_experience = #{totalExperience}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+            <if test="maxBlood != null">
+                and max_blood = #{maxBlood}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into player(blood, attack, experience, total_experience, level, max_blood)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.blood}, #{entity.attack}, #{entity.experience}, #{entity.totalExperience}, #{entity.level}, #{entity.maxBlood})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into player(blood, attack, experience, total_experience, level, max_blood)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.blood}, #{entity.attack}, #{entity.experience}, #{entity.totalExperience}, #{entity.level}, #{entity.maxBlood})
+        </foreach>
+        on duplicate key update
+        blood = values(blood),
+        attack = values(attack),
+        experience = values(experience),
+        total_experience = values(total_experience),
+        level = values(level),
+        max_blood = values(max_blood)
+    </insert>
+</mapper>
+

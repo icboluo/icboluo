@@ -1,3 +1,33 @@
+GET http://localhost:1514/player/nextMonster
+
+<> 2022-03-13T030010.200.json
+
+###
+
+GET http://localhost:1514/player/nextMonster
+
+<> 2022-03-13T022613.200.json
+
+###
+
+GET http://localhost:1514/player/nextMonster
+
+<> 2022-03-13T022609.200.json
+
+###
+
+GET http://localhost:1514/player/1
+
+<> 2022-03-13T020301.200.json
+
+###
+
+GET http://localhost:1110/province/selectAll
+
+<> 2022-03-12T222842.200.json
+
+###
+
 GET http://localhost:7788/async/simple
 
 <> 2022-03-12T215506.200.json
@@ -254,36 +284,6 @@ GET http://localhost:1110/expireAt
 GET http://localhost:1110/expireAt
 
 <> 2022-03-12T194702.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T194655-1.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T194655.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T194654.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T194653.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T194651.200.json
 
 ###
 

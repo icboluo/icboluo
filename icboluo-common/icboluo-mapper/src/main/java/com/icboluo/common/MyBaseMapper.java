@@ -33,9 +33,6 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
         return deleteBatchIds(idList);
     }
 
-    @Override
-    int insert(T entity);
-
     default int insertSelective(T record) {
         return insert(record);
     }

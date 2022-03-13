@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icboluo.mapper.MonsterMapper">
+
+    <resultMap type="com.icboluo.entity.Monster" id="MonsterMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="blood" column="blood" jdbcType="INTEGER"/>
+        <result property="attack" column="attack" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MonsterMap">
+        select
+          id, blood, attack
+        from monster
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="blood != null">
+                and blood = #{blood}
+            </if>
+            <if test="attack != null">
+                and attack = #{attack}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into monster(blood, attack)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.blood}, #{entity.attack})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into monster(blood, attack)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.blood}, #{entity.attack})
+        </foreach>
+        on duplicate key update
+        blood = values(blood),
+        attack = values(attack)
+    </insert>
+</mapper>
+

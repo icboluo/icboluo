@@ -6,7 +6,11 @@ import org.springframework.core.convert.converter.Converter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class String2LocalDateTimeConverter implements Converter<String, LocalDateTime> {
+/**
+ * @author icboluo
+ * @date 2022-03-12 22:30
+ */
+public class StringToLocalDateTimeConverter implements Converter<String, LocalDateTime> {
     @Override
     public LocalDateTime convert(@NonNull String str) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
