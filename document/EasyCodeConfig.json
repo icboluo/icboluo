@@ -79,6 +79,11 @@
           "matchType": "ORDINARY",
           "columnType": "boolean",
           "javaType": "java.lang.Boolean"
+        },
+        {
+          "matchType": "ORDINARY",
+          "columnType": "int unsigned",
+          "javaType": "java.lang.Integer"
         }
       ]
     }

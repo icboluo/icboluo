@@ -13,7 +13,6 @@ import java.util.List;
  * @author icboluo
  * @date 2021-36-23 21:36
  */
-@SuppressWarnings("all")
 public interface MyBaseMapper<T> extends BaseMapper<T> {
     /**
      * 通过主键删除数据

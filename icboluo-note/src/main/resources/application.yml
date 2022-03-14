@@ -30,5 +30,8 @@ mybatis-plus:
   type-aliases-super-type:
   global-config:
     db-config:
-      id-type: input
+      id-type: none
+      insert-strategy: not_null
+      update-strategy: not_null
+
 

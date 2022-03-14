@@ -1,0 +1,29 @@
+server:
+  port: 4399
+spring:
+  profiles:
+    active: test
+  application:
+    name: icboluo-game
+mybatis:
+  configuration:
+    #    ???????
+    map-underscore-to-camel-case: true
+  #    ??????? mybatis/*Mapper.xml?????????
+  mapper-locations: mapper/*Mapper.xml.
+logging:
+  level:
+    #    level ??????????????
+    com.icboluo: debug
+  pattern:
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:dd? HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+mybatis-plus:
+  type-aliases-super-type:
+  global-config:
+    db-config:
+      id-type: none
+      insert-strategy: not_null
+      update-strategy: not_null
+
+

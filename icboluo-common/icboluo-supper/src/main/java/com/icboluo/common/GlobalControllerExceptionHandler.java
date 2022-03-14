@@ -68,6 +68,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     public Response runtimeExceptionHandler(Exception e) {
         printLog(e);
+        response.setStatus(500);
         return R.error(ReEnum.UNEXPECTED_EXCEPTION);
     }
 

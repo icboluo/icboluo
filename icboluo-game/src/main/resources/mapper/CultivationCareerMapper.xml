@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icboluo.mapper.CultivationCareerMapper">
+
+    <resultMap type="com.icboluo.entity.CultivationCareer" id="CultivationCareerMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="playerId" column="player_id" jdbcType="INTEGER"/>
+        <result property="oper" column="oper" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CultivationCareerMap">
+        select
+        id, player_id, oper
+        from cultivation_career
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="playerId != null">
+                and player_id = #{playerId}
+            </if>
+            <if test="oper != null and oper != ''">
+                and oper = #{oper}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    <select id="selectByPlayer" resultType="com.icboluo.entity.CultivationCareer">
+        select *
+        from cultivation_career
+        where player_id = #{playId}
+        order by id desc
+    </select>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into cultivation_career(player_id, oper)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.playerId}, #{entity.oper})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into cultivation_career(player_id, oper)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.playerId}, #{entity.oper})
+        </foreach>
+        on duplicate key update
+        player_id = values(player_id),
+        oper = values(oper)
+    </insert>
+</mapper>
+

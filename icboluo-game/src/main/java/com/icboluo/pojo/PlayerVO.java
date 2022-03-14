@@ -1,6 +1,7 @@
-package com.icboluo.entity;
+package com.icboluo.pojo;
 
 import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -10,7 +11,7 @@ import java.io.Serializable;
  * @since 2022-03-13 12:17:18
  */
 @Data
-public class Player implements Serializable {
+public class PlayerVO implements Serializable {
     /**
      * id
      */
@@ -34,7 +35,7 @@ public class Player implements Serializable {
     /**
      * 级别
      */
-    private Integer level;
+    private String level;
     /**
      * 最大血量
      */

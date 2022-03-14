@@ -3,6 +3,7 @@ package com.icboluo.service.impl;
 import com.icboluo.entity.Monster;
 import com.icboluo.mapper.MonsterMapper;
 import com.icboluo.service.MonsterService;
+import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.RandomHelper;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +24,15 @@ public class MonsterServiceImpl implements MonsterService {
     @Override
     public Monster nextMonster() {
         List<Monster> list = monsterMapper.selectAll();
-        if (list.size() > 10) {
-            return list.get(0);
+        if (list.size() >= 10) {
+            throw new IcBoLuoException("monster more than 10, please attack before");
         }
         int attack = RandomHelper.interval(4, 8);
-        int blood = RandomHelper.interval(15, 30);
+        int maxBlood = RandomHelper.interval(15, 30);
         Monster monster = new Monster();
         monster.setAttack(attack);
-        monster.setBlood(blood);
+        monster.setBlood(maxBlood);
+        monster.setMaxBlood(maxBlood);
         monsterMapper.insert(monster);
         return monster;
     }

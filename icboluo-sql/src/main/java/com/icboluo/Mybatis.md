@@ -84,7 +84,7 @@ insert增加了注释，才能知道返回了id
 
 mybatis plus 实体类名不能更改，是一个坑
 
-insert的时候默认不会携带主键，在Entity中配置为 Input即可
+insert的时候主键会传过去 insert id null...，即便设置了非null属性
 
 # mybatis xml
 mybatis-config.xml：全局配置文件（核心配置文件）作用：配置数据源（配置数据库连接信息）

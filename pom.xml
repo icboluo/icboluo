@@ -24,6 +24,7 @@
         <module>icboluo-common/icboluo-mapper</module>
         <module>icboluo-framework</module>
         <module>icboluo-fund</module>
+        <module>icboluo-game</module>
         <module>icboluo-gateway</module>
         <module>icboluo-nacos-config</module>
         <module>icboluo-note</module>

@@ -38,6 +38,7 @@ public class HttpAspect {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes == null) {
+//            对于直接调用web层的接口，是无法转换成request的，这种情况，请不要直接调用web层
             log.error("why have a interface not convert attributes,please survey");
             return joinPoint.proceed();
         }

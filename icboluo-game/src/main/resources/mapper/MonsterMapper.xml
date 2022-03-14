@@ -6,12 +6,13 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="blood" column="blood" jdbcType="INTEGER"/>
         <result property="attack" column="attack" jdbcType="INTEGER"/>
+        <result property="maxBlood" column="max_blood" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MonsterMap">
         select
-          id, blood, attack
+          id, blood, attack, max_blood
         from monster
         <where>
             <if test="id != null">
@@ -23,27 +24,31 @@
             <if test="attack != null">
                 and attack = #{attack}
             </if>
+            <if test="maxBlood != null">
+                and max_blood = #{maxBlood}
+            </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into monster(blood, attack)
+        insert into monster(blood, attack, max_blood)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.blood}, #{entity.attack})
+        (#{entity.blood}, #{entity.attack}, #{entity.maxBlood})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into monster(blood, attack)
+        insert into monster(blood, attack, max_blood)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.blood}, #{entity.attack})
+            (#{entity.blood}, #{entity.attack}, #{entity.maxBlood})
         </foreach>
         on duplicate key update
         blood = values(blood),
-        attack = values(attack)
+        attack = values(attack),
+        max_blood = values(max_blood)
     </insert>
 </mapper>
 

@@ -1,5 +1,7 @@
-package com.icboluo.object;
+package com.icboluo.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -8,13 +10,14 @@ import java.io.Serializable;
  * 玩家(Player)实体类
  *
  * @author makejava
- * @since 2022-03-13 12:17:18
+ * @since 2022-03-14 22:22:41
  */
 @Data
-public class PlayerVO implements Serializable {
+public class Player implements Serializable {
     /**
-     * id
+     * id TODO 加这个真的难受，不加没有返回值，怎么处理
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
     /**
      * 血量
@@ -35,7 +38,7 @@ public class PlayerVO implements Serializable {
     /**
      * 级别
      */
-    private String level;
+    private Integer level;
     /**
      * 最大血量
      */
@@ -45,6 +48,6 @@ public class PlayerVO implements Serializable {
      */
     private Integer age;
 
-    private static final long serialVersionUID = 988155755708954717L;
+    private static final long serialVersionUID = -29898007683118569L;
 }
 

@@ -1,6 +1,7 @@
 package com.icboluo.service;
 
-import com.icboluo.object.PlayerVO;
+
+import com.icboluo.pojo.PlayerVO;
 
 /**
  * 玩家(Player)表服务接口
@@ -19,4 +20,6 @@ public interface PlayerService {
     PlayerVO queryById(Integer id);
 
     void attack(Integer playerId, Integer monsterId);
+
+    int startGame();
 }
