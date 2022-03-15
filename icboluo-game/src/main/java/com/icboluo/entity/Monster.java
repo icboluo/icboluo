@@ -6,8 +6,8 @@ import java.io.Serializable;
 /**
  * 玩家(Monster)实体类
  *
- * @author makejava
- * @since 2022-03-14 22:22:29
+ * @author icboluo
+ * @since 2022-03-15 23:00:20
  */
 @Data
 public class Monster implements Serializable {
@@ -27,7 +27,11 @@ public class Monster implements Serializable {
      * 最大血量
      */
     private Integer maxBlood;
+    /**
+     * 姓名
+     */
+    private String name;
 
-    private static final long serialVersionUID = -85159120832417759L;
+    private static final long serialVersionUID = -75975117175722732L;
 }
 

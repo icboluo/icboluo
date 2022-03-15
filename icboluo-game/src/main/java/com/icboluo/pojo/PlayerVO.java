@@ -44,6 +44,14 @@ public class PlayerVO implements Serializable {
      * 年龄
      */
     private Integer age;
+    /**
+     * 当前级别所需总经验
+     */
+    private Integer curTotalExperience;
+    /**
+     * 姓名
+     */
+    private String name;
 
     private static final long serialVersionUID = 988155755708954717L;
 }

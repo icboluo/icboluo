@@ -7,12 +7,13 @@
         <result property="blood" column="blood" jdbcType="INTEGER"/>
         <result property="attack" column="attack" jdbcType="INTEGER"/>
         <result property="maxBlood" column="max_blood" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MonsterMap">
         select
-          id, blood, attack, max_blood
+          id, blood, attack, max_blood, name
         from monster
         <where>
             <if test="id != null">
@@ -27,28 +28,32 @@
             <if test="maxBlood != null">
                 and max_blood = #{maxBlood}
             </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into monster(blood, attack, max_blood)
+        insert into monster(blood, attack, max_blood, name)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.blood}, #{entity.attack}, #{entity.maxBlood})
+        (#{entity.blood}, #{entity.attack}, #{entity.maxBlood}, #{entity.name})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into monster(blood, attack, max_blood)
+        insert into monster(blood, attack, max_blood, name)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.blood}, #{entity.attack}, #{entity.maxBlood})
+            (#{entity.blood}, #{entity.attack}, #{entity.maxBlood}, #{entity.name})
         </foreach>
         on duplicate key update
         blood = values(blood),
         attack = values(attack),
-        max_blood = values(max_blood)
+        max_blood = values(max_blood),
+        name = values(name)
     </insert>
 </mapper>
 

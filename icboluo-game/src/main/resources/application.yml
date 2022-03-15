@@ -5,18 +5,23 @@ spring:
     active: test
   application:
     name: icboluo-game
+  messages:
+#    必须有messages/messages.properties文件必须有（默认配置，内容可以为空），相反，其他文件可以瞎填类似的
+    basename: i18/messages
+    #    找不到用 msg的code
+    use-code-as-default-message: true
 mybatis:
   configuration:
-    #    ???????
+    #    自动小驼峰映射
     map-underscore-to-camel-case: true
-  #    ??????? mybatis/*Mapper.xml?????????
+  #    为什么这里指定 mybatis/*Mapper.xml不行（文件夹也改了
   mapper-locations: mapper/*Mapper.xml.
 logging:
   level:
-    #    level ??????????????
+    #    level 后面直接跟日志级别会启动报错
     com.icboluo: debug
   pattern:
-    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:dd? HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:dd日 HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
 
 mybatis-plus:
   type-aliases-super-type:
@@ -25,5 +30,6 @@ mybatis-plus:
       id-type: none
       insert-strategy: not_null
       update-strategy: not_null
+
 
 

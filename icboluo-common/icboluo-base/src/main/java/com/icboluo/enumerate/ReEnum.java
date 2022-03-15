@@ -95,9 +95,6 @@ public enum ReEnum {
     UNEXPECTED_EXCEPTION(500, "预料之外的异常"),
     PARAM_ERROR(500, "参数不合法"),
 
-    NO_FIND_THE_ROLE(1001, "No find the role, Please contact the administrator"),
-    CUR_ROLE_ALREADY_DIE(1002, "The role already die that you chose, Please restart GAME"),
-
     ROLE_ERROR(500, "角色错误"),
     ;
 

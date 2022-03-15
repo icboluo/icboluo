@@ -9,8 +9,8 @@ import java.io.Serializable;
 /**
  * 玩家(Player)实体类
  *
- * @author makejava
- * @since 2022-03-14 22:22:41
+ * @author icboluo
+ * @since 2022-03-15 22:48:56
  */
 @Data
 public class Player implements Serializable {
@@ -47,7 +47,11 @@ public class Player implements Serializable {
      * 年龄
      */
     private Integer age;
+    /**
+     * 姓名
+     */
+    private String name;
 
-    private static final long serialVersionUID = -29898007683118569L;
+    private static final long serialVersionUID = -95089312827414366L;
 }
 

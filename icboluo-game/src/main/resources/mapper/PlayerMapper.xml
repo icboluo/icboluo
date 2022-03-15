@@ -11,12 +11,13 @@
         <result property="level" column="level" jdbcType="INTEGER"/>
         <result property="maxBlood" column="max_blood" jdbcType="INTEGER"/>
         <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="PlayerMap">
         select
-          id, blood, attack, experience, total_experience, level, max_blood, age
+          id, blood, attack, experience, total_experience, level, max_blood, age, name
         from player
         <where>
             <if test="id != null">
@@ -43,23 +44,26 @@
             <if test="age != null">
                 and age = #{age}
             </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into player(blood, attack, experience, total_experience, level, max_blood, age)
+        insert into player(blood, attack, experience, total_experience, level, max_blood, age, name)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.blood}, #{entity.attack}, #{entity.experience}, #{entity.totalExperience}, #{entity.level}, #{entity.maxBlood}, #{entity.age})
+        (#{entity.blood}, #{entity.attack}, #{entity.experience}, #{entity.totalExperience}, #{entity.level}, #{entity.maxBlood}, #{entity.age}, #{entity.name})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into player(blood, attack, experience, total_experience, level, max_blood, age)
+        insert into player(blood, attack, experience, total_experience, level, max_blood, age, name)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.blood}, #{entity.attack}, #{entity.experience}, #{entity.totalExperience}, #{entity.level}, #{entity.maxBlood}, #{entity.age})
+            (#{entity.blood}, #{entity.attack}, #{entity.experience}, #{entity.totalExperience}, #{entity.level}, #{entity.maxBlood}, #{entity.age}, #{entity.name})
         </foreach>
         on duplicate key update
         blood = values(blood),
@@ -68,7 +72,8 @@
         total_experience = values(total_experience),
         level = values(level),
         max_blood = values(max_blood),
-        age = values(age)
+        age = values(age),
+        name = values(name)
     </insert>
 </mapper>
 

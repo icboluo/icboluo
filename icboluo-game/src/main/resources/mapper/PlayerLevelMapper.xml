@@ -5,12 +5,16 @@
     <resultMap type="com.icboluo.entity.PlayerLevel" id="PlayerLevelMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="level" column="level" jdbcType="VARCHAR"/>
+        <result property="experience" column="experience" jdbcType="INTEGER"/>
+        <result property="increaseAttack" column="increase_attack" jdbcType="INTEGER"/>
+        <result property="increaseBlood" column="increase_blood" jdbcType="INTEGER"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="PlayerLevelMap">
         select
-          id, level
+          id, level, experience, increase_attack, increase_blood, age
         from player_level
         <where>
             <if test="id != null">
@@ -19,26 +23,42 @@
             <if test="level != null and level != ''">
                 and level = #{level}
             </if>
+            <if test="experience != null">
+                and experience = #{experience}
+            </if>
+            <if test="increaseAttack != null">
+                and increase_attack = #{increaseAttack}
+            </if>
+            <if test="increaseBlood != null">
+                and increase_blood = #{increaseBlood}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into player_level(level)
+        insert into player_level(level, experience, increase_attack, increase_blood, age)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.level})
+        (#{entity.level}, #{entity.experience}, #{entity.increaseAttack}, #{entity.increaseBlood}, #{entity.age})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into player_level(level)
+        insert into player_level(level, experience, increase_attack, increase_blood, age)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.level})
+            (#{entity.level}, #{entity.experience}, #{entity.increaseAttack}, #{entity.increaseBlood}, #{entity.age})
         </foreach>
         on duplicate key update
-        level = values(level)
+        level = values(level),
+        experience = values(experience),
+        increase_attack = values(increase_attack),
+        increase_blood = values(increase_blood),
+        age = values(age)
     </insert>
 </mapper>
 

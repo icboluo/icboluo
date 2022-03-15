@@ -5,6 +5,8 @@ import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,6 +32,8 @@ public class GlobalControllerExceptionHandler {
     private HttpServletRequest request;
     @Resource
     private HttpServletResponse response;
+    @Resource
+    private MessageSource messageSource;
 
     /**
      * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
@@ -38,10 +42,12 @@ public class GlobalControllerExceptionHandler {
      * @return 失败的响应信息
      */
     @ExceptionHandler(value = {IcBoLuoException.class})
-    public Response noteExceptionHandler(Exception e) {
+    public Response icBoLuoExceptionHandler(IcBoLuoException e) {
         printLog(e);
         response.setStatus(500);
-        return R.error(500, e);
+//        TODO 这个解决了异常i18，可是ret i18还是没有解决，而且，不一定所有的异常均需要i18，是否有些浪费性能？
+        String message = messageSource.getMessage(e.getMessage(), null, LocaleContextHolder.getLocale());
+        return R.error(500, message);
     }
 
     /**
@@ -54,7 +60,7 @@ public class GlobalControllerExceptionHandler {
      * @throws Exception {@code e} 最大异常
      */
     @ExceptionHandler(value = Exception.class)
-    public Response defaultExceptionHandler(Exception e) throws Exception {
+    public Response exceptionHandler(Exception e) throws Exception {
         printLog(e);
         //如果异常上已经有 @ResponseStatus 注解，则让框架处理
         if (Objects.nonNull(AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class))) {

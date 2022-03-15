@@ -1,7 +1,6 @@
 package com.icboluo.service.impl;
 
 import com.icboluo.entity.*;
-import com.icboluo.enumerate.ReEnum;
 import com.icboluo.mapper.CultivationCareerMapper;
 import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.MonsterMapper;
@@ -11,6 +10,9 @@ import com.icboluo.service.PlayerLevelService;
 import com.icboluo.service.PlayerService;
 import com.icboluo.util.BeanHelper;
 import com.icboluo.util.IcBoLuoException;
+import com.icboluo.util.NameUtils;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,6 +35,8 @@ public class PlayerServiceImpl implements PlayerService {
     private DiePlayerMapper diePlayerMapper;
     @Resource
     private CultivationCareerMapper cultivationCareerMapper;
+    @Resource
+    private MessageSource messageSource;
 
     /**
      * 通过ID查询单条数据
@@ -46,19 +50,18 @@ public class PlayerServiceImpl implements PlayerService {
         if (player == null) {
             DiePlayer diePlayer = diePlayerMapper.queryById(id);
             if (diePlayer == null) {
-                throw new IcBoLuoException(ReEnum.NO_FIND_THE_ROLE);
+                String message = messageSource.getMessage("no.find.the.role", null, LocaleContextHolder.getLocale());
+                throw new IcBoLuoException(message);
             }
-            throw new IcBoLuoException(ReEnum.CUR_ROLE_ALREADY_DIE);
+            throw new IcBoLuoException("cur.role.already.die");
         }
-        player.setAttack(player.getAttack() + player.getLevel());
-        player.setBlood(player.getBlood() + player.getLevel() * 5);
-
         PlayerVO view = BeanHelper.copyProperties(player, PlayerVO::new);
         PlayerLevel playerLevel = playerLevelService.queryById(player.getLevel());
         view.setLevel(playerLevel.getLevel());
+        view.setCurTotalExperience(playerLevel.getExperience());
 
-        if (player.getAge() > 100) {
-            throw new IcBoLuoException("you are die");
+        if (player.getAge() >= playerLevel.getAge()) {
+            throw new IcBoLuoException("you.are.dead");
         }
         return view;
     }
@@ -66,40 +69,16 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void attack(Integer playerId, Integer monsterId) {
         Monster monster = monsterMapper.queryById(monsterId);
-        Integer monBlo = monster.getBlood();
-        if (monBlo <= 0) {
-            monsterMapper.deleteById(monster.getId());
+        Player player = playerMapper.queryById(playerId);
+        if (player == null || monster == null) {
             return;
         }
-        Player player = playerMapper.queryById(playerId);
-        CultivationCareer cultivationCareer = new CultivationCareer();
-        cultivationCareer.setPlayerId(player.getId());
-        Integer plaAtt = player.getAttack();
-        if (player.getBlood() > 0) {
-            Integer monAtt = monster.getAttack();
-            Integer plaBlo = player.getBlood();
-            player.setBlood(plaBlo - monAtt);
-            monster.setBlood(monBlo - plaAtt);
+        boolean attack = attack(player, monster);
+        if (!attack) {
+            return;
         }
-        if (monster.getBlood() > 0) {
-            monsterMapper.updateByPrimaryKeySelective(monster);
-            player.setAge(player.getAge() + 1);
-            cultivationCareer.setOper("You spend 1 year attacking a monster");
-        } else {
-            monsterMapper.deleteById(monster.getId());
-            player.setTotalExperience(player.getExperience() + 1);
-            if (player.getExperience() >= 4) {
-                player.setExperience(player.getExperience() - 4);
-                player.setLevel(player.getLevel() + 1);
-                cultivationCareer.setOper("you killed a monster, and you upgraded");
-            } else {
-                player.setExperience(player.getExperience() + 1);
-                cultivationCareer.setOper("you killed a monster");
-            }
-        }
+        experienceHand(player, monster);
         playerMapper.updateByPrimaryKeySelective(player);
-
-        cultivationCareerMapper.insert(cultivationCareer);
     }
 
     @Override
@@ -112,6 +91,8 @@ public class PlayerServiceImpl implements PlayerService {
         player.setLevel(1);
         player.setExperience(0);
         player.setTotalExperience(0);
+
+        player.setName(NameUtils.getCnName());
         playerMapper.insert(player);
 
         CultivationCareer cultivationCareer = new CultivationCareer();
@@ -119,5 +100,74 @@ public class PlayerServiceImpl implements PlayerService {
         cultivationCareer.setOper("Games start");
         cultivationCareerMapper.insert(cultivationCareer);
         return player.getId();
+    }
+
+    /**
+     * 攻击
+     *
+     * @param player  玩家
+     * @param monster 怪物
+     * @return 是否造成攻击行为
+     */
+    private boolean attack(Player player, Monster monster) {
+        Integer plaBlo = player.getBlood();
+        if (plaBlo <= 0) {
+            return false;
+        }
+        Integer monBlo = monster.getBlood();
+        if (monBlo <= 0) {
+            monsterMapper.deleteById(monster.getId());
+            return false;
+        }
+
+        int plaAtt = player.getAttack() + player.getLevel();
+        Integer monAtt = monster.getAttack();
+
+//        战斗之后怪物的血量
+        int aftMonBlo = monBlo - plaAtt;
+        player.setBlood(plaBlo - monAtt);
+        monster.setBlood(aftMonBlo);
+
+        player.setAge(player.getAge() + 1);
+        return true;
+    }
+
+    /**
+     * 经验处理
+     *
+     * @param player  玩家
+     * @param monster 怪物
+     */
+    private void experienceHand(Player player, Monster monster) {
+        CultivationCareer cultivationCareer = new CultivationCareer();
+        cultivationCareer.setPlayerId(player.getId());
+        if (monster.getBlood() > 0) {
+            monsterMapper.updateByPrimaryKeySelective(monster);
+            cultivationCareer.setOper("You spend 1 year attacking a monster");
+        } else {
+            monsterMapper.deleteById(monster.getId());
+            getExperience(player, 1, cultivationCareer);
+        }
+        cultivationCareerMapper.insert(cultivationCareer);
+    }
+
+    private void getExperience(Player player, int experience, CultivationCareer cultivationCareer) {
+        PlayerLevel playerLevel = playerLevelService.queryById(player.getLevel());
+//        过量经验
+        int excessExperience = player.getExperience() + experience - playerLevel.getExperience();
+        if (excessExperience >= 0) {
+            player.setExperience(excessExperience);
+            player.setLevel(player.getLevel() + 1);
+            player.setAttack(player.getAttack() + playerLevel.getIncreaseAttack());
+            player.setMaxBlood(player.getMaxBlood() + playerLevel.getIncreaseBlood());
+            cultivationCareer.setOper("you killed a monster, and you upgraded");
+            if (player.getLevel() > 4) {
+                throw new IcBoLuoException("you have reached the highest level");
+            }
+        } else {
+            player.setExperience(player.getExperience() + experience);
+            cultivationCareer.setOper("you killed a monster");
+        }
+        player.setTotalExperience(player.getTotalExperience() + experience);
     }
 }
