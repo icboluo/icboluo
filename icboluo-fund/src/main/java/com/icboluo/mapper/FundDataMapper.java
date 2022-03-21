@@ -53,5 +53,6 @@ public interface FundDataMapper extends MyBaseMapper<FundData> {
     List<FundDataVO> selectChooseAll(String fundId);
 
     void deleteByFundIdDate(@Param("fundId") String fundId, @Param("date") LocalDate date);
+
 }
 

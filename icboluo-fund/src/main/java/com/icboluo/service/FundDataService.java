@@ -9,6 +9,8 @@ import com.icboluo.object.vo.FundDataVO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 /**
  * (FundData)表服务接口
@@ -32,5 +34,27 @@ public interface FundDataService {
 
     FundDataRecentVO findRecentData(String fundId, LocalDate myChooseDate);
 
+    /**
+     * 增加今天的数据
+     *
+     * @param fundId 基金id
+     * @param rate   日增至率
+     */
     void addToday(String fundId, BigDecimal rate);
+
+    /**
+     * 最近10天增长率
+     *
+     * @param fundList 有序基金列表（按日期倒序
+     * @return 最近10天平均增长率
+     */
+    BigDecimal last10DaysAvg(List<FundData> fundList);
+
+    /**
+     * 年增长率（第二年的时候加上了第一年
+     *
+     * @param fundList 有序基金列表（按日期倒序
+     * @return 年平均增长率
+     */
+    Map<Integer, BigDecimal> yearAvg(List<FundData> fundList);
 }

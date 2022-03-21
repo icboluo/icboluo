@@ -183,6 +183,38 @@ public class FundDataServiceImpl implements FundDataService {
         fundDataMapper.insertSelective(data);
     }
 
+    @Override
+    public BigDecimal last10DaysAvg(List<FundData> fundList) {
+        if (CollectionUtils.isEmpty(fundList)) {
+            return BigDecimal.ZERO;
+        }
+        if (fundList.size() > 10) {
+            fundList = fundList.subList(0, 10);
+        }
+        Double tenAvg = fundList.stream()
+                .map(FundData::getIncreaseRateDay)
+                .filter(Objects::nonNull)
+                .collect(Collectors.averagingDouble(BigDecimal::doubleValue));
+        return BigDecimal.valueOf(tenAvg);
+    }
+
+    @Override
+    public Map<Integer, BigDecimal> yearAvg(List<FundData> fundList) {
+        LocalDate now = LocalDate.now();
+        Map<Integer, BigDecimal> avgMap = new HashMap<>();
+//            每年进行计算
+        for (int i = 0; i < 5; i++) {
+            LocalDate beforeDate = now.minusYears(i + 1);
+            Double val = fundList.stream()
+                    .filter(fundData -> fundData.getNetValueDate().compareTo(beforeDate) >= 0)
+                    .map(FundData::getIncreaseRateDay)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.averagingDouble(BigDecimal::doubleValue));
+            avgMap.put(i, BigDecimal.valueOf(val));
+        }
+        return avgMap;
+    }
+
     private List<FundDataVO> findSimChoose(List<FundDataVO> sourceList, List<FundDataVO> allList, Integer length) {
         List<FundDataVO> res = new ArrayList<>();
 //        比如当前是10个，选择2天，10-2+1=9 i的取值为0-8，当取8的时候可以选择8/9，是符合边界条件的
