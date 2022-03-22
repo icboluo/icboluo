@@ -1,10 +1,11 @@
 package com.icboluo.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.icboluo.annotation.ResponseResult;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
-import com.icboluo.annotation.ResponseResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class FundAttentionController {
 
     @GetMapping("/init")
     public PageInfo<FundAttentionVO> init(FundAttentionQuery query) {
-//        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
         List<FundAttentionVO> list = fundAttentionService.init(query);
         return PageInfo.of(list);
     }

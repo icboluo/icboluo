@@ -70,9 +70,6 @@
             <if test="endDate != null">
                 and fd.net_value_date <![CDATA[ <=]]> #{endDate}
             </if>
-        <if test="date !=null">
-            and net_value_date > #{date}
-        </if>
         </where>
         order by fd.net_value_date desc
     </select>

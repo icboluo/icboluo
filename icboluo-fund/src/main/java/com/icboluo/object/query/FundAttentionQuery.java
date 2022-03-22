@@ -4,7 +4,7 @@ package com.icboluo.object.query;
 import com.icboluo.common.PageQuery;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * @author icboluo
@@ -16,5 +16,7 @@ public class FundAttentionQuery extends PageQuery {
     /**
      * 查询日期
      */
-    private LocalDateTime date;
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 }

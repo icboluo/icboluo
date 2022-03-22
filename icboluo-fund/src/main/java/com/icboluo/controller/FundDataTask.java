@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  * @author icboluo
  * @date 2021-33-27 22:33
  */
-//@Component
+// @Component
 @Slf4j
 public class FundDataTask {
 

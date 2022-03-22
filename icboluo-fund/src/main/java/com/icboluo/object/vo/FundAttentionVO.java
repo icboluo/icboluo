@@ -32,12 +32,22 @@ public class FundAttentionVO {
     private Integer lossTotalDay;
 
     /**
-     * 定投总收益
+     * 定投收益（万份收益
      */
-    private BigDecimal fixedVote;
+    private BigDecimal fixedInvestmentIncome;
 
     /**
-     * 亏损投入总收益
+     * 亏损投入收益(万份收益
      */
-    private BigDecimal lossInvestment;
+    private BigDecimal lossInvestmentIncome;
+
+    /**
+     * 亏损比率投入收益（万份收益
+     */
+    private BigDecimal lossRatioIncome;
+
+    /**
+     * 大亏损时收益（万份收益
+     */
+    private BigDecimal bigLossIncome;
 }
