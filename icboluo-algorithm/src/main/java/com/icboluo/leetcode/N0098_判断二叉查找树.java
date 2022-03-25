@@ -122,11 +122,11 @@ public class N0098_判断二叉查找树 {
             }
             root = stack.pop();
             if (--k == 0) {
+//                这里也可以break，由下面的代码抛出ans
                 return root;
             }
             root = root.right;
         }
-//            这里少了一层判断非空
         return null;
     }
 

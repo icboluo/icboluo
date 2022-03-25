@@ -10,9 +10,8 @@ import com.icboluo.service.PlayerLevelService;
 import com.icboluo.service.PlayerService;
 import com.icboluo.util.BeanHelper;
 import com.icboluo.util.IcBoLuoException;
+import com.icboluo.util.IcBoLuoI18nException;
 import com.icboluo.util.NameUtils;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,8 +34,6 @@ public class PlayerServiceImpl implements PlayerService {
     private DiePlayerMapper diePlayerMapper;
     @Resource
     private CultivationCareerMapper cultivationCareerMapper;
-    @Resource
-    private MessageSource messageSource;
 
     /**
      * 通过ID查询单条数据
@@ -50,10 +47,9 @@ public class PlayerServiceImpl implements PlayerService {
         if (player == null) {
             DiePlayer diePlayer = diePlayerMapper.queryById(id);
             if (diePlayer == null) {
-                String message = messageSource.getMessage("no.find.the.role", null, LocaleContextHolder.getLocale());
-                throw new IcBoLuoException(message);
+                throw new IcBoLuoException("no.find.the.role");
             }
-            throw new IcBoLuoException("cur.role.already.die");
+            throw new IcBoLuoI18nException("cur.role.already.die");
         }
         PlayerVO view = BeanHelper.copyProperties(player, PlayerVO::new);
         PlayerLevel playerLevel = playerLevelService.queryById(player.getLevel());

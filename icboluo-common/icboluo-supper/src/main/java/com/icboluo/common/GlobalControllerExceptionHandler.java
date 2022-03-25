@@ -2,6 +2,7 @@ package com.icboluo.common;
 
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.IcBoLuoException;
+import com.icboluo.util.IcBoLuoI18nException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -45,13 +46,26 @@ public class GlobalControllerExceptionHandler {
     public Response icBoLuoExceptionHandler(IcBoLuoException e) {
         printLog(e);
         response.setStatus(500);
-//        TODO 这个解决了异常i18，可是ret i18还是没有解决，而且，不一定所有的异常均需要i18，是否有些浪费性能？
+        return R.error(500, e.getMessage());
+    }
+
+    /**
+     * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
+     *
+     * @param e 异常信息
+     * @return 失败的响应信息
+     */
+    @ExceptionHandler(value = {IcBoLuoI18nException.class})
+    public Response icBoLuoI18nExceptionHandler(IcBoLuoI18nException e) {
+        printLog(e);
+        response.setStatus(500);
+//        TODO 这个解决了异常i18，可是ret i18还是没有解决
         String message = messageSource.getMessage(e.getMessage(), null, LocaleContextHolder.getLocale());
         return R.error(500, message);
     }
 
     /**
-     * TODO 难道真的有什么异常会绕过runtime直接到except吗
+     * TODO 难道真的有什么异常会绕过runtime直接到Exception吗
      * <p>
      * 默认的异常处理方法，如果 e 有注解 @ResponseStatus 注解，则继续抛出，让框架处理
      *

@@ -7,7 +7,6 @@ import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.NameUtils;
 import com.icboluo.util.RandomHelper;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,8 +29,7 @@ public class MonsterServiceImpl implements MonsterService {
     public Monster nextMonster() {
         List<Monster> list = monsterMapper.selectAll();
         if (list.size() >= 10) {
-            String message = messageSource.getMessage("monster.more.than.10.please.attack.before", null, LocaleContextHolder.getLocale());
-            throw new IcBoLuoException(message);
+            throw new IcBoLuoException("monster.more.than.10.please.attack.before");
         }
         int attack = RandomHelper.interval(4, 8);
         int maxBlood = RandomHelper.interval(15, 30);
