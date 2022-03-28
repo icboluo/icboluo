@@ -1,4 +1,4 @@
-package com.icboluo.othersource;
+package com.icboluo.leetcode;
 
 import com.icboluo.common.TreeNode;
 
@@ -8,9 +8,9 @@ import java.util.Stack;
  * @author icboluo
  * @date 2021-21-14 13:21
  */
-public class DD {
+public class N0404_左叶子节点和 {
     public int sumOfLeftLeaves(TreeNode root) {
-        return sumOfLeftLeaves1(root);
+        return sumOfLeftLeaves2(root);
     }
 
     public int sumOfLeftLeaves1(TreeNode root) {
@@ -42,17 +42,18 @@ public class DD {
         int res = 0;
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-        if (!stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             TreeNode cur = stack.pop();
             if (cur.left != null) {
-                if (cur.left.left == null || cur.left.right == null) {
-                    res += root.left.val;
+//                 叶子节点
+                if (cur.left.left == null && cur.left.right == null) {
+                    res += cur.left.val;
                 } else {
                     stack.push(cur.left);
                 }
             }
             if (cur.right != null) {
-                if (root.right.left != null || root.right.right != null) {
+                if (cur.right.left != null || cur.right.right != null) {
                     stack.push(cur.right);
                 }
             }

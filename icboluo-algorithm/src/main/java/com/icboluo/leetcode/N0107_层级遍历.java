@@ -50,11 +50,13 @@ public class N0107_层级遍历 {
             return;
         }
         if (level == ans.size()) {
+//        正序解法    ans.add(new ArrayList<>());
             ans.add(0, new ArrayList<>());
         }
         order1(root.left, level + 1);
         order1(root.right, level + 1);
-        ans.get(level).add(root);
+//        ans.get(level).add(root);
+        ans.get(ans.size() - level - 1).add(root);
     }
 
     /**

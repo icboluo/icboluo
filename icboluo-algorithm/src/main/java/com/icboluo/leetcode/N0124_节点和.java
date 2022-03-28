@@ -25,7 +25,7 @@ public class N0124_节点和 {
         int right = Math.max(0, maxSum(root.right));
         int cur = left + right + root.val;
         ans = Math.max(ans, cur);
-//        why error
-        return cur;
+//       这里求的是当前节点一下的最大值，是单路径
+        return Math.max(left, right) + root.val;
     }
 }

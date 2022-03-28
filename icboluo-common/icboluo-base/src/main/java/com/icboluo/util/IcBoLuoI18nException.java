@@ -4,7 +4,7 @@ import com.icboluo.enumerate.ReEnum;
 import lombok.Getter;
 
 /**
- * TODO 这个还没有怎么用呢
+ * 国际化异常
  *
  * @author icboluo
  */

@@ -21,6 +21,11 @@ public class TreeNode {
         this.val = val;
     }
 
+    /**
+     * 完全二叉树的构造方法
+     *
+     * @param arr 层级遍历的数组
+     */
     public TreeNode(Integer[] arr) {
         TreeNode treeNode = getInstance(arr, 0);
         if (treeNode == null) {
