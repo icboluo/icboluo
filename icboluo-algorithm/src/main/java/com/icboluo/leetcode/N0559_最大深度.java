@@ -47,5 +47,4 @@ public class N0559_最大深度 {
         }
         return max + 1;
     }
-
 }
