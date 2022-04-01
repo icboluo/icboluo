@@ -23,11 +23,6 @@ public class ListNode {
                 '}';
     }
 
-    public ListNode() {
-        this.val = 0;
-        this.next = null;
-    }
-
     public void print() {
         ListNode cur = this;
         ListNode next = cur.next;

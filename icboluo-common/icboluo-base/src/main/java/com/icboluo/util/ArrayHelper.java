@@ -259,4 +259,13 @@ public class ArrayHelper {
         Collections.addAll(ans, arr);
         return ans;
     }
+
+    public static <T> Collection<T> toColl(T[] arr) {
+        if (arr == null) {
+            return null;
+        }
+        List<T> ans = new ArrayList<>();
+        Collections.addAll(ans, arr);
+        return ans;
+    }
 }

@@ -1,6 +1,5 @@
 package com.icboluo.jdk.hashmap;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Map;
@@ -15,10 +14,11 @@ import java.util.Objects;
  */
 class MyHashMap7<K, V> {
     static final Entry<?, ?>[] EMPTY_TABLE = {};
-    static final int MAXIMUM_CAPACITY = 1 << 30;
+    static final int max_capacity = 1 << 30;
     // 就是原table字段
     transient Entry<K, V>[] arr = (Entry<K, V>[]) EMPTY_TABLE;
     int threshold;
+    //    快速失败机制
     transient int modCount;
     final float loadFactor;
     transient int hashSeed = 0;
@@ -47,7 +47,6 @@ class MyHashMap7<K, V> {
 //           试着找链表中有没有新加元素
             V oldValue = linkEle.value;
             linkEle.value = value;
-            linkEle.recordAccess(this);
             return oldValue;
         }
 
@@ -60,30 +59,55 @@ class MyHashMap7<K, V> {
         // Find a power of 2 >= toSize
         int capacity = roundUpToPowerOf2(toSize);
 
-        threshold = (int) Math.min(capacity * loadFactor, MAXIMUM_CAPACITY + 1);
+        threshold = (int) Math.min(capacity * loadFactor, max_capacity + 1);
         arr = new Entry[capacity];
         initHashSeedAsNeeded(capacity);
     }
 
     private static int roundUpToPowerOf2(int number) {
         // assert number >= 0 : "number must be non-negative";
-        int rounded = number >= MAXIMUM_CAPACITY
-                ? MAXIMUM_CAPACITY
-                : (rounded = Integer.highestOneBit(number)) != 0
-                ? (Integer.bitCount(number) > 1) ? rounded << 1 : rounded
-                : 1;
-
+        if (number >= max_capacity) {
+            return max_capacity;
+        }
+        /*
+        假设，我们传入的是10，需要得到小于10的最大的2的次方数8（其实也可以直接将高位写成1，其他位遍历成0（遍历不考虑
+            0000 1000   8
+            0000 1010   10                  0001 ****
+       >>1  0000 0101                       0000 1***
+        |=  0000 1111                       0001 1***
+        ...                          >>2    0000 011*
+       >>>1 0000 0111                |=     0001 111*
+        i-  0000 1000
+         */
+        int rounded = Integer.highestOneBit(number);
+        /*
+        原实现
+        i |= (i >>  1)
+        i |= (i >>  2)
+        i |= (i >>  4)
+        i |= (i >>  8)
+        i |= (i >> 16)
+        ret i-(i>>>1)  （>>>:无符号右移
+         */
+        if (rounded == 0) {
+            return 1;
+        }
+//        一般情况下左移一位；如果是8，则不再移动
+        if (Integer.bitCount(number) > 1) {
+            return rounded << 1;
+        }
         return rounded;
     }
 
     private V putForNullKey(V value) {
-        for (Entry<K, V> e = arr[0]; e != null; e = e.next) {
-            if (e.key == null) {
-                V oldValue = e.value;
-                e.value = value;
-                e.recordAccess(this);
+        Entry<K, V> root = arr[0];
+        while (root != null) {
+            if (root.key == null) {
+                V oldValue = root.value;
+                root.value = value;
                 return oldValue;
             }
+            root = root.next;
         }
         modCount++;
         addEntry(0, null, value, 0);
@@ -100,31 +124,36 @@ class MyHashMap7<K, V> {
     }
 
     void resize(int newCapacity) {
-        Entry[] oldTable = arr;
-        int oldCapacity = oldTable.length;
-        if (oldCapacity == MAXIMUM_CAPACITY) {
+        Entry[] oldArr = arr;
+        int oldCapacity = oldArr.length;
+        if (oldCapacity == max_capacity) {
             threshold = Integer.MAX_VALUE;
             return;
         }
 
-        Entry[] newTable = new Entry[newCapacity];
-        transfer(newTable, initHashSeedAsNeeded(newCapacity));
-        arr = newTable;
-        threshold = (int) Math.min(newCapacity * loadFactor, MAXIMUM_CAPACITY + 1);
+        Entry[] newArr = new Entry[newCapacity];
+        transfer(newArr, initHashSeedAsNeeded(newCapacity));
+        arr = newArr;
+        threshold = (int) Math.min(newCapacity * loadFactor, max_capacity + 1);
     }
 
-    void transfer(Entry[] newTable, boolean rehash) {
-        int newCapacity = newTable.length;
-        for (Entry<K, V> e : arr) {
-            while (null != e) {
-                Entry<K, V> next = e.next;
+    void transfer(Entry[] newArr, boolean rehash) {
+        int newCapacity = newArr.length;
+        for (Entry<K, V> root : arr) {
+            while (root != null) {
+                Entry<K, V> next = root.next;
                 if (rehash) {
-                    e.hash = null == e.key ? 0 : hash(e.key);
+                    root.hash = root.key == null ? 0 : hash(root.key);
                 }
-                int i = indexFor(e.hash, newCapacity);
-                e.next = newTable[i];
-                newTable[i] = e;
-                e = next;
+                /*
+                1010 1010                               1011 1010
+                0001 1111 31
+                0000 1010 & 下标和15的时候是一致的      0001 1010 下标扩大了一倍
+                 */
+                int i = indexFor(root.hash, newCapacity);
+                root.next = newArr[i];
+                newArr[i] = root;
+                root = next;
             }
         }
     }
@@ -152,6 +181,13 @@ class MyHashMap7<K, V> {
 
     static int indexFor(int h, int length) {
         // assert Integer.bitCount(length) == 1 : "length must be a non-zero power of 2";
+        /*
+        0001 0000 16
+        0000 1111 15
+        **** **** h
+        0000 **** &
+        相当于%，与高位无关
+         */
         return h & (length - 1);
     }
 
@@ -169,6 +205,13 @@ class MyHashMap7<K, V> {
         }
 
         h ^= k.hashCode();
+
+        /*
+        1010 1111
+        0001 0101 >>>3
+        1011 1111 ^
+        让高位参与运算
+         */
 
         // This function ensures that hashCodes that differ only by
         // constant multiples at each bit position have a bounded
@@ -198,21 +241,6 @@ class MyHashMap7<K, V> {
             value = v;
             key = k;
             this.hash = hash;
-        }
-
-        /**
-         * This method is invoked whenever the value in an entry is
-         * overwritten by an invocation of put(k,v) for a key k that's already
-         * in the HashMap.
-         */
-        void recordAccess(MyHashMap7<K, V> m) {
-        }
-
-        /**
-         * This method is invoked whenever the entry is
-         * removed from the table.
-         */
-        void recordRemoval(MyHashMap7<K, V> m) {
         }
     }
 }

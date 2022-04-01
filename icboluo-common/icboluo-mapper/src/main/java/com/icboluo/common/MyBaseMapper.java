@@ -32,6 +32,12 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
         return deleteBatchIds(idList);
     }
 
+    /**
+     * String类型和自增Int类型是不一致的，需要在实体类上指定    @TableId(type = IdType.AUTO)
+     *
+     * @param record 实体类
+     * @return 受影响行数
+     */
     default int insertSelective(T record) {
         return insert(record);
     }
@@ -64,11 +70,21 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      * @param record 实例对象
      * @return 影响行数
      */
+    @SuppressWarnings(value = {"deprecation"})
     default int updateByPrimaryKeySelective(T record) {
         return updateById(record);
     }
 
-    int updateByPrimaryKey(T record);
+    /**
+     * 根据id更新
+     *
+     * @param record 实体类
+     * @return 受影响行数
+     * @deprecated 此函数默认实现selective功能，需要在子接口中重新定义
+     */
+    @Deprecated(since = "all")
+    @Override
+    int updateById(T record);
 
     default long count() {
         return count(Wrappers.emptyWrapper());

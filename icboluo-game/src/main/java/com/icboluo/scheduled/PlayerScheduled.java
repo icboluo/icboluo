@@ -45,7 +45,7 @@ public class PlayerScheduled {
                 player.setAge(player.getAge() + 1);
                 int blood = Math.min(player.getMaxBlood(), player.getBlood() + 10);
                 player.setBlood(blood);
-                playerMapper.updateById(player);
+                playerMapper.updateByPrimaryKeySelective(player);
                 cultivationCareer.setOper("time flies, another year has passed");
             }
             cultivationCareerMapper.insert(cultivationCareer);

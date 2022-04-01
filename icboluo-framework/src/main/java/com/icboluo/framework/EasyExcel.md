@@ -35,3 +35,5 @@ cell. get cell style 中的风格get出来后，重新设置会覆盖以前的�
 ## 使用
 
 EasyWriter.write 里面的data不需要EasyExcel支持，很简单的list即可
+
+当表头字段相同的时候，会合并单元格
