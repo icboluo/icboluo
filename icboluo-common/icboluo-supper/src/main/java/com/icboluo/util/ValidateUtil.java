@@ -13,6 +13,8 @@ import javax.validation.groups.Default;
 import java.util.Set;
 
 /**
+ * 如果不加 @Valid注解，可以使用本类开启手动校验，可以实现校验部分参数
+ *
  * @author icboluo
  * @since 2022-01-12 11:59
  */
@@ -45,8 +47,8 @@ public class ValidateUtil {
      * @param get
      * @param <T>
      */
-    public static <T> void validateProperty(T obj, SerialFunction<T, String>... get) {
-        for (SerialFunction<T, String> serialFunction : get) {
+    public static <T> void validateProperty(T obj, SerialFunction<T, Object>... get) {
+        for (SerialFunction<T, Object> serialFunction : get) {
             String columnName = SerializedLambda.getColumnName(serialFunction);
             Set<ConstraintViolation<T>> constraintViolations = VALIDATOR.validateProperty(obj, columnName, Default.class);
         }

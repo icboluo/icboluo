@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.stream.Collectors;
 
 /**
  * @author icboluo
@@ -27,8 +26,8 @@ public class N0107_层级遍历 {
         }
         order1(root);
         return ans.stream()
-                .map(li -> li.stream().map(treeNode -> treeNode.val).collect(Collectors.toList()))
-                .collect(Collectors.toList());
+                .map(li -> li.stream().map(treeNode -> treeNode.val).toList())
+                .toList();
     }
 
     List<List<TreeNode>> ans;

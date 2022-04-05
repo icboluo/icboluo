@@ -2,20 +2,30 @@ package com.icboluo.util;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.icboluo.annotation.Date;
+import com.icboluo.object.clientobject.RowCO;
+import com.icboluo.util.listenter.ExcelListener;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,10 +34,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * 读cell中元素的时候如果是数字，不能直接读成字符串
@@ -263,5 +271,84 @@ public class ExcelHelper {
         }
     }
 
+    public static <T> List<T> read(MultipartFile mf, ExcelListener<T> listener, Class<?> cla) {
+        if (mf == null) {
+            return new ArrayList<>();
+        }
+        validateSuffix(mf);
+        try (InputStream is = mf.getInputStream();) {
+            ExcelReader er = EasyExcel.read(is).build();
+            // 默认为0行表头，是因为要进行模板校验
+            ReadSheet rs = EasyExcel.readSheet(0).head(cla).headRowNumber(0).registerReadListener(listener).build();
+            er.read(rs);
+            return listener.getList();
+        } catch (IOException e) {
+            throw new IcBoLuoException("excel export error");
+        }
+    }
 
+    private static void validateSuffix(MultipartFile mf) {
+        String of = mf.getOriginalFilename();
+        if (of != null && !of.endsWith("xlsx")) {
+            throw new IcBoLuoException();
+        }
+    }
+
+    public static <T> String[][] validateContext(List<T> list) {
+        int head = 3;
+        String[][] arr = new String[list.size() + head][10];
+        for (int i = 0; i < list.size(); i++) {
+            T row = list.get(i);
+            Class<?> cla = row.getClass();
+            Field[] fields = cla.getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                String name = field.getName();
+                Set<ConstraintViolation<T>> constraintViolations = ValidateUtil.validateProperty(row, name);
+                String msg;
+                if (CollectionUtils.isEmpty(constraintViolations)) {
+                    msg = validateOther(field, row);
+                } else {
+                    List<ConstraintViolation<T>> collect = constraintViolations.stream().sorted().toList();
+                    msg = collect.get(0).getMessage();
+                }
+                if (StringUtils.hasText(msg)) {
+                    ExcelProperty ep = field.getAnnotation(ExcelProperty.class);
+                    arr[i + head][ep.index()] = msg;
+                }
+            }
+        }
+        return arr;
+    }
+
+    private static void removeErrData(List<RowCO> list, String[][] arr) {
+        for (int i = list.size() - 1; i >= 0; i--) {
+            String[] row = arr[i - 3];
+            boolean allEleIsEmpty = ArrayHelper.allEleIsEmpty(row);
+            if (!allEleIsEmpty) {
+                list.remove(i);
+            }
+        }
+    }
+
+    @SneakyThrows(IllegalAccessException.class)
+    private static <T> String validateOther(Field field, T row) {
+        if (field.isAnnotationPresent(Date.class)) {
+            Object o = field.get(row);
+            if (o instanceof LocalDate) {
+                return null;
+            } else {
+                return "not instanceof LocalDate";
+            }
+        }
+        return null;
+    }
+
+    private Comparator<ConstraintViolation<RowCO>> sort() {
+        Class<?>[] claArr = {NotNull.class, NotEmpty.class};
+        Comparator<ConstraintViolation<RowCO>> comparator = (fir, sec) -> {
+            return -1;
+        };
+        return comparator;
+    }
 }

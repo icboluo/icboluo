@@ -9,6 +9,7 @@ import com.icboluo.enumerate.ServiceNameEnum;
 import com.icboluo.dataobject.OrderCO;
 import com.icboluo.interceptor.UserContext;
 import com.icboluo.util.StaticTestUtil;
+import com.icboluo.util.ValidateUtil;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,7 +60,8 @@ public class WebInterceptorController {
     }
 
     @GetMapping("/validate")
-    public void validate(@Validated @RequestBody OrderCO co) {
-        System.out.println(co);
+    public void validate(@Validated @RequestBody OrderCO client) {
+        ValidateUtil.validateProperty(client, "code");
+        System.out.println(client);
     }
 }

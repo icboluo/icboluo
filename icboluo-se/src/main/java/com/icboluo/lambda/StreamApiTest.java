@@ -254,7 +254,7 @@ public class StreamApiTest {
     public void test8() {
         List<String> list = stus.stream()
                 .map(Student::getName)
-                .collect(Collectors.toList());
+                .toList();
         list.forEach(System.out::println);
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
         Set<Student.Status> set = stus.stream()

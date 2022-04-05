@@ -9,17 +9,16 @@ import java.util.Set;
  * @author icboluo
  * @since 2021-45-19 12:45
  */
-public class N0671 {
+public class N0671_二叉树次小值 {
     public static void main(String[] args) {
         Integer[] arr = {2, 2, 5, null, null, 5, 7};
         TreeNode root = new TreeNode(arr);
-        N0671 cla = new N0671();
+        N0671_二叉树次小值 cla = new N0671_二叉树次小值();
         int secondMinimumValue = cla.findSecondMinimumValue(root);
         System.out.println("secondMinimumValue = " + secondMinimumValue);
     }
 
     public int findSecondMinimumValue(TreeNode root) {
-//        TODO other fun dont understand
         Set<TreeNode> set = new HashSet<>();
         dfs(root, set);
         int min = root.val;
@@ -47,5 +46,15 @@ public class N0671 {
         set.add(root);
         dfs(root.left, set);
         dfs(root.right, set);
+    }
+
+    /**
+     * TODO 放在set中，循环比较依次比较次小值
+     *
+     * @param root
+     * @return
+     */
+    public int findSecondMinimumValue2(TreeNode root) {
+        return 0;
     }
 }

@@ -2,7 +2,7 @@ server:
   port: 1514
 spring:
   profiles:
-    active: test
+    active: simple
   application:
     name: icboluo-note
 mybatis:

@@ -1,7 +1,6 @@
 package com.icboluo.util.listenter;
 
 import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
 import com.icboluo.object.clientobject.RowCO;
 
@@ -11,7 +10,7 @@ import java.util.List;
 /**
  * @author lp
  */
-public class RowDataListener extends AnalysisEventListener<RowCO> {
+public class RowDataListener extends ExcelListener<RowCO> {
 
     public List<RowCO> list = new ArrayList<>();
 

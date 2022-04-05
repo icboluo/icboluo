@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @since 2021-47-01 22:47
  */
 @Component
-@Profile("!test")
+@Profile("!simple")
 public class RedisCacheConfig {
 
     @Resource

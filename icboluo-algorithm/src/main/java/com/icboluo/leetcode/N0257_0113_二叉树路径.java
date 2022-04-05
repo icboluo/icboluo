@@ -26,7 +26,7 @@ public class N0257_0113_二叉树路径 {
                         li.stream().map(treeNode -> treeNode.val)
                                 .map(String::valueOf)
                                 .collect(Collectors.joining("->"))
-                ).collect(Collectors.toList());
+                ).toList();
     }
 
     private void treePath(TreeNode root, LinkedList<TreeNode> curList) {
@@ -58,8 +58,8 @@ public class N0257_0113_二叉树路径 {
         return ans.stream()
                 .map(li ->
                         li.stream().map(treeNode -> treeNode.val)
-                                .collect(Collectors.toList())
-                ).collect(Collectors.toList());
+                                .toList()
+                ).toList();
     }
 
     private void treePath2(TreeNode root, LinkedList<TreeNode> curList) {
