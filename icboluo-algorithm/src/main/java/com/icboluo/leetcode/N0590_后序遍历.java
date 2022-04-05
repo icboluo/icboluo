@@ -8,7 +8,7 @@ import java.util.Stack;
 
 /**
  * @author icboluo
- * @date 2021-28-09 13:28
+ * @since 2021-28-09 13:28
  */
 public class N0590_后序遍历 {
     public List<Integer> postorder(Node root) {

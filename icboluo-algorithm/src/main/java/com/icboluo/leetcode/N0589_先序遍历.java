@@ -6,7 +6,7 @@ import java.util.*;
 
 /**
  * @author icboluo
- * @date 2021-17-09 13:17
+ * @since 2021-17-09 13:17
  */
 public class N0589_先序遍历 {
     public List<Integer> preorder(Node root) {

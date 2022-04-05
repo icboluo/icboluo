@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 /**
  * @author icboluo
- * @date 2021-26-24 21:26
+ * @since 2021-26-24 21:26
  */
 public class AlgorithmUtil {
 

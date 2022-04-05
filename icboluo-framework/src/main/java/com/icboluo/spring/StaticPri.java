@@ -8,7 +8,7 @@ import javax.annotation.Resource;
  * 成员方法调用静态变量
  *
  * @author icboluo
- * @date 2021-52-22 21:52
+ * @since 2021-52-22 21:52
  */
 public class StaticPri {
 

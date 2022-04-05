@@ -2,7 +2,7 @@ package com.icboluo.algorithm.prim;
 
 /**
  * @author icboluo
- * @date 2020-08-05 17:20
+ * @since 2020-08-05 17:20
  */
 public class PrimAlgorithm {
     public static void main(String[] args) {

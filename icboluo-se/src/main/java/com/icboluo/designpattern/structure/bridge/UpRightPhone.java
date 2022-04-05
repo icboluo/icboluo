@@ -2,7 +2,7 @@ package com.icboluo.designpattern.structure.bridge;
 
 /**
  * @author icboluo
- * @date 2020/12/10 22:36
+ * @since 2020/12/10 22:36
  */
 public class UpRightPhone extends Phone {
 

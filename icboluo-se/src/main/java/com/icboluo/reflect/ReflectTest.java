@@ -9,7 +9,7 @@ import java.util.Properties;
  * 框架代码是不能够修改的，不能写死（不能直接new）
  *
  * @author icboluo
- * @date 2020-09-01 16:31
+ * @since 2020-09-01 16:31
  */
 class ReflectTest {
     public static void main(String[] args) throws Exception {

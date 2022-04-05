@@ -4,7 +4,7 @@ package com.icboluo.designpattern.create.singleton;
  * 静态内部类 推荐使用
  *
  * @author icboluo
- * @date 2020/10/17 18:20
+ * @since 2020/10/17 18:20
  */
 public class SingletonTest07 {
     private static SingletonTest07 instance;

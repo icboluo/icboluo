@@ -5,7 +5,7 @@ import java.util.*;
 
 /**
  * @author icboluo
- * @date 2020/7/23 12:24
+ * @since 2020/7/23 12:24
  */
  class HuffmanCode {
     static StringBuilder sb = new StringBuilder();

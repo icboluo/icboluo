@@ -10,7 +10,7 @@ import java.util.List;
  * @author Yeauty
  * @version 1.0
  * @Description:生成名字
- * @date 2018/4/14 22:16
+ * @since 2018/4/14 22:16
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class NameUtils {

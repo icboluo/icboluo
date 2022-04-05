@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
  * 适配器
  *
  * @author icboluo
- * @date 2020/11/7 21:23
+ * @since 2020/11/7 21:23
  */
 @AllArgsConstructor
 public class VoltageAdapter implements Voltage5V {

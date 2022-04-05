@@ -4,7 +4,7 @@ package com.icboluo.datastructure.search;
  * 线性查找
  *
  * @author icboluo
- * @date 2020/6/12 12:58
+ * @since 2020/6/12 12:58
  */
 class SeqSearch {
     public static void main(String[] args) {

@@ -4,7 +4,7 @@ import com.icboluo.common.ListNode;
 
 /**
  * @author icboluo
- * @date 2021-11-18 23:07
+ * @since 2021-11-18 23:07
  */
 public class N0019_链表倒数第N个节点 {
     public static void main(String[] args) {

@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2021-11-19 13:11
+ * @since 2021-11-19 13:11
  */
 public class N0669 {
     public TreeNode trimBST(TreeNode root, int low, int high) {

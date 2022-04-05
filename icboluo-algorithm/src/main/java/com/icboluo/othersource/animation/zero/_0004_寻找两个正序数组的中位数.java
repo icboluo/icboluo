@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.zero;
 
 /**
  * @author icboluo
- * @date 2020-09-27 20:40
+ * @since 2020-09-27 20:40
  */
 public class _0004_寻找两个正序数组的中位数 {
     public static void main(String[] args) {

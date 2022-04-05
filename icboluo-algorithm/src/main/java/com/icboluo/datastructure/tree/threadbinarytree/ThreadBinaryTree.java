@@ -6,7 +6,7 @@ import lombok.Setter;
  * 实现了线索化功能的二叉树
  *
  * @author icboluo
- * @date 2020/6/14 16:43
+ * @since 2020/6/14 16:43
  */
  class ThreadBinaryTree {
     @Setter

@@ -2,7 +2,7 @@ package com.icboluo.datastructure.hashtable;
 
 /**
  * @author icboluo
- * @date 2020/6/14 14:20
+ * @since 2020/6/14 14:20
  */
 public class EmpLinkedList {
     private Employee head;

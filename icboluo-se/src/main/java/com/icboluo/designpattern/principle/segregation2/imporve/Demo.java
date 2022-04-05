@@ -2,7 +2,7 @@ package com.icboluo.designpattern.principle.segregation2.imporve;
 
 /**
  * @author icboluo
- * @date 2020-09-01 17:46
+ * @since 2020-09-01 17:46
  */
 class Demo {
     public static void main(String[] args) {

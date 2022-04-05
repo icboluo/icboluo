@@ -12,7 +12,7 @@ import java.util.Locale;
 
 /**
  * @author icboluo
- * @date 2022-03-15 23:17
+ * @since 2022-03-15 23:17
  */
 @Configuration
 public class I18Config implements WebMvcConfigurer {

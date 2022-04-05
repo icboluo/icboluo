@@ -2,7 +2,7 @@ package com.icboluo.algorithm;
 
 /**
  * @author icboluo
- * @date 2020-08-05 13:34
+ * @since 2020-08-05 13:34
  */
 public class Kmp {
     public static void main(String[] args) {

@@ -5,7 +5,7 @@ package com.icboluo.sheji.dongtaidaili.zhuangshizhe.demo02;
  * BufferedReader(FileReader)功能：底层封装了一个8192长度的字符数组缓冲区，增强了字符输入流的读取的效率。
  *
  * @author icboluo
- * @date 2020-08-04 13:07
+ * @since 2020-08-04 13:07
  */
  class Demo {
     public static void main(String[] args) {

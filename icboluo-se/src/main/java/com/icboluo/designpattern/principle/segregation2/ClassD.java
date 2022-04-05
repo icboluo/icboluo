@@ -2,7 +2,7 @@ package com.icboluo.designpattern.principle.segregation2;
 
 /**
  * @author icboluo
- * @date 2020-09-01 17:48
+ * @since 2020-09-01 17:48
  */
 class ClassD implements interface1 {
     @Override

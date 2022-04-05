@@ -5,7 +5,7 @@ package com.icboluo.designpattern.structure.proxy.staticproxy;
  * 会生成很多的代理类，代理类和目标类都要实现相同的接口
  *
  * @author icboluo
- * @date 2020/11/15 20:08
+ * @since 2020/11/15 20:08
  */
 public class Client {
     public static void main(String[] args) {

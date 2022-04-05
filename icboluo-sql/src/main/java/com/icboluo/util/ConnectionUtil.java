@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 
 /**
  * @author icboluo
- * @date 2021-10-25 22:48
+ * @since 2021-10-25 22:48
  */
 public class ConnectionUtil {
 

@@ -2,7 +2,7 @@ package com.icboluo.othersource;
 
 /**
  * @author icboluo
- * @date 2020-09-27 21:05
+ * @since 2020-09-27 21:05
  */
 public class _200915_数据入栈并弹栈合并 {
     public static void main(String[] args) {

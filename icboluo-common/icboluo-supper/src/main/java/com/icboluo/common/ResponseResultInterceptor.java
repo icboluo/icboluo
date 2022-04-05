@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author icboluo
- * @date 2021-05-13 23:05
+ * @since 2021-05-13 23:05
  */
 @Slf4j
 public class ResponseResultInterceptor implements HandlerInterceptor {

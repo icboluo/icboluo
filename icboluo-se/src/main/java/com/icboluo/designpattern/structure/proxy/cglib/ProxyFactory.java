@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author icboluo
- * @date 2020/11/15 20:35
+ * @since 2020/11/15 20:35
  */
 @AllArgsConstructor
 public class ProxyFactory implements MethodInterceptor {

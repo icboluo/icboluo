@@ -6,7 +6,7 @@ import java.util.Stack;
 
 /**
  * @author icboluo
- * @date 2021-21-14 13:21
+ * @since 2021-21-14 13:21
  */
 public class N0404_左叶子节点和 {
     public int sumOfLeftLeaves(TreeNode root) {

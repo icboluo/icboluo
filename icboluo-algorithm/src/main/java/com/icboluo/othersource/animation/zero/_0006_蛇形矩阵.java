@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.zero;
 
 /**
  * @author icboluo
- * @date 2020-09-27 20:52
+ * @since 2020-09-27 20:52
  */
 public class _0006_蛇形矩阵 {
     public static void main(String[] args) {

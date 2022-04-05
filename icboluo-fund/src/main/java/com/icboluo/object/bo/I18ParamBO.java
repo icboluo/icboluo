@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 /**
  * @author icboluo
- * @date 2021-45-05 14:45
+ * @since 2021-45-05 14:45
  */
 @Data
 public class I18ParamBO<S> {

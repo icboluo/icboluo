@@ -2,7 +2,7 @@ package com.icboluo.datastructure.tree.binary;
 
 /**
  * @author icboluo
- * @date 2020/6/14 16:55
+ * @since 2020/6/14 16:55
  */
  class BinaryTreeDemo {
     public static void main(String[] args) {

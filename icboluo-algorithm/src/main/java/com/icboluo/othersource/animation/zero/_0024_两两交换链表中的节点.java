@@ -4,7 +4,7 @@ import com.icboluo.common.ListNode;
 
 /**
  * @author icboluo
- * @date 2020-10-09 21:09
+ * @since 2020-10-09 21:09
  */
 public class _0024_两两交换链表中的节点 {
     public static void main(String[] args) {

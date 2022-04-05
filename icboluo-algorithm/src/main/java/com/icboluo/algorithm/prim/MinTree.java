@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * @author icboluo
- * @date 2020-08-05 17:22
+ * @since 2020-08-05 17:22
  */
  class MinTree {
     public void creatGraph(MGraph graph, int verxs, char[] data, int[][] weight) {

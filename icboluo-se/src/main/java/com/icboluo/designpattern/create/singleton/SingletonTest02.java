@@ -4,7 +4,7 @@ package com.icboluo.designpattern.create.singleton;
  * 饿汉式 静态代码块实现
  *
  * @author icboluo
- * @date 2020/10/17 18:15
+ * @since 2020/10/17 18:15
  */
 public class SingletonTest02 {
 

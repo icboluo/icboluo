@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * @author icboluo
- * @date 2020-08-27 21:08
+ * @since 2020-08-27 21:08
  */
 @Configuration
 public class RestTemplateConfig {

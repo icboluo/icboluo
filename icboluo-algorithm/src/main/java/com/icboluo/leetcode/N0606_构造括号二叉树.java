@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2022-03-29 22:21
+ * @since 2022-03-29 22:21
  */
 public class N0606_构造括号二叉树 {
     public String tree2str1(TreeNode root) {

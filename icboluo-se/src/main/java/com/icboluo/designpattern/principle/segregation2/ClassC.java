@@ -2,7 +2,7 @@ package com.icboluo.designpattern.principle.segregation2;
 
 /**
  * @author icboluo
- * @date 2020-09-01 17:50
+ * @since 2020-09-01 17:50
  */
 public class ClassC {
     public void depend1(interface1 interface1) {

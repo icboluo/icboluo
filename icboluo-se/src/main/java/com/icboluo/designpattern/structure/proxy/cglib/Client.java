@@ -2,7 +2,7 @@ package com.icboluo.designpattern.structure.proxy.cglib;
 
 /**
  * @author icboluo
- * @date 2020/11/15 20:34
+ * @since 2020/11/15 20:34
  */
 public class Client {
     public static void main(String[] args) {

@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author icboluo
- * @date 2020-08-14 10:59
+ * @since 2020-08-14 10:59
  */
 public class Lock01 implements Runnable {
     private int tickets = 100;

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * @author icboluo
- * @date 2020-09-17 22:32
+ * @since 2020-09-17 22:32
  */
 public class N0001_两数之和 {
     public static void main(String[] args) {

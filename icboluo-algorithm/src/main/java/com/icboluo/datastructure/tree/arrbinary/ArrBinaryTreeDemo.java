@@ -4,7 +4,7 @@ package com.icboluo.datastructure.tree.arrbinary;
  *
  *
  * @author icboluo
- * @date 2020/6/15 12:53
+ * @since 2020/6/15 12:53
  */
  class ArrBinaryTreeDemo {
     public static void main(String[] args) {

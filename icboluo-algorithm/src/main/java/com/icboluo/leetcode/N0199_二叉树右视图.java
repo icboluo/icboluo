@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author icboluo
- * @date 2022-03-28 23:17
+ * @since 2022-03-28 23:17
  */
 public class N0199_二叉树右视图 {
     List<Integer> ans;

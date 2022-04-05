@@ -2,7 +2,7 @@ package com.icboluo.annotation.demo_check;
 
 /**
  * @author icboluo
- * @date 2020-08-29 22:33
+ * @since 2020-08-29 22:33
  */
 public class Calculator {
     @Check10

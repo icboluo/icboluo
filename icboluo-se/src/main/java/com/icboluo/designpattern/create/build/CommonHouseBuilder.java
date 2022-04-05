@@ -2,7 +2,7 @@ package com.icboluo.designpattern.create.build;
 
 /**
  * @author icboluo
- * @date 2020/11/7 21:05
+ * @since 2020/11/7 21:05
  */
 public class CommonHouseBuilder extends HouseBuilder {
     @Override

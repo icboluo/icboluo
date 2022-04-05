@@ -9,7 +9,7 @@ package com.icboluo.algorithm.method;
  * 2.add函数将数组和2数之和分别存储到数组中，find函数直接到sum数组中找元素，时间复杂度O（n）
  *
  * @author icboluo
- * @date 2021-30-26 21:30
+ * @since 2021-30-26 21:30
  */
 public class 两数之和 {
 }

@@ -2,7 +2,7 @@ package com.icboluo.se.thread;
 
 /**
  * @author icboluo
- * @date 2020-08-14 10:49
+ * @since 2020-08-14 10:49
  */
 public class Creat02 implements Runnable {
     @Override

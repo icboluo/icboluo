@@ -2,7 +2,7 @@ package com.icboluo.algorithm.kruskal;
 
 /**
  * @author icboluo
- * @date 2020-08-05 22:41
+ * @since 2020-08-05 22:41
  */
 class Kruskal {
     private int edgeNum;

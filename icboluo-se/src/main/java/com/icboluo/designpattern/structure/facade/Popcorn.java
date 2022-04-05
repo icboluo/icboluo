@@ -4,7 +4,7 @@ package com.icboluo.designpattern.structure.facade;
  * 爆米花机
  *
  * @author icboluo
- * @date 2020/12/26 16:08
+ * @since 2020/12/26 16:08
  */
 public class Popcorn {
     private static Popcorn instance = new Popcorn();

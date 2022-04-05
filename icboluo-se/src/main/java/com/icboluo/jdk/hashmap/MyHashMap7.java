@@ -10,7 +10,7 @@ import java.util.Objects;
  * 2.头插法插入链表
  *
  * @author icboluo
- * @date 2022-03-28 23:46
+ * @since 2022-03-28 23:46
  */
 class MyHashMap7<K, V> {
     static final Entry<?, ?>[] EMPTY_TABLE = {};

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * 具体来说 JDK 其实包含了 JRE，同时还包含了编译 java 源码的编译器 javac，还包含了很多 java 程序调试和分析的工具。简单来说：如果你需要运行 java 程序，只需安装 JRE 就可以了，如果你需要编写 java 程序，需要安装 JDK。
  *
  * @author icboluo
- * @date 2020-07-31 15:23
+ * @since 2020-07-31 15:23
  */
 @Data
 public class MM {

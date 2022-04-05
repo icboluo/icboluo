@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * @author icboluo
- * @date 2020/11/15 21:27
+ * @since 2020/11/15 21:27
  */
 @AllArgsConstructor
 public class LightOffCommand implements Command {

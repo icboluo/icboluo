@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2022-03-25 19:09
+ * @since 2022-03-25 19:09
  */
 public class N0129_节点和 {
     public int sumNumbers(TreeNode root) {

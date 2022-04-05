@@ -4,7 +4,7 @@ package com.icboluo.designpattern.structure.adapter.classadapter;
  * 适配器
  *
  * @author icboluo
- * @date 2020/11/7 21:23
+ * @since 2020/11/7 21:23
  */
 //java单继承，又要继承一个src这个类，所以要求5v这个类必须是一个接口
 public class VoltageAdapter extends Voltage220V implements Voltage5V {

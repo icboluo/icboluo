@@ -4,7 +4,7 @@ import com.icboluo.common.ListNode;
 
 /**
  * @author icboluo
- * @date 2020-09-29 19:50
+ * @since 2020-09-29 19:50
  */
 public class _0203_移除链表元素 {
     public static void main(String[] args) {

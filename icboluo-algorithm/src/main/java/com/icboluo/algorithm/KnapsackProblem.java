@@ -6,7 +6,7 @@ import com.icboluo.util.ArrayHelper;
  * 背包问题
  *
  * @author icboluo
- * @date 2020-08-05 12:26
+ * @since 2020-08-05 12:26
  */
 public class KnapsackProblem {
     public static void main(String[] args) {

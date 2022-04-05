@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2021-05-04 13:05
+ * @since 2021-05-04 13:05
  */
 public class N1026 {
     public int maxAncestorDiff(TreeNode root) {

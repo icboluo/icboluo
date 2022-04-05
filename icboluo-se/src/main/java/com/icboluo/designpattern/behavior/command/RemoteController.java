@@ -2,7 +2,7 @@ package com.icboluo.designpattern.behavior.command;
 
 /**
  * @author icboluo
- * @date 2020/11/15 21:34
+ * @since 2020/11/15 21:34
  */
 public class RemoteController {
     Command[] onCommands;

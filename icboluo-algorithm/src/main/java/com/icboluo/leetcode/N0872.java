@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author icboluo
- * @date 2021-05-28 13:05
+ * @since 2021-05-28 13:05
  */
 public class N0872 {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {

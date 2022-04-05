@@ -6,7 +6,7 @@ import com.icboluo.designpattern.create.factory.abstractfactory.pizza.Pizza;
 
 /**
  * @author icboluo
- * @date 2020/12/5 18:53
+ * @since 2020/12/5 18:53
  */
 public class BJFactory implements AbsFactory{
 

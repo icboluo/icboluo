@@ -10,7 +10,7 @@ import java.util.Properties;
  * 配置文件的动态读取
  *
  * @author icboluo
- * @date 2020-08-12 16:14
+ * @since 2020-08-12 16:14
  */
 public class ConfigFile {
     public static void main(String[] args) throws IOException {

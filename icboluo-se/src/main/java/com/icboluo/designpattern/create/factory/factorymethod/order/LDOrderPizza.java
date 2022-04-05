@@ -6,7 +6,7 @@ import com.icboluo.designpattern.create.factory.factorymethod.pizza.Pizza;
 
 /**
  * @author icboluo
- * @date 2020/12/5 18:35
+ * @since 2020/12/5 18:35
  */
 public class LDOrderPizza extends OrderPizza {
     public LDOrderPizza(String orderType) {

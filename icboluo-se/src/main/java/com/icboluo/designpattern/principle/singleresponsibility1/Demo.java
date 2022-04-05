@@ -4,7 +4,7 @@ package com.icboluo.designpattern.principle.singleresponsibility1;
  * 单一职责原则
  *
  * @author icboluo
- * @date 2020-09-01 17:13
+ * @since 2020-09-01 17:13
  */
  class Demo {
     public static void main(String[] args) {

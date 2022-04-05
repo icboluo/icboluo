@@ -6,7 +6,7 @@ import lombok.Setter;
  * 二叉树
  *
  * @author icboluo
- * @date 2020/6/14 16:43
+ * @since 2020/6/14 16:43
  */
  class BinaryTree {
     @Setter

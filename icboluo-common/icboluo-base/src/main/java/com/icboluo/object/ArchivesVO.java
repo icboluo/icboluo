@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  * 档案视图对象
  *
  * @author icboluo
- * @date 2020/12/3 21:40
+ * @since 2020/12/3 21:40
  */
 @Data
 @AllArgsConstructor

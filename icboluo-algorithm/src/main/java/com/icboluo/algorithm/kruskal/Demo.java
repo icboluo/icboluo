@@ -2,7 +2,7 @@ package com.icboluo.algorithm.kruskal;
 
 /**
  * @author icboluo
- * @date 2020-08-06 00:57
+ * @since 2020-08-06 00:57
  */
 class Demo {
     public static void main(String[] args) {

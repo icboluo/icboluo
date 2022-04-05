@@ -5,7 +5,7 @@ package com.icboluo.designpattern.create.singleton;
  * 开发中禁止使用这种方式,有潜在的风险
  *
  * @author icboluo
- * @date 2020/10/17 18:20
+ * @since 2020/10/17 18:20
  */
 public class SingletonTest03 {
     private static SingletonTest03 instance;

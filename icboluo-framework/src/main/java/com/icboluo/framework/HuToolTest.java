@@ -24,7 +24,7 @@ import java.util.*;
  * 提供树结构，用作菜单展示
  *
  * @author icboluo
- * @date 2020-09-18 00:32
+ * @since 2020-09-18 00:32
  */
 @Slf4j
 public class HuToolTest {

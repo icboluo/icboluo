@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author icboluo
- * @date 2020-09-17 23:22
+ * @since 2020-09-17 23:22
  */
 @RestController
 @RequestMapping("webInterceptor")

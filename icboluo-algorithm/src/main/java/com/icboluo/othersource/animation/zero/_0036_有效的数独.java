@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.zero;
 
 /**
  * @author icboluo
- * @date 2020-10-09 21:49
+ * @since 2020-10-09 21:49
  */
 public class _0036_有效的数独 {
     public static void main(String[] args) {

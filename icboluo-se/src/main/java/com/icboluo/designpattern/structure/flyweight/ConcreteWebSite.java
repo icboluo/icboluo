@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * @author icboluo
- * @date 2020/12/26 16:51
+ * @since 2020/12/26 16:51
  */
 @AllArgsConstructor
 public class ConcreteWebSite extends WebSite {

@@ -2,7 +2,7 @@ package com.icboluo.designpattern.principle.liskov4;
 
 /**
  * @author icboluo
- * @date 2020-09-02 16:58
+ * @since 2020-09-02 16:58
  */
  class Liskov {
     public static void main(String[] args) {

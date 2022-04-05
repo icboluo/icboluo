@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * @author icboluo
- * @date 2021-09-28 13:09
+ * @since 2021-09-28 13:09
  */
 public class N001_数组拼接的最大值 {
     public int maxVal(int[] arr) {

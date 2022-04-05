@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * @author icboluo
- * @date 2020-08-04 10:40
+ * @since 2020-08-04 10:40
  */
 @AllArgsConstructor
 abstract class AbstractPrintDecorator implements PrintInterface {

@@ -5,7 +5,7 @@ package com.icboluo.designpattern.create.singleton;
  * 线程安全，效率低，不推荐使用
  *
  * @author icboluo
- * @date 2020/10/17 18:20
+ * @since 2020/10/17 18:20
  */
 public class SingletonTest04 {
     private static SingletonTest04 instance;

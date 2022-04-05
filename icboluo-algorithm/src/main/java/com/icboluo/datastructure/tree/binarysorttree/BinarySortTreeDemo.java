@@ -2,7 +2,7 @@ package com.icboluo.datastructure.tree.binarysorttree;
 
 /**
  * @author icboluo
- * @date 2020/7/27 01:10
+ * @since 2020/7/27 01:10
  */
  class BinarySortTreeDemo {
     public static void main(String[] args) {

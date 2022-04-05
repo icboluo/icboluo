@@ -2,7 +2,7 @@ package com.icboluo.designpattern.create.factory.simplefactory;
 
 /**
  * @author icboluo
- * @date 2020/10/21 19:53
+ * @since 2020/10/21 19:53
  */
 public class Test {
     public static void main(String[] args) {

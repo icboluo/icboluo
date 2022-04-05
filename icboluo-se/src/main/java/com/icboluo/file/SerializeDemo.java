@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author icboluo
- * @date 2020-08-12 15:32
+ * @since 2020-08-12 15:32
  */
 class SerializeDemo {
     public static void main(String[] args) throws IOException, ClassNotFoundException {

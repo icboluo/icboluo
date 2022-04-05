@@ -2,7 +2,7 @@ package com.icboluo.designpattern.behavior.strategy;
 
 /**
  * @author icboluo
- * @date 2020/11/22 18:39
+ * @since 2020/11/22 18:39
  */
 public class ToyDuck extends Duck {
 

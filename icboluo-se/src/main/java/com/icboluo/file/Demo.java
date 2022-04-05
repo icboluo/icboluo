@@ -23,7 +23,7 @@ import java.io.*;
  * PrintStream
  *
  * @author icboluo
- * @date 2020-08-10 14:26
+ * @since 2020-08-10 14:26
  */
 class Demo {
     public static void main(String[] args) throws IOException {

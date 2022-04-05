@@ -6,7 +6,7 @@ import lombok.Data;
  * 完整的基金对象
  *
  * @author icboluo
- * @date 2021-22-27 23:22
+ * @since 2021-22-27 23:22
  */
 @Data
 @SuppressWarnings("all")

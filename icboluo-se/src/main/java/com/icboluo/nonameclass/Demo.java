@@ -4,7 +4,7 @@ import com.icboluo.common.PrintInterface;
 
 /**
  * @author icboluo
- * @date 2020-08-11 10:53
+ * @since 2020-08-11 10:53
  */
 class Demo {
     public static void main(String[] args) {

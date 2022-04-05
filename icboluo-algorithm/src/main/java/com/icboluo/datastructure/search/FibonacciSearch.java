@@ -6,7 +6,7 @@ import java.util.Arrays;
  * 斐波那契（黄金分割法）查找算法
  *
  * @author icboluo
- * @date 2020/6/13 16:56
+ * @since 2020/6/13 16:56
  */
 class FibonacciSearch {
     private static final int MAX_SIZE = 20;

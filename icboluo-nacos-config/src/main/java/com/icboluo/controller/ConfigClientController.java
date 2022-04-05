@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author icboluo
- * @date 2020-08-25 20:43
+ * @since 2020-08-25 20:43
  */
 @RestController
 @RefreshScope

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * 单个基金日期对象
  *
  * @author icboluo
- * @date 2021-26-27 23:26
+ * @since 2021-26-27 23:26
  */
 @Data
 @SuppressWarnings("all")

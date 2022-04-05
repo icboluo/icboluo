@@ -2,7 +2,7 @@ package com.icboluo.datastructure.graph;
 
 /**
  * @author icboluo
- * @date 2020-07-31 12:26
+ * @since 2020-07-31 12:26
  */
 class Demo {
     public static void main(String[] args) {

@@ -2,7 +2,7 @@ package com.icboluo.designpattern.behavior.strategy;
 
 /**
  * @author icboluo
- * @date 2020/11/22 18:34
+ * @since 2020/11/22 18:34
  */
 public class Client {
     public static void main(String[] args) {

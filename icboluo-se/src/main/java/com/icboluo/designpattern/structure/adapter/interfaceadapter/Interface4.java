@@ -2,7 +2,7 @@ package com.icboluo.designpattern.structure.adapter.interfaceadapter;
 
 /**
  * @author icboluo
- * @date 2020/12/10 22:25
+ * @since 2020/12/10 22:25
  */
 interface Interface4 {
 

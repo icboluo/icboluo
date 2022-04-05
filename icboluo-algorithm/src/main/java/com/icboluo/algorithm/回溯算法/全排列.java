@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author icboluo
- * @date 2021-13-12 22:13
+ * @since 2021-13-12 22:13
  */
 public class 全排列 {
     public static void main(String[] args) {

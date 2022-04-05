@@ -5,7 +5,7 @@ import com.icboluo.object.bo.I18Res;
 
 /**
  * @author icboluo
- * @date 2021-44-05 14:44
+ * @since 2021-44-05 14:44
  */
 public interface I18Service {
 

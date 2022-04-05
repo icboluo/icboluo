@@ -20,7 +20,7 @@ import java.sql.*;
  * 6）释放资源;
  *
  * @author icboluo
- * @date 2020-08-13 13:29
+ * @since 2020-08-13 13:29
  */
 class Demo {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {

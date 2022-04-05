@@ -6,7 +6,7 @@ import com.icboluo.sheji.Print02;
 
 /**
  * @author icboluo
- * @date 2020-08-04 10:48
+ * @since 2020-08-04 10:48
  */
 class Demo {
     public static void main(String[] args) {

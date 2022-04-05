@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author icboluo
- * @date 2021-00-08 1:00
+ * @since 2021-00-08 1:00
  */
 @Data
 public class FundDataVO {

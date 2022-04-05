@@ -6,7 +6,7 @@ import java.util.Stack;
  * 单链表节点，为了做算法简单，只用节点做单链表，并不进行方法抽取
  *
  * @author icboluo
- * @date 2020-09-23 20:57
+ * @since 2020-09-23 20:57
  */
 public class ListNode {
     public int val;

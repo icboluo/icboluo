@@ -2,7 +2,7 @@ package com.icboluo.algorithm.floyd;
 
 /**
  * @author icboluo
- * @date 2020-08-10 12:57
+ * @since 2020-08-10 12:57
  */
 class FloydAlgorithm {
     public static void main(String[] args) {

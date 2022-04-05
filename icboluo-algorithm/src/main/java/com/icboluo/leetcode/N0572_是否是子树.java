@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2022-03-29 22:02
+ * @since 2022-03-29 22:02
  */
 public class N0572_是否是子树 {
     boolean ans;

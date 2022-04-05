@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2022-03-25 19:04
+ * @since 2022-03-25 19:04
  */
 public class N0124_节点和 {
 

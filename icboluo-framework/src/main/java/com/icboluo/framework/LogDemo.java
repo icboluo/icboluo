@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * logback 是spring默认日志插件、log4j2 log4j的更新版本，效率更优、slf4j.simple
  *
  * @author icboluo
- * @date 2020/12/2 20:52
+ * @since 2020/12/2 20:52
  */
 @Slf4j
 public class LogDemo {

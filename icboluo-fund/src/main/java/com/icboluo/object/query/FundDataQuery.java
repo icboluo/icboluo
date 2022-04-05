@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 /**
  * @author icboluo
- * @date 2021-03-31 22:03
+ * @since 2021-03-31 22:03
  */
 @Data
 public class FundDataQuery extends PageQuery {

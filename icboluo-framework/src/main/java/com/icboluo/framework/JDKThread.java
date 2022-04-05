@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author icboluo
- * @date 2022-01-10 15:43
+ * @since 2022-01-10 15:43
  */
 public class JDKThread {
     public static void main(String[] args) {

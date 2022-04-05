@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * @author icboluo
- * @date 2022-03-28 21:22
+ * @since 2022-03-28 21:22
  */
 public class N0530_二叉查找树最小差 {
     public int getMinimumDifference(TreeNode root) {

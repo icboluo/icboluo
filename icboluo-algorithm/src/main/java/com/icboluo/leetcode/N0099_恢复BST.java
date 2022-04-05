@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2022-02-25 20:29
+ * @since 2022-02-25 20:29
  */
 public class N0099_恢复BST {
     public void recoverTree(TreeNode root) {

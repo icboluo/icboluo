@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * redis 的所有键都是String
  *
  * @author icboluo
- * @date 2020/12/17 21:27
+ * @since 2020/12/17 21:27
  */
 @SuppressWarnings("unused")
 public abstract class AbstractRedis<T> {

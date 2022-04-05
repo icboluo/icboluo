@@ -2,7 +2,7 @@ package com.icboluo.leetcode;
 
 /**
  * @author icboluo
- * @date 2021-41-18 12:41
+ * @since 2021-41-18 12:41
  */
 public class N0053_最长连续子数组 {
     public int maxSubArray(int[] nums) {

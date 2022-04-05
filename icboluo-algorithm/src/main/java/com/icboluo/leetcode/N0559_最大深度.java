@@ -7,7 +7,7 @@ import java.util.Queue;
 
 /**
  * @author icboluo
- * @date 2021-05-09 13:05
+ * @since 2021-05-09 13:05
  */
 public class N0559_最大深度 {
     public int maxDepth(Node root) {

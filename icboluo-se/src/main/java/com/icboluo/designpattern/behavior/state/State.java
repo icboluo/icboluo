@@ -2,7 +2,7 @@ package com.icboluo.designpattern.behavior.state;
 
 /**
  * @author icboluo
- * @date 2020/11/22 17:53
+ * @since 2020/11/22 17:53
  */
 public abstract class State {
     /**

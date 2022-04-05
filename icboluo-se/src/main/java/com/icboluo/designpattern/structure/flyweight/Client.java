@@ -4,7 +4,7 @@ package com.icboluo.designpattern.structure.flyweight;
  * 享元模式
  *
  * @author icboluo
- * @date 2020/12/26 16:48
+ * @since 2020/12/26 16:48
  */
 public class Client {
     public static void main(String[] args) {

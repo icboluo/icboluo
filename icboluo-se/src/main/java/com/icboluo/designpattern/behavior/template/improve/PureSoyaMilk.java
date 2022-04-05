@@ -2,7 +2,7 @@ package com.icboluo.designpattern.behavior.template.improve;
 
 /**
  * @author icboluo
- * @date 2020/11/15 21:04
+ * @since 2020/11/15 21:04
  */
 public class PureSoyaMilk extends SoyaMilk {
     @Override

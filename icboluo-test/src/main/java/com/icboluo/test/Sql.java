@@ -7,7 +7,7 @@ package com.icboluo.test;
  * 3nf：对于非主属性，只依赖于主属性，不依赖于其他非主属性；建议分表
  *
  * @author icboluo
- * @date 2020-08-03 14:40
+ * @since 2020-08-03 14:40
  */
 public class Sql {
     public static void main(String[] args) {

@@ -2,7 +2,7 @@ package com.icboluo.designpattern.structure.proxy.dynamic;
 
 /**
  * @author icboluo
- * @date 2020/11/15 20:14
+ * @since 2020/11/15 20:14
  */
 public class TeacherDaoImpl implements TeacherDao {
     @Override

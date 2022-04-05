@@ -2,7 +2,7 @@ package com.icboluo.framework.类加载顺序;
 
 /**
  * @author icboluo
- * @date 2021-55-21 21:55
+ * @since 2021-55-21 21:55
  */
 public class Son extends Father {
 

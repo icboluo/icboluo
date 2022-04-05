@@ -10,7 +10,7 @@ import java.util.HashSet;
  * 贪心算法
  *
  * @author icboluo
- * @date 2020-08-05 16:19
+ * @since 2020-08-05 16:19
  */
 class GreedyAlgorithm {
     public static void main(String[] args) {

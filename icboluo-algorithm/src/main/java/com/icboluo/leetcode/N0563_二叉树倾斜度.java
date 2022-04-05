@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2022-03-29 21:52
+ * @since 2022-03-29 21:52
  */
 public class N0563_二叉树倾斜度 {
     int sum = 0;

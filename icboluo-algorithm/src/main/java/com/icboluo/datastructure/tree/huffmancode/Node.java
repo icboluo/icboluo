@@ -2,7 +2,7 @@ package com.icboluo.datastructure.tree.huffmancode;
 
 /**
  * @author icboluo
- * @date 2020/7/23 12:24
+ * @since 2020/7/23 12:24
  */
  class Node implements Comparable<Node> {
     Byte data;

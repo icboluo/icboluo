@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * 去访问user服务
  *
  * @author icboluo
- * @date 2020-08-27 19:21
+ * @since 2020-08-27 19:21
  */
 @FeignClient("icboluo-user")
 public interface UserFeign {

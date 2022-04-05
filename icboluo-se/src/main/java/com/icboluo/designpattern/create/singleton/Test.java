@@ -2,7 +2,7 @@ package com.icboluo.designpattern.create.singleton;
 
 /**
  * @author icboluo
- * @date 2020/10/17 18:09
+ * @since 2020/10/17 18:09
  */
 public class Test {
     public static void main(String[] args) {

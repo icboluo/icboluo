@@ -4,7 +4,7 @@ import lombok.Setter;
 
 /**
  * @author icboluo
- * @date 2020/11/22 18:36
+ * @since 2020/11/22 18:36
  */
 public abstract class Duck {
     @Setter

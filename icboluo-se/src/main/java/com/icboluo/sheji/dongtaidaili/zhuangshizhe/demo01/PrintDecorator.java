@@ -5,7 +5,7 @@ import com.icboluo.sheji.PrintInterface;
 
 /**
  * @author icboluo
- * @date 2020-08-04 10:42
+ * @since 2020-08-04 10:42
  */
  class PrintDecorator extends AbstractPrintDecorator {
     public PrintDecorator(PrintInterface printInterface) {

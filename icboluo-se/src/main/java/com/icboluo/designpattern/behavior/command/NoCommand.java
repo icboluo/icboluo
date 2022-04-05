@@ -5,7 +5,7 @@ package com.icboluo.designpattern.behavior.command;
  * 可以省掉对空判断
  *
  * @author icboluo
- * @date 2020/11/15 21:27
+ * @since 2020/11/15 21:27
  */
 public class NoCommand implements Command {
 

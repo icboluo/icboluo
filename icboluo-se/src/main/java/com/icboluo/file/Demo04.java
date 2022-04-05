@@ -5,7 +5,7 @@ import java.io.IOException;
 
 /**
  * @author icboluo
- * @date 2020-08-10 14:19
+ * @since 2020-08-10 14:19
  */
 class Demo04 {
     public static void main(String[] args) throws IOException {

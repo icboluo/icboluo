@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * @author icboluo
- * @date 2020-08-11 12:47
+ * @since 2020-08-11 12:47
  */
 public class HorseChessboard {
     /**

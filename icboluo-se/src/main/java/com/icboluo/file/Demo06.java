@@ -4,7 +4,7 @@ import java.io.*;
 
 /**
  * @author icboluo
- * @date 2020-08-10 14:25
+ * @since 2020-08-10 14:25
  */
 class Demo06 {
     public static void main(String[] args) throws IOException {

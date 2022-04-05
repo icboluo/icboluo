@@ -16,7 +16,7 @@ import java.util.List;
  * 版本不兼容的配置
  *
  * @author icboluo
- * @date 2022-03-12 16:53
+ * @since 2022-03-12 16:53
  */
 @Configuration
 public class SpringFoxConfig {

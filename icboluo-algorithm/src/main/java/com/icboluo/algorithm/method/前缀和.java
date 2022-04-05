@@ -4,7 +4,7 @@ package com.icboluo.algorithm.method;
  * 算出一共有几个和为 k 的子数组
  *
  * @author icboluo
- * @date 2021-34-27 21:34
+ * @since 2021-34-27 21:34
  */
 public class 前缀和 {
     public static void main(String[] args) {

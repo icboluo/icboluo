@@ -2,7 +2,7 @@ package com.icboluo.designpattern.structure.adapter.classadapter;
 
 /**
  * @author icboluo
- * @date 2020/11/7 21:26
+ * @since 2020/11/7 21:26
  */
 public class Phone {
     public void charging(Voltage5V v) {

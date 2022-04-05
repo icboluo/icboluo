@@ -9,7 +9,7 @@ import java.util.Collection;
 
 /**
  * @author icboluo
- * @date 2021-14-18 21:14
+ * @since 2021-14-18 21:14
  */
 @Data
 public class CollResponse<T> extends Response {

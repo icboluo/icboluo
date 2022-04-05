@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.one;
 
 /**
  * @author icboluo
- * @date 2020-09-29 21:15
+ * @since 2020-09-29 21:15
  */
 public class _0125_验证回文串 {
     public static void main(String[] args) {

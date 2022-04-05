@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * @author icboluo
- * @date 2020/6/16 12:16
+ * @since 2020/6/16 12:16
  */
 @AllArgsConstructor
  class ArrBinaryTree {

@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
  * AnnotatedElement是一个接口，它的实现类有Class，构造器，方法，属性，所以反射相关的类都有解析注解的功能。
  *
  * @author icboluo
- * @date 2020-08-12 17:05
+ * @since 2020-08-12 17:05
  */
 class Demo {
     public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {

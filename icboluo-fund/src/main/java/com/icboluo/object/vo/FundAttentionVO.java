@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * @author icboluo
- * @date 2021-28-09 0:28
+ * @since 2021-28-09 0:28
  */
 @Data
 public class FundAttentionVO {

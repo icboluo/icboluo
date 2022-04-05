@@ -2,7 +2,7 @@ package com.icboluo.designpattern.create.factory.abstractfactory.pizza;
 
 /**
  * @author icboluo
- * @date 2020/12/5 18:20
+ * @since 2020/12/5 18:20
  */
 public class BJPepperPizza extends Pizza {
 

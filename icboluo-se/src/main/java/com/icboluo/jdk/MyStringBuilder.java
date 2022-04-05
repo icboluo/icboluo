@@ -2,7 +2,7 @@ package com.icboluo.jdk;
 
 /**
  * @author icboluo
- * @date 2022-01-10 15:52
+ * @since 2022-01-10 15:52
  */
 public class MyStringBuilder {
     public static void main(String[] args) {

@@ -4,7 +4,7 @@ import com.icboluo.common.ListNode;
 
 /**
  * @author icboluo
- * @date 2020-09-29 19:54
+ * @since 2020-09-29 19:54
  */
 public class _0206_反转链表 {
     public static void main(String[] args) {

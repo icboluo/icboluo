@@ -8,7 +8,7 @@ import java.util.List;
  * todo 求左侧边界/右侧边界 用左闭右闭区间和左闭右开区间
  *
  * @author icboluo
- * @date 2020/6/13 14:41
+ * @since 2020/6/13 14:41
  */
 class BinarySearch {
     public static void main(String[] args) {

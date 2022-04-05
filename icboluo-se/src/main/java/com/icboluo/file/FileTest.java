@@ -16,7 +16,7 @@ import java.io.IOException;
  * 软件 : 将对应的 `字节数据` 翻译为对应的 `文件, 图片, 音频, 视频 ...`.
  *
  * @author icboluo
- * @date 2020-08-13 09:59
+ * @since 2020-08-13 09:59
  */
 @Slf4j
 public class FileTest {

@@ -4,7 +4,7 @@ package com.icboluo.designpattern.structure.facade;
  * 影院外观
  *
  * @author icboluo
- * @date 2020/12/26 16:14
+ * @since 2020/12/26 16:14
  */
 public class HomeTheateFacade {
 

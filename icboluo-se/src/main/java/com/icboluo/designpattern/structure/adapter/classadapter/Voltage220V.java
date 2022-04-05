@@ -4,7 +4,7 @@ package com.icboluo.designpattern.structure.adapter.classadapter;
  * 被适配的类
  *
  * @author icboluo
- * @date 2020/11/7 21:21
+ * @since 2020/11/7 21:21
  */
 public class Voltage220V {
 

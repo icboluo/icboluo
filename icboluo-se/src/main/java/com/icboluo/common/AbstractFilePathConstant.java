@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * @author icboluo
- * @date 2020-08-12 14:30
+ * @since 2020-08-12 14:30
  */
 @Getter
 public abstract class AbstractFilePathConstant {

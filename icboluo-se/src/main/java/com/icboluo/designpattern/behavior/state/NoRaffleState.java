@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * @author icboluo
- * @date 2020/11/22 17:54
+ * @since 2020/11/22 17:54
  */
 @AllArgsConstructor
 public class NoRaffleState extends State {

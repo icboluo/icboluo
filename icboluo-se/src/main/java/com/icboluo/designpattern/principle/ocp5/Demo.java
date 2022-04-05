@@ -2,7 +2,7 @@ package com.icboluo.designpattern.principle.ocp5;
 
 /**
  * @author icboluo
- * @date 2020-09-02 17:20
+ * @since 2020-09-02 17:20
  */
  class Demo {
     public static void main(String[] args) {

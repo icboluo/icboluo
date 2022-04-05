@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author icboluo
- * @date 2020/10/27 00:03
+ * @since 2020/10/27 00:03
  */
 //需要增加这个注解才可以让bean的内容被别的地方注入
 @Configuration

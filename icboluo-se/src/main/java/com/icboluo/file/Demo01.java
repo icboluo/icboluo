@@ -13,7 +13,7 @@ import java.io.IOException;
  * <p>一个汉字三个字节, 因此如果一个字节一个字节读取, 就会出现数据错误!
  *
  * @author icboluo
- * @date 2020-08-10 14:03
+ * @since 2020-08-10 14:03
  */
 class Demo01 {
     public static void main(String[] args) throws IOException {

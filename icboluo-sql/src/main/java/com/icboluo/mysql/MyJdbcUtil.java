@@ -9,7 +9,7 @@ import java.util.Properties;
 
 /**
  * @author icboluo
- * @date 2020-08-13 13:17
+ * @since 2020-08-13 13:17
  */
 public class MyJdbcUtil {
     public static final String UPDATE_SQL = "update user set password = ?";

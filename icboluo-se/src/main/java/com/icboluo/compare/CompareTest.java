@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * @author icboluo
- * @date 2020-08-07 16:07
+ * @since 2020-08-07 16:07
  */
 public class CompareTest {
     private final List<Student> stus = Arrays.asList(

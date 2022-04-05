@@ -2,7 +2,7 @@ package com.icboluo.designpattern.structure.bridge;
 
 /**
  * @author icboluo
- * @date 2020/12/10 22:31
+ * @since 2020/12/10 22:31
  */
 public class Client {
     public static void main(String[] args) {

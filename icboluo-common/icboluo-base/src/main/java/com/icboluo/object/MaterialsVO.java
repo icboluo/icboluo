@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  * 物料的视图对象，比档案对象对了数量字段
  *
  * @author icboluo
- * @date 2020/12/3 21:39
+ * @since 2020/12/3 21:39
  */
 @Data
 @AllArgsConstructor

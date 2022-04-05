@@ -4,7 +4,7 @@ import com.icboluo.common.ListNode;
 
 /**
  * @author icboluo
- * @date 2021-11-18 22:56
+ * @since 2021-11-18 22:56
  */
 public class N0002_链表2数和 {
 

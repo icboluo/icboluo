@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * @author icboluo
- * @date 2020/11/12 20:46
+ * @since 2020/11/12 20:46
  */
 @AllArgsConstructor
 public enum LanguageEnum {

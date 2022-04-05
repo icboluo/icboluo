@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.zero;
 
 /**
  * @author icboluo
- * @date 2020-09-27 20:48
+ * @since 2020-09-27 20:48
  */
 public class _0005_最长回文串 {
     public static void main(String[] args) {

@@ -2,7 +2,7 @@ package com.icboluo.leetcode;
 
 /**
  * @author icboluo
- * @date 2022-03-28 22:22
+ * @since 2022-03-28 22:22
  */
 public class N0331_叶子节点增加禁号 {
     public boolean isValidSerialization(String preorder) {

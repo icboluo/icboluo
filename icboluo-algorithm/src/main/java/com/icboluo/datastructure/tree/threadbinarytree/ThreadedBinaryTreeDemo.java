@@ -4,7 +4,7 @@ package com.icboluo.datastructure.tree.threadbinarytree;
  * 线索化二叉树
  *
  * @author icboluo
- * @date 2020/6/20 20:38
+ * @since 2020/6/20 20:38
  */
  class ThreadedBinaryTreeDemo {
     public static void main(String[] args) {

@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.zero;
 
 /**
  * @author icboluo
- * @date 2020-10-09 21:29
+ * @since 2020-10-09 21:29
  */
 public class _0026_删除排序数组中的重复项 {
     public static void main(String[] args) {

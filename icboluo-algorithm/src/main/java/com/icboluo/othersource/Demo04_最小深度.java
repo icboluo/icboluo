@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2021-11-17 22:25
+ * @since 2021-11-17 22:25
  */
 public class Demo04_最小深度 {
     public int minDepth(TreeNode root) {

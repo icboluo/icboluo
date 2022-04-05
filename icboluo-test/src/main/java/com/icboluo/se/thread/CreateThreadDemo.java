@@ -9,7 +9,7 @@ package com.icboluo.se.thread;
  * run方法执行完或者调用stop方法 线程死亡，无法用start方法就绪  死亡状态
  *
  * @author icboluo
- * @date 2020-08-14 10:42
+ * @since 2020-08-14 10:42
  */
 public class CreateThreadDemo {
     public static void main(String[] args) {

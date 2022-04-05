@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author icboluo
- * @date 2022-03-29 22:55
+ * @since 2022-03-29 22:55
  */
 public class N0637_层级遍历 {
     public List<Double> averageOfLevels(TreeNode root) {

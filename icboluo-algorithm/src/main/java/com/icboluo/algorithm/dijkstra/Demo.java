@@ -2,7 +2,7 @@ package com.icboluo.algorithm.dijkstra;
 
 /**
  * @author icboluo
- * @date 2020-08-07 12:32
+ * @since 2020-08-07 12:32
  */
 class Demo {
     public static void main(String[] args) {

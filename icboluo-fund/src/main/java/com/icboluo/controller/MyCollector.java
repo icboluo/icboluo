@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author icboluo
- * @date 2021-55-21 23:55
+ * @since 2021-55-21 23:55
  */
 public class MyCollector implements Collector<FundDataVO, List<BigDecimal>, BigDecimal> {
     /**

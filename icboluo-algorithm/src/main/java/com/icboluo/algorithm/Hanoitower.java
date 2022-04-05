@@ -4,7 +4,7 @@ package com.icboluo.algorithm;
  * 汉罗塔
  *
  * @author icboluo
- * @date 2020-08-04 12:30
+ * @since 2020-08-04 12:30
  */
 public class Hanoitower {
     public static void main(String[] args) {

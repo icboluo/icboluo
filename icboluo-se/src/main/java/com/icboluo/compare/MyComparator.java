@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 /**
  * @author icboluo
- * @date 2020-08-07 16:12
+ * @since 2020-08-07 16:12
  */
 class MyComparator implements Comparator<Integer> {
     /**

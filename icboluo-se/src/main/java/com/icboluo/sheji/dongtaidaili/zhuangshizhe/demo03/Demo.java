@@ -3,7 +3,7 @@ package com.icboluo.sheji.dongtaidaili.zhuangshizhe.demo03;
 
 /**
  * @author icboluo
- * @date 2020-08-12 16:42
+ * @since 2020-08-12 16:42
  */
 class Demo {
     public static void main(String[] args) {

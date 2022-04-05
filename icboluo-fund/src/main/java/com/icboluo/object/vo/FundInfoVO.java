@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * @author icboluo
- * @date 2021-59-09 21:59
+ * @since 2021-59-09 21:59
  */
 @Data
 public class FundInfoVO {

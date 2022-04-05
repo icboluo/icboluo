@@ -4,7 +4,7 @@ import com.icboluo.common.TreeNode;
 
 /**
  * @author icboluo
- * @date 2022-03-29 22:49
+ * @since 2022-03-29 22:49
  */
 public class N0617_合并二叉树 {
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {

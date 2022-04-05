@@ -2,7 +2,7 @@ package com.icboluo.nonameclass;
 
 /**
  * @author icboluo
- * @date 2020-08-11 10:44
+ * @since 2020-08-11 10:44
  */
 class People {
     private String name;

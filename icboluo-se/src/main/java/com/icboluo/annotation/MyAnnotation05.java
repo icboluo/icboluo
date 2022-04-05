@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * inherited：描述注解是否被子类继承
  *
  * @author icboluo
- * @date 2020-08-29 20:58
+ * @since 2020-08-29 20:58
  */
 /*
 注解只可以修饰

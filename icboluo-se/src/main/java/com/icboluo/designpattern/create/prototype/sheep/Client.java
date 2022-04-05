@@ -4,7 +4,7 @@ package com.icboluo.designpattern.create.prototype.sheep;
  * 原形模式就是实现Cloneable接口，是浅拷贝
  *
  * @author icboluo
- * @date 2020/10/27 19:56
+ * @since 2020/10/27 19:56
  */
 public class Client {
     public static void main(String[] args) {

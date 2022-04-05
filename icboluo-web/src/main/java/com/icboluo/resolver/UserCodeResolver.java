@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author icboluo
- * @date 2020/10/22 19:25
+ * @since 2020/10/22 19:25
  */
 public class UserCodeResolver implements HandlerMethodArgumentResolver {
     @Override

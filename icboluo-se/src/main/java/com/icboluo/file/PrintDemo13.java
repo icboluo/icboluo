@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 /**
  * @author icboluo
- * @date 2020-08-12 15:16
+ * @since 2020-08-12 15:16
  */
 class PrintDemo13 {
     public static void main(String[] args) throws FileNotFoundException {

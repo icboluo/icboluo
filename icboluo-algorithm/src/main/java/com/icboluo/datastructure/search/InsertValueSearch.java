@@ -4,7 +4,7 @@ package com.icboluo.datastructure.search;
  * 二分查找不均衡，每次都取中间值，可以考虑数值的偏移量取取索引的偏移量
  *
  * @author icboluo
- * @date 2020/6/13 15:55
+ * @since 2020/6/13 15:55
  */
 class InsertValueSearch {
     public static void main(String[] args) {

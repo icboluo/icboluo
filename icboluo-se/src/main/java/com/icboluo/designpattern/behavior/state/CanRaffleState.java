@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
  * 可以抽奖的状态
  *
  * @author icboluo
- * @date 2020/11/22 17:54
+ * @since 2020/11/22 17:54
  */
 @AllArgsConstructor
 public class CanRaffleState extends State {

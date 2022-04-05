@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.two;
 
 /**
  * @author icboluo
- * @date 2020-09-29 19:47
+ * @since 2020-09-29 19:47
  */
 public class _0202_快乐数 {
     public static void main(String[] args) {

@@ -2,7 +2,7 @@ package com.icboluo.designpattern.behavior.template;
 
 /**
  * @author icboluo
- * @date 2020/11/15 20:53
+ * @since 2020/11/15 20:53
  */
 public abstract class SoyaMilk {
     /**

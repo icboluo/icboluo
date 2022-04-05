@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
  * 奖品发完
  *
  * @author icboluo
- * @date 2020/11/22 17:54
+ * @since 2020/11/22 17:54
  */
 @AllArgsConstructor
 public class DispenseOutState extends State {

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * @author icboluo
- * @date 2020-08-07 12:32
+ * @since 2020-08-07 12:32
  */
 class Graph {
     private char[] vertex;

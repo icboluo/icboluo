@@ -5,7 +5,7 @@ package com.icboluo.designpattern.create.singleton;
  * 没有实现懒加载，类一装载就会实例化，如果没有用到这个实例，就会造成内存浪费
  *
  * @author icboluo
- * @date 2020/10/17 18:07
+ * @since 2020/10/17 18:07
  */
 public class SingletonTest01 {
 

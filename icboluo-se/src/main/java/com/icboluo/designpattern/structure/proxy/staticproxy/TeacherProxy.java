@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
  * 代理对象 静态代理
  *
  * @author icboluo
- * @date 2020/11/15 20:05
+ * @since 2020/11/15 20:05
  */
 @AllArgsConstructor
 public class TeacherProxy implements TeacherDao {

@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.zero;
 
 /**
  * @author icboluo
- * @date 2020-10-09 20:32
+ * @since 2020-10-09 20:32
  */
 public class _0015_三数之和 {
     public static void main(String[] args) {

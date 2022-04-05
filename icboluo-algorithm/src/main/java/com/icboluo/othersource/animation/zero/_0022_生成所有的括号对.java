@@ -2,7 +2,7 @@ package com.icboluo.othersource.animation.zero;
 
 /**
  * @author icboluo
- * @date 2020-10-09 20:53
+ * @since 2020-10-09 20:53
  */
 public class _0022_生成所有的括号对 {
     public static void main(String[] args) {
