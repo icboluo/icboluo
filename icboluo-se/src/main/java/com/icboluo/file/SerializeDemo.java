@@ -1,6 +1,7 @@
 package com.icboluo.file;
 
-import com.icboluo.common.AbstractFilePathConstant;
+import com.icboluo.constant.FileRelativePathPre;
+import com.icboluo.object.Student;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,18 +14,20 @@ import java.util.List;
 class SerializeDemo {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Student stu = new Student(18, "小明");
-//       TODO 这里会乱码应该怎么处理呢
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(AbstractFilePathConstant.A));
+        // 对象流 TODO 这里会乱码应该怎么处理呢
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"));
         oos.writeObject(stu);
         oos.close();
-//        字节输入流，读取对象（已经读取到了）
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(AbstractFilePathConstant.A));
+
+        // 字节输入流，读取对象（已经读取到了）
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"));
         Student student = (Student) ois.readObject();
-        ois.close();
         System.out.println("student = " + student);
+        ois.close();
+
         List<Student> list = new ArrayList<>();
         list.add(stu);
-        ObjectOutputStream oos2 = new ObjectOutputStream(new FileOutputStream(AbstractFilePathConstant.A));
+        ObjectOutputStream oos2 = new ObjectOutputStream(new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"));
         oos2.writeObject(list);
         oos2.close();
     }

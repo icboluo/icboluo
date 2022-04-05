@@ -1,6 +1,7 @@
 package com.icboluo.lambda;
 
-import com.icboluo.dataobject.Student;
+
+import com.icboluo.object.Student;
 import com.icboluo.util.IcBoLuoException;
 import org.junit.jupiter.api.Test;
 

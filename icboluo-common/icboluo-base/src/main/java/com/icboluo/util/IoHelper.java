@@ -99,35 +99,35 @@ public class IoHelper {
      * * <p>英文字符 : a ~ z 每个字符都是一个字节组成的. 读取就是正确的.
      * * <p>一个汉字三个字节, 因此如果一个字节一个字节读取, 就会出现数据错误!
      *
-     * @param fileInputStream fis
+     * @param fis fis
      * @return sb
      * @throws IOException 读取异常
      */
-    public static StringBuilder readFileInputStream(FileInputStream fileInputStream) throws IOException {
+    public static StringBuilder readFileInputStream(FileInputStream fis) throws IOException {
         StringBuilder sb = new StringBuilder();
 //      读取数据
         int read;
-//      fileInputStream.read()：一个字节一个字节实现数据的读取
-        while ((read = fileInputStream.read()) != -1) {
+//      fis.read()：一个字节一个字节实现数据的读取
+        while ((read = fis.read()) != -1) {
 //          输出的数据内容是根据类型来判断.
             sb.append((char) read);
         }
         return sb;
     }
 
-    public static StringBuilder readFileInputStream2(FileInputStream fileInputStream) throws IOException {
+    public static StringBuilder readFileInputStream2(FileInputStream fis) throws IOException {
         StringBuilder sb = new StringBuilder();
         byte[] buf = new byte[8];
         int len;
 //      in.read(buf); 一个字节数组一个字节数组实现数据读取.
-        while ((len = fileInputStream.read(buf)) != -1) {
-            System.out.println(Arrays.toString(buf));
-            System.out.println(len);
+        while ((len = fis.read(buf)) != -1) {
+            sb.append(Arrays.toString(buf));
+            System.out.println("读到的数据长度=" + len);
         }
         return sb;
     }
 
-    public static StringBuilder readFileReader(FileReader fr) throws IOException {
+    public static StringBuilder readFileReader1(FileReader fr) throws IOException {
         StringBuilder sb = new StringBuilder();
         int read;
 //      fr.read()：字符流的 read 是根据底层编码表的规则实现读取的.
@@ -142,7 +142,6 @@ public class IoHelper {
         //用来保存字符数据的数组
         char[] chars = new char[1024];
         int len;//读取的字符个数
-
         while ((len = fr.read(chars)) != -1) {
             String str = new String(chars, 0, len);
             sb.append(str);

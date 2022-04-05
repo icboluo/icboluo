@@ -1,5 +1,6 @@
 package com.icboluo.file;
 
+import com.icboluo.constant.FileRelativePathPre;
 import com.icboluo.util.IoHelper;
 
 import java.io.FileInputStream;
@@ -15,18 +16,21 @@ import java.io.IOException;
  * @author icboluo
  * @since 2020-08-10 14:03
  */
-class Demo01 {
+class Demo02Read {
     public static void main(String[] args) throws IOException {
 //      创建一个文件输入流对象
-        FileInputStream in = new FileInputStream("a.txt");
+        FileInputStream in1 = new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
 
-        StringBuilder stringBuilder = IoHelper.readFileInputStream(in);
-        System.out.println(stringBuilder);
-        in.close();
+        StringBuilder sb1 = IoHelper.readFileInputStream(in1);
+        // 123ä¸­å½
+        System.out.println(sb1);
+        in1.close();
 
-        FileInputStream in2 = new FileInputStream("a.txt");
-        StringBuilder stringBuilder1 = IoHelper.readFileInputStream2(in2);
-        System.out.println(stringBuilder1);
+//        读到的数据是编码
+        FileInputStream in2 = new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        StringBuilder sb2 = IoHelper.readFileInputStream2(in2);
+//        [49, 50, 51, -28, -72, -83, -27, -101][-67, 13, 10, -28, -72, -83, -27, -101]
+        System.out.println(sb2);
         in2.close();
     }
 }

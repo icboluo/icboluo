@@ -1,6 +1,6 @@
 package com.icboluo.file;
 
-import com.icboluo.common.AbstractFilePathConstant;
+import com.icboluo.constant.FileRelativePathPre;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -23,17 +23,17 @@ public class FileTest {
     /**
      * 通过将给定的路径名字符串转换为抽象路径名来创建新的 File实例
      */
-    private final File file = new File(AbstractFilePathConstant.A);
+    private final File file = new File(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
     /**
      * 从父路径名字符串和子路径名字符串创建新的 File实例
      */
-    private final File dirFile = new File(AbstractFilePathConstant.DIRECTORY_ADDR, AbstractFilePathConstant.A);
+    private final File dirFile = new File(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES, "a.txt");
 
-    private final File parent = new File(AbstractFilePathConstant.DIRECTORY_ADDR);
+    private final File parent = new File(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES);
     /**
      * 从父抽象路径名和子路径名字符串创建新的 File实例
      */
-    private final File dirFile1 = new File(parent, AbstractFilePathConstant.A);
+    private final File dirFile1 = new File(parent, "a.txt");
     private static int count = 0;
 
 

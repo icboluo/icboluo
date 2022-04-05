@@ -1,6 +1,6 @@
 package com.icboluo.file;
 
-import com.icboluo.common.AbstractFilePathConstant;
+import com.icboluo.constant.FileRelativePathPre;
 
 import java.io.*;
 
@@ -27,15 +27,15 @@ import java.io.*;
  */
 class Demo {
     public static void main(String[] args) throws IOException {
-        FileOutputStream fos = new FileOutputStream("a.txt");
-        FileInputStream fis = new FileInputStream("a.txt");
-        FileReader fr = new FileReader("a.txt");
-        FileWriter fw = new FileWriter("a.txt");
+        FileOutputStream fos = new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        FileInputStream fis = new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        FileReader fr = new FileReader(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        FileWriter fw = new FileWriter(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
         BufferedWriter bw = new BufferedWriter(fw);
         BufferedReader br = new BufferedReader(fr);
-        new ObjectInputStream(new FileInputStream(AbstractFilePathConstant.A));
-        new OutputStreamWriter(new FileOutputStream(AbstractFilePathConstant.A));
-        new PrintStream(new FileOutputStream(AbstractFilePathConstant.A));
+        new ObjectInputStream(new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"));
+        new OutputStreamWriter(new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"));
+        new PrintStream(new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"));
         try (fos; fis; fr; fw; bw; br) {
             fos.write('a');
             int len;

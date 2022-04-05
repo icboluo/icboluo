@@ -1,5 +1,7 @@
 package com.icboluo.file;
 
+import com.icboluo.constant.FileRelativePathPre;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -7,10 +9,10 @@ import java.io.IOException;
  * @author icboluo
  * @since 2020-08-10 14:19
  */
-class Demo04 {
+class Demo03FileWriter {
     public static void main(String[] args) throws IOException {
 //      创建一个字符文件写入流对象
-        FileWriter fw = new FileWriter("a.txt");
+        FileWriter fw = new FileWriter(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES +"a.txt");
 //      写入数据  数据不是直接输出到硬盘的文件，它会先将数据保存到程序的缓冲区,必须通过刷新操作才会写到文件中
 //      字符流写入字符数据, 无需实现字节转换, 因为字符流底层拥有默认编码表.
         fw.write("How are you doing ?");

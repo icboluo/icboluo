@@ -1,6 +1,6 @@
 package com.icboluo.lambda;
 
-import com.icboluo.dataobject.Student;
+import com.icboluo.object.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

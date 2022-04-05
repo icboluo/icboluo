@@ -1,6 +1,6 @@
 package com.icboluo.lambda;
 
-import com.icboluo.dataobject.Student;
+import com.icboluo.object.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.StringUtils;
 
@@ -14,7 +14,7 @@ import java.util.function.*;
  * 1.创建stream
  * 2.中间操作
  * 3.终止操作
- *
+ * <p>
  * 方法引用：若Lambda体中的内容已经有方法实现了，可以使用方法引用
  * 方法引用语法：
  * 对象::实例方法名,实例方法就是普通方法

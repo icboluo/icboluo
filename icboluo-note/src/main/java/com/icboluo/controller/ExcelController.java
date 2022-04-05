@@ -109,6 +109,28 @@ public class ExcelController {
         }
     }
 
+    @GetMapping("/importStudent")
+    public void importStudent(HttpServletRequest request) {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile mf = multipartRequest.getFile("data");
+        if (mf == null) {
+            return;
+        }
+        validateSuffix(mf);
+        try (InputStream is = mf.getInputStream();) {
+            ExcelReader er = EasyExcel.read(is).build();
+            RowDataListener listener = new RowDataListener();
+            ReadSheet rs = EasyExcel.readSheet(0).head(RowCO.class).headRowNumber(0).registerReadListener(listener).build();
+            er.read(rs);
+            List<RowCO> list = listener.list;
+            String[][] arr = validateContext(list);
+            removeErrData(list, arr);
+            list.forEach(System.out::println);
+        } catch (Exception e) {
+
+        }
+    }
+
     private void removeErrData(List<RowCO> list, String[][] arr) {
         for (int i = list.size() - 1; i >= 0; i--) {
             String[] row = arr[i - 3];

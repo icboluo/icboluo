@@ -1,6 +1,7 @@
 package com.icboluo.lambda.predicatecom;
 
-import com.icboluo.dataobject.Student;
+
+import com.icboluo.object.Student;
 
 import java.util.function.Predicate;
 

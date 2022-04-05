@@ -1,3 +1,105 @@
+GET http://localhost:1514/excel/importStudent
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="element-name"
+Content-Type: text/plain
+
+Name
+--WebAppBoundary
+Content-Disposition: form-data; name="data"; filename="student.xlsx"
+Content-Type: application/json
+
+< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
+--WebAppBoundary--
+
+###
+
+GET http://localhost:1514/excel/importStudent
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="element-name"
+Content-Type: text/plain
+
+Name
+--WebAppBoundary
+Content-Disposition: form-data; name="data"; filename="student.xlsx"
+Content-Type: application/json
+
+< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
+--WebAppBoundary--
+
+###
+
+GET http://localhost:1514/excel/importStudent
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="element-name"
+Content-Type: text/plain
+
+Name
+--WebAppBoundary
+Content-Disposition: form-data; name="data"; filename="student.xlsx"
+Content-Type: application/json
+
+< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
+--WebAppBoundary--
+
+###
+
+GET http://localhost:1514/excel/importStudent
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="element-name"
+Content-Type: text/plain
+
+Name
+--WebAppBoundary
+Content-Disposition: form-data; name="data"; filename="student.xlsx"
+Content-Type: application/json
+
+< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
+--WebAppBoundary--
+
+###
+
+GET http://localhost:1514/excel/importStudent
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="element-name"
+Content-Type: text/plain
+
+Name
+--WebAppBoundary
+Content-Disposition: form-data; name="data"; filename="database.xlsx"
+Content-Type: application/json
+
+< D:\IdeaProjects\icboluo\icboluo-note\database.xlsx
+--WebAppBoundary--
+
+###
+
+GET http://localhost:1514/excel/importStudent
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="element-name"
+Content-Type: text/plain
+
+Name
+--WebAppBoundary
+Content-Disposition: form-data; name="data"; filename="database.xlsx"
+Content-Type: application/json
+
+< D:\IdeaProjects\icboluo\icboluo-note\database.xlsx
+--WebAppBoundary--
+
+###
+
 GET http://localhost:1514/player/nextMonster
 
 <> 2022-03-13T030010.200.json
@@ -248,42 +350,6 @@ GET http://localhost:1110/expireAt
 GET http://localhost:1110/expireAt
 
 <> 2022-03-12T200437.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T200425.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T200204.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T195445.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T195334.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T194801.200.json
-
-###
-
-GET http://localhost:1110/expireAt
-
-<> 2022-03-12T194702.200.json
 
 ###
 

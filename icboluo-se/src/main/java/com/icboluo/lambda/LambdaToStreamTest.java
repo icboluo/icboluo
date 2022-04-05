@@ -1,9 +1,11 @@
 package com.icboluo.lambda;
 
-import com.icboluo.dataobject.Student;
+import com.icboluo.object.Student;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.*;
 
 public class LambdaToStreamTest {

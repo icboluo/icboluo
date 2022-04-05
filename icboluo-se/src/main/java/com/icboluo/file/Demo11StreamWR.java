@@ -1,6 +1,6 @@
 package com.icboluo.file;
 
-import com.icboluo.common.AbstractFilePathConstant;
+import com.icboluo.constant.FileRelativePathPre;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -9,14 +9,14 @@ import java.nio.charset.StandardCharsets;
  * @author icboluo
  * @since 2020-08-12 15:03
  */
-class Demo11 {
+class Demo11StreamWR {
     public static void main(String[] args) throws IOException {
         String str = "我爱Java";
-        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(AbstractFilePathConstant.A), StandardCharsets.UTF_8);
+        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"), StandardCharsets.UTF_8);
         osw.write(str);
         osw.close();
 
-        InputStreamReader isr = new InputStreamReader(new FileInputStream(AbstractFilePathConstant.A), StandardCharsets.UTF_8);
+        InputStreamReader isr = new InputStreamReader(new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"), StandardCharsets.UTF_8);
         int len;
         char[] chars = new char[1024];
         while ((len = isr.read(chars)) != -1) {
