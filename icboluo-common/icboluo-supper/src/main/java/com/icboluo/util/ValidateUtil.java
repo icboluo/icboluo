@@ -14,6 +14,13 @@ import java.util.Set;
 
 /**
  * 如果不加 @Valid注解，可以使用本类开启手动校验，可以实现校验部分参数
+ * 子类需要校验的时候需要在子类字段上加上@Valid注解，否则校验不到子类中
+ * NotEmpty注解代表不能为null&&'',
+ * NotBlack注解代表不能为''可以为null,没什么用
+ * NotEmpty+NotNull可以实现判断数组中的每一个元素均不为null
+ * NotBlack+NotNull=NotEmpty
+ * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
+ *
  *
  * @author icboluo
  * @since 2022-01-12 11:59
