@@ -71,7 +71,7 @@
         <easyexcel.version>3.0.5</easyexcel.version>
         <!--校验器        -->
         <validation.api.version>2.0.1.Final</validation.api.version>
-        <hibernate.validator.version>7.0.1.Final</hibernate.validator.version>
+        <hibernate.validator.version>6.2.0.Final</hibernate.validator.version>
         <!--公共包-->
         <hutool.all.version>5.6.6</hutool.all.version>
         <common.io.version>2.8.0</common.io.version>
@@ -180,7 +180,7 @@
                 <artifactId>validation-api</artifactId>
                 <version>${validation.api.version}</version>
             </dependency>
-            <!-- hibernate validator-->
+            <!-- hibernate validator 新版本可能不兼容，导致校验失效-->
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>

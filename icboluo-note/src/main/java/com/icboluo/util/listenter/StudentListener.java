@@ -10,15 +10,11 @@ import com.icboluo.object.excel.StudentExcel;
  */
 public class StudentListener extends ExcelListener<StudentExcel> {
 
-    private final int headIdx = 0;
-
-    private int maxLineIdx = 3;
-
     @Override
     public void invoke(StudentExcel data, AnalysisContext context) {
         ReadRowHolder rrh = context.readRowHolder();
         Integer rowIndex = rrh.getRowIndex();
-        if (rowIndex > headIdx) {
+        if (rowIndex > head()) {
             super.getList().add(data);
         } else {
             System.out.println("进行head校验----成功");
@@ -28,5 +24,10 @@ public class StudentListener extends ExcelListener<StudentExcel> {
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
 
+    }
+
+    @Override
+    public int head() {
+        return 0;
     }
 }

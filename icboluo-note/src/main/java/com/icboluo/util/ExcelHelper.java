@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -276,6 +277,7 @@ public class ExcelHelper {
             return new ArrayList<>();
         }
         validateSuffix(mf);
+        headMap.computeIfAbsent(cla, key -> listener.head());
         try (InputStream is = mf.getInputStream();) {
             ExcelReader er = EasyExcel.read(is).build();
             // 默认为0行表头，是因为要进行模板校验
@@ -295,8 +297,12 @@ public class ExcelHelper {
     }
 
     public static <T> String[][] validateContext(List<T> list) {
-        int head = 3;
-        String[][] arr = new String[list.size() + head][10];
+        if (CollectionUtils.isEmpty(list)) {
+            return new String[0][0];
+        }
+        int headNum = getHeadNum(list);
+        int lineNum = getLineNum(list);
+        String[][] arr = new String[list.size() + headNum][lineNum];
         for (int i = 0; i < list.size(); i++) {
             T row = list.get(i);
             Class<?> cla = row.getClass();
@@ -314,16 +320,20 @@ public class ExcelHelper {
                 }
                 if (StringUtils.hasText(msg)) {
                     ExcelProperty ep = field.getAnnotation(ExcelProperty.class);
-                    arr[i + head][ep.index()] = msg;
+                    arr[i + headNum][ep.index()] = msg;
                 }
             }
         }
         return arr;
     }
 
-    private static void removeErrData(List<RowCO> list, String[][] arr) {
+    public static <T> void removeErrData(List<T> list, String[][] arr) {
+        if (CollectionUtils.isEmpty(list)) {
+            return;
+        }
+        int headNum = getHeadNum(list);
         for (int i = list.size() - 1; i >= 0; i--) {
-            String[] row = arr[i - 3];
+            String[] row = arr[i + headNum];
             boolean allEleIsEmpty = ArrayHelper.allEleIsEmpty(row);
             if (!allEleIsEmpty) {
                 list.remove(i);
@@ -335,10 +345,17 @@ public class ExcelHelper {
     private static <T> String validateOther(Field field, T row) {
         if (field.isAnnotationPresent(Date.class)) {
             Object o = field.get(row);
+            if (o == null) {
+                return null;
+            }
             if (o instanceof LocalDate) {
                 return null;
-            } else {
-                return "not instanceof LocalDate";
+            }
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+            try {
+                format.parse((String) o);
+            } catch (ParseException e) {
+                return "date error";
             }
         }
         return null;
@@ -350,5 +367,44 @@ public class ExcelHelper {
             return -1;
         };
         return comparator;
+    }
+
+    private static final Map<Class<?>, Integer> lineNumMap = new HashMap<>();
+    private static final Map<Class<?>, Integer> headMap = new HashMap<>();
+
+
+    /**
+     * 获取最大列数
+     *
+     * @param list 原列表
+     * @param <T>  列表中元素类型
+     * @return 最大列数
+     */
+    private static <T> int getLineNum(List<T> list) {
+        Class<?> firCla = list.get(0).getClass();
+        if (lineNumMap.containsKey(firCla)) {
+            return lineNumMap.get(firCla);
+        } else {
+            Field[] declaredFields = firCla.getDeclaredFields();
+            int lineNum = Arrays.stream(declaredFields)
+                    .filter(field -> field.isAnnotationPresent(ExcelProperty.class))
+                    .map(field -> field.getAnnotation(ExcelProperty.class))
+                    .mapToInt(ExcelProperty::index)
+                    .max().orElse(0);
+            lineNumMap.put(firCla, lineNum + 1);
+            return lineNumMap.get(firCla);
+        }
+    }
+
+    /**
+     * 获得头行数
+     *
+     * @param list 原列表
+     * @param <T>  列表中元素类型
+     * @return 头行数
+     */
+    private static <T> int getHeadNum(List<T> list) {
+        Class<?> firCla = list.get(0).getClass();
+        return headMap.get(firCla);
     }
 }

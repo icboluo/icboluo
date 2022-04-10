@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.icboluo.annotation.ResponseResult;
 import com.icboluo.entity.CultivationCareer;
 import com.icboluo.service.CultivationCareerService;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +18,6 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/cultivationCareer")
-@CrossOrigin(origins = "*", maxAge = 3600)
 @ResponseResult
 public class CultivationCareerController {
 

@@ -18,7 +18,6 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/fundInfo")
-@CrossOrigin(origins = "*", maxAge = 3600)
 @ResponseResult
 public class FundInfoController {
     /**

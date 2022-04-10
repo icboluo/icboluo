@@ -4,15 +4,10 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.fastjson.JSON;
 import com.icboluo.object.clientobject.RowCO;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author lp
  */
 public class RowDataListener extends ExcelListener<RowCO> {
-
-    public List<RowCO> list = new ArrayList<>();
 
     /**
      * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
@@ -28,7 +23,7 @@ public class RowDataListener extends ExcelListener<RowCO> {
      */
     @Override
     public void invoke(RowCO data, AnalysisContext context) {
-        list.add(data);
+        super.getList().add(data);
     }
 
     /**
@@ -38,6 +33,11 @@ public class RowDataListener extends ExcelListener<RowCO> {
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        System.out.println(JSON.toJSONString(list));
+        System.out.println(JSON.toJSONString(super.getList()));
+    }
+
+    @Override
+    public int head() {
+        return 3;
     }
 }

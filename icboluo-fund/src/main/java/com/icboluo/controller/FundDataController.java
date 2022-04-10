@@ -1,15 +1,14 @@
 package com.icboluo.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.icboluo.annotation.ResponseResult;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +26,6 @@ import java.time.LocalDate;
  */
 @RestController
 @RequestMapping("/fundData")
-@CrossOrigin(origins = "*", maxAge = 3600)
 @ResponseResult
 public class FundDataController {
 

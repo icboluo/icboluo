@@ -1,3 +1,375 @@
+GET http://localhost:7788/rest/uuid
+
+<> 2022-04-10T214039.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/getUserCode
+
+<> 2022-04-10T213841.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9,
+  "customerEmail": 789
+}
+
+<> 2022-04-10T213251.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9,
+  "customerEmail": 789
+}
+
+<> 2022-04-10T213157.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T213133.500.json
+
+###
+
+GET http://localhost:8888/fundData/init?fundId=164402
+
+<> 2022-04-10T212357.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T211652.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T211600.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T211258.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T210758.400.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T210550.400.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T210205.400.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T210035.400.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T205903.400.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T205623.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T205609.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T205420.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T205218.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T205111.500.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T204623.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T204515.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T204134.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T204011.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T203346.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T203301.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T203254.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T203107.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T203039.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T202806.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T202716.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T202612.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T202118.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T201917.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T201813.200.json
+
+###
+
+GET http://localhost:7788/webInterceptor/validate
+Content-Type: application/json
+
+{
+  "code": 9
+}
+
+<> 2022-04-10T201611.200.json
+
+###
+
 GET http://localhost:7788/webInterceptor/validate
 Content-Type: application/json
 
@@ -158,606 +530,6 @@ Content-Type: application/json
 {}
 
 <> 2022-04-05T195011.200.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-
-<> 2022-04-05T194941.500.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T194849.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T193127.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T193009.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T192843.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T192657.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T192551.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T192541.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T192535.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T192501.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-<> 2022-04-05T192423.200.json
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-user: 123
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="mf"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="student.xlsx"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< D:\IdeaProjects\icboluo\icboluo-note\src\main\resources\dir\student.xlsx
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< D:\apache-maven-3.6.3\README.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< D:\apache-maven-3.6.3\README.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< D:\apache-maven-3.6.3\README.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-Name
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="gitignore"
-Content-Type: multipart/form-data
-
-< C:\Users\Administrator\AppData\Local\Temp\http_request_input_file1707.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< C:\Users\Administrator\AppData\Local\Temp\http_request_input_file2227.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< C:\Users\Administrator\AppData\Local\Temp\http_request_input_file1508.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< D:\apache-maven-3.6.3\README.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< D:\apache-maven-3.6.3\README.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="README.txt"
-Content-Type: multipart/form-data
-
-< D:\apache-maven-3.6.3\README.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="aaa.png"
-Content-Type: image/png
-
-< D:\apache-maven-3.6.3\aaa.png
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="aaa.png"
-Content-Type: image/png
-
-< D:\apache-maven-3.6.3\aaa.png
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="aaa.png"
-Content-Type: image/png
-
-< C:\Users\Administrator\AppData\Local\Temp\http_request_input_file461.txt
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="aaa.png"
-Content-Type: image/png
-
-< D:\apache-maven-3.6.3\aaa.png
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="aaa.png"
-Content-Type: image/png
-
-< D:\apache-maven-3.6.3\aaa.png
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="aaa.png"
-Content-Type: image/png
-
-< D:\apache-maven-3.6.3\aaa.png
---WebAppBoundary--
-
-###
-
-GET http://localhost:1514/excel/importStudent
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-777
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="aaa.png"
-Content-Type: image/png
-
-< D:\apache-maven-3.6.3\aaa.png
---WebAppBoundary--
 
 ###
 

@@ -7,7 +7,7 @@ import com.icboluo.object.businessobject.Student;
 import com.icboluo.object.clientobject.RowCO;
 import com.icboluo.object.excel.StudentExcel;
 import com.icboluo.service.impl.ExcelService;
-import com.icboluo.util.ArrayHelper;
+import com.icboluo.util.DateHelper;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.listenter.RowDataListener;
 import com.icboluo.util.listenter.StudentListener;
@@ -89,7 +89,7 @@ public class ExcelController {
         RowDataListener listener = new RowDataListener();
         List<RowCO> read = ExcelHelper.read(mf, listener, RowCO.class);
         String[][] arr = ExcelHelper.validateContext(read);
-        removeErrData(read, arr);
+        ExcelHelper.removeErrData(read, arr);
         read.forEach(System.out::println);
     }
 
@@ -99,9 +99,11 @@ public class ExcelController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile mf = multipartRequest.getFile("data");
         StudentListener listener = new StudentListener();
-//        List<StudentExcel> read = ExcelHelper.read(mf, listener, StudentExcel.class);
+        List<StudentExcel> read1 = ExcelHelper.read(mf, listener, StudentExcel.class);
         List<StudentExcel> read = paramBuild();
         String[][] arr = ExcelHelper.validateContext(read);
+        ExcelHelper.removeErrData(read, arr);
+        read.forEach(System.out::println);
     }
 
     private List<StudentExcel> paramBuild() {
@@ -111,19 +113,10 @@ public class ExcelController {
         student1.setName("李明");
         student1.setAge("15");
         student1.setSex("男");
+        student1.setStartDate(DateHelper.getCurrentDateFormat());
         StudentExcel student2 = new StudentExcel();
         list.add(student1);
         list.add(student2);
         return list;
-    }
-
-    private void removeErrData(List<RowCO> list, String[][] arr) {
-        for (int i = list.size() - 1; i >= 0; i--) {
-            String[] row = arr[i - 3];
-            boolean allEleIsEmpty = ArrayHelper.allEleIsEmpty(row);
-            if (!allEleIsEmpty) {
-                list.remove(i);
-            }
-        }
     }
 }

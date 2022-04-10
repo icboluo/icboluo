@@ -28,7 +28,6 @@ import java.util.Map;
  * @author lp
  */
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/timeNote")
 @Api(tags = "笔记本")
 @ResponseResult

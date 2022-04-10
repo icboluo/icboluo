@@ -18,7 +18,7 @@ import java.util.Set;
  * NotEmpty注解代表不能为null&&'',
  * NotBlack注解代表不能为''可以为null,没什么用
  * NotEmpty+NotNull可以实现判断数组中的每一个元素均不为null
- * NotBlack+NotNull=NotEmpty
+ * NotEmpty.contain NotBlack+NotNull
  * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
  *
  *

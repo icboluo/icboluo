@@ -1,7 +1,9 @@
 package com.icboluo.object.excel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.icboluo.annotation.Date;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @author icboluo
@@ -10,6 +12,7 @@ import lombok.Data;
 @Data
 public class StudentExcel {
 
+    @Length(max = 2)
     @ExcelProperty(index = 0)
     private String code;
 
@@ -21,4 +24,8 @@ public class StudentExcel {
 
     @ExcelProperty(index = 3)
     private String age;
+
+    @Date
+    @ExcelProperty(index = 4)
+    private String startDate;
 }

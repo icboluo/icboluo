@@ -20,6 +20,7 @@ import com.icboluo.util.DateHelper;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
  * @author icboluo
  * @since 2021-33-27 22:33
  */
-// @Component
+@Component
 @Slf4j
 public class FundDataTask {
 

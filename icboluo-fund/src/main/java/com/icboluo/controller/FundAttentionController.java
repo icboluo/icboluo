@@ -6,7 +6,6 @@ import com.icboluo.annotation.ResponseResult;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/fundAttention")
-@CrossOrigin(origins = "*", maxAge = 3600)
 @ResponseResult
 public class FundAttentionController {
 

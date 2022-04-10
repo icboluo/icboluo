@@ -17,7 +17,6 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "*", maxAge = 3600)
 @Api(tags = "用户")
 @Slf4j
 public class UserController {

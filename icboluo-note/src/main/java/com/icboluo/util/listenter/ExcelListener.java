@@ -14,4 +14,11 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
 
     @Getter
     private final List<T> list = new ArrayList<>();
+
+    /**
+     * 获取头行数，用于Excel分析
+     *
+     * @return 头行数
+     */
+    public abstract int head();
 }

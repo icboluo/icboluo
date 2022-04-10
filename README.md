@@ -21,7 +21,7 @@ Here are some ideas to get you started:
 * 采用简单的Spring全家桶
 * Mysql
 * 装这些就可以啦,项目可以启动个七七八八了
-* 可以使用application.simple这个配置文件，用这个启动文件，项目启动不需要任何的服务支持（但是功能也会首影响
+* 可以使用application.simple这个配置文件，用这个启动文件，项目启动不需要任何的服务支持（但是功能也会受影响
 
 ### 项目更新了LeetCode中的一些算法解法
 

@@ -284,7 +284,7 @@ public class ExcelService {
             SheetBO sheetBO = new SheetBO();
             String sheetName = readSheets.get(i).getSheetName();
             sheetBO.setTableName(sheetName);
-            List<RowCO> rowClients = listener.list;
+            List<RowCO> rowClients = listener.getList();
             this.buildExcelBO(sheetBO, rowClients);
             list.add(sheetBO);
         }

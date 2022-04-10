@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,7 +21,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 拦截异常并统一处理
@@ -64,6 +69,30 @@ public class GlobalControllerExceptionHandler {
         return R.error(500, message);
     }
 
+    @ExceptionHandler(value = RuntimeException.class)
+    public Response runtimeExceptionHandler(RuntimeException e) {
+        printLog(e);
+        response.setStatus(500);
+        return R.error(ReEnum.UNEXPECTED_EXCEPTION);
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public Response methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        printLog(e);
+        BindingResult bindingResult = e.getBindingResult();
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        String msg = fieldErrors.stream()
+                .map(fieldError -> {
+                    String field = fieldError.getField();
+                    String defaultMessage = fieldError.getDefaultMessage();
+                    assert defaultMessage != null;
+                    String message = messageSource.getMessage(defaultMessage, null, LocaleContextHolder.getLocale());
+                    return field + " " + message;
+                }).collect(Collectors.joining(";"));
+        response.setStatus(500);
+        return R.error(msg);
+    }
+
     /**
      * TODO 难道真的有什么异常会绕过runtime直接到Exception吗
      * <p>
@@ -82,14 +111,6 @@ public class GlobalControllerExceptionHandler {
         }
         String msg = Objects.isNull(e.getMessage()) ? "操作失败，但没有失败消息" : e.getMessage();
         return R.error(500, msg);
-    }
-
-
-    @ExceptionHandler(value = RuntimeException.class)
-    public Response runtimeExceptionHandler(Exception e) {
-        printLog(e);
-        response.setStatus(500);
-        return R.error(ReEnum.UNEXPECTED_EXCEPTION);
     }
 
 
