@@ -2,14 +2,13 @@ package com.icboluo.util;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
-import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.icboluo.annotation.Config;
 import com.icboluo.annotation.Date;
 import com.icboluo.object.clientobject.RowCO;
 import com.icboluo.util.listenter.ExcelListener;
@@ -278,7 +277,7 @@ public class ExcelHelper {
         }
         validateSuffix(mf);
         headMap.computeIfAbsent(cla, key -> listener.head());
-        try (InputStream is = mf.getInputStream();) {
+/*        try (InputStream is = mf.getInputStream();) {
             ExcelReader er = EasyExcel.read(is).build();
             // 默认为0行表头，是因为要进行模板校验
             ReadSheet rs = EasyExcel.readSheet(0).head(cla).headRowNumber(0).registerReadListener(listener).build();
@@ -286,7 +285,8 @@ public class ExcelHelper {
             return listener.getList();
         } catch (IOException e) {
             throw new IcBoLuoException("excel export error");
-        }
+        }*/
+        return null;
     }
 
     private static void validateSuffix(MultipartFile mf) {
@@ -302,6 +302,7 @@ public class ExcelHelper {
         }
         int headNum = getHeadNum(list);
         int lineNum = getLineNum(list);
+        List<String> configList = getConfigList(list);
         String[][] arr = new String[list.size() + headNum][lineNum];
         for (int i = 0; i < list.size(); i++) {
             T row = list.get(i);
@@ -325,6 +326,22 @@ public class ExcelHelper {
             }
         }
         return arr;
+    }
+
+    private static <T> List<String> getConfigList(List<T> list) {
+        List<Field> headNum111 = getConfigField(list);
+        return list.stream()
+                .flatMap(t -> headNum111.stream().map(field -> {
+                    try {
+                        field.setAccessible(true);
+                        return field.get(t);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }))
+                .map(String::valueOf)
+                .toList();
     }
 
     public static <T> void removeErrData(List<T> list, String[][] arr) {
@@ -371,6 +388,7 @@ public class ExcelHelper {
 
     private static final Map<Class<?>, Integer> lineNumMap = new HashMap<>();
     private static final Map<Class<?>, Integer> headMap = new HashMap<>();
+    private static final Map<Class<?>, List<Field>> configMap = new HashMap<>();
 
 
     /**
@@ -406,5 +424,19 @@ public class ExcelHelper {
     private static <T> int getHeadNum(List<T> list) {
         Class<?> firCla = list.get(0).getClass();
         return headMap.get(firCla);
+    }
+
+    private static <T> List<Field> getConfigField(List<T> list) {
+        Class<?> firCla = list.get(0).getClass();
+        if (configMap.containsKey(firCla)) {
+            return configMap.get(firCla);
+        } else {
+            Field[] declaredFields = firCla.getDeclaredFields();
+            List<Field> fieldList = Arrays.stream(declaredFields)
+                    .filter(field -> field.isAnnotationPresent(Config.class))
+                    .toList();
+            configMap.put(firCla, fieldList);
+            return fieldList;
+        }
     }
 }
