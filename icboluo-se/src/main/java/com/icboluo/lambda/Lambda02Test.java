@@ -1,6 +1,5 @@
 package com.icboluo.lambda;
 
-import com.icboluo.object.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -8,14 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.*;
 
-public class LambdaToStreamTest {
-
-    List<Student> stus = Arrays.asList(
-            //new Student(22, "one"),
-            new Student(1, "two"),
-            new Student(2, "three"),
-            new Student(3, "three")
-    );
+/**
+ * @author icboluo
+ */
+public class Lambda02Test {
 
     /**
      * 使用
@@ -72,7 +67,6 @@ public class LambdaToStreamTest {
             }
         }
         return strList;
-
     }
 
     private String strHander(String str, Function<String, String> fun) {

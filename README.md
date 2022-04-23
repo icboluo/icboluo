@@ -15,6 +15,8 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
+### 项目是学习Java的一些笔记
+
 ## 项目主体
 
 * JDK17
@@ -42,7 +44,4 @@ Here are some ideas to get you started:
 - redis工具类、还有一些常量枚举啥的
 
 ### 其他服务暂时没有实际意义上的功能
-
-
-
 
