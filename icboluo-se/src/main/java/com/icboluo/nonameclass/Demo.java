@@ -1,7 +1,5 @@
 package com.icboluo.nonameclass;
 
-import com.icboluo.common.PrintInterface;
-
 /**
  * @author icboluo
  * @since 2020-08-11 10:53
