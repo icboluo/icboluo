@@ -45,6 +45,7 @@ public class HttpAspect {
 //        url是带http前缀的请求
         HttpServletRequest request = attributes.getRequest();
         long start = System.currentTimeMillis();
+        // 异常应该交给全局异常来处理，这里不要越俎代庖
         Object ans = joinPoint.proceed();
         long end = System.currentTimeMillis();
 //        com.icboluo.controller.ProvinceController.selectAll

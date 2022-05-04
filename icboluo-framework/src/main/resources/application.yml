@@ -3,3 +3,11 @@ server:
 spring:
   application:
     name: icboluo-framework
+#    为什么有的项目无法设置error级别以上的日志打印
+logging:
+  level:
+    /*: debug
+#    当最后一个单词是文件的时候加.的方式是不行的，需要换行处理
+#    当控制台日志没有文件路径的时候，直接写文件名就可以了，写完整路径反而没用
+    com.icboluo: info
+

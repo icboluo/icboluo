@@ -43,7 +43,7 @@ public class RedisLogAspect {
         String declaringTypeName = signature.getDeclaringTypeName();
 //        如果日志里面用函数，不管日志级别是什么，后面的占位符中的函数都会执行
 //        启动模式和日志级别毫无关系
-        log.debug("==>  Method: {}.{}({})", getClassName(declaringTypeName), methodName, argsToString(args));
+        log.debug("==>  Method: {}.{}({})", getSimpleClassName(declaringTypeName), methodName, argsToString(args));
     }
 
     @AfterReturning(returning = "ret", pointcut = "redisLog()")
@@ -83,7 +83,7 @@ public class RedisLogAspect {
         if (ret instanceof Map<?, ?> addressMap) {
             ret = addressMap.size();
         }
-        return ret.toString();
+        return ret.toString().replace("\n", " ");
     }
 
     private String toString(Object args) {
@@ -100,7 +100,7 @@ public class RedisLogAspect {
         return complete.substring(0, 50) + "..." + complete.substring(complete.length() - 50);
     }
 
-    private String getClassName(String declaringTypeName) {
+    private String getSimpleClassName(String declaringTypeName) {
         int lastIndexOf = declaringTypeName.lastIndexOf(".");
         return declaringTypeName.substring(lastIndexOf + 1);
     }

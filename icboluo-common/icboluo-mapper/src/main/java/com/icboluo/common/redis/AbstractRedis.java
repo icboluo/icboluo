@@ -10,10 +10,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -143,7 +140,7 @@ public abstract class AbstractRedis<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (ObjectUtils.isEmpty(val)) {
+        if (ObjectUtils.isEmpty(val) || (val instanceof Optional<?> opt && opt.isEmpty())) {
 //            如果找不到，先从db中读出来写到缓存中
             val = dbRead.get();
             if (key == null) {

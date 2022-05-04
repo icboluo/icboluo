@@ -79,5 +79,13 @@ public class Stream03Test {
                 .toArray(Integer[]::new);
         System.out.println(Arrays.toString(arr1));
         System.out.println(Arrays.toString(arr2));
+
+        List<Integer> list = stuList1.stream()
+                .mapToInt(Student::getAge)
+                // 装箱，常用于IntStream无法排序的情况
+                .boxed()
+                .sorted((a, b) -> b - a)
+                .toList();
+        System.out.println(list);
     }
 }
