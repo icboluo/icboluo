@@ -6,6 +6,8 @@ import java.io.*;
 
 /**
  * @author icboluo
+ * @see RuntimeException 运行期异常，虽然继承于Exception，但是属于非受检异常，需要注意，如果AOP中不捕获这个异常，则会抛出其他的反射异常
+ * @see Exception 受检异常，需要显示处理，一般意义上我们需要继承的属于RuntimeException
  * @since 2020-08-10 11:20
  */
 class Demo {

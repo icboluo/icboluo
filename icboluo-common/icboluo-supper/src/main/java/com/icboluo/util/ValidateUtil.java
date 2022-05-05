@@ -21,8 +21,11 @@ import java.util.Set;
  * NotEmpty.contain NotBlack+NotNull
  * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
  *
- *
  * @author icboluo
+ * @see javax.validation.Valid
+ * @see org.springframework.validation.annotation.Validated
+ * <p>
+ * validate 如果后面不加BindingResult则抛异常，如果家何时能感，则会将错误的结果收集到bs中
  * @since 2022-01-12 11:59
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

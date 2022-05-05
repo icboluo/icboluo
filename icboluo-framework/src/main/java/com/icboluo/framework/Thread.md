@@ -44,3 +44,35 @@ thread local相当于一个线程的一个全局变量
 thread local不是解决对象共享访问问题的，主要是提供了保持对象的方法和 避免参数传递 的方便的对象访问方式
 
 thread local和@async 前面的代表本地线程，后面代表异步线程，数据不能共享，可以用线程池、代理增强等方式处理
+
+## sleep wait
+
+sleep和wait均针对于锁，他们的不同和线程无关，均不会释放线程
+
+## volition
+
+防止指令重排
+
+## 效率
+
+异步追求效率的过程中，cf比join要好很多，cf能更小颗粒度的控制流程
+
+## 线程状态
+
+1.new 新建\
+2.runnable 运行（java没有就绪状态\
+3.blocked 阻塞\
+4.waiting 等待\
+5.timed_waiting 有时间的等待\
+6.terminated 终止
+
+```java
+public class MyThread {
+    /**
+     * @see Thread.State
+     */
+    private void state() {
+
+    }
+}
+```

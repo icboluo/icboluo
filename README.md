@@ -45,3 +45,5 @@ Here are some ideas to get you started:
 
 ### 其他服务暂时没有实际意义上的功能
 
+[查看详情](document/README.md)
+

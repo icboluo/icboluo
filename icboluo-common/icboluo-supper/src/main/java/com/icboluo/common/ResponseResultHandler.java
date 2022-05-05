@@ -33,9 +33,9 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
             return false;
         }
         HttpServletRequest request = sra.getRequest();
-        Object attribute = request.getAttribute(ResponseResultInterceptor.abc);
+        Object attribute = request.getAttribute(ResponseResultInterceptor.resAnno);
         ResponseResult responseResultAnn = (ResponseResult) attribute;
-        request.removeAttribute(ResponseResultInterceptor.abc);
+        request.removeAttribute(ResponseResultInterceptor.resAnno);
         return responseResultAnn != null;
     }
 

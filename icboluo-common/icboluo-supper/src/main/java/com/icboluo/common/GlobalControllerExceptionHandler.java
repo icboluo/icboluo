@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
@@ -36,8 +36,7 @@ public class GlobalControllerExceptionHandler {
 
     @Resource
     private HttpServletRequest request;
-    @Resource
-    private HttpServletResponse response;
+
     @Resource
     private MessageSource messageSource;
 
@@ -48,9 +47,11 @@ public class GlobalControllerExceptionHandler {
      * @return 失败的响应信息
      */
     @ExceptionHandler(value = {IcBoLuoException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @SuppressWarnings("all")
     public Response icBoLuoExceptionHandler(IcBoLuoException e) {
         printLog(e);
-        response.setStatus(500);
+//        response.setStatus(500); // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
         return R.error(500, e.getMessage());
     }
 
@@ -61,22 +62,16 @@ public class GlobalControllerExceptionHandler {
      * @return 失败的响应信息
      */
     @ExceptionHandler(value = {IcBoLuoI18nException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response icBoLuoI18nExceptionHandler(IcBoLuoI18nException e) {
         printLog(e);
-        response.setStatus(500);
 //        TODO 这个解决了异常i18，可是ret i18还是没有解决
         String message = messageSource.getMessage(e.getMessage(), null, LocaleContextHolder.getLocale());
         return R.error(500, message);
     }
 
-    @ExceptionHandler(value = RuntimeException.class)
-    public Response runtimeExceptionHandler(RuntimeException e) {
-        printLog(e);
-        response.setStatus(500);
-        return R.error(ReEnum.UNEXPECTED_EXCEPTION);
-    }
-
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         printLog(e);
         BindingResult bindingResult = e.getBindingResult();
@@ -89,12 +84,18 @@ public class GlobalControllerExceptionHandler {
                     String message = messageSource.getMessage(defaultMessage, null, LocaleContextHolder.getLocale());
                     return field + " " + message;
                 }).collect(Collectors.joining(";"));
-        response.setStatus(500);
         return R.error(msg);
     }
 
+    @ExceptionHandler(value = RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Response runtimeExceptionHandler(RuntimeException e) {
+        printLog(e);
+        return R.error(ReEnum.UNEXPECTED_EXCEPTION);
+    }
+
     /**
-     * TODO 难道真的有什么异常会绕过runtime直接到Exception吗
+     * 能跑到这里，没有被runtime捕获到，应该属于受检异常
      * <p>
      * 默认的异常处理方法，如果 e 有注解 @ResponseStatus 注解，则继续抛出，让框架处理
      *
@@ -103,6 +104,7 @@ public class GlobalControllerExceptionHandler {
      * @throws Exception {@code e} 最大异常
      */
     @ExceptionHandler(value = Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response exceptionHandler(Exception e) throws Exception {
         printLog(e);
         //如果异常上已经有 @ResponseStatus 注解，则让框架处理

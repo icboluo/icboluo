@@ -64,7 +64,7 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 - 对公共sql的更改需要在mapper接口上增加注释，更改公共sql的时候，需要merge，不准直接copy覆盖
 
 - 修改数据库字段的时候，需要修改整个xml，需要注意，不要漏掉sql
-- 使用该字段的时候，需要判断是否为null，防止npe的情况发生 
+- 使用该字段的时候，需要判断是否为null，防止npe的情况发生
 
 ## 索引
 
@@ -131,13 +131,21 @@ mysql 日期格式用 time stramp，不要使用 date time（date time 的日期
 
 mybatis中批量sql是可以使用selective
 
-select name ,sum(money) from test group by name with rollup 
+select name ,sum(money) from test group by name with rollup
 
 先分组，分组后对聚合函数sum再聚合一次
 
-select coalesce(name，总金额;) ,sum (money) from test group by name with rollup 
+select coalesce(name，总金额;) ,sum (money) from test group by name with rollup
 
 这样写更合适
+
+## 不建议
+
+不建议删除db中的约束，太难考虑所有的情况了；针对于保存的数据，新建表似乎最好
+
+## 建议
+
+修改表字段类型并没有太复杂
 
 ## mysql
 

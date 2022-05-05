@@ -16,7 +16,10 @@ import java.lang.reflect.Method;
 @Slf4j
 public class ResponseResultInterceptor implements HandlerInterceptor {
 
-    public static final String abc = "abc";
+    /**
+     * 标记Res标准化的key
+     */
+    protected static String resAnno = "resAnno";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -24,9 +27,9 @@ public class ResponseResultInterceptor implements HandlerInterceptor {
             Class<?> cla = handlerMethod.getBeanType();
             Method method = handlerMethod.getMethod();
             if (cla.isAnnotationPresent(ResponseResult.class)) {
-                request.setAttribute(abc, cla.getAnnotation(ResponseResult.class));
+                request.setAttribute(resAnno, cla.getAnnotation(ResponseResult.class));
             } else if (method.isAnnotationPresent(ResponseResult.class)) {
-                request.setAttribute(abc, method.getAnnotation(ResponseResult.class));
+                request.setAttribute(resAnno, method.getAnnotation(ResponseResult.class));
             }
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);

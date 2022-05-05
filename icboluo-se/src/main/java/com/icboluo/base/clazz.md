@@ -46,7 +46,7 @@ public class Demo {
 
 #### 启动
 
-* 如下图所示，第7行第8行均有一个三角标记，随便点一个然后点run...即可
+* 如下图所示，第7行第8行均有一个三角标记，随便点一个然后点run...即可（也可以点击debug启动
   ![img.png](picture/start.png)
 * 控制台打印消息会在下方弹出
   ![img.png](picture/console.png)
@@ -196,5 +196,19 @@ public class StudentTest {
         student2.name = "张三";
         student2.attendClass2();
     }
+}
+```
+
+## String对象
+
+* 字符串是一个常用的类，先学习常用的字符串API(ApplicationInterface)
+
+```java
+public class StudentTest {
+  public static void main(String[] args) {
+    // 新建一个字符串对象
+    String str = new String("字符串dfjgoagja");
+    
+  }
 }
 ```
