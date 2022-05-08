@@ -31,6 +31,11 @@ public class IcBoLuoException extends RuntimeException {
         this.status = em.getCode();
     }
 
+    public IcBoLuoException(Throwable throwable) {
+        super(throwable.getMessage(), throwable);
+        this.status = 500;
+    }
+
     public IcBoLuoException(ReEnum em, Throwable throwable) {
         super(em.getMessage(), throwable);
         this.status = em.getCode();

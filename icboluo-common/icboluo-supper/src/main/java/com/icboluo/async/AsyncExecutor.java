@@ -19,6 +19,7 @@ public class AsyncExecutor {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setCorePoolSize(10);
         threadPoolTaskExecutor.setTaskDecorator(new AsyncTaskDecorator());
+        threadPoolTaskExecutor.setThreadNamePrefix("async-");
         threadPoolTaskExecutor.initialize();
         return threadPoolTaskExecutor;
     }

@@ -4,8 +4,9 @@ import com.icboluo.util.IcBoLuoException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * <p>slf4j simple logging facade for java (java门面日志) 类似于一个接口，其实现类有：
- * <p>logback 是spring默认日志插件、log4j2 log4j的更新版本，效率更优、slf4j.simple
+ * <p> 如果日志是红色的，说明某个地方将日志捕获，仅仅做了打印操作（e.printStackTrace();没有进行抛出
+ * <p> slf4j simple logging facade for java (java门面日志) 类似于一个接口，其实现类有：
+ * <p> logback 是spring默认日志插件、log4j2 log4j的更新版本，效率更优、slf4j.simple
  *
  * @author icboluo
  * @since 2020/12/2 20:52

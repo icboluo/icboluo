@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ValidationException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
@@ -73,6 +74,29 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        printLog(e);
+        BindingResult bindingResult = e.getBindingResult();
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        String msg = fieldErrors.stream()
+                .map(fieldError -> {
+                    String field = fieldError.getField();
+                    String defaultMessage = fieldError.getDefaultMessage();
+                    assert defaultMessage != null;
+                    String message = messageSource.getMessage(defaultMessage, null, LocaleContextHolder.getLocale());
+                    return field + " " + message;
+                }).collect(Collectors.joining(";"));
+        return R.error(msg);
+    }
+
+    /**
+     * TODO 另一个参数校验异常未处理
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = ValidationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Response aaa(MethodArgumentNotValidException e) {
         printLog(e);
         BindingResult bindingResult = e.getBindingResult();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();

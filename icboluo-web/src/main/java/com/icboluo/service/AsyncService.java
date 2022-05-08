@@ -31,4 +31,13 @@ public class AsyncService {
     public void excludeException() {
         throw new IcBoLuoException();
     }
+
+    public void sleep5s() {
+        try {
+            Thread.sleep(5000);
+            log.warn("have already sleep 5 second");
+        } catch (InterruptedException e) {
+            // no hand
+        }
+    }
 }

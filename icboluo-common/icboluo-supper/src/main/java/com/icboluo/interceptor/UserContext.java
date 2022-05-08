@@ -23,6 +23,9 @@ public class UserContext {
 
     private static String role;
 
+    /**
+     * @see javax.annotation.PreDestroy 和PostConstruct基本一致，但是我没有用过
+     */
     @PostConstruct
     private void setRole() {
         role = "post construct set value for static field, second execution";
