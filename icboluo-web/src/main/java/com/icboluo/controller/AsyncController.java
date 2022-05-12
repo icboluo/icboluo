@@ -3,6 +3,7 @@ package com.icboluo.controller;
 import com.icboluo.annotation.ResponseResult;
 import com.icboluo.service.AsyncService;
 import com.icboluo.util.IcBoLuoException;
+import com.icboluo.util.ThreadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -42,6 +43,8 @@ public class AsyncController {
     @Autowired
     private Executor asyncExecutor;
 
+    private final ThreadUtil threadUtil = new ThreadUtil();
+
     @GetMapping("/simple")
     public void simple() {
         asyncService.simpleException();
@@ -68,8 +71,8 @@ public class AsyncController {
 
     @GetMapping("/spring")
     public void spring() {
-        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> asyncService.sleep5s(), asyncExecutor);
-        asyncService.sleep5s();
+        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(threadUtil::sleep5s, asyncExecutor);
+        threadUtil.sleep5s();
         voidCompletableFuture.join();
         System.out.println("method end");
     }
@@ -89,32 +92,14 @@ public class AsyncController {
     @GetMapping("/daemon")
     public void daemon() {
         // TODO 为什么放在Http中守护线程不生效，只有main方法中才生效
-        Thread thread = new Thread(() -> {
-            while (true) {
-                try {
-                    log.warn("daemon while method hand");
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        Thread thread = new Thread(() -> threadUtil.infiniteLoop());
         thread.setDaemon(true);
         thread.start();
         log.warn("daemon method finish");
     }
 
     public static void main(String[] args) {
-        Thread thread = new Thread(() -> {
-            while (true) {
-                try {
-                    log.warn("daemon while method hand");
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        Thread thread = new Thread(() -> new ThreadUtil().infiniteLoop());
         thread.setDaemon(true);
         thread.start();
         log.warn("daemon method finish");

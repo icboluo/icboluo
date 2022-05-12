@@ -28,7 +28,7 @@ public class N0001_最少车辆数 {
         int curLength = 0;
         int total = 0;
         for (int i = 0; i < arr.length; i++) {
-//            TODO 这块条件判断可以用arr为主导，修改下，考试追求效率
+//            TODO 这块条件判断可以用arr为主导，修改下
 //            跳过条件
             if (curLength == 0 && arr[i] == 0) {
                 continue;

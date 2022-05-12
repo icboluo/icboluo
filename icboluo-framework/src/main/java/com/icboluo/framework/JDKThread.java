@@ -1,5 +1,7 @@
 package com.icboluo.framework;
 
+import com.icboluo.util.ThreadUtil;
+
 import java.util.PriorityQueue;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -18,21 +20,8 @@ public class JDKThread {
                 然后异步执行一些函数
                 紧接着打印定义好的字符串
                 """;
-        threadPool.execute(() -> {
-            try {
-                Thread.sleep(5000L);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        threadPool.execute(() -> {
-            try {
-                Thread.sleep(5000L);
-                System.out.println("after 5 second");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
+        threadPool.execute(() -> new ThreadUtil().sleep5s());
+        threadPool.execute(() -> new ThreadUtil().sleep5s());
 //         线程池如果不关的话，主服务也不会关的，现象就是控制台一直不结束
         threadPool.shutdown();
         System.out.println(str);

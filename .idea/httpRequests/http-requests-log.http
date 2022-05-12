@@ -1,3 +1,21 @@
+GET http://localhost:7788/async/daemon
+
+<> 2022-05-12T210933.200.json
+
+###
+
+GET http://localhost:7788/async/daemon
+
+<> 2022-05-12T210829.200.json
+
+###
+
+GET http://localhost:7788/async/daemon
+
+<> 2022-05-12T210740.200.json
+
+###
+
 GET http://localhost:1514/excel/writeStudentExcel
 
 ###
@@ -221,41 +239,6 @@ GET http://localhost:7788/rest/uuid
 GET http://localhost:7788/webInterceptor/getUserCode
 
 <> 2022-04-10T213841.500.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-Content-Type: application/json
-
-{
-  "code": 9,
-  "customerEmail": 789
-}
-
-<> 2022-04-10T213251.500.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-Content-Type: application/json
-
-{
-  "code": 9,
-  "customerEmail": 789
-}
-
-<> 2022-04-10T213157.500.json
-
-###
-
-GET http://localhost:7788/webInterceptor/validate
-Content-Type: application/json
-
-{
-  "code": 9
-}
-
-<> 2022-04-10T213133.500.json
 
 ###
 

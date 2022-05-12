@@ -151,7 +151,6 @@
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
                 <!--                禁止删这个包，会导致 cglib包找不到，导出异常-->
-
                 <!--                <exclusions>-->
                 <!--                    <exclusion>-->
                 <!--                        <artifactId>asm</artifactId>-->
@@ -219,7 +218,7 @@
                 <artifactId>amqp-client</artifactId>
                 <version>5.9.0</version>
             </dependency>
-            <!--        仅仅只有kvvmap用到了-->
+            <!--        仅仅只有kvv map用到了-->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
