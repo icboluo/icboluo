@@ -19,6 +19,7 @@ import com.icboluo.object.bo.FundDateBO;
 import com.icboluo.util.DateHelper;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -38,6 +39,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @Slf4j
+@Profile("!simple")
 public class FundDataTask {
 
     @Resource

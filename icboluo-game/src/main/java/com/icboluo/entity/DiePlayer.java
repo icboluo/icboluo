@@ -1,6 +1,8 @@
 package com.icboluo.entity;
 
 import lombok.Data;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -44,6 +46,7 @@ public class DiePlayer implements Serializable {
      */
     private Integer level;
 
+    @Serial
     private static final long serialVersionUID = 910295010867363556L;
 }
 

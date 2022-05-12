@@ -2,7 +2,7 @@ server:
   port: 4399
 spring:
   profiles:
-    active: test
+    active: simple
   application:
     name: icboluo-game
   messages:

@@ -1,6 +1,8 @@
 package com.icboluo.entity;
 
 import lombok.Data;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -36,6 +38,7 @@ public class PlayerLevel implements Serializable {
      */
     private Integer age;
 
+    @Serial
     private static final long serialVersionUID = 696671307215741211L;
 }
 

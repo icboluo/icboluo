@@ -7,6 +7,7 @@ import com.icboluo.mapper.CultivationCareerMapper;
 import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.PlayerMapper;
 import com.icboluo.util.BeanHelper;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @since 2022-03-14 22:41
  */
 @Component
+@Profile("test")
 public class PlayerScheduled {
 
     @Resource

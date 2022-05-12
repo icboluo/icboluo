@@ -2,6 +2,7 @@ package com.icboluo.pojo;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -53,6 +54,7 @@ public class PlayerVO implements Serializable {
      */
     private String name;
 
+    @Serial
     private static final long serialVersionUID = 988155755708954717L;
 }
 

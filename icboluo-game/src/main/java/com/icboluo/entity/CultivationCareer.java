@@ -1,6 +1,8 @@
 package com.icboluo.entity;
 
 import lombok.Data;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -24,6 +26,7 @@ public class CultivationCareer implements Serializable {
      */
     private String oper;
 
+    @Serial
     private static final long serialVersionUID = 593617170844456503L;
 }
 
