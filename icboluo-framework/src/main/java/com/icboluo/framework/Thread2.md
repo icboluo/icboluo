@@ -60,14 +60,14 @@ java中，启动main函数就是启动了一个JVM进程，而main函数所在�
 多核cpu意味着多个线程可以同时运行，减少了线程上下文切换的开销
 
 单核情况下：使用多线程主要是为了提高单进程利用cpu和IO系统的效率
-    
+
     假设只运行一个java进程，一个线程，请求IO的时候，此线程被IO阻塞，则整个进程被阻塞。cpu和IO设备永远只有一个
     在运行；这时，简单认为系统的效率为50%；当使用多线程的时候，一个线程被IO阻塞，其他线程还可以使用cpu...,可以
     提高了java进程利用系统资源的整体效率
 
-多核情况下：多线程主要是为了提高进程利用多核cpu的能力；一个进程一个线程的情况下，无论系统有几个cpu核心，都只会
-有一个cpu核心被利用到；创建多线程，这些线程可以被映射到底层多个cpu上执行，在任务中多个线程没有资源竞争的情况下，
-任务执行的效率会有显著的提高，=单核时间数/cpu核心数
+多核情况下：多线程主要是为了提高进程利用多核cpu的能力；一个进程一个线程的情况下，无论系统有几个cpu核心，
+都只会有一个cpu核心被利用到；创建多线程，这些线程可以被映射到底层多个cpu上执行，在任务中多个线程没有资
+源竞争的情况下，任务执行的效率会有显著的提高，=单核时间数/cpu核心数
 
 并发线程并不总是能提高程序运行速度，而且并发线程会遇到：内存泄漏、死锁、线程不安全...
 
@@ -83,6 +83,18 @@ java中，启动main函数就是启动了一个JVM进程，而main函数所在�
 ```java
 public class MyThread {
     /**
+     * <p> Thread.State 以下内容摘自State
+     * <p> These states are virtual machine states which do not reflect
+     * any operating system thread states.
+     * <p> 这些状态是 不反映任何操作系统线程状态 的虚拟机状态。
+     * <p>
+     * <p> Thread.State.RUNNABLE 以下内容摘自RUNNABLE
+     * <p> A thread in the runnable
+     * state is executing in the Java virtual machine but it may
+     * be waiting for other resources from the operating system
+     * such as processor.
+     * <p> 处于可运行状态的线程正在 Java 虚拟机中执行，但它可能正在等待来自操作系统的其他资源，例如处理器。
+     * <p>
      * @see Thread.State
      */
     private void state() {
@@ -95,6 +107,30 @@ public class MyThread {
 
 调用start方法后开始运行，线程这时候处理ready状态；可运行状态的线程获得了cpu时间片（timeslice 后就处于running状态
 
+线程的状态切换如下图所示：（图源：《Java并发编程艺术》 4.1.4节
+
+![Java线程状态切换](thread2/ThreadStatusChange.png)
+
+在操作系统层面线程有ready和runnable状态；在JVM层面只能看到runnable状态
+> （摘自：[java线程运行怎么有第六种状态？ - Dawell的回答](https://www.zhihu.com/question/56494969/answer/154053599) ） 
+> 现在的<b>时分</b>（time-sharing）<b>多任务</b>（multi-task）操作系统架构通常都是用所谓的“<b>时间分片</b>（time quantum or time slice）”方式进行<b>抢占式</b>（preemptive）
+> 轮转调度（round-robin式）。这个时间分片通常是很小的，一个线程一次最多只能在 CPU 上运行比如 10-20ms 的时间（此时处于 running 状态），也即大概只有 0.01 秒这一量级，时间片用
+> 后就要被切换下来放入调度队列的末尾等待再次调度。（也即回到 ready 状态）。线程切换的如此之快，区分这两种状态就没什么意义了。
+> 
+> 参考上面的注释（均摘自源码; runnable包含ready和running状态；主流JVM会把java的线程映射到操作系统底层的线程上，把调度委托给了操作系统，
+> 我们能在虚拟机层面看到的状态是对底层状态的映射和封装。JVM本身没有做实质上的调度，因为底层ready和running状态切换较快，而java线程状态
+> 是服务于监控的，区分2种意义不大（存疑），因此JVM做成了一种
+> 
+> 时间分片一次在cpu上运行的时间为15ms左右（不准确），也就是说running状态一共执行15ms就切换到ready状态了（也有可能15ms就结束了，变成其他状态了
+
+## 上下文切换
+
+线程再执行过程中会有自己的运行条件和状态（也称上下文），比如程序计数器、栈信息等\
+当出现如下情况的时候，线程会从占用cpu状态退出\
+* 主动让出cpu；例如sleep，wait
+* 时间分片用完；操作系统要防止一个线程或进程长时间占用cpy导致其他线程饿死
+* 调用阻塞类型的系统中断；比如请求IO，线程被阻塞
+* 被终止或结束运行
 
 
 
