@@ -205,10 +205,60 @@ public class StudentTest {
 
 ```java
 public class StudentTest {
-  public static void main(String[] args) {
-    // 新建一个字符串对象
-    String str = new String("字符串dfjgoagja");
-    
-  }
+    public static void main(String[] args) {
+        // 新建一个字符串对象
+        String str = new String("字符串dfjgoagja");
+
+        // 判断str对象和输入的参数是否相等
+        boolean equals = str.equals("dgaga");
+        // 把字符串中所有的a字符用 +++替换
+        String replace = str.replace("a", "+++");
+        // 把字符串转换称为字符数组
+        char[] chars = str.toCharArray();
+        // 把字符串中的字母均转换为小写
+        String lowerCase = str.toLowerCase();
+        // 求字符串的长度
+        int length = str.length();
+    }
 }
 ```
+
+## LocalDate LocalTime LocalDateTime对象
+
+java操作日期的工具
+
+参考[LocalDate使用](../../../../../../../icboluo-common/icboluo-base/src/main/java/com/icboluo/util/DateHelper.java)
+
+## ArrayList 对象
+
+容器：存放多个对象的地方
+
+```java
+import java.util.ArrayList;
+
+public class StudentTest {
+    public static void main(String[] args) {
+        // 新建一个容器对象
+        ArrayList<Integer> list = new ArrayList<>();
+        // 容器添加元素5
+        list.add(5);
+        // 容器添加元素7
+        list.add(7);
+        // 容器移除元素5
+        list.remove(Integer.parseInt(9));
+        // 容器移除第0个元素
+        list.remove(0);
+        // for循环元素，快捷键list.fori  list为形参可以改变
+        for (int i = 0; i < list.size(); i++) {
+            // 获取第i个元素
+            Integer item = list.get(i);
+            // 打印该元素
+            System.out.println(item);
+        }
+    }
+}
+```
+
+## HashMap对象
+
+

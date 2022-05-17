@@ -91,7 +91,7 @@ public class AsyncController {
      */
     @GetMapping("/daemon")
     public void daemon() {
-        // TODO 为什么放在Http中守护线程不生效，只有main方法中才生效
+        // TODO 为什么放在Http中守护线程不生效，只有main方法中才生效，是不是用的线程池的缘故
         Thread thread = new Thread(() -> threadUtil.infiniteLoop());
         thread.setDaemon(true);
         thread.start();
