@@ -1,6 +1,7 @@
 package com.icboluo.datastructure.sort;
 
 import com.icboluo.util.RandomHelper;
+import com.icboluo.util.TimeRecord;
 
 import java.util.Arrays;
 
@@ -12,10 +13,12 @@ import java.util.Arrays;
  */
  class HeapSort {
     public static void main(String[] args) {
+        TimeRecord.start();
         int[] arr = {4, 6, 8, 5, 9};
         int[] random = RandomHelper.getRandom(8000000);
+        TimeRecord.recordMsg();
         m2(random);
-
+        TimeRecord.build();
     }
 
     private static void m1(int[] arr) {

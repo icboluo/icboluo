@@ -54,13 +54,14 @@ Here are some ideas to get you started:
 ### se服务提供了Java SE 部分的内容
 
 [Base基础](icboluo-se/src/main/java/com/icboluo/base/clazz.md)\
-[Stream](icboluo-se/src/main/java/com/icboluo/lambda)\
-[Exception](icboluo-se/src/main/java/com/icboluo/exception)\
+[compare](icboluo-se/src/main/java/com/icboluo/compare)\
 [DesignPattern](icboluo-se/src/main/java/com/icboluo/designpattern)\
+[Exception](icboluo-se/src/main/java/com/icboluo/exception)\
 [File](icboluo-se/src/main/java/com/icboluo/file)\
-[Reflect](icboluo-se/src/main/java/com/icboluo/reflect)\
 [JDK](icboluo-se/src/main/java/com/icboluo/jdk)\
-[compare](icboluo-se/src/main/java/com/icboluo/compare)
+[Stream](icboluo-se/src/main/java/com/icboluo/lambda)\
+[Reflect](icboluo-se/src/main/java/com/icboluo/reflect)\
+[Thread](icboluo-se/src/main/java/com/icboluo/thread)
 
 ### sql服务提供mysql、redis、mq、mybatis等工具使用
 

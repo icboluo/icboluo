@@ -1,11 +1,5 @@
 package com.icboluo.util;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Table;
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +23,14 @@ public class KvvMap<K, V1, V2> {
         map2.put(k, v2);
     }
 
+    public void put1(K k, V1 v1) {
+        map1.put(k, v1);
+    }
+
+    public void put2(K k, V2 v2) {
+        map2.put(k, v2);
+    }
+
     public V1 get1(K k) {
         return map1.get(k);
     }
@@ -37,7 +39,7 @@ public class KvvMap<K, V1, V2> {
         return map2.get(k);
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         Multimap<String, String> kvvMap = ArrayListMultimap.create();
         kvvMap.put("key", "1");
         kvvMap.put("key", "2");
@@ -53,5 +55,5 @@ public class KvvMap<K, V1, V2> {
         System.out.println("row = " + row);
         Map<Integer, String> nv1 = kkvMap.column("nv");
         System.out.println("nv1 = " + nv1);
-    }
+    }*/
 }

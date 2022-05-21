@@ -17,7 +17,7 @@ class BubbleSort {
         //m1(arr);
         m2(arr);
         m2(RandomHelper.getRandom(4000));
-        TimeRecord.record("第二次排序");
+        TimeRecord.recordMsg("第二次排序");
         m2(RandomHelper.getRandom(4000));
         TimeRecord.build();
     }

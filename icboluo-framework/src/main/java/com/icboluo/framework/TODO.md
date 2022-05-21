@@ -6,10 +6,6 @@ lombok怎么做到不支持元注解就能实现功能的
 
 String、StringBuffer、StringBuilder 源码
 
-线程池和异步处理
-
-ThreadLocal源码
-
 redis分布式锁
 
 computerFuture 异步处理更新后不能查到数据，加join不能解决这个问题

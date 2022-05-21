@@ -9,18 +9,11 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
- * ### 前端传输数据到后端
- * <p>
- * DateTimeFormat(pattern = "yyyy-MM-dd")
- * <p>
- * ### 后端传输数据到前端
- * <p>
- * JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
- * <p>
- * 当设置全局 date format的时候，这个注解对于单个的对象属性并没有什么
+ * <p>前端传输数据到后端 DateTimeFormat(pattern = "yyyy-MM-dd")
+ * <p>后端传输数据到前端 JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+ * <p>当设置全局 date format的时候，这个注解对于单个的对象属性并没有什么
  * 作用，用下面的注解可以解决
- * <p>
- * JSONField(format ="yyyy-mm-dd HH:mm:ss")
+ * <p>JSONField(format ="yyyy-mm-dd HH:mm:ss")
  *
  * @author icboluo
  */
@@ -46,33 +39,33 @@ public class DateHelper {
     private static final Long DAY = 24 * 60 * 60 * 1000L;
 
     public static void main(String[] args) {
-//        1991-10-12
-        LocalDate localDate = LocalDate.of(1991, 10, 12);
-        LocalDate localDate1 = LocalDate.ofYearDay(1991, localDate.getDayOfYear());
-        LocalDate localDate2 = LocalDate.ofEpochDay(localDate.toEpochDay());//参数为距离1970-01-01的天数
+        LocalDate localDate1 = LocalDate.of(1991, 10, 12);
+        LocalDate localDate2 = LocalDate.ofYearDay(1991, localDate1.getDayOfYear());
+        // 参数为距离1970-01-01的天数
+        LocalDate localDate3 = LocalDate.ofEpochDay(localDate1.toEpochDay());
         LocalDate parse = LocalDate.parse("1991-10-12");
-        LocalDate yyyyMMdd = LocalDate.parse("19911012", DateTimeFormatter.ofPattern("yyyyMMdd"));
+        LocalDate localDate4 = LocalDate.parse("19911012", DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-//        08:20
+        // 08:20
         LocalTime of = LocalTime.of(8, 20);
-//        08:20:30
+        // 08:20:30
         LocalTime of1 = LocalTime.of(8, 20, 30);
-//        08:20:30.000000040
+        // 08:20:30.000000040
         LocalTime of2 = LocalTime.of(8, 20, 30, 40);
-        //参数为距离当天零时的秒数 08:20:30
+        // 参数为距离当天零时的秒数 08:20:30
         LocalTime localTime = LocalTime.ofSecondOfDay(of2.toSecondOfDay());
-//        08:20:30.000000040
+        // 08:20:30.000000040
         LocalTime localTime1 = LocalTime.ofNanoOfDay(of2.toNanoOfDay());
-//        08:20:30
+        // 08:20:30
         LocalTime parse1 = LocalTime.parse("08:20:30");
-//        08:20:30
+        // 08:20:30
         LocalTime hHmmss = LocalTime.parse("082030", DateTimeFormatter.ofPattern("HHmmss"));
 
-//        1991-10-12T08:20:30
+        // 1991-10-12T08:20:30
         LocalDateTime of3 = LocalDateTime.of(1991, 10, 12, 8, 20, 30);
-//        second exception
-//        LocalDateTime of4 = LocalDateTime.of(1991, Month.OCTOBER, 8, 20, 30, 150);
-//        1991-10-12T08:20:30
+        // second exception
+        // LocalDateTime of4 = LocalDateTime.of(1991, Month.OCTOBER, 8, 20, 30, 150);
+        // 1991-10-12T08:20:30
         LocalDateTime parse2 = LocalDateTime.parse("1991-10-12 08:20:30", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         parse.minusDays(3);

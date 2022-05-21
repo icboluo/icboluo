@@ -1,4 +1,4 @@
-package com.icboluo.framework;
+package com.icboluo.thread;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;

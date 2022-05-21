@@ -1,14 +1,15 @@
 package com.icboluo.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Random;
 
 /**
  * @author icboluo
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RandomHelper {
-
-    private RandomHelper() {
-    }
 
     /**
      * 获得随机数数组
