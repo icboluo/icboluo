@@ -28,7 +28,7 @@ public class ThreadUtil {
     @SneakyThrows
     public void infiniteLoop() {
         int i = 0;
-        while (true) {
+        while (i < 10000) {
             log.warn(i + " start sleep 3 second");
             Thread.sleep(3000);
             log.warn(i + " have already sleep 3 second");

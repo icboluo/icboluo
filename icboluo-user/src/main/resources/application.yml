@@ -1,13 +1,10 @@
 server:
   port: 7010
 spring:
+  profiles:
+    active: simple
   application:
     name: icboluo-user
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        register-enabled: false
 logging:
   level:
     com.icboluo: debug

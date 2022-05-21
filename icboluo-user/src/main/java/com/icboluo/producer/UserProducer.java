@@ -1,5 +1,6 @@
 package com.icboluo.producer;
 
+import com.icboluo.annotation.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +12,13 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/user")
+@ResponseResult
 @Slf4j
 public class UserProducer {
 
     @GetMapping("/getUserNameById")
     public String getUserNameById(@RequestParam Integer id) {
-        log.info("进入icboluo-user服务了");
+        log.info("GET请求，进入icboluo-user服务了");
         Objects.requireNonNull(id, "id不能为空");
         if (id <= 10) {
             return "user: " + id;
@@ -24,9 +26,10 @@ public class UserProducer {
             return null;
         }
     }
+
     @PostMapping("/postUserNameById")
     public String postUserNameById(@RequestBody Integer id) {
-        log.info("进入icboluo-user服务了");
+        log.info("POST请求，进入icboluo-user服务了");
         Objects.requireNonNull(id, "id不能为空");
         if (id <= 10) {
             return "user: " + id;

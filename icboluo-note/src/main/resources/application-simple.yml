@@ -13,7 +13,7 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
           #        不使用nacos的配置中心配置覆盖本地配置
-        enabled: false # 这个东西特别坑，设置成false才能避免项目启动慢（nacos服务美哦与启动的时候
+        enabled: false # 这个东西特别坑，设置成false才能避免项目启动慢（nacos服务没有启动的时候
         #        不把自己注册到注册中心的地址
         register-enabled: false
         heart-beat-timeout: 3000

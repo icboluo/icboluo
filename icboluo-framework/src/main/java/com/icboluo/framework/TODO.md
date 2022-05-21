@@ -1,7 +1,5 @@
 lombok怎么做到不支持元注解就能实现功能的
 
-静态方法调用成员方法，用@postconstruct 来实现
-
 消息队列优缺点
 
 String、StringBuffer、StringBuilder 源码
@@ -16,12 +14,6 @@ computerFuture 异步处理更新后不能查到数据，加join不能解决这�
 
 excel导出功能
 
-validate 异常全局处理
-
 excel导入注解校验
 
 redis 布隆过滤器
-
-jdk自带的线程池使用
-
-TreeSet根据元素中的内容进行去重

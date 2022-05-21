@@ -30,7 +30,6 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("unchecked,rawtypes")
 public abstract class Response implements Serializable {
     @Serial
     private static final long serialVersionUID = 3840949955410953654L;

@@ -1,9 +1,11 @@
 package com.icboluo.controller;
 
+import com.icboluo.annotation.ResponseResult;
 import com.icboluo.feign.UserFeign;
 import com.icboluo.service.impl.UserService;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
+import com.icboluo.util.response.SingleResponse;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户")
+@ResponseResult
 @Slf4j
 public class UserController {
 
@@ -51,9 +54,9 @@ public class UserController {
     public Response restTemplateGetUserNameById(@RequestParam Integer id) {
 /*        这个是放在请求体中传输的
         String obj = restTemplate.postForObject(USER_SERVICE + "/user/getUserNameById", id, String.class);*/
-        String obj = restTemplate.getForObject(USER_SERVICE + "/user/getUserNameById?id=" + id, String.class);
+        SingleResponse obj = restTemplate.getForObject(USER_SERVICE + "/user/getUserNameById?id=" + id, SingleResponse.class);
         log.info("发送 get 请求 只取返回值时，返回值是： " + obj);
-        ResponseEntity<String> entity = restTemplate.getForEntity(USER_SERVICE + "/user/getUserNameById?id=" + id, String.class);
+        ResponseEntity<SingleResponse> entity = restTemplate.getForEntity(USER_SERVICE + "/user/getUserNameById?id=" + id, SingleResponse.class);
         log.info("发送 get 请求 取整个返回结果，返回的entity是：" + entity);
         if (entity.getStatusCode().is2xxSuccessful()) {
             //TODO 返回值包装异常

@@ -26,6 +26,11 @@ Here are some ideas to get you started:
 * 可以使用任意一个[application.simple](icboluo-note/src/main/resources/application-simple.yml)
   配置文件，用这个配置文件，项目启动不需要任何三方服务的支持（但是功能也会受影响
 
+## document
+
+[sql文件](document/sql)\
+[IDEA settings](document/settings.zip)
+
 ### 项目更新了LeetCode中的一些算法解法
 
 在[algorithm](icboluo-algorithm/src/main/java/com/icboluo/leetcode)模块中可以找到
