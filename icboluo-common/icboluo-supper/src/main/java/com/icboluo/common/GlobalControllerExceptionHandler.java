@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ValidationException;
+import javax.validation.ConstraintViolationException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +52,7 @@ public class GlobalControllerExceptionHandler {
     @SuppressWarnings("all")
     public Response icBoLuoExceptionHandler(IcBoLuoException e) {
         printLog(e);
-//        response.setStatus(500); // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
+        // response.setStatus(500); // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
         return R.error(500, e.getMessage());
     }
 
@@ -66,7 +66,7 @@ public class GlobalControllerExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response icBoLuoI18nExceptionHandler(IcBoLuoI18nException e) {
         printLog(e);
-//        TODO 这个解决了异常i18，可是ret i18还是没有解决
+        // TODO 这个解决了异常i18，可是ret i18还是没有解决
         String message = messageSource.getMessage(e.getMessage(), null, LocaleContextHolder.getLocale());
         return R.error(500, message);
     }
@@ -89,26 +89,14 @@ public class GlobalControllerExceptionHandler {
     }
 
     /**
-     * TODO 另一个参数校验异常未处理
-     *
-     * @param e
-     * @return
+     * @param e exception
+     * @return msg
      */
-    @ExceptionHandler(value = ValidationException.class)
+    @ExceptionHandler(value = ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Response aaa(MethodArgumentNotValidException e) {
+    public Response constraintViolationExceptionHandler(ConstraintViolationException e) {
         printLog(e);
-        BindingResult bindingResult = e.getBindingResult();
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        String msg = fieldErrors.stream()
-                .map(fieldError -> {
-                    String field = fieldError.getField();
-                    String defaultMessage = fieldError.getDefaultMessage();
-                    assert defaultMessage != null;
-                    String message = messageSource.getMessage(defaultMessage, null, LocaleContextHolder.getLocale());
-                    return field + " " + message;
-                }).collect(Collectors.joining(";"));
-        return R.error(msg);
+        return R.error(e.getMessage());
     }
 
     @ExceptionHandler(value = RuntimeException.class)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.UnitMapper">
-    <resultMap id="BaseResultMap" type="com.icboluo.object.dataobject.UnitDO">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.base.UnitDO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -15,12 +15,12 @@
         from unit
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <select id="selectAll" resultType="com.icboluo.object.dataobject.UnitDO">
+    <select id="selectAll" resultType="com.icboluo.entity.base.UnitDO">
         select
         <include refid="Base_Column_List"/>
         from unit
     </select>
-    <select id="selectByCode" resultType="com.icboluo.object.dataobject.UnitDO">
+    <select id="selectByCode" resultType="com.icboluo.entity.base.UnitDO">
         select
         <include refid="Base_Column_List"/>
         from unit
@@ -31,11 +31,11 @@
         from unit
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.icboluo.object.dataobject.UnitDO">
+    <insert id="insert" parameterType="com.icboluo.entity.base.UnitDO">
         insert into unit (id, code, `name`)
         values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.icboluo.object.dataobject.UnitDO">
+    <insert id="insertSelective" parameterType="com.icboluo.entity.base.UnitDO">
         insert into unit
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -60,7 +60,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.object.dataobject.UnitDO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.base.UnitDO">
         update unit
         <set>
             <if test="code != null">
@@ -72,7 +72,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.icboluo.object.dataobject.UnitDO">
+    <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.base.UnitDO">
         update unit
         set code   = #{code,jdbcType=VARCHAR},
             `name` = #{name,jdbcType=VARCHAR}

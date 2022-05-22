@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.object.dataobject.WeekTimeDO;
+import com.icboluo.entity.note.WeekTimeDO;
 import com.icboluo.object.query.TimeNoteQuery;
 
 import java.util.List;

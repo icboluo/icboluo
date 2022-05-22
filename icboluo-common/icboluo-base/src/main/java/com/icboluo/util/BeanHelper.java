@@ -67,7 +67,7 @@ public class BeanHelper {
      * @param <T>        目标类的类型
      * @return 目标集合
      */
-    public static <T> List<T> copyWithCollection(List<?> sourceList, @NonNull Class<T> target) {
+    public static <T> List<T> copyWithColl(List<?> sourceList, @NonNull Class<T> target) {
         try {
             return sourceList.stream()
                     .map(s -> copyProperties(s, target))
@@ -78,7 +78,7 @@ public class BeanHelper {
         }
     }
 
-    public static <T> List<T> copyWithCollection(List<?> sourceList, @NonNull Supplier<T> supplier) {
+    public static <T> List<T> copyWithColl(List<?> sourceList, @NonNull Supplier<T> supplier) {
         try {
             return sourceList.stream()
                     .map(s -> copyProperties(s, supplier))
@@ -97,7 +97,7 @@ public class BeanHelper {
      * @param <T>        目标类的类型
      * @return 目标集合
      */
-    public static <T> Set<T> copyWithCollection(Set<?> sourceList, @NonNull Class<T> target) {
+    public static <T> Set<T> copyWithColl(Set<?> sourceList, @NonNull Class<T> target) {
         try {
             return sourceList.stream()
                     .map(s -> copyProperties(s, target))
@@ -124,7 +124,7 @@ public class BeanHelper {
         return first.orElse(null);
     }
 
-    public static <T> T singlistGetFirst(Collection<T> coll) {
+    public static <T> T singletonGetFirst(Collection<T> coll) {
         if (CollectionUtils.isEmpty(coll) || coll.size() != 1) {
             return null;
         }

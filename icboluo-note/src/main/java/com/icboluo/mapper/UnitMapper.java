@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.object.dataobject.UnitDO;
+import com.icboluo.entity.base.UnitDO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

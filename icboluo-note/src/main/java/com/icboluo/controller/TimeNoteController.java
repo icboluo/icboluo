@@ -1,15 +1,14 @@
 package com.icboluo.controller;
 
 import com.icboluo.annotation.ResponseResult;
+import com.icboluo.entity.note.TimeNoteDO;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.mapper.TimeNoteMapper;
-import com.icboluo.object.clientobject.DDD;
-import com.icboluo.object.clientobject.TimeNoteCO;
-import com.icboluo.object.dataobject.TimeNoteDO;
+import com.icboluo.object.client.TimeNoteCO;
+import com.icboluo.object.client.TimeUpdateCO;
 import com.icboluo.object.query.TimeNoteQuery;
-import com.icboluo.object.viewobject.FiledResultVO;
-import com.icboluo.object.viewobject.NoteAllVO;
-import com.icboluo.object.viewobject.NoteVO;
+import com.icboluo.object.view.FiledResultVO;
+import com.icboluo.object.view.NoteVO;
 import com.icboluo.service.NoteService;
 import com.icboluo.util.BeanHelper;
 import com.icboluo.util.response.R;
@@ -17,10 +16,12 @@ import com.icboluo.util.response.Response;
 import com.icboluo.util.validate.TimeNoteValidate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,21 +50,11 @@ public class TimeNoteController {
 
     @GetMapping("/selectAmount")
     @ApiOperation(value = "查询问题剩余量")
-    public Response selectTimeNoteAmount(TimeNoteQuery query) {
-        NoteAllVO noteVO = noteService.selectOne(query);
-        int timeNoteAmount = noteVO.getTimeNoteAmount();
-        int weekTimeAmount = noteVO.getWeekTimeAmount();
-        int monthTimeAmount = noteVO.getMonthTimeAmount();
-        int totalTimeAmount = timeNoteAmount + weekTimeAmount + monthTimeAmount;
-        Map<String, Integer> map = new HashMap<>(4);
-        map.put("timeNoteAmount", timeNoteAmount);
-        map.put("weekTimeAmount", weekTimeAmount);
-        map.put("monthTimeAmount", monthTimeAmount);
-        map.put("totalTimeAmount", totalTimeAmount);
-        return R.correct(map);
+    public Map<String, Integer> selectTimeNoteAmount() {
+        return noteService.selectAmount();
     }
 
-    @PostMapping("/add")
+    @GetMapping("/add")
     @ApiOperation(value = "增加")
     public Response add(TimeNoteCO client) {
         TimeNoteDO timeNoteDO = BeanHelper.copyProperties(client, TimeNoteDO.class);
@@ -72,37 +63,36 @@ public class TimeNoteController {
                 : R.error(ReEnum.ADD_ERROR);
     }
 
-    @PostMapping("/update")
+    @GetMapping("/update")
     @ApiOperation(value = "更新数据")
-    public void update(TimeNoteCO client) {
+    public void update(TimeNoteCO client, String type) {
         timeNoteValidate.validate(client);
-        TimeNoteQuery timeNoteQuery = new TimeNoteQuery();
-        Map<String, String> map = noteService.selectIdAndType(timeNoteQuery);
-        noteService.update(client, map);
+        int id = client.getId();
+        noteService.update(client, id, type);
     }
 
     @GetMapping("/onlyUpdateTime")
     @ApiOperation(value = "只更新时间")
-    public void onlyUpdateTime(DDD dd) {
-        noteService.onlyUpdateTime(dd);
+    public void onlyUpdateTime(TimeUpdateCO client) {
+        noteService.onlyUpdateTime(client);
     }
 
     @GetMapping("/updateFinishTime")
     @ApiOperation(value = "更新为完成了一次")
-    public void update(DDD dd) {
-        noteService.updateFinishTime(dd);
+    public void update(TimeUpdateCO client) {
+        noteService.updateFinishTime(client);
     }
 
     @GetMapping("/updateNotFinishTime")
     @ApiOperation(value = "更新为没有完成一次")
-    public void updateNotFinishTime(DDD dd) {
-        noteService.updateNotFinishTime(dd);
+    public void updateNotFinishTime(TimeUpdateCO client) {
+        noteService.updateNotFinishTime(client);
     }
 
     @GetMapping("/toOnlyRead")
     @ApiOperation(value = "仅仅更新时间")
-    public void toOnlyRead(DDD dd) {
-        noteService.toOnlyRead(dd);
+    public void toOnlyRead(TimeUpdateCO client) {
+        noteService.toOnlyRead(client);
     }
 
     @GetMapping("/selectByFiled")

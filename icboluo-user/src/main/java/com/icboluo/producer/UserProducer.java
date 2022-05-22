@@ -1,9 +1,14 @@
 package com.icboluo.producer;
 
 import com.icboluo.annotation.ResponseResult;
+import com.icboluo.util.IcBoLuoException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -14,7 +19,10 @@ import java.util.Objects;
 @RequestMapping("/user")
 @ResponseResult
 @Slf4j
+@Validated
 public class UserProducer {
+
+    private final Map<String, String> account = new HashMap<>();
 
     @GetMapping("/getUserNameById")
     public String getUserNameById(@RequestParam Integer id) {
@@ -35,6 +43,19 @@ public class UserProducer {
             return "user: " + id;
         } else {
             return null;
+        }
+    }
+
+    @Validated
+    @GetMapping("/register")
+    public void register(@Validated @NotEmpty String id, String pwd) {
+        account.put(id, pwd);
+    }
+
+    @GetMapping("/login")
+    public void login(String id, String pwd) {
+        if (!account.containsKey(id) || !Objects.equals(account.get(id), pwd)) {
+            throw new IcBoLuoException("account or password error");
         }
     }
 }

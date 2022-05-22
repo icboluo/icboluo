@@ -2,7 +2,7 @@ package com.icboluo.service.impl;
 
 import com.icboluo.common.Constant;
 import com.icboluo.mapper.YearTimeMapper;
-import com.icboluo.object.dataobject.YearTimeDO;
+import com.icboluo.entity.note.YearTimeDO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

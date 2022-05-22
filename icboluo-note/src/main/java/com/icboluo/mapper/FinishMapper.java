@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.object.dataobject.FinishDO;
+import com.icboluo.entity.note.FinishDO;
 
 import java.util.List;
 

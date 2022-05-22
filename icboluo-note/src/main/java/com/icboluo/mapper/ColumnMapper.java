@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.object.dataobject.RowDO;
+import com.icboluo.entity.base.RowDO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

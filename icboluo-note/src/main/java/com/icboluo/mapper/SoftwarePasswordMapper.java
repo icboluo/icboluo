@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.object.dataobject.SoftwarePasswordDO;
+import com.icboluo.entity.base.SoftwarePasswordDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

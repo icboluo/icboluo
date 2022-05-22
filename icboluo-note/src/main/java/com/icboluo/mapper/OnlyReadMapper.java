@@ -1,7 +1,7 @@
 package com.icboluo.mapper;
 
 
-import com.icboluo.object.dataobject.OnlyReadDO;
+import com.icboluo.entity.note.OnlyReadDO;
 
 /**
  * @author icboluo

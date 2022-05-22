@@ -8,3 +8,7 @@
 ## idea service
 
 如果idea service无法移动相对位置，可能是因为他们颜色不同，删了重新搞一下
+
+## .bak
+
+文件加 .bak后缀可以使文件失效

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.icboluo.object.dataobject.UserDO">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.base.UserDO">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="code" jdbcType="INTEGER" property="code"/>
         <result column="gmt_creat" jdbcType="TIMESTAMP" property="gmtCreat"/>
@@ -25,7 +25,7 @@
         from user
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.icboluo.object.dataobject.UserDO">
+    <insert id="insert" parameterType="com.icboluo.entity.base.UserDO">
         insert into user (id, code, gmt_creat,
                           gmt_modified, `name`, nick_name,
                           `password`, tel)
@@ -33,7 +33,7 @@
                 #{gmtModified,jdbcType=TIMESTAMP}, #{name,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR},
                 #{password,jdbcType=VARCHAR}, #{tel,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.icboluo.object.dataobject.UserDO">
+    <insert id="insertSelective" parameterType="com.icboluo.entity.base.UserDO">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -88,7 +88,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.object.dataobject.UserDO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.base.UserDO">
         update user
         <set>
             <if test="code != null">
@@ -115,7 +115,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.icboluo.object.dataobject.UserDO">
+    <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.base.UserDO">
         update user
         set code         = #{code,jdbcType=INTEGER},
             gmt_creat    = #{gmtCreat,jdbcType=TIMESTAMP},

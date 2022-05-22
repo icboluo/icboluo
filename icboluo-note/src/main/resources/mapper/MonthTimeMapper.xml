@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.MonthTimeMapper">
-    <resultMap id="BaseResultMap" type="com.icboluo.object.dataobject.MonthTimeDO">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.note.MonthTimeDO">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="problem" jdbcType="VARCHAR" property="problem"/>
         <result column="result" jdbcType="VARCHAR" property="result"/>
@@ -26,7 +26,7 @@
         from month_time
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.icboluo.object.dataobject.MonthTimeDO">
+    <insert id="insert" parameterType="com.icboluo.entity.note.MonthTimeDO">
         insert into month_time (id, problem, `result`,
                                 finish_time, belong_to_scope, gmt_create,
                                 gmt_first_create, gmt_modified)
@@ -34,7 +34,7 @@
                 #{finishTime,jdbcType=INTEGER}, #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
                 #{gmtFirstCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.icboluo.object.dataobject.MonthTimeDO">
+    <insert id="insertSelective" parameterType="com.icboluo.entity.note.MonthTimeDO">
         insert into month_time
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -89,7 +89,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.object.dataobject.MonthTimeDO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.note.MonthTimeDO">
         update month_time
         <set>
             <if test="problem != null">
@@ -116,7 +116,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.icboluo.object.dataobject.MonthTimeDO">
+    <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.note.MonthTimeDO">
         update month_time
         set problem          = #{problem,jdbcType=VARCHAR},
             `result`         = #{result,jdbcType=VARCHAR},
@@ -128,12 +128,12 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAll" resultType="com.icboluo.object.dataobject.MonthTimeDO">
+    <select id="selectAll" resultType="com.icboluo.entity.note.MonthTimeDO">
         select *
         from month_time
         order by gmt_modified
     </select>
-    <select id="select" resultType="com.icboluo.object.dataobject.MonthTimeDO">
+    <select id="select" resultType="com.icboluo.entity.note.MonthTimeDO">
         select
         <include refid="Base_Column_List"/>
         from

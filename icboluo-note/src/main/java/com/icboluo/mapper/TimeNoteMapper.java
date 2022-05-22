@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.object.dataobject.TimeNoteDO;
+import com.icboluo.entity.note.TimeNoteDO;
 import com.icboluo.object.query.TimeNoteQuery;
 
 import java.util.List;

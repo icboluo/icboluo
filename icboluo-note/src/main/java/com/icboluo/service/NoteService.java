@@ -1,11 +1,10 @@
 package com.icboluo.service;
 
-import com.icboluo.object.clientobject.DDD;
-import com.icboluo.object.clientobject.TimeNoteCO;
+import com.icboluo.object.client.TimeNoteCO;
+import com.icboluo.object.client.TimeUpdateCO;
 import com.icboluo.object.query.TimeNoteQuery;
-import com.icboluo.object.viewobject.FiledResultVO;
-import com.icboluo.object.viewobject.NoteAllVO;
-import com.icboluo.object.viewobject.NoteVO;
+import com.icboluo.object.view.FiledResultVO;
+import com.icboluo.object.view.NoteVO;
 
 import java.util.List;
 import java.util.Map;
@@ -16,32 +15,23 @@ import java.util.Map;
  */
 public interface NoteService {
 
-    /**
-     * 查询第一个应该解决的问题
-     *
-     * @param query condition of this select
-     * @return vo obj
-     */
-    NoteAllVO selectOne(TimeNoteQuery query);
-
     List<NoteVO> selectList(TimeNoteQuery query);
-
-    Map<String, String> selectIdAndType(TimeNoteQuery query);
 
     /**
      * 更新未完成次数
      *
      * @param dd 包含type id
      */
-    void updateNotFinishTime(DDD dd);
+    void updateNotFinishTime(TimeUpdateCO dd);
 
     /**
      * upLocalDateTime belongToScope problem and result
      *
-     * @param timeNoteCO upLocalDateTime obj
-     * @param map        k is id type
+     * @param client upLocalDateTime obj
+     * @param id     id
+     * @param type   type
      */
-    void update(TimeNoteCO timeNoteCO, Map<String, String> map);
+    void update(TimeNoteCO client, int id, String type);
 
     /**
      * 查询问题以及结果
@@ -51,19 +41,21 @@ public interface NoteService {
      */
     List<FiledResultVO> select(String file);
 
-    void toOnlyRead(DDD dd);
+    void toOnlyRead(TimeUpdateCO client);
 
     /**
      * 仅仅更新更新时间
      *
-     * @param dd 包含type id
+     * @param client 包含type id
      */
-    void onlyUpdateTime(DDD dd);
+    void onlyUpdateTime(TimeUpdateCO client);
 
     /**
      * 更新完成次数
      *
-     * @param dd 包含type id
+     * @param client 包含type id
      */
-    void updateFinishTime(DDD dd);
+    void updateFinishTime(TimeUpdateCO client);
+
+    Map<String, Integer> selectAmount();
 }

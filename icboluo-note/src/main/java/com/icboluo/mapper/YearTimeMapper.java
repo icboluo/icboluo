@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.object.dataobject.YearTimeDO;
+import com.icboluo.entity.note.YearTimeDO;
 
 import java.util.List;
 

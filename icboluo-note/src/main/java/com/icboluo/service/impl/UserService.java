@@ -2,7 +2,7 @@ package com.icboluo.service.impl;
 
 
 import com.icboluo.mapper.UserMapper;
-import com.icboluo.object.dataobject.UserDO;
+import com.icboluo.entity.base.UserDO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

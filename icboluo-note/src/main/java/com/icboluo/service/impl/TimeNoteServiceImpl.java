@@ -2,7 +2,7 @@ package com.icboluo.service.impl;
 
 import com.icboluo.common.Constant;
 import com.icboluo.mapper.TimeNoteMapper;
-import com.icboluo.object.dataobject.TimeNoteDO;
+import com.icboluo.entity.note.TimeNoteDO;
 import com.icboluo.service.TimeNoteService;
 import org.springframework.stereotype.Service;
 

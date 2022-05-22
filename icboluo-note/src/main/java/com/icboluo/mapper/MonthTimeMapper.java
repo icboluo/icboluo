@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.object.dataobject.MonthTimeDO;
+import com.icboluo.entity.note.MonthTimeDO;
 
 import java.util.List;
 

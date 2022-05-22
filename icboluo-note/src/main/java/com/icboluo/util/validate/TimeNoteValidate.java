@@ -1,6 +1,6 @@
 package com.icboluo.util.validate;
 
-import com.icboluo.object.clientobject.TimeNoteCO;
+import com.icboluo.object.client.TimeNoteCO;
 import com.icboluo.util.IcBoLuoException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

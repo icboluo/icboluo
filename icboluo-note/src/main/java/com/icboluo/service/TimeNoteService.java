@@ -1,6 +1,6 @@
 package com.icboluo.service;
 
-import com.icboluo.object.dataobject.TimeNoteDO;
+import com.icboluo.entity.note.TimeNoteDO;
 
 /**
  * @author icboluo

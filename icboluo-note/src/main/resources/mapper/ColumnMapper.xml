@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.ColumnMapper">
-    <resultMap id="BaseResultMap" type="com.icboluo.object.dataobject.ColumnDO">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.base.ColumnDO">
         <result column="TABLE_CATALOG" jdbcType="VARCHAR" property="tableCatalog"/>
         <result column="TABLE_SCHEMA" jdbcType="VARCHAR" property="tableSchema"/>
         <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName"/>
@@ -22,7 +22,7 @@
         <result column="COLUMN_COMMENT" jdbcType="VARCHAR" property="columnComment"/>
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
-               type="com.icboluo.object.dataobject.ColumnDOWithBLOBs">
+               type="com.icboluo.entity.base.ColumnDOWithBLOBs">
         <result column="COLUMN_DEFAULT" jdbcType="LONGVARCHAR" property="columnDefault"/>
         <result column="COLUMN_TYPE" jdbcType="LONGVARCHAR" property="columnType"/>
     </resultMap>
@@ -44,7 +44,7 @@
         FROM information_schema.TABLES
         WHERE table_schema = #{database}
     </select>
-    <select id="selectDatabaseConstruction" resultType="com.icboluo.object.dataobject.RowDO">
+    <select id="selectDatabaseConstruction" resultType="com.icboluo.entity.base.RowDO">
         select
         <include refid="base_column"/>
         from information_schema.columns
@@ -54,7 +54,7 @@
         </foreach>
         and table_schema = #{database}
     </select>
-    <select id="selectTableConstruction" resultType="com.icboluo.object.dataobject.RowDO">
+    <select id="selectTableConstruction" resultType="com.icboluo.entity.base.RowDO">
         select
         <include refid="base_column"/>
         from information_schema.columns

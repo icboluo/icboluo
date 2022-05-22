@@ -17,6 +17,9 @@ public class ThreadCreate {
         Call call = new Call();
         Thr thr = new Thr();
 
+        // 使用线程对象调用 start() 方法, 启动子线程.（子线程一旦启动，就会执行run方法，因为子线程入口是run方法）
+        //  start方法是真正的开辟了一个线程
+        // 该Thread对象才是真正的线程对象
         new Thread(run).start();
         ExecutorService es = Executors.newCachedThreadPool();
         es.submit(call);

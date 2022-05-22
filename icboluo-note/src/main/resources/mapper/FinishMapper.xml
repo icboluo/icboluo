@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.FinishMapper">
-    <resultMap id="BaseResultMap" type="com.icboluo.object.dataobject.FinishDO">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.note.FinishDO">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="problem" jdbcType="VARCHAR" property="problem"/>
         <result column="result" jdbcType="VARCHAR" property="result"/>
@@ -24,7 +24,7 @@
         from finish
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.icboluo.object.dataobject.FinishDO">
+    <insert id="insert" parameterType="com.icboluo.entity.note.FinishDO">
         insert into finish (id, problem, `result`,
                             belong_to_scope, gmt_create, gmt_first_create,
                             gmt_modified)
@@ -33,7 +33,7 @@
                 #{gmtFirstCreate,jdbcType=TIMESTAMP},
                 #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.icboluo.object.dataobject.FinishDO">
+    <insert id="insertSelective" parameterType="com.icboluo.entity.note.FinishDO">
         insert into finish
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -82,7 +82,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.object.dataobject.FinishDO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.note.FinishDO">
         update finish
         <set>
             <if test="problem != null">
@@ -106,7 +106,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.icboluo.object.dataobject.FinishDO">
+    <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.note.FinishDO">
         update finish
         set problem          = #{problem,jdbcType=VARCHAR},
             `result`         = #{result,jdbcType=VARCHAR},
@@ -117,7 +117,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="select" resultType="com.icboluo.object.dataobject.FinishDO">
+    <select id="select" resultType="com.icboluo.entity.note.FinishDO">
         select
         <include refid="Base_Column_List"/>
         from

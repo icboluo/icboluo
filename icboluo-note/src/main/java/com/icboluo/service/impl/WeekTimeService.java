@@ -2,7 +2,7 @@ package com.icboluo.service.impl;
 
 import com.icboluo.common.Constant;
 import com.icboluo.mapper.WeekTimeMapper;
-import com.icboluo.object.dataobject.WeekTimeDO;
+import com.icboluo.entity.note.WeekTimeDO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
