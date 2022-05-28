@@ -21,11 +21,6 @@ public class SingleResponse<T> extends Response {
         super(reEnum);
     }
 
-    @Override
-    public Response page() {
-        return this;
-    }
-
     public SingleResponse(T data, ReEnum reEnum) {
         super(reEnum);
         this.data = data;

@@ -351,7 +351,7 @@ public class ExcelHelper {
         int headNum = getHeadNum(list);
         for (int i = list.size() - 1; i >= 0; i--) {
             String[] row = arr[i + headNum];
-            boolean allEleIsEmpty = ArrayHelper.allEleIsEmpty(row);
+            boolean allEleIsEmpty = ArrayHelper.allEleIsNull(row);
             if (!allEleIsEmpty) {
                 list.remove(i);
             }

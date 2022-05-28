@@ -1,4 +1,4 @@
-package com.icboluo.util;
+package com.icboluo;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

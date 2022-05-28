@@ -47,11 +47,5 @@ public abstract class Response implements Serializable {
         this.message = reEnum.getMessage();
     }
 
-    /**
-     * 提供response对象的分页构建功能，
-     *
-     * @return response对象
-     */
-    public abstract Response page();
 
 }

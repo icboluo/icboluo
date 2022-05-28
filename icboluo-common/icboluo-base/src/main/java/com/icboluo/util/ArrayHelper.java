@@ -2,7 +2,6 @@ package com.icboluo.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 import java.util.function.Function;
@@ -218,9 +217,9 @@ public class ArrayHelper {
                 }).toList();
     }
 
-    public static <T> boolean allEleIsEmpty(T[] row) {
+    public static <T> boolean allEleIsNull(T[] row) {
         for (T t : row) {
-            if (!ObjectUtils.isEmpty(t)) {
+            if (!Objects.isNull(t)) {
                 return false;
             }
         }

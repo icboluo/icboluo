@@ -1,7 +1,5 @@
 package com.icboluo.enumerate;
 
-import org.springframework.util.CollectionUtils;
-
 import java.util.EnumSet;
 
 /**
@@ -40,7 +38,7 @@ public interface EnumServiceInterface<E extends Enum<E> & EnumInter> {
             return null;
         }
         EnumSet<E> set = allSet();
-        if (CollectionUtils.isEmpty(set)) {
+        if (set.isEmpty()) {
             return null;
         }
         return set.stream()

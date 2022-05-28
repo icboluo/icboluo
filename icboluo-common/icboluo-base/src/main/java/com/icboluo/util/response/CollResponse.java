@@ -1,8 +1,6 @@
 package com.icboluo.util.response;
 
-import com.github.pagehelper.PageInfo;
 import com.icboluo.enumerate.ReEnum;
-import com.icboluo.util.BeanHelper;
 import lombok.Data;
 
 import java.util.Collection;
@@ -32,10 +30,4 @@ public class CollResponse<T> extends Response {
         super(code, message);
     }
 
-    @Override
-    public Response page() {
-        //判断对象中的数据类型并进行分页返回值构建
-        PageInfo<T> pageInfo = BeanHelper.fakePage(data);
-        return R.correct(pageInfo);
-    }
 }

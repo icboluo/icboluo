@@ -145,6 +145,10 @@ sql 工具类，包含redis、mysql、mybatis plus简单的工具
 
 框架知识点,也包含一些最佳实践
 
+包含java软件环境的安装
+
+其中部分属于.xmind 文件
+
 ## fund
 
 基金服务，包含基金列表展示功能
@@ -170,12 +174,6 @@ TODO
 ## se
 
 包含se内容
-
-## software
-
-包含java软件环境的安装
-
-其中部分属于.xmind 文件
 
 ## sql
 

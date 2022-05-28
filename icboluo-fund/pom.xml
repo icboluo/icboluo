@@ -75,6 +75,7 @@
         </dependency>
     </dependencies>
 
+<!--    加上之后idea会把服务加入到service窗口中，也就是.idea/workspace.xml中加入相应配置，服务必须加上-->
     <build>
         <plugins>
             <plugin>

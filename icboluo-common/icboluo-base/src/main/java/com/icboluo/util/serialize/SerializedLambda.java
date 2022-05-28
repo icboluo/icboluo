@@ -2,7 +2,6 @@ package com.icboluo.util.serialize;
 
 import com.icboluo.function.SerialFunction;
 import com.icboluo.util.IoHelper;
-import org.springframework.util.StringUtils;
 
 import java.io.*;
 import java.lang.ref.WeakReference;
@@ -77,13 +76,11 @@ public class SerializedLambda implements Serializable {
      */
     public static <T> SerializedLambda resolveFunc(SerialFunction<T, ?> func) {
         Class<? extends SerialFunction> clazz = func.getClass();
-        return Optional.ofNullable(FUNC_CACHE.get(clazz))
-                .map(WeakReference::get)
-                .orElseGet(() -> {
-                    SerializedLambda lambda = SerializedLambda.resolve(func);
-                    FUNC_CACHE.put(clazz, new WeakReference<>(lambda));
-                    return lambda;
-                });
+        return Optional.ofNullable(FUNC_CACHE.get(clazz)).map(WeakReference::get).orElseGet(() -> {
+            SerializedLambda lambda = SerializedLambda.resolve(func);
+            FUNC_CACHE.put(clazz, new WeakReference<>(lambda));
+            return lambda;
+        });
     }
 
     /**
@@ -113,7 +110,7 @@ public class SerializedLambda implements Serializable {
      * @return 转换好的字符串
      */
     public static String firstToLowerCase(String param) {
-        if (!StringUtils.hasText(param)) {
+        if (param == null || "".equals(param)) {
             return "";
         }
         return param.substring(0, 1).toLowerCase() + param.substring(1);

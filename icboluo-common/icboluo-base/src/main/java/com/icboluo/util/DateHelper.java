@@ -1,7 +1,6 @@
 package com.icboluo.util;
 
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +17,6 @@ import java.util.Date;
  * @author icboluo
  */
 @Data
-@Slf4j
 @SuppressWarnings("unused")
 public class DateHelper {
     /**
