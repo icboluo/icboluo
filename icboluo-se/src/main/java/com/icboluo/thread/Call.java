@@ -27,6 +27,8 @@ class Call implements Callable<Integer> {
         // 使用FutureTask对象作为Thread对象的target创建并启动新线程。
         // 调用FutureTask对象的get()方法来获得子线程执行结束后的返回值
         Integer integer = futureTask.get();
-
+        // Future可以监控线程运行的状态
+        System.out.println(futureTask.isDone());
+        System.out.println(integer);
     }
 }

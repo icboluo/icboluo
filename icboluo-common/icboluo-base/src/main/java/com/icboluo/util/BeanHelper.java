@@ -145,6 +145,12 @@ public class BeanHelper {
                 .reduce(true, (a, b) -> a && b);
     }
 
+    public static boolean anyEmpty(Object... arr) {
+        return Arrays.stream(arr)
+                .map(Objects::nonNull)
+                .reduce(false, (a, b) -> a || b);
+    }
+
     public static boolean haveNull(Object... arr) {
         return Arrays.stream(arr)
                 .anyMatch(Objects::isNull);

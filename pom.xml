@@ -29,7 +29,6 @@
         <module>icboluo-nacos-config</module>
         <module>icboluo-note</module>
         <module>icboluo-se</module>
-        <module>icboluo-software</module>
         <module>icboluo-sql</module>
         <module>icboluo-test</module>
         <module>icboluo-user</module>

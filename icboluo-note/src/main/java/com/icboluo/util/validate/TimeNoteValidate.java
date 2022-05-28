@@ -1,9 +1,9 @@
 package com.icboluo.util.validate;
 
 import com.icboluo.object.client.TimeNoteCO;
+import com.icboluo.util.BeanHelper;
 import com.icboluo.util.IcBoLuoException;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 /**
  * @author icboluo
@@ -12,9 +12,7 @@ import org.springframework.util.StringUtils;
 public class TimeNoteValidate {
 
     public void validate(TimeNoteCO obj) {
-        boolean isEmptyData = StringUtils.hasText(obj.getBelongToScope())
-                && StringUtils.hasText(obj.getProblem()) && StringUtils.hasText(obj.getResult());
-        if (isEmptyData) {
+        if (BeanHelper.allIsNull(obj.getProblem(), obj.getResult(), obj.getBelongToScope())) {
             throw new IcBoLuoException();
         }
     }
