@@ -8,7 +8,8 @@ import com.icboluo.common.TreeNode;
  */
 public class N0687_最小单值路径 {
     public int longestUnivaluePath(TreeNode root) {
-        m(root, 0);
+//        m(root, 0);
+        getLength(root);
         return max;
     }
 
@@ -25,5 +26,23 @@ public class N0687_最小单值路径 {
             return Math.max(left, right) + 1;
         }
         return 0;
+    }
+
+    private int getLength(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = getLength(root.left);
+        int right = getLength(root.right);
+        int leftRes = 0;
+        if (root.left != null && root.left.val == root.val) {
+            leftRes = left + 1;
+        }
+        int rightRes = 0;
+        if (root.right != null && root.right.val == root.val) {
+            rightRes = right + 1;
+        }
+        max = Math.max(max, leftRes + rightRes);
+        return Math.max(leftRes, rightRes);
     }
 }

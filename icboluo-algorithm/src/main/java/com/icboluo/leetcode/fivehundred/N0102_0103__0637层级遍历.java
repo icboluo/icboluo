@@ -2,10 +2,7 @@ package com.icboluo.leetcode.fivehundred;
 
 import com.icboluo.common.TreeNode;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
@@ -89,7 +86,7 @@ public class N0102_0103__0637层级遍历 {
     }
 
     /**
-     * 0103 锯齿遍历（reverse
+     * 0103 锯齿遍历（reverse TODO ERROR
      *
      * @param root root
      * @return ans
@@ -125,6 +122,54 @@ public class N0102_0103__0637层级遍历 {
         return ans.stream()
                 .map(li -> li.stream().map(tree -> tree.val).toList())
                 .toList();
+    }
+
+    /**
+     * 0103 锯齿遍历（reverse
+     *
+     * @param root root
+     * @return ans
+     */
+    public List<List<Integer>> zigzagLevelOrder3(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        LinkedBlockingQueue<TreeNode> queue = new LinkedBlockingQueue<>();
+        queue.add(root);
+        int count = 0;
+        List<List<TreeNode>> ans = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            count++;
+            if (count % 2 == 0) {
+                queue = reverse(queue);
+            }
+            ans.add(new ArrayList<>(queue));
+            queue = reverse(queue);
+            for (TreeNode next : queue) {
+                if (next.left != null) {
+                    queue.add(next.left);
+                }
+                if (next.right != null) {
+                    queue.add(next.right);
+                }
+                queue.remove(next);
+            }
+        }
+        return ans.stream()
+                .map(li -> li.stream().map(tree -> tree.val).toList())
+                .collect(Collectors.toList());
+    }
+
+    private LinkedBlockingQueue<TreeNode> reverse(LinkedBlockingQueue<TreeNode> queue) {
+        LinkedBlockingQueue<TreeNode> res = new LinkedBlockingQueue<>();
+        ArrayList<TreeNode> list = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            list.add(queue.poll());
+        }
+        for (int i = list.size() - 1; i >= 0; i--) {
+            res.offer(list.get(i));
+        }
+        return res;
     }
 
     /**
@@ -169,5 +214,10 @@ public class N0102_0103__0637层级遍历 {
         TreeNode treeNode = new TreeNode(arr);
         List<List<Integer>> lists = cla.zigzagLevelOrder(treeNode);
         System.out.println("lists = " + lists);
+
+        Integer[] arr103 = {3, 9, 20, null, null, 15, 7};
+        TreeNode treeNode103 = new TreeNode(arr103);
+        List<List<Integer>> lists1 = cla.zigzagLevelOrder2(treeNode103);
+        System.out.println("lists1 = " + lists1);
     }
 }
