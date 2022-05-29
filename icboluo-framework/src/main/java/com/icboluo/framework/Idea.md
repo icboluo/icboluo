@@ -12,3 +12,7 @@
 ## .bak
 
 文件加 .bak后缀可以使文件失效
+
+## spelling
+
+可以将非词典单词加入到spelling中，在settings里面可以搜索整理

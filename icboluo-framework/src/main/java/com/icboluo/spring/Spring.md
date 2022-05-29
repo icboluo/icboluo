@@ -95,3 +95,14 @@ spring bean 默认单例
 切面执行不知道什么顺序，但是可以设置执行顺序，用order即可
 
 先执行的切面最后执行完，满足一般规律
+
+## aop
+
+需要把aop加入spring bean，要不然aop不会起作用（类上需要加@Component注解
+
+受检异常exception在aop执行中，如果不处理，会造成抛出java.lang.reflect.UndeclaredThrowableException异常
+## RequestParam
+
+requestParam并非完全没有作用，他比不加能适配的更多一些
+
+

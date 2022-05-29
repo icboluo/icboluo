@@ -36,8 +36,8 @@ public class MyDataSourceTest {
 
     @Test
     public void test2() throws SQLException {
-        DataSource c3P0DataSource = MyDataSourceFactory.getDataSource(1);
-        DataSource druidDataSource = MyDataSourceFactory.getDataSource(2);
+        DataSource c3P0DataSource = DataSourceFactory.getDataSource(1);
+        DataSource druidDataSource = DataSourceFactory.getDataSource(2);
         Connection connection = druidDataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(MyJdbcUtil.UPDATE_SQL);
         preparedStatement.setString(1, "12345");
@@ -58,20 +58,6 @@ public class MyDataSourceTest {
             System.out.println(i + "---" + connection);
             if (i == 5) {
                 connection.close();
-            }
-        }
-    }
-
-    /**
-     * c3p0连接池
-     */
-    @Test
-    public void tests4() throws SQLException {
-        for (int i = 0; i < 11; i++) {
-            Connection connection = MyJdbcUtil.getConnection2();
-            System.out.println(i + "=" + connection);
-            if (i == 5) {
-                connection.close();//索引为5，将连接放回连接池
             }
         }
     }

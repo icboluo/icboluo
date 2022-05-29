@@ -1,8 +1,5 @@
 package com.icboluo.mysql;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-
-import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -36,14 +33,12 @@ public class MyJdbcUtil {
     }
 
     public static Connection getConnection() {
-        Connection connection = null;
         try {
-            //ctrl alt+c
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return connection;
     }
 
     public static void release(ResultSet resultSet, Statement statement, Connection connection) {
@@ -81,16 +76,5 @@ public class MyJdbcUtil {
             String pwd = result.getString("password");
             System.out.println(id + "===" + name + "===" + pwd);
         }
-    }
-
-    public static Connection getConnection2() {
-        Connection connection = null;
-        try {
-            DataSource dataSource = new ComboPooledDataSource();
-            connection = dataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
     }
 }

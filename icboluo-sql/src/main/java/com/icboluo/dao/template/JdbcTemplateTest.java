@@ -1,7 +1,8 @@
-package com.icboluo.mysql.jdbctemplate;
+package com.icboluo.dao.template;
 
 import com.icboluo.dataobject.Book;
-import com.icboluo.mysql.MyDataSourceFactory;
+import com.icboluo.dataobject.User;
+import com.icboluo.mysql.DataSourceFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,16 +20,25 @@ import java.util.Map;
  * resultsetmatadata 结果集元数据 封装jdbctemplate的query方法
  */
 public class JdbcTemplateTest {
+
+    @Test
+    public void Test05() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
+        String sql = "select*from user where username=? and password=?";
+        List<User> users = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), "username", "password");
+        boolean b = users.size() > 0;
+        System.out.println("b = " + b);
+    }
     @Test
     public void Test01() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "create table book(bid int primary key auto_increment,bname varchar(20),price double,author varchar(20));";
         jdbcTemplate.execute(sql);
     }
 
     @Test
     public void Test02() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "insert into book values(?,?,?,?)";
         int i = jdbcTemplate.update(sql, null, "java", 666, "laowang");
         System.out.println(i);
@@ -36,7 +46,7 @@ public class JdbcTemplateTest {
 
     @Test
     public void Test03() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "insert into book values(?,?,?,?)";
         Object[] objs = {null, "jav", 66, "lao"};
         int i = jdbcTemplate.update(sql, objs);
@@ -45,7 +55,7 @@ public class JdbcTemplateTest {
 
     @Test
     public void Test04() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "update book set price=? where bname='jav'";
         Object[] objs = {444};
         int i = jdbcTemplate.update(sql, objs);
@@ -57,7 +67,7 @@ public class JdbcTemplateTest {
      */
     @Test
     public void Test11() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "select count(*) from user";
         Integer result = jdbcTemplate.queryForObject(sql, int.class);
         System.out.println(result);
@@ -65,7 +75,7 @@ public class JdbcTemplateTest {
 
     @Test//单行多列查询
     public void Test12() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "select*from book where bid=?";
         Map<String, Object> map = jdbcTemplate.queryForMap(sql, 1);
         System.out.println(map);
@@ -73,7 +83,7 @@ public class JdbcTemplateTest {
 
     @Test//多行多列查询
     public void Test13() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "select*from book where bid<?";
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql, 100);
         System.out.println(maps);
@@ -81,7 +91,7 @@ public class JdbcTemplateTest {
 
     @Test
     public void Test21() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "select*from book where price!=?";
         List<Book> books = jdbcTemplate.query(sql, new RowMapper<Book>() {//行映射成book,ctrl+h查询实现类
             @Override
@@ -106,7 +116,7 @@ public class JdbcTemplateTest {
 
     @Test
     public void Test22() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(MyDataSourceFactory.getDataSource(2));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceFactory.getDataSource(2));
         String sql = "select*from book where price!=?";
         List<Book> books = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class), 999);
         System.out.println("books = " + books);

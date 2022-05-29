@@ -1,4 +1,4 @@
-package com.icboluo.mysql.jdbc;
+package com.icboluo.dao.jdbc;
 
 import java.sql.*;
 import java.util.Properties;
@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  * @author icboluo
  * @since 2020-08-13 13:10
  */
-class MyDriver implements Driver {
+public class MyDriver implements Driver {
     @Override
     public Connection connect(String url, Properties info) throws SQLException {
         return null;
