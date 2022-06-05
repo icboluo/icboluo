@@ -43,7 +43,8 @@ public class WebConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getResResultInterceptor());
+        // 压根就不需要注入
+        registry.addInterceptor(new ResponseResultInterceptor());
         registry.addInterceptor(getAuthInterceptor());
 
         List<String> excludeList = excludePathPatterns();
@@ -100,6 +101,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 
         // 添加fastJson 的配置信息，比如：是否要格式化返回的json数据;
         FastJsonConfig fastConfig = new FastJsonConfig();
+        // fastjson 默认就把属性的序列化结果排序了按照字典顺序展示
         fastConfig.setSerializerFeatures(
                 // 保留map空的字段
                 SerializerFeature.WriteMapNullValue,
@@ -144,11 +146,6 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .allowedOriginPatterns("*")
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
                 .maxAge(3600);
-    }
-
-    @Bean
-    public ResponseResultInterceptor getResResultInterceptor() {
-        return new ResponseResultInterceptor();
     }
 
     @Bean
