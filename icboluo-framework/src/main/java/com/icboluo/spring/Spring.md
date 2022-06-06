@@ -101,8 +101,75 @@ spring bean 默认单例
 需要把aop加入spring bean，要不然aop不会起作用（类上需要加@Component注解
 
 受检异常exception在aop执行中，如果不处理，会造成抛出java.lang.reflect.UndeclaredThrowableException异常
+
 ## RequestParam
 
 requestParam并非完全没有作用，他比不加能适配的更多一些
+
+```java
+public class SpringIoc {
+    /**
+     * spring 的注入方式
+     */
+    @Resource
+    private ArchivesVO archivesVO;
+
+    /**
+     * 相当于
+     */
+    private ArchivesVO archives = getArchivesVO();
+
+    private singleton getArchivesVO() {
+        // 单例注入 map：ioc容器
+        if (map.get(ArchivesVO) == null) {
+            map.put(new ArchivesVO());
+        }
+        return map.get(ArchivesVO);
+    }
+
+    private prototype getArchivesVO() {
+        // 多例注入
+        return new ArchivesVO();
+    }
+}
+```
+
+```java
+public class SpringBoot {
+
+    private static SpringIoc sp;
+
+    /**
+     * set方法注入
+     *
+     * @param sp 需要注入的静态变量
+     */
+    @Resource
+    private void setSp(SpringIoc sp) {
+        SpringBoot.sp = sp;
+    }
+}
+```
+
+```java
+public class StaticPri {
+
+    private static ArchivesVO archivesVO;
+
+    @Resource
+    private void setArchivesVO(ArchivesVO archivesVO) {
+        StaticPri.archivesVO = archivesVO;
+    }
+
+    /**
+     * 静态内容调成员内容
+     */
+    private static void staticComm() {
+        // 但是new 出来的对象在Spring中，如果有DI则无法使用，会是null值
+        StaticPri staticPri = new StaticPri();
+        staticPri.setArchivesVO(null);
+    }
+}
+```
 
 
