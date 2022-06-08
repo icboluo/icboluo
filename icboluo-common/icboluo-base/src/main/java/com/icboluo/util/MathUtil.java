@@ -4,6 +4,7 @@ import com.icboluo.enumerate.ReEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,8 +17,9 @@ import java.util.OptionalInt;
  * @author icboluo
  * @since 2020/12/2 20:29
  */
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MathHelper {
+public class MathUtil {
     /**
      * 除法
      *
@@ -81,7 +83,10 @@ public class MathHelper {
             return new BigDecimal(mTemp);
         } else if (number instanceof Long mTemp) {
             return new BigDecimal(mTemp);
+        } else if (number instanceof String mTemp) {
+            return new BigDecimal(mTemp);
         } else {
+            log.error("Param {} not convert to BigDecimal,Please check", number);
             throw new IcBoLuoException(ReEnum.SYSTEM_NOT_SUPPORT_EXCEPTION);
         }
     }

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 /**
  * @author icboluo
@@ -57,6 +59,15 @@ public class Demo {
     public void beanFactory() {
         BeanFactory beanFactory = new DefaultListableBeanFactory();
         Student bean = beanFactory.getBean(Student.class);
+    }
+
+    @Test
+    public void applicationContext() {
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
+        Resource resource = applicationContext.getResource("spring.xml");
+        System.out.println("resource = " + resource);
+
+        System.out.println(applicationContext.getEnvironment());
     }
 
     /**

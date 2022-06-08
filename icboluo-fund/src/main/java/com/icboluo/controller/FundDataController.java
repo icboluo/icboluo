@@ -38,7 +38,7 @@ public class FundDataController {
         PageInfo<FundDataVO> pageInfo = fundDataService.selectByQuery(query);
         BigDecimal avg = pageInfo.getList().stream()
                 .collect(new MyCollector());
-        return R.correct("thisPageAvg", avg, pageInfo);
+        return R.correct(pageInfo);
     }
 
     @GetMapping("cal")

@@ -3,6 +3,7 @@ package com.icboluo.interceptor;
 import com.icboluo.annotation.WebContextAnno;
 import com.icboluo.constant.HttpConstant;
 import com.icboluo.enumerate.ServiceNameEnum;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.method.HandlerMethod;
@@ -34,7 +35,7 @@ public class WebContextInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod handlerMethod)) {
             log.error("handler 转换失败{}", handler);
             return HandlerInterceptor.super.preHandle(request, response, handler);
@@ -51,7 +52,7 @@ public class WebContextInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, Exception ex) throws Exception {
         UserContext.remove();
 //        接口名.super.默认方法名 可以直接调用接口中的方法
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);

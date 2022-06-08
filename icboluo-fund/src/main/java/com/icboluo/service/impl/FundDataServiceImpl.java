@@ -12,7 +12,7 @@ import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
 import com.icboluo.util.BeanHelper;
 import com.icboluo.util.IcBoLuoException;
-import com.icboluo.util.MathHelper;
+import com.icboluo.util.MathUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -232,7 +232,7 @@ public class FundDataServiceImpl implements FundDataService {
                 if (increaseRateDay == null) {
                     break;
                 }
-                boolean belong = MathHelper.belongTo(increaseRateDay, min, max);
+                boolean belong = MathUtil.belongTo(increaseRateDay, min, max);
                 if (belong) {
                     sourceEleIndex++;
                 } else {
