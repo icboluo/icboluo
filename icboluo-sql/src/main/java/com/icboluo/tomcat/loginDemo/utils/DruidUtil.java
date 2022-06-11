@@ -1,6 +1,6 @@
 package com.icboluo.tomcat.loginDemo.utils;
 
-import javax.activation.DataSource;
+import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +23,7 @@ public class DruidUtil {
             //  properties.load(inputStream);
 
             //创建数据库连接池
-           // dataSource = DruidDataSourceFactory.createDataSource(properties);
+            // dataSource = DruidDataSourceFactory.createDataSource(properties);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,7 +37,7 @@ public class DruidUtil {
         Connection connection = null;
         try {
             //创建连接对象
-          //  connection = dataSource.getConnection();
+            //  connection = dataSource.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }

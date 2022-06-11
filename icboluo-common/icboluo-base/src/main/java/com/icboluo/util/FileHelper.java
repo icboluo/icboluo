@@ -2,7 +2,6 @@ package com.icboluo.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 
@@ -19,7 +18,8 @@ public class FileHelper {
      * @param file 要删除的文件
      */
     public static void delete(File file) {
-        FileUtils.deleteQuietly(file);
+/*        import org.apache.commons.io.FileUtils;
+        FileUtils.deleteQuietly(file);*/
     }
 
     public static void write(String data, String filePath) {
