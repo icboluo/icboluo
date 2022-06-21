@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.Floyd;
+package com.icboluo.leetcode.岛屿问题;
 
 /**
  * @author icboluo
