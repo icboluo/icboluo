@@ -1,6 +1,8 @@
 package com.icboluo.util;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,19 +13,19 @@ import java.util.Map;
  */
 public class KkvMap<K1, K2, V> {
 
-    private final Map<Object[], V> map;
+    private final Map<List<Object>, V> map;
 
     public KkvMap() {
         map = new HashMap<>();
     }
 
     public void put(K1 k1, K2 k2, V v) {
-        Object[] arr = {k1, k2};
-        map.put(arr, v);
+        List<Object> key = Arrays.asList(k1, k2);
+        map.put(key, v);
     }
 
     public V get(K1 k1, K2 k2) {
-        Object[] arr = {k1, k2};
-        return map.get(arr);
+        List<Object> key = Arrays.asList(k1, k2);
+        return map.get(key);
     }
 }

@@ -32,16 +32,17 @@ public class RedisLock extends AbstractRedis<Object> {
                 return true;
             }
             byte[] value = redisConn.get(lockBytes);
-            if (Objects.nonNull(value) && value.length > 0) {
-                long expireTime = Long.parseLong(new String(value));
-                if (expireTime < System.currentTimeMillis()) {
-                    // 如果锁已经过期
-                    byte[] oldValue = redisConn.getSet(lockBytes, String.valueOf(System.currentTimeMillis() + lockExpire + 1).getBytes());
-                    // 防止死锁
-                    return Long.parseLong(new String(oldValue)) < System.currentTimeMillis();
-                }
+            if (value == null || value.length == 0) {
+                return false;
             }
-            return false;
+            long expireTime = Long.parseLong(new String(value));
+            // 如果锁没有过期
+            if (expireTime >= System.currentTimeMillis()) {
+                return false;
+            }
+            byte[] oldValue = redisConn.getSet(lockBytes, String.valueOf(System.currentTimeMillis() + lockExpire + 1).getBytes());
+            // 防止死锁
+            return Long.parseLong(new String(oldValue)) < System.currentTimeMillis();
         });
         return Objects.equals(execute, Boolean.TRUE);
     }
@@ -55,7 +56,7 @@ public class RedisLock extends AbstractRedis<Object> {
             }
             try {
                 procedure.run();
-            }finally {
+            } finally {
                 del(key);
             }
         }
