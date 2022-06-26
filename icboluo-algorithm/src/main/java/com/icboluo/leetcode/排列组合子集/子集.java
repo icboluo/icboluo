@@ -1,5 +1,6 @@
 package com.icboluo.leetcode.排列组合子集;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,18 +21,46 @@ public class 子集 {
     List<List<Integer>> subsets(int[] nums) {
         ans = new LinkedList<>();
         track = new LinkedList<>();
-        backtrack(nums, 0);
+        backtrack1(nums, 0);
         return ans;
     }
 
-    private void backtrack(int[] nums, int start) {
+    private void backtrack1(int[] nums, int start) {
         ans.add(new LinkedList<>(track));
         for (int i = start; i < nums.length; i++) {
             track.add(nums[i]);
-            backtrack(nums, i + 1);
+            backtrack1(nums, i + 1);
             track.removeLast();
         }
     }
+
+    /**
+     * N0090 元素可重复不可复选
+     *
+     * @param nums {1,2,2}
+     * @return [ [],[1],[2],[1,2],[2,2],[1,2,2] ]
+     */
+    List<List<Integer>> subsetsWithDup(int[] nums) {
+        ans = new LinkedList<>();
+        track = new LinkedList<>();
+
+        Arrays.sort(nums);
+        backtrack2(nums, 0);
+        return ans;
+    }
+
+    private void backtrack2(int[] arr, int start) {
+        ans.add(new LinkedList<>(track));
+        for (int i = start; i < arr.length; i++) {
+            if (i > start && arr[i] == arr[i - 1]) {
+                continue;
+            }
+            track.add(arr[i]);
+            backtrack2(arr, i + 1);
+            track.removeLast();
+        }
+    }
+
 
     public static void main(String[] args) {
         子集 cla = new 子集();
