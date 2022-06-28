@@ -1,5 +1,7 @@
 package com.icboluo.common;
 
+import lombok.NoArgsConstructor;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +14,7 @@ import java.util.Queue;
  * @since 2020-09-27 19:12
  */
 
+@NoArgsConstructor
 public class TreeNode {
     public int val;
     public TreeNode left;
