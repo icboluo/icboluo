@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.fivehundred;
+package com.icboluo.leetcode.双指针;
 
 import com.icboluo.common.ListNode;
 
@@ -10,11 +10,11 @@ public class N0019_链表倒数第N个节点 {
     public static void main(String[] args) {
         ListNode listNode = new ListNode(1, 2);
         N0019_链表倒数第N个节点 cla = new N0019_链表倒数第N个节点();
-        ListNode ans = cla.removeNthFromEnd(listNode, 2);
-        System.out.println("ans = " + ans);
+        ListNode ans = cla.removeNthFromEnd2(listNode, 1);
+        ans.print();
     }
 
-    public ListNode removeNthFromEnd(ListNode head, int n) {
+    public ListNode removeNthFromEnd1(ListNode head, int n) {
         if (head == null) {
             return null;
         }
@@ -39,5 +39,26 @@ public class N0019_链表倒数第N个节点 {
             listNode = listNode.next;
         }
         return length;
+    }
+
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+        ListNode fake = new ListNode(0);
+        fake.next = head;
+        ListNode left = fake;
+        ListNode right = fake;
+        while (right != null) {
+            if (n >= 0) {
+                right = right.next;
+                n--;
+            } else {
+                left = left.next;
+                right = right.next;
+            }
+        }
+        left.next = left.next.next;
+        return fake.next;
     }
 }
