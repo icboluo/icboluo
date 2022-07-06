@@ -4,7 +4,7 @@ package com.icboluo.leetcode.双指针;
  * @author icboluo
  * @since 2022-06-29 0:41
  */
-public class N0283_移动零 {
+ class N0283_移动零 {
     public void moveZeroes(int[] nums) {
         if (nums.length == 0) {
             return;

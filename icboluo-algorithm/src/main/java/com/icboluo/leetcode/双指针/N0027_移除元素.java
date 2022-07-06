@@ -4,7 +4,7 @@ package com.icboluo.leetcode.双指针;
  * @author icboluo
  * @since 2022-06-29 0:26
  */
-public class N0027_移除元素 {
+ class N0027_移除元素 {
     public int removeElement(int[] nums, int val) {
         if (nums.length == 0) {
             return 0;
