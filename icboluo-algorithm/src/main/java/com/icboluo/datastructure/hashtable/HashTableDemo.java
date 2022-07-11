@@ -6,12 +6,12 @@ import java.util.Scanner;
  * @author icboluo
  * @since 2020/6/14 14:19
  */
-public class HashTableDemo {
+class HashTableDemo {
     public static void main(String[] args) {
         HashTab hashTab = new HashTab(7);
         String key;
         Scanner sc = new Scanner(System.in);
-        while (true) {
+        while (sc.hasNext()) {
             System.out.println("add: 添加雇员");
             System.out.println("list: 显示雇员");
             System.out.println("find: 查找雇员");

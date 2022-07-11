@@ -4,7 +4,7 @@ package com.icboluo.datastructure.hashtable;
  * @author icboluo
  * @since 2020/6/14 14:31
  */
-public class HashTab {
+class HashTab {
     private EmpLinkedList[] empLinkedLists;
     private int size;
 

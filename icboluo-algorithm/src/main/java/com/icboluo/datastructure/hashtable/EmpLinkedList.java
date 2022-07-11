@@ -4,7 +4,7 @@ package com.icboluo.datastructure.hashtable;
  * @author icboluo
  * @since 2020/6/14 14:20
  */
-public class EmpLinkedList {
+class EmpLinkedList {
     private Employee head;
 
     public void add(Employee emp) {
