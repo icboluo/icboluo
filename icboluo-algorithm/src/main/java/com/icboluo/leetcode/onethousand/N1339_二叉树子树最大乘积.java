@@ -6,14 +6,15 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-05-29 17:11
  */
-public class N1139_二叉树子树最大乘积 {
-    int total = 0;
-    int max = 0;
+public class N1339_二叉树子树最大乘积 {
+    long total = 0;
+    long max = 0;
 
     public int maxProduct(TreeNode root) {
         total = total(root);
         maxFun(root);
-        return max;
+        // ??????
+        return (int) max % (int) (1e9 + 7);
     }
 
     private int maxFun(TreeNode root) {
@@ -27,12 +28,12 @@ public class N1139_二叉树子树最大乘积 {
         return sub;
     }
 
-    private int total(TreeNode root) {
+    private long total(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        int left = total(root.left);
-        int right = total(root.right);
+        long left = total(root.left);
+        long right = total(root.right);
         return root.val + left + right;
     }
 }
