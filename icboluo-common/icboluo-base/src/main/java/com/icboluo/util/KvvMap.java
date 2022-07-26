@@ -56,4 +56,13 @@ public class KvvMap<K, V1, V2> {
         Map<Integer, String> nv1 = kkvMap.column("nv");
         System.out.println("nv1 = " + nv1);
     }*/
+
+    /*
+                <!--        仅仅只有kvv map用到了-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>31.0.1-jre</version>
+            </dependency>
+     */
 }

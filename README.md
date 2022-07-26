@@ -48,13 +48,25 @@ Here are some ideas to get you started:
 
 ### framework
 
-[MarkDown](icboluo-framework/src/main/java/com/icboluo/framework/MarkDown.md)语法
+[MarkDown](icboluo-framework/src/main/java/com/icboluo/framework/MarkDown.md)语法\
+[Spring](icboluo-framework/src/main/java/com/icboluo/spring) Learn\
+[Thread](icboluo-framework/src/main/java/com/icboluo/thread)
 
 ### fund服务是基金服务
 
+[Fund](icboluo-fund/src/main/java/com/icboluo)
+
 ### game服务是一个小游戏
 
+[Game](icboluo-game/src/main/java/com/icboluo)
+
 ### note服务是笔记本功能，包含Excel-Mysql之间的转换
+
+[Note](icboluo-note/src/main/java/com/icboluo)\
+[EasyExcel](icboluo-note/src/main/java/com/icboluo/controller/ExcelController.java) 使用\
+[笔记本](icboluo-note/src/main/java/com/icboluo/controller/TimeNoteController.java)\
+[Feign](icboluo-note/src/main/java/com/icboluo/feign/UserFeign.java) 的简单使用\
+[Swagger2](icboluo-note/src/main/java/com/icboluo/Swagger2.java) 的简单使用
 
 ### se服务提供了Java SE 部分的内容
 
@@ -76,7 +88,14 @@ Here are some ideas to get you started:
 [Mybatis](icboluo-sql/src/main/java/com/icboluo/Mybatis.md) Learn\
 [Mq](icboluo-sql/src/main/java/com/icboluo/mq) Learn
 
-### 其他服务暂时没有实际意义上的功能
+### user服务提供接口，用来给其他服务调用，无实质内容
+
+[User](icboluo-user/src/main/java/com/icboluo)
+
+### web服务用作spring调试调用
+
+[Web](icboluo-web/src/main/java/com/icboluo)\
+[Async](icboluo-web/src/main/java/com/icboluo/controller/AsyncController.java) 异步注解
 
 [查看详情](document/README.md)
 

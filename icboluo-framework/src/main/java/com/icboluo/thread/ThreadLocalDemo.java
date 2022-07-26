@@ -1,4 +1,4 @@
-package com.icboluo.framework;
+package com.icboluo.thread;
 
 /**
  * @author icboluo

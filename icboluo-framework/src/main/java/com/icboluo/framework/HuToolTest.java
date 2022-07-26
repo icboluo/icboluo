@@ -32,8 +32,8 @@ public class HuToolTest {
     public void uuidTest() {
         System.out.println(IdUtil.simpleUUID());
         System.out.println(IdUtil.randomUUID());
-//        注意 IdUtil.createSnowflake每次调用会创建一个新的Snowflake对象，
-//        不同的Snowflake对象创建的ID可能会有重复，因此请自行维护此对象为单例，或者使用IdUtil.getSnowflake使用全局单例对象
+        // 注意 IdUtil.createSnowflake每次调用会创建一个新的Snowflake对象，
+        // 不同的Snowflake对象创建的ID可能会有重复，因此请自行维护此对象为单例，或者使用IdUtil.getSnowflake使用全局单例对象
         Snowflake snowflake = IdUtil.getSnowflake(1, 1);
         long l = snowflake.nextId();
         System.out.println("l = " + l);

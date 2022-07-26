@@ -261,4 +261,24 @@ public class StudentTest {
 
 ## HashMap对象
 
+```java
+import java.util.HashMap;
+
+public class StudentTest {
+    public static void main(String[] args) {
+        // 新建一个容器对象
+        HashMap<String, String> map = new HashMap<>();
+        // 容器中添加键值对
+        map.put("name", "张三");
+        map.put("school", "大学");
+        // 容器中根据key获取元素
+        String name = map.get("name");
+        // 获取容器大小
+        int size = map.size();
+        // 根据key移除元素
+        map.remove("name");
+    }
+}
+```
+
 

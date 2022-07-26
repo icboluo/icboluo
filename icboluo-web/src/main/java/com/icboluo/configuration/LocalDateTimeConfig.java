@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author icboluo
+ */
 @Configuration
 public class LocalDateTimeConfig {
 
@@ -18,7 +21,7 @@ public class LocalDateTimeConfig {
      * 因为是配置类，所以它会加载到配置文件中
      * 1.
      *
-     * @return
+     * @return Jackson2ObjectMapperBuilderCustomizer
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
@@ -32,7 +35,7 @@ public class LocalDateTimeConfig {
     /**
      * 2.
      *
-     * @return
+     * @return ObjectMapper
      */
     @Bean(name = "mapperObject")
     public ObjectMapper getObjectMapper() {
