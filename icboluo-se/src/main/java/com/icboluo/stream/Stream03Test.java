@@ -1,4 +1,4 @@
-package com.icboluo.lambda;
+package com.icboluo.stream;
 
 import com.icboluo.object.Student;
 import org.junit.jupiter.api.Test;

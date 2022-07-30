@@ -38,15 +38,15 @@ class Demo {
         //获取该show方法对象
         Class<Student> clazz = Student.class;
         Method showMethod = clazz.getMethod("show", int.class);
-//         判断当前对象是否有指定的注解MyAnnotation，有则返回true，否则返回false。
+        // 判断当前对象是否有指定的注解MyAnnotation，有则返回true，否则返回false。
         boolean result = showMethod.isAnnotationPresent(MyAnnotation.class);
         if (result) {
-//            获得当前对象上指定的注解对象
-//            Annotation[] getAnnotations(); 获得当前对象及其从父类上继承的所有的注解对象
-//            Annotation[] getDeclaredAnnotations();获得当前对象上所有的注解对象，不包括父类的
+            // 获得当前对象上指定的注解对象
+            // Annotation[] getAnnotations(); 获得当前对象及其从父类上继承的所有的注解对象
+            // Annotation[] getDeclaredAnnotations();获得当前对象上所有的注解对象，不包括父类的
             MyAnnotation annotation = showMethod.getAnnotation(MyAnnotation.class);
             System.out.println(annotation.name() + annotation.value());
-//            将注解的value值作为参数传递给show方法，让它执行
+            // 将注解的value值作为参数传递给show方法，让它执行
             showMethod.invoke(clazz.getDeclaredConstructor().newInstance(), annotation.value());
         }
     }

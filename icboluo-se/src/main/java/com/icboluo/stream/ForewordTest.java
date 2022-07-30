@@ -1,7 +1,7 @@
-package com.icboluo.lambda;
+package com.icboluo.stream;
 
-import com.icboluo.lambda.predicatecom.FilterStudentByAge;
-import com.icboluo.lambda.predicatecom.FilterStudentByName;
+import com.icboluo.stream.predicatecom.FilterStudentByAge;
+import com.icboluo.stream.predicatecom.FilterStudentByName;
 import com.icboluo.object.Student;
 import org.junit.jupiter.api.Test;
 

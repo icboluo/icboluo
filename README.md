@@ -29,11 +29,16 @@ Here are some ideas to get you started:
 ## document
 
 [sql文件](document/sql)\
+[EasyCode settings](document/EasyCodeConfig.json)
 [IDEA settings](document/settings.zip)
 
 ### 项目更新了LeetCode中的一些算法解法
 
-在[algorithm](icboluo-algorithm/src/main/java/com/icboluo/leetcode)模块中可以找到
+[algorithm](icboluo-algorithm/src/main/java/com/icboluo)
+
+[算法](icboluo-algorithm/src/main/java/com/icboluo/algorithm)\
+[数据结构](icboluo-algorithm/src/main/java/com/icboluo/datastructure)\
+[leetcode](icboluo-algorithm/src/main/java/com/icboluo/leetcode) 题目
 
 解法有好多是来源于Discuss中的思路
 
@@ -58,7 +63,8 @@ Here are some ideas to get you started:
 
 ### game服务是一个小游戏
 
-[Game](icboluo-game/src/main/java/com/icboluo)
+[Game](icboluo-game/src/main/java/com/icboluo)\
+[国际化](icboluo-game/src/main/resources/i18n/)
 
 ### note服务是笔记本功能，包含Excel-Mysql之间的转换
 
@@ -70,16 +76,18 @@ Here are some ideas to get you started:
 
 ### se服务提供了Java SE 部分的内容
 
+[注解](icboluo-se/src/main/java/com/icboluo/annotation)\
 [Base基础](icboluo-se/src/main/java/com/icboluo/base/clazz.md)\
-[compare](icboluo-se/src/main/java/com/icboluo/compare)\
-[DesignPattern](icboluo-se/src/main/java/com/icboluo/designpattern)\
-[Exception](icboluo-se/src/main/java/com/icboluo/exception)\
-[File](icboluo-se/src/main/java/com/icboluo/file)\
-[JDK](icboluo-se/src/main/java/com/icboluo/jdk)\
+[比较器](icboluo-se/src/main/java/com/icboluo/compare)\
+[设计模式](icboluo-se/src/main/java/com/icboluo/designpattern)\
+[异常处理](icboluo-se/src/main/java/com/icboluo/exception)\
+[IO流](icboluo-se/src/main/java/com/icboluo/file)\
+[JDK源码](icboluo-se/src/main/java/com/icboluo/jdk)\
 [HashMap1.7源码](icboluo-se/src/main/java/com/icboluo/jdk/hashmap/HashMap7.java)\
-[Stream](icboluo-se/src/main/java/com/icboluo/lambda)\
-[Reflect](icboluo-se/src/main/java/com/icboluo/reflect)\
-[Thread](icboluo-se/src/main/java/com/icboluo/thread)
+[内部类](icboluo-se/src/main/java/com/icboluo/nonameclass)\
+[反射](icboluo-se/src/main/java/com/icboluo/reflect)\
+[Stream](icboluo-se/src/main/java/com/icboluo/stream)\
+[线程](icboluo-se/src/main/java/com/icboluo/thread)
 
 ### sql服务提供mysql、redis、mq、mybatis等工具使用
 

@@ -1,7 +1,5 @@
 package com.icboluo.network;
 
-import com.icboluo.common.AbstractFilePathConstant;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -26,7 +24,7 @@ public class ConfigFile {
         System.out.println(properties.stringPropertyNames());
 //      这里看不懂了
         Properties properties1 = new Properties();
-        FileInputStream fis = new FileInputStream(AbstractFilePathConstant.A);
+        FileInputStream fis = new FileInputStream("a.txt");
         properties1.load(fis);
         System.out.println("fis = " + fis);
     }

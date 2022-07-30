@@ -1,4 +1,4 @@
-package com.icboluo.lambda.predicatecom;
+package com.icboluo.stream.predicatecom;
 
 
 import com.icboluo.object.Student;
