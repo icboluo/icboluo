@@ -2,6 +2,7 @@ package com.icboluo.service.impl;
 
 import com.icboluo.service.AddUpdateDel;
 import com.icboluo.service.CommonService;
+import com.spring.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.function.BiPredicate;
  * @author icboluo
  * @since 2021-11-07 14:46
  */
+@Component("commonServiceImpl")
 public class CommonServiceImpl implements CommonService {
 
     @Override

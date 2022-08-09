@@ -10,7 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>icboluo-common</artifactId>
-    <packaging>pom</packaging>
+    <!--    这里不要加这个，声明是父工程之后，其他项目例如fund难以引入-->
+    <!--    <packaging>pom</packaging>-->
 
     <properties>
         <java.version>${java.version}</java.version>
