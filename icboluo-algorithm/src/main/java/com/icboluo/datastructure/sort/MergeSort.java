@@ -7,12 +7,12 @@ import com.icboluo.util.RandomHelper;
  *
  * @author icboluo
  */
- class MergeSort {
+class MergeSort {
     public static void main(String[] args) {
         //int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
         int[] arr = RandomHelper.getRandom(8000000);
         int[] temp = new int[arr.length];
-        mergeSort(arr,0,arr.length-1, temp);
+        mergeSort(arr, 0, arr.length - 1, temp);
         //System.out.println(Arrays.toString(arr));
 
     }
@@ -21,8 +21,8 @@ import com.icboluo.util.RandomHelper;
         if (left < right) {
             int mid = (left + right) / 2;
             mergeSort(arr, left, mid, temp);
-            mergeSort(arr, mid+1, right, temp);
-            merge(arr,left,mid,right,temp);
+            mergeSort(arr, mid + 1, right, temp);
+            merge(arr, left, mid, right, temp);
         }
     }
 
@@ -44,25 +44,17 @@ import com.icboluo.util.RandomHelper;
         while (i <= mid && j <= right) {
             //如果左边的小于右边的，吧左边的放到temp中
             if (arr[i] <= arr[j]) {
-                temp[t] = arr[i];
-                t++;
-                i++;
+                temp[t++] = arr[i++];
             } else {
-                temp[t] = arr[j];
-                t++;
-                j++;
+                temp[t++] = arr[j++];
             }
         }
         //左边有剩余
         while (i <= mid) {
-            temp[t] = arr[i];
-            t++;
-            i++;
+            temp[t++] = arr[i++];
         }
         while (j <= right) {
-            temp[t] = arr[j];
-            t++;
-            j++;
+            temp[t++] = arr[j++];
         }
         t = 0;
         int tempLeft = left;
@@ -71,8 +63,5 @@ import com.icboluo.util.RandomHelper;
             t++;
             tempLeft++;
         }
-    }
-    public void end() {
-
     }
 }
