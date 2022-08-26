@@ -102,6 +102,8 @@ spring bean 默认单例
 
 受检异常exception在aop执行中，如果不处理，会造成抛出java.lang.reflect.UndeclaredThrowableException异常
 
+切面抛出的异常并非是因为受检异常什么的，jvm在处理动态代理的时候，如果出现顶层异常向下转型，会抛上述异常
+
 ## RequestParam
 
 requestParam并非完全没有作用，他比不加能适配的更多一些

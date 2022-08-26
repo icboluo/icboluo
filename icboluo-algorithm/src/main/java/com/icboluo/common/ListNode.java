@@ -53,6 +53,15 @@ public class ListNode {
         return cur;
     }
 
+    public void reversePrint(ListNode listNode) {
+        if (listNode == null) {
+            return;
+        }
+        reversePrint(listNode);
+        // 后序遍历拥有了前面的返回值
+        System.out.println(listNode.val);
+    }
+
     /**
      * 修改指向反转，和新建链表的代码是相似的
      *

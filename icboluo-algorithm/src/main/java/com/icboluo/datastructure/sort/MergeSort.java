@@ -64,4 +64,55 @@ class MergeSort {
             tempLeft++;
         }
     }
+
+    private static void merge2(int[] arr, int left, int mid, int right, int[] temp) {
+        for (int i = left; i <= right; i++) {
+            temp[i] = arr[i];
+        }
+        int i = left;
+        int j = mid + 1;
+        for (int k = left; k <= right; k++) {
+            if (i == mid + 1) {
+                arr[k] = temp[j++];
+            } else if (j == right + 1) {
+                arr[k] = temp[i++];
+            } else if (temp[i] > temp[j]) {
+                arr[k] = temp[j++];
+            } else {
+                arr[k] = temp[i++];
+            }
+        }
+    }
+
+    /**
+     * N0088
+     * 1.合并后排序
+     * 2....
+     * 3.双指针，从后向前比较 (也可以从前向后比较
+     *
+     * @param arr1
+     * @param arr2
+     * @return
+     */
+    private static int[] m1(int[] arr1, int[] arr2) {
+        int i = arr1.length - 1;
+        int j = arr2.length - 1;
+        int[] arr = new int[arr1.length + arr2.length];
+        int k = arr1.length + arr2.length;
+        while (i >= 0 && j >= 0) {
+            if (arr1[i] > arr2[j]) {
+                arr[k] = arr1[i--];
+            } else {
+                arr[k] = arr2[j--];
+            }
+            k--;
+        }
+        while (i >= 0) {
+            arr[k--] = arr1[i--];
+        }
+        while (j >= 0) {
+            arr[k--] = arr[j--];
+        }
+        return arr;
+    }
 }

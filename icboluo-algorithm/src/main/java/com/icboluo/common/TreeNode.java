@@ -36,6 +36,46 @@ public class TreeNode {
         this.right = treeNode.right;
     }
 
+    public TreeNode del(int key) {
+        return del(this, key);
+
+    }
+
+    /**
+     * 二叉查找树的删除
+     *
+     * @param root 根节点
+     * @param key  要删除的val
+     * @return 新树
+     */
+    private TreeNode del(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val == key) {
+            if (root.left == null) {
+                return root.right;
+            }
+            if (root.right == null) {
+                return root.left;
+            }
+            // 取右子树的最小节点|||||||左子树的最大节点
+            TreeNode rightMin = root;
+            while (rightMin.left != null) {
+                rightMin = rightMin.left;
+            }
+            root.right = del(root.right, rightMin.val);
+            rightMin.left = root.left;
+            rightMin.right = root.right;
+            return rightMin;
+        } else if (root.val > key) {
+            root.left = del(root.left, key);
+        } else {
+            root.right = del(root.right, key);
+        }
+        return root;
+    }
+
     /**
      * TODO it is error
      *
@@ -114,7 +154,6 @@ public class TreeNode {
             System.out.println();
         }
     }
-
 
     private String[][] toArr(TreeNode root) {
         sortIdx = 0;

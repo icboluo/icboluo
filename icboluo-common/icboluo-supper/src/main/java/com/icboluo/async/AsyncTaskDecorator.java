@@ -43,6 +43,7 @@ public class AsyncTaskDecorator implements TaskDecorator {
                 try {
                     Thread.currentThread().setName("async-" + threadName + Thread.currentThread().getName());
                     UserContext.set("");
+                    LocaleContextHolder.setLocale(locale);
                     // 使用MDC也是可以的
                     // MDC.setContextMap(new HashMap<>());
                     runnable.run();

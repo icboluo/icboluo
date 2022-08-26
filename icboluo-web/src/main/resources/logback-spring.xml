@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration scan="true" scanPeriod="60 seconds">
+<!--    彩色日志-->
+    <conversionRule >
+
+    </conversionRule>
+</configuration>

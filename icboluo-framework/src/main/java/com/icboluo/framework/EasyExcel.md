@@ -37,3 +37,9 @@ cell. get cell style 中的风格get出来后，重新设置会覆盖以前的�
 EasyWriter.write 里面的data不需要EasyExcel支持，很简单的list即可
 
 当表头字段相同的时候，会合并单元格
+
+## 头校验
+
+EasyExcel是支持头校验的，（泛型一般new Arraylist获取不到里面的泛型，需要改写法，但是没必要，多传一个class参数吧
+
+算法分为线性结构和非线性结构：队列、栈、链表；树、图
