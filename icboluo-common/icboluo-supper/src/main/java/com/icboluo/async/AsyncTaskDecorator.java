@@ -3,7 +3,12 @@ package com.icboluo.async;
 import com.icboluo.interceptor.UserContext;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.task.TaskDecorator;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author icboluo
@@ -24,10 +29,19 @@ public class AsyncTaskDecorator implements TaskDecorator {
             UserContext.remove();
         }*/
 
+        Locale locale = LocaleContextHolder.getLocale();
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        AtomicReference<String> threadName = new AtomicReference<>("");
+        Arrays.stream(stackTrace)
+                .filter(st -> st.getClassName().contains("com.icboluo"))
+                .filter(st -> !st.getClassName().contains("com.icboluo.async.AsyncTaskDecorator"))
+                .findFirst()
+                .ifPresent(st -> threadName.set(st.getMethodName()));
         try {
             // 部分操作
             return () -> {
                 try {
+                    Thread.currentThread().setName("async-" + threadName + Thread.currentThread().getName());
                     UserContext.set("");
                     // 使用MDC也是可以的
                     // MDC.setContextMap(new HashMap<>());

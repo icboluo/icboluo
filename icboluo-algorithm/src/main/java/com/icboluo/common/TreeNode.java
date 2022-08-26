@@ -2,10 +2,8 @@ package com.icboluo.common;
 
 import lombok.NoArgsConstructor;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 二叉树树节点，并不对树进行方法抽取，只做算法使用
@@ -13,7 +11,6 @@ import java.util.Queue;
  * @author icboluo
  * @since 2020-09-27 19:12
  */
-
 @NoArgsConstructor
 public class TreeNode {
     public int val;
@@ -29,7 +26,7 @@ public class TreeNode {
      *
      * @param arr 层级遍历的数组
      */
-    public TreeNode(Integer[] arr) {
+    public TreeNode(Integer... arr) {
         TreeNode treeNode = getInstance(arr, 0);
         if (treeNode == null) {
             return;
@@ -96,33 +93,156 @@ public class TreeNode {
         return cur;
     }
 
-    public static void printTree(TreeNode head) {
-        System.out.println("Binary Tree:");
-        printInOrder(head, 0, "-", 17);
-        System.out.println();
+    public void print() {
+        String[][] arr = toArr(this);
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                System.out.print(arr[i][j]);
+            }
+            System.out.println();
+            for (int j = 0; j < arr[i].length; j++) {
+                if (i < arr.length - 1) {
+                    if (" |-".equals(arr[i][j])) {
+                        System.out.print(" | ");
+                    } else if ("-| ".equals(arr[i][j])) {
+                        System.out.print(" | ");
+                    } else {
+                        System.out.print("   ");
+                    }
+                }
+            }
+            System.out.println();
+        }
     }
 
-    private static void printInOrder(TreeNode head, int height, String to, int len) {
-        if (head == null) {
+
+    private String[][] toArr(TreeNode root) {
+        sortIdx = 0;
+        int height = height();
+        int count = count();
+        Node[][] nodeArr = new Node[height][count];
+        String[][] arr = new String[height][count];
+        for (String[] row : arr) {
+            Arrays.fill(row, "   ");
+        }
+        buildArr(root, 0, nodeArr);
+        Map<Integer, List<Node>> weiZhiMap = eleWeiZhi(nodeArr);
+        for (int i = 0; i < height - 1; i++) {
+            List<Node> curList = weiZhiMap.get(i);
+            List<Node> nextList = weiZhiMap.get(i + 1);
+            Map<Integer, Node> nextValMap = nextList.stream().collect(Collectors.toMap(node -> node.val, node -> node));
+            for (Node cur : curList) {
+                if (cur.left != -1) {
+                    Node left = nextValMap.get(cur.left);
+                    for (int j = left.idx + 1; j <= cur.idx - 1; j++) {
+                        arr[i][j] = "---";
+                    }
+                    arr[i][left.idx] = " |-";
+                }
+                if (cur.right != -1) {
+                    Node right = nextValMap.get(cur.right);
+                    for (int j = cur.idx + 1; j <= right.idx - 1; j++) {
+                        arr[i][j] = "---";
+                    }
+                    arr[i][right.idx] = "-| ";
+                }
+                arr[i][cur.idx] = cur.print;
+            }
+        }
+        List<Node> last = weiZhiMap.get(height - 1);
+        for (Node cur : last) {
+            arr[height - 1][cur.idx] = cur.print;
+        }
+        return arr;
+    }
+
+    private Map<Integer, List<Node>> eleWeiZhi(Node[][] arr) {
+        Map<Integer, List<Node>> map = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[i][j] != null) {
+                    map.computeIfAbsent(i, key -> new ArrayList<>()).add(arr[i][j]);
+                }
+            }
+        }
+        return map;
+    }
+
+    private static int sortIdx = 0;
+
+    private void buildArr(TreeNode root, int level, Node[][] arr) {
+        if (root == null) {
             return;
         }
-        printInOrder(head.right, height + 1, "^", len);
-        String val = to + head.val + to;
-        int lenM = val.length();
-        int lenL = (len - lenM) / 2;
-        int lenR = len - lenM - lenL;
-        val = getSpace(lenL) + val + getSpace(lenR);
-        System.out.println(getSpace(height * len) + val);
-        printInOrder(head.left, height + 1, "v", len);
+        buildArr(root.left, level + 1, arr);
+        arr[level][sortIdx++] = new Node(root, sortIdx);
+        buildArr(root.right, level + 1, arr);
     }
 
-    private static String getSpace(int num) {
-        String space = " ";
-        StringBuilder buf = new StringBuilder();
-        for (int i = 0; i < num; i++) {
-            buf.append(space);
+    class Node {
+        int val;
+        int left = -1;
+        int right = -1;
+        String print;
+        int idx;
+
+        public Node(TreeNode root, int sortIdx) {
+            this.val = root.val;
+            this.idx = sortIdx - 1;
+            if (root.left != null) {
+                left = root.left.val;
+            }
+            if (root.right != null) {
+                right = root.right.val;
+            }
+            String item;
+            // 只有一位数
+            if (root.val < 10) {
+                item = " " + root.val + " ";
+            } else {
+                item = "   " + root.val;
+                item = item.substring(item.length() - 3);
+            }
+            this.print = item;
         }
-        return buf.toString();
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "val=" + val +
+                    '}';
+        }
+    }
+
+    /**
+     * 求元素个数
+     */
+    public int count() {
+        return count(this);
+    }
+
+    private int count(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return count(root.left) + count(root.right) + 1;
+    }
+
+    /**
+     * 求二叉树最大高度
+     *
+     * @return 最大高度
+     */
+    public int height() {
+        return height(this);
+    }
+
+
+    private int height(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return Math.max(height(root.left), height(root.right)) + 1;
     }
 
     @Override
