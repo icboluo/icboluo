@@ -36,9 +36,14 @@ public class TreeNode {
         this.right = treeNode.right;
     }
 
+    public TreeNode(TreeNode root) {
+        this.val = root.val;
+        this.left = root.left == null ? null : new TreeNode(root.left);
+        this.right = root.right == null ? null : new TreeNode(root.right);
+    }
+
     public TreeNode del(int key) {
         return del(this, key);
-
     }
 
     /**
@@ -282,6 +287,25 @@ public class TreeNode {
             return 0;
         }
         return Math.max(height(root.left), height(root.right)) + 1;
+    }
+
+    /**
+     * 二叉树的最小深度
+     *
+     * @return 最小深度
+     */
+    public int minDepth() {
+        return minDepth(this);
+    }
+
+    private int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        return root.left == null || root.right == null ?
+                left + right + 1 : Math.min(left, right) + 1;
     }
 
     @Override
