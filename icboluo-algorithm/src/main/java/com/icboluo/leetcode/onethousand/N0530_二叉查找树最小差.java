@@ -2,7 +2,7 @@ package com.icboluo.leetcode.onethousand;
 
 import com.icboluo.common.TreeNode;
 
-import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author icboluo
@@ -10,13 +10,13 @@ import java.util.Set;
  */
 public class N0530_二叉查找树最小差 {
     public int getMinimumDifference(TreeNode root) {
-        ans = Integer.MAX_VALUE;
+        min = Integer.MAX_VALUE;
         getMinDiff(root);
-        return ans;
+        return min;
     }
 
     TreeNode pre;
-    int ans;
+    int min;
 
     public void getMinDiff(TreeNode root) {
         if (root == null) {
@@ -24,17 +24,33 @@ public class N0530_二叉查找树最小差 {
         }
         getMinDiff(root.left);
         if (pre != null) {
-            ans = Math.min(ans, root.val - pre.val);
+            min = Math.min(min, root.val - pre.val);
         }
         pre = root;
         getMinDiff(root.right);
     }
 
-    Set<TreeNode> set;
+    TreeSet<Integer> set;
 
-    //TODO SET 硬写
-    public void getMinDiff2(TreeNode root) {
-
+    // 奇怪，这个方法的返回值并没有使用到
+    // 和N0783 一致
+    public int getMinDiff2(TreeNode root) {
+        if (root == null) {
+            return min;
+        }
+        // 规规整整的一次遍历，利用set可以取出最近的元素
+        while (!set.isEmpty()) {
+            if (set.floor(root.val) != null) {
+                min = Math.min(min, root.val - set.floor(root.val));
+            }
+            if (set.ceiling(root.val) != null) {
+                min = Math.min(min, set.ceiling(root.val) - root.val);
+            }
+        }
+        set.add(root.val);
+        getMinDiff2(root.left);
+        getMinDiff(root.right);
+        return min;
     }
 
 }

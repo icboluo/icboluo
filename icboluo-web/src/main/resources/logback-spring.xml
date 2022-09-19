@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration scan="true" scanPeriod="60 seconds">
-<!--    彩色日志-->
-    <conversionRule >
+    <!--    彩色日志-->
+    <conversionRule conversionWord="clr" onverterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    onverterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    onverterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
-    </conversionRule>
+    <springProperty scope="context" name="log" source="log.path"/>
+    <!--    输出到控制台-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encodre>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
+                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+            </pattern>
+        </encodre>
+    </appender>
 </configuration>
