@@ -6,14 +6,14 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-04-05 22:55
  */
-public class N0783_查找树最小差 {
+class N0783_查找树最小差 {
 
-    int ans = Integer.MAX_VALUE;
+    int min = Integer.MAX_VALUE;
     Integer pre;
 
     public int minDiffInBST(TreeNode root) {
         m(root);
-        return ans;
+        return min;
     }
 
     private void m(TreeNode root) {
@@ -22,11 +22,24 @@ public class N0783_查找树最小差 {
         }
 //        中序遍历即可
         if (pre != null) {
-            ans = Math.min(ans, root.val - pre);
+            min = Math.min(min, root.val - pre);
         }
         pre = root.val;
         if (root.right != null) {
             m(root.right);
         }
+    }
+
+
+    private int dfs(TreeNode pre, TreeNode root) {
+        if (root == null) {
+            return Integer.MAX_VALUE;
+        }
+        // 保留前驱节点即可，递归过程中OPS ans；方法返回最小的left or right
+        int min = Math.abs(pre.val - root.val);
+        this.min = Math.min(min, this.min);
+        int left = dfs(root, root.left);
+        int right = dfs(root, root.right);
+        return Math.min(left, right);
     }
 }

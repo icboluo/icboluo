@@ -7,7 +7,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2022-08-29 22:03
  */
-public class N0170_TwoSum1 {
+class N0170_TwoSum1 {
 
     /**
      * 记录元素出现次数

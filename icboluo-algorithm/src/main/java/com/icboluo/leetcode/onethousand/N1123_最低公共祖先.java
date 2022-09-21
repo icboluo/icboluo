@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-07-10 20:05
  */
-public class N1123_最低公共祖先 {
+class N1123_最低公共祖先 {
 
     public TreeNode lcaDeepestLeaves(TreeNode root) {
         return dfs(root, 0).parent;

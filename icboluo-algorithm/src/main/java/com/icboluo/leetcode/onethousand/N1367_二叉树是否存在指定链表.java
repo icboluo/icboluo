@@ -7,7 +7,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-05-29 17:00
  */
-public class N1367_二叉树是否存在指定链表 {
+class N1367_二叉树是否存在指定链表 {
     public boolean isSubPath(ListNode head, TreeNode root) {
         return dfs(head, root) || (root != null && (isSubPath(head, root.left) || isSubPath(head, root.right)));
     }

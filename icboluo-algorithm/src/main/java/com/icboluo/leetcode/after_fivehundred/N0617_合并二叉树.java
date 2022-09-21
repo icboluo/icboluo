@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-29 22:49
  */
-public class N0617_合并二叉树 {
+ class N0617_合并二叉树 {
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
         if (root1 == null && root2 == null) {
             return null;

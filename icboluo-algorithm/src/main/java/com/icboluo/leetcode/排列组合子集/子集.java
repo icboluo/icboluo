@@ -8,7 +8,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-06-21 19:10
  */
-public class 子集 {
+class 子集 {
     List<List<Integer>> ans;
     LinkedList<Integer> track;
 

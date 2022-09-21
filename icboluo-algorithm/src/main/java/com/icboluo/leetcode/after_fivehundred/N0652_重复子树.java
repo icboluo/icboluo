@@ -11,7 +11,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2022-03-29 23:05
  */
-public class N0652_重复子树 {
+ class N0652_重复子树 {
     Map<String, Integer> countMap;
     List<TreeNode> ans;
 

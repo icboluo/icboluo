@@ -4,7 +4,7 @@ package com.icboluo.othersource.guige;
  * @author icboluo
  * @since 2022-03-25 19:48
  */
-public class N0002_替换 {
+ class N0002_替换 {
     private String replace(String str) {
         return replace1(str);
     }

@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author icboluo
  * @since 2020-09-17 22:32
  */
-public class N0001_两数之和 {
+class N0001_两数之和 {
     public static void main(String[] args) {
         int[] arr = {2, 7, 11, 15};
         int[] res = twoSum(arr, 9);

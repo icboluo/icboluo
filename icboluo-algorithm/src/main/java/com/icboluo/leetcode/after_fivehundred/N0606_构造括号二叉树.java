@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-29 22:21
  */
-public class N0606_构造括号二叉树 {
+ class N0606_构造括号二叉树 {
     public String tree2str1(TreeNode root) {
         if (root == null) {
             return "";

@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-05-29 17:22
  */
-public class N1315_偶值祖父节点 {
+class N1315_偶值祖父节点 {
     public int sumEvenGrandparent(TreeNode root) {
         // 标准的动态扩展树，让节点和他的parent产生关系
         return dfs(root, 1, 1);

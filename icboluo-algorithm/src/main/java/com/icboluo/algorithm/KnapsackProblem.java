@@ -8,7 +8,7 @@ import com.icboluo.util.ArrayHelper;
  * @author icboluo
  * @since 2020-08-05 12:26
  */
-public class KnapsackProblem {
+class KnapsackProblem {
     public static void main(String[] args) {
         //物品重量
         int[] w = {1, 4, 3};
@@ -31,7 +31,7 @@ public class KnapsackProblem {
                     if (v[i - 1][j] < val[i - 1] + v[i - 1][j - w[i - 1]]) {
                         v[i][j] = val[i - 1] + v[i - 1][j - w[i - 1]];
                         path[i][j] = 1;
-                    }else {
+                    } else {
                         v[i][j] = v[i - 1][j];
                     }
                 }
@@ -42,7 +42,7 @@ public class KnapsackProblem {
         int j = path[0].length - 1;
         while (i > 0 && j > 0) {
             if (path[i][j] == 1) {
-                System.out.printf("第%d个商品放入背包\n" , i);
+                System.out.printf("第%d个商品放入背包\n", i);
                 j -= w[i - 1];
             }
             i--;

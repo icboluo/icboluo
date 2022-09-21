@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-29 21:36
  */
-public class N0538_更大的二叉树 {
+ class N0538_更大的二叉树 {
     int sum = 0;
 
     public TreeNode convertBST(TreeNode root) {

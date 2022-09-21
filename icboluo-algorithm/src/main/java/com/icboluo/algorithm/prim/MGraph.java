@@ -4,7 +4,7 @@ package com.icboluo.algorithm.prim;
  * @author icboluo
  * @since 2020-08-05 17:20
  */
- class MGraph {
+class MGraph {
     /**
      * 图节点个数
      */

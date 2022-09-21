@@ -9,7 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-05-28 13:05
  */
-public class N0872 {
+class N0872 {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
         List<Integer> list1 = new ArrayList<>();
         List<Integer> list2 = new ArrayList<>();

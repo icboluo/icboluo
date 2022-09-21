@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author icboluo
  * @since 2022-03-25 18:49
  */
-public class N0107_层级遍历 {
+class N0107_层级遍历 {
     public static void main(String[] args) {
         N0107_层级遍历 cla = new N0107_层级遍历();
         Integer[] arr = {3, 9, 20, null, null, 15, 7};

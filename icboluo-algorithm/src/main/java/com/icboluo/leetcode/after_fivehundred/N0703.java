@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
  * @author icboluo
  * @since 2021-05-10 13:05
  */
-public class N0703 {
+ class N0703 {
 
     PriorityQueue<Integer> queue;
     //    因为add函数需要idx，所以idx作为成员变量0

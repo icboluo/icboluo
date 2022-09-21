@@ -10,7 +10,7 @@ import java.util.Stack;
  * @author icboluo
  * @since 2022-07-10 19:25
  */
-public class N1305_两个二叉搜索树中的排序元素 {
+class N1305_两个二叉搜索树中的排序元素 {
     public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
         Stack<TreeNode> stack1 = new Stack<>();
         Stack<TreeNode> stack2 = new Stack<>();

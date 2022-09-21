@@ -9,7 +9,7 @@ import java.util.Set;
  * @author icboluo
  * @since 2022-09-20 0:08
  */
-public class N0170_TwoSum2 {
+class N0170_TwoSum2 {
     private Set<Integer> sum = new HashSet<>();
     private List<Integer> nums = new ArrayList<>();
 

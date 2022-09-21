@@ -6,7 +6,7 @@ import com.icboluo.common.ListNode;
  * @author icboluo
  * @since 2021-11-18 23:07
  */
-public class N0019_链表倒数第N个节点 {
+class N0019_链表倒数第N个节点 {
     public static void main(String[] args) {
         ListNode listNode = new ListNode(1, 2);
         N0019_链表倒数第N个节点 cla = new N0019_链表倒数第N个节点();

@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2021-11-19 13:11
  */
-public class N0669_修建二叉搜索树 {
+ class N0669_修建二叉搜索树 {
     public TreeNode trimBST(TreeNode root, int low, int high) {
         if (root == null) {
             return null;

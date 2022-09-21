@@ -9,7 +9,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2022-03-28 21:52
  */
-public class N0508_最频繁子树和 {
+class N0508_最频繁子树和 {
 
     Map<Integer, Integer> ans;
 

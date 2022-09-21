@@ -8,7 +8,7 @@ import java.util.TreeSet;
  * @author icboluo
  * @since 2022-03-28 21:22
  */
-public class N0530_二叉查找树最小差 {
+ class N0530_二叉查找树最小差 {
     public int getMinimumDifference(TreeNode root) {
         min = Integer.MAX_VALUE;
         getMinDiff(root);

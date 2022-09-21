@@ -7,7 +7,7 @@ import java.util.Deque;
  * @author icboluo
  * @since 2022-08-25 20:53
  */
-public class 字符串计算器 {
+class 字符串计算器 {
     public static void main(String[] args) {
         字符串计算器 cla = new 字符串计算器();
         String str = "3*(4-5/2)-6";

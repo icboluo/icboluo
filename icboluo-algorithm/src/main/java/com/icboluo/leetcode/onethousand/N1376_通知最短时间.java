@@ -9,7 +9,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2022-05-29 16:25
  */
-public class N1376_通知最短时间 {
+class N1376_通知最短时间 {
     /**
      * 经理下属关系
      */
@@ -18,10 +18,9 @@ public class N1376_通知最短时间 {
     int[] informTime;
 
     /**
-     *
      * @param n
      * @param headID
-     * @param manager i的经理
+     * @param manager    i的经理
      * @param informTime 通知时间
      * @return
      */

@@ -2,7 +2,7 @@ package com.icboluo.othersource;
 
 import java.util.Scanner;
 
-public class N0001_最少车辆数 {
+ class N0001_最少车辆数 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();

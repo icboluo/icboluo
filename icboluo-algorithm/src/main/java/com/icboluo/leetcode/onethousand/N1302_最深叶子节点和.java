@@ -9,7 +9,7 @@ import java.util.Queue;
  * @author icboluo
  * @since 2022-05-29 17:28
  */
-public class N1302_最深叶子节点和 {
+class N1302_最深叶子节点和 {
     public int deepestLeavesSum(TreeNode root) {
         if (root == null) {
             return 0;

@@ -4,7 +4,7 @@ package com.icboluo.leetcode.双指针;
  * @author icboluo
  * @since 2022-06-29 0:15
  */
-public class N0026_N0080_删除有序数组中的重复项 {
+class N0026_N0080_删除有序数组中的重复项 {
     /**
      * N0026 删除只保留一个
      *

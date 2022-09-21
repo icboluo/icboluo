@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author icboluo
  * @since 2020-08-11 12:47
  */
-public class HorseChessboard {
+class HorseChessboard {
     /**
      * 列
      */

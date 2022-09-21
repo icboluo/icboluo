@@ -10,7 +10,7 @@ import java.util.Queue;
  * @author icboluo
  * @since 2022-03-28 21:31
  */
-public class N0515_二叉树每层最大值 {
+ class N0515_二叉树每层最大值 {
 
     public List<Integer> largestValues(TreeNode root) {
         largestValues2(root);

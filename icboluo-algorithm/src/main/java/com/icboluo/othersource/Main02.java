@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Main02 {
+ class Main02 {
     private static int[] arr;
     private static int thisTime = 0;
 
@@ -30,7 +30,6 @@ public class Main02 {
         arr = new int[peopleNum];
 
         Set<Map.Entry<Integer, Integer>> entrySet = map.entrySet();
-        Set<Integer> integers = map.keySet();
         for (Map.Entry<Integer, Integer> entry : entrySet) {
             Integer time = entry.getKey();
             Integer length = entry.getValue();

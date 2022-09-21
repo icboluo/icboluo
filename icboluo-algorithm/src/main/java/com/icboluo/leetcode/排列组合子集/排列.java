@@ -17,7 +17,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-06-21 20:27
  */
-public class 排列 {
+class 排列 {
 
     List<List<Integer>> ans;
     /**

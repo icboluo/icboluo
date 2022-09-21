@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-25 19:09
  */
-public class N0129_节点和 {
+class N0129_节点和 {
     public int sumNumbers(TreeNode root) {
         return sumNumbers(root, 0);
     }

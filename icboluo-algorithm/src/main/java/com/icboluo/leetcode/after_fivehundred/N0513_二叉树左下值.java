@@ -9,7 +9,7 @@ import java.util.Queue;
  * @author icboluo
  * @since 2022-03-28 21:44
  */
-public class N0513_二叉树左下值 {
+ class N0513_二叉树左下值 {
     public int findBottomLeftValue(TreeNode root) {
         if (root == null) {
             return 0;

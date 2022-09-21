@@ -8,7 +8,7 @@ import java.util.*;
  * @author icboluo
  * @since 2021-11-17 23:55
  */
-public class N0104_二叉树最大深度 {
+class N0104_二叉树最大深度 {
 
     public static void main(String[] args) {
         Integer[] arr = {1, 2, 3, 4, null, null, 5};

@@ -9,7 +9,7 @@ import java.util.Set;
  * @author icboluo
  * @since 2022-03-29 23:37
  */
-public class N0653_二叉树2数和 {
+ class N0653_二叉树2数和 {
     Set<Integer> set = new HashSet<>();
 
     public boolean findTarget(TreeNode root, int k) {

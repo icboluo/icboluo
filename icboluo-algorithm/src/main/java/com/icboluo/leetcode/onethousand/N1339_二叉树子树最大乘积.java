@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-05-29 17:11
  */
-public class N1339_二叉树子树最大乘积 {
+class N1339_二叉树子树最大乘积 {
     long total = 0;
     long max = 0;
 

@@ -8,7 +8,7 @@ import java.util.*;
  * @author icboluo
  * @since 2021-17-09 13:17
  */
-public class N0589_先序遍历 {
+ class N0589_先序遍历 {
     public List<Integer> preorder(Node root) {
         return preorder1(root);
 //        return preorder2(root);

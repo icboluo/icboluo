@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-29 22:02
  */
-public class N0572_是否是子树 {
+ class N0572_是否是子树 {
     boolean ans;
 
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {

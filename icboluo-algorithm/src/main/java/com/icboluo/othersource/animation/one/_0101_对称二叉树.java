@@ -4,7 +4,7 @@ package com.icboluo.othersource.animation.one;
  * @author icboluo
  * @since 2020-09-29 20:20
  */
-public class _0101_对称二叉树 {
+class _0101_对称二叉树 {
     public static void main(String[] args) {
         m1();
     }

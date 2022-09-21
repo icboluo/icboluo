@@ -9,7 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-03-29 23:53
  */
-public class N0655_打印二叉树 {
+ class N0655_打印二叉树 {
     List<List<String>> ans;
 
     //    递归强写

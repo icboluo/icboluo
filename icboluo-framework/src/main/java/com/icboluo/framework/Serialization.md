@@ -5,3 +5,5 @@
 # 序列化和toString没有什么关系
 
 alibaba fastjson 序列化成字节数据的时候需要增加get方法，否则序列化不出来
+
+# get方法jackson是可以序列化的，防止序列化可以在方法上加@Transient注解

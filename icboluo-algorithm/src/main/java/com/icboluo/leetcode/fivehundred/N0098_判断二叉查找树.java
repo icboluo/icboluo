@@ -10,7 +10,7 @@ import java.util.Stack;
  * @author icboluo
  * @since 2021-11-17 23:40
  */
-public class N0098_判断二叉查找树 {
+class N0098_判断二叉查找树 {
 
     public boolean isValidBST(TreeNode root) {
         return isValidBST4(root);

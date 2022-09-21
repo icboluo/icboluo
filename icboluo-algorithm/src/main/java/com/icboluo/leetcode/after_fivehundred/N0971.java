@@ -9,7 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-25-04 13:25
  */
-public class N0971 {
+class N0971 {
 
     public List<Integer> flipMatchVoyage(TreeNode root, int[] voyage) {
         ans = new ArrayList<>();

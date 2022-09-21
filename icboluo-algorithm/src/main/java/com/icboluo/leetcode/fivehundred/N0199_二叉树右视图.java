@@ -9,7 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-03-28 23:17
  */
-public class N0199_二叉树右视图 {
+class N0199_二叉树右视图 {
     List<Integer> ans;
 
     public List<Integer> rightSideView(TreeNode root) {

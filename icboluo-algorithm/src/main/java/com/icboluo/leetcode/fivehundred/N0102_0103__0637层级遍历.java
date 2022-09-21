@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * @author icboluo
  */
-public class N0102_0103__0637层级遍历 {
+class N0102_0103__0637层级遍历 {
     /**
      * 0101 层级遍历
      *

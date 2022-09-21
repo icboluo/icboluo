@@ -6,7 +6,7 @@ import java.util.*;
  * @author icboluo
  * @since 2022-07-10 13:34
  */
-public class N1443_二叉树收集苹果最短时间 {
+class N1443_二叉树收集苹果最短时间 {
     Set<Integer> visited;
 
     public int minTime(int n, int[][] edges, List<Boolean> hasApple) {

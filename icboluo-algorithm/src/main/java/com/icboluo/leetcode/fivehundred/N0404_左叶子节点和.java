@@ -2,13 +2,14 @@ package com.icboluo.leetcode.fivehundred;
 
 import com.icboluo.common.TreeNode;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
  * @author icboluo
  * @since 2021-21-14 13:21
  */
-public class N0404_左叶子节点和 {
+class N0404_左叶子节点和 {
     public int sumOfLeftLeaves(TreeNode root) {
         return sumOfLeftLeaves2(root);
     }
@@ -40,7 +41,7 @@ public class N0404_左叶子节点和 {
             return 0;
         }
         int res = 0;
-        Stack<TreeNode> stack = new Stack<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode cur = stack.pop();

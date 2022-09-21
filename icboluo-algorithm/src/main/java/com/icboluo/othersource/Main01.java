@@ -5,27 +5,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Main01 {
-    private static ArrayList<Integer> temp;
-    private static int c;
+class Main01 {
+    private static List<Integer> temp;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str = br.readLine();
         String[] split = str.split(" ");
-        ArrayList<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         for (String s : split) {
             list.add(Integer.parseInt(s));
         }
-//6 1 2 3
+        // 6 1 2 3
         abc(list);
         for (int i = temp.size() - 1; i >= 0; i--) {
-            System.out.print(temp.get(i)+" ");
+            System.out.print(temp.get(i) + " ");
         }
     }
 
-    private static void abc(ArrayList<Integer> list) {
+    private static void abc(List<Integer> list) {
         temp = list;
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = i; j < list.size() - 1; j++) {
@@ -40,7 +40,7 @@ public class Main01 {
     }
 
     private static void gaibianlist(int i, int j) {
-        ArrayList<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         for (int a = 0; a < temp.size(); a++) {
             if (a >= i && a <= j) {
             } else if (a == j + 1) {
@@ -52,7 +52,7 @@ public class Main01 {
         temp = list;
     }
 
-    private static int sum(int i, int j, ArrayList<Integer> list) {
+    private static int sum(int i, int j, List<Integer> list) {
         int sum = 0;
         for (int i1 = 0; i1 < list.size(); i1++) {
             if (i1 >= i && i1 <= j) {

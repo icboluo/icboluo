@@ -4,7 +4,7 @@ package com.icboluo.leetcode.fivehundred;
  * @author icboluo
  * @since 2022-06-26 17:10
  */
-public class N0004_寻找两个正序数组的中位数 {
+class N0004_寻找两个正序数组的中位数 {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         return findMidNum1(nums1, nums2);
 //        return findMidNum2(nums1, nums2);

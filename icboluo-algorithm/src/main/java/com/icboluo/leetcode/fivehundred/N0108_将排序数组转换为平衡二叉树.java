@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-06-28 23:11
  */
-public class N0108_将排序数组转换为平衡二叉树 {
+class N0108_将排序数组转换为平衡二叉树 {
     public TreeNode sortedArrayToBST(int[] nums) {
         return build(nums, 0, nums.length - 1);
     }

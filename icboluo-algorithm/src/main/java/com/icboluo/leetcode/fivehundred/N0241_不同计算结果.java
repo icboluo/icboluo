@@ -9,7 +9,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2022-09-20 0:44
  */
-public class N0241_不同计算结果 {
+class N0241_不同计算结果 {
     Map<String, List<Integer>> cache = new HashMap<>();
 
     List<Integer> diff(String input) {

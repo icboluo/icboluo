@@ -9,7 +9,7 @@ import java.util.Set;
  * @author icboluo
  * @since 2022-07-10 13:12
  */
-public class N1457_二叉树伪回文路径 {
+class N1457_二叉树伪回文路径 {
     public int pseudoPalindromicPaths(TreeNode root) {
         return dfs(root, new HashSet<>());
     }

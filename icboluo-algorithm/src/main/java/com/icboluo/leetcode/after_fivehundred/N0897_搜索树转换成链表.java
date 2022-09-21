@@ -9,7 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-04-05 23:12
  */
-public class N0897_搜索树转换成链表 {
+class N0897_搜索树转换成链表 {
     public static void main(String[] args) {
         Integer[] arr = {5, 3, 6, 2, 4, null, 8, 1, null, null, null, 7, 9};
         TreeNode treeNode = new TreeNode(arr);

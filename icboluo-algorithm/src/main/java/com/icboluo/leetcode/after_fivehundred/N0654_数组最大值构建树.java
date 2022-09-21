@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-29 23:42
  */
-public class N0654_数组最大值构建树 {
+ class N0654_数组最大值构建树 {
     int[] arr;
 
 

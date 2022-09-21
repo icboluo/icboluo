@@ -4,13 +4,13 @@ package com.icboluo.algorithm;
  * @author icboluo
  * @since 2020-08-05 13:34
  */
-public class Kmp {
+class Kmp {
     public static void main(String[] args) {
         String str1 = "bbc abcdab abcdabcdabde";
         String str2 = "abcdabd";
         int i = violenceMatch(str1, str2);
         System.out.println("i = " + i);
-        int i1 = kmpSearch(str1, str2,kmpNext(str1));
+        int i1 = kmpSearch(str1, str2, kmpNext(str1));
         System.out.println("i1 = " + i1);
     }
 

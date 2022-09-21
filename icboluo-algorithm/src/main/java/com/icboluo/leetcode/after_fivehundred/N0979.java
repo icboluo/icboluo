@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2021-59-28 12:59
  */
-public class N0979 {
+class N0979 {
     int ans;
 
     public int distributeCoins(TreeNode root) {

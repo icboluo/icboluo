@@ -9,7 +9,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2021-11-18 0:07
  */
-public class N0105_前序中序构建二叉树 {
+class N0105_前序中序构建二叉树 {
     Map<Integer, Integer> inorderMap;
     int index;
 

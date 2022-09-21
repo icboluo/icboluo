@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-28 22:58
  */
-public class N0235_0236_二叉树公共祖先 {
+class N0235_0236_二叉树公共祖先 {
 
     /**
      * N0235 二叉搜索树公共祖先

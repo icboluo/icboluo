@@ -6,7 +6,7 @@ import java.util.*;
  * @author icboluo
  * @since 2022-09-20 0:11
  */
-public class N0127_顺序转换 {
+class N0127_顺序转换 {
     public static void main(String[] args) {
         N0127_顺序转换 cla = new N0127_顺序转换();
         int i = cla.ladderLength("ab", "xy", Arrays.asList("ac", "bc", "bd", "dy", "xy", "ay"));

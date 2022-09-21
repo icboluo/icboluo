@@ -1,4 +1,4 @@
-package com.icboluo.algorithm.method;
+package com.icboluo.othersource.method;
 
 /**
  * 算出一共有几个和为 k 的子数组

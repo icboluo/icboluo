@@ -4,7 +4,7 @@ package com.icboluo.leetcode.双指针;
  * @author icboluo
  * @since 2022-07-06 20:12
  */
-public class N0167_两数之和 {
+class N0167_两数之和 {
     /**
      * 只能使用左右指针，不可以使用快慢指针
      *

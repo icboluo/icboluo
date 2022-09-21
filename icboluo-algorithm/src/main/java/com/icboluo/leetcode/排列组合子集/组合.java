@@ -8,7 +8,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-06-21 19:17
  */
-public class 组合 {
+class 组合 {
 
     List<List<Integer>> ans;
     LinkedList<Integer> track;

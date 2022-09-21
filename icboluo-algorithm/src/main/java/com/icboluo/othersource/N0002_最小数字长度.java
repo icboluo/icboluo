@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Scanner;
 
-public class N0002_最小数字长度 {
+ class N0002_最小数字长度 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {

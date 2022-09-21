@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * @author icboluo
  * @since 2022-07-10 20:29
  */
-public class N1110_删除节点并返回森林 {
+class N1110_删除节点并返回森林 {
 
     Set<Integer> set;
 

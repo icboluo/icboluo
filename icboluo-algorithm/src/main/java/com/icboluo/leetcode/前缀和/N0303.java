@@ -4,7 +4,7 @@ package com.icboluo.leetcode.前缀和;
  * @author icboluo
  * @since 2022-08-02 23:13
  */
-public class N0303 {
+class N0303 {
     private final int[] preNum;
 
     public N0303(int[] nums) {

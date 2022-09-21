@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-04-05 23:24
  */
-public class N0938_搜索树范围和 {
+class N0938_搜索树范围和 {
     public int rangeSumBST(TreeNode root, int low, int high) {
         if (root == null) {
             return 0;

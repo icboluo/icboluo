@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
  * @author icboluo
  * @since 2022-08-26 20:19
  */
-public class 位操作 {
+class 位操作 {
     /**
      * 原码：计算机中将一个数字转换为二进制，并在其最高位加上符号的一种表示方法
      * 反码：根据表示规定，正数的反码就是其本身，而负数的反码是符号位不变，其余各位取反

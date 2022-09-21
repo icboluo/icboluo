@@ -10,7 +10,7 @@ import java.util.Set;
  * @author icboluo
  * @since 2022-06-28 20:51
  */
-public class 岛屿问题 {
+class 岛屿问题 {
     boolean[][] visited;
     int row;
     int col;

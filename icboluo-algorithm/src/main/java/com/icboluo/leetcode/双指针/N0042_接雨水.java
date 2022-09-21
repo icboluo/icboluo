@@ -4,7 +4,7 @@ package com.icboluo.leetcode.双指针;
  * @author icboluo
  * @since 2022-07-06 21:40
  */
-public class N0042_接雨水 {
+class N0042_接雨水 {
     public int trap(int[] height) {
         int[] leftMax = new int[height.length];
         int[] rightMax = new int[height.length];

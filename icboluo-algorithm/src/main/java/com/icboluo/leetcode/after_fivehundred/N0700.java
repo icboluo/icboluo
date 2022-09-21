@@ -9,7 +9,7 @@ import java.util.Queue;
  * @author icboluo
  * @since 2021-39-10 12:39
  */
-public class N0700 {
+ class N0700 {
 
     public TreeNode searchBST(TreeNode root, int val) {
         return searchBST1(root, val);

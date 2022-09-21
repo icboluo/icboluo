@@ -9,7 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-03-28 22:04
  */
-public class N0429_多叉树层级遍历 {
+class N0429_多叉树层级遍历 {
     public List<List<Integer>> levelOrder(Node root) {
         if (root == null) {
             return new LinkedList<>();

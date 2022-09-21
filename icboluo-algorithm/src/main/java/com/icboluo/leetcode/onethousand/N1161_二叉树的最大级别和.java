@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
  * @author icboluo
  * @since 2022-07-10 19:38
  */
-public class N1161_二叉树的最大级别和 {
+class N1161_二叉树的最大级别和 {
     public int maxLevelSum(TreeNode root) {
         return maxLevelSum2(root);
     }

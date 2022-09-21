@@ -4,7 +4,7 @@ package com.icboluo.leetcode.fivehundred;
  * @author icboluo
  * @since 2022-03-28 22:22
  */
-public class N0331_叶子节点增加井号 {
+class N0331_叶子节点增加井号 {
     public boolean isValidSerialization(String preorder) {
         String[] split = preorder.split(",");
 //         元素个数

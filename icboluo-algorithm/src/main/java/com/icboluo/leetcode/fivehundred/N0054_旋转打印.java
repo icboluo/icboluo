@@ -8,7 +8,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-09-20 0:19
  */
-public class N0054_旋转打印 {
+class N0054_旋转打印 {
     private List<Integer> spiralOrder(int[][] matrix) {
         int u = 0;
         int d = matrix.length - 1;

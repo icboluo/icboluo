@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-02-25 20:29
  */
-public class N0099_恢复BST {
+class N0099_恢复BST {
     public void recoverTree(TreeNode root) {
 //        一个有序数组，交换位置怎么恢复（swap即可），Bst作为有序数组即可
         recover(root);

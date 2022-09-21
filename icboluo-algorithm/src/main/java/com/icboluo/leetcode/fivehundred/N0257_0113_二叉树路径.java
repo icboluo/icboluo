@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @author icboluo
  * @since 2022-03-28 22:32
  */
-public class N0257_0113_二叉树路径 {
+class N0257_0113_二叉树路径 {
 
     List<List<TreeNode>> ans;
 

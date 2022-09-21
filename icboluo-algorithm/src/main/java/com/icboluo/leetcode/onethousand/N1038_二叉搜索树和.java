@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-07-10 21:13
  */
-public class N1038_二叉搜索树和 {
+class N1038_二叉搜索树和 {
     int pre = 0;
 
     public TreeNode bstToGst(TreeNode root) {

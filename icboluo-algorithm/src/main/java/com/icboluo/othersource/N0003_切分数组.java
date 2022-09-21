@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.function.BiFunction;
 
-public class N0003_切分数组 {
+ class N0003_切分数组 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {

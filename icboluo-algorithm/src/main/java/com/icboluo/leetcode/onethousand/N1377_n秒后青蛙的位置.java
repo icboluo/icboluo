@@ -9,7 +9,7 @@ import java.util.Queue;
  * @author icboluo
  * @since 2022-07-10 19:04
  */
-public class N1377_n秒后青蛙的位置 {
+class N1377_n秒后青蛙的位置 {
     public double frogPosition(int n, int[][] edges, int t, int target) {
         List<Integer>[] graph = new ArrayList[n];
         for (int i = 0; i < graph.length; i++) {

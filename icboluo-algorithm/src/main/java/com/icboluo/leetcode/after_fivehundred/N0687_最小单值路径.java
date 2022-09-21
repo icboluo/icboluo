@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-04-05 22:22
  */
-public class N0687_最小单值路径 {
+ class N0687_最小单值路径 {
     public int longestUnivaluePath(TreeNode root) {
 //        m(root, 0);
         getLength(root);

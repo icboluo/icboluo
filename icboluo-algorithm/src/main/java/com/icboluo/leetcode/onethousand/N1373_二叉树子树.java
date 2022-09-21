@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-05-29 16:48
  */
-public class N1373_二叉树子树 {
+class N1373_二叉树子树 {
 
     int maxSum = 0;
 

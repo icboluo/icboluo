@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-25 19:04
  */
-public class N0124_节点和 {
+class N0124_节点和 {
 
     int ans;
 

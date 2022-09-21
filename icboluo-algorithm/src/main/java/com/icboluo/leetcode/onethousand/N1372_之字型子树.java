@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-05-29 16:56
  */
-public class N1372_之字型子树 {
+class N1372_之字型子树 {
     int max = 0;
 
     public int longestZigZag(TreeNode root) {

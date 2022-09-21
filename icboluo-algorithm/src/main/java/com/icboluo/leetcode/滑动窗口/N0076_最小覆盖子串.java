@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 大致解题思路：
+ * 1.右指针右移迭代下一个解
+ * 2.左指针右移得到最优解/最终解
+ *
  * @author icboluo
  * @since 2022-07-27 0:36
  */

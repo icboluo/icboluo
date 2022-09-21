@@ -6,7 +6,7 @@ import com.icboluo.common.ListNode;
  * @author icboluo
  * @since 2021-11-18 22:56
  */
-public class N0002_链表2数和 {
+class N0002_链表2数和 {
 
     public static void main(String[] args) {
         ListNode listNode01 = new ListNode(2, 4, 3);

@@ -4,7 +4,7 @@ package com.icboluo.algorithm.Flood;
  * @author icboluo
  * @since 2022-06-28 22:33
  */
-public class N0733_FloodFill算法 {
+class N0733_FloodFill算法 {
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
         // 题目中说，起始像素与目标color一致的时候，直接结束
         if (image[sr][sc] == color) {

@@ -2,15 +2,13 @@ package com.icboluo.leetcode.fivehundred;
 
 import com.icboluo.common.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author icboluo
  * @since 2022-03-28 23:24
  */
-public class N0144_N0145_前序中序遍历 {
+class N0144_N0145_前序中序遍历 {
     List<Integer> ans;
 
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -32,7 +30,7 @@ public class N0144_N0145_前序中序遍历 {
         if (root == null) {
             return;
         }
-        Stack<TreeNode> stack = new Stack<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode pop = stack.pop();
@@ -62,12 +60,12 @@ public class N0144_N0145_前序中序遍历 {
         ans.add(root.val);
     }
 
-//    TODO error
+    //    TODO error
     private void postorder2(TreeNode root) {
         if (root == null) {
             return;
         }
-        Stack<TreeNode> stack = new Stack<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode pop = stack.pop();

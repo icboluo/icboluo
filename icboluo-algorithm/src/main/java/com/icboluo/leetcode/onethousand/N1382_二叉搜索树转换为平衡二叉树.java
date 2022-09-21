@@ -9,7 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-06-28 23:02
  */
-public class N1382_二叉搜索树转换为平衡二叉树 {
+class N1382_二叉搜索树转换为平衡二叉树 {
 
     List<TreeNode> sortList;
 

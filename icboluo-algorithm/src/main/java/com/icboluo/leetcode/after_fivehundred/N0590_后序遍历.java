@@ -10,7 +10,7 @@ import java.util.Stack;
  * @author icboluo
  * @since 2021-28-09 13:28
  */
-public class N0590_后序遍历 {
+ class N0590_后序遍历 {
     public List<Integer> postorder(Node root) {
         return postorder1(root);
 //       return postorder2(root);

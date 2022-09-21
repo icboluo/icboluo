@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-25 19:40
  */
-public class N0222_节点数量 {
+class N0222_节点数量 {
     int ans;
 
     public int countNodes(TreeNode root) {
