@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
- class HeroNode {
+class HeroNode {
     private int no;
     private String name;
     private HeroNode left;

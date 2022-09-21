@@ -30,7 +30,17 @@ public class BeanHelper {
     private static final String CONVERT_ERR_MESSAGE = "【数据转换】数据转换出错，目标对象{}构造函数异常";
 
     /**
-     * 将一个对象中的属性copy到另一个对象中
+     * 属性复制，也可以直接使用Spring的工具类
+     *
+     * @param source 源对象
+     * @param target 目标对象
+     */
+    public static void copyProperties(Object source, Object target) {
+        BeanUtils.copyProperties(source, target);
+    }
+
+    /**
+     * 将一个对象中的属性copy到另一个对象中，需要默认无参的构造方法
      *
      * @param source 源对象
      * @param target 目标类
@@ -38,25 +48,21 @@ public class BeanHelper {
      * @return 目标对象
      */
     public static <T> T copyProperties(Object source, @NonNull Class<T> target) {
+        T t;
         try {
-            T t = target.getDeclaredConstructor().newInstance();
-            BeanUtils.copyProperties(source, t);
-            return t;
+            t = target.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
             throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
         }
+        BeanUtils.copyProperties(source, t);
+        return t;
     }
 
     public static <T> T copyProperties(Object source, @NonNull Supplier<T> supplier) {
-        try {
-            T t = supplier.get();
-            BeanUtils.copyProperties(source, t);
-            return t;
-        } catch (Exception e) {
-            log.error(CONVERT_ERR_MESSAGE, supplier.getClass().getName(), e);
-            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
-        }
+        T t = supplier.get();
+        BeanUtils.copyProperties(source, t);
+        return t;
     }
 
     /**
@@ -79,14 +85,9 @@ public class BeanHelper {
     }
 
     public static <T> List<T> copyWithColl(List<?> sourceList, @NonNull Supplier<T> supplier) {
-        try {
-            return sourceList.stream()
-                    .map(s -> copyProperties(s, supplier))
-                    .toList();
-        } catch (Exception e) {
-            log.error(CONVERT_ERR_MESSAGE, supplier.getClass().getName(), e);
-            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
-        }
+        return sourceList.stream()
+                .map(s -> copyProperties(s, supplier))
+                .toList();
     }
 
     /**

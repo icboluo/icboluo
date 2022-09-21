@@ -8,7 +8,7 @@ import lombok.Setter;
  * @author icboluo
  * @since 2020/6/14 16:43
  */
- class BinaryTree {
+class BinaryTree {
     @Setter
     private HeroNode root;
 

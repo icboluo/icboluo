@@ -4,7 +4,7 @@ package com.icboluo.datastructure.tree.binary;
  * @author icboluo
  * @since 2020/6/14 16:55
  */
- class BinaryTreeDemo {
+class BinaryTreeDemo {
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
         HeroNode root = new HeroNode(1, "宋江");
@@ -17,15 +17,17 @@ package com.icboluo.datastructure.tree.binary;
         root.setRight(node3);
         node3.setLeft(node5);
         node3.setRight(node4);
+
         binaryTree.preOrder();
-/*        binaryTree.infixOrder();
+        binaryTree.infixOrder();
         binaryTree.postOrder();
+
         HeroNode heroNode = binaryTree.preOrderSearch(5);
         if (heroNode != null) {
-            System.out.println(heroNode.toString());
+            System.out.println(heroNode);
         } else {
             System.out.println("没找到");
-        }*/
+        }
         binaryTree.delete(3);
         binaryTree.preOrder();
 

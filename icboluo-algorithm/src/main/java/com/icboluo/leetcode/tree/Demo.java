@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * @author icboluo
  * @since 2022-08-23 18:51
  */
-public class Demo {
+class Demo {
 
     /**
      * 倒序打印单链表节点的值
