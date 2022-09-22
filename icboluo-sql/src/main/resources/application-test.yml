@@ -8,3 +8,8 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         register-enabled: true
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/note?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&serverTimezone=UTC
+    username: root
+    password: root

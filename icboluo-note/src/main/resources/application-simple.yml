@@ -2,10 +2,10 @@ profiles:
   active: simple
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/note?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&serverTimezone=UTC
-    username: root
-    password: root
+    driverClassName: org.sqlite.JDBC
+    url: jdbc:sqlite::resource:db/sqlite3.db
+    username:
+    password:
     hikari:
       connection-timeout: 3000
   cloud:
