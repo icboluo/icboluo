@@ -9,6 +9,6 @@ spring:
         enabled: false
   datasource:
     driverClassName: org.sqlite.JDBC
-    url: jdbc:sqlite::../../document/sql/sqlite3.db
+    url: jdbc:sqlite::../../document/sql/document.db
     username:
     password:

@@ -1,13 +1,15 @@
 package com.icboluo.common;
 
-import com.github.pagehelper.IPage;
 import lombok.Data;
 
 /**
+ * 禁止实现IPage接口，会和全局配置一样检测到参数中实现这个接口自动分页；全局配置自动分页是support-method-arguments：true
+ *
  * @author icboluo
  */
 @Data
-public class PageQuery implements IPage {
+@SuppressWarnings("unused")
+public class PageQuery {
     /**
      * 当前页 默认1
      */
@@ -17,20 +19,13 @@ public class PageQuery implements IPage {
      */
     private Integer pageSize;
 
-    @Override
     public Integer getPageNum() {
         pageNum = pageNum == null ? 1 : pageNum;
         return pageNum;
     }
 
-    @Override
     public Integer getPageSize() {
         pageSize = pageSize == null ? 10 : pageSize;
         return pageSize;
-    }
-
-    @Override
-    public String getOrderBy() {
-        return null;
     }
 }

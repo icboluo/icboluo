@@ -98,6 +98,9 @@ public class RedisList<T> extends AbstractRedis<T> {
      * @return 是否新增成功
      */
     public Long addAll(String key, List<T> value) {
+        if (value.isEmpty()) {
+            return add(key, null);
+        }
         return listOperations.rightPushAll(key, value);
     }
 

@@ -3,7 +3,7 @@ profiles:
 spring:
   datasource:
     driverClassName: org.sqlite.JDBC
-    url: jdbc:sqlite::resource:db/sqlite3.db
+    url: jdbc:sqlite::resource:db/note.db
     username:
     password:
     hikari:

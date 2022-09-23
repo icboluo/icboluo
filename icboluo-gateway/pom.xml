@@ -50,6 +50,12 @@
             <groupId>it.ozimov</groupId>
             <artifactId>embedded-redis</artifactId>
             <version>0.7.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-simple</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
