@@ -7,7 +7,6 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
  * @author icboluo
  */
 @Aspect
-@Component
+//@Component
 @Slf4j
 public class RedisLogAspect {
 

@@ -2,12 +2,14 @@ package com.icboluo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import redis.embedded.RedisServer;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Configuration
+@Profile("simple")
 public class EmbededRedisConfiguration {
 
     private final RedisServer redisServer;

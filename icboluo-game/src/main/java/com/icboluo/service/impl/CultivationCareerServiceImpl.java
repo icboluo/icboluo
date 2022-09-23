@@ -1,10 +1,12 @@
 package com.icboluo.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.icboluo.common.PageQuery;
+import com.icboluo.common.redis.RedisList;
 import com.icboluo.entity.CultivationCareer;
 import com.icboluo.mapper.CultivationCareerMapper;
 import com.icboluo.service.CultivationCareerService;
+import com.icboluo.util.BeanHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +23,9 @@ public class CultivationCareerServiceImpl implements CultivationCareerService {
     @Resource
     private CultivationCareerMapper cultivationCareerMapper;
 
+    @Resource
+    private RedisList<CultivationCareer> redisList;
+
     /**
      * 通过ID查询单条数据
      *
@@ -34,8 +39,19 @@ public class CultivationCareerServiceImpl implements CultivationCareerService {
 
     @Override
     public PageInfo<CultivationCareer> cultivationCareer(Integer id) {
-        PageHelper.startPage(1, 10);
-        List<CultivationCareer> list = cultivationCareerMapper.selectByPlayer(id);
-        return PageInfo.of(list);
+/*        PageHelper.startPage(1, 10);
+        List<CultivationCareer> list = cultivationCareerMapper.selectByPlayer(id);*/
+        List<CultivationCareer> list = redisList.get("career:" + id);
+        return BeanHelper.fakePage(list, new PageQuery());
+    }
+
+    @Override
+    public void add(CultivationCareer data) {
+        redisList.add("career:" + data.getPlayerId(), data);
+    }
+
+    @Override
+    public void sync() {
+
     }
 }

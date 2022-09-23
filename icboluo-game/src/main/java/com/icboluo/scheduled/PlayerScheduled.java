@@ -3,11 +3,11 @@ package com.icboluo.scheduled;
 import com.icboluo.entity.CultivationCareer;
 import com.icboluo.entity.DiePlayer;
 import com.icboluo.entity.Player;
-import com.icboluo.mapper.CultivationCareerMapper;
 import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.PlayerMapper;
+import com.icboluo.service.CultivationCareerService;
+import com.icboluo.service.PlayerService;
 import com.icboluo.util.BeanHelper;
-import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -19,22 +19,23 @@ import java.util.List;
  * @since 2022-03-14 22:41
  */
 @Component
-@Profile("test")
 public class PlayerScheduled {
 
     @Resource
     private PlayerMapper playerMapper;
     @Resource
+    private PlayerService playerService;
+    @Resource
     private DiePlayerMapper diePlayerMapper;
     @Resource
-    private CultivationCareerMapper cultivationCareerMapper;
+    private CultivationCareerService cultivationCareerService;
 
     /**
      * 时间轴
      */
     @Scheduled(cron = "*/10 * * * * ?")
     public void timeLine() {
-        List<Player> playerList = playerMapper.selectAll();
+        List<Player> playerList = playerService.selectAll();
         CultivationCareer cultivationCareer = new CultivationCareer();
         for (Player player : playerList) {
             cultivationCareer.setPlayerId(player.getId());
@@ -48,9 +49,10 @@ public class PlayerScheduled {
                 int blood = Math.min(player.getMaxBlood(), player.getBlood() + 10);
                 player.setBlood(blood);
                 playerMapper.updateByPrimaryKeySelective(player);
+                playerService.update(player);
                 cultivationCareer.setOper("time flies, another year has passed");
             }
-            cultivationCareerMapper.insert(cultivationCareer);
+            cultivationCareerService.add(cultivationCareer);
         }
     }
 }

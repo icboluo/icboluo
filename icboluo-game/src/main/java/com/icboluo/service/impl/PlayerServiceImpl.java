@@ -1,11 +1,13 @@
 package com.icboluo.service.impl;
 
+import com.icboluo.common.redis.RedisHash;
+import com.icboluo.common.redis.RedisList;
 import com.icboluo.entity.*;
-import com.icboluo.mapper.CultivationCareerMapper;
 import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.MonsterMapper;
 import com.icboluo.mapper.PlayerMapper;
 import com.icboluo.pojo.PlayerVO;
+import com.icboluo.service.CultivationCareerService;
 import com.icboluo.service.PlayerLevelService;
 import com.icboluo.service.PlayerService;
 import com.icboluo.util.BeanHelper;
@@ -15,6 +17,8 @@ import com.icboluo.util.NameUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 玩家(Player)表服务实现类
@@ -33,7 +37,11 @@ public class PlayerServiceImpl implements PlayerService {
     @Resource
     private DiePlayerMapper diePlayerMapper;
     @Resource
-    private CultivationCareerMapper cultivationCareerMapper;
+    private CultivationCareerService cultivationCareerService;
+    @Resource
+    private RedisList<Player> redisList;
+    @Resource
+    private RedisHash<Player> redisHash;
 
     /**
      * 通过ID查询单条数据
@@ -94,8 +102,33 @@ public class PlayerServiceImpl implements PlayerService {
         CultivationCareer cultivationCareer = new CultivationCareer();
         cultivationCareer.setPlayerId(player.getId());
         cultivationCareer.setOper("Games start");
-        cultivationCareerMapper.insert(cultivationCareer);
+        cultivationCareerService.add(cultivationCareer);
         return player.getId();
+    }
+
+    /**
+     * TODO,期望实现redis缓存，不知道使用哪一种数据结构更合适一点，redisHash使用起来非常困难
+     * @return
+     */
+    @Override
+    public List<Player> selectAll() {
+        String key = "game:player";
+        Set<String> keys = redisHash.keys(key);
+        if (keys.isEmpty()) {
+            List<Player> dbList = playerMapper.selectAll();
+            for (Player db : dbList) {
+                redisHash.hset(key, "123", db);
+            }
+            return dbList;
+        } else {
+            return null;
+        }
+
+    }
+
+    @Override
+    public void update(Player player) {
+//        redisList.remove()
     }
 
     /**
@@ -144,7 +177,7 @@ public class PlayerServiceImpl implements PlayerService {
             monsterMapper.deleteById(monster.getId());
             getExperience(player, 1, cultivationCareer);
         }
-        cultivationCareerMapper.insert(cultivationCareer);
+        cultivationCareerService.add(cultivationCareer);
     }
 
     private void getExperience(Player player, int experience, CultivationCareer cultivationCareer) {

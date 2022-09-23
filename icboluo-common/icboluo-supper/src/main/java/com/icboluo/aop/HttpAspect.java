@@ -2,7 +2,6 @@ package com.icboluo.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.PropertyFilter;
-import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,8 +13,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.Map;
 
 /**
  * 项目日志 切面
@@ -50,11 +47,8 @@ public class HttpAspect {
         long end = System.currentTimeMillis();
 //        com.icboluo.controller.ProvinceController.selectAll
 //        log.debug(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        log.info("Ip {}, Time {}ms, Response {}\n {} {}\n{}", getIp(request), end - start, toSimpleStr(ans, 200),
-                request.getMethod(), request.getRequestURI(),
-                toSimpleStr(Arrays.toString(joinPoint.getArgs()), 1000));
 
-        Map<String, String[]> paramMap = request.getParameterMap();
+/*        Map<String, String[]> paramMap = request.getParameterMap();
         if (!ObjectUtils.isEmpty(paramMap)) {
             StringBuilder sb = new StringBuilder();
             for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
@@ -72,7 +66,7 @@ public class HttpAspect {
                 }
             }
             log.debug("请求参数PARAM : " + sb);
-        }
+        }*/
         return ans;
     }
 

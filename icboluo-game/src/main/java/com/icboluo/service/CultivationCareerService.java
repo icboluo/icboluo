@@ -20,4 +20,8 @@ public interface CultivationCareerService {
     CultivationCareer queryById(Integer id);
 
     PageInfo<CultivationCareer> cultivationCareer(Integer id);
+
+    void add(CultivationCareer data);
+
+    void sync();
 }

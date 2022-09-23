@@ -130,4 +130,5 @@ public class DateHelper {
     public static LocalDate lastDayOfMonth(LocalDate localDate) {
         return localDate.with(TemporalAdjusters.lastDayOfMonth());
     }
+
 }
