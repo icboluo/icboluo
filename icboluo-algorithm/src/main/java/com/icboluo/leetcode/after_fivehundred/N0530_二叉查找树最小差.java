@@ -8,7 +8,7 @@ import java.util.TreeSet;
  * @author icboluo
  * @since 2022-03-28 21:22
  */
- class N0530_二叉查找树最小差 {
+class N0530_二叉查找树最小差 {
     public int getMinimumDifference(TreeNode root) {
         min = Integer.MAX_VALUE;
         getMinDiff(root);
@@ -34,9 +34,9 @@ import java.util.TreeSet;
 
     // 奇怪，这个方法的返回值并没有使用到
     // 和N0783 一致
-    public int getMinDiff2(TreeNode root) {
+    public void getMinDiff2(TreeNode root) {
         if (root == null) {
-            return min;
+            return;
         }
         // 规规整整的一次遍历，利用set可以取出最近的元素
         while (!set.isEmpty()) {
@@ -50,7 +50,6 @@ import java.util.TreeSet;
         set.add(root.val);
         getMinDiff2(root.left);
         getMinDiff(root.right);
-        return min;
     }
 
 }

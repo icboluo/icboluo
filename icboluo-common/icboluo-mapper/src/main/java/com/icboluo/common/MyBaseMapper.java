@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * mybatis plus 默认新增策略是input
+ *
  * @author icboluo
  * @since 2021-36-23 21:36
  */
