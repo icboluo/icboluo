@@ -1,6 +1,10 @@
 package com.icboluo.util;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ValueFilter;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.PageQuery;
@@ -13,6 +17,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -88,6 +95,17 @@ public class BeanHelper {
         return sourceList.stream()
                 .map(s -> copyProperties(s, supplier))
                 .toList();
+    }
+
+    public static <S, T> List<T> copyWithColl(List<S> sourceList, @NonNull Supplier<T> supplier, BiConsumer<S, T> callBack) {
+        return sourceList.stream()
+                .map(s -> {
+                    T t = copyProperties(s, supplier);
+                    if (callBack != null) {
+                        callBack.accept(s, t);
+                    }
+                    return t;
+                }).toList();
     }
 
     /**
@@ -231,5 +249,39 @@ public class BeanHelper {
             return PageInfo.of(list);
         }
         return PageInfo.of(new ArrayList<>(coll));
+    }
+
+    public static JSONObject merge(Object obj1, Object... arr) {
+        ValueFilter valueFilter = valueFilter();
+        JSONObject json1 = JSON.parseObject(JSON.toJSONString(obj1, valueFilter, SerializerFeature.WriteMapNullValue));
+        for (Object obj2 : arr) {
+            if (obj2 == null) {
+                continue;
+            }
+            JSONObject json2 = JSON.parseObject(JSON.toJSONString(obj2, valueFilter, SerializerFeature.WriteMapNullValue));
+            for (Map.Entry<String, Object> entry : json2.entrySet()) {
+                if (json1.containsKey(entry.getKey())) {
+                    json1.computeIfAbsent(entry.getKey(), k -> entry.getValue());
+                } else {
+                    json1.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+        return json1;
+    }
+
+    private static ValueFilter valueFilter() {
+        return (obj, name, val) -> {
+            if (val == null) {
+                val = "";
+            }
+            if (val instanceof LocalDate localDateVal) {
+                val = localDateVal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }
+            if (val instanceof LocalDateTime localDateTimeVal) {
+                val = localDateTimeVal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+            return val;
+        };
     }
 }

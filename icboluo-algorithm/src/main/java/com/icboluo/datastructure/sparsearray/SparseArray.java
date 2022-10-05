@@ -3,6 +3,8 @@ package com.icboluo.datastructure.sparsearray;
 import com.icboluo.util.ArrayHelper;
 
 /**
+ * 当一个数组大部分元素相等的时候，可以采用稀疏数组记录；这个是标准的时间换空间的概念
+ *
  * @author lp
  */
 class SparseArray {
