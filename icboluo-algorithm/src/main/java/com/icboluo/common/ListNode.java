@@ -69,7 +69,7 @@ public class ListNode {
      */
     public ListNode reverse1() {
         ListNode cur = this;
-        ListNode pre = null
+        ListNode pre = null;
         ListNode next;
         while (cur != null) {
             next = cur.next;

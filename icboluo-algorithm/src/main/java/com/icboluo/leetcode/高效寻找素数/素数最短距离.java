@@ -60,7 +60,8 @@ public class 素数最短距离 {
                     }
                 }
             }
-            // 遍历晚整整一层，遍历次数增加
+            // 遍历完整整一层，遍历次数增加
+            change++;
         }
         return change;
     }

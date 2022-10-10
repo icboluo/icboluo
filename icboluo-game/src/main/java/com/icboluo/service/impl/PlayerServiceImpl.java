@@ -1,7 +1,10 @@
 package com.icboluo.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.icboluo.common.redis.RedisHash;
 import com.icboluo.common.redis.RedisList;
+import com.icboluo.common.redis.RedisString;
 import com.icboluo.entity.*;
 import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.MonsterMapper;
@@ -14,11 +17,15 @@ import com.icboluo.util.BeanHelper;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.IcBoLuoI18nException;
 import com.icboluo.util.NameUtils;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * 玩家(Player)表服务实现类
@@ -41,7 +48,11 @@ public class PlayerServiceImpl implements PlayerService {
     @Resource
     private RedisList<Player> redisList;
     @Resource
-    private RedisHash<Player> redisHash;
+    private RedisHash<Object> redisHash;
+    @Resource
+    private RedisString<String> redisString;
+    @Resource
+    private RedisTemplate redisTemplate;
 
     /**
      * 通过ID查询单条数据
@@ -108,27 +119,41 @@ public class PlayerServiceImpl implements PlayerService {
 
     /**
      * TODO,期望实现redis缓存，不知道使用哪一种数据结构更合适一点，redisHash使用起来非常困难
+     *
      * @return
      */
     @Override
     public List<Player> selectAll() {
-        String key = "game:player";
-        Set<String> keys = redisHash.keys(key);
-        if (keys.isEmpty()) {
+        // 对于分组查询，key需要增加冒号
+        // 针对于项目启动需要同步进入redis的数据（初始化同步），需要增加同步功能
+        // 不要试图完全相信redis，要有一定的恢复机制（这个会造成性能的一些损失
+        String key = "game:player:";
+        if (Boolean.TRUE.equals(redisString.containsKey("game:player"))) {
+            ScanOptions build = ScanOptions.scanOptions().match(key + "*").count(10L).build();
+            Cursor scan = redisTemplate.scan(build);
+            List<Player> cacheList = new ArrayList<>();
+            while (scan.hasNext()) {
+                String next = (String) scan.next();
+                Map<String, Object> hmget = redisHash.hmget(next);
+                Player player = JSON.parseObject(JSON.toJSONString(hmget), Player.class);
+                cacheList.add(player);
+            }
+            return cacheList;
+        } else {
             List<Player> dbList = playerMapper.selectAll();
             for (Player db : dbList) {
-                redisHash.hset(key, "123", db);
+                JSONObject jo = JSON.parseObject(JSON.toJSONString(db));
+                redisHash.hmset(key + db.getId(), jo);
             }
+            redisString.set("game:player", "true");
             return dbList;
-        } else {
-            return null;
         }
-
     }
 
     @Override
     public void update(Player player) {
-//        redisList.remove()
+        JSONObject jo = JSON.parseObject(JSON.toJSONString(player));
+        redisHash.hmset("game:player:" + player.getId(), jo);
     }
 
     /**
