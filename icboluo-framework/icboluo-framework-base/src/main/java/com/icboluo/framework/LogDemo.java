@@ -39,5 +39,9 @@ public class LogDemo {
                 * 更新记录只记录部分数据，不会造成数据量过大，但是查找部分数据会需要找上一个日志的记录，比较繁琐/数据量比较少
                 """;
         log.warn(str);
+        String str1 = """
+                logback日志的路径记录相对路径是比较合适的，log； /log绝对路径不起作用 ../log也不行
+                """;
+        log.info(str1);
     }
 }

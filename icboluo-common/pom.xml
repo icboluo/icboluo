@@ -10,8 +10,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>icboluo-common</artifactId>
-    <!--    这里不要加这个，声明是父工程之后，其他项目例如fund难以引入-->
-    <!--    <packaging>pom</packaging>-->
+    <!--    这里不要加这个，声明是父工程之后，其他项目例如fund难以引入；但是如果要引入包的话引入单个即可，没必要引入全部吧；
+    这个标签和modules标签是一起使用的-->
+    <packaging>pom</packaging>
+    <modules>
+        <module>icboluo-base</module>
+        <module>icboluo-supper</module>
+        <module>icboluo-mapper</module>
+    </modules>
 
     <properties>
         <java.version>${java.version}</java.version>
@@ -20,33 +26,7 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.icboluo</groupId>
-            <artifactId>icboluo-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.icboluo</groupId>
-            <artifactId>icboluo-supper</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.icboluo</groupId>
-                    <artifactId>icboluo-base</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.icboluo</groupId>
-            <artifactId>icboluo-mapper</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.icboluo</groupId>
-                    <artifactId>icboluo-base</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
     </dependencies>
 
     <!--    project build 标签针对于整个项目，是大包的一些配置，可以指定打包的文件目录等...-->

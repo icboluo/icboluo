@@ -29,6 +29,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!--            spring web中内置tomcat插件，如果把这个包排除掉，本地jab包启动就会失败；因为服务器使用的是war包部署，不需要内置tomcat，反而能正常使用：-->
+            <!--            <exclusions>
+                            <exclusion>
+                                <groupId>org.apache.tomcat.embed</groupId>
+                                <artifactId>tomcat-embed-core</artifactId>
+                            </exclusion>
+                        </exclusions>-->
         </dependency>
         <!--        web应用必须加这个监视器，虽然不影响使用，但是应该交给spring管理
         而且，idea集成boot应用，需要web监视器来监视web应用，更好的使用例如http client功能

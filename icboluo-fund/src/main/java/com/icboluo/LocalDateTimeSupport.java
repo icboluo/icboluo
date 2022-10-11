@@ -22,7 +22,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * TODO 这个jackson为什么反序列化不起作用
+ * TODO 这个jackson为什么反序列化不起作用:因为这个是jackson
+ *
  * @author icboluo
  * @since 2021-19-08 21:19
  */
@@ -40,8 +41,8 @@ public class LocalDateTimeSupport {
         javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
         javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
 
-        javaTimeModule.addDeserializer(LocalDateTime.class,new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        javaTimeModule.addDeserializer(LocalDate.class,new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         om.registerModule(javaTimeModule).registerModule(new ParameterNamesModule());
 
 

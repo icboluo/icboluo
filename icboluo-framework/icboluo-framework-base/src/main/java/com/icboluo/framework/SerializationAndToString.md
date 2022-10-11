@@ -7,3 +7,5 @@
 alibaba fastjson 序列化成字节数据的时候需要增加get方法，否则序列化不出来
 
 # get方法jackson是可以序列化的，防止序列化可以在方法上加@Transient注解
+
+fastjson需要放到序列化工具中的第一个，要不然都被别人执行了

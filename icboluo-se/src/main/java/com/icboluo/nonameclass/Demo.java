@@ -1,6 +1,9 @@
 package com.icboluo.nonameclass;
 
 /**
+ * 什么时候使用匿名内部类？？
+ * 当我们需要一个父类的对象，而这个对象只被使用一次，这个对象的类没必须特意创建.java源文件，此时就直接使用匿名内部类即可
+ *
  * @author icboluo
  * @since 2020-08-11 10:53
  */

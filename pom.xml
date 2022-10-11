@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.2</version>
+        <version>2.7.4</version>
         <!--        relativePath元素中的地址–>本地仓库–>远程仓库-->
         <!--        如为空值将始终从仓库中获取，不从本地路径获取-->
         <!--        设定一个空值将始终从仓库中获取，不从本地路径获取，子模块禁止添加这个-->
@@ -19,9 +19,6 @@
     <modules>
         <module>icboluo-algorithm</module>
         <module>icboluo-common</module>
-        <module>icboluo-common/icboluo-base</module>
-        <module>icboluo-common/icboluo-supper</module>
-        <module>icboluo-common/icboluo-mapper</module>
         <module>icboluo-framework</module>
         <module>icboluo-fund</module>
         <module>icboluo-game</module>

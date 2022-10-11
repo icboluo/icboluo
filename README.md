@@ -21,7 +21,7 @@ Here are some ideas to get you started:
 
 * JDK17
 * 采用简单的Spring全家桶
-* Mysql/Sqlite3
+* Mysql/Sqlite3/Redis
 * 装这些就可以啦,项目可以启动个七七八八了
 * 可以使用任意一个[application.simple](icboluo-note/src/main/resources/application-simple.yml)
   配置文件，用这个配置文件，项目启动不需要任何三方服务的支持（但是功能也会受影响

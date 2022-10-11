@@ -6,9 +6,7 @@ package com.icboluo.seee.Improve;
 C) 当做参数传递调用  show( method() ); 方法的返回值必须和show方法接收的形参类	型一致。
 D) 当做方法的返回值调用 int show(){ return method(); } method()方法的返回值类型必	须和show()的返回值类型一致。
 E) 当做三元运算的结果使用。 int max = a > b ? demo1() : demo2(); 方法的返回值类型和	接收结果的类型要一致。
-   1、请写出为什么要配置path变量和JAVA_HOME变量
-         配置path变量的目的是希望在path变量下路径中的可执行程序在任何目下都可以执行。
-         配置JAVA_HOME变量的目的是为了方便查找和更改jdk的目录，防止勿改。
+
    5、简述java中的关键字、标识符是什么？简述标识符的定义和使用
        标识符的定义规则：
            1、必须由数字、字母、_ 或 $ 组合而成
@@ -25,11 +23,6 @@ E) 当做三元运算的结果使用。 int max = a > b ? demo1() : demo2(); 方
            4、在同一个范围内，不能存在相同的变量名
 
    9.java程序是通过jav来实现跨平台性，但jvm不跨平台
-jvm	Java Virtual Machinte	虚拟机
-jre	Java Runtime Environment	运行环境	jvm+运行时所需的核心类库
-jdk	Java Development Kit	开发工具包	jre+开发人员使用的工具
-java程序开发步骤	编写 编译 运行	javac.exe 编译器	java.exe 解释器
-	编写好java源文件	java源文件经编译器编译成字节码文件	字节码文件经解释器
 
 3、下面关于java中包的说法正确的是(A )b?
 A、 在java中可以使用import语句导入包

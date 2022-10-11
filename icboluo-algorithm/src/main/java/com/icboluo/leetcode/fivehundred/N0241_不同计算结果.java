@@ -37,21 +37,12 @@ class N0241_不同计算结果 {
         return ans;
     }
 
-    @SuppressWarnings("all")
     private Integer cal(Integer l, Integer r, char ch) {
-        switch (ch) {
-            case '+' -> {
-                return l + r;
-            }
-            case '-' -> {
-                return l - r;
-            }
-            case '*' -> {
-                return l * r;
-            }
-            default -> {
-                return -1;
-            }
-        }
+        return switch (ch) {
+            case '+' -> l + r;
+            case '-' -> l - r;
+            case '*' -> l * r;
+            default -> -1;
+        };
     }
 }

@@ -100,6 +100,8 @@ insert的时候主键会传过去 insert id null...，即便设置了非null属�
 
 insert自增主键的时候，可以返回主键id
 
+mybatis 的select all 函数是需要无参构造的
+
 # mybatis xml
 mybatis-config.xml：全局配置文件（核心配置文件）作用：配置数据源（配置数据库连接信息）
 ```xml

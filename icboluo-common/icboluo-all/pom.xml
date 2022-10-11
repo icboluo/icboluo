@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.icboluo</groupId>
+        <artifactId>icboluo</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <!--        不加这个会编译报错-->
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>icboluo-all</artifactId>
+
+    <properties>
+        <java.version>${java.version}</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.icboluo</groupId>
+            <artifactId>icboluo-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.icboluo</groupId>
+            <artifactId>icboluo-supper</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.icboluo</groupId>
+                    <artifactId>icboluo-base</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.icboluo</groupId>
+            <artifactId>icboluo-mapper</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.icboluo</groupId>
+                    <artifactId>icboluo-base</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <!--    project build 标签针对于整个项目，是大包的一些配置，可以指定打包的文件目录等...-->
+    <!--    project profile build 针对不同的profile进行配置-->
+    <build>
+        <!--        build plugins用于指定使用的插件-->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

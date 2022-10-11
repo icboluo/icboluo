@@ -1,6 +1,6 @@
-package com.icboluo.file;
+package com.icboluo.test;
 
-class Convert {
+class 类型提升 {
     public static void main(String[] args) {
         System.out.println('中');
         System.out.println('中' + 0);
