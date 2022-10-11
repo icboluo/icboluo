@@ -18,11 +18,11 @@
 
 1. 将java的安装目录配成系统变量
    
-   ![img_3.png](software安装与配置/software安装与配置/img_3.png)
+   ![img_3.png](software安装与配置/img_3.png)
    
 2. 将系统变量引入path路径
 
-   ![img_2.png](software安装与配置/software安装与配置/img_2.png)
+   ![img_2.png](software安装与配置/img_2.png)
 
 3.测试：在jdk安装目录下面的bin目录里面运行
 
@@ -36,11 +36,11 @@ javac.exe
 
 2. 修改maven的依赖下载地址，在config文件中修改，就是把53行的代码复制在注释外，修补一下
 
-   ![img_4.png](software安装与配置/software安装与配置/img_4.png)
+   ![img_4.png](software安装与配置/img_4.png)
    
 3. 修改下载源地址（默认的下载源是外网的，效率低，用阿里云覆盖）
 
-   ![img_5.png](software安装与配置/software安装与配置/img_5.png)
+   ![img_5.png](software安装与配置/img_5.png)
    
    ```
    <mirror>
@@ -53,7 +53,7 @@ javac.exe
 
 5. idea设置，修改idea和maven的链接关系
 
-   ![img_6.png](software安装与配置/software安装与配置/img_6.png)
+   ![img_6.png](software安装与配置/img_6.png)
 
 5. idea设置，修改run
 
@@ -99,14 +99,14 @@ javac.exe
 
    - 安装镜像的时候，一定要好好选，不要默认直接安装，要在软件选择里面改成服务器，要不然就成图形化界面了
 
-   ![img.png](software安装与配置/software安装与配置/imgxnj.png)
+   ![img.png](software安装与配置/imgxnj.png)
 
 4. 选择安装服务器客户端工具 FinalShell
 
 5. 如果主机给虚拟机分配的地址不是192.168，就还原几次默认配置就好了
 
    vim /etc/sysconfig/network-scripts/ifcfg-ens33
- ![img.png](software安装与配置/software安装与配置/imgwangluo.png)
+ ![img.png](software安装与配置/imgwangluo.png)
 
 ## 4.jdk
 

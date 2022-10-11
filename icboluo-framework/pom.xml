@@ -13,6 +13,12 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
+    <packaging>pom</packaging>
+    <modules>
+        <module>icboluo-framework-base</module>
+        <module>icboluo-framework-spring</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>com.icboluo</groupId>
@@ -31,7 +37,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-<!--            <scope>test</scope>-->
+            <!--            <scope>test</scope>-->
             <exclusions>
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>

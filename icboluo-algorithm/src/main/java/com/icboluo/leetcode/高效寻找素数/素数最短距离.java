@@ -48,7 +48,7 @@ public class 素数最短距离 {
                 // 不要看这里的层级比较多，这个双层for循环只是一个简简单单的0023-0029转换
                 for (int j = 0; j < poll.length(); j++) {
                     // 注意，这里的右比较需要加等号，使用的是双闭区间
-                    for (int k = '0'; k < '9'; k++) {
+                    for (int k = '0'; k <= '9'; k++) {
                         // 这个arr的创建需要写到里面，经过下一行，arr已经被更改了；也就是说，每一次这个arr都代表原本的poll数据
                         char[] arr = poll.toCharArray();
                         arr[j] = (char) k;

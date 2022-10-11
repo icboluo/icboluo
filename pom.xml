@@ -14,7 +14,7 @@
     </parent>
     <!--    必须在这个modules里面加各个module，否则编译器无法识别改module为一个项目-->
     <!--    编辑器build的时候，启动项目只和相关的服务产生关联，其他的pom不通过，不影响当前项目的启动
-    微服务项目构建过程中，之和相关的依赖产生关系
+    微服务项目构建过程中，只和相关的依赖产生关系
     -->
     <modules>
         <module>icboluo-algorithm</module>
@@ -165,16 +165,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${alibaba.fastjson.verison}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpcore</artifactId>
-                <version>${httpcore.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpclient.version}</version>
             </dependency>
             <!--jsr 303-->
             <dependency>
