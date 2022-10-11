@@ -15,7 +15,7 @@ import java.util.concurrent.FutureTask;
 class Call implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
-        new ThreadUtil().sleep5s();
+        ThreadUtil.sleep5s();
         return 1;
     }
 

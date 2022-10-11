@@ -1,4 +1,4 @@
-package com.spring;
+package com.icboluo.spring;
 
 /**
  * @author icboluo

@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ThreadUtil {
 
-    public void sleep5s() {
+    public static void sleep5s() {
         try {
             log.warn("start sleep 5 second");
             Thread.sleep(5000);
@@ -26,7 +26,7 @@ public class ThreadUtil {
      * 无限的循环
      */
     @SneakyThrows
-    public void infiniteLoop() {
+    public static void infiniteLoop() {
         int i = 0;
         while (i < 10000) {
             log.warn(i + " start sleep 3 second");

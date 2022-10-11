@@ -40,6 +40,9 @@ public class MathUtil {
         if (scale == null) {
             scale = 2;
         }
+        if (m.compareTo(BigDecimal.ZERO) == 0 || d.compareTo(BigDecimal.ZERO) == 0) {
+            return BigDecimal.ZERO;
+        }
         return m.divide(d, scale, mode);
     }
 
@@ -65,6 +68,12 @@ public class MathUtil {
     public static <M, D> String dividePercentage(@NonNull M molecular, @NonNull D denominator, Integer scale, RoundingMode mode) {
         BigDecimal multiply = toBigDecimal(molecular).multiply(new BigDecimal(100));
         BigDecimal divide = divide(multiply, denominator, scale, mode);
+        if (divide.compareTo(BigDecimal.valueOf(100L)) == 0) {
+            return "100%";
+        }
+        if (divide.compareTo(BigDecimal.ZERO) == 0) {
+            return "0%";
+        }
         return divide + "%";
     }
 

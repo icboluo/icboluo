@@ -4,6 +4,9 @@ import com.icboluo.object.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -46,6 +49,28 @@ public class Stream03Test {
                         // 利用 TreeSet 的排序去重构造函数来达到去重元素的目的
                         () -> new TreeSet<>(Comparator.comparing(Student::getName))), ArrayList::new));
         System.out.println("distinctList = " + distinctList);
+
+        stuList1.stream()
+                .filter(distinctByKey(Student::getName))
+                .forEach(System.out::println);
+    }
+
+    /**
+     * 根据对象属性进行去重
+     * 可以这样理解后一句话，filter需要的是接口，接口的实现类是return语句，而不是new map,所以只有return语句需要执行多次
+     * 表示一个方法中执行的内容也可以被割裂调用的；Stream在启动的时候，先调用filter函数，调用里面的方法，运行过程中执行函数式接口
+     *
+     * @param keyExtractor
+     * @param <T>
+     * @return
+     */
+    private <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        ConcurrentHashMap<Object, Boolean> map = new ConcurrentHashMap<>();
+        System.out.println("map被创建了");
+        return t -> {
+            System.out.println("函数式接口执行了");
+            return map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+        };
     }
 
     /**

@@ -43,8 +43,6 @@ public class AsyncController {
     @Autowired
     private Executor asyncExecutor;
 
-    private final ThreadUtil threadUtil = new ThreadUtil();
-
     @GetMapping("/simple")
     public void simple() {
         asyncService.simpleException();
@@ -71,8 +69,8 @@ public class AsyncController {
 
     @GetMapping("/spring")
     public void spring() {
-        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(threadUtil::sleep5s, asyncExecutor);
-        threadUtil.sleep5s();
+        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(ThreadUtil::sleep5s, asyncExecutor);
+        ThreadUtil.sleep5s();
         voidCompletableFuture.join();
         System.out.println("method end");
     }
@@ -92,14 +90,14 @@ public class AsyncController {
     @GetMapping("/daemon")
     public void daemon() {
         // TODO 为什么放在Http中守护线程不生效，只有main方法中才生效，是不是用的线程池的缘故
-        Thread thread = new Thread(() -> threadUtil.infiniteLoop());
+        Thread thread = new Thread(() -> ThreadUtil.infiniteLoop());
         thread.setDaemon(true);
         thread.start();
         log.warn("daemon method finish");
     }
 
     public static void main(String[] args) {
-        Thread thread = new Thread(() -> new ThreadUtil().infiniteLoop());
+        Thread thread = new Thread(() -> ThreadUtil.infiniteLoop());
         thread.setDaemon(true);
         thread.start();
         log.warn("daemon method finish");

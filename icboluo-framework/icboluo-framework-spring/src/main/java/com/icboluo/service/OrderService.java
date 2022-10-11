@@ -1,6 +1,6 @@
-package com.icboluo.service.impl;
+package com.icboluo.service;
 
-import com.spring.*;
+import com.icboluo.spring.*;
 
 /**
  * @author icboluo

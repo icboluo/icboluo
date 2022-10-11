@@ -14,6 +14,7 @@
     这个标签和modules标签是一起使用的-->
     <packaging>pom</packaging>
     <modules>
+        <module>icboluo-all</module>
         <module>icboluo-base</module>
         <module>icboluo-supper</module>
         <module>icboluo-mapper</module>
