@@ -1,5 +1,7 @@
 package com.icboluo.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,7 +10,16 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2022-05-12 20:57
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ThreadUtil {
+
+    public static void sleep(long i) {
+        try {
+            Thread.sleep(i);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 
     public static void sleep5s() {
         try {
