@@ -157,7 +157,7 @@ public class ExcelController {
                     E color = iterator.next();
                     iterator.remove();
                     Short idx = getIndex.apply(color);
-                    cellStyle.setFillBackgroundColor(idx);
+                    cellStyle.setFillForegroundColor(idx);
                     cell.setCellStyle(cellStyle);
                     cell.setCellValue(color.toString());
                 }

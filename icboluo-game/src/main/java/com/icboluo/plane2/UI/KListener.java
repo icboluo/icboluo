@@ -4,42 +4,47 @@ import com.icboluo.plane2.Thread.DrawThread;
 
 import java.awt.event.*;
 
-public class KListener implements ActionListener, KeyListener, MouseListener , MouseMotionListener {
+public class KListener implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
     GameUI gameUI;
     int speed = 5;
+
+    private boolean isStart;
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        String btn_action = e.getActionCommand();
-        System.out.println(btn_action);
-        if(btn_action.equals("选择地图")){
+        String actionCommand = e.getActionCommand();
+        System.out.println(actionCommand);
+        if ("选择地图".equals(actionCommand)) {
             SelectMapUI selectMapUI = new SelectMapUI(gameUI.kl);
             selectMapUI.init();
         }
 
-        switch(btn_action){
-//            case "开始游戏":
-//                new Thread(new DrawThread(gameUI.g)).start();
-//                new Thread(new MoveThread()).start();
-//                new Thread(new EnemyPlaneThread()).start();
-//                new Thread(new TestCrashThread()).start();
-//                break;
-            case "森林上空" :
-                DrawThread.player.mapNum=1;
+        switch (actionCommand) {
+            case "开始游戏":
+                if (!isStart) {
+//                    new Thread(new DrawThread(gameUI.g)).start();
+//                    new Thread(new MoveThread()).start();
+//                    new Thread(new EnemyPlaneThread()).start();
+//                    new Thread(new TestCrashThread()).start();
+                    isStart = true;
+                }
+                break;
+            case "森林上空":
+                DrawThread.player.mapNum = 1;
                 gameUI.game.requestFocus();
                 break;
-            case "天空之城" :
-                DrawThread.player.mapNum=2;
+            case "天空之城":
+                DrawThread.player.mapNum = 2;
                 gameUI.game.requestFocus();
                 break;
-            case "沙漠荒野" :
-                DrawThread.player.mapNum=3;
+            case "沙漠荒野":
+                DrawThread.player.mapNum = 3;
                 gameUI.game.requestFocus();
                 break;
-            case "实验区域" :
-                DrawThread.player.mapNum=4;
+            case "实验区域":
+                DrawThread.player.mapNum = 4;
                 gameUI.game.requestFocus();
                 break;
-
         }
     }
 
@@ -48,32 +53,32 @@ public class KListener implements ActionListener, KeyListener, MouseListener , M
 
     }
 
+    @SuppressWarnings("all")
     @Override
     public void keyPressed(KeyEvent e) {
-        int c = e.getKeyCode();
-        if(DrawThread.myPlane!=null){
-            switch (c){
-                case 37:
+        int keyCode = e.getKeyCode();
+        if (DrawThread.myPlane != null) {
+            switch (keyCode) {
+                case 37 -> {
                     DrawThread.myPlane.setSpeedX(-speed);
-                    break;
-                case 38:
+                }
+                case 38 -> {
                     DrawThread.myPlane.setSpeedY(-speed);
-                    break;
-                case 39:
+                }
+                case 39 -> {
                     DrawThread.myPlane.setSpeedX(speed);
-                    break;
-                case 40:
+                }
+                case 40 -> {
                     DrawThread.myPlane.setSpeedY(speed);
-                    break;
+                }
             }
         }
-
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         int c = e.getKeyCode();
-        switch (c){
+        switch (c) {
             case 37:
             case 39:
                 DrawThread.myPlane.setSpeedX(0);
@@ -87,9 +92,9 @@ public class KListener implements ActionListener, KeyListener, MouseListener , M
 
     @Override
     public void mouseClicked(MouseEvent e) {
-//        int x = e.getX();
-//        int y = e.getY();
-//        System.out.println(x + " " + y);
+        int x = e.getX();
+        int y = e.getY();
+        System.out.println(x + " " + y);
     }
 
     @Override
@@ -121,11 +126,6 @@ public class KListener implements ActionListener, KeyListener, MouseListener , M
     public void mouseMoved(MouseEvent e) {
 
     }
-
-
-
-
-
 }
 
 

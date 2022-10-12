@@ -1,14 +1,13 @@
 package com.icboluo.plane2.UI;
 
+import lombok.AllArgsConstructor;
+
 import javax.swing.*;
 import java.awt.*;
 
+@AllArgsConstructor
 public class SelectMapUI {
     KListener kl;
-
-    public SelectMapUI(KListener kl) {
-        this.kl = kl;
-    }
 
     public void init() {
         // 创建窗体
@@ -18,19 +17,20 @@ public class SelectMapUI {
         jf.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel jPanel = new JPanel();
         jf.add(jPanel);
+
         add(jPanel);
         addButton(jPanel);
-        jf.setVisible(true);
 
+        jf.setVisible(true);
     }
 
     public void add(JComponent component) {
         //创建4个单选框按钮
-        String[] str = {"森林上空", "天空之城", "沙漠荒野", "实验区域"};
+        String[] arr = {"森林上空", "天空之城", "沙漠荒野", "实验区域"};
         Dimension dim = new Dimension(200, 60);
         ButtonGroup group = new ButtonGroup();
-        for (String s : str) {
-            JRadioButton c = new JRadioButton(s);
+        for (String str : arr) {
+            JRadioButton c = new JRadioButton(str);
             c.addActionListener(kl);
             c.setPreferredSize(dim);
             //监听器
@@ -40,10 +40,10 @@ public class SelectMapUI {
     }
 
     public void addButton(JComponent component) {
-        String[] str = {"确定", "取消"};
+        String[] arr = {"确定", "取消"};
         Dimension dim = new Dimension(100, 40);
-        for (String s : str) {
-            JButton btn = new JButton(s);
+        for (String str : arr) {
+            JButton btn = new JButton(str);
             btn.addActionListener(kl);
             btn.setPreferredSize(dim);
             //监听器

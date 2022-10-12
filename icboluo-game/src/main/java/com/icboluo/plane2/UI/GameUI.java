@@ -71,10 +71,10 @@ public class GameUI extends JFrame {
 
     //leftUp部分添加按钮
     public void addButton(JComponent component) {
-        String[] str = {"开始游戏", "选择飞机", "选择地图"};
+        String[] arr = {"开始游戏", "选择飞机", "选择地图"};
         Dimension dim = new Dimension(90, 35);
-        for (String s : str) {
-            JButton btn = new JButton(s);
+        for (String str : arr) {
+            JButton btn = new JButton(str);
             btn.addActionListener(kl);
             btn.setPreferredSize(dim);
             //监听器
