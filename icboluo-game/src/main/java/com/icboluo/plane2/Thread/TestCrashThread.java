@@ -3,7 +3,7 @@ package com.icboluo.plane2.Thread;
 import com.icboluo.plane2.BaseClass.MyPlane;
 import com.icboluo.plane2.BaseClass.Prop;
 import com.icboluo.plane2.MyDataStructrue.MyArrayList;
-import com.icboluo.plane2.UI.GameUI;
+import com.icboluo.plane2.UI.GameStart;
 import com.icboluo.util.ThreadUtil;
 
 import java.io.IOException;
@@ -140,7 +140,7 @@ public class TestCrashThread implements Runnable {
             ThreadUtil.sleep(5);
 
             if (!DrawThread.player.isAlive()) {
-                GameUI.gameOver();
+                GameStart.gameOver();
             }
         }
     }

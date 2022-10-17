@@ -4,8 +4,11 @@ import com.icboluo.plane2.Thread.DrawThread;
 
 import java.awt.event.*;
 
-public class KListener implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
-    GameUI gameUI;
+/**
+ * @author icboluo
+ */
+public class Listener implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
+    GameStart gameStart;
     int speed = 5;
 
     private boolean isStart;
@@ -15,7 +18,7 @@ public class KListener implements ActionListener, KeyListener, MouseListener, Mo
         String actionCommand = e.getActionCommand();
         System.out.println(actionCommand);
         if ("选择地图".equals(actionCommand)) {
-            SelectMapUI selectMapUI = new SelectMapUI(gameUI.kl);
+            SelectMapUI selectMapUI = new SelectMapUI();
             selectMapUI.init();
         }
 
@@ -31,19 +34,19 @@ public class KListener implements ActionListener, KeyListener, MouseListener, Mo
                 break;
             case "森林上空":
                 DrawThread.player.mapNum = 1;
-                gameUI.game.requestFocus();
+                GameStart.game.requestFocus();
                 break;
             case "天空之城":
                 DrawThread.player.mapNum = 2;
-                gameUI.game.requestFocus();
+                GameStart.game.requestFocus();
                 break;
             case "沙漠荒野":
                 DrawThread.player.mapNum = 3;
-                gameUI.game.requestFocus();
+                GameStart.game.requestFocus();
                 break;
             case "实验区域":
                 DrawThread.player.mapNum = 4;
-                gameUI.game.requestFocus();
+                GameStart.game.requestFocus();
                 break;
         }
     }

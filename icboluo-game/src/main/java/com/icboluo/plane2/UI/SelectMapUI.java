@@ -7,13 +7,12 @@ import java.awt.*;
 
 @AllArgsConstructor
 public class SelectMapUI {
-    KListener kl;
 
     public void init() {
         // 创建窗体
         JFrame jf = new JFrame("选择地图");
         jf.setSize(300, 400);
-        jf.setLocationRelativeTo(kl.gameUI);
+        jf.setLocationRelativeTo(GameStart.listener.gameStart);
         jf.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel jPanel = new JPanel();
         jf.add(jPanel);
@@ -31,7 +30,7 @@ public class SelectMapUI {
         ButtonGroup group = new ButtonGroup();
         for (String str : arr) {
             JRadioButton c = new JRadioButton(str);
-            c.addActionListener(kl);
+            c.addActionListener(GameStart.listener);
             c.setPreferredSize(dim);
             //监听器
             group.add(c);
@@ -44,7 +43,7 @@ public class SelectMapUI {
         Dimension dim = new Dimension(100, 40);
         for (String str : arr) {
             JButton btn = new JButton(str);
-            btn.addActionListener(kl);
+            btn.addActionListener(GameStart.listener);
             btn.setPreferredSize(dim);
             //监听器
             component.add(btn);

@@ -7,15 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class GameUI extends JFrame {
-    KListener kl = new KListener();
-    Graphics g;
-    JPanel game;
+public class GameStart extends JFrame {
+    static Listener listener = new Listener();
+    static Graphics g;
+    static JPanel game;
 
     public static void main(String[] args) {
-        GameUI gameUI = new GameUI();
-        gameUI.init();
-        gameUI.kl.gameUI = gameUI;
+        GameStart gameStart = new GameStart();
+        gameStart.init();
+        listener.gameStart = gameStart;
     }
 
     public void init() {
@@ -36,9 +36,9 @@ public class GameUI extends JFrame {
         jf.add(left, BorderLayout.WEST);
 
         jf.add(game, BorderLayout.CENTER);
-        game.addMouseListener(kl);     //添加监听器
-        game.addMouseMotionListener(kl);
-        game.addKeyListener(kl);
+        game.addMouseListener(listener);     //添加监听器
+        game.addMouseMotionListener(listener);
+        game.addKeyListener(listener);
         game.requestFocus();
         left.setLayout(new BorderLayout());
 
@@ -75,7 +75,7 @@ public class GameUI extends JFrame {
         Dimension dim = new Dimension(90, 35);
         for (String str : arr) {
             JButton btn = new JButton(str);
-            btn.addActionListener(kl);
+            btn.addActionListener(listener);
             btn.setPreferredSize(dim);
             //监听器
             component.add(btn);
