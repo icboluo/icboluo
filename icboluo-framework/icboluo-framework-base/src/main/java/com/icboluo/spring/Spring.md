@@ -22,8 +22,6 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @RunWith（SpringJUnit4ClassRunner.class）：替换掉junit的运行器,换成一个可以初始化spring容器的运行器。
 
-@Component《组件》 放在类上，把该类放进bean中，并设置其id（value）值
-
 @Controller @Service @Repository《仓库》
 
 @Autowired注入：先直接找子类，找的多了按id找
@@ -52,11 +50,17 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @ComponentScan:<context:component-scan base-package="cn.itcast"></context:component-scan>
 
+@Component《组件》 放在类上，把该类放进bean中，并设置其id（value）值
+
+    @Component由scan扫描到后自动装配到bean容器中（项目启动的时候调用）；bean（上的参数也是从容器中取的，不是随便写的（项目启动的时候调用）
+
 @Bean:
 
     将方法的返回值作为一个bean,并且放入spring容器。 exa：配置jdbc（用@value跨类调用）
     
     声明在方法上，将方法的返回值加入Bean容器，代替<bean>标签，spring会自动调用bean
+
+    bean和Commponent的区别：component作用于类，bean作用于方法；bean可以随便找个地方随便注入类（第三方工具，component不行
 
 @ContextConfiguration（locations={"classpath：......"}）：加载配置类或者xml配置文件
 
@@ -116,11 +120,11 @@ View:提供界面来与用户进行人机交互
 
 @ResponseBody 表示该方法的返回结果直接写入HTTP response body，
 
-@ResponseBody	是把Controller方法返回值转化为JSON，称为序列化
+@ResponseBody 是把Controller方法返回值转化为JSON，称为序列化
 
 @RestController，将该注解使用在Controller类上，所有方法都默认是响应json格式的数据了
 
-@RequestBody	是把接收到的JSON数据转化为Pojo对象，称为反序列化
+@RequestBody 是把接收到的JSON数据转化为Pojo对象，称为反序列化
 
 @RequestBody用于获取请求体内容。直接使用得到是key=value&key=value...结构的数据。 一般用于接收一个json数据。
 
@@ -139,7 +143,6 @@ Propertysource 指定外部属性文件
 ## PostHandler
 
 post handler 在controller报异常的时候不会执行，需要用after handler
-
 
 ## RequestParam
 
@@ -210,5 +213,7 @@ public class StaticPri {
     }
 }
 ```
+
+## 源码
 
 

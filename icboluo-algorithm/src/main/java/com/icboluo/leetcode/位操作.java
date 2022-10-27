@@ -40,4 +40,18 @@ class 位操作 {
         // 这样写会报错
         System.out.println(Integer.parseInt("11111111111111111111111111111001", 2));
     }
+
+    /**
+     * 位运算是针对于二进制，进行位运算的时候，首先要将数据转换为二进制
+     */
+    @Test
+    public void base() {
+        int i = 2 << 3;
+        System.out.println("i = " + i);
+        int j = 2 << 4;
+        System.out.println("j = " + j);
+        // 11--->1100=12
+        int k = 3 << 2;
+        System.out.println("k = " + k);
+    }
 }

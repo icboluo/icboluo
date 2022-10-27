@@ -1,4 +1,4 @@
-package com.icboluo.algorithm.dijkstra;
+package com.icboluo.algorithm.dijkstra.test;
 
 import java.util.Arrays;
 

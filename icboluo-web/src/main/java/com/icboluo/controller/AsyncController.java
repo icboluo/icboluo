@@ -36,6 +36,9 @@ public class AsyncController {
     /**
      * Spring把Type(Class)映射成type，把name（变量名）映射成name
      * 优先按照自己指定的方式去寻找bean，否则才使用默认规则寻找bean
+     * autowired和resource是否可以使用可以看idea前面的标识，如果标识没有问题就可以尝试（还得启动测试，有可能误检测或者没有检测到）；autowired多考虑多实现的情况，例如线程池
+     * resource标记的是方法注入的bean，有的情况下书写习惯会将类名和方法名做成差不多，会造成一些幻想；其实注入的bean名称应该用方法名来区分
+     * 禁止resource同时加上type和name，会造成严格匹配，导致非必要的麻烦
      *
      * @see Resource 是根据名称查找，你的成员属性长什么样，就会去找什么样的bean（匹配较为严格，类似于map，必须找到匹配的bean名
      * @see Autowired 是根据类型进行查找，其实也是在bean中查找，如果有接口有多个实现，但是只有一个被注入放入到bean，也是可以使用的
