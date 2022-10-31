@@ -3,6 +3,7 @@ package com.icboluo.framework;
 
 import com.icboluo.function.CiConsumer;
 
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 
 /**
@@ -21,5 +22,9 @@ public class MessageFormatDemo {
          */
         String format = MessageFormat.format("{0} is zero,{0} is zero, {2} is two", 0, 1, 2);
         System.out.println("format = " + format);
+
+        // 数字格式化 1.DecimalFormat
+        DecimalFormat decimalFormat = new DecimalFormat("0000");
+        decimalFormat.format(100);// 0100
     }
 }
