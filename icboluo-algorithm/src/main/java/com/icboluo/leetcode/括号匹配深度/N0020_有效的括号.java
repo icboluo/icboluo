@@ -37,6 +37,7 @@ class N0020_有效的括号 {
     }
 
     private boolean m2(String str) {
+        // 用栈，压栈的时候进行转换，peek进行判断
         Deque<Character> stack = new ArrayDeque<>();
         for (int i = 0; i < str.length(); i++) {
             char item = str.charAt(i);
@@ -61,13 +62,13 @@ class N0020_有效的括号 {
     }
 
     private Character convert(Character item) {
-        return switch (item) {
-            case '(':
-                yield ')';
-            case '[':
-                yield ']';
-            case '{':
-                yield '}';
-        };
+        if (item == '[') {
+            return ']';
+        } else if (item == '{') {
+            return '}';
+        } else if (item == '(') {
+            return ')';
+        }
+        return ' ';
     }
 }

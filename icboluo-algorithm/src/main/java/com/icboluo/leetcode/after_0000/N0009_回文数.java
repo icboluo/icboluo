@@ -11,6 +11,11 @@ class N0009_回文数 {
 //        return hws2(x);
     }
 
+    /**
+     * 用sb的reverse方法判断
+     * @param x
+     * @return
+     */
     private boolean hws1(int x) {
         return new StringBuilder(x).reverse().compareTo(new StringBuilder(x)) == 0;
     }

@@ -12,6 +12,7 @@ class N0021_合并2个有序链表 {
 
     /**
      * 循环/迭代
+     * 新链表依次拼接两个链表中的元素，直到一个链表全为空，将另一个链表全部拼接到这个链表后面
      *
      * @param listNode1
      * @param listNode2
@@ -40,6 +41,7 @@ class N0021_合并2个有序链表 {
 
     /**
      * 递归
+     * 令cur为较小的元素，next为合并后的链表
      *
      * @param listNode1
      * @param listNode2
