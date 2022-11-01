@@ -16,15 +16,8 @@ import java.util.stream.Stream;
  */
 public class Stream03Test {
 
-    List<Student> stuList1 = Arrays.asList(
-            new Student(1, "one", Student.Status.BUSY),
-            new Student(2, "two", Student.Status.FREE),
-            new Student(3, "three", Student.Status.VOCATION)
-    );
-    List<Student> stuList2 = Arrays.asList(
-            new Student(4, "four", Student.Status.BUSY),
-            new Student(5, "five", Student.Status.FREE)
-    );
+    List<Student> stuList1 = Arrays.asList(new Student(1, "one", Student.Status.BUSY), new Student(2, "two", Student.Status.FREE), new Student(3, "three", Student.Status.VOCATION));
+    List<Student> stuList2 = Arrays.asList(new Student(4, "four", Student.Status.BUSY), new Student(5, "five", Student.Status.FREE));
 
     /**
      * 将多个list的数据加到一起
@@ -44,15 +37,12 @@ public class Stream03Test {
      */
     @Test
     public void test2() {
-        List<Student> distinctList = stuList1.stream()
-                .collect(Collectors.collectingAndThen(Collectors.toCollection(
-                        // 利用 TreeSet 的排序去重构造函数来达到去重元素的目的
-                        () -> new TreeSet<>(Comparator.comparing(Student::getName))), ArrayList::new));
+        List<Student> distinctList = stuList1.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(
+                // 利用 TreeSet 的排序去重构造函数来达到去重元素的目的
+                () -> new TreeSet<>(Comparator.comparing(Student::getName))), ArrayList::new));
         System.out.println("distinctList = " + distinctList);
 
-        stuList1.stream()
-                .filter(distinctByKey(Student::getName))
-                .forEach(System.out::println);
+        stuList1.stream().filter(distinctByKey(Student::getName)).forEach(System.out::println);
     }
 
     /**
@@ -80,15 +70,12 @@ public class Stream03Test {
      */
     @Test
     public void test3() {
-        stuList1.stream()
-                .anyMatch(stu -> stu.getAge() == 2);
+        stuList1.stream().anyMatch(stu -> stu.getAge() == 2);
         // 请注意 the stream is empty return true
-        stuList1.stream()
-                .allMatch(stu -> stu.getAge() == 2);
+        stuList1.stream().allMatch(stu -> stu.getAge() == 2);
 
         // Stream中ele不能为null；map key不能重复、不能为null；val不能为null
-        stuList1.stream()
-                .collect(Collectors.toMap(Student::getName, Student::getAge));
+        stuList1.stream().collect(Collectors.toMap(Student::getName, Student::getAge));
     }
 
     /**
@@ -96,21 +83,28 @@ public class Stream03Test {
      */
     @Test
     public void test4() {
-        int[] arr1 = stuList1.stream()
-                .mapToInt(Student::getAge)
-                .toArray();
-        Integer[] arr2 = stuList1.stream()
-                .map(Student::getAge)
-                .toArray(Integer[]::new);
+        int[] arr1 = stuList1.stream().mapToInt(Student::getAge).toArray();
+        Integer[] arr2 = stuList1.stream().map(Student::getAge).toArray(Integer[]::new);
         System.out.println(Arrays.toString(arr1));
         System.out.println(Arrays.toString(arr2));
 
-        List<Integer> list = stuList1.stream()
-                .mapToInt(Student::getAge)
+        List<Integer> list = stuList1.stream().mapToInt(Student::getAge)
                 // 装箱，常用于IntStream无法排序的情况
-                .boxed()
-                .sorted((a, b) -> b - a)
-                .toList();
+                .boxed().sorted((a, b) -> b - a).toList();
         System.out.println(list);
+    }
+
+    /**
+     * Optional的长链式调用不会出错NPE（map操作返回的是ofNullAble）
+     */
+    @Test
+    public void test5() {
+        Optional.ofNullable(stuList1)
+                .map(o -> o.get(0))
+                .map(Student::getAge)
+                .filter(a -> a > 100000)
+                .map(StringBuffer::new)
+                .map(StringBuffer::toString)
+                .ifPresent(System.out::println);
     }
 }

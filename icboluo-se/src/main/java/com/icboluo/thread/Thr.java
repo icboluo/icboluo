@@ -9,6 +9,6 @@ import com.icboluo.util.ThreadUtil;
  class Thr extends Thread {
     @Override
     public void run() {
-        new ThreadUtil().sleep5s();
+        ThreadUtil.sleep5s();
     }
 }

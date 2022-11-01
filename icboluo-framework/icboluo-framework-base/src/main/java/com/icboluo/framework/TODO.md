@@ -12,8 +12,6 @@ computerFuture 异步处理更新后不能查到数据，加join不能解决这�
 
 流读取之后可以设置再次读取
 
-excel导出功能
-
 excel导入注解校验
 
 redis 布隆过滤器
