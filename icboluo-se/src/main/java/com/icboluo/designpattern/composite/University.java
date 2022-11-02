@@ -17,7 +17,7 @@ public class University extends OrganizationComponent {
     @Override
     protected void add(OrganizationComponent organizationComponent) {
         // 业务中 college的add和university不一样
-        organizationComponent.add(organizationComponent);
+        organizationComponents.add(organizationComponent);
     }
 
     @Override

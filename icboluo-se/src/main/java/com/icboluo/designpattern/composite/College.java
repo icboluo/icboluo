@@ -17,7 +17,7 @@ public class College extends OrganizationComponent {
     @Override
     protected void add(OrganizationComponent organizationComponent) {
         // 业务中 college的add和university不一样
-        organizationComponent.add(organizationComponent);
+        organizationComponents.add(organizationComponent);
     }
 
     @Override
@@ -28,6 +28,6 @@ public class College extends OrganizationComponent {
     @Override
     protected void print() {
         System.out.println(getName());
-        organizationComponents.forEach(System.out::println);
+        organizationComponents.forEach(OrganizationComponent::print);
     }
 }

@@ -12,25 +12,25 @@ class N0349_两个数组的交集 {
         N0349_两个数组的交集 cla = new N0349_两个数组的交集();
         int[] arr1 = {1, 2, 2, 1, 3};
         int[] arr2 = {2, 2, 3};
-        List<Integer> m = cla.m(arr1, arr2);
-        System.out.println("m = " + m);
+        int[] intersection = cla.intersection(arr1, arr2);
+        System.out.println(Arrays.toString(intersection));
     }
 
     /**
      * 一个放到set中，另一个一个一个比较
      *
-     * @param arr1
-     * @param arr2
+     * @param nums1
+     * @param nums2
      * @return
      */
-    private List<Integer> m(int[] arr1, int[] arr2) {
-        Set<Integer> set = Arrays.stream(arr1).mapToObj(Integer::valueOf).collect(Collectors.toSet());
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set = Arrays.stream(nums1).boxed().collect(Collectors.toSet());
         HashSet<Integer> res = new HashSet<>();
-        for (int item : arr2) {
+        for (int item : nums2) {
             if (set.contains(item)) {
                 res.add(item);
             }
         }
-        return new ArrayList<>(res);
+        return res.stream().mapToInt(Integer::intValue).toArray();
     }
 }

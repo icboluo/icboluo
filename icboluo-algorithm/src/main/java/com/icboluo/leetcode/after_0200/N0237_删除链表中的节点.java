@@ -24,7 +24,7 @@ class N0237_删除链表中的节点 {
         ListNode cur = listNode;
         while (cur != null) {
             if (cur.next == null) {
-                // 还是用前驱节点好一点
+                // 还是用前驱节点好一点 TODO ERROR这里需要前期节点判断倒数第一个节点
             } else {
                 if (cur.val == n) {
                     // 当前节点的值用下一个节点替代

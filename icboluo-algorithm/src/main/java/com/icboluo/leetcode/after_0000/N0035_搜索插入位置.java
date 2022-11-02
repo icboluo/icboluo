@@ -23,7 +23,7 @@ class N0035_搜索插入位置 {
     private int findInsertIndex1(int[] arr, int n) {
         int i = 0;
         for (; i < arr.length; i++) {
-            if (arr[i] > n) {
+            if (arr[i] >= n) {
                 break;
             }
         }

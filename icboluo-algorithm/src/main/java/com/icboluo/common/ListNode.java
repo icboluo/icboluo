@@ -35,6 +35,9 @@ public class ListNode {
     }
 
     public ListNode(int... arr) {
+        if (arr == null) {
+            return;
+        }
         ListNode head = new ListNode(0);
         ListNode pre = head;
         for (int j : arr) {

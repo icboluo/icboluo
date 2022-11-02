@@ -20,7 +20,7 @@ impl...HandlerInterceptor ：preHandle，postHandle，afterCompletion
 
 ## 源码
 
-1.在boot项目启动之后---bean初始化值---执行aware回调的时候---会初始化applicationContext(由ApplicationObjectSupport类承担)，会构建拦截器去List中
+1.在boot项目启动之后---bean初始化之后---执行aware回调的时候---会初始化applicationContext(由ApplicationObjectSupport类承担)，会构建拦截器去List中
 2.启动之后当 InitializingBean 子实现 AbstractHandlerMethodMapping.afterPropertiesSet 执行的时候，会调用
 AbstractHandlerMethodMapping 会执行detectHandlerMethods 方法，Map.put(RequestMappingInfo(聚合请求路径)，MappingRegistration(映射注册；聚合类名、方法名))
   2在调用之后也会返回去调用1

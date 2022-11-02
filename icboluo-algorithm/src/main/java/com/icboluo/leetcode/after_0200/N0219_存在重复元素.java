@@ -22,7 +22,7 @@ class N0219_存在重复元素 {
      * @return
      */
     private boolean isExist(int[] arr, int n) {
-        // 没必要优先级队列 TODO 这个方法好奇怪，看不懂
+        // 没必要优先级队列，随便使用一个LinkedList queue就可以了
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         for (int i = 0; i < arr.length; i++) {
             if (pq.contains(arr[i])) {

@@ -66,7 +66,7 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @Scope @PostConstruct @PreDestroy 相当于：<bean id="" class="" init-method="" destroy-method="" />
 
-postConstruct 在创建对象后执行，整个系统中只执行一次，可以用来系统启动初始化某些属性
+@PostConstruct 在创建对象后执行，整个系统中只执行一次，可以用来系统启动初始化某些属性,方法设置成私有的也是可以执行的
 
 Joinpoint 连接点 连接点表示应用执行过程中能够插入切面的一个点， 这个点可以是方法的调用、异常的抛出。在 Spring AOP 中，连接点总是方法的调用
 
