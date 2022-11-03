@@ -10,11 +10,12 @@ class N0189_旋转数组 {
     public static void main(String[] args) {
         N0189_旋转数组 cla = new N0189_旋转数组();
         int[] arr = {1, 2, 3, 4, 5, 6, 7};
-        cla.m(arr, 3);
+        cla.rotate(arr, 3);
         System.out.println(Arrays.toString(arr));
     }
 
-    private void m(int[] arr, int n) {
+    // TODO error
+    public void rotate(int[] arr, int n) {
         reverse(arr, 0, arr.length - 1);
         reverse(arr, 0, n - 1);
         reverse(arr, n, arr.length - 1);

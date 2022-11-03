@@ -12,7 +12,7 @@ class N0009_回文数 {
     }
 
     /**
-     * 用sb的reverse方法判断
+     * 用sb的reverse方法判断 TODO error
      * @param x
      * @return
      */
@@ -21,7 +21,7 @@ class N0009_回文数 {
     }
 
     /**
-     * 用/%取左右比较
+     * 用/%取左右比较 todo error
      *
      * @param x 元素 2002
      * @return 是否回文数
@@ -46,7 +46,7 @@ class N0009_回文数 {
     }
 
     /**
-     * 后半段反转和前半段比较
+     * 后半段反转和前半段比较 todo error
      *
      * @param x 元素 2002
      * @return 是否回文数

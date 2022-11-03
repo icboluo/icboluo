@@ -2,12 +2,13 @@ package com.icboluo.leetcode.after_0000;
 
 class N0125_验证回文串 {
     public static void main(String[] args) {
+        N0125_验证回文串 cla = new N0125_验证回文串();
         String str = "A man, a plan, a canal: Panama";
-        boolean res = m(str);
+        boolean res = cla.isPalindrome(str);
         System.out.println("res = " + res);
     }
 
-    private static boolean m(String str) {
+    public boolean isPalindrome(String str) {
         int left = 0;
         int right = str.length() - 1;
         while (left < right) {

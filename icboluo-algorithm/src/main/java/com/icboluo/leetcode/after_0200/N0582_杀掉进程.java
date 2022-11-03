@@ -24,9 +24,10 @@ class N0582_杀掉进程 {
             }
         }
         for (int i = 0; i < ppid.length; i++) {
-            parentChildMap.get(ppid[i]).add(ppid[i]);
+            parentChildMap.get(ppid[i]).add(pid[i]);
         }
         List<Integer> ans = new ArrayList<>();
+        ans.add(kill);
         kill(parentChildMap, ans, kill);
         return ans;
     }

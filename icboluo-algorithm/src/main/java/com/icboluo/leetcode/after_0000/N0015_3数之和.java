@@ -6,8 +6,9 @@ import java.util.List;
 
 class N0015_3数之和 {
     public static void main(String[] args) {
+        N0015_3数之和 cla = new N0015_3数之和();
         int[] arr = {-1, 0, 1, 2, -1, -4};
-        List<List<Integer>> res = threeNumSum1(arr);
+        List<List<Integer>> res = cla.threeSum1(arr);
         System.out.println("res = " + res);
     }
 
@@ -20,7 +21,7 @@ class N0015_3数之和 {
      * @param arr
      * @return
      */
-    private static List<List<Integer>> threeNumSum1(int[] arr) {
+    public List<List<Integer>> threeSum1(int[] arr) {
         List<List<Integer>> ans = new ArrayList<>();
         Arrays.sort(arr);
         for (int i = 0; i < arr.length - 2; i++) {
@@ -51,7 +52,7 @@ class N0015_3数之和 {
         return ans;
     }
 
-    private static boolean threeNumSum2(int[] arr) {
+    public boolean threeSum2(int[] arr) {
         Arrays.sort(arr);
         for (int i = 0; i < arr.length - 2; i++) {
             // 因为每次从第i个节点开始，left为i个节点的左边一个节点，所以left指针应该写到里面

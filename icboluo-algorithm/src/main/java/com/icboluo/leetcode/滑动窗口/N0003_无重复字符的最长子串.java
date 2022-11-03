@@ -14,7 +14,7 @@ class N0003_无重复字符的最长子串 {
     public static void main(String[] args) {
         N0003_无重复字符的最长子串 cla = new N0003_无重复字符的最长子串();
         String str = "abcabcbb";
-        int res = cla.m1(str);
+        int res = cla.lengthOfLongestSubstring(str);
         System.out.println("res = " + res);
     }
 
@@ -24,7 +24,7 @@ class N0003_无重复字符的最长子串 {
      * @param str
      * @return
      */
-    private int m1(String str) {
+    public int lengthOfLongestSubstring(String str) {
         int ans = 0;
         // 字符出现的次数
         Map<Character, Integer> winMap = new HashMap<>();
@@ -47,7 +47,8 @@ class N0003_无重复字符的最长子串 {
         return ans;
     }
 
-    private int m2(String str) {
+    // TODO error
+    public int m2(String str) {
         int ans = 0;
         // 字符最后一次出现的索引
         Map<Character, Integer> winMap = new HashMap<>();
@@ -67,12 +68,12 @@ class N0003_无重复字符的最长子串 {
     }
 
     /**
-     * m2的for循环型解法
+     * m2的for循环型解法 TODO ERROR
      *
      * @param str
      * @return max length
      */
-    private int m3(String str) {
+    public int m3(String str) {
         // 字符最后一次出现的索引
         Map<Character, Integer> winMap = new HashMap<>();
         int l = 0;

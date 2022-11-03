@@ -8,39 +8,39 @@ class N0162_寻找峰值 {
     public static void main(String[] args) {
         N0162_寻找峰值 cla = new N0162_寻找峰值();
         int[] arr = {1, 2, 3, 1};
-        int i = cla.m1(arr);
+        int i = cla.findPeakElement(arr);
         System.out.println("i = " + i);
     }
 
     /**
      * 线性扫描
      *
-     * @param arr
+     * @param nums
      * @return
      */
-    private int m1(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] > arr[i + 1]) {
+    public int findPeakElement(int[] nums) {
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] > nums[i + 1]) {
                 return i;
             }
         }
-        return arr.length - 1;
+        return nums.length - 1;
     }
 
     /**
      * 二分查找
      *
-     * @param arr
+     * @param nums
      * @return
      */
-    private int m2(int[] arr) {
+    public int findPeakElement2(int[] nums) {
         int left = 0;
-        int right = arr.length - 1;
+        int right = nums.length - 1;
         while (left < right) {
             int mid = (left + right) / 2;
-            if (arr[mid] > arr[mid + 1]) {
+            if (nums[mid] > nums[mid + 1]) {
                 right = mid;
-            }else{
+            } else {
                 left = mid + 1;
             }
         }
