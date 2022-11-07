@@ -1,4 +1,4 @@
-package com.icboluo.algorithm.Flood;
+package com.icboluo.algorithm.FloodFill;
 
 /**
  * @author icboluo
