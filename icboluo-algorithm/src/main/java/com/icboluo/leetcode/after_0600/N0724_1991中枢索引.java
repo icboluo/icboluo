@@ -14,7 +14,7 @@ class N0724_1991中枢索引 {
         System.out.println("i = " + i);
     }
 
-    // todo error
+    // todo error 不应该假定的认为arr是有序的，用左右指针的做法是不合理的
     public int pivotIndex(int[] nums) {
         int left = 0;
         int right = nums.length - 1;

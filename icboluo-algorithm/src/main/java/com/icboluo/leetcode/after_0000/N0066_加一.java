@@ -14,7 +14,6 @@ class N0066_加一 {
         System.out.println(Arrays.toString(res));
     }
 
-    // TODO ERROR
     public int[] plusOne(int[] arr) {
         for (int i = arr.length - 1; i >= 0; i--) {
             if (arr[i] != 9) {
@@ -24,7 +23,7 @@ class N0066_加一 {
             arr[i] = 0;
         }
         int[] res = new int[arr.length + 1];
-        arr[0] = 1;
+        res[0] = 1;
         return res;
     }
 }

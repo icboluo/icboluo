@@ -14,8 +14,10 @@ class N0189_旋转数组 {
         System.out.println(Arrays.toString(arr));
     }
 
-    // TODO error
     public void rotate(int[] arr, int n) {
+        if (n > arr.length) {
+            n = n % arr.length;
+        }
         reverse(arr, 0, arr.length - 1);
         reverse(arr, 0, n - 1);
         reverse(arr, n, arr.length - 1);

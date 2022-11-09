@@ -17,7 +17,21 @@ class N0819_最大命令单词 {
     // todo 大小写error,小数点拆分错误
     public String mostCommonWord(String paragraph, String[] banned) {
         Set<String> set = new HashSet<>(Arrays.asList(banned));
-        Map<String, Integer> strCountMap = Arrays.stream(paragraph.split(" "))
+        // 拆分字符串
+        List<String> list = new ArrayList<>();
+        String temp = "";
+        for (int i = 0; i < paragraph.length(); i++) {
+            if (Character.isLetter(paragraph.charAt(i))) {
+                temp += paragraph.charAt(i);
+            } else {
+                list.add(temp);
+                temp = "";
+            }
+        }
+        if (!"".equals(temp)) {
+            list.add(temp);
+        }
+        Map<String, Integer> strCountMap = list.stream()
                 .map(String::toLowerCase)
                 .filter(str -> !set.contains(str))
                 .collect(Collectors.groupingBy(str -> str, Collectors.collectingAndThen(Collectors.toList(), List::size)));

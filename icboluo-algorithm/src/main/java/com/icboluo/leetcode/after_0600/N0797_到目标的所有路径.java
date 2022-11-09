@@ -11,23 +11,24 @@ import java.util.List;
 class N0797_到目标的所有路径 {
     List<List<Integer>> ans;
 
-    // TODO ERROR
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
         ans = new ArrayList<>();
-        LinkedList<Integer> list = new LinkedList<>();
-        dfs(graph, 0, list);
-        return allPathsSourceTarget(graph);
+        LinkedList<Integer> track = new LinkedList<>();
+        track.add(0);
+        dfs(graph, 0, track);
+        return ans;
     }
 
     private void dfs(int[][] graph, int start, LinkedList<Integer> track) {
-        track.add(start);
         // 在叶子节点收集结果
         if (start == graph.length - 1) {
             ans.add(new LinkedList<>(track));
         }
         for (int child : graph[start]) {
+            // 回溯的位置越近越好，尽可能的近；如果removeLast放在最下面，会造成整个for循环完才回溯一次，这是不合理的
+            track.add(child);
             dfs(graph, child, track);
+            track.removeLast();
         }
-        track.removeLast();
     }
 }

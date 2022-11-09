@@ -44,17 +44,16 @@ class N0438_找到字符串中所有字母异位词 {
             // 这个while和if换一下也是可以的
             while (needMap.size() == match) {
                 // 更新结果集
-                if (r - l == needMap.size()) {
+                if (r - l - 1 == needMap.size()) {
                     resList.add(l);
                 }
-                char left = s.charAt(l);
+                char left = s.charAt(l++);
                 if (needMap.containsKey(left)) {
                     winMap.put(left, winMap.getOrDefault(left, 0) - 1);
                     if (winMap.get(left) < needMap.get(left)) {
                         match--;
                     }
                 }
-                l++;
             }
         }
         return resList;

@@ -8,12 +8,13 @@ import java.util.List;
  * @since 2022-11-07 21:57
  */
 class N0139_0140单词分割 {
-    // 递归暴力解，复杂问题简单化；可以map优化 TODO error
+    // 递归暴力解，复杂问题简单化；可以map优化 TODO 超时
     public boolean wordBreak(String s, List<String> wordDict) {
         if (s.length() == 0) {
             return true;
         }
-        for (int i = 0; i < s.length(); i++) {
+        // 我们需要从1开始，length结束；因为length==0的判断是下一层方法，尽可能的让suffix为0，而不是pre
+        for (int i = 1; i <= s.length(); i++) {
             String pre = s.substring(0, i);
             String suffix = s.substring(i);
             if (wordDict.contains(pre) && wordBreak(suffix, wordDict)) {

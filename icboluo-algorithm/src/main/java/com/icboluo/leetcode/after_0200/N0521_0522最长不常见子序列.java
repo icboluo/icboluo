@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
  */
 class N0521_0522最长不常见子序列 {
     /**
-     * TODO:ERROR
      * 题意：最长，字符串最长；不常见，只出现一次；子序列，这个是废话，a是b的子序列，b不是a的子序列，所以依然不是子序列，相当于equals
      *
      * @param a
@@ -19,9 +18,10 @@ class N0521_0522最长不常见子序列 {
      * @return
      */
     public int findLUSlength(String a, String b) {
-        return a.equals(b) ? -1 : Math.min(a.length(), b.length());
+        return a.equals(b) ? -1 : Math.max(a.length(), b.length());
     }
-// TODO ERROR
+
+    // TODO ERROR
     public int findLUSlength(String[] strs) {
         // 字符串，出现次数的map
         Map<String, Integer> strCountMap = Arrays.stream(strs).collect(Collectors.groupingBy(key -> key, Collectors.collectingAndThen(Collectors.toList(), List::size)));

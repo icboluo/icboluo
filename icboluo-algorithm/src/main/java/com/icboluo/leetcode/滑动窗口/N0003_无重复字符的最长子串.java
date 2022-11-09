@@ -47,7 +47,6 @@ class N0003_无重复字符的最长子串 {
         return ans;
     }
 
-    // TODO error
     public int m2(String str) {
         int ans = 0;
         // 字符最后一次出现的索引
@@ -55,20 +54,20 @@ class N0003_无重复字符的最长子串 {
         int l = 0;
         int r = 0;
         // 右指针扩大，遍历所有解
-        while (r < str.length() - 1) {
+        while (r < str.length()) {
             char right = str.charAt(r++);
             // 左指针右移，优化最优解，这里采用一次移动到左指针的位置或者出现过的下一个位置
             // 其实好像做个判断好一点，如果窗口中不存在就不需要移动左指针
             l = Math.max(winMap.getOrDefault(right, -1) + 1, l);
             // 因为这一块只有窗口的数据录入功能，没有销毁功能，所以，取值一定要保证在窗口内部，也就是必须要不小于left
-            winMap.put(right, r);
+            winMap.put(right, r - 1);
             ans = Math.max(ans, r - l);
         }
         return ans;
     }
 
     /**
-     * m2的for循环型解法 TODO ERROR
+     * m2的for循环型解法
      *
      * @param str
      * @return max length
@@ -78,7 +77,7 @@ class N0003_无重复字符的最长子串 {
         Map<Character, Integer> winMap = new HashMap<>();
         int l = 0;
         int r = 0;
-        int max = Integer.MIN_VALUE;
+        int max = 0;
 
         char[] chars = str.toCharArray();
         for (; r < chars.length && l < chars.length; r++) {

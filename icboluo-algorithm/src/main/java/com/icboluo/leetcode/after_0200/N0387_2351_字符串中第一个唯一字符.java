@@ -1,5 +1,6 @@
 package com.icboluo.leetcode.after_0200;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -117,7 +118,7 @@ class N0387_2351_字符串中第一个唯一字符 {
         return new int[]{count, map.size()};
     }
 
-    // 2374 节点的边最高得分 TODO error
+    // 2374 节点的边最高得分 TODO 超时
     public int edgeScore(int[] edges) {
         // 入度
         Map<Integer, List<Integer>> map = new HashMap<>();
@@ -126,8 +127,10 @@ class N0387_2351_字符串中第一个唯一字符 {
         }
         return map.entrySet()
                 .stream()
-                .sorted((a, b) -> b.getValue().stream().mapToInt(Integer::intValue).sum() - a.getValue().stream()
-                        .mapToInt(Integer::intValue).sum()).map(Map.Entry::getKey).findFirst().orElse(-1);
+                .sorted((a, b) ->
+                        b.getValue().stream().map(BigDecimal::new).reduce(BigDecimal::add).get()
+                                .compareTo(a.getValue().stream().map(BigDecimal::new).reduce(BigDecimal::add).get()))
+                .map(Map.Entry::getKey).findFirst().orElse(-1);
     }
 
     // 2404 最常见的偶数元素

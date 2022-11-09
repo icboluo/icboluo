@@ -14,8 +14,9 @@ class N0806_书写行数 {
             int width = widths[ch - 'a'];
             if (tempWidth + width > 100) {
                 total++;
-                tempWidth = tempWidth + width - 100;
-            }else{
+                // 这里要换行写一个完整的单词，而不是先把上一行写完
+                tempWidth = width;
+            } else {
                 tempWidth += width;
             }
         }
