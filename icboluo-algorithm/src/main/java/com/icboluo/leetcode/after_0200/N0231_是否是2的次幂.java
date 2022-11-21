@@ -21,10 +21,10 @@ class N0231_是否是2的次幂 {
         return n == 1;
     }
 
-    // TODO N==1 IS ERROR
+    // N==1 IS ERROR，需要增加 n>0 判断
     public boolean isPowerOfTwo2(int n) {
         // 10000 & 01111==00000
         // 也可以这样写 Integer.bitCount(n)==1
-        return (n & (n - 1)) == 0;
+        return n > 0 && (n & (n - 1)) == 0;
     }
 }

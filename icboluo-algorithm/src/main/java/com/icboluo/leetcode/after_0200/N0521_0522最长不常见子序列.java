@@ -1,9 +1,6 @@
 package com.icboluo.leetcode.after_0200;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * @author icboluo
@@ -21,17 +18,52 @@ class N0521_0522最长不常见子序列 {
         return a.equals(b) ? -1 : Math.max(a.length(), b.length());
     }
 
-    // TODO ERROR
+    // 0522 对字符串用长度排序，没有重复项，则最长的就是；有重复，可能下一个非重复的是，非重复的，但是也可能是大串的子序列，需要校验
     public int findLUSlength(String[] strs) {
-        // 字符串，出现次数的map
-        Map<String, Integer> strCountMap = Arrays.stream(strs).collect(Collectors.groupingBy(key -> key, Collectors.collectingAndThen(Collectors.toList(), List::size)));
-        return strCountMap.entrySet().stream()
-                // 找出只出现一次的
-                .filter(entry -> entry.getValue() == 1)
-                .map(Map.Entry::getKey)
-                .map(String::length)
-                // 最长的
-                .min((a, b) -> b - a)
-                .orElse(-1);
+        Arrays.sort(strs, (a, b) -> b.length() - a.length());
+
+        Set<String> duplicate = getDuplicate(strs);
+        for (int i = 0; i < strs.length; i++) {
+            if (duplicate.contains(strs[i])) {
+                continue;
+            }
+            if (i == 0) {
+                return strs[0].length();
+            }
+            for (int j = 0; j < i; j++) {
+                if (isSubsequence(strs[j], strs[i])) {
+                    break;
+                }
+                // 如果没有找到，全部不是子序列
+                if (j == i - 1) {
+                    return strs[i].length();
+                }
+            }
+        }
+        return -1;
+    }
+
+    private boolean isSubsequence(String parent, String child) {
+        int i = 0;
+        int j = 0;
+        while (i < parent.length() && j < child.length()) {
+            if (parent.charAt(i) == child.charAt(j)) {
+                j++;
+            }
+            i++;
+        }
+        return j == child.length();
+    }
+
+    private Set<String> getDuplicate(String[] arr) {
+        HashSet<String> set = new HashSet<>();
+        HashSet<String> duplicate = new HashSet<>();
+        for (String s : arr) {
+            if (set.contains(s)) {
+                duplicate.add(s);
+            }
+            set.add(s);
+        }
+        return duplicate;
     }
 }

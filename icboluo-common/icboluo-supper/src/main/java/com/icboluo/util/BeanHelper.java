@@ -219,6 +219,10 @@ public class BeanHelper {
         return pageInfo;
     }
 
+    public static <S, T> PageInfo<T> pageInfoConvert(List<S> source, List<T> target) {
+        return pageInfoConvert(PageInfo.of(source), target);
+    }
+
     /**
      * 假分页
      *

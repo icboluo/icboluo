@@ -125,11 +125,16 @@ class N0387_2351_字符串中第一个唯一字符 {
         for (int i = 0; i < edges.length; i++) {
             map.computeIfAbsent(edges[i], key -> new ArrayList<>()).add(i);
         }
+        // 此块用Integer.sum会越界
         return map.entrySet()
                 .stream()
                 .sorted((a, b) ->
-                        b.getValue().stream().map(BigDecimal::new).reduce(BigDecimal::add).get()
-                                .compareTo(a.getValue().stream().map(BigDecimal::new).reduce(BigDecimal::add).get()))
+                        b.getValue().stream()
+                                .map(BigDecimal::new)
+                                .reduce(BigDecimal::add).get()
+                                .compareTo(a.getValue().stream()
+                                        .map(BigDecimal::new)
+                                        .reduce(BigDecimal::add).get()))
                 .map(Map.Entry::getKey).findFirst().orElse(-1);
     }
 

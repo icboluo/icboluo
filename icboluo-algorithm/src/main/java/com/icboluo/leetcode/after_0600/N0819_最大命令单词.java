@@ -14,7 +14,7 @@ class N0819_最大命令单词 {
         System.out.println("s = " + s);
     }
 
-    // todo 大小写error,小数点拆分错误
+    // ERROR 小数点拆分错误
     public String mostCommonWord(String paragraph, String[] banned) {
         Set<String> set = new HashSet<>(Arrays.asList(banned));
         // 拆分字符串
@@ -23,7 +23,8 @@ class N0819_最大命令单词 {
         for (int i = 0; i < paragraph.length(); i++) {
             if (Character.isLetter(paragraph.charAt(i))) {
                 temp += paragraph.charAt(i);
-            } else {
+                // 因为不光是空格间隔，还有其他字符，多增加一个过滤
+            } else if (!"".equals(temp)) {
                 list.add(temp);
                 temp = "";
             }
@@ -35,7 +36,8 @@ class N0819_最大命令单词 {
                 .map(String::toLowerCase)
                 .filter(str -> !set.contains(str))
                 .collect(Collectors.groupingBy(str -> str, Collectors.collectingAndThen(Collectors.toList(), List::size)));
-        return strCountMap.entrySet().stream().min((a, b) -> b.getValue() - a.getValue())
+        return strCountMap.entrySet().stream()
+                .min((a, b) -> b.getValue() - a.getValue())
                 .map(Map.Entry::getKey)
                 .orElse("");
     }

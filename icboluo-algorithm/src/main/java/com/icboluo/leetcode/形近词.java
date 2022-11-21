@@ -46,7 +46,7 @@ class 形近词 {
             // 此块是一个循环，如果words中item有重复，可以map优化
             for (String temp : tempList) {
                 if (dictMap.containsKey(temp)) {
-                    arr[i] = dictMap.get(temp);
+                    arr[i] += dictMap.get(temp);
                 }
             }
             // item.length 代表生成了多少个形近词；如果重复abc会生成3个元素，需要排除

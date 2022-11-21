@@ -14,36 +14,38 @@ class N0724_1991中枢索引 {
         System.out.println("i = " + i);
     }
 
-    // todo error 不应该假定的认为arr是有序的，用左右指针的做法是不合理的
+    // 不应该假定的认为arr是有序的，用左右指针的做法是不合理的
     public int pivotIndex(int[] nums) {
-        int left = 0;
-        int right = nums.length - 1;
-        int cha = 0;
-        while (left < right) {
-            if (cha > 0) {
-                cha -= nums[right--];
-            } else {
-                cha += nums[left++];
-            }
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
         }
-        return cha == 0 ? left : -1;
+        int preSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            // 因为要排除当前所有，所以公式为：left+right+mid=sum
+            if (preSum * 2 + nums[i] == sum) {
+                return i;
+            }
+            preSum += nums[i];
+        }
+        return -1;
     }
 
-    // 1991 查找数组中的中间索引 ,没写完
+    // 1991 查找数组中的中间索引
     public int findMiddleIndex(int[] nums) {
         int sum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
+        for (int num : nums) {
+            sum += num;
         }
         Map<Integer, Integer> totalIdxMap = new HashMap<>();
         int leftSum = 0;
         for (int i = 0; i < nums.length; i++) {
             // 这块只是为了处理0的特殊值的，完全可以独立处理从1开始遍历
-            if (i - 1 > 0) {
+            if (i > 0) {
                 leftSum += nums[i - 1];
             }
-            totalIdxMap.putIfAbsent(leftSum * 2 + nums[i], 1);
+            totalIdxMap.putIfAbsent(leftSum * 2 + nums[i], i);
         }
-        return sum;
+        return totalIdxMap.getOrDefault(sum, -1);
     }
 }

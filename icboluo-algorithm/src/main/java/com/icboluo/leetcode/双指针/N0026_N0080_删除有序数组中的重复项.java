@@ -7,6 +7,9 @@ package com.icboluo.leetcode.双指针;
 class N0026_N0080_删除有序数组中的重复项 {
     /**
      * N0026 删除只保留一个
+     * 双指针：快慢指针
+     * 快慢指针的差就是res数组的大小
+     * 如果元素相等，quick++，else slow、quick ++，并使slowEle=quickEle
      *
      * @param nums 待处理数组
      * @return 处理后的数组

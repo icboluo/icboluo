@@ -76,6 +76,8 @@ public class Stream03Test {
 
         // Stream中ele不能为null；map key不能重复、不能为null；val不能为null
         stuList1.stream().collect(Collectors.toMap(Student::getName, Student::getAge));
+        // 第三个参数标注key重复情况下的处理逻辑，第四个参数是说map的结构，常用 LinkedHashMap 做排序map处理
+        stuList1.stream().collect(Collectors.toMap(Student::getName, Student::getAge, (k1, k2) -> k2, LinkedHashMap::new));
     }
 
     /**
