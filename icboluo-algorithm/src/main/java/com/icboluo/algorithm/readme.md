@@ -20,4 +20,4 @@
 
 ## 优先级队列
 
-PriorityQueue 没有在offer上实现排序，仅仅是poll的时候实现了拍戏，所以toString看起来有bug，不可以这样看
+PriorityQueue 没有在offer上实现排序，仅仅是poll的时候实现了排序，所以toString看起来有bug，不可以这样看
