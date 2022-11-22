@@ -15,7 +15,7 @@ class N0006_蛇形矩阵 {
         System.out.println("res = " + res);
     }
 
-    // TODO ERROR
+    // 建立空数组，分为多行，将每行的数组拼接就可以了
     public String convert(String str, int row) {
         String[] arr = new String[row];
         Arrays.fill(arr, "");
@@ -24,13 +24,14 @@ class N0006_蛇形矩阵 {
         while (true) {
             // 一次完整的循环就是先竖再斜上
             for (int i = 0; i < row; i++) {
-                if (idx >= str.length() - 1) {
+                if (idx > str.length() - 1) {
                     return Arrays.stream(arr).reduce(String::concat).orElse("");
                 }
+                // 因为这里是后加，所以前面不需要等号
                 arr[i] += chars[idx++];
             }
             for (int i = row - 2; i > 0; i--) {
-                if (idx > +str.length() - 1) {
+                if (idx > str.length() - 1) {
                     return Arrays.stream(arr).reduce(String::concat).orElse("");
                 }
                 arr[i] += chars[idx++];

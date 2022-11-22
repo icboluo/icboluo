@@ -18,7 +18,7 @@ class 形近词 {
         String[] dictionary = {"aa", "ab", "ac"};
         String[] words = {"ac", "dd"};
         int[] ints = cla.queryWords(dictionary, words);
-        System.out.println("ints = " + ints);
+        System.out.println("ints = " + Arrays.toString(ints));
     }
 
     /**
