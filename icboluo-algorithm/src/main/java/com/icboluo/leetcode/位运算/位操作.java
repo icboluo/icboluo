@@ -1,4 +1,4 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.位运算;
 
 import org.junit.jupiter.api.Test;
 

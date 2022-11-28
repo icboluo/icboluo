@@ -22,10 +22,48 @@
                     -》当前节点是左节点
                     -》当前节点是右节点
 
-## 顺序存储二叉树/线索化二叉树
+## 顺序存储二叉树
 
-针对的是完全二叉树，其实是二叉树的层级遍历；是根据2*n的公式来的
+顺序存储二叉树 针对的是完全二叉树，其实是二叉树的层级遍历；是根据2*n的公式来的
+
+## 线索化二叉树
+
+线索化二叉树是利用到未使用的指针信息，使二叉树操作更方便(前驱节点，后继节点)
 
 ## 为什么使用B+树不适用B树
 
     1.B+树数据均存储在叶子节点上
+
+## 图
+
+#### 新建图
+
+根据是否有向图构建，下面的是有向图，仅需要构建单边
+
+        LinkedList<int[]>[] graph = new LinkedList[num];
+        for (int i = 0; i < num; i++) {
+            graph[i] = new LinkedList<>();
+        }
+        for (int[] edge : arr) {
+            // 这里是由1可以到0
+            graph[edge[1]].add(edge[0]);
+        }
+
+#### 图遍历
+
+        private void list(LinkedList<Integer>[] graph, int start) {
+        // 拓扑排序需要这个判断
+        if (isPath[start]) {
+            hasCycle = true;
+            return;
+        }
+        if (visited[start]) {
+            return;
+        }
+        visited[start] = true; // 防止b-a-b这种循环遍历
+        isPath[start] = true; // 前序遍历，遍历之前设置一个值，如果遍历的时候再访问到这个节点，说明有环
+        for (Integer child : graph[start]) {
+            list(graph, child);
+        }
+        isPath[start] = false; // 回溯
+    }

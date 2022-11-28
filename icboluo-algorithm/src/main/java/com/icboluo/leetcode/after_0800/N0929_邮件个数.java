@@ -15,7 +15,7 @@ class N0929_邮件个数 {
             String[] split = email.split("@");
             String replace = split[0].replace(".", "");
             int i = replace.indexOf("+");
-            String temp = replace.substring(0, i == -1 ? replace.length() - 1 : i) + split[1];
+            String temp = replace.substring(0, i == -1 ? replace.length() : i) + split[1];
             set.add(temp);
         }
         return set.size();

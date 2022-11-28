@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.PageQuery;
@@ -272,6 +273,17 @@ public class BeanHelper {
             }
         }
         return json1;
+    }
+
+    /**
+     * TypeUtils 拥有数据类型转换函数
+     *
+     * @param val
+     * @return
+     */
+    @Deprecated
+    public static Integer toInt(Object val) {
+        return TypeUtils.castToInt(val);
     }
 
     private static ValueFilter valueFilter() {

@@ -3,7 +3,7 @@ package com.icboluo.datastructure.tree.binary;
 import lombok.AllArgsConstructor;
 
 /**
- * 线索化二叉树
+ * 顺序存储二叉树，顺序存储二叉树针对的是完全二叉树，其实二叉树的层级遍历，是根据2*n的公式来的
  *
  * @author icboluo
  * @since 2020/6/16 12:16

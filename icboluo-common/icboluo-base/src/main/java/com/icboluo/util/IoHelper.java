@@ -6,6 +6,8 @@ import java.io.*;
 import java.util.Arrays;
 
 /**
+ * 字节流遇到中文的时候容易乱码，建议使用字符流
+ *
  * @author icboluo
  * @since 2020/11/10 22:15
  */

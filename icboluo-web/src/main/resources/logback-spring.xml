@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <!--    彩色日志-->
+    <conversionRule conversionWord="clr" onverterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    onverterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    onverterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <springProperty scope="context" name="log" source="log.path"/>
+    <!--    输出到控制台-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encodre>
+            <!--            格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg；日志消息，%n是换行符-->
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
+                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+            </pattern>
+        </encodre>
+    </appender>
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--        级别过滤器，里面还有一个阈值过滤器-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--            设置过滤级别-->
+            <level>DEBUG</level>
+            <!--            用于配置符合过滤条件的操作-->
+            <conMatch>ACCEPT</conMatch>
+            <!--            用于配置不符合过滤条件的操作-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>${LOG_HOME}/debug/debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--        日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/debug/debug.%d{yyyy-MM-DD}.%i,log</FileNamePattern>
+            <!--        日志大小-->
+            <maxFileSize>10MB</maxFileSize>
+            <!--        日志文件保留天数-->
+            <maxHistory>30</maxHistory>
+            <!--        指定时间段日志大小上限-->
+            <totalSizeGap>5GB</totalSizeGap>
+        </rollingPolicy>
+        <encodre>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
+                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+            </pattern>
+        </encodre>
+    </appender>
+
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/debug/debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--        日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/debug/debug.%d{yyyy-MM-DD}.%i,log</FileNamePattern>
+            <!--        日志大小-->
+            <maxFileSize>10MB</maxFileSize>
+            <!--        日志文件保留天数-->
+            <maxHistory>30</maxHistory>
+            <!--        指定时间段日志大小上限-->
+            <totalSizeGap>5GB</totalSizeGap>
+        </rollingPolicy>
+        <encodre>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
+                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+            </pattern>
+        </encodre>
+    </appender>
+
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--        级别过滤器，里面还有一个阈值过滤器-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--            设置过滤级别-->
+            <level>WARN</level>
+            <!--            用于配置符合过滤条件的操作-->
+            <conMatch>ACCEPT</conMatch>
+            <!--            用于配置不符合过滤条件的操作-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>${LOG_HOME}/debug/debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--        日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/debug/debug.%d{yyyy-MM-DD}.%i,log</FileNamePattern>
+            <!--        日志大小-->
+            <maxFileSize>10MB</maxFileSize>
+            <!--        日志文件保留天数-->
+            <maxHistory>30</maxHistory>
+            <!--        指定时间段日志大小上限-->
+            <totalSizeGap>5GB</totalSizeGap>
+        </rollingPolicy>
+        <encodre>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
+                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+            </pattern>
+        </encodre>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--        级别过滤器，里面还有一个阈值过滤器-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--            设置过滤级别-->
+            <level>ERROR</level>
+            <!--            用于配置符合过滤条件的操作-->
+            <conMatch>ACCEPT</conMatch>
+            <!--            用于配置不符合过滤条件的操作-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>${LOG_HOME}/debug/debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--        日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/debug/debug.%d{yyyy-MM-DD}.%i,log</FileNamePattern>
+            <!--        日志大小-->
+            <maxFileSize>10MB</maxFileSize>
+            <!--        日志文件保留天数-->
+            <maxHistory>30</maxHistory>
+            <!--        指定时间段日志大小上限-->
+            <totalSizeGap>5GB</totalSizeGap>
+        </rollingPolicy>
+        <encodre>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
+                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+            </pattern>
+        </encodre>
+    </appender>
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+    <springProperty name="dev,test">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="DEBUG"/>
+            <appender-ref ref="INFO"/>
+            <appender-ref ref="WARN"/>
+            <appender-ref ref="ERROR"/>
+        </root>
+        <logger name="com.zaxxer.hikari.pool.HikariPool" level="INFO"/>
+    </springProperty>
+</configuration>
