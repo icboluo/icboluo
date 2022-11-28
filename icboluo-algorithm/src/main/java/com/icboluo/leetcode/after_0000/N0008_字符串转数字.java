@@ -11,7 +11,7 @@ class N0008_字符串转数字 {
         System.out.println("i = " + i);
     }
 
-    // TODO ERROR 越界
+    // TODO ERROR 小数点错误
     public int myAtoi(String s) {
         char[] chars = s.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -33,7 +33,11 @@ class N0008_字符串转数字 {
         if (!haveDigit) {
             return 0;
         } else {
-            return Integer.parseInt(sb.toString());
+            long l = Long.parseLong(sb.toString());
+            if ((int) l == l) {
+                return (int) l;
+            }
+            return l > 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
         }
     }
 }

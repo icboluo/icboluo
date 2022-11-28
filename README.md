@@ -53,9 +53,9 @@ Here are some ideas to get you started:
 
 ### framework
 
-[MarkDown](icboluo-framework/src/main/java/com/icboluo/framework/MarkDown.md)语法\
-[Spring](icboluo-framework/src/main/java/com/icboluo/spring) Learn\
-[Thread](icboluo-framework/src/main/java/com/icboluo/thread)
+[MarkDown](icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/framework/MarkDown.md)语法\
+[Spring](icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/spring) Learn\
+[Thread](icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/thread)
 
 ### fund服务是基金服务
 
@@ -65,6 +65,8 @@ Here are some ideas to get you started:
 
 [Game](icboluo-game/src/main/java/com/icboluo)\
 [国际化](icboluo-game/src/main/resources/i18n/)
+
+### gateway 服务内嵌Redis，服务启动，Redis服务自动启动
 
 ### note服务是笔记本功能，包含Excel-Mysql之间的转换
 

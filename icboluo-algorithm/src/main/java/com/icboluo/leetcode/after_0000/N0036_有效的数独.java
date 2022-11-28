@@ -7,7 +7,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2020-10-09 21:49
  */
-public class N0036_有效的数独 {
+class N0036_有效的数独 {
     public static void main(String[] args) {
         /*
         给每一个横、竖、九宫格建立map
@@ -16,7 +16,7 @@ public class N0036_有效的数独 {
          */
     }
 
-    // TODO ERROR
+    // TODO ERROR，这种校验是不合理的，仅仅校验了现有数独是否合法，没办法校验是否能正常填充
     public boolean isValidSudoku(char[][] board) {
         Map<Character, Boolean>[] row = new HashMap[9];
         Map<Character, Boolean>[] column = new HashMap[9];

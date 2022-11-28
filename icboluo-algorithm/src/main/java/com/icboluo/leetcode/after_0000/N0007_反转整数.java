@@ -5,8 +5,12 @@ package com.icboluo.leetcode.after_0000;
  * @since 2022-11-26 14:08
  */
 class N0007_反转整数 {
+    public static void main(String[] args) {
+        reverse(-2147483648);
+    }
+
     // TODO ERROR 数字过大
-    public int reverse(int x) {
+    public static int reverse(int x) {
         if (x == 0) {
             return 0;
         }
@@ -24,7 +28,7 @@ class N0007_反转整数 {
             int m = x % 10;
             if (notFirst0) {
                 sb.append(m);
-            }else{
+            } else {
                 if (m != 0) {
                     notFirst0 = true;
                     sb.append(m);
@@ -32,6 +36,7 @@ class N0007_反转整数 {
             }
             x = x / 10;
         }
-        return Integer.parseInt(sb.toString());
+        long l = Long.parseLong(sb.toString());
+        return (int) l == l ? (int) l : 0;
     }
 }
