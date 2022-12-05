@@ -7,7 +7,7 @@ package com.icboluo.leetcode.after_0000;
 class N0008_字符串转数字 {
     public static void main(String[] args) {
         N0008_字符串转数字 cla = new N0008_字符串转数字();
-        int i = cla.myAtoi("-91283472332");
+        int i = cla.myAtoi("   -42");
         System.out.println("i = " + i);
     }
 
@@ -17,16 +17,17 @@ class N0008_字符串转数字 {
         StringBuilder sb = new StringBuilder();
         boolean haveDigit = false;
         for (char aChar : chars) {
-            if (aChar == ' ') {
+            if (aChar == ' ' || aChar == '+') {
                 continue;
             }
             if (aChar == '-') {
                 sb.append('-');
-            }
-            if (Character.isDigit(aChar)) {
+            } else if (Character.isDigit(aChar)) {
                 sb.append(aChar);
                 haveDigit = true;
-            } else if (Character.isLetter(aChar)) {
+                // 不能这么写，是除数字的所有，并不是字母
+                // } else if (Character.isLetter(aChar)) {
+            } else {
                 break;
             }
         }

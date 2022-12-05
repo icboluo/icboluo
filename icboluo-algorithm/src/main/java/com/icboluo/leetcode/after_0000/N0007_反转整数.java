@@ -9,13 +9,16 @@ class N0007_反转整数 {
         reverse(-2147483648);
     }
 
-    // TODO ERROR 数字过大
     public static int reverse(int x) {
         if (x == 0) {
             return 0;
         }
         boolean xiaoYu0 = false;
         if (x < 0) {
+            // 对于 -128不能直接取反，会溢出
+            if (x == Integer.MIN_VALUE) {
+                return 0;
+            }
             x = -x;
             xiaoYu0 = true;
         }
