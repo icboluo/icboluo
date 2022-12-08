@@ -9,7 +9,24 @@ import java.util.List;
  * @since 2022-09-20 0:19
  */
 class N0054_旋转打印 {
-    private List<Integer> spiralOrder(int[][] matrix) {
+
+    public static void main(String[] args) {
+        N0054_旋转打印 cla = new N0054_旋转打印();
+        int[][] arr = new int[][]{
+                {1, 2, 3, 4},//.......
+                {5, 6, 7, 8},//........
+                {9, 10, 11, 12}
+        };
+        List<Integer> integers = cla.spiralOrder(arr);
+        System.out.println("integers = " + integers);
+
+        int[][] ints = cla.genMatrix(3);
+        for (int[] anInt : ints) {
+            System.out.println(Arrays.toString(anInt));
+        }
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
         int u = 0;
         int d = matrix.length - 1;
         int l = 0;
@@ -44,7 +61,8 @@ class N0054_旋转打印 {
         return ans;
     }
 
-    private int[][] genMatrix(int n) {
+    // TODO what`s this
+    public int[][] genMatrix(int n) {
         int[][] arr = new int[n][n];
         int u = 0, l = 0;
         int d = n - 1, r = n - 1;
@@ -77,21 +95,5 @@ class N0054_旋转打印 {
             }
         }
         return arr;
-    }
-
-    public static void main(String[] args) {
-        N0054_旋转打印 cla = new N0054_旋转打印();
-        int[][] arr = new int[][]{
-                {1, 2, 3, 4},//
-                {5, 6, 7, 8},//
-                {9, 10, 11, 12}
-        };
-        List<Integer> integers = cla.spiralOrder(arr);
-        System.out.println("integers = " + integers);
-
-        int[][] ints = cla.genMatrix(3);
-        for (int[] anInt : ints) {
-            System.out.println(Arrays.toString(anInt));
-        }
     }
 }

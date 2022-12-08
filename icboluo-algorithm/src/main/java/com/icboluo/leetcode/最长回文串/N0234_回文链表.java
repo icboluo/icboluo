@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0200;
+package com.icboluo.leetcode.最长回文串;
 
 import com.icboluo.common.ListNode;
 
@@ -13,7 +13,7 @@ class N0234_回文链表 {
     public static void main(String[] args) {
         N0234_回文链表 cla = new N0234_回文链表();
         ListNode listNode = new ListNode(1, 2, 2, 1);
-        boolean b = cla.m1(listNode);
+        boolean b = cla.isPalindrome1(listNode);
         System.out.println("b = " + b);
     }
 
@@ -23,7 +23,7 @@ class N0234_回文链表 {
      * @param listNode
      * @return
      */
-    private boolean m1(ListNode listNode) {
+    public boolean isPalindrome1(ListNode listNode) {
         // TODO 移动至公共类
         List<Integer> list = new ArrayList<>();
         ListNode cur = listNode;
@@ -49,7 +49,7 @@ class N0234_回文链表 {
      * @param listNode
      * @return
      */
-    private boolean m2(ListNode listNode) {
+    public boolean isPalindrome2(ListNode listNode) {
         ListNode left = listNode;
         ListNode right = listNode;
         // 确认中心点

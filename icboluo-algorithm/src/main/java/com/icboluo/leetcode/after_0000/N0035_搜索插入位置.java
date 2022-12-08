@@ -9,7 +9,7 @@ class N0035_搜索插入位置 {
         N0035_搜索插入位置 cla = new N0035_搜索插入位置();
         // 有序
         int[] arr = {1, 3, 5, 6};
-        int idx = cla.findInsertIndex1(arr, 5);
+        int idx = cla.searchInsert1(arr, 5);
         System.out.println("idx = " + idx);
     }
 
@@ -20,7 +20,7 @@ class N0035_搜索插入位置 {
      * @param n
      * @return
      */
-    private int findInsertIndex1(int[] arr, int n) {
+    public int searchInsert1(int[] arr, int n) {
         int i = 0;
         for (; i < arr.length; i++) {
             if (arr[i] >= n) {
@@ -31,13 +31,13 @@ class N0035_搜索插入位置 {
     }
 
     /**
-     * 二分查找
+     * 二分查找 TODO ERROR
      *
      * @param arr
      * @param n
      * @return
      */
-    private int findInsertIndex2(int[] arr, int n) {
+    public int searchInsert2(int[] arr, int n) {
         int left = 0;
         int right = arr.length - 1;
         while (left < right) {

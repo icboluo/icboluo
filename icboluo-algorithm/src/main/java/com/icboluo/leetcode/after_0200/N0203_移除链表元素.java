@@ -10,11 +10,12 @@ class N0203_移除链表元素 {
     public static void main(String[] args) {
         N0203_移除链表元素 cla = new N0203_移除链表元素();
         ListNode listNode = new ListNode(1, 2, 6, 3, 4, 5, 6);
-        cla.m1(listNode, 6);
+        cla.removeElements1(listNode, 6);
         listNode.print();
     }
 
-    private void m1(ListNode listNode, int n) {
+    // TODO ERROR
+    public void removeElements1(ListNode listNode, int n) {
         ListNode cur = listNode;
         while (cur.next != null) {
             if (cur.next.val == n) {
@@ -31,13 +32,13 @@ class N0203_移除链表元素 {
      * @param listNode
      * @param n
      */
-    private ListNode m2(ListNode listNode, int n) {
-// 递归到链表末尾
+    public ListNode removeElements2(ListNode listNode, int n) {
+        // 递归到链表末尾
         if (listNode == null) {
             return null;
         }
         // pre节点的next域指向下次递归的return
-        listNode.next = m2(listNode.next, n);
+        listNode.next = removeElements2(listNode.next, n);
         // 相当于把next域的指向重新指定了一下
         return listNode.val == n ? listNode.next : listNode;
     }

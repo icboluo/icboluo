@@ -8,11 +8,12 @@ class N0070_爬楼梯 {
          */
         N0070_爬楼梯 cla = new N0070_爬楼梯();
         int i = 3;
-        int plt = cla.plt2(i);
+        int plt = cla.climbStairs1(i);
         System.out.println("plt = " + plt);
     }
 
-    private int plt2(int target) {
+    // TODO ERROR
+    public int climbStairs1(int target) {
         if (target == 1) {
             return 1;
         }
@@ -27,7 +28,7 @@ class N0070_爬楼梯 {
         return iJian1;
     }
 
-    private int plt1(int target) {
+    public int climbStairs2(int target) {
         if (target == 1) {
             return 1;
         }

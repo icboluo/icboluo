@@ -6,7 +6,7 @@ class N0075_颜色分类三路快排 {
     public static void main(String[] args) {
         int[] arr = {2, 0, 2, 1, 1, 0};
         N0075_颜色分类三路快排 cla = new N0075_颜色分类三路快排();
-        cla.paixu1(arr);
+        cla.sortColors1(arr);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -15,7 +15,7 @@ class N0075_颜色分类三路快排 {
      *
      * @param arr
      */
-    private void paixu1(int[] arr) {
+    public void sortColors1(int[] arr) {
         int zero = -1;
         int end = arr.length;
         int temp;
@@ -40,7 +40,7 @@ class N0075_颜色分类三路快排 {
         }
     }
 
-    private void paixu2(int[] arr) {
+    private void sortColors2(int[] arr) {
         int left = 0;
         int right = arr.length - 1;
         // TODO 这个写法是错误的，很奇怪的写法，不能修正
