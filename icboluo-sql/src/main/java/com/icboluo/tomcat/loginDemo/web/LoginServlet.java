@@ -3,10 +3,10 @@ package com.icboluo.tomcat.loginDemo.web;
 
 import com.icboluo.dataobject.User;
 import com.icboluo.tomcat.loginDemo.service.UserService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/loginServlet")

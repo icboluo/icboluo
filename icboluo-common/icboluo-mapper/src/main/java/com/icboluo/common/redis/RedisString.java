@@ -1,5 +1,6 @@
 package com.icboluo.common.redis;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.BoundKeyOperations;
 import org.springframework.data.redis.core.ValueOperations;
@@ -8,7 +9,6 @@ import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;

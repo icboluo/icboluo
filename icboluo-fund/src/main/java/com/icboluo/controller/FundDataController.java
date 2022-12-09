@@ -9,11 +9,11 @@ import com.icboluo.object.vo.FundDataVO;
 import com.icboluo.service.FundDataService;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;

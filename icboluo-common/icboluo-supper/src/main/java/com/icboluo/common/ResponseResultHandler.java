@@ -5,6 +5,7 @@ import com.icboluo.annotation.ResponseResult;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -17,7 +18,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author icboluo

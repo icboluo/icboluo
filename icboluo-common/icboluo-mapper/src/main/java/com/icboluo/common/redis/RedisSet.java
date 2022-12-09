@@ -1,9 +1,9 @@
 package com.icboluo.common.redis;
 
+import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Set;
 
 /**

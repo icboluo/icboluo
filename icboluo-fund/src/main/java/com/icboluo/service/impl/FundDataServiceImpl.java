@@ -13,11 +13,11 @@ import com.icboluo.service.FundDataService;
 import com.icboluo.util.BeanHelper;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.MathUtil;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.DayOfWeek;

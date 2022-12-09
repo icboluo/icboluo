@@ -6,10 +6,10 @@ import com.icboluo.service.MonsterService;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.NameUtils;
 import com.icboluo.util.RandomHelper;
+import jakarta.annotation.Resource;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

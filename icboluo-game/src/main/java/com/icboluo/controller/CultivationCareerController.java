@@ -4,11 +4,10 @@ import com.github.pagehelper.PageInfo;
 import com.icboluo.annotation.ResponseResult;
 import com.icboluo.entity.CultivationCareer;
 import com.icboluo.service.CultivationCareerService;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * 修仙生涯(CultivationCareer)表控制层

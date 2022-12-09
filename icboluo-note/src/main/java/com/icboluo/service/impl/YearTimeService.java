@@ -1,11 +1,10 @@
 package com.icboluo.service.impl;
 
 import com.icboluo.common.Constant;
-import com.icboluo.mapper.YearTimeMapper;
 import com.icboluo.entity.note.YearTimeDO;
+import com.icboluo.mapper.YearTimeMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author icboluo

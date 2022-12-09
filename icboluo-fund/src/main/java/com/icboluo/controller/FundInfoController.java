@@ -3,12 +3,11 @@ package com.icboluo.controller;
 import com.icboluo.annotation.ResponseResult;
 import com.icboluo.object.vo.FundInfoVO;
 import com.icboluo.service.FundInfoService;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 
 /**
  * (FundInfo)表控制层

@@ -1,12 +1,11 @@
 package com.icboluo.service.impl;
 
 
-import com.icboluo.mapper.UserMapper;
 import com.icboluo.entity.base.UserDO;
+import com.icboluo.mapper.UserMapper;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author icboluo

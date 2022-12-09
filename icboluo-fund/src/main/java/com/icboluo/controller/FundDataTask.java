@@ -17,6 +17,7 @@ import com.icboluo.object.bo.FundCompleteDateBO;
 import com.icboluo.object.bo.FundDataGetBO;
 import com.icboluo.object.bo.FundDateBO;
 import com.icboluo.util.DateHelper;
+import jakarta.annotation.Resource;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -25,7 +26,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;

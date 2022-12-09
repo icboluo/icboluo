@@ -1,11 +1,10 @@
 package com.icboluo.util;
 
 import com.icboluo.dataobject.Student;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 /**
  * PostConstruct 代表的是创建对象后调用

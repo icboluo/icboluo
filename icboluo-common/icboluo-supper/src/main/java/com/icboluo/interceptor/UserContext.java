@@ -2,6 +2,8 @@ package com.icboluo.interceptor;
 
 import com.icboluo.controller.Demo;
 import com.icboluo.util.IcBoLuoException;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 
 /**
  * @author icboluo
@@ -24,7 +24,7 @@ public class UserContext {
     private static String role;
 
     /**
-     * @see javax.annotation.PreDestroy 和PostConstruct基本一致，但是我没有用过
+     * @see jakarta.annotation.PreDestroy 和PostConstruct基本一致，但是我没有用过
      */
     @PostConstruct
     private void setRole() {

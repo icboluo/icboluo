@@ -5,9 +5,8 @@ import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.vo.FundInfoVO;
 import com.icboluo.service.FundInfoService;
 import com.icboluo.util.BeanHelper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * (FundInfo)表服务实现类

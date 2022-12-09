@@ -3,9 +3,8 @@ package com.icboluo.service.impl;
 import com.icboluo.entity.PlayerLevel;
 import com.icboluo.mapper.PlayerLevelMapper;
 import com.icboluo.service.PlayerLevelService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * (PlayerLevel)表服务实现类

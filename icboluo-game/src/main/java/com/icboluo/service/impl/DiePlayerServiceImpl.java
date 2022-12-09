@@ -3,9 +3,8 @@ package com.icboluo.service.impl;
 import com.icboluo.entity.DiePlayer;
 import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.service.DiePlayerService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * 玩家(DiePlayer)表服务实现类

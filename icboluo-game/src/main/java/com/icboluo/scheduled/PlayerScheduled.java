@@ -8,10 +8,10 @@ import com.icboluo.mapper.PlayerMapper;
 import com.icboluo.service.CultivationCareerService;
 import com.icboluo.service.PlayerService;
 import com.icboluo.util.BeanHelper;
+import jakarta.annotation.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

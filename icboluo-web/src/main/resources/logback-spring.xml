@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration scan="true" scanPeriod="60 seconds">
     <!--    彩色日志-->
-    <conversionRule conversionWord="clr" onverterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wex"
-                    onverterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
     <conversionRule conversionWord="wEx"
-                    onverterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
-    <springProperty scope="context" name="log" source="log.path"/>
+    <springProperty scope="context" name="LOG_HOME" source="log.path"/>
     <!--    输出到控制台-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encodre>

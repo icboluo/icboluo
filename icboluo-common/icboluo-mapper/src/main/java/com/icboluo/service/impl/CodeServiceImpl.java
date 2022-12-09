@@ -4,8 +4,8 @@ import com.icboluo.entity.Student;
 import com.icboluo.mapper.CodeMapper;
 import com.icboluo.object.ArchivesVO;
 import com.icboluo.service.CodeService;
+import jakarta.annotation.Resource;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

@@ -3,9 +3,8 @@ package com.icboluo.service.impl;
 import com.icboluo.entity.FundAsyncRecord;
 import com.icboluo.mapper.FundAsyncRecordMapper;
 import com.icboluo.service.FundAsyncRecordService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * (FundAsyncRecord)表服务实现类

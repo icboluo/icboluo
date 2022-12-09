@@ -7,9 +7,9 @@ import com.icboluo.entity.CultivationCareer;
 import com.icboluo.mapper.CultivationCareerMapper;
 import com.icboluo.service.CultivationCareerService;
 import com.icboluo.util.BeanHelper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

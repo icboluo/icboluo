@@ -1,8 +1,10 @@
 package com.icboluo.tomcat.Day04;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
 import java.io.IOException;
 
 /*会话级别：浏览器关闭后session持久化不够，修改age可以解决

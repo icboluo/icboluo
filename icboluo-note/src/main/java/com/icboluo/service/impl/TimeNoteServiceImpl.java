@@ -1,12 +1,12 @@
 package com.icboluo.service.impl;
 
 import com.icboluo.common.Constant;
-import com.icboluo.mapper.TimeNoteMapper;
 import com.icboluo.entity.note.TimeNoteDO;
+import com.icboluo.mapper.TimeNoteMapper;
 import com.icboluo.service.TimeNoteService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 /**

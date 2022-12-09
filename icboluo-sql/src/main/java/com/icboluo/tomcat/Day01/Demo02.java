@@ -1,6 +1,7 @@
 package com.icboluo.tomcat.Day01;
 
-import javax.servlet.*;
+import jakarta.servlet.*;
+
 import java.io.IOException;
 
 /*
