@@ -18,7 +18,7 @@ class N0268_缺失数字 {
      * 方式1：排序，挨个遍历|二分查找
      * 方式2：存储到set,用n.for去set中查找
      * <p>
-     * 二分法 TODO ERROR
+     * 二分法
      *
      * @param arr
      * @return
@@ -26,10 +26,12 @@ class N0268_缺失数字 {
     public int missingNumber1(int[] arr) {
         Arrays.sort(arr);
         int left = 0;
-        int right = arr.length - 1;
+        // 这个右左边很重要；因为针对于0123这样的数据而言，left为len-1，right也为len-1，下面小括号显示是开区间，右指针必须开
+        int right = arr.length;
         while (left < right) {
-//            int mid = right - (right - left) / 2; 为什么这个方法不行
-            int mid = (left + right) / 2;
+//            int mid = right - (right - left) / 2; 假设right=1，left=0---》1，中间指针会向右移动，是不合理的；这个非常重要
+            int mid = left + (right - left) / 2;
+//            int mid = (left + right) / 2;
             if (arr[mid] > mid) {
                 right = mid;
             } else {

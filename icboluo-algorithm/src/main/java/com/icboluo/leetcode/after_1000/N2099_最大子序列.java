@@ -14,7 +14,7 @@ class N2099_最大子序列 {
         int[] ints = cla.maxSubsequence(arr, 9);
         System.out.println(Arrays.toString(ints));
     }
-// TODO ERROR
+
     public int[] maxSubsequence(int[] nums, int k) {
         // 此块代码非常小心：pq存储idx，根据nums[i]逆序；pq容器的大小是初始化大小（设置了没啥用，反正也不会变化）
         PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> nums[b] - nums[a]);
@@ -22,10 +22,22 @@ class N2099_最大子序列 {
             pq.add(i);
             // 可以在这里判断pq的长度，也可以在后面limit，都是可以的;好像不能这样写
         }
+/*        // 这个顺序是对的
         while (!pq.isEmpty()) {
             System.out.println(pq.poll());
         }
+        // 这个顺序是错的
         // 先limit前2个，再sort idx，这样就保证原始顺序不变，然后收集nums[i]
-        return pq.stream().limit(k).sorted().mapToInt(i -> nums[i]).toArray();
+        return pq.stream().limit(k).sorted().mapToInt(i -> nums[i]).toArray();*/
+
+        int[] res = new int[k];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = pq.poll();
+        }
+        Arrays.sort(res);
+        for (int i = 0; i < res.length; i++) {
+            res[i] = nums[res[i]];
+        }
+        return res;
     }
 }

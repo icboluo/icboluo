@@ -14,7 +14,6 @@ class N0013_Roman数字转换 {
         System.out.println("iii = " + iii);
     }
 
-    // TODO ERROR
     public int romanToInt(String s) {
         Map<Character, Integer> map = new HashMap<>();
         map.put('I', 1);
@@ -29,7 +28,8 @@ class N0013_Roman数字转换 {
         for (int i = 0; i < s.toCharArray().length - 1; i++) {
             int cur = map.get(s.charAt(i));
             int next = map.get(s.charAt(i + 1));
-            if (cur > next) {
+            // 这里注意等号
+            if (cur >= next) {
                 ans += cur;
             } else {
                 ans -= cur;

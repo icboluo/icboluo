@@ -34,7 +34,10 @@ class N0015_3数之和 {
                     list.add(arr[i]);
                     list.add(arr[left]);
                     list.add(arr[right]);
-                    ans.add(list);
+                    // 这里做一个去重即可
+                    if (!ans.contains(list)) {
+                        ans.add(list);
+                    }
                     if (arr[left + 1] == arr[left]) {
                         left++;
                     } else if (arr[right - 1] == arr[right]) {

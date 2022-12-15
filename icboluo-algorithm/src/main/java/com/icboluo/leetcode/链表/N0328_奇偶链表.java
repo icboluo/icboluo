@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0200;
+package com.icboluo.leetcode.链表;
 
 import com.icboluo.common.ListNode;
 
@@ -10,11 +10,11 @@ class N0328_奇偶链表 {
     public static void main(String[] args) {
         N0328_奇偶链表 cla = new N0328_奇偶链表();
         ListNode listNode = new ListNode(1, 2, 3, 4, 5);
-        ListNode res = cla.m(listNode);
+        ListNode res = cla.oddEvenList(listNode);
         res.print();
     }
 
-    private ListNode m(ListNode listNode) {
+    public ListNode oddEvenList(ListNode listNode) {
         ListNode ji = new ListNode();
         ListNode ou = new ListNode();
         ListNode jiCur = ji;
@@ -26,7 +26,7 @@ class N0328_奇偶链表 {
             if (count % 2 == 0) {
                 ouCur.next = cur;
                 ouCur = ouCur.next;
-            }else {
+            } else {
                 jiCur.next = cur;
                 jiCur = jiCur.next;
             }

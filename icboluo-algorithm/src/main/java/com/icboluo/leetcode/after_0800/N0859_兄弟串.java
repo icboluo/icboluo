@@ -52,7 +52,7 @@ class N0859_兄弟串 {
         return word1FrenquencyList.equals(word2FrenquencyList);
     }
 
-    // 1790 检查一次字符串交换是否可以使字符串相等 TODO ERROR
+    // 1790 检查一次字符串交换是否可以使字符串相等
     public boolean areAlmostEqual(String s1, String s2) {
         if (s1.length() != s2.length()) {
             return false;
@@ -63,13 +63,20 @@ class N0859_兄弟串 {
         Integer different = null;
         for (int i = 0; i < s1.length(); i++) {
             if (s1.charAt(i) != s2.charAt(i)) {
+                // 第一次赋值索引
                 if (different == null) {
                     different = i;
                 } else {
-                    return false;
+                    // 第二次比对
+                    if (s1.charAt(different) == s2.charAt(i) && s1.charAt(i) == s2.charAt(different)) {
+                        // 比对成功再比对剩余字符串
+                        return s1.substring(i + 1).equals(s2.substring(i + 1));
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
-        return true;
+        return false;
     }
 }

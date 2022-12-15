@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0100;
+package com.icboluo.leetcode.链表;
 
 import com.icboluo.common.ListNode;
 
@@ -12,16 +12,16 @@ class N0160_相交链表 {
         listNode50.next.next = listNode1;
         listNode1.next = listNode836;
         N0160_相交链表 cla = new N0160_相交链表();
-        cla.m(listNode4, listNode50);
+        cla.getIntersectionNode(listNode4, listNode50);
     }
 
     /**
-     * 双指针，a链表后面跟b，b链表后面跟a，两个指针相遇的地方就是链表相交的地方
+     * 双指针，a链表后面跟b，b链表后面跟a，两个指针相遇的地方就是链表相交的地方 FIXME
      *
      * @param listNode01
      * @param listNode02
      */
-    private void m(ListNode listNode01, ListNode listNode02) {
+    public ListNode getIntersectionNode(ListNode listNode01, ListNode listNode02) {
         ListNode aNode = listNode01;
         ListNode bNode = listNode02;
         while (aNode.val != bNode.val) {
@@ -36,6 +36,6 @@ class N0160_相交链表 {
                 bNode = listNode01;
             }
         }
-        System.out.println(aNode.next);
+        return aNode.next;
     }
 }

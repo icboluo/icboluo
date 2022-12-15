@@ -23,11 +23,11 @@ class N1013_三分数组 {
         }
         int leftSum = 0;
         int rightSum = 0;
-        // 注意这个-1，保证中间有数据
-        while (left < right - 1) {
-            if (leftSum != target) {
+        // 不取等要保证中间有值（不为空数组
+        while (left < right) {
+            if (leftSum != target || left == 0) {
                 leftSum += arr[left++];
-            } else if (rightSum != target) {
+            } else if (rightSum != target || right == arr.length - 1) {
                 rightSum += arr[right--];
             } else {
                 break;

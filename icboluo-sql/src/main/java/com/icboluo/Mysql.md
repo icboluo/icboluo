@@ -216,3 +216,22 @@ where条件中多过滤一些行，使驱动表小一点
         System.out.println("or 两边都需要索引，有一个没有索引就会导致全表扫描");
         System.out.println("mysql offset表示取出前m+n条数据，扔掉前m条，返回n条，大数据量慢");
         System.out.println("用exists代替in 用 not exists代替 not in");
+
+
+## 易错点
+
+mysql在处理字符串与整数数据对比的时候，会依次将字符串与整数数据对比，直到字符串不为整数的字母为止
+
+简单来说，就是挨着遍历数字，直到非数字，发现有没有匹配的值
+
+select 'abc'=1;-- 0 false
+select '1abc'=1;--1 true
+select 'abc'=0;---1 true
+select 'a2bc'=2;--0 false
+select '02a2bc'=2;--1 true
+
+结论，禁止使用字符串类型和数字类型做比较；常见于db_str in(int,int,int)这种模式，因为数据库中的数据为1;2;3这种类型，传参为int类型，就会造成数据类型转换比较，不合理
+
+in应该这么写
+
+where find_in_set('1',replace(product1,';',','))

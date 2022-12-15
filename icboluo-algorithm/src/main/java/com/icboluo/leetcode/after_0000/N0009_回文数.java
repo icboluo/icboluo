@@ -23,7 +23,7 @@ class N0009_回文数 {
     }
 
     /**
-     * 用/%取左右比较 TODO error 1001
+     * 用/%取左右比较
      *
      * @param x 元素 2002
      * @return 是否回文数
@@ -33,7 +33,8 @@ class N0009_回文数 {
             return false;
         }
         int weiShu = 1;
-        while (x / weiShu > 10) {
+        // 这里注意等号
+        while (x / weiShu >= 10) {
             weiShu *= 10;
         }
         while (weiShu != 0) {

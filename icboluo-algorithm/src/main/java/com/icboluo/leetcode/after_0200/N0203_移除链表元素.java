@@ -14,9 +14,11 @@ class N0203_移除链表元素 {
         listNode.print();
     }
 
-    // TODO ERROR
-    public void removeElements1(ListNode listNode, int n) {
-        ListNode cur = listNode;
+    // 要注意删光的情况
+    public ListNode removeElements1(ListNode listNode, int n) {
+        ListNode head = new ListNode();
+        head.next = listNode;
+        ListNode cur = head;
         while (cur.next != null) {
             if (cur.next.val == n) {
                 cur.next = cur.next.next;
@@ -24,6 +26,7 @@ class N0203_移除链表元素 {
                 cur = cur.next;
             }
         }
+        return head.next;
     }
 
     /**

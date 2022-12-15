@@ -15,14 +15,15 @@ class N0169_数组中超过一般的数字 {
      * @return
      */
     public int majorityElement1(int[] nums) {
-        int count = 0;
         for (int i = 0; i < nums.length - 1; i++) {
+            // i出现的次数
+            int count = 0;
             for (int j = i + 1; j < nums.length; j++) {
                 if (nums[i] == nums[j]) {
                     count++;
                 }
             }
-            if (count++ > nums.length / 2) {
+            if (++count > nums.length / 2) {
                 return nums[i];
             }
         }

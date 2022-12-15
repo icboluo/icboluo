@@ -24,7 +24,8 @@ class N0128_最长连续序列 {
         if (arr == null || arr.length == 0) {
             return 0;
         }
-        Arrays.sort(arr);
+        // 题意要求去重
+        arr = Arrays.stream(arr).boxed().distinct().sorted().mapToInt(Integer::intValue).toArray();
         int max = 1;
         int pre = arr[0];
         int temp = 1;

@@ -41,13 +41,15 @@ class N0035_搜索插入位置 {
         int left = 0;
         int right = arr.length - 1;
         while (left < right) {
+            // 这里的计算会让mid靠近左边，1.5的时候我们期望右边的值为1，而不是0
             int mid = (left + right) / 2;
             if (arr[mid] == n) {
                 return mid;
             } else if (arr[mid] < n) {
                 left = mid + 1;
             } else {
-                right = mid - 1;
+                // 注意这里
+                right = mid;
             }
         }
         return left;

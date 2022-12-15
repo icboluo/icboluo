@@ -5,10 +5,12 @@ import java.util.List;
 
 class N0118_杨辉三角 {
     public static void main(String[] args) {
-        m(8);
+        N0118_杨辉三角 cla = new N0118_杨辉三角();
+        List<List<Integer>> generate = cla.generate(8);
+        System.out.println("generate = " + generate);
     }
 
-    private static void m(int n) {
+    public List<List<Integer>> generate(int n) {
         List<List<Integer>> ans = new ArrayList<>();
         List<Integer> list0 = new ArrayList<>();
         list0.add(1);
@@ -23,6 +25,6 @@ class N0118_杨辉三角 {
             listi.add(1);
             ans.add(listi);
         }
-        ans.forEach(System.out::println);
+        return ans;
     }
 }

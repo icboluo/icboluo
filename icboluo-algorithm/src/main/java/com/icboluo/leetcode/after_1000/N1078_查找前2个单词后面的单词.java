@@ -8,11 +8,11 @@ import java.util.List;
  * @since 2022-12-08 23:13
  */
 class N1078_查找前2个单词后面的单词 {
-    // TODO ERROR
     public String[] findOcurrences(String text, String first, String second) {
         int idx = 0;
         List<String> list = new ArrayList<>();
-        String two = first + " " + second;
+        // 注意字符串构建...
+        String two = first + " " + second + " ";
         while (idx != -1) {
             idx = text.indexOf(two, idx);
             int start = idx + two.length();

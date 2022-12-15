@@ -12,13 +12,13 @@ class N0070_爬楼梯 {
         System.out.println("plt = " + plt);
     }
 
-    // TODO ERROR
     public int climbStairs1(int target) {
         if (target == 1) {
             return 1;
         }
-        int iJian1 = 1;
-        int iJian2 = 2;
+        // 注意这里
+        int iJian2 = 1;
+        int iJian1 = 2;
         int temp;
         for (int i = 2; i < target; i++) {
             temp = iJian2;

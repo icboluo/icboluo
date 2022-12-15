@@ -16,17 +16,26 @@ class N0008_字符串转数字 {
         char[] chars = s.toCharArray();
         StringBuilder sb = new StringBuilder();
         boolean haveDigit = false;
+        boolean haveFuHaoWei = false;
         for (char aChar : chars) {
-            if (aChar == ' ' || aChar == '+') {
+            if (aChar == ' ') {
                 continue;
             }
-            if (aChar == '-') {
-                sb.append('-');
+            if (!haveFuHaoWei) {
+                if (aChar == '-') {
+                    sb.append('-');
+                    haveFuHaoWei = true;
+                    continue;
+                } else if (aChar == '+') {
+                    haveFuHaoWei = true;
+                    continue;
+                }
+            }
+            if (aChar == '-' || aChar == '+') {
+                break;
             } else if (Character.isDigit(aChar)) {
                 sb.append(aChar);
                 haveDigit = true;
-                // 不能这么写，是除数字的所有，并不是字母
-                // } else if (Character.isLetter(aChar)) {
             } else {
                 break;
             }
