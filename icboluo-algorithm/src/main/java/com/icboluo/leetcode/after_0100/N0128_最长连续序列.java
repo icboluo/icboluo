@@ -15,7 +15,7 @@ class N0128_最长连续序列 {
     }
 
     /**
-     * 排序，遍历一遍即可 TODO ERROR
+     * 排序，遍历一遍即可
      *
      * @param arr
      * @return

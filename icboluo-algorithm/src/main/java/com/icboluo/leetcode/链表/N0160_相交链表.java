@@ -24,7 +24,8 @@ class N0160_相交链表 {
     public ListNode getIntersectionNode(ListNode listNode01, ListNode listNode02) {
         ListNode aNode = listNode01;
         ListNode bNode = listNode02;
-        while (aNode.val != bNode.val) {
+        // 这里是内存值比较
+        while (aNode != bNode) {
             if (aNode.next != null) {
                 aNode = aNode.next;
             } else {

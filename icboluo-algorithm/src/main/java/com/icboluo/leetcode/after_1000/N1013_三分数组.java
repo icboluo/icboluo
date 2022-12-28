@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 class N1013_三分数组 {
     /**
-     * 将数组分为3份，保证每份的和相等 TODO ERROR
+     * 将数组分为3份，保证每份的和相等
      *
      * @param arr
      * @return
@@ -25,7 +25,8 @@ class N1013_三分数组 {
         int rightSum = 0;
         // 不取等要保证中间有值（不为空数组
         while (left < right) {
-            if (leftSum != target || left == 0) {
+            // 要保证左右有值（不为空数组，这个并且代码起码留2个空位
+            if ((leftSum != target || left == 0) && left != arr.length - 2) {
                 leftSum += arr[left++];
             } else if (rightSum != target || right == arr.length - 1) {
                 rightSum += arr[right--];

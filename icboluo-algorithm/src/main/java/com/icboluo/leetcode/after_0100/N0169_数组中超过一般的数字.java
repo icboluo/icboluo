@@ -9,12 +9,16 @@ import java.util.Map;
  */
 class N0169_数组中超过一般的数字 {
     /**
-     * 双层for TODO ERROR
+     * 双层for
      *
      * @param nums
      * @return
      */
     public int majorityElement1(int[] nums) {
+        // 需要加数组只有一个的判断
+        if (nums.length == 1) {
+            return nums[0];
+        }
         for (int i = 0; i < nums.length - 1; i++) {
             // i出现的次数
             int count = 0;
@@ -52,7 +56,7 @@ class N0169_数组中超过一般的数字 {
     }
 
     /**
-     * 摩尔投票法 有点难理解
+     * 摩尔投票法 有点难理解 TODO
      *
      * @param nums
      * @return

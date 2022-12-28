@@ -31,7 +31,7 @@ class N0035_搜索插入位置 {
     }
 
     /**
-     * 二分查找 TODO ERROR
+     * 二分查找
      *
      * @param arr
      * @param n
@@ -39,7 +39,8 @@ class N0035_搜索插入位置 {
      */
     public int searchInsert2(int[] arr, int n) {
         int left = 0;
-        int right = arr.length - 1;
+        // 注意这里取最后一个元素
+        int right = arr.length;
         while (left < right) {
             // 这里的计算会让mid靠近左边，1.5的时候我们期望右边的值为1，而不是0
             int mid = (left + right) / 2;

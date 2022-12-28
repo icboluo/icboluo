@@ -7,7 +7,7 @@ import java.util.Deque;
  * @author icboluo
  * @since 2022-12-15 22:46
  */
-class N0709_每天的温度 {
+class N0739_每天的温度 {
     public int[] dailyTemperatures(int[] temperatures) {
         Deque<Integer> stack = new ArrayDeque<>();
         int[] res = new int[temperatures.length];
