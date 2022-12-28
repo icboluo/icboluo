@@ -17,7 +17,18 @@ class MergeSort {
 
     }
 
+    /**
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @param temp 可以将temp抽取成全局变量，减少参数传递
+     */
     public static void mergeSort(int[] arr, int left, int right, int[] temp) {
+        // 也可以这样判断
+/*        if (left == right) {
+            return;
+        }*/
         if (left < right) {
             int mid = (left + right) / 2;
             mergeSort(arr, left, mid, temp);

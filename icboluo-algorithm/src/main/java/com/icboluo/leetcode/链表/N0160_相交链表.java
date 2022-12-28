@@ -16,27 +16,30 @@ class N0160_相交链表 {
     }
 
     /**
-     * 双指针，a链表后面跟b，b链表后面跟a，两个指针相遇的地方就是链表相交的地方 FIXME
+     * 双指针，a链表后面跟b，b链表后面跟a，两个指针相遇的地方就是链表相交的地方
      *
      * @param listNode01
      * @param listNode02
      */
     public ListNode getIntersectionNode(ListNode listNode01, ListNode listNode02) {
+        if (listNode01 == null || listNode02 == null) {
+            return null;
+        }
         ListNode aNode = listNode01;
         ListNode bNode = listNode02;
         // 这里是内存值比较
         while (aNode != bNode) {
-            if (aNode.next != null) {
+            if (aNode != null) {
                 aNode = aNode.next;
             } else {
                 aNode = listNode02;
             }
-            if (bNode.next != null) {
+            if (bNode != null) {
                 bNode = bNode.next;
             } else {
                 bNode = listNode01;
             }
         }
-        return aNode.next;
+        return aNode;
     }
 }
