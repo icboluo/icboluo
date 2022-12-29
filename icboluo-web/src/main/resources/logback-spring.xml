@@ -10,12 +10,11 @@
     <springProperty scope="context" name="LOG_HOME" source="log.path"/>
     <!--    输出到控制台-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encodre>
+        <encoder>
             <!--            格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg；日志消息，%n是换行符-->
-            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
-                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} [%15.15t] %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
             </pattern>
-        </encodre>
+        </encoder>
     </appender>
     <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--        级别过滤器，里面还有一个阈值过滤器-->
@@ -36,32 +35,30 @@
             <!--        日志文件保留天数-->
             <maxHistory>30</maxHistory>
             <!--        指定时间段日志大小上限-->
-            <totalSizeGap>5GB</totalSizeGap>
+            <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
-        <encodre>
-            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
-                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+        <encoder>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} [%15.15t] %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
             </pattern>
-        </encodre>
+        </encoder>
     </appender>
 
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${LOG_HOME}/debug/debug.log</File>
+        <File>${LOG_HOME}/info/info.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--        日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/debug/debug.%d{yyyy-MM-DD}.%i,log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/info/info.%d{yyyy-MM-DD}.%i.log</FileNamePattern>
             <!--        日志大小-->
             <maxFileSize>10MB</maxFileSize>
             <!--        日志文件保留天数-->
             <maxHistory>30</maxHistory>
             <!--        指定时间段日志大小上限-->
-            <totalSizeGap>5GB</totalSizeGap>
+            <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
-        <encodre>
-            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
-                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+        <encoder>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} [%15.15t] %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
             </pattern>
-        </encodre>
+        </encoder>
     </appender>
 
     <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -74,22 +71,21 @@
             <!--            用于配置不符合过滤条件的操作-->
             <onMismatch>DENY</onMismatch>
         </filter>
-        <File>${LOG_HOME}/debug/debug.log</File>
+        <File>${LOG_HOME}/warn/warn.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--        日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/debug/debug.%d{yyyy-MM-DD}.%i,log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/warn/warn.%d{yyyy-MM-DD}.%i.log</FileNamePattern>
             <!--        日志大小-->
             <maxFileSize>10MB</maxFileSize>
             <!--        日志文件保留天数-->
             <maxHistory>30</maxHistory>
             <!--        指定时间段日志大小上限-->
-            <totalSizeGap>5GB</totalSizeGap>
+            <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
-        <encodre>
-            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
-                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+        <encoder>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} [%15.15t] %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
             </pattern>
-        </encodre>
+        </encoder>
     </appender>
 
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -102,22 +98,21 @@
             <!--            用于配置不符合过滤条件的操作-->
             <onMismatch>DENY</onMismatch>
         </filter>
-        <File>${LOG_HOME}/debug/debug.log</File>
+        <File>${LOG_HOME}/error/error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--        日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/debug/debug.%d{yyyy-MM-DD}.%i,log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/error/error.%d{yyyy-MM-DD}.%i.log</FileNamePattern>
             <!--        日志大小-->
             <maxFileSize>10MB</maxFileSize>
             <!--        日志文件保留天数-->
             <maxHistory>30</maxHistory>
             <!--        指定时间段日志大小上限-->
-            <totalSizeGap>5GB</totalSizeGap>
+            <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
-        <encodre>
-            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }}){magenta} %clr(---){faint} [%15.15t]
-                %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
+        <encoder>
+            <pattern>%d{dd日 HH:mm:ss.SSS} -%clr(${level:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} [%15.15t] %clr(%-40.40logger{39}){cyan}: %replace(%replace(%msg){'\n','_'}){'\r','_'}%n
             </pattern>
-        </encodre>
+        </encoder>
     </appender>
     <root level="WARN">
         <appender-ref ref="CONSOLE"/>
@@ -126,7 +121,7 @@
         <appender-ref ref="WARN"/>
         <appender-ref ref="ERROR"/>
     </root>
-    <springProperty name="dev,test">
+    <springProfile name="dev,test">
         <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="DEBUG"/>
@@ -135,5 +130,5 @@
             <appender-ref ref="ERROR"/>
         </root>
         <logger name="com.zaxxer.hikari.pool.HikariPool" level="INFO"/>
-    </springProperty>
+    </springProfile>
 </configuration>

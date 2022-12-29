@@ -18,11 +18,10 @@ class MergeSort {
     }
 
     /**
-     *
      * @param arr
      * @param left
      * @param right
-     * @param temp 可以将temp抽取成全局变量，减少参数传递
+     * @param temp  可以将temp抽取成全局变量，减少参数传递
      */
     public static void mergeSort(int[] arr, int left, int right, int[] temp) {
         // 也可以这样判断
@@ -105,7 +104,7 @@ class MergeSort {
      * @param arr2
      * @return
      */
-    private static int[] m1(int[] arr1, int[] arr2) {
+    public int[] merge(int[] arr1, int[] arr2) {
         int i = arr1.length - 1;
         int j = arr2.length - 1;
         int[] arr = new int[arr1.length + arr2.length];
