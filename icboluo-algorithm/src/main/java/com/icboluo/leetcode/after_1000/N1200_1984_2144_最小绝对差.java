@@ -63,13 +63,25 @@ class N1200_1984_2144_最小绝对差 {
      * @param k
      * @return
      */
-    public int minimumDifference(int[] nums, int k) {
+    public int minimumDifference1(int[] nums, int k) {
         Arrays.sort(nums);
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < nums.length; i += k) {
             int a = nums[i];
+            // 直接分组会使不能均分的情况变得难以处理
             int b = i + k >= nums.length ? nums[nums.length - 1] : nums[i + k];
             min = Math.min(min, b - a);
+        }
+        return min;
+    }
+
+    public int minimumDifference(int[] nums, int k) {
+        Arrays.sort(nums);
+        int min = Integer.MAX_VALUE;
+        // 需要证明对于 a b c，c-a一定是小于b的，这个比较困难,这就相当于，我们可以舍去b的判断，从0开始到n-k结束即可
+        // 注意这个循环的约束条件，这个是相当重要的
+        for (int i = 0; i < nums.length - k + 1; i++) {
+            min = Math.min(min, nums[i + k - 1] - nums[i]);
         }
         return min;
     }

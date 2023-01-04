@@ -95,7 +95,7 @@ class MergeSort {
     }
 
     /**
-     * N0088
+     * N0088 FIXME ERROR
      * 1.合并后排序
      * 2....
      * 3.双指针，从后向前比较 (也可以从前向后比较
@@ -104,11 +104,11 @@ class MergeSort {
      * @param arr2
      * @return
      */
-    public int[] merge(int[] arr1, int[] arr2) {
-        int i = arr1.length - 1;
-        int j = arr2.length - 1;
-        int[] arr = new int[arr1.length + arr2.length];
-        int k = arr1.length + arr2.length;
+    public int[] merge(int[] arr1, int m, int[] arr2, int n) {
+        int i = m - 1;
+        int j = n - 1;
+        int[] arr = new int[m + n];
+        int k = m + n - 1;
         while (i >= 0 && j >= 0) {
             if (arr1[i] > arr2[j]) {
                 arr[k] = arr1[i--];

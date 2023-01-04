@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1000;
+package com.icboluo.leetcode.math;
 
 import java.util.Arrays;
 
@@ -14,12 +14,12 @@ class N1317_获取不含0的整数 {
     }
 
     /**
-     * 把n拆分成2个整数和 FIXME ERROR
+     * 把n拆分成2个整数和 ERROR
      *
      * @param n
      * @return
      */
-    public int[] getNoZeroIntegers(int n) {
+    public int[] getNoZeroIntegers1(int n) {
         String str = n + "";
         int weiShu = 0;
         String a = "";
@@ -44,5 +44,31 @@ class N1317_获取不含0的整数 {
             }
         }
         return new int[]{Integer.parseInt(a), Integer.parseInt(b)};
+    }
+
+    /**
+     * 需要好好看这个代码，写的不错的
+     *
+     * @param n
+     * @return
+     */
+    public int[] getNoZeroIntegers(int n) {
+        int a = 0;
+        int b = 0;
+        int step = 1;
+        while (n > 0) {
+            int m = n % 10;
+            n /= 10;
+            if ((m == 0 || m == 1) && n > 0) {
+                a += step * (1 + m);
+                b += step * 9;
+                n--;
+            } else {
+                a += step * 1;
+                b += step * (m - 1);
+            }
+            step *= 10;
+        }
+        return new int[]{a, b};
     }
 }

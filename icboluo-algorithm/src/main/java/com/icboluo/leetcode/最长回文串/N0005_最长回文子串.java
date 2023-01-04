@@ -8,18 +8,18 @@ class N0005_最长回文子串 {
     public static void main(String[] args) {
         N0005_最长回文子串 cla = new N0005_最长回文子串();
         String str = "babad";
-        String s = cla.maxHwc1(str);
+        String s = cla.longestPalindrome1(str);
         System.out.println("s = " + s);
     }
 
     /**
-     * todo 马拉车、中心拓扑、动态规划
+     * TODO 马拉车、中心拓扑、动态规划 FIXME ERROR
      * 判断所有子串，时间复杂度达到3次方阶
      *
      * @param str
      * @return
      */
-    private String maxHwc1(String str) {
+    public String longestPalindrome1(String str) {
         String res = "";
         int max = Integer.MIN_VALUE;
         char[] chars = str.toCharArray();
@@ -42,7 +42,7 @@ class N0005_最长回文子串 {
      * @param str
      * @return
      */
-    private String longestPalindrome2(String str) {
+    public String longestPalindrome2(String str) {
         String res = "";
         for (int i = 0; i < str.length(); i++) {
             // 奇数情况
@@ -50,6 +50,14 @@ class N0005_最长回文子串 {
             String str2 = centerMaxHwc(str, i, i + 1);
             res = str1.length() > res.length() ? str1 : res;
             res = str2.length() > res.length() ? str2 : res;
+
+            // 也可以这样写
+/*            if (res.length() < str1.length()) {
+                res = str1;
+            }
+            if (res.length() < str2.length()) {
+                res = str2;
+            }*/
         }
         return res;
     }
@@ -71,7 +79,7 @@ class N0005_最长回文子串 {
     }
 
     /**
-     * 中心开花向两边扩展 FIXME ERROR
+     * 中心开花向两边扩展
      *
      * @param str
      * @return
@@ -83,9 +91,10 @@ class N0005_最长回文子串 {
             int len1 = center(str, i, i);
             int len2 = center(str, i, i + 1);
             int len = Math.max(len1, len2);
-            if (len > right - left) {
+            // 这里需要+1
+            if (len > right - left + 1) {
                 left = i - (len - 1) / 2;
-                right = i + left / 2;
+                right = i + len / 2;
             }
         }
         return str.substring(left, right + 1);
