@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
  * @since 2020/12/26 16:51
  */
 @AllArgsConstructor
-public class ConcreteWebSite extends WebSite {
+class ConcreteWebSite extends WebSite {
     /**
      * 网站发布的类型（这个是共享的部分，属于内部状态）
      * 存储在享元对象内部且不会随环境的改变而改变

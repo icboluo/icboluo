@@ -1,4 +1,4 @@
-package com.icboluo.designpattern.productconsumer;
+package com.icboluo.designpattern.product_consumer;
 
 /**
  * 此类是（本质上：共同访问的）共享数据区域

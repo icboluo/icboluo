@@ -1,6 +1,7 @@
 package com.icboluo.designpattern.structure.flyweight;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 网站工厂类：根据需要返回一个网站
@@ -8,11 +9,11 @@ import java.util.HashMap;
  * @author icboluo
  * @since 2020/12/26 16:52
  */
-public class WebSiteFactory {
+class WebSiteFactory {
     /**
      * 集合，充当池的作用
      */
-    private HashMap<String, ConcreteWebSite> pool = new HashMap<>();
+    private Map<String, ConcreteWebSite> pool = new HashMap<>();
 
     /**
      * 根据网站的类型，返回一个网站，如果没有网站，那就创建一个网站，并放入到池中，并返回

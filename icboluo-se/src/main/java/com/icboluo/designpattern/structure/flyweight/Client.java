@@ -6,7 +6,7 @@ package com.icboluo.designpattern.structure.flyweight;
  * @author icboluo
  * @since 2020/12/26 16:48
  */
-public class Client {
+class Client {
     public static void main(String[] args) {
         WebSiteFactory webSiteFactory = new WebSiteFactory();
         WebSite webSite01 = webSiteFactory.getWebSiteCategory("新闻");

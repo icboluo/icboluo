@@ -18,7 +18,6 @@ class N0438_找到字符串中所有字母异位词 {
         System.out.println("list = " + list);
     }
 
-    // TODO error
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> resList = new ArrayList<>();
         // 字符出现的次数

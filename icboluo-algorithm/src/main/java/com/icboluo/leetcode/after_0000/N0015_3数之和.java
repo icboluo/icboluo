@@ -17,6 +17,7 @@ class N0015_3数之和 {
      * 3层循环求和不考虑 TODO ERROR
      * <p>
      * 升序数组+双指针：带区间的三数之和
+     * 三数之和是否为0
      *
      * @param arr
      * @return
@@ -34,17 +35,21 @@ class N0015_3数之和 {
                     list.add(arr[i]);
                     list.add(arr[left]);
                     list.add(arr[right]);
-                    // 这里做一个去重即可
+                    // 这里做一个去重即可，也可以使用set集合先收集，最终处理结果集
                     if (!ans.contains(list)) {
                         ans.add(list);
                     }
-                    if (arr[left + 1] == arr[left]) {
+                    // 因为left、right已经使用过了，所以这里要进行 ++ --
+                    left++;
+                    right--;
+                    // 这里的加速是没有必要的，每个索引的元素均可以使用，并不是不能相同，所以这块加上加速和break只会让结果集变小
+/*                    if (arr[left + 1] == arr[left]) {
                         left++;
                     } else if (arr[right - 1] == arr[right]) {
                         right--;
                     } else {
                         break;
-                    }
+                    }*/
                 } else if (temp < 0) {
                     left++;
                 } else {

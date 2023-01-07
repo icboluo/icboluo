@@ -13,14 +13,16 @@ class N0005_最长回文子串 {
     }
 
     /**
-     * TODO 马拉车、中心拓扑、动态规划 FIXME ERROR
+     * TODO 马拉车、中心拓扑、动态规划
+     * 超时
      * 判断所有子串，时间复杂度达到3次方阶
      *
      * @param str
      * @return
      */
     public String longestPalindrome1(String str) {
-        String res = "";
+        // 针对于单元素的处理方式
+        String res = str.substring(0, 1);
         int max = Integer.MIN_VALUE;
         char[] chars = str.toCharArray();
         for (int i = 0; i < chars.length - 1; i++) {

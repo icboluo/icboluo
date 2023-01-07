@@ -9,6 +9,6 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class User {
+class User {
     private String name;
 }

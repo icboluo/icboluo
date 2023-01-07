@@ -1,4 +1,4 @@
-package com.icboluo.designpattern.productconsumer;
+package com.icboluo.designpattern.product_consumer;
 
 public class Consumer implements Runnable {
 

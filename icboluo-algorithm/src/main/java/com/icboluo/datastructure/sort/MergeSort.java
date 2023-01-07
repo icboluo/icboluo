@@ -2,6 +2,8 @@ package com.icboluo.datastructure.sort;
 
 import com.icboluo.util.RandomHelper;
 
+import java.util.Arrays;
+
 /**
  * 归并排序
  *
@@ -14,7 +16,10 @@ class MergeSort {
         int[] temp = new int[arr.length];
         mergeSort(arr, 0, arr.length - 1, temp);
         //System.out.println(Arrays.toString(arr));
-
+        MergeSort cla = new MergeSort();
+        var nums1 = new int[]{1, 2, 3, 0, 0, 0};
+        cla.merge(nums1, 3, new int[]{2, 5, 6}, 3);
+        System.out.println(Arrays.toString(nums1));
     }
 
     /**
@@ -100,29 +105,29 @@ class MergeSort {
      * 2....
      * 3.双指针，从后向前比较 (也可以从前向后比较
      *
-     * @param arr1
-     * @param arr2
+     * @param nums1
+     * @param nums2
      * @return
      */
-    public int[] merge(int[] arr1, int m, int[] arr2, int n) {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
         int i = m - 1;
         int j = n - 1;
         int[] arr = new int[m + n];
         int k = m + n - 1;
         while (i >= 0 && j >= 0) {
-            if (arr1[i] > arr2[j]) {
-                arr[k] = arr1[i--];
+            if (nums1[i] > nums2[j]) {
+                arr[k] = nums1[i--];
             } else {
-                arr[k] = arr2[j--];
+                arr[k] = nums2[j--];
             }
             k--;
         }
         while (i >= 0) {
-            arr[k--] = arr1[i--];
+            arr[k--] = nums1[i--];
         }
         while (j >= 0) {
-            arr[k--] = arr[j--];
+            arr[k--] = nums2[j--];
         }
-        return arr;
+        System.arraycopy(arr, 0, nums1, 0, arr.length);
     }
 }

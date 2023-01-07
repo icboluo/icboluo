@@ -1,5 +1,6 @@
-package com.icboluo.leetcode.after_0800;
+package com.icboluo.leetcode.after_0600;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -8,8 +9,8 @@ import java.util.Set;
  * @author icboluo
  * @since 2022-11-22 22:30
  */
-class N0905_0922根据奇偶排序 {
-    // 747 数组最大元素是其他元素的至少2倍 TODO ERROR
+class N0747_0905_0922根据奇偶排序 {
+    // 747 数组最大元素是其他元素的至少2倍
     public int dominantIndex(int[] nums) {
         int max = -1;
         int second = -1;
@@ -23,7 +24,8 @@ class N0905_0922根据奇偶排序 {
                 second = nums[i];
             }
         }
-        return max > second * 2 ? idx : -1;
+        // 这块需要加上一个等号
+        return max >= second * 2 ? idx : -1;
     }
 
     // 905
@@ -42,31 +44,41 @@ class N0905_0922根据奇偶排序 {
         return nums;
     }
 
-    // 0922 TODO ERROR
+    /**
+     * 0922 根据奇偶排序
+     * 里面奇数偶数各占一半，使当i为奇数的时候，arr[i]也为奇数
+     *
+     * @param nums
+     * @return
+     */
     public int[] sortArrayByParityII(int[] nums) {
         int[] arr = new int[nums.length];
         int even = 0;
         int odd = 0;
+        // 这里采用的是以结果集为导向，每一个位置使用奇偶元素填充
         for (int i = 0; i < nums.length; i++) {
             if (i % 2 == 0) {
-                while (nums[even] != 0) {
+                // 如果当前不是偶数，一直加到偶数
+                while (nums[even] % 2 != 0) {
                     even++;
                 }
-                arr[i] = nums[even];
+                // 这个偶数使用过了，应该++舍去
+                arr[i] = nums[even++];
             } else {
-                while (nums[odd] != 1) {
+                while (nums[odd] % 2 != 1) {
                     odd++;
                 }
-                arr[i] = nums[odd];
+                arr[i] = nums[odd++];
             }
         }
         return arr;
     }
 
-    // 1346 数组中存在一个元素是一个元素的2倍 TODO ERROR
-    public boolean checkIfExist(int[] arr) {
+    // 1346 数组中存在一个元素是一个元素的2倍 ERROR
+    public boolean checkIfExist1(int[] arr) {
         Set<Integer> set = new HashSet<>();
         for (int num : arr) {
+            // 这样的写法set集合刚开始并不是全量数据，包含判断是不完全的
             if (set.contains(num * 2)) {
                 return true;
             }
@@ -75,13 +87,33 @@ class N0905_0922根据奇偶排序 {
         return false;
     }
 
-    // 2149 按符号重新排列数组元素 TODO ERROR
+    // -10,12,-20,-8,15 负数没法处理
+    public boolean checkIfExist2(int[] arr) {
+        Arrays.sort(arr);
+        Set<Integer> set = new HashSet<>();
+        for (int i = arr.length - 1; i >= 0; i--) {
+            if (set.contains(arr[i] * 2)) {
+                return true;
+            }
+            set.add(arr[i]);
+        }
+        return false;
+    }
+
+    /**
+     * 2149 按符号重新排列数组元素
+     * 重排数组，使相邻元素一个为正一个为负；正数开头
+     *
+     * @param nums
+     * @return
+     */
     public int[] rearrangeArray(int[] nums) {
         int even = 0;
         int odd = 1;
         int[] arr = new int[nums.length];
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] % 2 == 0) {
+            // 这里采用的是将数组的每一个元素放到合适的位置
+            if (nums[i] > 0) {
                 arr[even] = nums[i];
                 even += 2;
             } else {
@@ -125,7 +157,13 @@ class N0905_0922根据奇偶排序 {
         return nums;
     }
 
-    // 2231 奇数位或偶数位交换后的最大值 TODO ERROR
+    /**
+     * 2231 奇数位或偶数位交换后的最大值 TODO ERROR
+     * 可以交换任意2个偶数位或奇数位的数字，交换多次，返回交换后的最大值 可是我感觉这个题做的没问题啊
+     *
+     * @param num
+     * @return
+     */
     public int largestInteger(int num) {
         String str = String.valueOf(num);
         PriorityQueue<Character> even = new PriorityQueue<>((a, b) -> b - a);

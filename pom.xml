@@ -58,13 +58,13 @@
         <!--mapper -->
         <mysql.version>8.0.29</mysql.version>
         <druid.verison>1.2.5</druid.verison>
-        <mybatis.plus.verison>3.5.2</mybatis.plus.verison>
-        <pagehelper.version>1.4.1</pagehelper.version>
+        <mybatis.plus.verison>3.5.3</mybatis.plus.verison>
+        <pagehelper.version>1.4.6</pagehelper.version>
         <!--alibaba -->
         <alibaba.fastjson.verison>1.2.83</alibaba.fastjson.verison>
         <alibaba.dependencies.verison>2.2.5.RELEASE</alibaba.dependencies.verison>
         <nacos.verison>2021.1</nacos.verison>
-        <easyexcel.version>3.0.5</easyexcel.version>
+        <easyexcel.version>3.1.4</easyexcel.version>
         <!--校验器 下面的版本不要升级，会启动失败        -->
         <validation.api.version>2.0.1.Final</validation.api.version>
         <hibernate.validator.version>6.0.18.Final</hibernate.validator.version>

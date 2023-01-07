@@ -64,7 +64,7 @@ Here are some ideas to get you started:
 ### game服务是一个小游戏
 
 [Game](icboluo-game/src/main/java/com/icboluo)\
-[国际化](icboluo-game/src/main/resources/i18n/)
+[国际化](icboluo-game/src/main/resources/i18n)
 
 ### gateway 服务内嵌Redis，服务启动，Redis服务自动启动
 
