@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.条件排序;
+package com.icboluo.leetcode.排序;
 
 import java.util.Arrays;
 import java.util.HashMap;
