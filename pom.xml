@@ -4,6 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <!--    clean的时候有时候会出现 Process terminated （加工终止-->
     <parent>
+        <!--        我们在升级Spring的时候，应该把其他的stater同样升级到相同版本，例如mybatis-->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.0</version>
@@ -136,6 +137,8 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.version}</version>
             </dependency>
+            <!--            项目启动失败，报mybatis异常的时候：原因可能是因为Spring升级，删除部分文件导致mybatis引用Spring的时候失效
+            ，可以在SqlSessionFactoryBean中查看，有爆红-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
