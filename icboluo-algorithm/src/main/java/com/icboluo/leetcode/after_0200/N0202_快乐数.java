@@ -7,9 +7,9 @@ import java.util.Set;
  * @author icboluo
  * @since 2020-09-29 19:47
  */
-public class N0202_todo快乐数 {
+public class N0202_快乐数 {
     public static void main(String[] args) {
-        N0202_todo快乐数 cla = new N0202_todo快乐数();
+        N0202_快乐数 cla = new N0202_快乐数();
         boolean r = cla.isHappy(19);
         System.out.println("r = " + r);
     }
