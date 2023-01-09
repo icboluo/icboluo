@@ -7,7 +7,7 @@ package com.icboluo.leetcode.二分查找;
 class N0069_0367_平方根 {
     /**
      * 取最近的
-     * 对x取平方根，并向下取整 FIXME 超时
+     * 对x取平方根，并向下取整
      *
      * @param x
      * @return
@@ -19,7 +19,8 @@ class N0069_0367_平方根 {
         int left = 1;
         int right = x;
         while (true) {
-            int mid = left + (right - left) >> 1;
+            // 注意这个括号，位运算优先级比较低
+            int mid = left + ((right - left) >> 1);
             if (mid > x / mid) {
                 right = mid - 1;
             } else {
@@ -40,8 +41,9 @@ class N0069_0367_平方根 {
     public boolean isPerfectSquare(int num) {
         int left = 0;
         int right = num;
-        while (left <= num) {
-            int mid = left + (right - left) >> 1;
+        // 这里是right，不是num
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
             if (mid * mid > num) {
                 right = mid - 1;
             } else if (mid * mid < num) {

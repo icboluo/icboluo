@@ -80,6 +80,32 @@ class N1365_比当前元素还要小的数 {
     }
 
     /**
+     * 0875.. 可可吃香蕉
+     *
+     * @param piles 香蕉个数
+     * @param h     时间
+     * @return 时间内吃掉所有香蕉的最小速度
+     */
+    public int minEatingSpeed(int[] piles, int h) {
+        int left = 0;
+        int right = (int) Math.pow(10, 9);
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            // 以mid的速度吃香蕉，花费的小时数
+            int sum = 0;
+            for (int pile : piles) {
+                sum += Math.ceil((double) pile / mid);
+            }
+            if (sum > h) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
+
+    /**
      * N1365_比当前元素还要小的数
      *
      * @param nums
@@ -114,7 +140,8 @@ class N1365_比当前元素还要小的数 {
     }
 
     /**
-     * 1754 两个字符串的最大合并
+     * 1754 两个字符串的最大合并 FIXME 超时
+     * 把任意一个单词的首字母放到合并后的字符串的最后，求字典序最大的字符串
      *
      * @param word1
      * @param word2
@@ -122,6 +149,49 @@ class N1365_比当前元素还要小的数 {
      */
     public String largestMerge(String word1, String word2) {
         String res = "";
+        while (!"".equals(word1) || !"".equals(word2)) {
+            if ("".equals(word1)) {
+                res += word2.charAt(0);
+                word2 = word2.substring(1);
+            } else if ("".equals(word2)) {
+                res += word1.charAt(0);
+                word2 = word1.substring(1);
+            } else {
+                if (word1.charAt(0) > word2.charAt(0)) {
+                    res += word1.charAt(0);
+                    word1 = word1.substring(1);
+                } else {
+                    res += word2.charAt(0);
+                    word2 = word2.substring(1);
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 2064... 分发到任何商店的产品的最小化最大值 FIXME ERROR
+     *
+     * @param n          专卖店
+     * @param quantities 产品类型的产品数量
+     * @return
+     */
+    public int minimizedMaximum(int n, int[] quantities) {
+        int left = 0;
+        int right = 10000;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            int sum = 0;
+            for (int quantity : quantities) {
+                sum += Math.ceil((double) quantity / mid);
+            }
+            if (sum > n) {
+                left++;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
     }
 
     /**
