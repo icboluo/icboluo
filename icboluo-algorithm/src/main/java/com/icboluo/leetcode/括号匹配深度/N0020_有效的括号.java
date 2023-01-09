@@ -36,6 +36,27 @@ class N0020_有效的括号 {
         return index == 0;
     }
 
+    /**
+     * 仅有一种小括号 (())
+     *
+     * @param str
+     * @return
+     */
+    private int m2(String str) {
+        int max = Integer.MIN_VALUE;
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c == '(') {
+                count++;
+                max = Math.max(max, count);
+            } else {
+                count--;
+            }
+        }
+        return max;
+    }
+
     public boolean isValid(String str) {
         // 用栈，压栈的时候进行转换，peek进行判断
         Deque<Character> stack = new ArrayDeque<>();
