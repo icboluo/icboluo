@@ -25,7 +25,7 @@ class N0349_两个数组的交集 {
      */
     public int[] intersection(int[] nums1, int[] nums2) {
         Set<Integer> set = Arrays.stream(nums1).boxed().collect(Collectors.toSet());
-        HashSet<Integer> res = new HashSet<>();
+        Set<Integer> res = new HashSet<>();
         for (int item : nums2) {
             if (set.contains(item)) {
                 res.add(item);

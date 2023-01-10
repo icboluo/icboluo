@@ -19,7 +19,7 @@ class N0143_再订购清单 {
             fast = fast.next.next;
             slow = slow.next;
         }
-        ListNode right = reverse(slow);
+        ListNode right = slow.reverse();
         ListNode left = head;
         while (right != null) {
             // 这个想起来比较抽象，简单来做把每一个的next都标识起来即可
@@ -33,18 +33,5 @@ class N0143_再订购清单 {
             }
             right = rightNext;
         }
-    }
-
-    public ListNode reverse(ListNode listNode) {
-        ListNode cur = listNode;
-        ListNode pre = null;
-        ListNode next;
-        while (cur != null) {
-            next = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = next;
-        }
-        return pre;
     }
 }

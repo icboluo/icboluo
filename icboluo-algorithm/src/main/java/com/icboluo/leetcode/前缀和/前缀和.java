@@ -1,4 +1,4 @@
-package com.icboluo.othersource.method;
+package com.icboluo.leetcode.前缀和;
 
 /**
  * 算出一共有几个和为 k 的子数组
@@ -6,7 +6,7 @@ package com.icboluo.othersource.method;
  * @author icboluo
  * @since 2021-34-27 21:34
  */
-public class 前缀和 {
+class 前缀和 {
     public static void main(String[] args) {
         前缀和 cla = new 前缀和();
         int[] arr = {3, 5, 2, -2, 6, 4};

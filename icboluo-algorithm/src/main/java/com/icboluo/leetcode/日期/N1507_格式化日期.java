@@ -5,7 +5,7 @@ package com.icboluo.leetcode.日期;
  * @since 2023-01-07 16:00
  */
 class N1507_格式化日期 {
-    private String[] monthArr = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    private final String[] monthArr = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
     public String reformatDate(String date) {
         String[] strArr = date.split(" ");

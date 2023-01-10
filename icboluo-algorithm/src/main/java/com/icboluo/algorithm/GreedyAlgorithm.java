@@ -2,9 +2,7 @@ package com.icboluo.algorithm;
 
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * 贪心算法
@@ -15,7 +13,7 @@ import java.util.HashSet;
 class GreedyAlgorithm {
     public static void main(String[] args) {
         //广播信息
-        HashMap<String, HashSet<String>> broadcasts = new HashMap<>();
+        Map<String, HashSet<String>> broadcasts = new HashMap<>();
         HashSet<String> hashSet1 = new HashSet<>();
         hashSet1.add("北京");
         hashSet1.add("上海");
@@ -49,9 +47,9 @@ class GreedyAlgorithm {
         allAreas.add("成都");
         allAreas.add("杭州");
         allAreas.add("大连");
-//最后选择的广播
-        ArrayList<String> selects = new ArrayList<>();
-        HashSet<String> tempSet = new HashSet<>();
+        // 最后选择的广播
+        List<String> selects = new ArrayList<>();
+        Set<String> tempSet = new HashSet<>();
         String maxKey;
         while (CollectionUtils.isEmpty(allAreas)) {
             maxKey = null;
@@ -60,7 +58,7 @@ class GreedyAlgorithm {
                 HashSet<String> areas = broadcasts.get(key);
                 tempSet.addAll(areas);
                 tempSet.retainAll(allAreas);
-                if (tempSet.size() > 0 && (maxKey == null || tempSet.size() > broadcasts.get(maxKey).size())) {
+                if (!tempSet.isEmpty() && (maxKey == null || tempSet.size() > broadcasts.get(maxKey).size())) {
                     maxKey = key;
                 }
             }

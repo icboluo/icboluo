@@ -1,23 +1,23 @@
 package com.icboluo.leetcode.after_0100;
 
-class N0172_ {
+class N0172_阶乘后的零 {
     public static void main(String[] args) {
-        N0172_ cla = new N0172_();
-        int res = cla.m1(5);
+        N0172_阶乘后的零 cla = new N0172_阶乘后的零();
+        int res = cla.trailingZeroes1(5);
         System.out.println("res = " + res);
     }
 
     /**
-     * 阶乘
+     * 阶乘 FIXME ERROR
      *
      * @param n
      * @return
      */
-    private int m1(int n) {
+    private int trailingZeroes1(int n) {
         if (n == 1) {
             return n;
         }
-        int res = n * m1(n - 1);
+        int res = n * trailingZeroes1(n - 1);
         return res;
     }
 
@@ -27,11 +27,11 @@ class N0172_ {
      * @param n
      * @return
      */
-    private int m2(int n) {
+    private int trailingZeroes2(int n) {
         if (n == 1) {
             return n;
         }
-        int res = n * m1(n - 1);
+        int res = n * trailingZeroes2(n - 1);
         return res;
     }
 }

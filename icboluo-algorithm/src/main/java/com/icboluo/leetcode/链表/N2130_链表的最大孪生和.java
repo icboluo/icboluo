@@ -23,7 +23,7 @@ class N2130_链表的最大孪生和 {
         }
         assert slow != null;
         // 后半部分反转，即可next读取元素
-        ListNode mid = reverse(slow);
+        ListNode mid = slow.reverse();
         while (mid != null) {
             int temp = head.val + mid.val;
             max = Math.max(max, temp);
@@ -31,18 +31,5 @@ class N2130_链表的最大孪生和 {
             mid = mid.next;
         }
         return max;
-    }
-
-    public ListNode reverse(ListNode listNode) {
-        ListNode cur = listNode;
-        ListNode pre = null;
-        ListNode next;
-        while (cur != null) {
-            next = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = next;
-        }
-        return pre;
     }
 }
