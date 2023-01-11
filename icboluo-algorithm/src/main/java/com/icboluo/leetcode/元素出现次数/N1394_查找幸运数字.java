@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.字符出现次数;
+package com.icboluo.leetcode.元素出现次数;
 
 import java.util.*;
 

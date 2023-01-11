@@ -14,7 +14,7 @@ import java.util.HashMap;
  * @author icboluo
  * @since 2021-30-26 21:30
  */
-class Demo01_TwoSum {
+class N0001_TwoSum {
     public static void main(String[] args) {
         int[] arr = {2, 7, 11, 15};
         int[] res = twoSum1(arr, 9);
