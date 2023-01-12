@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1000;
+package com.icboluo.leetcode.元素出现次数;
 
 import java.util.Arrays;
 import java.util.List;

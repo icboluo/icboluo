@@ -1,8 +1,8 @@
-package com.icboluo.leetcode.after_0100;
+package com.icboluo.leetcode.math;
 
 class N0172_阶乘后的零 {
     public static void main(String[] args) {
-        N0172_阶乘后的零 cla = new N0172_阶乘后的零();
+        var cla = new N0172_阶乘后的零();
         int res = cla.trailingZeroes1(5);
         System.out.println("res = " + res);
     }
@@ -13,7 +13,7 @@ class N0172_阶乘后的零 {
      * @param n
      * @return
      */
-    private int trailingZeroes1(int n) {
+    public int trailingZeroes1(int n) {
         if (n == 1) {
             return n;
         }
@@ -27,7 +27,7 @@ class N0172_阶乘后的零 {
      * @param n
      * @return
      */
-    private int trailingZeroes2(int n) {
+    public int trailingZeroes2(int n) {
         if (n == 1) {
             return n;
         }

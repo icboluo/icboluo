@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0800;
+package com.icboluo.leetcode.二分查找;
 
 /**
  * @author icboluo

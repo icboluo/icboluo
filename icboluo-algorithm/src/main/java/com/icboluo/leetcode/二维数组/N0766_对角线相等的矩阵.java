@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0600;
+package com.icboluo.leetcode.二维数组;
 
 /**
  * @author icboluo

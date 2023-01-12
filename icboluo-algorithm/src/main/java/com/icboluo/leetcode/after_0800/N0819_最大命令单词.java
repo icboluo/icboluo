@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  */
 class N0819_最大命令单词 {
     public static void main(String[] args) {
-        N0819_最大命令单词 cla = new N0819_最大命令单词();
+        var cla = new N0819_最大命令单词();
         String s = cla.mostCommonWord("Bob hit a ball, the hit BALL flew far after it was hit.", new String[]{"hit"});
         System.out.println("s = " + s);
     }

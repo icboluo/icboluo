@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.二维数组;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,11 +12,10 @@ class N0054_旋转打印 {
 
     public static void main(String[] args) {
         N0054_旋转打印 cla = new N0054_旋转打印();
-        int[][] arr = new int[][]{
+        @SuppressWarnings("all") int[][] arr = new int[][]{//..................
                 {1, 2, 3, 4},//.......
                 {5, 6, 7, 8},//........
-                {9, 10, 11, 12}
-        };
+                {9, 10, 11, 12}};
         List<Integer> integers = cla.spiralOrder(arr);
         System.out.println("integers = " + integers);
 

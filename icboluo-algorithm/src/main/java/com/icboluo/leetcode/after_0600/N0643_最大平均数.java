@@ -27,7 +27,7 @@ class N0643_最大平均数 {
     }
 
     public static void main(String[] args) {
-        N0643_最大平均数 cla = new N0643_最大平均数();
+        var cla = new N0643_最大平均数();
         double maxAverage = cla.findMaxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4);
         System.out.println("maxAverage = " + maxAverage);
     }

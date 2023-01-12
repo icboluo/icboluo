@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 class N1436_目的地城市 {
     /**
      * 开始地-目的地，因为最终目的地只会是目的地，也就是说，最终目的地不在开始地里面
+     *
      * @param paths
      * @return
      */

@@ -6,7 +6,7 @@ package com.icboluo.leetcode.after_0600;
  */
 class N0681_最近时刻 {
     public static void main(String[] args) {
-        N0681_最近时刻 cla = new N0681_最近时刻();
+        var cla = new N0681_最近时刻();
         String str = "23:59";
         String s = cla.nextCloseTime(str);
         System.out.println("s = " + s);

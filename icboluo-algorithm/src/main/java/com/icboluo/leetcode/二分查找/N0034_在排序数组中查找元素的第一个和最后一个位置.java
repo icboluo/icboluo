@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.二分查找;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -7,9 +7,9 @@ import java.util.Arrays;
  * @author icboluo
  * @since 2020-10-09 21:44
  */
-class N0034_搜索插入位置 {
+class N0034_在排序数组中查找元素的第一个和最后一个位置 {
     public static void main(String[] args) {
-        N0034_搜索插入位置 cla = new N0034_搜索插入位置();
+        var cla = new N0034_在排序数组中查找元素的第一个和最后一个位置();
         int[] arr1 = {1, 3, 5, 6};
         var res = cla.searchRange1(arr1, 5);
         System.out.println("res = " + Arrays.toString(res));
@@ -43,17 +43,37 @@ class N0034_搜索插入位置 {
     }
 
     /**
-     * 二分查找 TODO
+     * 二分查找
      * ==mid
      * <mid+1 =left
      * >mid+1 =mid
      *
-     * @param nums
+     * @param arr
      * @param target
      * @return
      */
-    public int[] searchRange2(int[] nums, int target) {
-        return new int[2];
+    public int[] searchRange2(int[] arr, int target) {
+        int[] res = new int[2];
+        Arrays.fill(res, -1);
+        if (arr.length == 0) {
+            return res;
+        }
+        int left = 0;
+        int right = arr.length - 1;
+        while (left <= right && (arr[left] != target || arr[right] != target)) {
+            if (left == right && arr[left] != target) {
+                return res;
+            }
+            if (arr[left] != target) {
+                left++;
+                // 不加else会不会快点
+            } else if (arr[right] != target) {
+                right--;
+            }
+        }
+        res[0] = left;
+        res[1] = right;
+        return res;
     }
 
 

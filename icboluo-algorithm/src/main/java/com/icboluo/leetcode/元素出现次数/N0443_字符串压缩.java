@@ -10,7 +10,7 @@ import java.util.List;
 class N0443_字符串压缩 {
 
     public static void main(String[] args) {
-        N0443_字符串压缩 cla = new N0443_字符串压缩();
+        var cla = new N0443_字符串压缩();
         int compress = cla.compress(new char[]{'a', 'a', 'b', 'b', 'c', 'c', 'c'});
         System.out.println("compress = " + compress);
     }

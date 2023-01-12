@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1000;
+package com.icboluo.leetcode.二维数组;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.List;
  */
 class N1260_移位二维数组 {
     public static void main(String[] args) {
-        N1260_移位二维数组 cla = new N1260_移位二维数组();
-        int[][] arr = new int[][]{{1, 2, 3},  // ---------------------
+        var cla = new N1260_移位二维数组();
+        @SuppressWarnings("all") int[][] arr = new int[][]{{1, 2, 3},  // ---------------------
                 {4, 5, 6},// --------------------------
                 {7, 8, 9},};
         List<List<Integer>> lists = cla.shiftGrid(arr, 1);

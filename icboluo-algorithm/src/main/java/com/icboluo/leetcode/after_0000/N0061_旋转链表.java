@@ -8,7 +8,7 @@ import com.icboluo.common.ListNode;
  */
 class N0061_旋转链表 {
     public static void main(String[] args) {
-        N0061_旋转链表 cla = new N0061_旋转链表();
+        var cla = new N0061_旋转链表();
         ListNode listNode = new ListNode(1, 2, 3, 4, 5);
         ListNode ans = cla.rotateRight(listNode, 2);
         ans.print();

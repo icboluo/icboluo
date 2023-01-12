@@ -6,7 +6,7 @@ package com.icboluo.leetcode.二分查找;
  */
 class N0035_搜索插入位置 {
     public static void main(String[] args) {
-        N0035_搜索插入位置 cla = new N0035_搜索插入位置();
+        var cla = new N0035_搜索插入位置();
         // 有序
         int[] arr = {1, 3, 5, 6};
         int idx = cla.searchInsert1(arr, 5);

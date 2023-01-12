@@ -2,7 +2,7 @@ package com.icboluo.leetcode.after_0000;
 
 class N0058_最后一个单词的长度 {
     public static void main(String[] args) {
-        N0058_最后一个单词的长度 cla = new N0058_最后一个单词的长度();
+        var cla = new N0058_最后一个单词的长度();
         String str = "hello world";
         int length = cla.lengthOfLastWord2(str);
         System.out.println("length = " + length);

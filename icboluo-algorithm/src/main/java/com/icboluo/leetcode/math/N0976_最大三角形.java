@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0800;
+package com.icboluo.leetcode.math;
 
 import java.util.Arrays;
 
@@ -19,5 +19,5 @@ class N0976_最大三角形 {
         return 0;
     }
 
-    // 0812 三角形的最大面积 it`s hard to understand
+    // TODO 0812 三角形的最大面积 it`s hard to understand
 }

@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
  */
 class N1313_将数组元素按照次数展示 {
     public static void main(String[] args) {
-        N1313_将数组元素按照次数展示 cla = new N1313_将数组元素按照次数展示();
+        var cla = new N1313_将数组元素按照次数展示();
         int[] res = cla.decompressRLElist(new int[]{73, 95, 5, 68, 6, 14, 98, 3, 98, 39, 100, 69, 76, 77, 93, 46, 91, 69, 26, 13, 30, 53, 15, 53, 34, 17});
         System.out.println(Arrays.toString(res));
     }

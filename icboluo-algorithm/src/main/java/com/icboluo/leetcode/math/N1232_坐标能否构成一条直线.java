@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1000;
+package com.icboluo.leetcode.math;
 
 /**
  * @author icboluo
