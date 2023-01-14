@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  */
 class N0926_1653_1752_将字符串翻转为单调递增 {
     public static void main(String[] args) {
-        N0926_1653_1752_将字符串翻转为单调递增 cla = new N0926_1653_1752_将字符串翻转为单调递增();
+        var cla = new N0926_1653_1752_将字符串翻转为单调递增();
         boolean aaabbb = cla.checkString("aaabbb");
         System.out.println("aaabbb = " + aaabbb);
     }
@@ -66,17 +66,37 @@ class N0926_1653_1752_将字符串翻转为单调递增 {
 
     /**
      * 1752 检查数组是否升序或旋转；判断数组是否是升序的，或者原本是升序的，只是经过了一次旋转
-     * 比较 a,b  a>b的情况最多法师一次 FIXME ERROR
+     * 比较 a,b  a>b的情况最多法师一次 ERROR
      *
      * @param nums
      * @return
      */
-    public boolean check(int[] nums) {
+    public boolean check1(int[] nums) {
         int k = 0;
         // 这块要考虑最后一个元素的，代码可能不对
         for (int i = 0; i < nums.length - 1; i++) {
             // 旋转最多一次
             if (nums[i] > nums[i + 1]) {
+                k++;
+            }
+            if (k > 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * example: 4 5 1 2 3 // 2 1 3 4
+     *
+     * @param nums
+     * @return
+     */
+    public boolean check2(int[] nums) {
+        int k = 0;
+        for (int i = 0; i < nums.length; i++) {
+            // 最后一个元素需要和第一个元素相连做比较，也必须满足第一个大于最后一个，总的来说，当前大于下一个的情况只运行出现一次
+            if (nums[i] > nums[(i + 1) % nums.length]) {
                 k++;
             }
             if (k > 1) {

@@ -1,9 +1,6 @@
 package com.icboluo.leetcode.after_0600;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author icboluo
@@ -89,7 +86,11 @@ class N0747_0905_0922根据奇偶排序 {
 
     // -10,12,-20,-8,15 负数没法处理
     public boolean checkIfExist2(int[] arr) {
-        Arrays.sort(arr);
+        // 我们期望，数组里面的值不断的变大，然后我们由大到小即可判断
+        arr = Arrays.stream(arr).boxed()
+                .sorted(Comparator.comparingInt(Math::abs))
+                .mapToInt(Integer::intValue)
+                .toArray();
         Set<Integer> set = new HashSet<>();
         for (int i = arr.length - 1; i >= 0; i--) {
             if (set.contains(arr[i] * 2)) {
@@ -158,8 +159,8 @@ class N0747_0905_0922根据奇偶排序 {
     }
 
     /**
-     * 2231 奇数位或偶数位交换后的最大值 TODO ERROR
-     * 可以交换任意2个偶数位或奇数位的数字，交换多次，返回交换后的最大值 可是我感觉这个题做的没问题啊
+     * 2231 奇数位或偶数位交换后的最大值
+     * 可以交换任意2个偶数或奇数数字，交换多次，返回交换后的最大值
      *
      * @param num
      * @return
@@ -169,7 +170,7 @@ class N0747_0905_0922根据奇偶排序 {
         PriorityQueue<Character> even = new PriorityQueue<>((a, b) -> b - a);
         PriorityQueue<Character> odd = new PriorityQueue<>((a, b) -> b - a);
         for (int i = 0; i < str.length(); i++) {
-            if (i % 2 == 0) {
+            if (Character.getNumericValue(str.charAt(i)) % 2 == 0) {
                 even.add(str.charAt(i));
             } else {
                 odd.add(str.charAt(i));
@@ -177,7 +178,7 @@ class N0747_0905_0922根据奇偶排序 {
         }
         String ans = "";
         for (int i = 0; i < str.length(); i++) {
-            ans += i % 2 == 0 ? even.poll() : odd.poll();
+            ans += Character.getNumericValue(str.charAt(i)) % 2 == 0 ? even.poll() : odd.poll();
         }
         return Integer.parseInt(ans);
     }

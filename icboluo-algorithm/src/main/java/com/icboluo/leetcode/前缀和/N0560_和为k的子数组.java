@@ -9,7 +9,7 @@ import java.util.Map;
  */
 class N0560_和为k的子数组 {
     public static void main(String[] args) {
-        N0560_和为k的子数组 cla = new N0560_和为k的子数组();
+        var cla = new N0560_和为k的子数组();
         int i = cla.subarraySum2(new int[]{-1, -1, 1}, 0);
         System.out.println("i = " + i);
     }
@@ -40,8 +40,6 @@ class N0560_和为k的子数组 {
     }
 
     /**
-     * FIXME ERROR 1,1
-     *
      * @param arr
      * @param k
      * @return
@@ -50,18 +48,19 @@ class N0560_和为k的子数组 {
         int[] preSum = new int[arr.length + 1];
         // 前缀和出现次数
         Map<Integer, Integer> map = new HashMap<>();
+        // 0 出现1次代表如果当前的前缀和就是所求结果，count+1，也就是说，
+        // map不应该将当前的前缀和放进去参与运算（map的put应该放在后面，这个是不好理解的
         map.put(0, 1);
-        preSum[0] = 0;
         int count = 0;
         for (int i = 0; i < arr.length; i++) {
             // 前缀和并不是一次性构建的，每次只是构建前面的元素，这样遍历过程中相当于j=0;j<i
-            preSum[i + 1] = preSum[i] + arr[i];
-            // 因为单词循环是针对i以前的元素，所以不要将i之前的元素也放进去
-            map.put(preSum[i + 1], map.getOrDefault(preSum[i + 1], 0) + 1);
-            int need = preSum[i + 1] - k;
+            preSum[i] = i == 0 ? arr[i] : preSum[i - 1] + arr[i];
+            int need = preSum[i] - k;
             if (map.containsKey(need)) {
                 count += map.get(need);
             }
+            // 因为单词循环是针对i以前的元素，所以不要将i之前的元素也放进去;这个put需要统计完成之后的结果
+            map.put(preSum[i], map.getOrDefault(preSum[i], 0) + 1);
         }
         return count;
     }

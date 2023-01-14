@@ -8,7 +8,7 @@ class N0172_阶乘后的零 {
     }
 
     /**
-     * 阶乘 FIXME ERROR
+     * 阶乘
      *
      * @param n
      * @return
@@ -17,8 +17,7 @@ class N0172_阶乘后的零 {
         if (n == 1) {
             return n;
         }
-        int res = n * trailingZeroes1(n - 1);
-        return res;
+        return n * trailingZeroes1(n - 1);
     }
 
     /**
@@ -28,10 +27,15 @@ class N0172_阶乘后的零 {
      * @return
      */
     public int trailingZeroes2(int n) {
-        if (n == 1) {
-            return n;
+        int count = 0;
+        // 比如第一次循环 5 10 15 20 25 30，阶乘中存在6个5；1,2,3,4,5,6，第二个阶乘中存在1个5，总的就是6+1
+        // 这个解决方法是巧妙的，类似于子数组的组合数
+        while (n != 0) {
+            // 阶乘中有多少个5
+            int temp = n / 5;
+            count += temp;
+            n = temp;
         }
-        int res = n * trailingZeroes2(n - 1);
-        return res;
+        return count;
     }
 }

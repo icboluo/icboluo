@@ -66,7 +66,7 @@ class N1342_1404_2139_2169将数字归零的步骤数 {
 
     /**
      * 2139 达到目标分数的最少步数，只能加1或者加倍
-     * 因为限制了最大加倍的次数，所以尽可能的使当前数够大之后再加倍 FIXME ERROR
+     * 因为限制了最大加倍的次数，所以尽可能的使当前数够大之后再加倍
      *
      * @param target
      * @param maxDoubles
@@ -75,6 +75,11 @@ class N1342_1404_2139_2169将数字归零的步骤数 {
     public int minMoves(int target, int maxDoubles) {
         int count = 0;
         while (target != 1) {
+            // 加速
+            if (maxDoubles == 0) {
+                count += target - 1;
+                break;
+            }
             if (target % 2 == 0 && maxDoubles > 0) {
                 target = target >> 1;
                 maxDoubles--;

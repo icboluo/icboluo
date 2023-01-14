@@ -32,7 +32,7 @@ class N0999_可以被一步捕获的棋子数 {
     }
 
     /**
-     * 2257 计算网格中未受保护的单元格 FIXME ERROR
+     * 2257 计算网格中未受保护的单元格
      *
      * @param m
      * @param n
@@ -52,6 +52,7 @@ class N0999_可以被一步捕获的棋子数 {
             grid[guard[0]][guard[1]] = 'g';
         }
         int count = m * n - guards.length - walls.length;
+        // 以卫兵做为开始
         for (int[] guard : guards) {
             // 向四个方向移动，判断最多移动的距离
             count -= dd(grid, guard[0], guard[1], 1, 0);
@@ -63,14 +64,19 @@ class N0999_可以被一步捕获的棋子数 {
     }
 
     private int dd(char[][] arr, int x, int y, int dx, int dy) {
+        // 先移动一次
         x += dx;
         y += dy;
         int count = 0;
+        // 这里取边界
         while (x >= 0 && x < arr.length && y >= 0 && y < arr[0].length && arr[x][y] != 'g' && arr[x][y] != 'w') {
             if (arr[x][y] != 'p') {
-                count--;
+                count++;
+                arr[x][y] = 'p';
             }
-            arr[x][y] = 'p';
+            // 再不断移动
+            x += dx;
+            y += dy;
         }
         return count;
     }

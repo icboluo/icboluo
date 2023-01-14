@@ -33,7 +33,7 @@ class N0069_0367_平方根 {
     }
 
     /**
-     * 0367 有效完美平方，判断一个数是否能开根号 FIXME 超时
+     * 0367 有效完美平方，判断一个数是否能开根号
      *
      * @param num
      * @return
@@ -43,11 +43,13 @@ class N0069_0367_平方根 {
         int right = num;
         // 这里是right，不是num
         while (left <= right) {
-            int mid = left + ((right - left) >> 1);
+            // 这块改为long类型，提升下面计算的上限
+            long mid = left + ((right - left) >> 1);
+            // mid太大容易溢出，long*long变为long类型能好很多
             if (mid * mid > num) {
-                right = mid - 1;
+                right = (int) (mid - 1);
             } else if (mid * mid < num) {
-                left = mid + 1;
+                left = (int) (mid + 1);
             } else {
                 return true;
             }

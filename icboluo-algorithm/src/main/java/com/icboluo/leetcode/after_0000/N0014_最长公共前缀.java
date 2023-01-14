@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 class N0014_最长公共前缀 {
     public static void main(String[] args) {
-        N0014_最长公共前缀 cla = new N0014_最长公共前缀();
+        var cla = new N0014_最长公共前缀();
         String s = cla.longestCommonPrefix6(new String[]{"flower", "flow", "flight"});
         System.out.println("s = " + s);
     }
@@ -90,7 +90,7 @@ class N0014_最长公共前缀 {
     }
 
     /**
-     * 方法4：分治算法 FIXME ERROR 栈溢出了，也看不懂这个写法
+     * 方法4：分治算法 TODO 看不懂这个写法
      *
      * @param arr
      * @return
@@ -103,7 +103,7 @@ class N0014_最长公共前缀 {
         if (l == r) {
             return arr[l];
         }
-        int mid = l + (r - l) >> 1;
+        int mid = l + ((r - l) >> 1);
         String lStr = sub5(arr, l, mid);
         String rStr = sub5(arr, mid + 1, r);
         return sub5(lStr, rStr);
@@ -127,7 +127,7 @@ class N0014_最长公共前缀 {
     }
 
     /**
-     * 方法5：二分查找 FIXME ERROR
+     * 方法5：二分查找
      *
      * @param arr
      * @return
@@ -138,7 +138,7 @@ class N0014_最长公共前缀 {
         int low = 1;
         int high = minLen;
         while (low <= high) {
-            int mid = low + (high - low) >> 1;
+            int mid = low + ((high - low) >> 1);
             if (sub6(arr, mid)) {
                 low = mid + 1;
             } else {

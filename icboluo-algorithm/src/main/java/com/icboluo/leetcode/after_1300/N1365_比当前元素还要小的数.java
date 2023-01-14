@@ -24,7 +24,7 @@ class N1365_比当前元素还要小的数 {
     }
 
     /**
-     * 0826 大多数利润分配工作 FIXME ERROR
+     * 0826 大多数利润分配工作
      * 每个工人只能做一份工作，一份工作可以完成多次
      *
      * @param difficulty 工作难度
@@ -40,6 +40,8 @@ class N1365_比当前元素还要小的数 {
             pair[i][1] = profit[i];
         }
         Arrays.sort(pair, Comparator.comparingInt(a -> a[0]));
+        // 为了少不必要的计算，我们将能力排序，这样 i和best 就可以定义到循环外面了
+        Arrays.sort(worker);
         int i = 0;
         int best = 0;
         int res = 0;
@@ -80,7 +82,7 @@ class N1365_比当前元素还要小的数 {
     }
 
     /**
-     * 0875.. 可可吃香蕉
+     * 0875 可可吃香蕉
      *
      * @param piles 香蕉个数
      * @param h     时间
@@ -160,9 +162,21 @@ class N1365_比当前元素还要小的数 {
                 if (word1.charAt(0) > word2.charAt(0)) {
                     res += word1.charAt(0);
                     word1 = word1.substring(1);
-                } else {
+                } else if (word1.charAt(0) < word2.charAt(0)) {
                     res += word2.charAt(0);
                     word2 = word2.substring(1);
+                    // 注意这个相等的情况
+                } else {
+                    // 在这里，我们要判断2个字符串谁更加大一点，这里做一个推论
+                    String ab = word1 + word2;
+                    String ba = word2 + word1;
+                    if (ab.compareTo(ba) > 0) {
+                        res += word1.charAt(0);
+                        word1 = word1.substring(1);
+                    } else {
+                        res += word2.charAt(0);
+                        word2 = word2.substring(1);
+                    }
                 }
             }
         }
@@ -170,15 +184,17 @@ class N1365_比当前元素还要小的数 {
     }
 
     /**
-     * 2064... 分发到任何商店的产品的最小化最大值 FIXME ERROR
+     * 2064... 分发到任何商店的产品的最小化最大值
+     * 专卖店只能提供一种产品，但是数量任意，希望给任何商店的产品的最大数量最低，因为最低数量是很难去运算的，我们代入题意可得
+     * 总量/数量=组数，只要总组数小于等于专卖店数量即可
      *
-     * @param n          专卖店
-     * @param quantities 产品类型的产品数量
-     * @return
+     * @param n          专卖店 6
+     * @param quantities 产品类型的产品数量 11 6
+     * @return 类型1的11个产品分为 2 3 3 3，类型2个6个产品分别为3 3
      */
     public int minimizedMaximum(int n, int[] quantities) {
         int left = 0;
-        int right = 10000;
+        int right = 100000;
         while (left <= right) {
             int mid = left + ((right - left) >> 1);
             int sum = 0;
@@ -186,11 +202,12 @@ class N1365_比当前元素还要小的数 {
                 sum += Math.ceil((double) quantity / mid);
             }
             if (sum > n) {
-                left++;
+                left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
+        // 求最小的就返回left
         return left;
     }
 
@@ -203,8 +220,8 @@ class N1365_比当前元素还要小的数 {
      * @return
      */
     public int[] successfulPairs1(int[] spells, int[] potions, long success) {
-        Arrays.sort(spells);
-        // 元素出现的位置
+        Arrays.sort(potions);
+        // 元素首次出现的位置，这个首次非常重要，首次出现的->最后的均是可行解
         TreeMap<Integer, Integer> map = new TreeMap<>();
         // 这里也可以在下面 +-1来调整
         map.put(Integer.MAX_VALUE, potions.length);

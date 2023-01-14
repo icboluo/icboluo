@@ -33,7 +33,8 @@ class N0997_找到小镇的法官 {
                 count[ints[1]]++;
             }
         }
-        for (int i = 0; i < n; i++) {
+        // 这里用的是count，不过这个写法还是不太懂，得再看看
+        for (int i = 0; i < count.length; i++) {
             if (count[i] == n - 1) {
                 return i;
             }

@@ -15,26 +15,24 @@ class N1437_2365_检查所有的1是否相隔至少k个位置 {
     }
 
     /**
-     * 二进制数组所有1之间的距离是否均大于k FIXME ERROR
+     * 二进制数组所有1之间的距离是否均大于等于k FIXME ERROR
      *
      * @param nums
      * @param k
      * @return
      */
     public boolean kLengthApart(int[] nums, int k) {
-        int left = -1;
+        // 第一个1出现的时候，我们不希望报错，期望left和right之间的距离尽可能的大，所以left设置为较小（防止溢出，不要最小）
+        int left = Integer.MAX_VALUE / 2;
         int right = 0;
         while (right < nums.length) {
             if (nums[right] == 1) {
-                // 第一个1出现时候的特例
-                if (left == -1) {
-                    left = right;
-                }
-                if (right - left < k) {
+                if (right - left <= k) {
                     return false;
                 }
-                left = right++;
+                left = right;
             }
+            right++;
         }
         return true;
     }

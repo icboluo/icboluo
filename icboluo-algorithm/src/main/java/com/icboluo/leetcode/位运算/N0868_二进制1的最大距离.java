@@ -19,7 +19,7 @@ class N0868_二进制1的最大距离 {
     }
 
     /**
-     * 我们尝试将n向右移动一次 FIXME ERROR
+     * 我们尝试将n向右移动一次
      *
      * @param n
      * @return
@@ -29,14 +29,14 @@ class N0868_二进制1的最大距离 {
         // 我们要尽可能的使第一个1无效，所以，temp的初始值要尽可能的小;temp相当于一个计数器
         int temp = Integer.MIN_VALUE;
         while (n > 0) {
-            n = n >> 1;
             // 如果最后一位是1，说明找到边界了
             if (n % 2 == 1) {
                 max = Math.max(max, temp);
-                temp = 1;
-            } else {
-                temp++;
+                temp = 0;
             }
+            temp++;
+            // 第一次也是需要判断的，不要刚来就给当前的数/2
+            n = n >> 1;
         }
         return max;
     }
