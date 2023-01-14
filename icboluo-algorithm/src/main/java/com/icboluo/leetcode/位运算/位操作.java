@@ -114,13 +114,23 @@ class 位操作 {
      */
     @Test
     public void hmqz() {
-        int n = 100;
+        int n = -3;
+        System.out.println(hammingWeight(n));
+    }
+
+    /**
+     * 0191 二进制1的个数
+     *
+     * @param n
+     * @return
+     */
+    public int hammingWeight(int n) {
         int count = 0;
         while (n != 0) {
             n = n & (n - 1);
             count++;
         }
-        System.out.println(count);
+        return count;
     }
 
     /**
