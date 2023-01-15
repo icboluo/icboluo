@@ -1,5 +1,6 @@
 package com.icboluo.fjdz;
 
+import com.icboluo.plane2.PlanConstant;
 import lombok.Data;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class Bullet {
     private int y;
     private int width;
     private int height;
-    private ImageIcon bulletImageIcon = new ImageIcon("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\fjdz\\image/bullet.png");
+    private ImageIcon bulletImageIcon = new ImageIcon(PlanConstant.GAME1 + "bullet.png");
 
     public Bullet(int x, int y) {
         this.x = x;

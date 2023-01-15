@@ -1,5 +1,6 @@
 package com.icboluo.fjdz;
 
+import com.icboluo.plane2.PlanConstant;
 import lombok.Data;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class Enemy {
     private int y;
 
     //
-    private ImageIcon enemyImageIcon = new ImageIcon("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\fjdz\\image/enemy.png");
+    private ImageIcon enemyImageIcon = new ImageIcon(PlanConstant.GAME1 + "enemy.png");
 
     public Enemy() {
         this.width = enemyImageIcon.getIconWidth();

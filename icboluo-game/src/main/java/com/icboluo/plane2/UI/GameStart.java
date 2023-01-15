@@ -1,21 +1,23 @@
 package com.icboluo.plane2.UI;
 
 
+import com.icboluo.plane2.GameBusiness;
 import com.icboluo.plane2.Thread.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.CompletableFuture;
+
+import static com.icboluo.plane2.AtkAll.*;
 
 
 public class GameStart extends JFrame {
-    static Listener listener = new Listener();
-    static Graphics g;
-    static JPanel game;
 
     public static void main(String[] args) {
         GameStart gameStart = new GameStart();
         gameStart.init();
-        listener.gameStart = gameStart;
+
+        GameBusiness.frame = gameStart;
     }
 
     public void init() {
@@ -29,17 +31,19 @@ public class GameStart extends JFrame {
         JPanel left = new JPanel();
         JPanel leftUp = new JPanel();
         JPanel leftDown = new JPanel();
-        game = new JPanel();
+        GameBusiness.panel = new JPanel();
 
         left.setPreferredSize(new Dimension(170, 800));
         left.setBackground(new Color(-3355444));
         jf.add(left, BorderLayout.WEST);
 
-        jf.add(game, BorderLayout.CENTER);
-        game.addMouseListener(listener);     //添加监听器
-        game.addMouseMotionListener(listener);
-        game.addKeyListener(listener);
-        game.requestFocus();
+        // 添加监听器
+        GameBusiness.panel.addMouseListener(GameBusiness.listener);
+        GameBusiness.panel.addMouseMotionListener(GameBusiness.listener);
+        GameBusiness.panel.addKeyListener(GameBusiness.listener);
+        GameBusiness.panel.requestFocus();
+        jf.add(GameBusiness.panel, BorderLayout.CENTER);
+
         left.setLayout(new BorderLayout());
 
         leftUp.setPreferredSize(new Dimension(0, 250));
@@ -57,25 +61,22 @@ public class GameStart extends JFrame {
         addLabel(leftDown);
 
         jf.setVisible(true);
-        game.requestFocus();
-        g = game.getGraphics();
+        GameBusiness.panel.requestFocus();
+        GameBusiness.graphics = GameBusiness.panel.getGraphics();
 
-        new Thread(new DrawThread(g)).start();
-
-        new Thread(new MoveThread()).start();
-
-        new Thread(new EnemyPlaneThread()).start();
-
-        new Thread(new TestCrashThread()).start();
+        CompletableFuture.runAsync(new DrawThread());
+        CompletableFuture.runAsync(new MoveThread());
+        CompletableFuture.runAsync(new EnemyPlaneThread());
+        CompletableFuture.runAsync(new CrashThread());
     }
 
-    //leftUp部分添加按钮
+    // leftUp部分添加按钮
     public void addButton(JComponent component) {
         String[] arr = {"开始游戏", "选择飞机", "选择地图"};
         Dimension dim = new Dimension(90, 35);
         for (String str : arr) {
             JButton btn = new JButton(str);
-            btn.addActionListener(listener);
+            btn.addActionListener(GameBusiness.listener);
             btn.setPreferredSize(dim);
             //监听器
             component.add(btn);
@@ -95,26 +96,26 @@ public class GameStart extends JFrame {
 
     @SuppressWarnings("all")
     public static void gameOver() {
-        DrawThread.myPlane.setSpeedX(0);
-        DrawThread.myPlane.setSpeedY(0);
+        myPlane.setSpeedX(0);
+        myPlane.setSpeedY(0);
         String[] options = {"再来一次", "结束游戏"};
-        int value = JOptionPane.showOptionDialog(null, "本局得分为：" + DrawThread.player.score + ",要再来一局吗",
+        int value = JOptionPane.showOptionDialog(null, "本局得分为：" + player.score + ",要再来一局吗",
                 "游戏结束", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 options, "再来一次");
         if (value != JOptionPane.CLOSED_OPTION) {
             switch (value) {
                 case 0:
-                    DrawThread.player.score = 0;
-                    DrawThread.player.hp = 100;
-                    DrawThread.myPlane.setGrade(1);
-                    for (int i = 0; i < EnemyPlaneThread.enemyPlanes.size(); i++) {
-                        EnemyPlaneThread.enemyPlanes.get(i).setAlive(false);
+                    player.score = 0;
+                    player.hp = 100;
+                    myPlane.setGrade(1);
+                    for (int i = 0; i < enemyPlanes.size(); i++) {
+                        enemyPlanes.get(i).setAlive(false);
                     }
-                    EnemyPlaneThread.enemyPlanes.clear();
-                    EnemyBulletThread.enemyBullets.clear();
-                    DrawThread.myPlane.setX(200);
-                    DrawThread.myPlane.setY(600);
-                    DrawThread.player.setAlive(true);
+                    enemyPlanes.clear();
+                    enemyBullets.clear();
+                    myPlane.setX(200);
+                    myPlane.setY(600);
+                    player.setAlive(true);
 
                     break;
                 case 1:

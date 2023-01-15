@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0400;
+package com.icboluo.leetcode.二维数组;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +8,14 @@ import java.util.List;
  * @since 2022-11-02 12:44
  */
 class N0566_重塑矩阵 {
+    /**
+     * 将二维数组转换为另一个二维数组
+     *
+     * @param mat
+     * @param r
+     * @param c
+     * @return
+     */
     public int[][] matrixReshape(int[][] mat, int r, int c) {
         int g = mat.length;
         int k = mat[0].length;

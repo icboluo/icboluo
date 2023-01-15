@@ -1,5 +1,6 @@
 package com.icboluo.fjdz;
 
+import com.icboluo.plane2.PlanConstant;
 import lombok.Data;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import javax.swing.*;
 public class Hero {
 
     //读取英雄机的图片
-    ImageIcon heroImage = new ImageIcon("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\fjdz\\image/hero.png");
+    ImageIcon heroImage = new ImageIcon(PlanConstant.GAME1 + "hero.png");
     //英雄机的坐标
     private int x = 300;
     private int y = 400;

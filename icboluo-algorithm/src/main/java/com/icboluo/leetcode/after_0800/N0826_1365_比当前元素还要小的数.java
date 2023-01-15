@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1300;
+package com.icboluo.leetcode.after_0800;
 
 import java.util.*;
 
@@ -6,9 +6,9 @@ import java.util.*;
  * @author icboluo
  * @since 2023-01-08 14:28
  */
-class N1365_比当前元素还要小的数 {
+class N0826_1365_比当前元素还要小的数 {
     public static void main(String[] args) {
-        N1365_比当前元素还要小的数 cla = new N1365_比当前元素还要小的数();
+        var cla = new N0826_1365_比当前元素还要小的数();
         int[] ints = cla.answerQueries(new int[]{4, 5, 2, 1}, new int[]{3, 10, 21});
         System.out.println(Arrays.toString(ints));
     }

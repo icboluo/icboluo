@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.股票买卖;
+package com.icboluo.leetcode.峰值低谷问题;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;

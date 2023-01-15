@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0200;
+package com.icboluo.leetcode.链表;
 
 import com.icboluo.common.ListNode;
 
@@ -8,7 +8,7 @@ import com.icboluo.common.ListNode;
  */
 class N0203_移除链表元素 {
     public static void main(String[] args) {
-        N0203_移除链表元素 cla = new N0203_移除链表元素();
+        var cla = new N0203_移除链表元素();
         ListNode listNode = new ListNode(1, 2, 6, 3, 4, 5, 6);
         cla.removeElements1(listNode, 6);
         listNode.print();

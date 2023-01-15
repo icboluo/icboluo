@@ -1,5 +1,6 @@
 package com.icboluo.fjdz;
 
+import com.icboluo.plane2.PlanConstant;
 import lombok.Data;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class Bomb {
 	private int y;
 	private int width;
 	private int height;
-	private ImageIcon bombimg = new ImageIcon("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\fjdz\\image/bomb.png");
+	private ImageIcon bombimg = new ImageIcon(PlanConstant.GAME1 + "bomb.png");
 	private int count;//删除的次数
 
 	public Bomb(int x, int y) {

@@ -1,5 +1,7 @@
 package com.icboluo.plane2.BaseClass;
 
+import com.icboluo.plane2.PlanConstant;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,13 +18,18 @@ public class BackGround {
     int w;
     int h;
 
-    public BackGround(Graphics g) throws IOException {
+    public BackGround(Graphics g) {
+
         this.g = g;
-        bufferedImage_0 = ImageIO.read(new File("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\plane2\\z_img\\img_bg_0.jpg"));//初始背景
-        bufferedImage_1 = ImageIO.read(new File("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\plane2\\z_img\\img_bg_1.jpg"));//地图1
-        bufferedImage_2 = ImageIO.read(new File("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\plane2\\z_img\\img_bg_2.jpg"));//地图2
-        bufferedImage_3 = ImageIO.read(new File("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\plane2\\z_img\\img_bg_3.jpg"));//地图3
-        bufferedImage_4 = ImageIO.read(new File("D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\plane2\\z_img\\img_bg_4.jpg"));//地图4
+        try {
+            bufferedImage_0 = ImageIO.read(new File(PlanConstant.GAME2 + "img_bg_0.jpg"));//初始背景
+            bufferedImage_1 = ImageIO.read(new File(PlanConstant.GAME2 + "img_bg_1.jpg"));//地图1
+            bufferedImage_2 = ImageIO.read(new File(PlanConstant.GAME2 + "img_bg_2.jpg"));//地图2
+            bufferedImage_3 = ImageIO.read(new File(PlanConstant.GAME2 + "img_bg_3.jpg"));//地图3
+            bufferedImage_4 = ImageIO.read(new File(PlanConstant.GAME2 + "img_bg_4.jpg"));//地图4
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         w = bufferedImage_1.getWidth();
         h = bufferedImage_1.getHeight();
     }

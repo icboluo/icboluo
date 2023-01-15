@@ -1,6 +1,5 @@
 package com.icboluo.plane2.BaseClass;
 
-import com.icboluo.plane2.MyDataStructrue.MyArrayList;
 import com.icboluo.util.ThreadUtil;
 import lombok.Data;
 
@@ -9,6 +8,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author icboluo
@@ -19,9 +20,12 @@ public class MyPlane extends FlyObject implements Runnable {
     public Graphics g;
     public BufferedImage plane_img;
 
-    public volatile static MyArrayList<MyBullet> myBulletList = new MyArrayList<>();
+    /**
+     * 子弹
+     */
+    public static final java.util.List<MyBullet> bulletList = Collections.synchronizedList(new ArrayList<>());
 
-    public MyPlane(Graphics g, String fileName) throws IOException {
+    public MyPlane(Graphics g, String fileName) {
         x = 200;
         y = 600;
         speedX = 0;
@@ -29,8 +33,12 @@ public class MyPlane extends FlyObject implements Runnable {
         sizeX = 141;
         sizeY = 105;
         this.g = g;
-        plane_img = ImageIO.read(new File(fileName));
         grade = 1;
+        try {
+            plane_img = ImageIO.read(new File(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void draw(int i) {
@@ -65,7 +73,7 @@ public class MyPlane extends FlyObject implements Runnable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    myBulletList.add(bullet);
+                    bulletList.add(bullet);
                     break;
                 case 2:
                     bullet_x = getX() + 28;
@@ -75,7 +83,7 @@ public class MyPlane extends FlyObject implements Runnable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    myBulletList.add(bullet);
+                    bulletList.add(bullet);
 
                     bullet_x = getX() + 84;
                     bullet_y = getY() - 44;
@@ -84,7 +92,7 @@ public class MyPlane extends FlyObject implements Runnable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    myBulletList.add(bullet);
+                    bulletList.add(bullet);
                     break;
                 case 3:
                     bullet_x = getX() + 56;
@@ -94,7 +102,7 @@ public class MyPlane extends FlyObject implements Runnable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    myBulletList.add(bullet);
+                    bulletList.add(bullet);
 
                     bullet_x = getX() + 28;
                     bullet_y = getY() - 44;
@@ -103,7 +111,7 @@ public class MyPlane extends FlyObject implements Runnable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    myBulletList.add(bullet);
+                    bulletList.add(bullet);
 
                     bullet_x = getX() + 84;
                     bullet_y = getY() - 44;
@@ -112,7 +120,7 @@ public class MyPlane extends FlyObject implements Runnable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    myBulletList.add(bullet);
+                    bulletList.add(bullet);
                     break;
 
                 default:

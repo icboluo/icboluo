@@ -97,7 +97,7 @@ class N0198_0213_打家劫舍 {
     }
 
     public static void main(String[] args) {
-        N0198_0213_打家劫舍 cla = new N0198_0213_打家劫舍();
+        var cla = new N0198_0213_打家劫舍();
         int[] arr = {1, 2, 3, 1};
         int i = cla.rob3(arr);
         System.out.println("i = " + i);

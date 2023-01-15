@@ -1,5 +1,9 @@
 package com.icboluo.plane2.BaseClass;
 
+import com.icboluo.plane2.PlanConstant;
+import com.icboluo.util.RandomHelper;
+import lombok.Data;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,37 +11,49 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * 道具
+ *
  * @author icboluo
  */
+@Data
 public class Prop extends FlyObject {
 
-    String propHpFileName = "D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\plane2\\z_img\\img_addHp.png";
-    String propScoreFileName = "D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\plane2\\z_img\\img_addScore.png";
-    String propUpFileName = "D:\\IdeaProjects\\icboluo\\icboluo-game\\src\\main\\java\\com\\icboluo\\plane2\\z_img\\up.png";
-    BufferedImage hp_buffimg;
-    BufferedImage score_buffimg;
-    BufferedImage up_buffimg;
+    /**
+     * 心形 图形---加血量
+     */
+    BufferedImage hpImg;
+    /**
+     * 五角星---得分
+     */
+    BufferedImage fivePointedStarImg;
+    /**
+     * up心 图形---等级提升
+     */
+    BufferedImage upHeartImg;
 
+    /**
+     * 道具类型 0代表心形，1代表五角星，2代表up心
+     */
     int type;
-    private final int TYPE_HP = 0;
-    private final int TYPE_SCORE = 1;
-    private final int TYPE_UP = 2;
 
-    public Prop(int i) throws IOException {
-        type = i % 3;
+    public Prop() {
+        type = RandomHelper.nextInt(10) % 3;
 
         speedX = 0;
         speedY = 3;
-
-        hp_buffimg = ImageIO.read(new File(propHpFileName));
-        score_buffimg = ImageIO.read(new File(propScoreFileName));
-        up_buffimg = ImageIO.read(new File(propUpFileName));
+        try {
+            hpImg = ImageIO.read(new File(PlanConstant.GAME2 + "img_addHp.png"));
+            fivePointedStarImg = ImageIO.read(new File(PlanConstant.GAME2 + "img_addScore.png"));
+            upHeartImg = ImageIO.read(new File(PlanConstant.GAME2 + "up.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void drawHpImg(Graphics g) {
         sizeX = 50;
         sizeY = 43;
-        g.drawImage(hp_buffimg, x, y, x + sizeX, y + sizeY, 0, 0, 81, 72, null);
+        g.drawImage(hpImg, x, y, x + sizeX, y + sizeY, 0, 0, 81, 72, null);
     }
 
     public void setXY(int x, int y) {
@@ -48,27 +64,21 @@ public class Prop extends FlyObject {
     public void drawScoreImg(Graphics g) {
         sizeX = 60;
         sizeY = 60;
-        g.drawImage(score_buffimg, x, y, x + sizeX, y + sizeY, 0, 0, 58, 59, null);
+        g.drawImage(fivePointedStarImg, x, y, x + sizeX, y + sizeY, 0, 0, 58, 59, null);
     }
 
     public void drawUpImg(Graphics g) {
         sizeX = 50;
         sizeY = 50;
-        g.drawImage(up_buffimg, x, y, x + sizeX, y + sizeY, 0, 0, 132, 139, null);
+        g.drawImage(upHeartImg, x, y, x + sizeX, y + sizeY, 0, 0, 132, 139, null);
     }
 
 
     public void draw(Graphics g) {
         switch (type) {
-            case TYPE_HP -> drawHpImg(g);
-            case TYPE_SCORE -> drawScoreImg(g);
-            case TYPE_UP -> drawUpImg(g);
-            default -> {
-            }
+            case 0 -> drawHpImg(g);
+            case 1 -> drawScoreImg(g);
+            case 2 -> drawUpImg(g);
         }
-    }
-
-    public int getType() {
-        return type;
     }
 }

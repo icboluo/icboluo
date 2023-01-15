@@ -1,5 +1,6 @@
 package com.icboluo.plane2.UI;
 
+import com.icboluo.plane2.GameBusiness;
 import lombok.AllArgsConstructor;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class SelectMapUI {
         // 创建窗体
         JFrame jf = new JFrame("选择地图");
         jf.setSize(300, 400);
-        jf.setLocationRelativeTo(GameStart.listener.gameStart);
+        jf.setLocationRelativeTo(GameBusiness.frame);
         jf.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel jPanel = new JPanel();
         jf.add(jPanel);
@@ -30,7 +31,7 @@ public class SelectMapUI {
         ButtonGroup group = new ButtonGroup();
         for (String str : arr) {
             JRadioButton c = new JRadioButton(str);
-            c.addActionListener(GameStart.listener);
+            c.addActionListener(GameBusiness.listener);
             c.setPreferredSize(dim);
             //监听器
             group.add(c);
@@ -43,7 +44,7 @@ public class SelectMapUI {
         Dimension dim = new Dimension(100, 40);
         for (String str : arr) {
             JButton btn = new JButton(str);
-            btn.addActionListener(GameStart.listener);
+            btn.addActionListener(GameBusiness.listener);
             btn.setPreferredSize(dim);
             //监听器
             component.add(btn);

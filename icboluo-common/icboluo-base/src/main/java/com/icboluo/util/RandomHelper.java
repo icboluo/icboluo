@@ -11,6 +11,8 @@ import java.util.Random;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RandomHelper {
 
+    private static final Random RANDOM = new Random();
+
     /**
      * 获得随机数数组
      *
@@ -33,7 +35,10 @@ public class RandomHelper {
      * @return 随机数
      */
     public static int interval(int a, int b) {
-        Random random = new Random();
-        return random.nextInt(b - a + 1) + a;
+        return RANDOM.nextInt(b - a + 1) + a;
+    }
+
+    public static int nextInt(int bound) {
+        return RANDOM.nextInt(bound);
     }
 }

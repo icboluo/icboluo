@@ -1,14 +1,16 @@
 package com.icboluo.plane2.UI;
 
-import com.icboluo.plane2.Thread.DrawThread;
+import com.icboluo.plane2.GameBusiness;
 
 import java.awt.event.*;
+
+import static com.icboluo.plane2.AtkAll.myPlane;
+import static com.icboluo.plane2.AtkAll.player;
 
 /**
  * @author icboluo
  */
 public class Listener implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
-    GameStart gameStart;
     int speed = 5;
 
     private boolean isStart;
@@ -33,20 +35,20 @@ public class Listener implements ActionListener, KeyListener, MouseListener, Mou
                 }
                 break;
             case "森林上空":
-                DrawThread.player.mapNum = 1;
-                GameStart.game.requestFocus();
+                player.mapNum = 1;
+                GameBusiness.panel.requestFocus();
                 break;
             case "天空之城":
-                DrawThread.player.mapNum = 2;
-                GameStart.game.requestFocus();
+                player.mapNum = 2;
+                GameBusiness.panel.requestFocus();
                 break;
             case "沙漠荒野":
-                DrawThread.player.mapNum = 3;
-                GameStart.game.requestFocus();
+                player.mapNum = 3;
+                GameBusiness.panel.requestFocus();
                 break;
             case "实验区域":
-                DrawThread.player.mapNum = 4;
-                GameStart.game.requestFocus();
+                player.mapNum = 4;
+                GameBusiness.panel.requestFocus();
                 break;
         }
     }
@@ -60,19 +62,19 @@ public class Listener implements ActionListener, KeyListener, MouseListener, Mou
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (DrawThread.myPlane != null) {
+        if (myPlane != null) {
             switch (keyCode) {
                 case 37 -> {
-                    DrawThread.myPlane.setSpeedX(-speed);
+                    myPlane.setSpeedX(-speed);
                 }
                 case 38 -> {
-                    DrawThread.myPlane.setSpeedY(-speed);
+                    myPlane.setSpeedY(-speed);
                 }
                 case 39 -> {
-                    DrawThread.myPlane.setSpeedX(speed);
+                    myPlane.setSpeedX(speed);
                 }
                 case 40 -> {
-                    DrawThread.myPlane.setSpeedY(speed);
+                    myPlane.setSpeedY(speed);
                 }
             }
         }
@@ -84,11 +86,11 @@ public class Listener implements ActionListener, KeyListener, MouseListener, Mou
         switch (c) {
             case 37:
             case 39:
-                DrawThread.myPlane.setSpeedX(0);
+                myPlane.setSpeedX(0);
                 break;
             case 38:
             case 40:
-                DrawThread.myPlane.setSpeedY(0);
+                myPlane.setSpeedY(0);
                 break;
         }
     }

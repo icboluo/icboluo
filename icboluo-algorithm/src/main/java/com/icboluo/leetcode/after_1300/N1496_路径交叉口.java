@@ -14,6 +14,7 @@ class N1496_路径交叉口 {
      * @param path
      * @return
      */
+    @SuppressWarnings("all")
     public boolean isPathCrossing(String path) {
         int x = 0;
         int y = 0;
