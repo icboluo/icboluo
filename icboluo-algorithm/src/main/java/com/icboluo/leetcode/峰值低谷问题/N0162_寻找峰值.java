@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0100;
+package com.icboluo.leetcode.峰值低谷问题;
 
 /**
  * @author icboluo

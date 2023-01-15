@@ -1,23 +1,17 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.最长回文串;
 
 /**
  * @author icboluo
  * @since 2022-03-25 19:52
  */
 class N0009_回文数 {
-
-    public boolean isPalindrome(int x) {
-        return hws1(x);
-//        return hws2(x);
-    }
-
     /**
      * 用sb的reverse方法判断
      *
      * @param x
      * @return
      */
-    private boolean hws1(int x) {
+    public boolean isPalindrome1(int x) {
         // new sb 数字参数是容量不是具体指
         return new StringBuilder(x + "").reverse().compareTo(new StringBuilder(x + "")) == 0;
     }
@@ -28,7 +22,7 @@ class N0009_回文数 {
      * @param x 元素 2002
      * @return 是否回文数
      */
-    private boolean hws2(int x) {
+    public boolean isPalindrome2(int x) {
         if (x < 0) {
             return false;
         }
@@ -57,7 +51,7 @@ class N0009_回文数 {
      * @param x 元素 2002
      * @return 是否回文数
      */
-    private boolean hws3(int x) {
+    public boolean isPalindrome3(int x) {
         if (x < 0) {
             return false;
         }

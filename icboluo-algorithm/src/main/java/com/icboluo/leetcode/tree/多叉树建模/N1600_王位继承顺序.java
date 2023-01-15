@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1300;
+package com.icboluo.leetcode.tree.多叉树建模;
 
 import java.util.*;
 
@@ -6,15 +6,17 @@ import java.util.*;
  * @author icboluo
  * @since 2022-11-01 13:44
  */
-public class N1600 {
+public class N1600_王位继承顺序 {
 
     String root;
-
+    /**
+     * 多叉树问题
+     */
     Map<String, List<String>> map = new HashMap<>();
 
     Set<String> set = new HashSet<>();
 
-    public N1600(String kingName) {
+    public N1600_王位继承顺序(String kingName) {
         root = kingName;
     }
 

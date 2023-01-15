@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1300;
+package com.icboluo.leetcode.tree.层级遍历;
 
 import com.icboluo.common.TreeNode;
 
@@ -9,7 +9,8 @@ import java.util.Queue;
  * @author icboluo
  * @since 2022-11-01 13:28
  */
-class N1609 {
+class N1609_奇偶树 {
+    // FIXME ERROR
     public boolean isEvenOddTree(TreeNode root) {
         if (root == null) {
             return true;

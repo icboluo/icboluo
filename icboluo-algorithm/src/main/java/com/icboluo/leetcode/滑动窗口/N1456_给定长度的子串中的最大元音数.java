@@ -7,6 +7,10 @@ import com.icboluo.constant.CharConstant;
  * @since 2023-01-15 16:53
  */
 class N1456_给定长度的子串中的最大元音数 {
+    public static void main(String[] args) {
+        N1456_给定长度的子串中的最大元音数 cla = new N1456_给定长度的子串中的最大元音数();
+        System.out.println(cla.minimumRecolors("WBW", 1));
+    }
 
     /**
      * 长度为k的子串，中元音字母数量最大是多少
@@ -33,5 +37,36 @@ class N1456_给定长度的子串中的最大元音数 {
             }
         }
         return max;
+    }
+
+    /**
+     * 2379 获取k个连续黑色块的最少重新着色 FIXME ERROR
+     * 可以将白色染成黑色，返回最少操作数
+     *
+     * @param blocks
+     * @param k
+     * @return
+     */
+    public int minimumRecolors(String blocks, int k) {
+        char[] arr = blocks.toCharArray();
+        int l = 0;
+        int r = 0;
+        int winBlack = 0;
+        int min = k;
+        while (r < arr.length) {
+            char right = arr[r++];
+            if (right == 'B') {
+                winBlack++;
+            }
+            // 这里区间最小为2啊，怎么求1的
+            if (r - l + 1 == k) {
+                char left = arr[l++];
+                min = Math.min(min, winBlack);
+                if (left == 'B') {
+                    winBlack--;
+                }
+            }
+        }
+        return min;
     }
 }

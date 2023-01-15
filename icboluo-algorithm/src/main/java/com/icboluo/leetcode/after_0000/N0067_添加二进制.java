@@ -6,7 +6,7 @@ package com.icboluo.leetcode.after_0000;
  */
 class N0067_添加二进制 {
     public static void main(String[] args) {
-        N0067_添加二进制 cla = new N0067_添加二进制();
+        var cla = new N0067_添加二进制();
         String s = cla.addBinary("11", "1");
         System.out.println("s = " + s);
     }
