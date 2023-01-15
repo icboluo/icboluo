@@ -16,7 +16,7 @@ class MergeSort {
         int[] temp = new int[arr.length];
         mergeSort(arr, 0, arr.length - 1, temp);
         //System.out.println(Arrays.toString(arr));
-        MergeSort cla = new MergeSort();
+        var cla = new MergeSort();
         var nums1 = new int[]{1, 2, 3, 0, 0, 0};
         cla.merge(nums1, 3, new int[]{2, 5, 6}, 3);
         System.out.println(Arrays.toString(nums1));
@@ -100,7 +100,7 @@ class MergeSort {
     }
 
     /**
-     * N0088 FIXME ERROR
+     * N0088
      * 1.合并后排序
      * 2....
      * 3.双指针，从后向前比较 (也可以从前向后比较

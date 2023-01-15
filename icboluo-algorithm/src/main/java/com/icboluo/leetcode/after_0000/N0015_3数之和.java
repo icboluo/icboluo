@@ -6,7 +6,7 @@ import java.util.List;
 
 class N0015_3数之和 {
     public static void main(String[] args) {
-        N0015_3数之和 cla = new N0015_3数之和();
+        var cla = new N0015_3数之和();
         int[] arr = {-1, 0, 1, 2, -1, -4};
         List<List<Integer>> res = cla.threeSum1(arr);
         System.out.println("res = " + res);
@@ -14,7 +14,7 @@ class N0015_3数之和 {
 
 
     /**
-     * 3层循环求和不考虑 TODO ERROR
+     * 3层循环求和不考虑
      * <p>
      * 升序数组+双指针：带区间的三数之和
      * 三数之和是否为0

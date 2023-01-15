@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.链表;
 
 import com.icboluo.common.ListNode;
 
