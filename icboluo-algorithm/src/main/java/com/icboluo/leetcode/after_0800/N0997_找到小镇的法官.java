@@ -25,11 +25,12 @@ class N0997_找到小镇的法官 {
         return -1;
     }
 
-    // FIXME ERROR
+    // ERROR
     public int findJudge2(int n, int[][] trust) {
         int[] count = new int[n + 1];
         for (int[] ints : trust) {
             if (ints[0] != ints[1]) {
+                // 这里必须加上--，因为数组的大小是不确定的，如果法官相信别人，这里没有减，就会计算错误
                 count[ints[1]]++;
             }
         }

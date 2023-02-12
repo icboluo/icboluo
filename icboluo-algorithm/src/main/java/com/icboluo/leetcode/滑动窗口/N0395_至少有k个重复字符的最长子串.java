@@ -48,7 +48,9 @@ class N0395_至少有k个重复字符的最长子串 {
             if (eleCountWinMap.get(right) == k) {
                 eleValidCount++;
             }
-            while (eleValidCount > winNeedDistinctEleCount) {
+//            这里不应该使用元素有效个数来判断，左指针右移，起码要保证数据合法
+//            while (eleValidCount > winNeedDistinctEleCount) {
+            while (eleCountWinMap.size() > winNeedDistinctEleCount) {
                 char left = s.charAt(l++);
                 if (eleCountWinMap.get(left) == k) {
                     eleValidCount--;

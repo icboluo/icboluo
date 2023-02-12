@@ -31,6 +31,35 @@ class N0258_0390_数组位数求和不断缩小_重复多次 {
     }
 
     /**
+     * 0390 消除游戏 n代表1->n的数组，先从左到右相隔一个删，再从右往左相隔一个删，剩一个返回 12期待6  TODO 超时
+     *
+     * @param n
+     * @return
+     */
+    public int lastRemaining(int n) {
+        int[] arr = IntStream.range(1, n + 1).toArray();
+        // 外置len可以方便我们计算外层循环层数，可以简单的使用while循环判断执行到了没有，而不是准确判断执行次数，计算这个是比较麻烦的
+        int len = arr.length;
+        while (len > 1) {
+            int j = 0;
+            for (int i = 1; i < len; i += 2) {
+                arr[j++] = arr[i];
+            }
+            // 这块不能从k开始，因为还没有使用，直接覆盖了就取不到原来的值了；因为数组是向前缩小的，所以我们需要尽可能早的使用前面的数值
+//            int k = j / 2;
+//            for (int i = j - 2; i >= 0; i -= 2) {
+//                arr[--k] = arr[i];
+//            }
+            int k = 0;
+            for (int i = j % 2; i < j; i += 2) {
+                arr[k++] = arr[i];
+            }
+            len = k;
+        }
+        return arr[0];
+    }
+
+    /**
      * 2243 计算字符串中的数字和，将字符串分组，求和，直到只剩一组
      * 经过尝试，字符串操作之后变成字符串，是一个完整的循环，先把字符串转换为数组或者list属于画蛇添足，整个流程就要加上了，是没有必要的
      *
@@ -94,29 +123,5 @@ class N0258_0390_数组位数求和不断缩小_重复多次 {
             }
         }
         return nums[0];
-    }
-
-    /**
-     * 0390 消除游戏 n代表1->n的数组，先从左到右相隔一个删，再从右往左相隔一个删，剩一个返回 12期待6 FIXME ERROR
-     *
-     * @param n
-     * @return
-     */
-    public int lastRemaining(int n) {
-        int[] arr = IntStream.range(1, n + 1).toArray();
-        // 外置len可以方便我们计算外层循环层数，可以简单的使用while循环判断执行到了没有，而不是准确判断执行次数，计算这个是比较麻烦的
-        int len = arr.length;
-        while (len > 1) {
-            int j = 0;
-            for (int i = 1; i < len; i += 2) {
-                arr[j++] = arr[i];
-            }
-            int k = j / 2;
-            len = k;
-            for (int i = j - 2; i >= 0; i -= 2) {
-                arr[--k] = arr[i];
-            }
-        }
-        return arr[0];
     }
 }

@@ -133,7 +133,7 @@ class N1423_2091_左边一部分右边一部分的最大和 {
     }
 
     /**
-     * 2423 删除字母使频率相等；删除一个字母，其余元素出现次数相等
+     * 2423 删除字母使频率相等；删除一个字母，其余元素出现次数相等 ERROR
      *
      * @param word
      * @return
@@ -142,6 +142,7 @@ class N1423_2091_左边一部分右边一部分的最大和 {
         Map<Character, Integer> eleCountMap = IntStream.range(0, word.length())
                 .mapToObj(word::charAt)
                 .collect(Collectors.groupingBy(ch -> ch, Collectors.summingInt(ch -> 1)));
+        // 不能仅仅获取最大值1个，最大值可能有多个
         List<Integer> list = eleCountMap.values().stream().sorted().toList();
         Integer max = list.get(list.size() - 1);
         List<Integer> subList = list.stream().limit(list.size() - 1).distinct().toList();
@@ -153,5 +154,17 @@ class N1423_2091_左边一部分右边一部分的最大和 {
         }
         // a b c 的情况是个例外，删一个还是可以的
         return list.stream().distinct().allMatch(time -> 1 == time);
+    }
+
+    // fixme error abbcc 需要删除的是最小的
+    public boolean equalFrequency2(String word) {
+        Map<Character, Integer> eleCountMap = IntStream.range(0, word.length())
+                .mapToObj(word::charAt)
+                .collect(Collectors.groupingBy(ch -> ch, Collectors.summingInt(ch -> 1)));
+        Map.Entry<Character, Integer> first = eleCountMap.entrySet()
+                .stream().min((a, b) -> b.getValue() - a.getValue())
+                .get();
+        eleCountMap.put(first.getKey(), first.getValue() - 1);
+        return eleCountMap.values().stream().filter(time -> time != 0).distinct().count() <= 1;
     }
 }

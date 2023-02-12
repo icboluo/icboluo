@@ -21,7 +21,8 @@ class N0264_返回可以整除235的数 {
                 isUsed[min] = true;
                 i++;
             }
-            if (a == min) {
+            // 这里必须加一个else，如果当前最小值已经被使用，则最小值进行变化；防止结果差1；为什么我也不知道
+            else if (a == min) {
                 a += 2;
             } else if (b == min) {
                 b += 3;
