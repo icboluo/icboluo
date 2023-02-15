@@ -26,3 +26,7 @@ AbstractHandlerMethodMapping 会执行detectHandlerMethods 方法，Map.put(Requ
   2在调用之后也会返回去调用1
 3.DispatchServlet继承http Servlet，tomcat容器启动的时候会调用servlet的init函数，分发给子类dispatch称为onRefresh函数，onRefresh函数调用多个init函数;
 mvc架构读取需要从上到下，上面的部分是接口部分功能，功能单一;例如aware通知接口;InitializingBean 接口
+
+每一个http请求都要经过servlet接口的.service(req.res)方法
+到http servlet类执行service方法，http servlet分发给framework抽象类
+framework servlet调用intiContextHolders 再调用LocaleContextHolder.setLocaleContext即可设置request到thread中

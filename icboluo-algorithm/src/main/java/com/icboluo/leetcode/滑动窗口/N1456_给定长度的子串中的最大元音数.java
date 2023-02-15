@@ -51,19 +51,19 @@ class N1456_给定长度的子串中的最大元音数 {
         char[] arr = blocks.toCharArray();
         int l = 0;
         int r = 0;
-        int winBlack = 0;
+        int winWrite = 0;
         int min = k;
         while (r < arr.length) {
             char right = arr[r++];
             if (right == 'B') {
-                winBlack++;
+                winWrite++;
             }
             // 这里区间最小为2啊，怎么求1的
-            if (r - l + 1 == k) {
+            if (r - l == k) {
                 char left = arr[l++];
-                min = Math.min(min, winBlack);
-                if (left == 'B') {
-                    winBlack--;
+                min = Math.min(min, winWrite);
+                if (left == 'W') {
+                    winWrite--;
                 }
             }
         }

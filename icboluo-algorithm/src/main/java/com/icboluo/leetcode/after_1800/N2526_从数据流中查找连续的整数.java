@@ -13,7 +13,12 @@ class N2526_从数据流中查找连续的整数 {
     List<Integer> list;
 
     /**
-     * 2526 从数据流中查找连续的整数 FIXME 超时
+     * 上一个value点的索引
+     */
+    int preIndex;
+
+    /**
+     * 2526 从数据流中查找连续的整数
      * 最后k个整数，值是否均为value
      *
      * @param value
@@ -23,13 +28,28 @@ class N2526_从数据流中查找连续的整数 {
         this.k = k;
         this.value = value;
         list = new ArrayList<>();
+        preIndex = Integer.MAX_VALUE;
     }
 
     public boolean consec(int num) {
-        list.add(num);
-        if (list.size() < k) {
+//        list.add(num);
+//        if (list.size() < k) {
+//            return false;
+//        }
+//        return list.stream().skip(list.size() - k).allMatch(n -> n == value);
+        if (num == value) {
+            list.add(num);
+            if (preIndex == Integer.MAX_VALUE) {
+                preIndex = list.size() - 1;
+            }
+            if (list.size() - preIndex < k) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            preIndex = Integer.MAX_VALUE;
             return false;
         }
-        return list.stream().skip(list.size() - k).allMatch(n -> n == value);
     }
 }

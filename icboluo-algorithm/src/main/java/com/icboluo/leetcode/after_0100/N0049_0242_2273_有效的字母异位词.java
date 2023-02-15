@@ -15,7 +15,7 @@ class N0049_0242_2273_有效的字母异位词 {
         String str2 = "nagaram";
         boolean b = cla.isAnagram1(str1, str2);
         System.out.println("b = " + b);
-        System.out.println("cla.removeAnagrams(new String[]{}) = " + cla.removeAnagrams(new String[]{"a", "b", "a"}));
+        System.out.println("cla.removeAnagrams(new String[]{}) = " + cla.removeAnagrams2(new String[]{"a", "b", "a"}));
     }
 
     /**
@@ -75,12 +75,12 @@ class N0049_0242_2273_有效的字母异位词 {
     }
 
     /**
-     * 2273 移除字母异位词后的结果数组；把长的相似的去重（需要是相邻的）FIXME ERROR
+     * 2273 移除字母异位词后的结果数组；把长的相似的去重（需要是相邻的 ERROR
      *
      * @param words
      * @return
      */
-    public List<String> removeAnagrams(String[] words) {
+    public List<String> removeAnagrams1(String[] words) {
         Set<Map<Character, Integer>> set = new HashSet<>();
         List<String> res = new ArrayList<>();
         for (String word : words) {
@@ -89,6 +89,21 @@ class N0049_0242_2273_有效的字母异位词 {
                     .collect(Collectors.groupingBy(ch -> ch, Collectors.summingInt(ele -> 1)));
             if (set.add(eleCountMap)) {
                 res.add(word);
+            }
+        }
+        return res;
+    }
+
+    public List<String> removeAnagrams2(String[] words) {
+        List<String> res = new ArrayList<>();
+        Map<Character, Integer> preMap = new HashMap<>();
+        for (String word : words) {
+            Map<Character, Integer> eleCountMap = IntStream.range(0, word.length())
+                    .mapToObj(word::charAt)
+                    .collect(Collectors.groupingBy(ch -> ch, Collectors.summingInt(ele -> 1)));
+            if (!preMap.equals(eleCountMap)) {
+                res.add(word);
+                preMap = eleCountMap;
             }
         }
         return res;

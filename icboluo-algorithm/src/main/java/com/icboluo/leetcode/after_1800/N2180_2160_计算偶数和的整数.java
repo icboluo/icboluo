@@ -79,7 +79,7 @@ class N2180_2160_计算偶数和的整数 {
     }
 
     /**
-     * 2274 没有特殊楼层的最大连续楼层数 FIXME ERROR
+     * 2274 没有特殊楼层的最大连续楼层数
      *
      * @param bottom  开始
      * @param top     结束
@@ -99,7 +99,8 @@ class N2180_2160_计算偶数和的整数 {
         // mid 已经是左右最大值了，再填充上中间的最大值即可
         int mid = Math.max(left, right);
         for (int i = 0; i < special.length - 1; i++) {
-            mid = Math.max(mid, special[i + 1] - special[i]);
+            // 这里需要减1
+            mid = Math.max(mid, special[i + 1] - special[i] - 1);
         }
         return mid;
     }

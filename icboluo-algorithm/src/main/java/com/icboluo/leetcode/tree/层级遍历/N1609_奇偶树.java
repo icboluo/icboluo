@@ -10,7 +10,6 @@ import java.util.Queue;
  * @since 2022-11-01 13:28
  */
 class N1609_奇偶树 {
-    // FIXME ERROR
     public boolean isEvenOddTree(TreeNode root) {
         if (root == null) {
             return true;
@@ -34,12 +33,12 @@ class N1609_奇偶树 {
                         return false;
                     }
                 }
-                pre = root.val;
-                if (root.left != null) {
-                    queue.add(root.left);
+                pre = poll.val;
+                if (poll.left != null) {
+                    queue.add(poll.left);
                 }
-                if (root.right != null) {
-                    queue.add(root.right);
+                if (poll.right != null) {
+                    queue.add(poll.right);
                 }
             }
             count++;

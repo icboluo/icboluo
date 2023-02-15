@@ -23,7 +23,7 @@ public class OrderService implements BeanNameAware, InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        System.out.println("我被初始化了");
+        System.out.println("OrderService 被初始化了");
     }
 
     public void test() {

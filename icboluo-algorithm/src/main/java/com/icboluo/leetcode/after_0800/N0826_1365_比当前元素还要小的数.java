@@ -142,7 +142,7 @@ class N0826_1365_比当前元素还要小的数 {
     }
 
     /**
-     * 1754 两个字符串的最大合并 FIXME 超时
+     * 1754 两个字符串的最大合并
      * 把任意一个单词的首字母放到合并后的字符串的最后，求字典序最大的字符串
      *
      * @param word1
@@ -157,7 +157,7 @@ class N0826_1365_比当前元素还要小的数 {
                 word2 = word2.substring(1);
             } else if ("".equals(word2)) {
                 res += word1.charAt(0);
-                word2 = word1.substring(1);
+                word1 = word1.substring(1);
             } else {
                 if (word1.charAt(0) > word2.charAt(0)) {
                     res += word1.charAt(0);
@@ -212,7 +212,7 @@ class N0826_1365_比当前元素还要小的数 {
     }
 
     /**
-     * 2300 成功的法术和药水对；2个数组相互乘积大于success的对数 FIXME ERROR
+     * 2300 成功的法术和药水对；2个数组相互乘积大于success的对数
      *
      * @param spells
      * @param potions
@@ -222,18 +222,18 @@ class N0826_1365_比当前元素还要小的数 {
     public int[] successfulPairs1(int[] spells, int[] potions, long success) {
         Arrays.sort(potions);
         // 元素首次出现的位置，这个首次非常重要，首次出现的->最后的均是可行解
-        TreeMap<Integer, Integer> map = new TreeMap<>();
+        TreeMap<Long, Integer> map = new TreeMap<>();
         // 这里也可以在下面 +-1来调整
-        map.put(Integer.MAX_VALUE, potions.length);
+        map.put(Long.MAX_VALUE, potions.length);
         // 这里要逆序，这样可以获得元素出现的第一个位置
         for (int i = potions.length - 1; i >= 0; i--) {
-            map.put(potions[i], i);
+            map.put((long) potions[i], i);
         }
         for (int i = 0; i < spells.length; i++) {
             // 需要的被除数
             long need = (success + spells[i] - 1) / spells[i];
             // 注意这个api，找出被除数的位置，后面的均是可行解
-            spells[i] = potions.length - map.ceilingEntry((int) need).getValue();
+            spells[i] = potions.length - map.ceilingEntry(need).getValue();
         }
         return spells;
     }
