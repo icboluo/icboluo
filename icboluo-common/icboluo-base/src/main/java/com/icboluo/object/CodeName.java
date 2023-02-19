@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 档案视图对象
+ * 档案对象
  *
  * @author icboluo
  * @since 2020/12/3 21:40
@@ -13,17 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArchivesVO {
-
-    /**
-     * id
-     */
-    private String id;
-
-
-    /**
-     * 名称
-     */
-    private String name;
+public class CodeName extends Archives<String, String> {
 
 }

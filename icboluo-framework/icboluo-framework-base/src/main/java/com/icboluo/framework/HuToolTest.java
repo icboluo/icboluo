@@ -12,7 +12,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import com.icboluo.enumerate.StatusEnum;
-import com.icboluo.object.ArchivesVO;
+import com.icboluo.object.CodeName;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -60,17 +60,17 @@ public class HuToolTest {
 
     @Test
     public void beanTest() {
-        ArchivesVO brand = new ArchivesVO();
+        CodeName brand = new CodeName();
         brand.setId(1L + "");
         brand.setName("华为");
         // Bean转Map
         Map<String, Object> map = BeanUtil.beanToMap(brand);
         log.info("beanUtil bean to map:{}", map);
         // Map转Bean
-        ArchivesVO mapBrand = BeanUtil.toBean(map, ArchivesVO.class);
+        CodeName mapBrand = BeanUtil.toBean(map, CodeName.class);
         log.info("beanUtil map to bean:{}", mapBrand);
         // Bean属性拷贝
-        ArchivesVO copyBrand = new ArchivesVO();
+        CodeName copyBrand = new CodeName();
         BeanUtil.copyProperties(brand, copyBrand);
         log.info("beanUtil copy properties:{}", copyBrand);
     }

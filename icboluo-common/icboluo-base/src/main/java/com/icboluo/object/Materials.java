@@ -13,20 +13,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MaterialsVO {
-
+public class Materials {
     /**
-     * d
+     * 项
      */
-    private String id;
-
-    /**
-     * 名称
-     */
-    private String name;
+    private CodeName item;
 
     /**
      * 数量
      */
-    private Integer quantity;
+    private Integer num;
 }

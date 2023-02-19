@@ -2,7 +2,7 @@ package com.icboluo.service.impl;
 
 import com.icboluo.entity.Student;
 import com.icboluo.mapper.CodeMapper;
-import com.icboluo.object.ArchivesVO;
+import com.icboluo.object.CodeName;
 import com.icboluo.service.CodeService;
 import jakarta.annotation.Resource;
 
@@ -48,9 +48,9 @@ public class CodeServiceImpl implements CodeService {
      * @param arch 用户对象
      * @return 是否是管理员
      */
-    private boolean isAdmin(ArchivesVO arch) {
+    private boolean isAdmin(CodeName arch) {
         return Optional.ofNullable(arch)
-                .map(ArchivesVO::getName)
+                .map(CodeName::getName)
                 .filter("admin"::equals)
                 .isPresent();
     }
