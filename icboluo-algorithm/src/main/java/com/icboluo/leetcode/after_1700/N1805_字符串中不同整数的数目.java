@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1800;
+package com.icboluo.leetcode.after_1700;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -52,6 +53,7 @@ public class Stream02Test {
         Stream<Double> stream5 = Stream.generate(() -> Math.random());
         stream5.limit(100).forEach(System.out::println);
 
+        IntStream.range(0, 10);
     }
 
     /**

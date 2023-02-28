@@ -1,10 +1,10 @@
 ## 什么是Class(类)
 
 * 如下图在Idea中右键->new->Java class创建出来的文件叫Class
-  ![img.png](picture/create.png)
-* ![img.png](picture/name.png)
+  ![img.png](clazz/create.png)
+* ![img.png](clazz/name.png)
 * 看一下Demo Class在文件夹中长什么样
-* ![img.png](picture/dir.png)
+* ![img.png](clazz/dir.png)
 * Idea自动生成的Class的内容如下
 
 ```java
@@ -47,9 +47,9 @@ public class Demo {
 #### 启动
 
 * 如下图所示，第7行第8行均有一个三角标记，随便点一个然后点run...即可（也可以点击debug启动
-  ![img.png](picture/start.png)
+  ![img.png](clazz/start.png)
 * 控制台打印消息会在下方弹出
-  ![img.png](picture/console.png)
+  ![img.png](clazz/console.png)
 
 ## 认识数据类型
 

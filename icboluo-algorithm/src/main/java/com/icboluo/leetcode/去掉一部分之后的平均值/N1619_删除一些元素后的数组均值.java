@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1300;
+package com.icboluo.leetcode.去掉一部分之后的平均值;
 
 import java.util.Arrays;
 

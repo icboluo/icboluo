@@ -16,8 +16,14 @@ import java.util.stream.Stream;
  */
 public class Stream03Test {
 
-    List<Student> stuList1 = Arrays.asList(new Student(1, "one", Student.Status.BUSY), new Student(2, "two", Student.Status.FREE), new Student(3, "three", Student.Status.VOCATION));
-    List<Student> stuList2 = Arrays.asList(new Student(4, "four", Student.Status.BUSY), new Student(5, "five", Student.Status.FREE));
+    List<Student> stuList1 = Arrays.asList(
+            new Student(1, "one", Student.Status.BUSY),
+            new Student(2, "two", Student.Status.FREE),
+            new Student(3, "three", Student.Status.VOCATION));
+
+    List<Student> stuList2 = Arrays.asList(
+            new Student(4, "four", Student.Status.BUSY),
+            new Student(5, "five", Student.Status.FREE));
 
     /**
      * 将多个list的数据加到一起
@@ -30,6 +36,7 @@ public class Stream03Test {
         list.stream().flatMap(Collection::stream).forEach(System.out::println);
 
         Stream.of(stuList1.stream(), stuList2.stream()).flatMap(ele -> ele).toList();
+        Stream.of(stuList1, stuList2).flatMap(Collection::stream).toList();
     }
 
     /**
@@ -66,7 +73,7 @@ public class Stream03Test {
     /**
      * 易错点
      *
-     * @see com.icboluo.util.BeanHelper mapConvert
+     * @see com.icboluo.util.BeanHelper#mapConvert
      */
     @Test
     public void test3() {
@@ -108,5 +115,20 @@ public class Stream03Test {
                 .map(StringBuffer::new)
                 .map(StringBuffer::toString)
                 .ifPresent(System.out::println);
+    }
+
+    /**
+     * 求元素出现次数
+     */
+    @Test
+    public void test6() {
+        Map<Integer, Integer> ageCountMap = stuList1.stream()
+                .collect(Collectors.groupingBy(Student::getAge, Collectors.summingInt(ele -> 1)));
+        System.out.println("ageCountMap = " + ageCountMap);
+
+        // toMap 第4个参数用linked可以保证map的顺序
+        LinkedHashMap<Integer, Integer> collect = stuList1.stream()
+                .collect(Collectors.toMap(Student::getAge, ele -> 1, Integer::sum, LinkedHashMap::new));
+        System.out.println("collect = " + collect);
     }
 }

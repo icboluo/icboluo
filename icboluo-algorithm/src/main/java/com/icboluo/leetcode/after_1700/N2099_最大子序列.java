@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1800;
+package com.icboluo.leetcode.after_1700;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
