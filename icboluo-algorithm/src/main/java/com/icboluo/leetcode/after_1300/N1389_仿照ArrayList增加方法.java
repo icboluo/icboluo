@@ -1,6 +1,7 @@
 package com.icboluo.leetcode.after_1300;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author icboluo
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  */
  class N1389_仿照ArrayList增加方法 {
     public int[] createTargetArray(int[] nums, int[] index) {
-        ArrayList<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) {
             list.add(index[i], nums[i]);
         }

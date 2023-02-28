@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2021-05-04 13:05
  */
-class N1026 {
+class N1026_节点与其祖先节点之间的最大差值 {
     public int maxAncestorDiff(TreeNode root) {
         return maxAncestorDiff1(root);
 //        return maxAncestorDiff2(root);

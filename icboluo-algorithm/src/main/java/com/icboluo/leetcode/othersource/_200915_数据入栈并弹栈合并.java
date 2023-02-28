@@ -1,4 +1,4 @@
-package com.icboluo.othersource;
+package com.icboluo.leetcode.othersource;
 
 /**
  * @author icboluo
@@ -50,5 +50,4 @@ class _200915_数据入栈并弹栈合并 {
             System.out.println(sum);
         }
     }
-
 }

@@ -29,6 +29,7 @@ class N1773_统计匹配的数量 {
                 case "type" -> type;
                 case "color" -> color;
                 case "name" -> name;
+                default -> "";
             };
         }
     }

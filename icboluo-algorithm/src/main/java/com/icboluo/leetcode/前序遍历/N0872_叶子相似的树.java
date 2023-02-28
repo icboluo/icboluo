@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0800;
+package com.icboluo.leetcode.前序遍历;
 
 import com.icboluo.common.TreeNode;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-05-28 13:05
  */
-class N0872 {
+class N0872_叶子相似的树 {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
         List<Integer> list1 = new ArrayList<>();
         List<Integer> list2 = new ArrayList<>();

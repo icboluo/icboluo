@@ -1,4 +1,4 @@
-package com.icboluo.othersource;
+package com.icboluo.leetcode.othersource;
 
 import com.icboluo.util.IcBoLuoException;
 
@@ -8,7 +8,7 @@ import com.icboluo.util.IcBoLuoException;
  */
 class S0006_把字符串转换成整数 {
     public static void main(String[] args) {
-        S0006_把字符串转换成整数 cla = new S0006_把字符串转换成整数();
+        var cla = new S0006_把字符串转换成整数();
         String str = "-12312312";
         int i = cla.m(str);
         System.out.println("i = " + i);

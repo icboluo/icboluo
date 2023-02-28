@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1300;
+package com.icboluo.leetcode.日期;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +21,8 @@ class N1360_2409_计算间隔日期 {
     }
 
     /**
-     * 2409 计算一起度过的日志，日期交集 ERROR,这个题只有月-日，没有年
+     * 2409 计算一起度过的日子，日期交集 ERROR,这个题只有月-日，没有年
+     * 日期交集
      *
      * @param arriveAlice
      * @param leaveAlice

@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.两数之和;
 
 import com.icboluo.common.ListNode;
 
@@ -7,11 +7,11 @@ import com.icboluo.common.ListNode;
  * @since 2021-11-18 22:56
  */
 class N0002_链表2数和 {
-
     public static void main(String[] args) {
         ListNode listNode01 = new ListNode(2, 4, 3);
         ListNode listNode02 = new ListNode(5, 6, 4);
-        ListNode listNode = getTwoNumSum(listNode01, listNode02);
+        var cla = new N0002_链表2数和();
+        ListNode listNode = cla.getTwoNumSum(listNode01, listNode02);
         listNode.print();
     }
 
@@ -22,7 +22,7 @@ class N0002_链表2数和 {
      * @param listNode02
      * @return
      */
-    private static ListNode getTwoNumSum(ListNode listNode01, ListNode listNode02) {
+    public ListNode getTwoNumSum(ListNode listNode01, ListNode listNode02) {
         ListNode head = new ListNode();
         ListNode cur = head;
 //        位数
@@ -61,5 +61,4 @@ class N0002_链表2数和 {
         }
         return root.next;
     }
-
 }

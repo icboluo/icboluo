@@ -1,4 +1,4 @@
-package com.icboluo.othersource;
+package com.icboluo.leetcode.othersource;
 
 /**
  * @author icboluo
