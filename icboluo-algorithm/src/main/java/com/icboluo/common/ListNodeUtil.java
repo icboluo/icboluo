@@ -4,7 +4,7 @@ package com.icboluo.common;
  * @author icboluo
  * @since 2023-01-10 21:23
  */
-class ListNodeUtil {
+public class ListNodeUtil {
     public static void main(String[] args) {
         ListNodeUtil cla = new ListNodeUtil();
         ListNode listNode = new ListNode(1, 2, 3, 4, 5);
@@ -83,5 +83,50 @@ class ListNodeUtil {
         aPre.next = bPre;
         aCur.next = next;
         return head;
+    }
+
+    /**
+     * 双指针一个指向start，一个指向end，交换位置
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    public static ListNode reverse1(ListNode start, ListNode end) {
+        // 最终链表的前驱节点
+        ListNode pre = null;
+        ListNode cur = start;
+        ListNode next;
+        while (cur != end) {
+            // 存储后继节点
+            next = cur.next;
+            // pre->cur 反向指向，相当于链表反转
+            cur.next = pre;
+            // pre和cur后移
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+
+    /**
+     * 遍历原来的链表，每遍历一个节点，将其取出，并放在新的链表的最前面
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    public static ListNode reverse2(ListNode start, ListNode end) {
+        ListNode cur = start;
+        ListNode reverseHead = new ListNode();
+        while (cur != end) {
+            ListNode next = cur.next;
+            // 把新链表的数据放到当前节点的下一个
+            cur.next = reverseHead.next;
+            // 把当前节点放到新链表之后
+            reverseHead.next = cur;
+            cur = next;
+        }
+        return reverseHead.next;
     }
 }

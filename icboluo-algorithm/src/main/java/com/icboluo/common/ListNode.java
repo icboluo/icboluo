@@ -86,8 +86,8 @@ public class ListNode {
     }
 
     /**
-     * <p></>1.将链表反转，然后打印
-     * <p></>2.遍历链表，将链表中的元素存到stack中，打印
+     * <p>1.将链表反转，然后打印
+     * <p>2.遍历链表，将链表中的元素存到stack中，打印
      */
     public void reversePrint() {
         ListNode cur = this;

@@ -12,31 +12,14 @@ import java.util.*;
  */
 class GreedyAlgorithm {
     public static void main(String[] args) {
-        //广播信息
-        Map<String, HashSet<String>> broadcasts = new HashMap<>();
-        HashSet<String> hashSet1 = new HashSet<>();
-        hashSet1.add("北京");
-        hashSet1.add("上海");
-        hashSet1.add("天津");
-        HashSet<String> hashSet2 = new HashSet<>();
-        hashSet2.add("广州");
-        hashSet2.add("上海");
-        hashSet2.add("深圳");
-        HashSet<String> hashSet3 = new HashSet<>();
-        hashSet3.add("成都");
-        hashSet3.add("上海");
-        hashSet3.add("杭州");
-        HashSet<String> hashSet4 = new HashSet<>();
-        hashSet4.add("上海");
-        hashSet4.add("天津");
-        HashSet<String> hashSet5 = new HashSet<>();
-        hashSet5.add("杭州");
-        hashSet5.add("大连");
-        broadcasts.put("k1", hashSet1);
-        broadcasts.put("k2", hashSet2);
-        broadcasts.put("k3", hashSet3);
-        broadcasts.put("k4", hashSet4);
-        broadcasts.put("k5", hashSet5);
+        // 广播信息
+        Map<String, Set<String>> broadcasts = new HashMap<>();
+
+        broadcasts.put("k1", Set.of("北京", "上海", "天津"));
+        broadcasts.put("k2", Set.of("广州", "上海", "深圳"));
+        broadcasts.put("k3", Set.of("成都", "上海", "杭州"));
+        broadcasts.put("k4", Set.of("上海", "天津"));
+        broadcasts.put("k5", Set.of("杭州", "大连"));
 
         HashSet<String> allAreas = new HashSet<>();
         allAreas.add("北京");
@@ -50,24 +33,22 @@ class GreedyAlgorithm {
         // 最后选择的广播
         List<String> selects = new ArrayList<>();
         Set<String> tempSet = new HashSet<>();
-        String maxKey;
-        while (CollectionUtils.isEmpty(allAreas)) {
-            maxKey = null;
-            for (String key : broadcasts.keySet()) {
-                tempSet.clear();
-                HashSet<String> areas = broadcasts.get(key);
-                tempSet.addAll(areas);
+        while (!CollectionUtils.isEmpty(allAreas)) {
+            String maxKey = null;
+            for (Map.Entry<String, Set<String>> entry : broadcasts.entrySet()) {
+                tempSet.addAll(entry.getValue());
                 tempSet.retainAll(allAreas);
                 if (!tempSet.isEmpty() && (maxKey == null || tempSet.size() > broadcasts.get(maxKey).size())) {
-                    maxKey = key;
+                    maxKey = entry.getKey();
                 }
+                // 这样可以反复地使用同一个容器，不必重新创建
+                tempSet.clear();
             }
             if (maxKey != null) {
                 selects.add(maxKey);
                 allAreas.removeAll(broadcasts.get(maxKey));
             }
         }
-
         System.out.println(selects);
     }
 }

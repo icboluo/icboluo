@@ -38,7 +38,8 @@ Here are some ideas to get you started:
 
 [算法](icboluo-algorithm/src/main/java/com/icboluo/algorithm)\
 [数据结构](icboluo-algorithm/src/main/java/com/icboluo/datastructure)\
-[leetcode](icboluo-algorithm/src/main/java/com/icboluo/leetcode) 题目
+[leetcode](icboluo-algorithm/src/main/java/com/icboluo/leetcode) 题目\
+[简单算法](icboluo-algorithm/src/main/java/com/icboluo/leetcode/simple.md) \
 
 解法有好多是来源于Discuss中的思路
 
@@ -82,6 +83,7 @@ Here are some ideas to get you started:
 
 [注解](icboluo-se/src/main/java/com/icboluo/annotation)\
 [Base基础](icboluo-se/src/main/java/com/icboluo/base/clazz.md)\
+[SpringBoot](icboluo-se/src/main/java/com/icboluo/base/spring.md)\
 [比较器](icboluo-se/src/main/java/com/icboluo/compare)\
 [设计模式](icboluo-se/src/main/java/com/icboluo/designpattern)\
 [异常处理](icboluo-se/src/main/java/com/icboluo/exception)\
