@@ -58,7 +58,7 @@
         {
           "matchType": "ORDINARY",
           "columnType": "date",
-          "javaType": "java.time.LocalDateTime"
+          "javaType": "java.time.LocalDate"
         },
         {
           "matchType": "ORDINARY",

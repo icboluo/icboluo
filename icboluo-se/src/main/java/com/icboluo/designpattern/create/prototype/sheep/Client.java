@@ -6,11 +6,11 @@ package com.icboluo.designpattern.create.prototype.sheep;
  * @author icboluo
  * @since 2020/10/27 19:56
  */
-public class Client {
+class Client {
     public static void main(String[] args) {
         Sheep sheep = new Sheep("tom", 1, "白色");
         sheep.friend = new Sheep("jack", 2, "黑色");
         Sheep sheep1 = (Sheep) sheep.clone();
-        System.out.println(sheep.friend==sheep1.friend);
+        System.out.println(sheep.friend == sheep1.friend);
     }
 }
