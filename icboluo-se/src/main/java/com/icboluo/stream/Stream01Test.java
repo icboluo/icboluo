@@ -23,8 +23,8 @@ public class Stream01Test {
         Consumer<String> con = x -> ps1.println("x = " + x);
         con.accept("ddd");
 
-        PrintStream ps = System.out;
-        Consumer<String> con1 = ps::println;
+        PrintStream ps2 = System.out;
+        Consumer<String> con1 = ps2::println;
         con1.accept("fff");
 
         Consumer<String> con2 = System.out::println;

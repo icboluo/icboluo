@@ -8,17 +8,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
- * Lambda表达式需要函数式接口的支持
- * <p>
- * Java 内置的4大核心函数式接口（有好多其他的接口，可以自行查找
+ * <p>Lambda表达式需要函数式接口的支持
+ * <p>Java 内置的4大核心函数式接口（有好多其他的接口，可以自行查找
  *
  * @author icboluo
- * @see java.util.function.Consumer：消费型接口    void accept(T t)
- * @see java.util.function.Supplier：供给型接口    T get()
- * @see java.util.function.Function：函数型接口  R apply(T t)
- * @see java.util.function.Predicate：断言型接口   boolean test(T t)
+ * @see java.util.function.Consumer#accept(Object) 消费型接口
+ * @see Supplier#get() 供给型接口
+ * @see java.util.function.Function#apply(Object) 函数型接口
+ * @see java.util.function.Predicate#test(Object) 断言型接口
  */
 public class Lambda01Test {
     /**

@@ -16,6 +16,7 @@ import java.util.function.Predicate;
  * <p>首先，过滤函数就要具有通用性，我们先做一个私有函数做公共逻辑处理
  *
  * @author icboluo
+ * @see ForewordTest#filterStudent(List, Predicate)
  */
 public class ForewordTest {
     /**

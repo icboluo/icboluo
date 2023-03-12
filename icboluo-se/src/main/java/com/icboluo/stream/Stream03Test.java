@@ -57,9 +57,9 @@ public class Stream03Test {
      * 可以这样理解后一句话，filter需要的是接口，接口的实现类是return语句，而不是new map,所以只有return语句需要执行多次
      * 表示一个方法中执行的内容也可以被割裂调用的；Stream在启动的时候，先调用filter函数，调用里面的方法，运行过程中执行函数式接口
      *
-     * @param keyExtractor
-     * @param <T>
-     * @return
+     * @param keyExtractor 需要过滤的元素
+     * @param <T>          实体类型
+     * @return 断言型函数式接口
      */
     private <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
         ConcurrentHashMap<Object, Boolean> map = new ConcurrentHashMap<>();
@@ -73,8 +73,9 @@ public class Stream03Test {
     /**
      * 易错点
      *
-     * @see com.icboluo.util.BeanHelper#mapConvert
+     * @see com.icboluo.util.BeanHelper#mapConvert(Map, Function, Function)
      */
+    @SuppressWarnings("all")
     @Test
     public void test3() {
         stuList1.stream().anyMatch(stu -> stu.getAge() == 2);
