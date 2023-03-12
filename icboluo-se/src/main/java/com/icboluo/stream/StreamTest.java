@@ -232,7 +232,9 @@ public class StreamTest {
     }
 
     public String getLinkedMethod() {
-        stuList.add(new Student(4, null, Student.Status.BUSY));
+        // 请使用该list
+        List<Student> list = new ArrayList<>(stuList);
+        list.add(new Student(4, null, Student.Status.BUSY));
         return null;
     }
 
@@ -346,8 +348,9 @@ public class StreamTest {
     }
 
     public String getLinkedMethodAns() {
-        stuList.add(new Student(4, null, Student.Status.BUSY));
-        return stuList.stream()
+        List<Student> list = new ArrayList<>(stuList);
+        list.add(new Student(4, null, Student.Status.BUSY));
+        return list.stream()
                 .filter(stu -> stu.getAge() > 3)
                 .filter(stu -> stu.getStatus().equals(Student.Status.BUSY))
                 .map(Student::getName)
