@@ -84,7 +84,7 @@ class N0747_0905_0922根据奇偶排序 {
         return false;
     }
 
-    // -10,12,-20,-8,15 负数没法处理 FIXME ERROR
+    // -10,12,-20,-8,15 负数没法处理
     public boolean checkIfExist2(int[] arr) {
         // 我们期望，数组里面的值不断的变大，然后我们由大到小即可判断
         arr = Arrays.stream(arr).boxed()

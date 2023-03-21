@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1700;
+package com.icboluo.leetcode.low;
 
 import java.util.Arrays;
 

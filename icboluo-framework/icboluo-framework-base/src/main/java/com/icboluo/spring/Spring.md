@@ -26,6 +26,8 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @Autowired注入：先直接找子类，找的多了按id找
 
+    autowired作为方法注解的时候，需要注入参数；如果仅仅是在初始化的时候需要set默认值，我们可以使用PostConstruct
+
 @Qualifier改id
 
 @Resource两者合一

@@ -26,6 +26,9 @@ public class Student implements Serializable {
      */
     private String name;
 
+    /**
+     * 状态
+     */
     private Status status;
 
     public enum Status {

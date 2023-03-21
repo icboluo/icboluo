@@ -7,7 +7,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2023-03-02 21:10
  */
-class N1786_子串中固定长度不重复的数量 {
+class N1876_子串中固定长度不重复的数量 {
     // 子串长度为3，且子串中字符不重复的数量,简简单单的滑动窗口
     public int countGoodSubstrings(String s) {
         int l = 0;

@@ -4,7 +4,7 @@ package com.icboluo.leetcode.after_1700;
  * @author icboluo
  * @since 2023-01-15 20:06
  */
-class N2384_子数组的组合数 {
+class N2348_子数组的组合数 {
     /**
      * 零填充子数组的数量 0的组数
      *

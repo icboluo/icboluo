@@ -1,11 +1,11 @@
-package com.icboluo.leetcode.after_1700;
+package com.icboluo.leetcode.前缀和;
 
 /**
  * @author icboluo
  * @since 2023-03-02 21:01
  */
 class N1854_每组包含出生年份和死亡年份 {
-    // 前缀和
+    // 前缀和 数组交集
     public int maximumPopulation(int[][] logs) {
         int[] arr = new int[1001];
         for (int[] log : logs) {

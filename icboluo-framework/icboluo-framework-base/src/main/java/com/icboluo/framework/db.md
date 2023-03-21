@@ -26,3 +26,25 @@ create table best_practice_cur_handler
 )
     comment '最佳实践-当前处理人';
 ```
+
+## 数据类型
+
+数据库日期格式建立有2种，一种天级别的date，一种秒级别的datetime，不要均使用datetime
+
+## 异常
+
+Cause: java.lang.IllegalArgumentException: argument type mismatch
+
+mybatis select * from db,中db需要增加无参构造函数，否则会报上述错误
+
+## SQL
+
+select * from information schema.INNODB TRX;
+
+查看sql运行
+
+当此语句发现running的时候，说明有语句在运行；当多线程执行的时候，如果一直在running，说明有一个线程一直在占用
+
+## 时间
+
+为什么mybatis打印第一行日志的时候总是延迟10ms，不管是同步请求还是异步请求均会出现
