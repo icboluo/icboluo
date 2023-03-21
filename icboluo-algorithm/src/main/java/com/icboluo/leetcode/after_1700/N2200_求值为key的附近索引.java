@@ -6,7 +6,7 @@ import java.util.*;
  * @author icboluo
  * @since 2023-03-21 22:42
  */
-class N2200_求值为key的附件索引 {
+class N2200_求值为key的附近索引 {
     /**
      * 查找数组中的所有k距离索引 FIXME ERROR
      * 暴力解
