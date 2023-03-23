@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
  */
 class 形近词 {
     public static void main(String[] args) {
-        形近词 cla = new 形近词();
+        var cla = new 形近词();
         String[] dictionary = {"aa", "ab", "ac"};
         String[] words = {"ac", "dd"};
         int[] ints = cla.queryWords(dictionary, words);
@@ -22,10 +22,10 @@ class 形近词 {
     }
 
     /**
-     * dict存放所有单词，互不相同；words是所需要校验的字符串；将words中的每一个单词，能否只将这个单词中一个字母换成另一个字母，使形成的新单词存在于字典中（不包含单词本身），请统计该单词形近词在字典集中的数量，将结果放到数组中
+     * 将words中的每一个单词，能否只将这个单词中一个字母换成另一个字母，使形成的新单词存在于字典中（不包含单词本身），请统计该单词形近词在字典集中的数量，将结果放到数组中
      *
-     * @param dictionary
-     * @param words
+     * @param dictionary dict存放所有单词，互不相同
+     * @param words      words是所需要校验的字符串
      * @return
      */
     private int[] queryWords(String[] dictionary, String[] words) {

@@ -30,7 +30,7 @@ class N0733_FloodFill算法 {
     }
 
     public static void main(String[] args) {
-        N0733_FloodFill算法 cla = new N0733_FloodFill算法();
+        var cla = new N0733_FloodFill算法();
         int[][] arr = new int[][]{
                 {1, 1, 1},
                 {1, 1, 0},
