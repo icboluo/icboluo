@@ -2,7 +2,6 @@ package com.icboluo.controller;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-import org.springframework.stereotype.Component;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -11,12 +10,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- * TODO 这个并没有起作用
  * @author icboluo
  * @since 2022-09-23 19:21
  */
-@Component
-public class MyBatisType implements TypeHandler<LocalDate> {
+public class LocalDateMyBatisType implements TypeHandler<LocalDate> {
 
     @Override
     public void setParameter(PreparedStatement ps, int i, LocalDate parameter, JdbcType jdbcType) throws SQLException {

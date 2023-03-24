@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author icboluo
@@ -19,6 +20,7 @@ public class LocalMybatis implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         SqlSessionFactory bean = applicationContext.getBean(SqlSessionFactory.class);
         TypeHandlerRegistry typeHandlerRegistry = bean.getConfiguration().getTypeHandlerRegistry();
-        typeHandlerRegistry.register(LocalDate.class, MyBatisType.class);
+        typeHandlerRegistry.register(LocalDate.class, LocalDateMyBatisType.class);
+        typeHandlerRegistry.register(LocalDateTime.class, LocalDateTimeMyBatisType.class);
     }
 }

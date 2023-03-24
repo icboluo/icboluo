@@ -131,4 +131,7 @@ public class DateHelper {
         return localDate.with(TemporalAdjusters.lastDayOfMonth());
     }
 
+    public static LocalDateTime toDateTime(String str) {
+        return LocalDateTime.parse(str, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 }
