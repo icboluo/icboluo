@@ -3,6 +3,6 @@ profiles:
 spring:
   datasource:
     driverClassName: org.sqlite.JDBC
-    url: jdbc:sqlite::resource:db/fund.db
+    url: jdbc:sqlite::../../document/sql/fund.db
     username:
     password:

@@ -3,6 +3,6 @@ profiles:
 spring:
   datasource:
     driverClassName: org.sqlite.JDBC
-    url: jdbc:sqlite::resource:db/game.db
+    url: jdbc:sqlite::../../document/sql/game.db
     username:
     password:
