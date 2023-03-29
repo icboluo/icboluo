@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -132,4 +134,63 @@ public class Stream03Test {
                 .collect(Collectors.toMap(Student::getAge, ele -> 1, Integer::sum, LinkedHashMap::new));
         System.out.println("collect = " + collect);
     }
+
+    @Test
+    public void test7() {
+        Msg msg1 = new Msg(Arrays.asList("正确的1", "correct1"), Arrays.asList("错误的1", "error1"));
+        Msg msg2 = new Msg(Arrays.asList("正确的2", "correct2"), Arrays.asList("错误的2", "error2"));
+        List<Msg> list = Arrays.asList(msg1, msg2);
+        // 求所有的消息结果
+        // 方法1确定：对于每一个msg，均创建了一个中间的set；对于每一个msg，它的correct和error均遍历2遍（addAll，收集
+        Set<String> set1 = list.stream().flatMap(msg -> {
+            HashSet<String> set = new HashSet<>();
+            set.addAll(msg.correct);
+            set.addAll(msg.error);
+            return set.stream();
+        }).collect(Collectors.toSet());
+        System.out.println(set1);
+
+        Set<String> set2 = list.stream().<String>mapMulti((msg, consumer) -> {
+            msg.correct.forEach(consumer);
+            msg.error.forEach(consumer);
+            // msgService.findErrorById(msg.getId).forEach(consumer)
+        }).collect(Collectors.toSet());
+        System.out.println(set2);
+    }
+
+    /**
+     * 将包含迭代器的混合类型，拆分成同一个类型
+     */
+    @Test
+    public void test8() {
+        // 嵌套列表
+        var nestedList = List.of(1, List.of(2, List.of(3, 4)), 5);
+        Stream<Object> expandStream = nestedList.stream().mapMulti(Stream03Test::expandIterator);
+        System.out.println(expandStream.toList());
+
+        // 从stream中依次获取满足条件的元素，直到不满足条件为止结束获取
+        IntStream.of(12, 4, 3, 6, 8, 9).takeWhile(x -> x % 2 == 0).forEach(System.out::println);
+        // 从stream中依次删除满足条件的元素，这2个函数会提前终止，和filter不一样
+        IntStream.of(12, 4, 3, 6, 8, 9).takeWhile(x -> x % 2 == 0).forEach(System.out::println);
+    }
+
+    /**
+     * 展开迭代
+     *
+     * @param obj
+     * @param consumer
+     */
+    public static void expandIterator(Object obj, Consumer<Object> consumer) {
+        if (obj instanceof Iterable<?> elements) {
+            for (Object one : elements) {
+                expandIterator(one, consumer);
+            }
+        } else if (obj != null) {
+            consumer.accept(obj);
+        }
+    }
+
+    public record Msg(List<String> correct, List<String> error) {
+    }
+
 }
