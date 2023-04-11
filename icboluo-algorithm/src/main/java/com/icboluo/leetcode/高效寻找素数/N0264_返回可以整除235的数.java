@@ -5,32 +5,35 @@ package com.icboluo.leetcode.高效寻找素数;
  * @since 2023-01-14 18:54
  */
 class N0264_返回可以整除235的数 {
+    public static void main(String[] args) {
+        var cla = new N0264_返回可以整除235的数();
+        System.out.println(cla.nthUglyNumber(10));
+    }
+
     // FIXME ERROR
     public int nthUglyNumber(int n) {
-        if (n == 1 || n == 2) {
-            return n;
-        }
-        // 改成map更好，要不然这个数组的范围界定有点麻烦
-        boolean[] isUsed = new boolean[2 * n + 10];
-        int a = 2;
-        int b = 3;
-        int c = 5;
-        for (int i = 0; i < n - 1; ) {
-            int min = Math.min(Math.min(a, b), c);
-            if (!isUsed[min]) {
-                isUsed[min] = true;
-                i++;
+        // 请使用乘法，而不是加法
+        int a2 = 1;
+        int a3 = 1;
+        int a5 = 1;
+        int[] arr = new int[n];
+        arr[0] = 1;
+        for (int i = 1; i < n; i++) {
+            // 我们每次获取下一个可能的最小值
+            arr[i] = Math.min(Math.min(a2 * 2, a3 * 3), a5 * 5);
+            // 这里如果出现公倍数，多个指针会同时变化，会将较小的数提升到较高的级别，保证了程序顺序进行
+            // 绝不能加else
+            if (a2 * 2 == arr[i]) {
+                a2++;
             }
-            // 这里必须加一个else，如果当前最小值已经被使用，则最小值进行变化；防止结果差1；为什么我也不知道
-            else if (a == min) {
-                a += 2;
-            } else if (b == min) {
-                b += 3;
-            } else {
-                c += 5;
+            if (a3 * 3 == arr[i]) {
+                a3++;
+            }
+            if (a5 * 5 == arr[i]) {
+                a5++;
             }
         }
-        return Math.min(Math.min(a, b), c);
+        return arr[n - 1];
     }
 
     /**

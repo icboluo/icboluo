@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
  */
 class N0258_0390_数组位数求和不断缩小_重复多次 {
     public static void main(String[] args) {
-        N0258_0390_数组位数求和不断缩小_重复多次 cla = new N0258_0390_数组位数求和不断缩小_重复多次();
+        var cla = new N0258_0390_数组位数求和不断缩小_重复多次();
         System.out.println(cla.digitSum("11111222223", 3));
     }
 
@@ -31,12 +31,12 @@ class N0258_0390_数组位数求和不断缩小_重复多次 {
     }
 
     /**
-     * 0390 消除游戏 n代表1->n的数组，先从左到右相隔一个删，再从右往左相隔一个删，剩一个返回 12期待6  TODO 超时
+     * 0390 消除游戏 n代表1->n的数组，先从左到右相隔一个删，再从右往左相隔一个删，剩一个返回 12期待6，做法没有问题，超时
      *
      * @param n
      * @return
      */
-    public int lastRemaining(int n) {
+    public int lastRemaining1(int n) {
         int[] arr = IntStream.range(1, n + 1).toArray();
         // 外置len可以方便我们计算外层循环层数，可以简单的使用while循环判断执行到了没有，而不是准确判断执行次数，计算这个是比较麻烦的
         int len = arr.length;
@@ -57,6 +57,37 @@ class N0258_0390_数组位数求和不断缩小_重复多次 {
             len = k;
         }
         return arr[0];
+    }
+
+    /**
+     * 找规律，互相递归
+     *
+     * @param n
+     * @return
+     */
+    public int lastRemaining2(int n) {
+        return leftToRight(n);
+    }
+
+    private int leftToRight(int n) {
+        if (n <= 2) {
+            return n;
+        }
+        // 12345 的2倍
+        return 2 * rightToLeft(n / 2);
+    }
+
+    private int rightToLeft(int n) {
+        if (n <= 2) {
+            return 1;
+        }
+        // 从右到左需要考虑奇偶数
+        if (n % 2 == 1) {
+            // 123的4倍
+            return 2 * leftToRight(n / 2);
+        } else {
+            return 2 * leftToRight(n / 2) - 1;
+        }
     }
 
     /**

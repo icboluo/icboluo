@@ -102,7 +102,7 @@
         },
         {
           "name": "entity.java.vm",
-          "code": "##引入宏定义\n$!{define.vm}\n\n##使用宏定义设置回调（保存位置与文件后缀）\n#save(\"/entity\", \".java\")\n\n##使用宏定义设置包后缀\n#setPackageSuffix(\"entity\")\n\nimport java.io.Serializable;\nimport lombok.Data;\n##使用全局变量实现默认包导入\n$!{autoImport.vm}\n\n##使用宏定义实现类注释信息\n#tableComment(\"实体类\")\n@Data\npublic class $!{tableInfo.name} implements Serializable {\n#foreach($column in $tableInfo.fullColumn)\n    #if(${column.comment})/**\n     * ${column.comment}\n     */#end\n\n    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};\n\n#end\n    private static final long serialVersionUID = $!tool.serial();\n}\n"
+          "code": "##引入宏定义\n$!{define.vm}\n\n##使用宏定义设置回调（保存位置与文件后缀）\n#save(\"/entity\", \".java\")\n\n##使用宏定义设置包后缀\n#setPackageSuffix(\"entity\")\n\nimport java.io.Serializable;\nimport lombok.Data;\n##使用全局变量实现默认包导入\n$!{autoImport.vm}\n\n##使用宏定义实现类注释信息\n#tableComment(\"实体类\")\n@Data\npublic class $!{tableInfo.name} implements Serializable {\n#foreach($column in $tableInfo.pkColumn)\n    #if(${column.comment})/**\n     * ${column.comment}\n     */#end\n\n    #if(${column.type}==\"java.lang.String\")\n    @TableId\n    #end\n    #if(${column.type}==\"java.lang.Integer\")\n    @TableId(type = IdType.AUTO)\n    #end\n    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};\n\n#end\n#foreach($column in $tableInfo.otherColumn)\n    #if(${column.comment})/**\n     * ${column.comment}\n     */#end\n\n    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};\n\n#end\n    private static final long serialVersionUID = $!tool.serial();\n}\n"
         },
         {
           "name": "mapper.xml.vm",

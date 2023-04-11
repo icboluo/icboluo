@@ -8,8 +8,8 @@ import com.icboluo.constant.CharConstant;
  */
 class N1456_给定长度的子串中的最大元音数 {
     public static void main(String[] args) {
-        N1456_给定长度的子串中的最大元音数 cla = new N1456_给定长度的子串中的最大元音数();
-        System.out.println(cla.minimumRecolors("WBW", 1));
+        var cla = new N1456_给定长度的子串中的最大元音数();
+        System.out.println(cla.minimumRecolors("WBW", 2));
     }
 
     /**

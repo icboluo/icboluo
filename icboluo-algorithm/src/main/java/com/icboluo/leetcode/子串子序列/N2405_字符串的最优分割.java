@@ -61,19 +61,19 @@ class N2405_字符串的最优分割 {
 
     /**
      * 0915 将数组划分为不相交的区间；分成2部分 使 all left<right;left & right notnull;求min left.length
-     * 这个代码写出来是相当困难的 FIXME ERROR
+     * 这个代码写出来是相当困难的
      *
      * @param nums
      * @return
      */
     public int partitionDisjoint(int[] nums) {
-// 如果左边区间存在一个数不满足条件，则需要左边区间继续扩大，寻找可行解
+        // 如果左边区间存在一个数不满足条件，则需要左边区间继续扩大，寻找可行解
         int res = 0;
         int leftToCurMax = nums[0];
         int leftMax = nums[0];
         for (int i = 1; i < nums.length; i++) {
             // 如果当前值比较大，则是对的，需要更新左到现在的最大值
-            if (nums[i] > leftMax) {
+            if (nums[i] >= leftMax) {
                 leftToCurMax = Math.max(leftToCurMax, nums[i]);
             } else {
                 res = i;

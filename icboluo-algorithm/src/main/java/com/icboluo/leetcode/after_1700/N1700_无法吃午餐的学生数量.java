@@ -50,8 +50,14 @@ class N1700_无法吃午餐的学生数量 {
      */
     public int timeRequiredToBuy(int[] tickets, int k) {
         int sum = 0;
-        for (int ticket : tickets) {
-            sum += Math.min(ticket, tickets[k]);
+        for (int i = 0; i < tickets.length; i++) {
+            // 对于k索引之前的人，必须经过较多个
+            if (i <= k) {
+                sum += Math.min(tickets[i], tickets[k]);
+            } else {
+                // 对于k后面的人，可以少买一张票
+                sum += Math.min(tickets[i], tickets[k] - 1);
+            }
         }
         return sum;
     }

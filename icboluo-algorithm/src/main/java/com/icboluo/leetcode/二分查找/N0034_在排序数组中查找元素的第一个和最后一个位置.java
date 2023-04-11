@@ -10,8 +10,8 @@ import java.util.Arrays;
 class N0034_在排序数组中查找元素的第一个和最后一个位置 {
     public static void main(String[] args) {
         var cla = new N0034_在排序数组中查找元素的第一个和最后一个位置();
-        int[] arr1 = {1, 3, 5, 6};
-        var res = cla.searchRange1(arr1, 5);
+        int[] arr1 = {5, 7, 7, 8, 8, 10};
+        var res = cla.searchRange3(arr1, 8);
         System.out.println("res = " + Arrays.toString(res));
 
         int[] arr2 = {5, 7, 7, 8, 8, 10};
@@ -78,52 +78,54 @@ class N0034_在排序数组中查找元素的第一个和最后一个位置 {
     }
 
     /**
-     * FIXME ERROR
-     *
      * @param arr
      * @param target
      * @return
      */
     public int[] searchRange3(int[] arr, int target) {
-        int left = 0;
-        int right = arr.length;
+        int left1 = 0;
+        int right1 = arr.length;
         // 左闭右开区间
-        while (left < right) {
-            int mid = left + ((right - left) >> 1);
+        while (left1 < right1) {
+            int mid = left1 + ((right1 - left1) >> 1);
             if (arr[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid;
+                left1 = mid + 1;
+            } else if (arr[mid] > target) {
+                right1 = mid;
+            } else if (arr[mid] == target) {
+                right1 = mid;
             }
         }
-        if (left > right || arr[left] != target) {
+        if (left1 > arr.length - 1 || arr[left1] != target) {
             return new int[]{-1, -1};
         }
-        int l = 0;
-        int r = arr.length;
-        while (l < r) {
-            int mid = l + ((r - l) >> 1);
+        int left2 = 0;
+        int right2 = arr.length;
+        while (left2 < right2) {
+            int mid = left2 + ((right2 - left2) >> 1);
+            // [left,mid)
             if (arr[mid] > target) {
-                r = mid - 1;
-            } else {
-                l = mid;
+                right2 = mid;
+            } else if (arr[mid] < target) {
+                // [mid+1,right)
+                left2 = mid + 1;
+            } else if (arr[mid] == target) {
+                // [mid+1,right)
+                left2 = mid + 1;
             }
         }
-        if (left > right || left > r) {
+        if (left2 < 1 || arr[left2 - 1] != target) {
             return new int[]{-1, -1};
         }
-        return new int[]{left, r};
+        return new int[]{left1, left2 - 1};
     }
 
     /**
-     * FIXME ERROR
-     *
      * @param arr
      * @param target
      * @return
      */
     public int[] searchRange4(int[] arr, int target) {
-        int[] res = new int[]{-1, -1};
         int left1 = 0;
         int right1 = arr.length - 1;
         // 双闭区间
@@ -137,10 +139,9 @@ class N0034_在排序数组中查找元素的第一个和最后一个位置 {
                 right1 = mid - 1;
             }
         }
-        if (arr[left1] != target) {
-            return res;
+        if (left1 > arr.length - 1 || arr[left1] != target) {
+            return new int[]{-1, -1};
         }
-        res[0] = left1;
         int left2 = left1;
         int right2 = arr.length - 1;
         while (left2 <= right2) {
@@ -153,8 +154,10 @@ class N0034_在排序数组中查找元素的第一个和最后一个位置 {
                 left2 = mid + 1;
             }
         }
-        res[1] = right2;
-        return res;
+        if (left2 < 1 || arr[left2 - 1] != target) {
+            return new int[]{-1, -1};
+        }
+        return new int[]{left1, left2 - 1};
     }
 
 

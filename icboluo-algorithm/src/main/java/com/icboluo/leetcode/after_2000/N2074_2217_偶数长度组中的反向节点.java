@@ -16,26 +16,26 @@ class N2074_2217_偶数长度组中的反向节点 {
     public ListNode reverseEvenLengthGroups(ListNode head) {
         int i = 0;
         // 挺麻烦的代码，需要慢慢梳理
-        ListNode cur = head;
+        ListNode beforePre = head;
         ListNode temp = null;
-        while (cur != null) {
+        while (beforePre != null) {
             i++;
             ListNode pre = null;
-            ListNode tempHead = cur;
+            ListNode tempHead = beforePre;
             for (int j = 0; j < i; j++) {
                 if (i % 2 == 0) {
-                    if (cur != null) {
-                        ListNode nextNode = cur.next;
-                        cur.next = pre;
-                        pre = cur;
-                        cur = nextNode;
+                    if (beforePre != null) {
+                        ListNode nextNode = beforePre.next;
+                        beforePre.next = pre;
+                        pre = beforePre;
+                        beforePre = nextNode;
                     }
                     temp.next = pre;
-                    tempHead.next = cur;
+                    tempHead.next = beforePre;
                 } else {
-                    if (cur != null) {
-                        temp = cur;
-                        cur = cur.next;
+                    if (beforePre != null) {
+                        temp = beforePre;
+                        beforePre = beforePre.next;
                     }
                 }
             }

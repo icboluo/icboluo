@@ -5,27 +5,32 @@ package com.icboluo.leetcode.after_2000;
  * @since 2023-03-02 22:42
  */
 class N2110_一只股票平稳下降的期数 {
-
+    public static void main(String[] args) {
+        var cla = new N2110_一只股票平稳下降的期数();
+        System.out.println(cla.numSubarrayProductLessThanK(new int[]{1, 1, 1}, 1));
+    }
 
     /**
-     * 求递减区间，这似乎也是一种组合问题 FIXME ERROR
+     * 求递减区间，这似乎也是一种组合问题
      *
      * @param prices 价格
      * @return 递减区间
      */
     public long getDescentPeriods(int[] prices) {
-        long res = 0;
-        int curCount = 1;
-        if (prices.length > 0) {
-            res += curCount;
+        if (prices.length == 0) {
+            return 0;
         }
-        for (int i = 1; i < prices.length; i++) {
-            if (prices[i] - prices[i - 1] > 0) {
-                curCount++;
-                res += curCount;
+        // 这个res的结果为修正值
+        long res = 1;
+        // 计数器记录当前元素，按1开始
+        int count = 1;
+        for (int i = 0; i < prices.length - 1; i++) {
+            if (prices[i] - prices[i + 1] == 1) {
+                count++;
             } else {
-                curCount = 1;
+                count = 1;
             }
+            res += count;
         }
         return res;
     }
@@ -40,6 +45,9 @@ class N2110_一只股票平稳下降的期数 {
      * @return
      */
     public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if (k == 0) {
+            return 0;
+        }
         int res = 0;
         int l = 0;
         int r = 0;

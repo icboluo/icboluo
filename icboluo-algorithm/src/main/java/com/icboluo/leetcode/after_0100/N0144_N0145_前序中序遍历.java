@@ -45,6 +45,12 @@ class N0144_N0145_前序中序遍历 {
         }
     }
 
+    /**
+     * 0145
+     *
+     * @param root
+     * @return
+     */
     public List<Integer> postorderTraversal(TreeNode root) {
         ans = new ArrayList<>();
         postorder1(root);
@@ -60,22 +66,24 @@ class N0144_N0145_前序中序遍历 {
         ans.add(root.val);
     }
 
-    //    TODO error
-    private void postorder2(TreeNode root) {
+    public List<Integer> postorderTraversa2(TreeNode root) {
         if (root == null) {
-            return;
+            return new ArrayList<>();
         }
+        List<TreeNode> list = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode pop = stack.pop();
-            ans.add(pop.val);
-            if (pop.right != null) {
-                stack.push(pop.right);
-            }
+            list.add(0, pop);
+            // 先压左边，再压右边，可以保证先弹右边，完成后序遍历，难以理解
             if (pop.left != null) {
                 stack.push(pop.left);
             }
+            if (pop.right != null) {
+                stack.push(pop.right);
+            }
         }
+        return list.stream().map(tree -> tree.val).toList();
     }
 }

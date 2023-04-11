@@ -12,7 +12,7 @@ python 是一个强类型、动态、解释性语音;
 
 可以简单理解jvm为bin包、jre包含了bin+lib包、jdk包含jre+exe命令包
 
-jvm Java Virtual Machinte 虚拟机
+jvm Java Virtual Machine 虚拟机
 
 jre Java Runtime Environment 运行环境 jvm+运行时所需的核心类库
 

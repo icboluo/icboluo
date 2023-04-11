@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 public class Player implements Serializable {
     /**
-     * id TODO 加这个真的难受，不加没有返回值，怎么处理
+     * id
      */
     @TableId(type = IdType.AUTO)
     private Integer id;

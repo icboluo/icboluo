@@ -13,7 +13,6 @@ import java.util.stream.IntStream;
  */
 class N0748_最短补全词 {
     /**
-     * FIXME ERROR
      * @param licensePlate
      * @param words
      * @return
@@ -22,6 +21,7 @@ class N0748_最短补全词 {
         Map<Integer, Integer> eleCountMap = IntStream.range(0, licensePlate.length())
                 .map(licensePlate::charAt)
                 .mapToObj(Character::toLowerCase)
+                .filter(ch -> ch >= 'a' && ch <= 'z')
                 .collect(Collectors.toMap(Function.identity(), ele -> 1, Integer::sum));
         PriorityQueue<String> pq = new PriorityQueue<>(Comparator.comparingInt(String::length));
         for (String word : words) {

@@ -238,10 +238,18 @@ public class BeanHelper {
     public static <S, T, Q extends PageQuery> PageInfo<T> fakePage(List<S> list, Function<List<S>, List<T>> convert, Q query) {
         int start = (query.getPageNum() - 1) * query.getPageSize();
         int end = Math.min(list.size(), query.getPageSize() * query.getPageNum());
-        List<S> subList = list.subList(start, end);
+        List<S> subList;
+        if (start > list.size()) {
+            int mo = list.size() % query.getPageSize();
+            subList = list.subList(list.size() - mo, list.size());
+        } else {
+            subList = list.subList(start, Math.min(end, list.size()));
+        }
         List<T> apply = convert.apply(subList);
         PageInfo<T> pi = PageInfo.of(apply);
         pi.setTotal(list.size());
+        pi.setPageNum(query.getPageNum());
+        pi.setPageSize(query.getPageSize());
         return pi;
     }
 
