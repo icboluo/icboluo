@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 二分查找（条件，有序
- * todo 求左侧边界/右侧边界 用左闭右闭区间和左闭右开区间
+ * 二分查找（先决条件，有序
  *
  * @author icboluo
  * @since 2020/6/13 14:41
