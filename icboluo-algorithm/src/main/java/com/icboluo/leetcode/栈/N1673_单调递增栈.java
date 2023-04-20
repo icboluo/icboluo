@@ -10,7 +10,7 @@ import java.util.Deque;
  */
 class N1673_单调递增栈 {
     public static void main(String[] args) {
-        N1673_单调递增栈 cla = new N1673_单调递增栈();
+        var cla = new N1673_单调递增栈();
 //        int[] ints = cla.mostCompetitive(new int[]{3, 5, 2, 6,}, 2);
         int[] ints = cla.mostCompetitive(new int[]{2, 4, 3, 3, 5, 4, 9, 6}, 4);
         System.out.println(Arrays.toString(ints));

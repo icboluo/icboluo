@@ -14,7 +14,6 @@ class N2022_将一维数组转换为二维数组 {
     }
 
     /**
-     * FIXME ERROR
      * @param original
      * @param m
      * @param n
@@ -27,7 +26,7 @@ class N2022_将一维数组转换为二维数组 {
         int[][] arr = new int[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                arr[i][j] = original[m * i + j];
+                arr[i][j] = original[n * i + j];
             }
         }
         return arr;

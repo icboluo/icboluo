@@ -14,10 +14,12 @@ class BinarySerarchNoRecur {
         System.out.println(cla.binarySearch1(arr1, 100));
         int[] arr2 = {1, 5};
         System.out.println(cla.binarySearch1(arr2, 3));
+        System.out.println("-------------------------------------------");
         System.out.println(cla.binarySearch1(new int[]{1, 2, 2, 3, 4}, 2));
         System.out.println(cla.binarySearch2(new int[]{1, 2, 2, 3, 4}, 2));
         System.out.println(cla.binarySearch3(new int[]{1, 2, 2, 3, 4}, 2));
         System.out.println(cla.binarySearch4(new int[]{1, 2, 2, 3, 4}, 2));
+        System.out.println(cla.binarySearch5(new int[]{1, 2, 2, 3, 4}, 2));
     }
 
     /**
@@ -109,7 +111,7 @@ class BinarySerarchNoRecur {
     }
 
     /**
-     * 寻找右边界 左闭右开区间 FIXME ERROR
+     * 寻找右边界 左闭右开区间
      *
      * @param arr
      * @param target
@@ -122,7 +124,7 @@ class BinarySerarchNoRecur {
             int mid = left + ((right - left) >> 1);
             if (arr[mid] == target) {
                 // [mid+1,right)
-                right = mid;
+                left = mid + 1;
             } else if (arr[mid] > target) {
                 // [left,mid)
                 right = mid;
@@ -131,7 +133,9 @@ class BinarySerarchNoRecur {
                 left = mid + 1;
             }
         }
-        // 此时left=right
+        if (left - 1 < 0 || arr[left - 1] != target) {
+            return -1;
+        }
         return left - 1;
     }
 
@@ -170,6 +174,4 @@ class BinarySerarchNoRecur {
         }
         return list;
     }
-
-
 }

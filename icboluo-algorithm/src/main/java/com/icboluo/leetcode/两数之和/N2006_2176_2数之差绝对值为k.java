@@ -11,15 +11,16 @@ import java.util.stream.IntStream;
  */
 class N2006_2176_2数之差绝对值为k {
 
-    // 求数组中2值之差的绝对值为k的个数 2数之和的问题 FIXME ERROR
+    // 求数组中2值之差的绝对值为k的个数 2数之和的问题
     public int countKDifference(int[] nums, int k) {
         Map<Integer, Integer> eleCountMap = IntStream.range(0, nums.length)
                 .boxed()
                 .collect(Collectors.toMap(i -> nums[i], ele -> 1, Integer::sum));
         int res = 0;
         for (int num : nums) {
-            int a = Math.abs(num - k);
-            int b = Math.abs(num + k);
+            // 这里不要取绝对值，都是正数，正常去求即可
+            int a = num - k;
+            int b = num + k;
             res += eleCountMap.getOrDefault(a, 0) + eleCountMap.getOrDefault(b, 0);
         }
         return res / 2;

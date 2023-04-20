@@ -1,6 +1,7 @@
 package com.icboluo.leetcode.low;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 /**
  * @author icboluo
@@ -15,6 +16,10 @@ class N1684_统计一致字符串的个数 {
      * @return
      */
     public int countConsistentStrings(String allowed, String[] words) {
-        return (int) Arrays.stream(words).filter(word -> word.chars().allMatch(ch -> allowed.contains(ch + ""))).count();
+        return (int) Arrays.stream(words)
+                .filter(word -> IntStream.range(0, word.length())
+                        .mapToObj(word::charAt)
+                        .allMatch(ch -> allowed.contains(String.valueOf(ch))))
+                .count();
     }
 }

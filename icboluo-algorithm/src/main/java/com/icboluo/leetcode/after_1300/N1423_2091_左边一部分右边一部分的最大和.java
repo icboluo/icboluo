@@ -138,7 +138,7 @@ class N1423_2091_左边一部分右边一部分的最大和 {
      * @param word
      * @return
      */
-    public boolean equalFrequency(String word) {
+    public boolean equalFrequency1(String word) {
         Map<Character, Integer> eleCountMap = IntStream.range(0, word.length())
                 .mapToObj(word::charAt)
                 .collect(Collectors.groupingBy(ch -> ch, Collectors.summingInt(ch -> 1)));
@@ -161,10 +161,20 @@ class N1423_2091_左边一部分右边一部分的最大和 {
         Map<Character, Integer> eleCountMap = IntStream.range(0, word.length())
                 .mapToObj(word::charAt)
                 .collect(Collectors.groupingBy(ch -> ch, Collectors.summingInt(ch -> 1)));
-        Map.Entry<Character, Integer> first = eleCountMap.entrySet()
-                .stream().min((a, b) -> b.getValue() - a.getValue())
+        Map.Entry<Character, Integer> max = eleCountMap.entrySet()
+                .stream().max(Comparator.comparingInt(Map.Entry::getValue))
                 .get();
-        eleCountMap.put(first.getKey(), first.getValue() - 1);
+        // 如果最大值有只有1个
+        if (max.getValue() == 1) {
+            eleCountMap.remove(max.getKey());
+        } else {
+            // 需要删除的是最小的
+            Map.Entry<Character, Integer> min = eleCountMap.entrySet()
+                    .stream()
+                    .min(Comparator.comparingInt(Map.Entry::getValue))
+                    .get();
+            eleCountMap.put(min.getKey(), min.getValue() - 1);
+        }
         return eleCountMap.values().stream().filter(time -> time != 0).distinct().count() <= 1;
     }
 }

@@ -55,7 +55,7 @@ class N0435_无重叠区间 {
                 preEnd = end;
             }
         }
-        return count;
+        return arr.length - count;
     }
 
     /**
