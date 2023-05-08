@@ -13,7 +13,7 @@ class N0104_二叉树最大深度 {
     public static void main(String[] args) {
         Integer[] arr = {1, 2, 3, 4, null, null, 5};
         TreeNode treeNode = new TreeNode(arr);
-        N0104_二叉树最大深度 cla = new N0104_二叉树最大深度();
+        var cla = new N0104_二叉树最大深度();
         int i = cla.maxDepth4(treeNode);
         System.out.println("i = " + i);
     }
@@ -63,6 +63,12 @@ class N0104_二叉树最大深度 {
         return max;
     }
 
+    /**
+     * TODO 用的是addLast方法，没必要使用栈，应该使用队列linkedList
+     *
+     * @param root
+     * @return
+     */
     public int maxDepth3(TreeNode root) {
         if (root == null) {
             return 0;

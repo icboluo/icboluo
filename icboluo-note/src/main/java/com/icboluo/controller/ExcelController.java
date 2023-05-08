@@ -120,7 +120,6 @@ public class ExcelController {
 
     @GetMapping("/writeStudentExcel")
     public void writeStudentExcel() {
-        // 不可能仅仅把file加载到内存中，修改内存就可以持久化；还需要一个fos来手动持久化
         writeColor(EnumSet.allOf(HSSFColor.HSSFColorPredefined.class), HSSFColor.HSSFColorPredefined::getIndex, 3);
         writeColor(EnumSet.allOf(IndexedColors.class), IndexedColors::getIndex, 12);
     }
@@ -131,6 +130,7 @@ public class ExcelController {
         int setSize = allOf.size();
         int rowSize = 8;
         int rowNum = (setSize + rowSize - 1) / rowSize;
+        // 不可能仅仅把file加载到内存中，修改内存就可以持久化；还需要一个fos来手动持久化
         try (Workbook workbook = WorkbookFactory.create(file); FileOutputStream fos = new FileOutputStream(file, true)) {
             Sheet sheet = workbook.getSheetAt(0);
             for (int i = firstRow; i < firstRow + rowNum; i++) {

@@ -1,6 +1,6 @@
 package com.icboluo.util;
 
-import com.icboluo.enumerate.ReEnum;
+import com.alibaba.fastjson.util.TypeUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -32,8 +32,8 @@ public class MathUtil {
      * @return 除法返回值
      */
     public static <M, D> BigDecimal divide(@NonNull M molecular, @NonNull D denominator, Integer scale, RoundingMode mode) {
-        BigDecimal m = toBigDecimal(molecular);
-        BigDecimal d = toBigDecimal(denominator);
+        BigDecimal m = TypeUtils.castToBigDecimal(molecular);
+        BigDecimal d = TypeUtils.castToBigDecimal(denominator);
         if (mode == null) {
             mode = RoundingMode.HALF_UP;
         }
@@ -66,7 +66,7 @@ public class MathUtil {
      * @return 百分数返回值
      */
     public static <M, D> String dividePercentage(@NonNull M molecular, @NonNull D denominator, Integer scale, RoundingMode mode) {
-        BigDecimal multiply = toBigDecimal(molecular).multiply(new BigDecimal(100));
+        BigDecimal multiply = TypeUtils.castToBigDecimal(molecular).multiply(new BigDecimal(100));
         BigDecimal divide = divide(multiply, denominator, scale, mode);
         if (divide.compareTo(BigDecimal.valueOf(100L)) == 0) {
             return "100%";
@@ -83,21 +83,6 @@ public class MathUtil {
 
     public static <M, D> String dividePercentage(@NonNull M molecular, @NonNull D denominator) {
         return dividePercentage(molecular, denominator, null, null);
-    }
-
-    private static <T> BigDecimal toBigDecimal(@NonNull T number) {
-        if (number instanceof BigDecimal mTemp) {
-            return mTemp;
-        } else if (number instanceof Integer mTemp) {
-            return new BigDecimal(mTemp);
-        } else if (number instanceof Long mTemp) {
-            return new BigDecimal(mTemp);
-        } else if (number instanceof String mTemp) {
-            return new BigDecimal(mTemp);
-        } else {
-            log.error("Param {} not convert to BigDecimal,Please check", number);
-            throw new IcBoLuoException(ReEnum.SYSTEM_NOT_SUPPORT_EXCEPTION);
-        }
     }
 
     public static int max(int... arr) {

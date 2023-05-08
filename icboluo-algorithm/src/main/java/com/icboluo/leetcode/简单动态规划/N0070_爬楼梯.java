@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.简单动态规划;
 
 class N0070_爬楼梯 {
     public static void main(String[] args) {
@@ -6,7 +6,7 @@ class N0070_爬楼梯 {
         假设你正在爬楼梯，需要n阶你才能到达楼顶
         每次你可以爬1或2个台阶。你有多少种不同的方法可以爬到楼顶呢
          */
-        N0070_爬楼梯 cla = new N0070_爬楼梯();
+        var cla = new N0070_爬楼梯();
         int i = 3;
         int plt = cla.climbStairs1(i);
         System.out.println("plt = " + plt);

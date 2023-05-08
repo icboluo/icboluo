@@ -22,7 +22,7 @@ class N1688_比赛中的配对次数 {
     Set<Integer> set = new HashSet<>();
 
     /**
-     * 计算桌面上的不同数字 FIXME ERROR
+     * 2549 计算桌面上的不同数字 FIXME ERROR
      *
      * @param n
      * @return

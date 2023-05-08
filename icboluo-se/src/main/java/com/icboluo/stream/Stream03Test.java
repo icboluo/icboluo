@@ -171,7 +171,7 @@ public class Stream03Test {
         // 从stream中依次获取满足条件的元素，直到不满足条件为止结束获取
         IntStream.of(12, 4, 3, 6, 8, 9).takeWhile(x -> x % 2 == 0).forEach(System.out::println);
         // 从stream中依次删除满足条件的元素，这2个函数会提前终止，和filter不一样
-        IntStream.of(12, 4, 3, 6, 8, 9).takeWhile(x -> x % 2 == 0).forEach(System.out::println);
+        IntStream.of(12, 4, 3, 6, 8, 9).dropWhile(x -> x % 2 == 0).forEach(System.out::println);
     }
 
     /**

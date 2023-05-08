@@ -38,7 +38,7 @@ Here are some ideas to get you started:
 
 [算法](icboluo-algorithm/src/main/java/com/icboluo/algorithm)\
 [数据结构](icboluo-algorithm/src/main/java/com/icboluo/datastructure)\
-[leetcode](icboluo-algorithm/src/main/java/com/icboluo/leetcode) 题目\
+[leetcode](icboluo-algorithm/src/main/java/com/icboluo/leetcode) 题目，2600以后题目不再维护\
 [简单算法](icboluo-algorithm/src/main/java/com/icboluo/leetcode/simple.md)
 
 解法有好多是来源于Discuss中的思路
