@@ -1,5 +1,6 @@
 package com.icboluo.leetcode.after_1700;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -26,7 +27,7 @@ class N1791_2497_寻找图的中心点 {
         // 感觉这里写的不对
         LinkedList<Integer> neighbor = new LinkedList<>();
         int max = 0;
-        int idx = 0;
+        int idx = -1;
         for (int i = 0; i < graph.length; i++) {
             // 好像也有等于的情况
             if (graph[i].size() > max) {
@@ -34,6 +35,9 @@ class N1791_2497_寻找图的中心点 {
                 neighbor = graph[i];
                 idx = i;
             }
+        }
+        if (idx == -1) {
+            return Arrays.stream(vals).max().orElse(0);
         }
         return neighbor.stream().mapToInt(i -> vals[i]).limit(k).filter(a -> a > 0).sum() + vals[idx];
     }

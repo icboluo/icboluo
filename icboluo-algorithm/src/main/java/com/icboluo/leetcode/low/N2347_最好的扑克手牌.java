@@ -39,7 +39,7 @@ class N2347_最好的扑克手牌 {
     }
 
     /**
-     * 2525 根据标准对框进行分类 low FIXME
+     * 2525 根据标准对框进行分类 low
      *
      * @param length
      * @param width
@@ -51,7 +51,7 @@ class N2347_最好的扑克手牌 {
         String a = "";
         if (length >= 10000 || width >= 10000 || height >= 10000) {
             a = "Bulky";
-        } else if (length * width * height >= Math.pow(10, 9)) {
+        } else if ((long) length * width * height >= Math.pow(10, 9)) {
             a = "Bulky";
         }
         String b = "";

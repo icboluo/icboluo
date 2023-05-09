@@ -10,27 +10,31 @@ class N0264_返回可以整除235的数 {
         System.out.println(cla.nthUglyNumber(10));
     }
 
-    // FIXME ERROR
     public int nthUglyNumber(int n) {
         // 请使用乘法，而不是加法
-        int a2 = 1;
-        int a3 = 1;
-        int a5 = 1;
+        // 上一组选的值的索引
+        int i2 = 0;
+        int i3 = 0;
+        int i5 = 0;
+        // 下一组可选值
+        int v2 = 2;
+        int v3 = 3;
+        int v5 = 5;
         int[] arr = new int[n];
         arr[0] = 1;
         for (int i = 1; i < n; i++) {
             // 我们每次获取下一个可能的最小值
-            arr[i] = Math.min(Math.min(a2 * 2, a3 * 3), a5 * 5);
+            arr[i] = Math.min(Math.min(v2, v3), v5);
             // 这里如果出现公倍数，多个指针会同时变化，会将较小的数提升到较高的级别，保证了程序顺序进行
             // 绝不能加else
-            if (a2 * 2 == arr[i]) {
-                a2++;
+            if (v2 == arr[i]) {
+                v2 = 2 * arr[++i2];
             }
-            if (a3 * 3 == arr[i]) {
-                a3++;
+            if (v3 == arr[i]) {
+                v3 = 3 * arr[++i3];
             }
-            if (a5 * 5 == arr[i]) {
-                a5++;
+            if (v5 == arr[i]) {
+                v5 = 5 * arr[++i5];
             }
         }
         return arr[n - 1];

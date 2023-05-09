@@ -9,6 +9,12 @@ import java.util.stream.IntStream;
  * @since 2023-01-15 15:55
  */
 class N1423_2091_左边一部分右边一部分的最大和 {
+    public static void main(String[] args) {
+        var cla = new N1423_2091_左边一部分右边一部分的最大和();
+        System.out.println(cla.equalFrequency2("abcc"));
+        System.out.println(cla.equalFrequency2("cccd"));
+    }
+
     /**
      * 可以从卡中获得的最大积分
      * k张牌最大和，只可以在开始或者结束位置拿牌
@@ -162,13 +168,15 @@ class N1423_2091_左边一部分右边一部分的最大和 {
                 .mapToObj(word::charAt)
                 .collect(Collectors.groupingBy(ch -> ch, Collectors.summingInt(ch -> 1)));
         Map.Entry<Character, Integer> max = eleCountMap.entrySet()
-                .stream().max(Comparator.comparingInt(Map.Entry::getValue))
+                .stream()
+                .max(Comparator.comparingInt(Map.Entry::getValue))
                 .get();
-        // 如果最大值有只有1个
-        if (max.getValue() == 1) {
-            eleCountMap.remove(max.getKey());
+        Map<Integer, List<Map.Entry<Character, Integer>>> reverseMap = eleCountMap.entrySet().stream().collect(Collectors.groupingBy(Map.Entry::getValue));
+        // 如果最大值有只有1个，最大值-1，最大值的个数判断是错误的
+        if (reverseMap.get(max.getValue()).size() == 1) {
+            eleCountMap.put(max.getKey(), max.getValue() - 1);
         } else {
-            // 需要删除的是最小的
+            // 如果最大值是多个，则最小值-1即可
             Map.Entry<Character, Integer> min = eleCountMap.entrySet()
                     .stream()
                     .min(Comparator.comparingInt(Map.Entry::getValue))

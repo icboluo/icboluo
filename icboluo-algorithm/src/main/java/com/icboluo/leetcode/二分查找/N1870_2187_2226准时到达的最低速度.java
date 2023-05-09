@@ -1,5 +1,7 @@
 package com.icboluo.leetcode.二分查找;
 
+import java.util.Arrays;
+
 /**
  * @author icboluo
  * @since 2023-03-29 20:37
@@ -76,7 +78,7 @@ class N1870_2187_2226准时到达的最低速度 {
     }
 
     /**
-     * 2226 最大可能的糖果数 TODO 二分查找类题目，还有很多 FIXME ERROR
+     * 2226 最大可能的糖果数 TODO 二分查找类题目，还有很多 FIXME ERROR 期待1实际0
      *
      * @param candies
      * @param k
@@ -84,11 +86,11 @@ class N1870_2187_2226准时到达的最低速度 {
      */
     public int maximumCandies(int[] candies, long k) {
         int left = 0;
-        int right = 1000000;
+        int right = Integer.MAX_VALUE;
         while (left <= right) {
             int mid = left + ((right - left) >> 1);
             if (mid == 0) {
-                return mid;
+                return Arrays.stream(candies).sum() == k ? 1 : 0;
             }
             int sum = 0;
             // 这里比较巧妙，把糖果每堆分给孩子，有的糖果可以分2堆，有的1堆都分不到，尽可能的使糖果的堆数和孩子的个数匹配
@@ -104,6 +106,6 @@ class N1870_2187_2226准时到达的最低速度 {
                 right = mid - 1;
             }
         }
-        return right;
+        return left - 1;
     }
 }

@@ -1,10 +1,17 @@
 package com.icboluo.leetcode.滑动窗口;
 
+import java.util.Arrays;
+
 /**
  * @author icboluo
  * @since 2023-02-15 23:35
  */
 class N1652_拆炸弹 {
+    public static void main(String[] args) {
+        var cla = new N1652_拆炸弹();
+        System.out.println(Arrays.toString(cla.decrypt(new int[]{2, 4, 9, 3}, -2)));
+    }
+
     /**
      * 对循环数组进行解密
      * 后k个元素相加 FIXME ERROR
@@ -20,10 +27,12 @@ class N1652_拆炸弹 {
         }
         int l = 0;
         int r = 1;
+        // 对于负值的处理是困难的
         if (k < 0) {
             k = -k;
             l = code.length - k;
             r = code.length - k;
+            k = l + k - 1;
         }
         int winSum = 0;
         // 对于可以优先处理的逻辑，抽取处理更加合适

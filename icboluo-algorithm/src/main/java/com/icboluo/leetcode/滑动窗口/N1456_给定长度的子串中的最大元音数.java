@@ -40,7 +40,7 @@ class N1456_给定长度的子串中的最大元音数 {
     }
 
     /**
-     * 2379 获取k个连续黑色块的最少重新着色 FIXME ERROR
+     * 2379 获取k个连续黑色块的最少重新着色
      * 可以将白色染成黑色，返回最少操作数
      *
      * @param blocks
@@ -55,7 +55,7 @@ class N1456_给定长度的子串中的最大元音数 {
         int min = k;
         while (r < arr.length) {
             char right = arr[r++];
-            if (right == 'B') {
+            if (right == 'W') {
                 winWrite++;
             }
             // 这里区间最小为2啊，怎么求1的

@@ -38,7 +38,7 @@ class N2110_一只股票平稳下降的期数 {
     // TODO 2348
 
     /**
-     * 0713 小于K的子数组积，组合问题，滑动窗口问题，特殊组合问题 TODO 2302 hard FIXME ERROR
+     * 0713 小于K的子数组积，组合问题，滑动窗口问题，特殊组合问题 TODO 2302 hard
      *
      * @param nums
      * @param k
@@ -55,7 +55,8 @@ class N2110_一只股票平稳下降的期数 {
         while (r < nums.length) {
             int right = nums[r++];
             win *= right;
-            while (win >= k) {
+            // l容易越界，应该这样处理，做错过
+            while (win >= k && l < r && l < nums.length) {
                 int left = nums[l++];
                 win /= left;
             }
