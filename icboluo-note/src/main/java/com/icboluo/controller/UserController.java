@@ -61,7 +61,6 @@ public class UserController {
         ResponseEntity<SingleResponse> entity = restTemplate.getForEntity(USER_SERVICE + "/user/getUserNameById?id=" + id, SingleResponse.class);
         log.info("发送 get 请求 取整个返回结果，返回的entity是：" + entity);
         if (entity.getStatusCode().is2xxSuccessful()) {
-            //TODO 返回值包装异常
             return R.correct(entity.getBody());
         } else {
             return R.error();

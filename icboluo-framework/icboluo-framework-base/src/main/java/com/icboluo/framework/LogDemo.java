@@ -42,6 +42,7 @@ public class LogDemo {
         String str1 = """
                 logback日志的路径记录相对路径是比较合适的，log； /log绝对路径不起作用 ../log也不行
                 """;
+        // 对于异常来说：runtimeException super(msg)，会生成一行 className:msg的error日志
         log.info(str1);
     }
 }

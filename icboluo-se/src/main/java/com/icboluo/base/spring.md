@@ -11,3 +11,5 @@
 ## Controller 层
 
 ![](spring/controller.png)
+
+[三层架构XMind](../../../../../../../icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/software/三层架构.xmind)

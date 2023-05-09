@@ -15,11 +15,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
- * TODO 拦截器把请求拦截之后，进入不了切面，记录不了日志，怎么处理
- *
  * @author icboluo
  */
 @Slf4j
@@ -37,11 +35,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (auth == null) {
             return true;
         }
-        // TODO 可以简化
-        boolean present = Optional.of(auth)
-                .filter(au -> au.role().equals(role))
-                .isPresent();
-        if (!present) {
+        if (!Objects.equals(role, auth.role())) {
             // 拦截器的异常会抛到前台,请将error写入响应
             ServletOutputStream outputStream = response.getOutputStream();
             Response error = R.error(ReEnum.ROLE_ERROR);

@@ -66,7 +66,6 @@ public class GlobalControllerExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response icBoLuoI18nExceptionHandler(IcBoLuoI18nException e) {
         printLog(e);
-        // TODO 这个解决了异常i18，可是ret i18还是没有解决
         String message = messageSource.getMessage(e.getMessage(), null, LocaleContextHolder.getLocale());
         return R.error(500, message);
     }

@@ -24,7 +24,6 @@ public class WebContextInterceptor implements HandlerInterceptor {
 
     private final List<String> exclude = new ArrayList<>();
 
-    //TODO    使用匿名内部类 + 实例化代码块儿 = 使用两个大括号进行初始化
     {
         exclude.add("aController.init");
         exclude.add("bController.init");
