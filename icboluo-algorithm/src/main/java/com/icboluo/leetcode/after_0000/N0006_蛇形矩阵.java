@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 class N0006_蛇形矩阵 {
     public static void main(String[] args) {
-        N0006_蛇形矩阵 cla = new N0006_蛇形矩阵();
+        var cla = new N0006_蛇形矩阵();
         String str = "PAYPALISHIRING";
         int row = 3;
         String res = cla.convert(str, row);

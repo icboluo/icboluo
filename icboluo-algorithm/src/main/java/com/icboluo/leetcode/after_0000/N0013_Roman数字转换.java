@@ -9,7 +9,7 @@ import java.util.Map;
  */
 class N0013_Roman数字转换 {
     public static void main(String[] args) {
-        N0013_Roman数字转换 cla = new N0013_Roman数字转换();
+        var cla = new N0013_Roman数字转换();
         int iii = cla.romanToInt("III");
         System.out.println("iii = " + iii);
     }

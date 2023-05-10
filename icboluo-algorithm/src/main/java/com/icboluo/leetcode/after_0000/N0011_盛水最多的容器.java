@@ -6,7 +6,7 @@ package com.icboluo.leetcode.after_0000;
  */
 class N0011_盛水最多的容器 {
     public static void main(String[] args) {
-        N0011_盛水最多的容器 cla = new N0011_盛水最多的容器();
+        var cla = new N0011_盛水最多的容器();
         int[] arr = new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7};
         int i = cla.maxArea1(arr);
         System.out.println("i = " + i);
