@@ -11,9 +11,9 @@ import java.util.Set;
  */
 public class N0671_二叉树次小值 {
     public static void main(String[] args) {
+        var cla = new N0671_二叉树次小值();
         Integer[] arr = {2, 2, 5, null, null, 5, 7};
         TreeNode root = new TreeNode(arr);
-        N0671_二叉树次小值 cla = new N0671_二叉树次小值();
         int secondMinimumValue = cla.findSecondMinimumValue(root);
         System.out.println("secondMinimumValue = " + secondMinimumValue);
     }

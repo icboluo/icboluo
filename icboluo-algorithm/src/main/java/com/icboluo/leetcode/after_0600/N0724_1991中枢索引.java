@@ -9,7 +9,7 @@ import java.util.Map;
  */
 class N0724_1991中枢索引 {
     public static void main(String[] args) {
-        N0724_1991中枢索引 cla = new N0724_1991中枢索引();
+        var cla = new N0724_1991中枢索引();
         int i = cla.pivotIndex(new int[]{1, 7, 3, 6, 5, 6});
         System.out.println("i = " + i);
     }

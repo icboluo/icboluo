@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Student implements Serializable {
 
     /**
-     * 年龄
+     * 年龄 如果是db，需要用包装类解决数据库查询出来为null问题
      */
     private int age;
 

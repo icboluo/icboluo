@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
  */
 class N0743_网络延迟时间 {
     public static void main(String[] args) {
-        N0743_网络延迟时间 cla = new N0743_网络延迟时间();
+        var cla = new N0743_网络延迟时间();
         int[][] arr = new int[][]{{2, 1, 1}, {2, 3, 1}, {3, 4, 1}};
         int i = cla.networkDelayTime(arr, 4, 2);
         System.out.println("i = " + i);

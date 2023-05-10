@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
  */
 class N0219_存在重复元素 {
     public static void main(String[] args) {
-        N0219_存在重复元素 cla = new N0219_存在重复元素();
+        var cla = new N0219_存在重复元素();
         int[] arr = {1, 2, 3, 1};
         boolean ans = cla.isExist(arr, 3);
         System.out.println("ans = " + ans);

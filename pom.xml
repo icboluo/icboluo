@@ -28,7 +28,6 @@
         <module>icboluo-note</module>
         <module>icboluo-se</module>
         <module>icboluo-sql</module>
-        <module>icboluo-test</module>
         <module>icboluo-user</module>
         <module>icboluo-web</module>
     </modules>

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  */
 class N0349_两个数组的交集 {
     public static void main(String[] args) {
-        N0349_两个数组的交集 cla = new N0349_两个数组的交集();
+        var cla = new N0349_两个数组的交集();
         int[] arr1 = {1, 2, 2, 1, 3};
         int[] arr2 = {2, 2, 3};
         int[] intersection = cla.intersection(arr1, arr2);

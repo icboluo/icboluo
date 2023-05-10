@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class N0350_两个数组的交集 {
     public static void main(String[] args) {
-        N0350_两个数组的交集 cla = new N0350_两个数组的交集();
+        var cla = new N0350_两个数组的交集();
         int[] arr1 = {1, 2, 2, 1, 3};
         int[] arr2 = {2, 2, 3};
         int[] intersect = cla.intersect(arr1, arr2);
