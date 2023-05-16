@@ -4,17 +4,25 @@ package com.icboluo.leetcode.low;
  * @author icboluo
  * @since 2023-03-30 21:56
  */
-public class N2239_最接近0的数字 {
-    // 也可以使用比较器 FIXME ERROR
+class N2239_最接近0的数字 {
+
+    /**
+     * 找到最接近0的数字，如果有多个相同，求里面的最大值 FIXME ERROR
+     * 也可以使用比较器
+     *
+     * @param nums
+     * @return
+     */
     public int findClosestNumber(int[] nums) {
         int res = Integer.MAX_VALUE;
         int val = Integer.MAX_VALUE;
         for (int num : nums) {
-            if (Math.abs(num) <= res) {
-                if (num >= 0 || num != val) {
+            // 正负数
+            if (Math.abs(num) <= Math.abs(res)) {
+                if (num >= 0 || Math.abs(num) != Math.abs(val)) {
                     val = num;
                 }
-                res = Math.abs(num);
+                res = num;
             }
         }
         return res;

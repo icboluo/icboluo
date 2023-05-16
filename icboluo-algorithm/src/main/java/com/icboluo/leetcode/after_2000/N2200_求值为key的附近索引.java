@@ -1,6 +1,7 @@
 package com.icboluo.leetcode.after_2000;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * @author icboluo
@@ -8,7 +9,7 @@ import java.util.*;
  */
 class N2200_求值为key的附近索引 {
     /**
-     * 查找数组中的所有k距离索引 FIXME ERROR
+     * 查找数组中的所有k距离索引
      * 暴力解
      *
      * @param nums
@@ -21,7 +22,8 @@ class N2200_求值为key的附近索引 {
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == key) {
                 set.add(i);
-                for (int j = 1; j < k; j++) {
+                // 加个等于号
+                for (int j = 1; j <= k; j++) {
                     set.add(i + j);
                     set.add(i - j);
                 }
@@ -31,7 +33,7 @@ class N2200_求值为key的附近索引 {
     }
 
     public List<Integer> findKDistantIndices2(int[] nums, int key, int k) {
-        List<Integer> list = Arrays.stream(nums).filter(i -> nums[i] == key).boxed().toList();
+        List<Integer> list = IntStream.range(0, nums.length).filter(i -> nums[i] == key).boxed().toList();
         // 前面的最大值，也是当前的最小值
         int max = 0;
         List<Integer> res = new ArrayList<>();

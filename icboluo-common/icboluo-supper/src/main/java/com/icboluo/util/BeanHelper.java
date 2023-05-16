@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("unused")
 public class BeanHelper {
 
     private static final String CONVERT_ERR_MESSAGE = "【数据转换】数据转换出错，目标对象{}构造函数异常";
@@ -286,10 +287,11 @@ public class BeanHelper {
     /**
      * TypeUtils 拥有数据类型转换函数
      *
-     * @param val
-     * @return
+     * @param val 对象值
+     * @return int值
+     * @deprecated 不应该调用此方法，直接调用type转换工具类即可
      */
-    @Deprecated
+    @Deprecated(since = "all")
     public static Integer toInt(Object val) {
         return TypeUtils.castToInt(val);
     }

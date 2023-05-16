@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_2000;
+package com.icboluo.leetcode.low;
 
 /**
  * @author icboluo
@@ -18,6 +18,9 @@ class N2047_句子中有效单词数 {
                 if (i != str.length() - 1 && (str.charAt(i) == '.' || str.charAt(i) == '!' || str.charAt(i) == ',')) {
                     isValid = false;
                 }
+            }
+            if (str.isEmpty()) {
+                isValid = false;
             }
             if (str.indexOf('-') == 0 || str.indexOf('-') == str.length() - 1 || str.indexOf('-') != str.lastIndexOf('-')) {
                 isValid = false;

@@ -17,7 +17,6 @@ import java.util.Set;
  * 子类需要校验的时候需要在子类字段上加上@Valid注解，否则校验不到子类中
  * NotEmpty注解代表不能为null&&'',
  * NotBlack注解代表不能为''可以为null,没什么用
- * NotEmpty+NotNull可以实现判断数组中的每一个元素均不为null
  * NotEmpty.contain NotBlack+NotNull
  * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
  *
@@ -25,7 +24,7 @@ import java.util.Set;
  * @see javax.validation.Valid
  * @see org.springframework.validation.annotation.Validated
  * <p>
- * validate 如果后面不加BindingResult则抛异常，如果家何时能感，则会将错误的结果收集到bs中
+ * validate 如果后面不加BindingResult则抛异常，如果加上，则会将错误的结果收集到bs中
  * @since 2022-01-12 11:59
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
  */
 class N2068_判断2个长度相等的字符串是否相似 {
     /**
-     * 相似条件：每个字符出现频率小于3 FIXME ERROR
+     * 相似条件：每个字符出现频率小于3
      *
      * @param word1
      * @param word2
@@ -27,7 +27,8 @@ class N2068_判断2个长度相等的字符串是否相似 {
         for (int i = 'a'; i <= 'z'; i++) {
             int a = eleCountMap1.getOrDefault((char) i, 0);
             int b = eleCountMap2.getOrDefault((char) i, 0);
-            if (Math.abs(a - b) <= 3) {
+            // 相差为3，不是个数相等......
+            if (Math.abs(a - b) > 3) {
                 return false;
             }
         }
