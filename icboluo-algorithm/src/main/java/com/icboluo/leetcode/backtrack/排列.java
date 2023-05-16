@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.排列组合子集;
+package com.icboluo.leetcode.backtrack;
 
 import java.util.Arrays;
 import java.util.LinkedList;

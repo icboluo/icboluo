@@ -4,7 +4,7 @@ package com.icboluo.leetcode.dfs;
  * @author icboluo
  * @since 2023-05-10 18:33
  */
-public class N0079_单词搜索 {
+class N0079_单词搜索 {
     boolean[][] isVisited;
 
     public boolean exist(char[][] board, String word) {
@@ -31,9 +31,9 @@ public class N0079_单词搜索 {
         }
         isVisited[i][j] = true;
         boolean res = dfs(board, i - 1, j, word, step + 1)
-                ||dfs(board, i + 1, j, word, step + 1)
-                ||dfs(board, i, j-1, word, step + 1)
-                ||dfs(board, i, j+1, word, step + 1);
+                || dfs(board, i + 1, j, word, step + 1)
+                || dfs(board, i, j - 1, word, step + 1)
+                || dfs(board, i, j + 1, word, step + 1);
         // 一定要回溯
         isVisited[i][j] = false;
         return res;
