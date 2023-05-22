@@ -9,7 +9,7 @@ import java.util.Deque;
  */
 class 字符串计算器 {
     public static void main(String[] args) {
-        字符串计算器 cla = new 字符串计算器();
+        var cla = new 字符串计算器();
         String str = "3*(4-5/2)-6";
         int ans = cla.cal(str, 0);
         System.out.println(ans);

@@ -6,7 +6,7 @@ package com.icboluo.leetcode.操作系统操作问题;
  */
 class N1598_爬虫日志文件 {
     public static void main(String[] args) {
-        N1598_爬虫日志文件 cla = new N1598_爬虫日志文件();
+        var cla = new N1598_爬虫日志文件();
         int i = cla.minOperations(new String[]{"d1/", "d2/", "../", "d21/", "./"});
         System.out.println("i = " + i);
     }

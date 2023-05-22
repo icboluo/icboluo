@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.tree.层级遍历;
 
 import com.icboluo.common.TreeNode;
 
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 class N0102_0103_0637层级遍历 {
     /**
-     * 0101 层级遍历
+     * 0102 层级遍历
      *
      * @param root root
      * @return ans
@@ -30,6 +30,7 @@ class N0102_0103_0637层级遍历 {
             for (int i = 0; i < count; i++) {
                 TreeNode poll = queue.poll();
 //                其实queue里面存储的值均！=null，用size去遍历，poll值不会为null
+                assert poll != null;
                 if (poll.left != null) {
                     queue.offer(poll.left);
                 }

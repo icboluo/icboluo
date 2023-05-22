@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.dp;
 
 import java.util.HashMap;
 import java.util.Map;

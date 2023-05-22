@@ -3,17 +3,17 @@ package com.icboluo.leetcode.tree.层级遍历;
 import com.icboluo.common.TreeNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author icboluo
  * @since 2022-03-25 18:49
  */
-class N0107_层级遍历 {
+class N0107_倒序层级遍历 {
     public static void main(String[] args) {
-        var cla = new N0107_层级遍历();
+        var cla = new N0107_倒序层级遍历();
         Integer[] arr = {3, 9, 20, null, null, 15, 7};
         TreeNode treeNode = new TreeNode(arr);
         List<List<Integer>> lists = cla.levelOrderBottom(treeNode);
@@ -24,7 +24,9 @@ class N0107_层级遍历 {
         if (root == null) {
             return new ArrayList<>();
         }
-        order1(root);
+        ans = new ArrayList<>();
+        //         这个level可以理解为倒数第n个
+        order1(root, 0);
         return ans.stream()
                 .map(li -> li.stream().map(treeNode -> treeNode.val).toList())
                 .toList();
@@ -33,29 +35,39 @@ class N0107_层级遍历 {
     List<List<TreeNode>> ans;
 
     /**
-     * 递归 why error
+     * 递归
      *
      * @param root
-     * @return
+     * @param level
      */
-    private void order1(TreeNode root) {
-        ans = new ArrayList<>();
-//         这个level可以理解为倒数第n个
-        order1(root, 0);
-    }
-
     private void order1(TreeNode root, int level) {
         if (root == null) {
             return;
         }
         if (level == ans.size()) {
-//        正序解法    ans.add(new ArrayList<>());
             ans.add(0, new ArrayList<>());
         }
         order1(root.left, level + 1);
         order1(root.right, level + 1);
-//        ans.get(level).add(root);
         ans.get(ans.size() - level - 1).add(root);
+    }
+
+    /**
+     * 正序解法
+     *
+     * @param root
+     * @param level
+     */
+    private void order3(TreeNode root, int level) {
+        if (root == null) {
+            return;
+        }
+        if (level == ans.size()) {
+            ans.add(new ArrayList<>());
+        }
+        order3(root.left, level + 1);
+        order3(root.right, level + 1);
+        ans.get(level).add(root);
     }
 
     /**
@@ -66,8 +78,7 @@ class N0107_层级遍历 {
      */
     private void order2(TreeNode root) {
         ans = new ArrayList<>();
-//        为什么这里要用队列呢，因为顺序比栈好嘛
-        Queue<TreeNode> queue = new LinkedBlockingQueue<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
             List<TreeNode> list = new ArrayList<>();
