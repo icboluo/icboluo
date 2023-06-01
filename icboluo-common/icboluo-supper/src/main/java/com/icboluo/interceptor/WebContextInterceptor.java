@@ -17,6 +17,8 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
+ * 拦截器是不需要加入到bean容器中的，加了也没用
+ *
  * @author icboluo
  */
 @Slf4j
