@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * @param <K>
+ * @param <V>
+ * @see HashMap
+ */
 class MyHashMap8<K, V> {
 
     static final int defaultInitCapacity = 1 << 4; // aka 16
@@ -169,11 +174,11 @@ class MyHashMap8<K, V> {
     final V putVal(int newHash, K key, V value) {
         Node<K, V>[] arr = table;
         Node<K, V> firstEle;
-        int arrLength = arr.length;
+        int arrLength;
         new HashMap<>();
         int newArrLength;
 //        数据是空,扩容
-        if (arr == null || arrLength == 0) {
+        if (arr == null || (arrLength = arr.length) == 0) {
             arr = resize();
             arrLength = arr.length;
         }
@@ -426,8 +431,15 @@ class MyHashMap8<K, V> {
         return new TreeNode<>(p.hash, p.key, p.value, next);
     }
 
-    //    权限问题，没有权限不是报错
-    static final class TreeNode<K, V> extends LinkedHashMap.Entry<K, V> {
+    static class Entry<K, V> extends Node<K, V> {
+        Entry<K, V> before, after;
+
+        Entry(int hash, K key, V value, Node<K, V> next) {
+            super(hash, key, value, next);
+        }
+    }
+
+    static final class TreeNode<K, V> extends Entry<K, V> {
         TreeNode<K, V> parent;  // red-black tree links
         TreeNode<K, V> left;
         TreeNode<K, V> right;
@@ -441,10 +453,11 @@ class MyHashMap8<K, V> {
         /**
          * Returns root of tree containing this node.
          */
-        final TreeNode<K, V> root() {
+        TreeNode<K, V> root() {
             for (TreeNode<K, V> r = this, p; ; ) {
-                if ((p = r.parent) == null)
+                if ((p = r.parent) == null) {
                     return r;
+                }
                 r = p;
             }
         }
@@ -479,30 +492,31 @@ class MyHashMap8<K, V> {
          * The kc argument caches comparableClassFor(key) upon first use
          * comparing keys.
          */
-        final TreeNode<K, V> find(int h, Object k, Class<?> kc) {
+        TreeNode<K, V> find(int h, Object k, Class<?> kc) {
             TreeNode<K, V> p = this;
             do {
                 int ph, dir;
                 K pk;
                 TreeNode<K, V> pl = p.left, pr = p.right, q;
-                if ((ph = p.hash) > h)
+                if ((ph = p.hash) > h) {
                     p = pl;
-                else if (ph < h)
+                } else if (ph < h) {
                     p = pr;
-                else if ((pk = p.key) == k || (k != null && k.equals(pk)))
+                } else if ((pk = p.key) == k || (k != null && k.equals(pk))) {
                     return p;
-                else if (pl == null)
+                } else if (pl == null) {
                     p = pr;
-                else if (pr == null)
+                } else if (pr == null) {
                     p = pl;
-                else if ((kc != null ||
+                } else if ((kc != null ||
                         (kc = comparableClassFor(k)) != null) &&
-                        (dir = compareComparables(kc, k, pk)) != 0)
+                        (dir = compareComparables(kc, k, pk)) != 0) {
                     p = (dir < 0) ? pl : pr;
-                else if ((q = pr.find(h, k, kc)) != null)
+                } else if ((q = pr.find(h, k, kc)) != null) {
                     return q;
-                else
+                } else {
                     p = pl;
+                }
             } while (p != null);
             return null;
         }
@@ -510,7 +524,7 @@ class MyHashMap8<K, V> {
         /**
          * Calls find for root node.
          */
-        final TreeNode<K, V> getTreeNode(int h, Object k) {
+        TreeNode<K, V> getTreeNode(int h, Object k) {
             return ((parent != null) ? root() : this).find(h, k, null);
         }
 
@@ -534,7 +548,7 @@ class MyHashMap8<K, V> {
         /**
          * Forms tree of the nodes linked from this node.
          */
-        final void treeify(Node<K, V>[] tab) {
+        void treeify(Node<K, V>[] tab) {
             TreeNode<K, V> root = null;
             for (TreeNode<K, V> x = this, next; x != null; x = next) {
                 next = (TreeNode<K, V>) x.next;
