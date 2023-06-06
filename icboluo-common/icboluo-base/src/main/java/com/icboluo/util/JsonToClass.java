@@ -62,6 +62,7 @@ public class JsonToClass {
 
     /**
      * 驼峰命名
+     *
      * @param str
      * @return
      */
@@ -71,7 +72,7 @@ public class JsonToClass {
             if (str.charAt(i) == '_') {
                 i++;
                 res += Character.toUpperCase(str.charAt(i));
-            }else{
+            } else {
                 res += str.charAt(i);
             }
         }

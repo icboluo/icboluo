@@ -5,10 +5,12 @@ package com.icboluo.leetcode.after_0000;
  * @since 2023-06-05 23:30
  */
 class N0045_跳跃游戏 {
-    // FIXME
     // 从0到最终索引最小的跳跃时间
     // BFS 难以理解 需要打❤
     public int jump(int[] nums) {
+        if (nums.length <= 1) {
+            return 0;
+        }
         int curMax = 0;
         int nextMax = 0;
         int i = 0;

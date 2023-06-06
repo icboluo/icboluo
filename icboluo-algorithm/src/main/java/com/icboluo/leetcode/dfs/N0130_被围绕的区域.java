@@ -5,7 +5,7 @@ package com.icboluo.leetcode.dfs;
  * @since 2023-05-22 21:07
  */
 class N0130_被围绕的区域 {
-    // 边界上的元素，并且没有和内部的元素相连 FIXME ERROR
+    // 边界上的元素，并且没有和内部的元素相连
     // 方法1：边界上DFS
     public void solve(char[][] board) {
         // 由边界传染到内部，取名为A
@@ -41,7 +41,7 @@ class N0130_被围绕的区域 {
         }
         board[i][j] = 'A';
         dfs(board, i - 1, j);
-        dfs(board, i - 1, j);
+        dfs(board, i + 1, j);
         dfs(board, i, j - 1);
         dfs(board, i, j + 1);
     }

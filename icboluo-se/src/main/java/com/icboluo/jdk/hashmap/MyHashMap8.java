@@ -177,21 +177,22 @@ class MyHashMap8<K, V> {
         int arrLength;
         new HashMap<>();
         int newArrLength;
-//        数据是空,扩容
+        // 数据是空,扩容
         if (arr == null || (arrLength = arr.length) == 0) {
             arr = resize();
             arrLength = arr.length;
         }
         newArrLength = arrLength - 1;
+        // 这个是快速去模的方式，就是把哈希值计算到数组上
         firstEle = arr[newArrLength & newHash];
-//        arr中元素为空，直接放进数组就行
+        // arr中元素为空，直接放进数组就行
         if (firstEle == null) {
             arr[newArrLength] = newNode(newHash, key, value, null);
-//            链表中已有元素
+            // 链表中已有元素
         } else {
             Node<K, V> cur;
             K k;
-//            就在数组上
+            // 就在数组上
             if (firstEle.hash == newHash &&
                     ((k = firstEle.key) == key || (key != null && key.equals(k)))) {
                 cur = firstEle;
@@ -217,7 +218,7 @@ class MyHashMap8<K, V> {
                     count++;
                 }
             }
-//            找到了就结束
+            // 找到了就结束
             if (cur != null) { // existing mapping for key
                 V oldValue = cur.value;
 //                if (!onlyIfAbsent || oldValue == null) {
@@ -615,13 +616,13 @@ class MyHashMap8<K, V> {
             for (TreeNode<K, V> p = root; ; ) {
                 int dir, ph;
                 K pk;
-                if ((ph = p.hash) > h)
+                if ((ph = p.hash) > h) {
                     dir = -1;
-                else if (ph < h)
+                } else if (ph < h) {
                     dir = 1;
-                else if ((pk = p.key) == k || (k != null && k.equals(pk)))
+                } else if ((pk = p.key) == k || (k != null && k.equals(pk))) {
                     return p;
-                else if ((kc == null &&
+                } else if ((kc == null &&
                         (kc = comparableClassFor(k)) == null) ||
                         (dir = compareComparables(kc, k, pk)) == 0) {
                     if (!searched) {
@@ -630,8 +631,9 @@ class MyHashMap8<K, V> {
                         if (((ch = p.left) != null &&
                                 (q = ch.find(h, k, kc)) != null) ||
                                 ((ch = p.right) != null &&
-                                        (q = ch.find(h, k, kc)) != null))
+                                        (q = ch.find(h, k, kc)) != null)) {
                             return q;
+                        }
                     }
                     dir = tieBreakOrder(k, pk);
                 }
@@ -640,14 +642,16 @@ class MyHashMap8<K, V> {
                 if ((p = (dir <= 0) ? p.left : p.right) == null) {
                     Node<K, V> xpn = xp.next;
                     TreeNode<K, V> x = map.newTreeNode(h, k, v, xpn);
-                    if (dir <= 0)
+                    if (dir <= 0) {
                         xp.left = x;
-                    else
+                    } else {
                         xp.right = x;
+                    }
                     xp.next = x;
                     x.parent = x.prev = xp;
-                    if (xpn != null)
+                    if (xpn != null) {
                         ((TreeNode<K, V>) xpn).prev = x;
+                    }
                     moveRootToFront(tab, balanceInsertion(root, x));
                     return null;
                 }
@@ -864,8 +868,9 @@ class MyHashMap8<K, V> {
                 if ((xp = x.parent) == null) {
                     x.red = false;
                     return x;
-                } else if (!xp.red || (xpp = xp.parent) == null)
+                } else if (!xp.red || (xpp = xp.parent) == null) {
                     return root;
+                }
                 if (xp == (xppl = xpp.left)) {
                     if ((xppr = xpp.right) != null && xppr.red) {
                         xppr.red = false;
@@ -926,9 +931,9 @@ class MyHashMap8<K, V> {
                         root = rotateLeft(root, xp);
                         xpr = (xp = x.parent) == null ? null : xp.right;
                     }
-                    if (xpr == null)
+                    if (xpr == null) {
                         x = xp;
-                    else {
+                    } else {
                         TreeNode<K, V> sl = xpr.left, sr = xpr.right;
                         if ((sr == null || !sr.red) &&
                                 (sl == null || !sl.red)) {
@@ -936,8 +941,9 @@ class MyHashMap8<K, V> {
                             x = xp;
                         } else {
                             if (sr == null || !sr.red) {
-                                if (sl != null)
+                                if (sl != null) {
                                     sl.red = false;
+                                }
                                 xpr.red = true;
                                 root = rotateRight(root, xpr);
                                 xpr = (xp = x.parent) == null ?
@@ -945,8 +951,9 @@ class MyHashMap8<K, V> {
                             }
                             if (xpr != null) {
                                 xpr.red = (xp == null) ? false : xp.red;
-                                if ((sr = xpr.right) != null)
+                                if ((sr = xpr.right) != null) {
                                     sr.red = false;
+                                }
                             }
                             if (xp != null) {
                                 xp.red = false;
@@ -962,9 +969,9 @@ class MyHashMap8<K, V> {
                         root = rotateRight(root, xp);
                         xpl = (xp = x.parent) == null ? null : xp.left;
                     }
-                    if (xpl == null)
+                    if (xpl == null) {
                         x = xp;
-                    else {
+                    } else {
                         TreeNode<K, V> sl = xpl.left, sr = xpl.right;
                         if ((sl == null || !sl.red) &&
                                 (sr == null || !sr.red)) {
@@ -972,8 +979,9 @@ class MyHashMap8<K, V> {
                             x = xp;
                         } else {
                             if (sl == null || !sl.red) {
-                                if (sr != null)
+                                if (sr != null) {
                                     sr.red = false;
+                                }
                                 xpl.red = true;
                                 root = rotateLeft(root, xpl);
                                 xpl = (xp = x.parent) == null ?
@@ -981,8 +989,9 @@ class MyHashMap8<K, V> {
                             }
                             if (xpl != null) {
                                 xpl.red = (xp == null) ? false : xp.red;
-                                if ((sl = xpl.left) != null)
+                                if ((sl = xpl.left) != null) {
                                     sl.red = false;
+                                }
                             }
                             if (xp != null) {
                                 xp.red = false;

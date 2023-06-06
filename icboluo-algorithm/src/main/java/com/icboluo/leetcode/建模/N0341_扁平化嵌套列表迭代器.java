@@ -10,7 +10,6 @@ import java.util.List;
  * @since 2023-06-05 23:17
  */
 class N0341_扁平化嵌套列表迭代器 implements Iterator<Integer> {
-    // FIXME
     // 主要这里需要一个元素可以消费的容器，list相比较而言更偏向查找，栈仅仅是操作方便，此处链表的作用完全一样
     Deque<NestedInteger> stack;
 
@@ -32,7 +31,8 @@ class N0341_扁平化嵌套列表迭代器 implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        if (!stack.isEmpty() && !stack.peek().isInteger()) {
+        // 此块需要使用while防止[][1,2,3]的情况出现
+        while (!stack.isEmpty() && !stack.peek().isInteger()) {
             List<NestedInteger> list = stack.pop().getList();
             for (int i = list.size() - 1; i >= 0; i--) {
                 stack.push(list.get(i));

@@ -25,7 +25,7 @@ class N0747_0905_0922根据奇偶排序 {
         return max >= second * 2 ? idx : -1;
     }
 
-    // 905
+    // 0905
     public int[] sortArrayByParity(int[] nums) {
         int left = 0;
         int right = 0;
