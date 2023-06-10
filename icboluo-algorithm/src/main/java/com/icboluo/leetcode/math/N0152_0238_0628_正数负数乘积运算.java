@@ -34,13 +34,25 @@ class N0152_0238_0628_正数负数乘积运算 {
     }
 
     /**
-     * 0238 数组自身的乘积 low
+     * 0238 数组自身的乘积
+     * 只要存储2个方向的相乘结果接口
      *
      * @param nums
      * @return
      */
     public int[] productExceptSelf(int[] nums) {
-        return nums;
+        int[] res = new int[nums.length];
+        // 需要改为1，乘法的输出值是1，加法的初始值是0
+        res[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            res[i] = res[i - 1] * nums[i - 1];
+        }
+        int temp = 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            res[i] *= temp;
+            temp *= nums[i];
+        }
+        return res;
     }
 
     /**

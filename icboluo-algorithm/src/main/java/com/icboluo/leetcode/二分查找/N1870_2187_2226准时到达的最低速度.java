@@ -78,7 +78,7 @@ class N1870_2187_2226准时到达的最低速度 {
     }
 
     /**
-     * 2226 最大可能的糖果数 TODO 二分查找类题目，还有很多 FIXME ERROR 期待1实际0
+     * 2226 最大可能的糖果数 TODO 二分查找类题目，还有很多
      *
      * @param candies
      * @param k
@@ -92,7 +92,7 @@ class N1870_2187_2226准时到达的最低速度 {
             if (mid == 0) {
                 return Arrays.stream(candies).sum() == k ? 1 : 0;
             }
-            int sum = 0;
+            long sum = 0;
             // 这里比较巧妙，把糖果每堆分给孩子，有的糖果可以分2堆，有的1堆都分不到，尽可能的使糖果的堆数和孩子的个数匹配
             for (int candy : candies) {
                 sum += candy / mid;

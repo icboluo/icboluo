@@ -58,10 +58,7 @@ class N0212_单词查找 {
         // }
         // 方法2,这种方法好很多，简洁移动
         root = root.child[board[i][j] - 'a'];
-        if (root == null) {
-            return;
-        }
-        if (root.isWord) {
+        if (root != null && root.isWord) {
             res.add(str);
             // 将该单词标记为非单词，代表已访问，防止重复
             root.isWord = false;

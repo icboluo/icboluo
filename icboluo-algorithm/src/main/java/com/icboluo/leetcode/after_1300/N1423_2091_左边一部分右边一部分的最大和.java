@@ -162,7 +162,7 @@ class N1423_2091_左边一部分右边一部分的最大和 {
         return list.stream().distinct().allMatch(time -> 1 == time);
     }
 
-    // fixme error abbcc 需要删除的是最小的
+    // 这些解法都有太多的边缘用例，以至于很难全面处理（基本上不行，需要暴力解 ERROR
     public boolean equalFrequency2(String word) {
         Map<Character, Integer> eleCountMap = IntStream.range(0, word.length())
                 .mapToObj(word::charAt)
@@ -184,5 +184,22 @@ class N1423_2091_左边一部分右边一部分的最大和 {
             eleCountMap.put(min.getKey(), min.getValue() - 1);
         }
         return eleCountMap.values().stream().filter(time -> time != 0).distinct().count() <= 1;
+    }
+
+    public boolean equalFrequency3(String word) {
+        Map<Character, Integer> eleCountMap = IntStream.range(0, word.length())
+                .mapToObj(word::charAt)
+                .collect(Collectors.groupingBy(ch -> ch, Collectors.summingInt(ch -> 1)));
+        // 我们不去考虑太多太复杂的情况，暴力解，仅仅需要遍历一遍，正确的返回即可
+        for (Map.Entry<Character, Integer> entry : eleCountMap.entrySet()) {
+            Integer val = entry.getValue();
+            entry.setValue(val - 1);
+            boolean equals = eleCountMap.values().stream().filter(va -> va != 0).distinct().count() <= 1;
+            if (equals) {
+                return true;
+            }
+            entry.setValue(val);
+        }
+        return false;
     }
 }

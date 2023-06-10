@@ -22,6 +22,7 @@ class N0074_二维数组的二分查找 {
                 right = mid - 1;
             }
         }
-        return matrix[left / matrix.length][left % matrix[0].length] == target;
+        // 这块小心越界（left-1）
+        return matrix[left - 1 / matrix.length][left % matrix[0].length] == target;
     }
 }

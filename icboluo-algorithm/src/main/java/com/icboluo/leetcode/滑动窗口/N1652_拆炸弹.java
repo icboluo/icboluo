@@ -14,7 +14,7 @@ class N1652_拆炸弹 {
 
     /**
      * 对循环数组进行解密
-     * 后k个元素相加 FIXME ERROR
+     * 后k个元素相加
      *
      * @param code
      * @param k
@@ -25,27 +25,23 @@ class N1652_拆炸弹 {
         if (k == 0) {
             return arr;
         }
-        int l = 0;
-        int r = 1;
+        int l = 1;
+        int r = k;
         // 对于负值的处理是困难的
         if (k < 0) {
-            k = -k;
-            l = code.length - k;
-            r = code.length - k;
-            k = l + k - 1;
+            l = code.length + k;
+            r = code.length - 1;
         }
         int winSum = 0;
         // 对于可以优先处理的逻辑，抽取处理更加合适
-        while (r < k) {
-            winSum += code[(r++) % code.length];
+        for (int i = l; i <= r; i++) {
+            winSum += code[i];
         }
-        while (l <= code.length) {
-            int right = code[(r++) % code.length];
-            winSum += right;
-            // 中间结果值
-            arr[l % code.length] = winSum;
-            int left = code[(++l) % code.length];
-            winSum -= left;
+        // 这块不由左右指针的变化而变化，应该默认从0开始，清勿使方法复杂化
+        for (int i = 0; i < code.length; i++) {
+            arr[i] = winSum;
+            winSum += code[(++r) % code.length];
+            winSum -= code[(l++) % code.length];
         }
         return arr;
     }
