@@ -1,10 +1,8 @@
-package com.icboluo.leetcode.after_0400;
+package com.icboluo.leetcode.tree.多叉树;
 
 import com.icboluo.common.Node;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author icboluo
@@ -13,7 +11,7 @@ import java.util.Stack;
  class N0590_后序遍历 {
     public List<Integer> postorder(Node root) {
         return postorder1(root);
-//       return postorder2(root);
+        // return postorder2(root);
     }
 
     List<Integer> ans;
@@ -23,7 +21,7 @@ import java.util.Stack;
             return new ArrayList<>();
         }
         ans = new ArrayList<>();
-        Stack<Node> stack = new Stack<>();
+        Deque<Node> stack = new ArrayDeque<>();
         stack.push(root);
         while (!stack.isEmpty()) {
             Node pop = stack.pop();

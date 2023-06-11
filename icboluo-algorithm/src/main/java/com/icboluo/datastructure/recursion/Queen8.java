@@ -117,6 +117,7 @@ class Queen8 {
             array[n] = i;
             // 剔除不合法选择
             if (judge(n)) {
+                // 执行下一层决策树...这里用的是int记录单个数据，下次再使用的时候会直接覆盖，所以不需要撤销
                 backtrack2(n + 1);
             }
             // array[n]=before 此处不需要撤销选择

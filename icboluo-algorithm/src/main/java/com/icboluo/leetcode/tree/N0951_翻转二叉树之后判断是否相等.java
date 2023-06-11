@@ -1,11 +1,11 @@
-package com.icboluo.leetcode.after_0800;
+package com.icboluo.leetcode.tree;
 
 import com.icboluo.common.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class N0951_ {
+class N0951_翻转二叉树之后判断是否相等 {
     public boolean flipEquiv1(TreeNode root1, TreeNode root2) {
         if (root1 == null && root2 == null) {
             return true;
@@ -28,8 +28,8 @@ class N0951_ {
         List<TreeNode> list2 = new ArrayList<>();
         dfs(root1, list1);
         dfs(root2, list2);
-        // TODO list的equals原理是比较里面是元素嘛？
-        return list1.equals(list2);
+        // TODO list的equals原理是比较里面是元素嘛？ FIXME ERROR
+        return list1.stream().map(treeNode -> treeNode.val).toList().equals(list2.stream().map(treeNode -> treeNode.val).toList());
     }
 
     private void dfs(TreeNode root, List<TreeNode> list) {

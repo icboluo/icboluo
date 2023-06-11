@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0600;
+package com.icboluo.leetcode.bfs;
 
 import java.util.Arrays;
 import java.util.LinkedList;

@@ -183,10 +183,6 @@ TODO
 
 包含：jdbc JdbcTemplate 自定义连接池 c3p0 druid redis
 
-## test
-
-测试代码
-
 ## user
 
 提供对外访问的接口

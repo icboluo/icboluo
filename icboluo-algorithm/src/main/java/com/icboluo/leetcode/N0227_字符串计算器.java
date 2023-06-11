@@ -7,11 +7,11 @@ import java.util.Deque;
  * @author icboluo
  * @since 2022-08-25 20:53
  */
-class 字符串计算器 {
+class N0227_字符串计算器 {
     public static void main(String[] args) {
-        var cla = new 字符串计算器();
+        var cla = new N0227_字符串计算器();
         String str = "3*(4-5/2)-6";
-        int ans = cla.cal(str, 0);
+        int ans = cla.calculate(str, 0);
         System.out.println(ans);
     }
 
@@ -42,7 +42,7 @@ class 字符串计算器 {
      */
     private int endIdx;
 
-    private int cal(String str, int start) {
+    private int calculate(String str, int start) {
         str = str.replace(" ", "");
         int num = 0;
         int symbol = '+';
@@ -53,7 +53,7 @@ class 字符串计算器 {
                 num = num * 10 + (cur - '0');
             }
             if (cur == '(') {
-                num = cal(str, i + 1);
+                num = calculate(str, i + 1);
                 i = endIdx;
             }
             if (!Character.isDigit(cur) || i == str.length() - 1) {

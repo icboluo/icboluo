@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0800;
+package com.icboluo.leetcode.tree;
 
 import com.icboluo.common.TreeNode;
 
@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2021-59-28 12:59
  */
-class N0979 {
+class N0979_在二叉树中分配硬币 {
     int ans;
 
     public int distributeCoins(TreeNode root) {
@@ -25,6 +25,7 @@ class N0979 {
         }
         int left = dfs(root.left);
         int right = dfs(root.right);
+        // 后序遍历，挺难理解的，因为中途收集了结果
         ans += Math.abs(left) + Math.abs(right);
         return root.val + left + right - 1;
     }

@@ -51,8 +51,10 @@ public class MyCollector implements Collector<FundDataVO, List<BigDecimal>, BigD
 
     /**
      * 对结果容器应用最终转换
+     * 完成器也可以直接=中间结果
      *
      * @return
+     * @see Collectors.CollectorImpl
      */
     @Override
     public Function<List<BigDecimal>, BigDecimal> finisher() {

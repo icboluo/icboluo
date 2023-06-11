@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0400;
+package com.icboluo.leetcode.tree;
 
 import com.icboluo.common.TreeNode;
 

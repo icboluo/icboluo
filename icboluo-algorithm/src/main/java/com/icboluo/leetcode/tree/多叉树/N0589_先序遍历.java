@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0400;
+package com.icboluo.leetcode.tree.多叉树;
 
 import com.icboluo.common.Node;
 
@@ -11,14 +11,14 @@ import java.util.*;
  class N0589_先序遍历 {
     public List<Integer> preorder(Node root) {
         return preorder1(root);
-//        return preorder2(root);
+        // return preorder2(root);
     }
 
     public List<Integer> preorder1(Node root) {
         if (root == null) {
             return new ArrayList<>();
         }
-        Stack<Node> stack = new Stack<>();
+        Deque<Node> stack = new ArrayDeque<>();
         stack.add(root);
         List<Integer> ans = new ArrayList<>();
         while (!stack.isEmpty()) {

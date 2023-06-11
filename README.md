@@ -50,7 +50,9 @@ Here are some ideas to get you started:
   、[日志切面](icboluo-common/icboluo-supper/src/main/java/com/icboluo/aop/HttpAspect.java)
 - [统一返回值](icboluo-common/icboluo-supper/src/main/java/com/icboluo/common/ResponseResultHandler.java)
   、[全局异常处理](icboluo-common/icboluo-supper/src/main/java/com/icboluo/common/GlobalControllerExceptionHandler.java)
-- [Redis工具类](icboluo-common/icboluo-mapper/src/main/java/com/icboluo/common/redis/RedisLogAspect.java)、 还有一些常量枚举啥的
+- [Redis工具类](icboluo-common/icboluo-mapper/src/main/java/com/icboluo/common/redis/RedisLogAspect.java)、
+[BaseMapper层](icboluo-common/icboluo-mapper/src/main/java/com/icboluo/common/MyBaseMapper.java) 
+- 还有一些常量枚举啥的
 
 ### framework
 

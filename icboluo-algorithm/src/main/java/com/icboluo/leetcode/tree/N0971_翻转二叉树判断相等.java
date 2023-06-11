@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0800;
+package com.icboluo.leetcode.tree;
 
 import com.icboluo.common.TreeNode;
 
@@ -9,8 +9,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-25-04 13:25
  */
-class N0971 {
-
+class N0971_翻转二叉树判断相等 {
     public List<Integer> flipMatchVoyage(TreeNode root, int[] voyage) {
         ans = new ArrayList<>();
         idx = 0;
