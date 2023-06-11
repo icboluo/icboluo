@@ -15,14 +15,14 @@ public interface Create {
      *
      * @return 创建人
      */
-    String getCreatedBy();
+    String getCreateBy();
 
     /**
      * 设置创建人
      *
      * @param createdBy 创建人
      */
-    void setCreatedBy(String createdBy);
+    void setCreateBy(String createdBy);
 
     /**
      * 获取创建时间

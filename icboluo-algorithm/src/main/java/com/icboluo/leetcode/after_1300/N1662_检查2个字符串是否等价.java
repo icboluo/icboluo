@@ -44,8 +44,6 @@ public class N1662_检查2个字符串是否等价 {
     }
 
     /**
-     * FIXME ERROR
-     *
      * @param word1
      * @param word2
      * @return
@@ -73,12 +71,12 @@ public class N1662_检查2个字符串是否等价 {
 
         @Override
         public Character next() {
-            char ch = words[diJiGeDanCi].charAt(charIdx);
+            // 将当前的取出来，指针后移
+            char ch = words[diJiGeDanCi].charAt(charIdx++);
+            // 如果指针越界，需要修正
             if (charIdx == words[diJiGeDanCi].length()) {
                 diJiGeDanCi++;
                 charIdx = 0;
-            } else {
-                charIdx++;
             }
             return ch;
         }
@@ -89,5 +87,4 @@ public class N1662_检查2个字符串是否等价 {
             this.charIdx = charIdx;
         }
     }
-
 }

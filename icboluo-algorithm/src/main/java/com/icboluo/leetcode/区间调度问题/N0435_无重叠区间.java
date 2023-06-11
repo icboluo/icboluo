@@ -34,7 +34,7 @@ class N0435_无重叠区间 {
     }
 
     /**
-     * 算出这些区间中最多有几个互不相交的区间，也就是：区间的最大不相交子集 FIXME ERROR
+     * 算出这些区间中最多有几个互不相交的区间，也就是：区间的最大不相交子集
      * 从区间集合arr中选择一个区间x，这个x是在当前所有区间中结束最早的（end最小
      * 把所有与x区间相交的区间从区间集合arr中删除
      * 重复步骤1和2，知道arr为空为止。之前选出的哪些x就是最大不相交子集
@@ -50,7 +50,7 @@ class N0435_无重叠区间 {
         for (int i = 1; i < arr.length; i++) {
             int start = arr[i][0];
             int end = arr[i][1];
-            if (start > preEnd) {
+            if (start >= preEnd) {
                 count++;
                 preEnd = end;
             }

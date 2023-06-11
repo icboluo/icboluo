@@ -38,6 +38,13 @@ public interface CreateUpdate extends Create {
     void setUpdateTime(LocalDateTime updateTime);
 
     /**
+     * 设置更新信息
+     */
+    default void setUpdateInfo() {
+        setUpdateTime(LocalDateTime.now());
+    }
+
+    /**
      * 设置创建信息和更新信息
      */
     default void setCreateUpdate() {

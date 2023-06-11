@@ -5,7 +5,7 @@ package com.icboluo.leetcode.low;
  * @since 2023-03-16 22:47
  */
 class N2047_句子中有效单词数 {
-    // 长单词中有效单词的数量 low FIXME ERROR
+    // 长单词中有效单词的数量
     public int countValidWords(String sentence) {
         String[] arr = sentence.split(" ");
         int count = 0;
@@ -22,8 +22,12 @@ class N2047_句子中有效单词数 {
             if (str.isEmpty()) {
                 isValid = false;
             }
-            if (str.indexOf('-') == 0 || str.indexOf('-') == str.length() - 1 || str.indexOf('-') != str.lastIndexOf('-')) {
-                isValid = false;
+            int idx = str.indexOf('-');
+            if (idx != -1) {
+                if (idx == 0 || idx == str.length() - 1 || idx != str.lastIndexOf('-')
+                        || !Character.isLetter(str.charAt(idx - 1)) || !Character.isLetter(str.charAt(idx + 1))) {
+                    isValid = false;
+                }
             }
             if (isValid) {
                 count++;

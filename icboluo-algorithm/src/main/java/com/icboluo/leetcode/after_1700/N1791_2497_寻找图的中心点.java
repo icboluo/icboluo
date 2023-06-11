@@ -8,12 +8,18 @@ import java.util.LinkedList;
  * @since 2023-03-02 21:03
  */
 class N1791_2497_寻找图的中心点 {
+    public static void main(String[] args) {
+        N1791_2497_寻找图的中心点 cla = new N1791_2497_寻找图的中心点();
+        // 1
+        System.out.println(cla.maxStarSum(new int[]{1, -8, 0}, new int[][]{{1, 0}, {2, 1}}, 2));
+    }
+
     // 图的中心点，我们只需要判断2条边即可
     public int findCenter(int[][] edges) {
         return edges[0][0] == edges[1][0] || edges[0][0] == edges[1][1] ? edges[0][0] : edges[0][1];
     }
 
-    // 2497 图的中心点连接组多的边
+    // 2497 图的中心点连接组多的边 FIXME ERROR
     public int maxStarSum(int[] vals, int[][] edges, int k) {
         // 这块的k是递增的，对于非规律型图，需要使用map
         LinkedList<Integer>[] graph = new LinkedList[vals.length];

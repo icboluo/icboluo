@@ -1,5 +1,6 @@
 package com.icboluo.leetcode.bfs;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -9,7 +10,6 @@ import java.util.PriorityQueue;
  * @since 2023-03-29 18:56
  */
 class N1514_概率最大的路径 {
-    // FIXME ERROR
     public static void main(String[] args) {
         var cla = new N1514_概率最大的路径();
         int[][] edges = {{0, 1}, {1, 2}, {0, 2},};
@@ -47,7 +47,9 @@ class N1514_概率最大的路径 {
         // 关于非最短路，当每条路径长度不等的时候，我们不能简单的层级遍历，层级遍历需要的是每一个元素仅访问一遍，下面的方法元素访问次数不受限制，但是也要防止死循环
         // 方法1：dij算法，利用优先级队列来处理弹出的元素优先级，通常伴随着内部类
         // 方法2：更新全图，求到达所有顶点的最优值即可，判断到达顶点是否最优来确认是否要天界此neighbor到queue
-        PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> (int) (b.probFromStart - a.probFromStart));
+        // 这个比较器有问题，double->int会精度丢失
+        // PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> (int) (b.probFromStart - a.probFromStart));
+        PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> BigDecimal.valueOf(b.probFromStart).compareTo(BigDecimal.valueOf(a.probFromStart)));
         pq.offer(new Node(start, 1));
         while (!pq.isEmpty()) {
             Node poll = pq.poll();
@@ -74,7 +76,7 @@ class N1514_概率最大的路径 {
         double[] distArr = new double[graph.length];
         Arrays.fill(distArr, 0);
         distArr[start] = 1;
-        PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> (int) (b.probFromStart - a.probFromStart));
+        PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> BigDecimal.valueOf(b.probFromStart).compareTo(BigDecimal.valueOf(a.probFromStart)));
         pq.offer(new Node(start, 1));
         while (!pq.isEmpty()) {
             Node poll = pq.poll();

@@ -35,16 +35,16 @@ class N2062_计算字符串的元音子串 {
                     if (eleCountMap.get(miVal) == 0) {
                         valid--;
                     }
-                    mid++;
                 }
-                // 对于每个位置r，均有mid-l个有效子字符串
+                // 这个需要放到while的外面，此块代码非常难写，当mid和left有不同的时候，说明mid指针动了，产生了偏差，所以需要记录结果
+                // 这种累加计数方式需要一次性记录
                 count += mid - l;
             } else {
                 eleCountMap.clear();
                 valid = 0;
                 // 本次是非元音，所以至少，l和mid应该位于下一个字符处
-                l = r + 1;
-                mid = r + 1;
+                l = r;
+                mid = r;
             }
         }
         return count;
