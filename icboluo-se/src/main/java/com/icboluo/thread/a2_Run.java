@@ -4,9 +4,9 @@ import com.icboluo.util.ThreadUtil;
 
 /**
  * @author icboluo
- * @since 2022-05-21 13:27
+ * @since 2022-05-21 13:26
  */
- class Thr extends Thread {
+class a2_Run implements Runnable {
     @Override
     public void run() {
         ThreadUtil.sleep5s();

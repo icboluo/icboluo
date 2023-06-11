@@ -7,13 +7,13 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author icboluo
  * @since 2020-08-14 10:59
  */
-public class ThreadSafeDemo implements Runnable {
+public class a6_ThreadSafeDemo implements Runnable {
     private int tickets = 100;
     private final Object lock = new Object();
     Lock lock1 = new ReentrantLock();
 
     public static void main(String[] args) {
-        ThreadSafeDemo threadSafeDemo = new ThreadSafeDemo();
+        a6_ThreadSafeDemo threadSafeDemo = new a6_ThreadSafeDemo();
         Thread thread1 = new Thread(threadSafeDemo, "窗口1");
         Thread thread2 = new Thread(threadSafeDemo, "窗口2");
         Thread thread3 = new Thread(threadSafeDemo, "窗口3");
@@ -62,7 +62,7 @@ public class ThreadSafeDemo implements Runnable {
      */
     public void run2() {
         while (true) {
-            synchronized (ThreadSafeDemo.class) {
+            synchronized (a6_ThreadSafeDemo.class) {
                 if (tickets > 0) {
                     System.out.println(Thread.currentThread().getName() + "正在售出第" + tickets-- + "张票");
                 } else {

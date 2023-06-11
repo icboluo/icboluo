@@ -10,12 +10,12 @@ import java.util.concurrent.Executors;
  * @author icboluo
  * @since 2022-05-21 12:56
  */
-public class ThreadCreate {
+public class a4_ThreadCreate {
 
     public static void main(String[] args) throws Exception {
-        Run run = new Run();
-        Call call = new Call();
-        Thr thr = new Thr();
+        a2_Run run = new a2_Run();
+        a1_Call call = new a1_Call();
+        a3_Thr thr = new a3_Thr();
 
         // 使用线程对象调用 start() 方法, 启动子线程.（子线程一旦启动，就会执行run方法，因为子线程入口是run方法）
         //  start方法是真正的开辟了一个线程

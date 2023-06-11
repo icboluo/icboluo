@@ -1,4 +1,4 @@
-package com.icboluo.designpattern.a3_structure.proxy.dynamic;
+package com.icboluo.designpattern.a3_structure.proxy.dynamic1;
 
 import lombok.AllArgsConstructor;
 

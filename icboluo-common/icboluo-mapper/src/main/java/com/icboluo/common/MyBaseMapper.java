@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * mybatis plus 默认新增策略是input
+ * BaseMapper是允许重写的，我们假定的认为BaseMapper反射过程中生成了其他方法名的方法
+ * MybatisPlus启动时是有主键检查的，如果没有设置主键会将id字段当成主键，如果也没有id字段才会报警告（必报警告）
  *
  * @author icboluo
  * @since 2021-36-23 21:36
@@ -20,7 +22,9 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
     /**
      * <p>String类型和自增Integer类型是不一致的：
      * <p>String类型的输入主键，需要在实体类上指定 @TableId(type = IdType.INPUT) 其中小括号里面的内容可以删掉
-     * <p>Integer类型的自增主键，需要在实体类上指定 TableId(type = IdType.AUTO)
+     * <p>Integer类型的自增主键，需要在实体类上指定 TableId(type = IdType.AUTO) 如果不指定AUTO，接口也不会报错，
+     * 只是会产生一个较大的id（因为默认的策略是input），违背了自增属性；
+     * 当用Integer接受的时候（或者数据库字段长度不够），会导致set方法报错<p/>
      *
      * @param record 实体类
      * @return 受影响行数

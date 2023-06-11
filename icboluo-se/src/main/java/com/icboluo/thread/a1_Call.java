@@ -12,7 +12,7 @@ import java.util.concurrent.FutureTask;
  * @author icboluo
  * @since 2022-05-21 13:27
  */
-class Call implements Callable<Integer> {
+class a1_Call implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         ThreadUtil.sleep5s();
@@ -21,7 +21,7 @@ class Call implements Callable<Integer> {
 
     private void demo() throws ExecutionException, InterruptedException {
         // 创建Callable接口的实现类，并实现call()方法，该call()方法将作为线程执行体，并且有返回值
-        Call call = new Call();
+        a1_Call call = new a1_Call();
         // 创建Callable实现类的实例，使用FutureTask类来包装Callable对象，该FutureTask对象封装了该Callable对象的call()方法的返回值
         FutureTask<Integer> futureTask = new FutureTask<>(call);
         // 使用FutureTask对象作为Thread对象的target创建并启动新线程。

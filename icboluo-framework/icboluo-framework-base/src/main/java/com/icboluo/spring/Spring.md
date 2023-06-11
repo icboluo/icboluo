@@ -130,7 +130,9 @@ View:提供界面来与用户进行人机交互
 
 @RequestBody 是把接收到的JSON数据转化为Pojo对象，称为反序列化
 
-@RequestBody用于获取请求体内容。直接使用得到是key=value&key=value...结构的数据。 一般用于接收一个json数据。
+@RequestBody用于获取请求体内容。直接使用得到是key=value&key=value...结构的数据。 一般用于接收一个json数据
+
+如果标记为false，说明整个对象都为null
 
 RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
 

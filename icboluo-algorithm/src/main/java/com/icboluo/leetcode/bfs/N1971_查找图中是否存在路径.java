@@ -23,15 +23,15 @@ class N1971_查找图中是否存在路径 {
      * @return
      */
     public boolean validPath1(int n, int[][] edges, int source, int destination) {
-        Map<Integer, Set<Integer>> map = new HashMap<>();
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int[] edge : edges) {
-            Set<Integer> set1 = map.getOrDefault(edge[0], new HashSet<>());
+            Set<Integer> set1 = graph.getOrDefault(edge[0], new HashSet<>());
             set1.add(edge[1]);
-            map.put(edge[0], set1);
+            graph.put(edge[0], set1);
 
-            Set<Integer> set0 = map.getOrDefault(edge[1], new HashSet<>());
+            Set<Integer> set0 = graph.getOrDefault(edge[1], new HashSet<>());
             set0.add(edge[0]);
-            map.put(edge[1], set0);
+            graph.put(edge[1], set0);
         }
         Queue<Integer> queue = new LinkedList<>();
         queue.add(source);
@@ -45,8 +45,8 @@ class N1971_查找图中是否存在路径 {
                 if (poll == destination) {
                     return true;
                 }
-                if (map.containsKey(poll)) {
-                    for (Integer neighbor : map.get(poll)) {
+                if (graph.containsKey(poll)) {
+                    for (Integer neighbor : graph.get(poll)) {
                         if (visited.add(neighbor)) {
                             queue.add(neighbor);
                         }

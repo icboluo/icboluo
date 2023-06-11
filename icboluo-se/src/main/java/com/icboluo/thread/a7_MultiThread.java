@@ -11,7 +11,7 @@ import java.lang.management.ThreadMXBean;
  * @author icboluo
  * @since 2022-05-12 19:23
  */
-public class MultiThread {
+public class a7_MultiThread {
     public static void main(String[] args) {
         // 获取 Java 线程管理 MXBean
         ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();

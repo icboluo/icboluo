@@ -8,12 +8,13 @@ import java.util.*;
  */
 class N0127_顺序转换 {
     public static void main(String[] args) {
-        N0127_顺序转换 cla = new N0127_顺序转换();
+        var cla = new N0127_顺序转换();
         int i = cla.ladderLength("ab", "xy", Arrays.asList("ac", "bc", "bd", "dy", "xy", "ay"));
         System.out.println(i);
     }
 
-    private int ladderLength(String begin, String end, List<String> wordList) {
+    // FIXME ERROR
+    public int ladderLength(String begin, String end, List<String> wordList) {
         Set<String> set = new HashSet<>(wordList);
         if (!set.contains(end)) {
             return -1;

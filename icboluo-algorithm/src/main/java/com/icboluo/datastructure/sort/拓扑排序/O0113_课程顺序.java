@@ -9,7 +9,7 @@ import java.util.*;
 public class O0113_课程顺序 {
 
     public static void main(String[] args) {
-        O0113_课程顺序 cla = new O0113_课程顺序();
+        var cla = new O0113_课程顺序();
         Integer[][] arr1 = new Integer[][]{{1, 2}, {1, 3}, {2, 3}, {3, null}, {3, 4}, {4, 5}};
         int[] sort = cla.sort(5, arr1);
         System.out.println(Arrays.toString(sort));

@@ -1,5 +1,6 @@
 package com.icboluo.test;
 
+import com.icboluo.object.Student;
 import lombok.NonNull;
 import org.junit.jupiter.api.Test;
 
