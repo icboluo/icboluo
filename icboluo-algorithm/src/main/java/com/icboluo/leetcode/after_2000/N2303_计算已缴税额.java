@@ -6,8 +6,6 @@ package com.icboluo.leetcode.after_2000;
  */
 class N2303_计算已缴税额 {
     /**
-     * FIXME ERROR
-     *
      * @param brackets
      * @param income
      * @return
@@ -16,16 +14,16 @@ class N2303_计算已缴税额 {
         int res = 0;
         for (int i = 0; i < brackets.length; i++) {
             int val = brackets[i][0];
-            int nextVal = i < brackets.length - 1 ? brackets[i + 1][0] : income;
+            int preVal = i == 0 ? 0 : brackets[i - 1][0];
             int rate = brackets[i][1];
             // 收入过大
-            if (income > nextVal) {
-                res += (nextVal - val) * rate;
+            if (income > val) {
+                res += (val - preVal) * rate;
             } else {
-                res += (income - rate) * rate;
-                return res;
+                res += (income - preVal) * rate;
+                return res / 100.0;
             }
         }
-        return res;
+        return res / 100.0;
     }
 }

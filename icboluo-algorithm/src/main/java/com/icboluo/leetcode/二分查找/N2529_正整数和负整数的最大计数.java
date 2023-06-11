@@ -18,7 +18,7 @@ class N2529_正整数和负整数的最大计数 {
     }
 
     /**
-     * 因为有序，建议二分 FIXME ERROR TODO 1351
+     * 因为有序，建议二分 TODO 1351
      *
      * @param nums
      * @return
@@ -47,9 +47,9 @@ class N2529_正整数和负整数的最大计数 {
                 right = mid - 1;
 //                [mid+1,right]
             } else if (nums[mid] == target) {
-                left = mid + 1;
+                right = mid - 1;
             }
         }
-        return right;
+        return left;
     }
 }

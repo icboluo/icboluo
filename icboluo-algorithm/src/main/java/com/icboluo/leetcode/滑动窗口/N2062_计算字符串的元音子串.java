@@ -10,7 +10,7 @@ import java.util.Map;
  * @since 2023-05-17 0:36
  */
 class N2062_计算字符串的元音子串 {
-    // 滑动窗口，这个题属于中等问题 FIXME ERROR
+    // 滑动窗口，这个题属于中等问题
     public int countVowelSubstrings(String word) {
         Map<Character, Integer> eleCountMap = new HashMap<>();
         int valid = 0;
