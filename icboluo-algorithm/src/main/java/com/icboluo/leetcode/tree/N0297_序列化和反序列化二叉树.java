@@ -4,6 +4,9 @@ import com.icboluo.common.TreeNode;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 /**
  * @author icboluo
  * @since 2023-05-22 21:19
@@ -15,6 +18,18 @@ class N0297_序列化和反序列化二叉树 {
         TreeNode tree = cla.deserialize("1,2,3,null,null,4,5");
         tree.print();
         System.out.println(cla.serialize(tree));
+
+        // Positive test case
+        Queue<Integer> queue = new LinkedList<>(Arrays.asList(1, 2, 3, null, null, 4, 5));
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.right.left = new TreeNode(4);
+        root.right.right = new TreeNode(5);
+        assertEquals(root, cla.buildTree1(queue));
+        // Negative test case
+        queue = new LinkedList<>(Arrays.asList(null, null, null));
+        assertNull(cla.buildTree1(queue));
     }
 
     String spliter = ",";
