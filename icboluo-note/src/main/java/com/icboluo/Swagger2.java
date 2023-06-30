@@ -1,6 +1,5 @@
 package com.icboluo;
 
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -11,6 +10,8 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Set;
 
 /**
  * @author icboluo
@@ -27,8 +28,8 @@ public class Swagger2 {
                 .apis(RequestHandlerSelectors.basePackage("com.icboluo.note.controller"))
                 .paths(PathSelectors.any())
                 .build()
-                .produces(Sets.newHashSet("application/json;charset=UTF-8"))
-                .consumes(Sets.newHashSet("application/json;charset=UTF-8"));
+                .produces(Set.of("application/json;charset=UTF-8"))
+                .consumes(Set.of("application/json;charset=UTF-8"));
     }
 
     private ApiInfo apiInfo() {

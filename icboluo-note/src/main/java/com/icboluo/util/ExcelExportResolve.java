@@ -7,7 +7,7 @@ import java.util.*;
  * @author icboluo
  * @since 2023-06-25 18:50
  */
-public class ExcelExportCla<T> {
+public class ExcelExportResolve<T> {
 
     private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new HashMap<>();
 
@@ -17,7 +17,7 @@ public class ExcelExportCla<T> {
 
     private List<String> sortList;
 
-    public ExcelExportCla(Class<T> clazz) {
+    public ExcelExportResolve(Class<T> clazz) {
         this.clazz = clazz;
         this.toCache(clazz);
         this.nameFieldMap = CLASS_NAME_FIELD_CACHE.get(clazz);

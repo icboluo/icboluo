@@ -48,3 +48,8 @@ select * from information schema.INNODB TRX;
 ## 时间
 
 为什么mybatis打印第一行日志的时候总是延迟10ms，不管是同步请求还是异步请求均会出现
+
+## 注意
+
+left join on 和where的区别，where纯过滤，left join on是将过滤的条件展示出来，不管on什么，后面有没有and，左表
+全部数据均展示，只是右表数据有没有而已，即便on后面and左表，依然至少右表没有数据
