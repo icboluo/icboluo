@@ -21,7 +21,7 @@ function orangesRotting(grid: number[][]): number {
         count++
         let len = queue.length
         for (let i = 0; i < len; i++) {
-            const pop = queue.pop();
+            const pop = queue.shift();
             for (let dir of dirs) {
                 let x = pop[0] + dir[0]
                 let y = pop[1] + dir[1]
@@ -36,5 +36,3 @@ function orangesRotting(grid: number[][]): number {
     }
     return oneCount == 0 ? count - 1 : -1
 }
-
-// FIXME ERROR EXP 1
