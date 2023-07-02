@@ -31,8 +31,8 @@ class N0168_0171_2194_Excel数字转列号和列号转数字 {
      * 0171 Excel 列号转数字
      * 我们可以发现 BCM=(2(26)+3)+13
      *
-     * @param columnTitle
-     * @return
+     * @param columnTitle 列英文名称，不区分大小写
+     * @return 列对应的序号，从0开始
      */
     public int titleToNumber(String columnTitle) {
         if (columnTitle == null) {

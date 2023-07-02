@@ -1,7 +1,6 @@
 package com.icboluo.util;
 
 import com.alibaba.fastjson.JSON;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,14 +52,5 @@ public class HttpHelper {
                         httpRequest, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .join();
-    }
-
-    /**
-     * TODO 方法被删除了
-     *
-     * @param response
-     * @param s
-     */
-    public static void writeDownloadData(HttpServletResponse response, String s) {
     }
 }

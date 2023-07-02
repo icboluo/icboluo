@@ -8,6 +8,7 @@ import com.icboluo.converter.StringToLocalDateConverter;
 import com.icboluo.converter.StringToLocalDateTimeConverter;
 import com.icboluo.interceptor.AuthInterceptor;
 import com.icboluo.interceptor.WebContextInterceptor;
+import com.icboluo.util.BeanHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,9 +24,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -81,13 +79,6 @@ public class WebConfiguration implements WebMvcConfigurer {
             if (null == val) {
                 val = "";
             }
-
-            if (val instanceof LocalDate ld) {
-                val = ld.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            }
-            if (val instanceof LocalDateTime ldt) {
-                val = ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            }
 //          奇怪，为什么这个有时候生效有时候不生效
             if (val instanceof DayOfWeek dayOfWeek) {
                 int value = dayOfWeek.getValue();
@@ -122,7 +113,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         )
         ;
         // 缺点，这是过滤级别的序列化，序列化的结果取决于o1的值，如将LocalDateTime类型的o1转换为String类型的o1，后续将不会调用LocalDateTime的序列化器，因为已经不是LocalDateTime类型了
-        fastConfig.setSerializeFilters(valueFilter);
+        fastConfig.setSerializeFilters(BeanHelper.localDateTimeValueFilter(),valueFilter);
         // 缺点，指定后，将不会使用@JSONField注解上的format属性，包括并不限于Date类，LocalDateTime类，LocalDate类。（慎用）
         fastConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
         fastConverter.setFastJsonConfig(fastConfig);

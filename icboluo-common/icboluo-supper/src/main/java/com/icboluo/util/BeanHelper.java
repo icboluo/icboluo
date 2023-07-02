@@ -1,9 +1,6 @@
 package com.icboluo.util;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.github.pagehelper.Page;
@@ -134,7 +131,7 @@ public class BeanHelper {
      *
      * @param coll list 容器
      * @param <T>  容器元素类型
-     * @return 如果容器是空，或者第一个元素是空，返回 null
+     * @return 如果容器是空的，或者第一个元素是空的，返回 null
      */
     public static <T> T listGetFirst(Collection<T> coll) {
         if (CollectionUtils.isEmpty(coll)) {
@@ -196,15 +193,15 @@ public class BeanHelper {
         }
     }
 
-    public static <SK, TK, V> Map<TK, V> mapKeyConvert(Map<SK, V> map, Function<SK, TK> keyConvert) {
+    public static <K1, K2, V> Map<K2, V> mapKeyConvert(Map<K1, V> map, Function<K1, K2> keyConvert) {
         return mapConvert(map, keyConvert, item -> item);
     }
 
-    public static <K, SV, TV> Map<K, TV> mapValConvert(Map<K, SV> map, Function<SV, TV> valConvert) {
+    public static <K, V1, V2> Map<K, V2> mapValConvert(Map<K, V1> map, Function<V1, V2> valConvert) {
         return mapConvert(map, item -> item, valConvert);
     }
 
-    public static <SK, TK, SV, TV> Map<TK, TV> mapConvert(@NonNull Map<SK, SV> map, Function<SK, TK> keyConvert, Function<SV, TV> valConvert) {
+    public static <K1, K2, V1, V2> Map<K2, V2> mapConvert(@NonNull Map<K1, V1> map, Function<K1, K2> keyConvert, Function<V1, V2> valConvert) {
         return map.entrySet().stream()
                 .filter(entry -> allNotNull(entry.getKey(), keyConvert.apply(entry.getKey())))
                 .filter(entry -> allNotNull(entry.getKey(), valConvert.apply(entry.getValue())))
@@ -265,25 +262,6 @@ public class BeanHelper {
         return PageInfo.of(new ArrayList<>(coll));
     }
 
-    public static JSONObject merge(Object obj1, Object... arr) {
-        ValueFilter valueFilter = valueFilter();
-        JSONObject json1 = JSON.parseObject(JSON.toJSONString(obj1, valueFilter, SerializerFeature.WriteMapNullValue));
-        for (Object obj2 : arr) {
-            if (obj2 == null) {
-                continue;
-            }
-            JSONObject json2 = JSON.parseObject(JSON.toJSONString(obj2, valueFilter, SerializerFeature.WriteMapNullValue));
-            for (Map.Entry<String, Object> entry : json2.entrySet()) {
-                if (json1.containsKey(entry.getKey())) {
-                    json1.computeIfAbsent(entry.getKey(), k -> entry.getValue());
-                } else {
-                    json1.put(entry.getKey(), entry.getValue());
-                }
-            }
-        }
-        return json1;
-    }
-
     /**
      * TypeUtils 拥有数据类型转换函数
      *
@@ -296,7 +274,7 @@ public class BeanHelper {
         return TypeUtils.castToInt(val);
     }
 
-    private static ValueFilter valueFilter() {
+    public static ValueFilter localDateTimeValueFilter() {
         return (obj, name, val) -> {
             if (val == null) {
                 val = "";

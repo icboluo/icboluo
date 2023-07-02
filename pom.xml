@@ -52,8 +52,6 @@
         <lombok.version>1.18.26</lombok.version>
         <common.version>0.0.1-SNAPSHOT</common.version>
         <!--web -->
-        <httpcore.version>4.4.14</httpcore.version>
-        <httpclient.version>4.5.13</httpclient.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <!--mapper -->
         <mysql.version>8.0.33</mysql.version>
@@ -126,11 +124,6 @@
                 <version>${druid.verison}</version>
             </dependency>
             <!--            引这个依赖才可以选择多个mysql driver class name-->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
