@@ -72,7 +72,6 @@ sleep和wait均针对于锁，他们的不同和线程无关，均不会释放�
         具体场景如下：del a where b=; del a where c=; 其中任意一个有数据即可死锁；2个都没有不会死锁
         mysql一个navicat页面就是一次链接，也是一次会话，idea窗口同理，多次会话直接可以做事物测试
 
-
 ## 线程池
 
 线程池中的最大线程数触发时机：当核心线程满了之后，然后队列也满了，线程数量就会由核心线程数量变为最大线程数量
@@ -94,3 +93,34 @@ Executor提交不需要返回值的任务
 run方法是执行的真正方法，需要修改run，就可以实现子线程和父线程的数据传递
 
 Executor比Thread.start更好，包含：创建runnable，执行，处理结果
+
+## CompletableFuture
+
+cf.isCompletedExceptionally()这个方法并不好用，因为这个需要等到异步任务执行完之后调用才有效，
+但是等待雨布执行完，需要try{cf.join} catch ，或者while(cf.isDone)
+
+2种方式均不友好：不要让cf抛异常，应该将异常结果收集起来，然后join判断
+
+## CAS
+
+首先将内存位置的值和预期值比较，如果相匹配，处理器会自动将该内存位置的值更新为新值，并返回true；如果不匹配，处理器不进行任何操作，并返回false
+
+see java unsafe.java
+
+// 字段对象，字段内存位置，预期原值，新值
+compare and swap(object o,long offset,long expected,long x)
+
+cas的问题：
+
+    因为是比较，如果存在由a改为b再改为a就会出现判断错误，可以用jdk其他工具帮助：AtomicStampedReference
+    只能保证一个变量的原子操作，可以把i j放入一个对象中，对对象cas
+
+自旋锁问题：
+
+    首先声明，cas仅仅是一次判断，不包含自旋锁；但是我们使用cas的时候，大概率会循环调用，
+    如果为期望结果的时候，才放行，自己循环自己，形成自旋锁
+        
+    高并发情况下，会造成大量cas失败（因为同一时间仅仅只能成功一个），会浪费CPU性能，降低并发：
+    1.使用LongAddr
+    2.削峰 列如AQS
+

@@ -1,0 +1,3 @@
+mock bean 会给每一个方法一个默认执行策略和返回值
+
+MockBean 和Mock是不同的逻辑，MockBean是将Spring容器中的Bean替换，Mock是生产一个空的Bean

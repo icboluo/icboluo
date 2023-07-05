@@ -103,7 +103,7 @@ public class ExcelController {
         LocalDateTime gmtStart = LocalDateTime.now();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile mf = multipartRequest.getFile("data");
-        StudentListener listener = new StudentListener();
+        StudentListener listener = new StudentListener(StudentExcel.class);
         List<StudentExcel> read1 = ExcelHelper.read(mf, listener, StudentExcel.class);
         List<StudentExcel> read = StudentExcel.generatorFactory(2);
         String[][] arr = ExcelHelper.validateContext(read);

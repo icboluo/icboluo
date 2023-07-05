@@ -10,14 +10,21 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 采用数组+链表|红黑树的数据结构
+ *
  * @param <K>
  * @param <V>
  * @see HashMap
  */
 class MyHashMap8<K, V> {
-
+    /**
+     * 哈希表数组默认长度是1<<4而不是16，这样写的目的是可读性高并且容易修改，与效率没有任何关系
+     */
     static final int defaultInitCapacity = 1 << 4; // aka 16
     static final int maxCapacity = 1 << 30;
+    /**
+     * 加载因子，用来衡量hashMap满的程度
+     */
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
     static final int treeifyThreshold = 8;
     static final int UNTREEIFY_THRESHOLD = 6;
@@ -32,8 +39,17 @@ class MyHashMap8<K, V> {
         Node<K, V> next;
     }
 
+    /**
+     * 一种hash算法，因为数组的长度很小，直接取模或造成高位不参与运算，所以需要扰动函数，使hash值每一位均参与运算
+     * hash^(hash>>> 16)，高位与低位首先参与运算（其实这里仅仅只是折半
+     * 扰动函数每一版源码均不相同，最终目的仅仅是让高位尽可能地参与运算，使最终获得的三散列值更加离散
+     *
+     * @param key
+     * @return
+     */
     static final int hash(Object key) {
         int h;
+        // 此块只是扰动函数扰动hash值
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
 
@@ -177,13 +193,13 @@ class MyHashMap8<K, V> {
         int arrLength;
         new HashMap<>();
         int newArrLength;
-        // 数据是空,扩容
+        // 数据是空的,扩容
         if (arr == null || (arrLength = arr.length) == 0) {
             arr = resize();
             arrLength = arr.length;
         }
         newArrLength = arrLength - 1;
-        // 这个是快速去模的方式，就是把哈希值计算到数组上
+        // 哈希表链表上出现的位置；这个是快速去模的方式，就是把哈希值计算到数组上
         firstEle = arr[newArrLength & newHash];
         // arr中元素为空，直接放进数组就行
         if (firstEle == null) {
@@ -248,7 +264,9 @@ class MyHashMap8<K, V> {
         int oldCap = oldArr == null ? 0 : oldArr.length;
         int oldThr = threshold;
         int newCap, newThr = 0;
+        // 旧的hash表是否被初始化
         if (oldCap > 0) {
+            // 旧表容量是否超过最大值，超过直接设置最大，因为已经无法扩容
             if (oldCap >= maxCapacity) {
                 threshold = Integer.MAX_VALUE;
                 return oldArr;
@@ -256,26 +274,28 @@ class MyHashMap8<K, V> {
                     oldCap >= defaultInitCapacity) {
                 newThr = oldThr << 1; // double threshold
             }
-//            旧容量等于0
+//            旧容量等于0 初始化过程中，将容量暂时放到阈值中，为了简单，新的值直接等于旧的接口（hashMap 在存储元素之前不会实例化哈希表）
         } else if (oldThr > 0) {// initial capacity was placed in threshold
             newCap = oldThr;
-// 旧都为0
+// 旧都为0，全部使用默认值
         } else {               // zero initial threshold signifies using defaults
             newCap = defaultInitCapacity;
             newThr = (int) (DEFAULT_LOAD_FACTOR * defaultInitCapacity);
         }
+        // 容量设置完，再设置阈值，扩容方法的整体目的是设置阈值
         if (newThr == 0) {
             float ft = (float) newCap * loadFactor;
             newThr = (newCap < maxCapacity && ft < (float) maxCapacity ?
                     (int) ft : Integer.MAX_VALUE);
         }
         threshold = newThr;
+        // 根据新容量建立新数组
         Node<K, V>[] newTab = (Node<K, V>[]) new Node[newCap];
         table = newTab;
         if (oldArr != null) {
             for (int j = 0; j < oldCap; ++j) {
-                Node<K, V> e;
-                if ((e = oldArr[j]) != null) {
+                Node<K, V> e = oldArr[j];
+                if (e != null) {
                     oldArr[j] = null;
                     if (e.next == null) {
                         newTab[e.hash & (newCap - 1)] = e;
@@ -641,18 +661,18 @@ class MyHashMap8<K, V> {
                 TreeNode<K, V> xp = p;
                 if ((p = (dir <= 0) ? p.left : p.right) == null) {
                     Node<K, V> xpn = xp.next;
-                    TreeNode<K, V> x = map.newTreeNode(h, k, v, xpn);
+                    TreeNode<K, V> cur = map.newTreeNode(h, k, v, xpn);
                     if (dir <= 0) {
-                        xp.left = x;
+                        xp.left = cur;
                     } else {
-                        xp.right = x;
+                        xp.right = cur;
                     }
-                    xp.next = x;
-                    x.parent = x.prev = xp;
+                    xp.next = cur;
+                    cur.parent = cur.prev = xp;
                     if (xpn != null) {
-                        ((TreeNode<K, V>) xpn).prev = x;
+                        ((TreeNode<K, V>) xpn).prev = cur;
                     }
-                    moveRootToFront(tab, balanceInsertion(root, x));
+                    moveRootToFront(tab, balanceInsertion(root, cur));
                     return null;
                 }
             }
@@ -861,13 +881,21 @@ class MyHashMap8<K, V> {
             return root;
         }
 
+        /*
+        首先加节点需要是红节点，避免黑数量冲突
+        父节点是黑色，不影响红黑平衡，直接插入即可
+        右旋的时候，是中间结果，不是最开始的
+         */
         static <K, V> TreeNode<K, V> balanceInsertion(TreeNode<K, V> root,
                                                       TreeNode<K, V> x) {
             x.red = true;
-            for (TreeNode<K, V> xp, xpp, xppl, xppr; ; ) {
+            TreeNode<K, V> xp, xpp, xppl, xppr;
+            while (true) {
+                // 如果父节点为空，说明当前节点为根节点
                 if ((xp = x.parent) == null) {
                     x.red = false;
                     return x;
+                    // 如果是父节点是黑节点，或者祖父节点为空，不做处理
                 } else if (!xp.red || (xpp = xp.parent) == null) {
                     return root;
                 }

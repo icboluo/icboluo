@@ -16,6 +16,8 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
         1、基于接口的JDK官方的动态代理（优先使用）要求：被代理类最少实现一个接口
         2、基于子类的第三方的cglib的动态代理 要求：被代理类不能用final修饰的类
 
+注意：直接调用Controller层方法和通过URL调用Controller接口，所经过的http切面是一致的，都无法避免
+
 ## 名词/注解
 
 @Import：用于导入其他配置类
@@ -40,7 +42,7 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
     属性注入，将制定配置文件中的属性注入到变量中
       
-      @Value("${jdbc.url}")
+       @Value("${jdbc.url}")
        private String name;
 
 @Configuration
@@ -66,13 +68,14 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
     bean和Commponent的区别：component作用于类，bean作用于方法；bean可以随便找个地方随便注入类（第三方工具，component不行
 
-@ContextConfiguration（locations={"classpath：......"}）：加载配置类或者xml配置文件
+@ContextConfiguration(locations={"classpath：......"})：加载配置类或者xml配置文件
 
 @Scope @PostConstruct @PreDestroy 相当于：<bean id="" class="" init-method="" destroy-method="" />
 
 @PostConstruct 在创建对象后执行，整个系统中只执行一次，可以用来系统启动初始化某些属性,方法设置成私有的也是可以执行的
 
-Joinpoint 连接点 连接点表示应用执行过程中能够插入切面的一个点， 这个点可以是方法的调用、异常的抛出。在 Spring AOP 中，连接点总是方法的调用
+Joinpoint 连接点 连接点表示应用执行过程中能够插入切面的一个点， 这个点可以是方法的调用、异常的抛出。在 Spring AOP
+中，连接点总是方法的调用
 
 PointCut 切点 可以插入增强处理的连接点
 
@@ -112,7 +115,15 @@ spring bean 默认单例
 
 切面抛出的异常并非是因为受检异常什么的，jvm在处理动态代理的时候，如果出现顶层异常向下转型，会抛上述异常
 
-## Springmvc:Model View Controller 模型视图控制器
+aop 与代理
+
+aop存在于spring中，是对一个类做一个切面，通过spring获取这个类的时候（注入）其实就是调用到代理类；
+
+本类之间的调用，没有获取spring的额外的bean，自然就不会产生代理了；
+
+这块可以打断点调试，service层的aop，再controller注入的其实是cglib代理类
+
+## SpringMvc:Model View Controller 模型视图控制器
 
 ## 名词/注解
 
@@ -138,7 +149,8 @@ RequestMapping 提供路由信息，负责URL到Controller中的具体函数的�
 
 @RequestParam@PathVariable@GetMapping@PostMapping@PutMapping@DeleteMapping
 
-@SpringBootApplication 申明让spring boot自动给程序进行必要的配置@Configuration ，@EnableAutoConfiguration 和 @ComponentScan 三个配置。
+@SpringBootApplication 申明让spring boot自动给程序进行必要的配置@Configuration ，@EnableAutoConfiguration 和
+@ComponentScan 三个配置。
 
 ConfigurationProperties 声明当前类为属性读取类
 

@@ -13,5 +13,5 @@ public interface ExcelTitleMap {
      *
      * @return 表头映射
      */
-    Map<Character, String> titleMap();
+    Map<String, String> titleMap();
 }
