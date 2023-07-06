@@ -2,7 +2,7 @@ server:
   port: 1110
 spring:
   profiles:
-    active: test
+    active: simple
   application:
     name: icboluo-sql
   data:
