@@ -33,6 +33,7 @@ spring:
           #        uri: lb://note
           predicates:
             - Path=/note/lb/** #断言,路径相匹配的进行路由
-  redis:
-    host: 127.0.0.1
-    port: 6379
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379

@@ -2,7 +2,7 @@ server:
   port: 9527
 spring:
   profiles:
-    active: simple
+    active: test
   application:
     name: icboluo-gateway
 logging:

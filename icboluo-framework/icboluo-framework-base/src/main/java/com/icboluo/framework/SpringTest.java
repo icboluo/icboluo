@@ -42,6 +42,7 @@ public class SpringTest {
 
     @Test
     public void stream() throws IOException {
+        // 是一个比较好用的api
         StreamUtils.copy(new byte[]{}, null);
         byte[] bytes = StreamUtils.copyToByteArray(null);
     }

@@ -2,12 +2,13 @@ server:
   port: 1110
 spring:
   profiles:
-    active: simple
+    active: test
   application:
     name: icboluo-sql
-  redis:
-    host: 127.0.0.1
-    port: 6379
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 logging:
   level:
     com.icboluo: debug

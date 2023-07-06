@@ -23,3 +23,13 @@ toString几乎相反，但又完全不一样
 ## 异常
 
 实体类里面如果一个字段都没有，可能导致序列化异常，这个情况是测试的时候容易发生的
+
+## 日期
+
+前端传输数据到后端 DateTimeFormat(pattern = "yyyy-MM-dd")
+
+后端传输数据到前端 JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+
+当设置全局 date format的时候，这个注解对于单个的对象属性并没有什么 作用，用下面的注解可以解决
+
+JSONField(format ="yyyy-mm-dd HH:mm:ss")
