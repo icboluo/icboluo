@@ -33,13 +33,18 @@ public class DateHelper {
      */
     private static final Long DAY = 24 * 60 * 60 * 1000L;
 
+    private static final Long HOUR = 60 * 60 * 1000L;
+    private static final Long MIN = 60 * 1000L;
+
+    private static DateTimeFormatter Y_M_D_H_M_S = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     /**
      * 获取当前的标准日期
      *
      * @return 2020-04-03 13:24:29
      */
     public static String getCurrentDateFormat() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return LocalDateTime.now().format(Y_M_D_H_M_S);
     }
 
     /**
@@ -59,7 +64,7 @@ public class DateHelper {
      * @return 2020-04-03 13:08:41
      */
     public static String dateFormat(LocalDateTime dateTime) {
-        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return dateTime.format(Y_M_D_H_M_S);
     }
 
     /**
@@ -126,6 +131,6 @@ public class DateHelper {
     }
 
     public static LocalDateTime toDateTime(String str) {
-        return LocalDateTime.parse(str, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return LocalDateTime.parse(str, Y_M_D_H_M_S);
     }
 }
