@@ -13,6 +13,7 @@ class N1123_最低公共祖先 {
     }
 
     // TODO not understand
+    // 首先，会找到最深的节点，然后回溯
     private Pair dfs(TreeNode root, int depth) {
         if (root == null) {
             return new Pair(null, depth);
@@ -23,7 +24,7 @@ class N1123_最低公共祖先 {
         if (left.depth == right.depth) {
             return new Pair(root, left.depth);
         } else {
-            // 首先，会找到最深的节点，然后回溯
+            // 否则返回深度较大的那个节点
             return left.depth > right.depth ? left : right;
         }
     }
