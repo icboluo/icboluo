@@ -84,6 +84,7 @@ class N0212_单词查找 {
                     temp.child[ch - 'a'] = new Trie();
                 }
                 temp.child[ch - 'a'] = new Trie();
+                temp = temp.child[ch - 'a'];
             }
             temp.isWord = true;
         }

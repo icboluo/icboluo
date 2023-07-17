@@ -6,8 +6,6 @@ package com.icboluo.leetcode.峰值低谷问题;
  */
 class N0122_可以多次买入卖出 {
     /**
-     * FIXME ERROR
-     *
      * @param prices
      * @return
      */

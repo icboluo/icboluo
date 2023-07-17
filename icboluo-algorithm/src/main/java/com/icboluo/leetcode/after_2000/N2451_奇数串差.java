@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
  */
 class N2451_奇数串差 {
     /**
-     * 字符间距离相等 FIXME ERROR
+     * 字符间距离相等
      *
      * @param words
      * @return

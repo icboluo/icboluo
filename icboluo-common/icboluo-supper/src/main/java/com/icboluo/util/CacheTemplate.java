@@ -81,4 +81,8 @@ public class CacheTemplate<K, V> {
         }
         return Optional.empty();
     }
+
+    public void invalidate(K k) {
+        cache.invalidate(k);
+    }
 }

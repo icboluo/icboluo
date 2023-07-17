@@ -20,6 +20,7 @@ class N0074_二维数组的二分查找 {
             } else if (midVal == target) {
                 // 其实这块return true就可以了啊
                 right = mid - 1;
+                return true;
             }
         }
         // 这块小心越界（left-1）

@@ -8,7 +8,8 @@ function findKthPositive(arr: number[], k: number): number {
         if (arr[mid] - mid - 1 < k) {
             left = mid + 1
         } else if (arr[mid] - mid - 1 == k) {
-            left = mid + 1
+            // 这里有问题，寻找的是左边界
+            right = mid - 1
         } else {
             right = mid - 1;
         }
