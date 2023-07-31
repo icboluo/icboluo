@@ -2,7 +2,7 @@ package com.icboluo.stream;
 
 import com.icboluo.stream.predicatecom.FilterStudentByAge;
 import com.icboluo.stream.predicatecom.FilterStudentByName;
-import com.icboluo.object.Student;
+import com.icboluo.object.StatusStudent;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -22,11 +22,11 @@ public class ForewordTest {
     /**
      * 学生容器
      */
-    List<Student> stuList = Arrays.asList(
-            new Student(22, "one"),
-            new Student(2, "two"),
-            new Student(66, "three"),
-            new Student(4, "three")
+    List<StatusStudent> stuList = Arrays.asList(
+            new StatusStudent(22, "one"),
+            new StatusStudent(2, "two"),
+            new StatusStudent(66, "three"),
+            new StatusStudent(4, "three")
     );
 
     /**
@@ -38,9 +38,9 @@ public class ForewordTest {
      */
     @Test
     public void test1() {
-        List<Student> students1 = filterStudent(stuList, new FilterStudentByAge());
+        List<StatusStudent> students1 = filterStudent(stuList, new FilterStudentByAge());
         System.out.println("students1 = " + students1);
-        List<Student> students2 = filterStudent(stuList, new FilterStudentByName());
+        List<StatusStudent> students2 = filterStudent(stuList, new FilterStudentByName());
         System.out.println("students2 = " + students2);
     }
 
@@ -49,9 +49,9 @@ public class ForewordTest {
      */
     @Test
     public void test2() {
-        List<Student> students = filterStudent(stuList, new Predicate<Student>() {
+        List<StatusStudent> students = filterStudent(stuList, new Predicate<StatusStudent>() {
             @Override
-            public boolean test(Student student) {
+            public boolean test(StatusStudent student) {
                 return student.getAge() > 55;
             }
         });
@@ -64,7 +64,7 @@ public class ForewordTest {
     @Test
     public void test3() {
         //箭头左侧放的是参数列表，右侧放的是接口中抽象方法的实现
-        List<Student> students = filterStudent(stuList, s -> s.getAge() > 55);
+        List<StatusStudent> students = filterStudent(stuList, s -> s.getAge() > 55);
         students.forEach(System.out::println);
     }
 
@@ -80,9 +80,9 @@ public class ForewordTest {
                 .forEach(System.out::println);
     }
 
-    private List<Student> filterStudent(List<Student> list, Predicate<Student> pre) {
-        List<Student> ans = new ArrayList<>();
-        for (Student student : list) {
+    private List<StatusStudent> filterStudent(List<StatusStudent> list, Predicate<StatusStudent> pre) {
+        List<StatusStudent> ans = new ArrayList<>();
+        for (StatusStudent student : list) {
             if (pre.test(student)) {
                 ans.add(student);
             }

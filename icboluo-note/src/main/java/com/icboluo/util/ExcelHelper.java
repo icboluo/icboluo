@@ -276,7 +276,7 @@ public class ExcelHelper {
             return new ArrayList<>();
         }
         validateSuffix(mf);
-        headMap.computeIfAbsent(cla, key -> listener.head());
+        headMap.computeIfAbsent(cla, key -> listener.head);
 /*        try (InputStream is = mf.getInputStream();) {
             ExcelReader er = EasyExcel.read(is).build();
             // 默认为0行表头，是因为要进行模板校验

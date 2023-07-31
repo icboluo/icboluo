@@ -15,4 +15,13 @@ public class GatewayApplication {
         SpringApplication.run(GatewayApplication.class, args);
     }
 
+//    @Bean
+//    public InetUtilsProperties inetUtilsProperties() {
+//        return new InetUtilsProperties();
+//    }
+//
+//    @Bean
+//    public InetUtils inetUtils(InetUtilsProperties inetUtilsProperties) {
+//        return new InetUtils(inetUtilsProperties);
+//    }
 }

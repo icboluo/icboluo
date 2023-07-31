@@ -1,13 +1,15 @@
 package com.icboluo.mysql;
 
 
+import com.icboluo.a_sql.z_MyJdbcUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class TransferDemo {
     public static void main(String[] args) {
-        Connection connection = MyJdbcUtil.getConnection();
+        Connection connection = z_MyJdbcUtil.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             //手动开启事物
@@ -35,7 +37,7 @@ public class TransferDemo {
                 e1.printStackTrace();
             }
         } finally {
-            MyJdbcUtil.release(null, preparedStatement, connection);
+            z_MyJdbcUtil.release(null, preparedStatement, connection);
         }
     }
 }

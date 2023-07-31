@@ -13,7 +13,7 @@ public class EmbededRedisConfiguration {
 
     private final RedisServer redisServer;
 
-    public EmbededRedisConfiguration(@Value("${spring.redis.port}") final int redisPort) {
+    public EmbededRedisConfiguration(@Value("${spring.data.redis.port}") final int redisPort) {
         this.redisServer = RedisServer.builder().port(redisPort).setting("maxmemory 256m").build();
     }
 

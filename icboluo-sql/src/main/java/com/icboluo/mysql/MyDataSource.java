@@ -1,5 +1,7 @@
 package com.icboluo.mysql;
 
+import com.icboluo.a_sql.z_MyJdbcUtil;
+
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationHandler;
@@ -29,7 +31,7 @@ public class MyDataSource implements DataSource {
      */
     public MyDataSource() {
         for (int i = 0; i < 10; i++) {
-            Connection connection = MyJdbcUtil.getConnection();
+            Connection connection = z_MyJdbcUtil.getConnection();
             pools.addFirst(connection);
         }
         System.out.println("数据库连接池创建了，当前有" + pools.size() + "个连接");

@@ -2,13 +2,19 @@ package com.icboluo.controller;
 
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.constant.FileRelativePathPre;
-import com.icboluo.object.business.Student;
+import com.icboluo.object.business.StudentBO;
 import com.icboluo.object.client.RowCO;
 import com.icboluo.object.excel.StudentExcel;
-import com.icboluo.service.impl.ExcelService;
+import com.icboluo.object.view.StudentVO;
+import com.icboluo.service.ExcelService;
+import com.icboluo.service.StudentService;
+import com.icboluo.service.impl.StudentServiceImpl;
+import com.icboluo.util.ExcelExportResolve;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.listenter.RowDataListener;
 import com.icboluo.util.listenter.StudentListener;
@@ -48,6 +54,8 @@ public class ExcelController {
     private ReadExcelEntity readExcelEntity;
     @Resource
     private WriteExcelEntity writeExcelEntity;
+
+    private StudentService studentService = new StudentServiceImpl();
     /**
      * 将配置文件中的属性读取出来
      */
@@ -77,13 +85,13 @@ public class ExcelController {
 
     @GetMapping("www")
     public void www(HttpServletResponse response) {
-        List<Student> data = new ArrayList<>();
-        Student student = new Student();
+        List<StudentBO> data = new ArrayList<>();
+        StudentBO student = new StudentBO();
         student.setAge(18);
         student.setId("22");
         data.add(student);
         List<String> strings = Arrays.asList("name", "id", "age");
-        ExcelHelper.exportExcel(response, strings, Student.class, data);
+        ExcelHelper.exportExcel(response, strings, StudentBO.class, data);
     }
 
     @GetMapping("/importExcel")
@@ -113,9 +121,25 @@ public class ExcelController {
 
     @GetMapping("/exportExcel")
     public void exportExcel() {
-        EasyExcel.write(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "student.xlsx")
-                .head(Student.class)
-                .build();
+        EasyExcel.write(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "student.xlsx").head(StudentBO.class).build();
+    }
+
+    /**
+     * 自定义列导出
+     */
+    @GetMapping("customizationExport")
+    public void customizationExport() throws IllegalAccessException {
+        String fileName = "title_customization_" + System.currentTimeMillis() + ".xlsx";
+        ExcelExportResolve<StudentVO> resolve = new ExcelExportResolve<>(StudentVO.class);
+        resolve.setSortFieldName(Arrays.asList("age", null, "name", "code", "id"));
+        EasyExcelFactory.write(fileName)
+                // 实测这个自定义列宽最大值太宽了，需要修改为 100|150
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .head(resolve.head())
+                .sheet("学生")
+                .doWrite(resolve.body(() ->
+                        studentService.generateList(20).stream()
+                                .map(StudentVO::new).toList()));
     }
 
     @GetMapping("/writeStudentExcel")

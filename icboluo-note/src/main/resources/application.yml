@@ -33,5 +33,10 @@ mybatis-plus:
       id-type: none
       insert-strategy: not_null
       update-strategy: not_null
+feign:
+  client:
+    config:
+      default:
+        logger-level: basic
 
 

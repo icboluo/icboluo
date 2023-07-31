@@ -1,7 +1,7 @@
 package com.icboluo.stream;
 
 
-import com.icboluo.object.Student;
+import com.icboluo.object.StatusStudent;
 import com.icboluo.util.IcBoLuoException;
 import org.junit.jupiter.api.Test;
 
@@ -21,12 +21,12 @@ import java.util.stream.Stream;
  */
 public class Stream02Test {
 
-    List<Student> stuList = Arrays.asList(
-            new Student(1, "one", Student.Status.BUSY),
-            new Student(2, "two", Student.Status.FREE),
-            new Student(3, "three", Student.Status.VOCATION),
-            new Student(4, "four", Student.Status.BUSY),
-            new Student(5, "five", Student.Status.FREE)
+    List<StatusStudent> stuList = Arrays.asList(
+            new StatusStudent(1, "one", StatusStudent.Status.BUSY),
+            new StatusStudent(2, "two", StatusStudent.Status.FREE),
+            new StatusStudent(3, "three", StatusStudent.Status.VOCATION),
+            new StatusStudent(4, "four", StatusStudent.Status.BUSY),
+            new StatusStudent(5, "five", StatusStudent.Status.FREE)
     );
 
     /**
@@ -41,8 +41,8 @@ public class Stream02Test {
         List<String> list = new ArrayList<>();
         Stream<String> stream1 = list.stream();
 
-        Student[] strArr = new Student[10];
-        Stream<Student> stream2 = Arrays.stream(strArr);
+        StatusStudent[] strArr = new StatusStudent[10];
+        Stream<StatusStudent> stream2 = Arrays.stream(strArr);
 
         Stream<String> stream3 = Stream.of("a", "b", "c");
 
@@ -64,7 +64,7 @@ public class Stream02Test {
     @Test
     public void test2() {
         // 内部迭代：由stream api 完成
-        Stream<Student> stream1 = stuList.stream()
+        Stream<StatusStudent> stream1 = stuList.stream()
                 .filter(s -> {
                     System.out.println("stream api 的中间操作没有终止操作不执行");
                     return s.getAge() > 2;
@@ -109,7 +109,7 @@ public class Stream02Test {
                 .forEach(System.out::print);
         System.out.println("---------------------------------");
         stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .forEach(System.out::print);
         System.out.println("---------------------------------");
         //map本身得到的是一个新流
@@ -154,31 +154,31 @@ public class Stream02Test {
 
         //过滤，获得名称，排序
         stuList.stream()
-                .filter(s -> s.getStatus().equals(Student.Status.FREE))
-                .map(Student::getName)
+                .filter(s -> s.getStatus().equals(StatusStudent.Status.FREE))
+                .map(StatusStudent::getName)
                 .sorted((s1, s2) -> s1.compareTo(s2))
                 .forEach(System.out::print);
         System.out.println();
         //按姓名排序name
         stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .sorted()
                 .forEach(System.out::print);
         System.out.println();
         String str = stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .sorted()
                 .reduce("", String::concat);
         System.out.println("str = " + str);
         //打乱名字中的字母排序 区分大小写/不区分大小写
         stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .flatMap(Stream02Test::splitCharacter1)
                 .sorted()
                 .forEach(System.out::print);
         System.out.println();
         stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .flatMap(Stream02Test::splitCharacter2)
                 .sorted((s1, s2) -> s1.compareToIgnoreCase(s2))
                 //.sorted(String::compareToIgnoreCase)
@@ -197,21 +197,21 @@ public class Stream02Test {
     @Test
     public void test6() {
         boolean b1 = stuList.stream()
-                .allMatch(s -> s.getStatus().equals(Student.Status.BUSY));
+                .allMatch(s -> s.getStatus().equals(StatusStudent.Status.BUSY));
         System.out.println("b1 = " + b1);
         boolean b2 = stuList.stream()
-                .anyMatch(s -> s.getStatus().equals(Student.Status.VOCATION));
+                .anyMatch(s -> s.getStatus().equals(StatusStudent.Status.VOCATION));
         System.out.println("b2 = " + b2);
         boolean b3 = stuList.stream()
-                .noneMatch(s -> s.getStatus().equals(Student.Status.VOCATION));
+                .noneMatch(s -> s.getStatus().equals(StatusStudent.Status.VOCATION));
         System.out.println("b3 = " + b3);
         //返回的结果集有可能为null时，stream会将这个值封装到optional容器中
-        Optional<Student> op1 = stuList.stream()
+        Optional<StatusStudent> op1 = stuList.stream()
                 .sorted((s1, s2) -> -Integer.compare(s1.getAge(), s2.getAge()))
                 .findFirst();
         System.out.println(op1.get());
-        Optional<Student> op2 = stuList.stream()
-                .filter(s -> s.getStatus().equals(Student.Status.FREE))
+        Optional<StatusStudent> op2 = stuList.stream()
+                .filter(s -> s.getStatus().equals(StatusStudent.Status.FREE))
                 .findAny();
 //        如果是null，则抛出异常
         System.out.println(op2.orElseThrow(IcBoLuoException::new));
@@ -219,11 +219,11 @@ public class Stream02Test {
         long count = stuList.stream()
                 .count();
         System.out.println("count = " + count);
-        Optional<Student> op3 = stuList.stream()
+        Optional<StatusStudent> op3 = stuList.stream()
                 .max((s1, s2) -> Integer.compare(s1.getAge(), s2.getAge()));
         System.out.println(op3.get());
         Optional<Integer> op4 = stuList.stream()
-                .map(Student::getAge)
+                .map(StatusStudent::getAge)
                 .min(Integer::compare);
         System.out.println(op4.get());
     }
@@ -240,7 +240,7 @@ public class Stream02Test {
         System.out.println("reduce = " + reduce);
         //上面的有起始值，所以比不为null，下面的可能为null，所以放在optional中
         Optional<Integer> op = stuList.stream()
-                .map(Student::getAge)
+                .map(StatusStudent::getAge)
                 .reduce(Integer::sum);
         System.out.println(op.orElse(0));
 
@@ -257,17 +257,17 @@ public class Stream02Test {
     @Test
     public void test8() {
         List<String> list = stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .toList();
         list.forEach(System.out::println);
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        Set<Student.Status> set = stuList.stream()
-                .map(Student::getStatus)
+        Set<StatusStudent.Status> set = stuList.stream()
+                .map(StatusStudent::getStatus)
                 .collect(Collectors.toSet());
         set.forEach(System.out::println);
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
         HashSet<String> hs = stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .collect(Collectors.toCollection(HashSet::new));
         hs.forEach(System.out::println);
 
@@ -282,21 +282,21 @@ public class Stream02Test {
                 .collect(Collectors.counting());
         System.out.println("count = " + count);
         Double avg = stuList.stream()
-                .collect(Collectors.averagingInt(Student::getAge));
+                .collect(Collectors.averagingInt(StatusStudent::getAge));
         System.out.println("avg = " + avg);
         Integer sum = stuList.stream()
-                .collect(Collectors.summingInt(Student::getAge));
+                .collect(Collectors.summingInt(StatusStudent::getAge));
         System.out.println("sum = " + sum);
-        Optional<Student> max = stuList.stream()
+        Optional<StatusStudent> max = stuList.stream()
                 .collect(Collectors.maxBy((s1, s2) -> Integer.compare(s1.getAge(), s2.getAge())));
         System.out.println(max.get());
         Optional<Integer> min = stuList.stream()
-                .map(Student::getAge)
+                .map(StatusStudent::getAge)
                 .collect(Collectors.minBy(Integer::compare));
         System.out.println(min.get());
 //        汇总一起收集
         IntSummaryStatistics iss = stuList.stream()
-                .collect(Collectors.summarizingInt(Student::getAge));
+                .collect(Collectors.summarizingInt(StatusStudent::getAge));
         System.out.println("iss.getAverage() = " + iss.getAverage());
         System.out.println("iss.getCount() = " + iss.getCount());
         System.out.println("iss.getMax() = " + iss.getMax());
@@ -310,14 +310,14 @@ public class Stream02Test {
      */
     @Test
     public void test10() {
-        Map<Student.Status, List<Student>> map1 = stuList.stream()
-                .collect(Collectors.groupingBy(Student::getStatus));
+        Map<StatusStudent.Status, List<StatusStudent>> map1 = stuList.stream()
+                .collect(Collectors.groupingBy(StatusStudent::getStatus));
 
-        Map<Student, List<Student>> map2 = stuList.stream()
-                .collect(Collectors.groupingBy(s -> new Student(s.getAge(), s.getName())));
+        Map<StatusStudent, List<StatusStudent>> map2 = stuList.stream()
+                .collect(Collectors.groupingBy(s -> new StatusStudent(s.getAge(), s.getName())));
         System.out.println("map1 = " + map1);
-        Map<Student.Status, Map<String, List<Student>>> map3 = stuList.stream()
-                .collect(Collectors.groupingBy(Student::getStatus, Collectors.groupingBy(s -> {
+        Map<StatusStudent.Status, Map<String, List<StatusStudent>>> map3 = stuList.stream()
+                .collect(Collectors.groupingBy(StatusStudent::getStatus, Collectors.groupingBy(s -> {
                     if (s.getAge() > 2) {
                         return "大于2";
                     } else if (s.getAge() < 4) {
@@ -334,7 +334,7 @@ public class Stream02Test {
      */
     @Test
     public void test11() {
-        Map<Boolean, List<Student>> map = stuList.stream()
+        Map<Boolean, List<StatusStudent>> map = stuList.stream()
                 .collect(Collectors.partitioningBy(s -> s.getAge() > 2));
         System.out.println("map = " + map);
     }
@@ -345,7 +345,7 @@ public class Stream02Test {
     @Test
     public void test12() {
         String str = stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .collect(Collectors.joining(",", "<", ">"));
         System.out.println("str = " + str);
     }

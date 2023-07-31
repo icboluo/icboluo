@@ -61,7 +61,7 @@
         <!--alibaba -->
         <alibaba.fastjson.verison>1.2.83</alibaba.fastjson.verison>
         <alibaba.dependencies.verison>2022.0.0.0-RC2</alibaba.dependencies.verison>
-        <nacos.verison>2022.0.0.0-RC2</nacos.verison>
+        <nacos.verison>2022.0.0.0</nacos.verison>
         <easyexcel.version>3.3.2</easyexcel.version>
         <!--校验器 下面的版本不要升级，会启动失败        -->
         <validation.api.version>2.0.1.Final</validation.api.version>

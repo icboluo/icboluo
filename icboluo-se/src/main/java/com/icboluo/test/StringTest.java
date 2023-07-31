@@ -1,6 +1,6 @@
 package com.icboluo.test;
 
-import com.icboluo.object.Student;
+import com.icboluo.object.StatusStudent;
 import lombok.NonNull;
 import org.junit.jupiter.api.Test;
 
@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StringTest {
-    List<Student> stus = Arrays.asList(
-            new Student(1, "one", Student.Status.BUSY),
-            new Student(2, "two", Student.Status.FREE),
-            new Student(3, "three", Student.Status.VOCATION),
-            new Student(4, "four", Student.Status.BUSY),
-            new Student(5, "five", Student.Status.FREE),
-            new Student(5, "five", Student.Status.FREE),
-            new Student(5, "five", Student.Status.FREE)
+    List<StatusStudent> stus = Arrays.asList(
+            new StatusStudent(1, "one", StatusStudent.Status.BUSY),
+            new StatusStudent(2, "two", StatusStudent.Status.FREE),
+            new StatusStudent(3, "three", StatusStudent.Status.VOCATION),
+            new StatusStudent(4, "four", StatusStudent.Status.BUSY),
+            new StatusStudent(5, "five", StatusStudent.Status.FREE),
+            new StatusStudent(5, "five", StatusStudent.Status.FREE),
+            new StatusStudent(5, "five", StatusStudent.Status.FREE)
     );
 
     @Test

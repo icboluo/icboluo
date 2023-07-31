@@ -2,16 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.ProvinceMapper">
 
-    <resultMap id="ProvinceMap" type="com.icboluo.entity.Province" >
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.Province">
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="proCode" column="pro_code" jdbcType="VARCHAR"/>
+        <result property="proName" column="pro_name" jdbcType="VARCHAR"/>
     </resultMap>
+
     <sql id="Base_Column_List">
-      id
+        pro_id, pro_code, pro_name
     </sql>
 
-        <!--通过实体作为筛选条件查询-->
-    <select id="queryAllByData" resultMap="ProvinceMap">
+    <!--查询指定数据-->
+    <select id="queryByAllField" resultMap="BaseResultMap">
         select
-         <include refid="Base_Column_List"/>
+          pro_id, pro_code, pro_name
         from province
         <where>
             <if test="proId != null">
@@ -26,21 +30,23 @@
         </where>
     </select>
 
-    <insert id="insertBatch" keyProperty="proId" useGeneratedKeys="true">
+              <insert id="insertBatch" keyProperty="proId" useGeneratedKeys="true">
         insert into province(pro_code, pro_name)
         values
-        <foreach collection="entities" item="entity" separator=",">
+        <foreach collection="list" item="entity" separator=",">
         (#{entity.proCode}, #{entity.proName})
         </foreach>
     </insert>
 
-    <insert id="insertOrUpdateBatch" keyProperty="proId" useGeneratedKeys="true">
+        <insert id="insertOrUpdateBatch" keyProperty="proId" useGeneratedKeys="true">
         insert into province(pro_code, pro_name)
         values
-        <foreach collection="entities" item="entity" separator=",">
+        <foreach collection="list" item="entity" separator=",">
             (#{entity.proCode}, #{entity.proName})
         </foreach>
         on duplicate key update
-         pro_code = values(pro_code) , pro_name = values(pro_name)     </insert>
+        pro_code = values(pro_code),
+        pro_name = values(pro_name)
+    </insert>
 </mapper>
 

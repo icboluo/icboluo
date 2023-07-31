@@ -13,6 +13,7 @@ public class RowDataListener extends ExcelListener<RowCO> {
      * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
      */
     public RowDataListener() {
+        super(null);
     }
 
     /**
@@ -34,10 +35,5 @@ public class RowDataListener extends ExcelListener<RowCO> {
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         System.out.println(JSON.toJSONString(super.getList()));
-    }
-
-    @Override
-    public int head() {
-        return 3;
     }
 }

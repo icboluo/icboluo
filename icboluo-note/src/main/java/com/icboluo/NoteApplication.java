@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * DataSourceAutoConfiguration.class 会自动查找
@@ -26,6 +27,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableConfigurationProperties({ReadExcelEntity.class, WriteExcelEntity.class})
 @EnableFeignClients
+@ComponentScan("com.icboluo.*") // 奇怪，为什么要加这个注解呢
 public class NoteApplication {
 
     public static void main(String[] args) {

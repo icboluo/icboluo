@@ -28,10 +28,8 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
 
     /**
      * 获取头行数，用于Excel分析
-     *
-     * @return 头行数
      */
-    protected Integer head;
+    public Integer head;
 
     protected ExcelListener(Class<T> clazz) {
         this(clazz, 1);

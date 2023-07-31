@@ -14,6 +14,7 @@ spring:
         #        enabled: false
         #        不把自己注册到注册中心的地址
         register-enabled: true
-  redis:
-    host: 127.0.0.1
-    port: 6379
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379

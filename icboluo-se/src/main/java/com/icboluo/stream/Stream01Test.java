@@ -1,6 +1,6 @@
 package com.icboluo.stream;
 
-import com.icboluo.object.Student;
+import com.icboluo.object.StatusStudent;
 import org.junit.jupiter.api.Test;
 
 import java.io.PrintStream;
@@ -33,7 +33,7 @@ public class Stream01Test {
 
     @Test
     public void test2() {
-        Student student = new Student();
+        StatusStudent student = new StatusStudent();
         Supplier<String> sup = () -> student.getName();
         String name = sup.get();
         System.out.println("name = " + name);
@@ -73,14 +73,14 @@ public class Stream01Test {
      */
     @Test
     public void test5() {
-        Supplier<Student> sup = () -> new Student();
+        Supplier<StatusStudent> sup = () -> new StatusStudent();
 
-        Supplier<Student> sup2 = Student::new;
-        Student student = sup2.get();
+        Supplier<StatusStudent> sup2 = StatusStudent::new;
+        StatusStudent student = sup2.get();
         System.out.println("student = " + student);
 
-        Function<Integer, Student> fun = x -> new Student(x, "1");
-        BiFunction<Integer, String, Student> bf = Student::new;
+        Function<Integer, StatusStudent> fun = x -> new StatusStudent(x, "1");
+        BiFunction<Integer, String, StatusStudent> bf = StatusStudent::new;
         System.out.println("bf.apply(1,zhu) = " + bf.apply(1, "zhu"));
     }
 

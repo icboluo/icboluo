@@ -16,12 +16,12 @@ import java.util.List;
 public interface ProvinceMapper extends MyBaseMapper<Province> {
 
     /**
-     * 通过实体作为筛选条件查询
+     * 查询指定数据
      *
-     * @param province 实例对象
+     * @param province 查询条件
      * @return 对象列表
      */
-    List<Province> queryAllByData(Province province);
+    List<Province> queryByAllField(Province province);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）

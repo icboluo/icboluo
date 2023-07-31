@@ -4,10 +4,13 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author icboluo
@@ -104,6 +107,10 @@ public class DateHelper {
                 .toLocalDateTime();
     }
 
+    public static LocalDateTime firstTime(LocalDate localDate) {
+        return localDate.atStartOfDay();
+    }
+
     /**
      * 这天的最后一秒，在数据库中因为数据库精度不够，会进一
      *
@@ -111,13 +118,7 @@ public class DateHelper {
      * @return 这天的最后时间
      */
     public static LocalDateTime finalTime(LocalDate localDate) {
-        LocalTime maxTime = LocalTime.MAX;
-        return LocalDateTime.of(localDate, maxTime);
-    }
-
-    public static LocalDateTime firstTime(LocalDate localDate) {
-        LocalTime minTime = LocalTime.MIN;
-        return LocalDateTime.of(localDate, minTime);
+        return LocalDateTime.of(localDate, LocalTime.MAX);
     }
 
     /**
@@ -132,5 +133,89 @@ public class DateHelper {
 
     public static LocalDateTime toDateTime(String str) {
         return LocalDateTime.parse(str, Y_M_D_H_M_S);
+    }
+
+    /**
+     * 此formatters需要修改默认支持的数据类型
+     */
+    private static List<DateTimeFormatter> formatters = Arrays.asList(Y_M_D_H_M_S, Y_M_D_H_M_S);
+
+    /**
+     * 把多种时间类型转换为LocalDateTime类型
+     *
+     * @param str 字符串时间
+     * @return 日期
+     */
+    public static LocalDateTime toDataTime(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                return LocalDateTime.parse(str, formatter);
+            } catch (Exception exception) {
+                // do nothing
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * 转换成年月字符串
+     *
+     * @param localDate 日期
+     * @return 年月字符串
+     */
+    public static String toYearMonth(LocalDate localDate) {
+        int year = localDate.getYear();
+        int month = localDate.getMonthValue();
+        return year + "-" + month;
+    }
+
+    /**
+     * <p>计算分钟时间间隔，取2位小数，计算过程取毫秒值
+     * <p>请自行维护开始时间小于结束时间
+     *
+     * @param start 开始日期
+     * @param end   结束日期
+     * @return 时间间隔
+     */
+    public static BigDecimal betweenMin(LocalDateTime start, LocalDateTime end) {
+        Duration duration = Duration.between(start, end);
+        long min = duration.toMinutes();
+        long mills = duration.toMillis();
+        // 毫秒占比+分钟数
+        return MathUtil.divide(mills - min * MIN, MIN).add(BigDecimal.valueOf(min));
+    }
+
+    /**
+     * 计算小时时间间隔，取2位小数，计算过程取毫秒值
+     *
+     * @param start 开始日期
+     * @param end   结束日期
+     * @return 时间间隔
+     */
+    public static BigDecimal betweenHours(LocalDateTime start, LocalDateTime end) {
+        Duration duration = Duration.between(start, end);
+        long hours = duration.toHours();
+        long mills = duration.toMillis();
+        // 毫秒占比+分钟数
+        return MathUtil.divide(mills - hours * HOUR, HOUR).add(BigDecimal.valueOf(hours));
+    }
+
+    /**
+     * 计算天时间间隔，取2位小数，计算过程取毫秒值
+     *
+     * @param start 开始日期
+     * @param end   结束日期
+     * @return 时间间隔
+     */
+    public static BigDecimal betweenDay(LocalDateTime start, LocalDateTime end) {
+        Duration duration = Duration.between(start, end);
+        long min = duration.toMinutes();
+        long mills = duration.toMillis();
+        // 毫秒占比+分钟数
+        return MathUtil.divide(mills - min * DAY, DAY).add(BigDecimal.valueOf(min));
     }
 }

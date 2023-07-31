@@ -14,4 +14,6 @@ public class Student {
     private Integer code;
 
     private String name;
+
+    private Integer age;
 }

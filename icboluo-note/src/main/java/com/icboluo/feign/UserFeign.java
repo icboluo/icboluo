@@ -20,6 +20,4 @@ public interface UserFeign {
      */
     @GetMapping("/user/getUserNameById")
     String getUserNameById(@RequestParam("id") Integer id);
-
-
 }

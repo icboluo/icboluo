@@ -68,7 +68,7 @@ public class TimeRecord {
             }
             preTime = curTime;
         }
-        String rate = MathUtil.dividePercentage(maxTime, allTime);
+        String rate = MathUtil.dividePercentage(maxTime, allTime) + "%";
         String msg = timeList.get(maxAfterIndex - 1).msg;
         if (msg != null && !"".equals(msg)) {
             log.warn("第{}个节点到下一个节点消耗时间最久为 {} 毫秒，功能是：{}，占总时间 {}", maxAfterIndex - 1, maxTime, msg, rate);

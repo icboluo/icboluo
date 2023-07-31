@@ -1,6 +1,6 @@
 package com.icboluo.stream;
 
-import com.icboluo.object.Student;
+import com.icboluo.object.StatusStudent;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -18,21 +18,21 @@ import java.util.stream.Stream;
  */
 public class Stream03Test {
 
-    List<Student> stuList1 = Arrays.asList(
-            new Student(1, "one", Student.Status.BUSY),
-            new Student(2, "two", Student.Status.FREE),
-            new Student(3, "three", Student.Status.VOCATION));
+    List<StatusStudent> stuList1 = Arrays.asList(
+            new StatusStudent(1, "one", StatusStudent.Status.BUSY),
+            new StatusStudent(2, "two", StatusStudent.Status.FREE),
+            new StatusStudent(3, "three", StatusStudent.Status.VOCATION));
 
-    List<Student> stuList2 = Arrays.asList(
-            new Student(4, "four", Student.Status.BUSY),
-            new Student(5, "five", Student.Status.FREE));
+    List<StatusStudent> stuList2 = Arrays.asList(
+            new StatusStudent(4, "four", StatusStudent.Status.BUSY),
+            new StatusStudent(5, "five", StatusStudent.Status.FREE));
 
     /**
      * 将多个list的数据加到一起
      */
     @Test
     public void test01() {
-        List<List<Student>> list = new ArrayList<>();
+        List<List<StatusStudent>> list = new ArrayList<>();
         list.add(stuList1);
         list.add(stuList2);
         list.stream().flatMap(Collection::stream).forEach(System.out::println);
@@ -46,12 +46,12 @@ public class Stream03Test {
      */
     @Test
     public void test2() {
-        List<Student> distinctList = stuList1.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(
+        List<StatusStudent> distinctList = stuList1.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(
                 // 利用 TreeSet 的排序去重构造函数来达到去重元素的目的
-                () -> new TreeSet<>(Comparator.comparing(Student::getName))), ArrayList::new));
+                () -> new TreeSet<>(Comparator.comparing(StatusStudent::getName))), ArrayList::new));
         System.out.println("distinctList = " + distinctList);
 
-        stuList1.stream().filter(distinctByKey(Student::getName)).forEach(System.out::println);
+        stuList1.stream().filter(distinctByKey(StatusStudent::getName)).forEach(System.out::println);
     }
 
     /**
@@ -85,9 +85,9 @@ public class Stream03Test {
         stuList1.stream().allMatch(stu -> stu.getAge() == 2);
 
         // Stream中ele不能为null；map key不能重复、不能为null；val不能为null
-        stuList1.stream().collect(Collectors.toMap(Student::getName, Student::getAge));
+        stuList1.stream().collect(Collectors.toMap(StatusStudent::getName, StatusStudent::getAge));
         // 第三个参数标注key重复情况下的处理逻辑，第四个参数是说map的结构，常用 LinkedHashMap 做排序map处理
-        stuList1.stream().collect(Collectors.toMap(Student::getName, Student::getAge, (k1, k2) -> k2, LinkedHashMap::new));
+        stuList1.stream().collect(Collectors.toMap(StatusStudent::getName, StatusStudent::getAge, (k1, k2) -> k2, LinkedHashMap::new));
     }
 
     /**
@@ -95,12 +95,12 @@ public class Stream03Test {
      */
     @Test
     public void test4() {
-        int[] arr1 = stuList1.stream().mapToInt(Student::getAge).toArray();
-        Integer[] arr2 = stuList1.stream().map(Student::getAge).toArray(Integer[]::new);
+        int[] arr1 = stuList1.stream().mapToInt(StatusStudent::getAge).toArray();
+        Integer[] arr2 = stuList1.stream().map(StatusStudent::getAge).toArray(Integer[]::new);
         System.out.println(Arrays.toString(arr1));
         System.out.println(Arrays.toString(arr2));
 
-        List<Integer> list = stuList1.stream().mapToInt(Student::getAge)
+        List<Integer> list = stuList1.stream().mapToInt(StatusStudent::getAge)
                 // 装箱，常用于IntStream无法排序的情况
                 .boxed().sorted((a, b) -> b - a).toList();
         System.out.println(list);
@@ -113,7 +113,7 @@ public class Stream03Test {
     public void test5() {
         Optional.ofNullable(stuList1)
                 .map(o -> o.get(0))
-                .map(Student::getAge)
+                .map(StatusStudent::getAge)
                 .filter(a -> a > 100000)
                 .map(StringBuffer::new)
                 .map(StringBuffer::toString)
@@ -126,12 +126,12 @@ public class Stream03Test {
     @Test
     public void test6() {
         Map<Integer, Integer> ageCountMap = stuList1.stream()
-                .collect(Collectors.groupingBy(Student::getAge, Collectors.summingInt(ele -> 1)));
+                .collect(Collectors.groupingBy(StatusStudent::getAge, Collectors.summingInt(ele -> 1)));
         System.out.println("ageCountMap = " + ageCountMap);
 
         // toMap 第4个参数用linked可以保证map的顺序
         LinkedHashMap<Integer, Integer> collect = stuList1.stream()
-                .collect(Collectors.toMap(Student::getAge, ele -> 1, Integer::sum, LinkedHashMap::new));
+                .collect(Collectors.toMap(StatusStudent::getAge, ele -> 1, Integer::sum, LinkedHashMap::new));
         System.out.println("collect = " + collect);
     }
 

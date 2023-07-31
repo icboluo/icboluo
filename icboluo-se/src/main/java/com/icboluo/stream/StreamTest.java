@@ -1,6 +1,6 @@
 package com.icboluo.stream;
 
-import com.icboluo.object.Student;
+import com.icboluo.object.StatusStudent;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.ObjectUtils;
 
@@ -18,12 +18,12 @@ import java.util.stream.IntStream;
  * @since 2023-03-12 12:53
  */
 public class StreamTest {
-    List<Student> stuList = Arrays.asList(
-            new Student(1, "one", Student.Status.BUSY),
-            new Student(2, "two", Student.Status.FREE),
-            new Student(3, "three", Student.Status.VOCATION),
-            new Student(4, "four", Student.Status.BUSY),
-            new Student(5, "five", Student.Status.FREE)
+    List<StatusStudent> stuList = Arrays.asList(
+            new StatusStudent(1, "one", StatusStudent.Status.BUSY),
+            new StatusStudent(2, "two", StatusStudent.Status.FREE),
+            new StatusStudent(3, "three", StatusStudent.Status.VOCATION),
+            new StatusStudent(4, "four", StatusStudent.Status.BUSY),
+            new StatusStudent(5, "five", StatusStudent.Status.FREE)
     );
 
     /**
@@ -72,7 +72,7 @@ public class StreamTest {
         System.out.println(limit3());
     }
 
-    public List<Student> limit3() {
+    public List<StatusStudent> limit3() {
         return null;
     }
 
@@ -96,7 +96,7 @@ public class StreamTest {
         System.out.println(sort());
     }
 
-    public List<Student> sort() {
+    public List<StatusStudent> sort() {
         return null;
     }
 
@@ -144,7 +144,7 @@ public class StreamTest {
         System.out.println(findFirstStatusIsFree());
     }
 
-    public Optional<Student> findFirstStatusIsFree() {
+    public Optional<StatusStudent> findFirstStatusIsFree() {
         return null;
     }
 
@@ -168,7 +168,7 @@ public class StreamTest {
         System.out.println(groupByStatus());
     }
 
-    public Map<Student.Status, List<Student>> groupByStatus() {
+    public Map<StatusStudent.Status, List<StatusStudent>> groupByStatus() {
         return null;
     }
 
@@ -180,7 +180,7 @@ public class StreamTest {
         System.out.println(groupByAge());
     }
 
-    public Map<Boolean, List<Student>> groupByAge() {
+    public Map<Boolean, List<StatusStudent>> groupByAge() {
         return null;
     }
 
@@ -204,7 +204,7 @@ public class StreamTest {
         System.out.println(groupByStatusName());
     }
 
-    public Map<Student.Status, Map<String, List<Student>>> groupByStatusName() {
+    public Map<StatusStudent.Status, Map<String, List<StatusStudent>>> groupByStatusName() {
         return null;
     }
 
@@ -233,8 +233,8 @@ public class StreamTest {
 
     public String getLinkedMethod() {
         // 请使用该list
-        List<Student> list = new ArrayList<>(stuList);
-        list.add(new Student(4, null, Student.Status.BUSY));
+        List<StatusStudent> list = new ArrayList<>(stuList);
+        list.add(new StatusStudent(4, null, StatusStudent.Status.BUSY));
         return null;
     }
 
@@ -271,32 +271,32 @@ public class StreamTest {
     }
 
     public List<String> getAllStuNameAns() {
-        return stuList.stream().map(Student::getName).toList();
+        return stuList.stream().map(StatusStudent::getName).toList();
     }
 
     public Integer busyStuCountAns() {
-        return (int) stuList.stream().filter(stu -> Student.Status.BUSY.equals(stu.getStatus())).count();
+        return (int) stuList.stream().filter(stu -> StatusStudent.Status.BUSY.equals(stu.getStatus())).count();
     }
 
     public Integer countStatusAns() {
-        return (int) stuList.stream().map(Student::getStatus).distinct().count();
+        return (int) stuList.stream().map(StatusStudent::getStatus).distinct().count();
     }
 
-    public List<Student> limit3Ans() {
+    public List<StatusStudent> limit3Ans() {
         return stuList.stream().limit(3).toList();
     }
 
     public List<String> toUpperCaseAns() {
-        return stuList.stream().map(Student::getName).map(String::toUpperCase).toList();
+        return stuList.stream().map(StatusStudent::getName).map(String::toUpperCase).toList();
     }
 
-    public List<Student> sortAns() {
+    public List<StatusStudent> sortAns() {
         return stuList.stream().sorted((a, b) -> b.getAge() - a.getAge()).toList();
     }
 
     public List<Character> containCharAns() {
         return stuList.stream()
-                .map(Student::getName)
+                .map(StatusStudent::getName)
                 .map(str -> IntStream.range(0, str.length()).mapToObj(str::charAt).toList())
                 .flatMap(Collection::stream)
                 .distinct()
@@ -305,7 +305,7 @@ public class StreamTest {
 
     public int[] ageMaxAndMinAns() {
         int[] arr = new int[3];
-        IntSummaryStatistics summary = stuList.stream().collect(Collectors.summarizingInt(Student::getAge));
+        IntSummaryStatistics summary = stuList.stream().collect(Collectors.summarizingInt(StatusStudent::getAge));
         arr[0] = summary.getMin();
         arr[1] = summary.getMax();
         arr[2] = (int) summary.getCount();
@@ -316,44 +316,44 @@ public class StreamTest {
         return stuList.stream().anyMatch(stu -> stu.getAge() < 3);
     }
 
-    public Optional<Student> findFirstStatusIsFreeAns() {
-        return stuList.stream().filter(stu -> stu.getStatus().equals(Student.Status.FREE)).findFirst();
+    public Optional<StatusStudent> findFirstStatusIsFreeAns() {
+        return stuList.stream().filter(stu -> stu.getStatus().equals(StatusStudent.Status.FREE)).findFirst();
     }
 
     public Integer ageMultiplyAns() {
-        return stuList.stream().map(Student::getAge).reduce(1, (a, b) -> a * b);
+        return stuList.stream().map(StatusStudent::getAge).reduce(1, (a, b) -> a * b);
     }
 
-    public Map<Student.Status, List<Student>> groupByStatusAns() {
-        return stuList.stream().collect(Collectors.groupingBy(Student::getStatus));
+    public Map<StatusStudent.Status, List<StatusStudent>> groupByStatusAns() {
+        return stuList.stream().collect(Collectors.groupingBy(StatusStudent::getStatus));
     }
 
-    public Map<Boolean, List<Student>> groupByAgeAns() {
+    public Map<Boolean, List<StatusStudent>> groupByAgeAns() {
         return stuList.stream().collect(Collectors.partitioningBy(stu -> stu.getAge() > 3));
     }
 
     public String joinNameAns() {
-        return stuList.stream().map(Student::getName).collect(Collectors.joining(";"));
+        return stuList.stream().map(StatusStudent::getName).collect(Collectors.joining(";"));
     }
 
-    public Map<Student.Status, Map<String, List<Student>>> groupByStatusNameAns() {
+    public Map<StatusStudent.Status, Map<String, List<StatusStudent>>> groupByStatusNameAns() {
         return stuList.stream()
-                .collect(Collectors.groupingBy(Student::getStatus,
+                .collect(Collectors.groupingBy(StatusStudent::getStatus,
                         Collectors.collectingAndThen(Collectors.toList(), li -> li.stream()
-                                .collect(Collectors.groupingBy(Student::getName)))));
+                                .collect(Collectors.groupingBy(StatusStudent::getName)))));
     }
 
     public Map<String, Integer> eleCountMapAns() {
-        return stuList.stream().map(Student::getName).collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(ele -> 1)));
+        return stuList.stream().map(StatusStudent::getName).collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(ele -> 1)));
     }
 
     public String getLinkedMethodAns() {
-        List<Student> list = new ArrayList<>(stuList);
-        list.add(new Student(4, null, Student.Status.BUSY));
+        List<StatusStudent> list = new ArrayList<>(stuList);
+        list.add(new StatusStudent(4, null, StatusStudent.Status.BUSY));
         return list.stream()
                 .filter(stu -> stu.getAge() > 3)
-                .filter(stu -> stu.getStatus().equals(Student.Status.BUSY))
-                .map(Student::getName)
+                .filter(stu -> stu.getStatus().equals(StatusStudent.Status.BUSY))
+                .map(StatusStudent::getName)
                 .filter(name -> name.startsWith("f"))
                 .map(String::toUpperCase)
                 .findFirst()
