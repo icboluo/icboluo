@@ -1,6 +1,5 @@
 package com.icboluo.producer;
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.util.IcBoLuoException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +16,6 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/user")
-@ResponseResult
 @Slf4j
 @Validated
 public class UserProducer {

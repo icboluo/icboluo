@@ -1,6 +1,5 @@
 package com.icboluo.controller;
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.service.AsyncService;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.ThreadUtil;
@@ -27,7 +26,6 @@ import java.util.concurrent.Executor;
 @RestController
 @RequestMapping("/async")
 @Slf4j
-@ResponseResult
 public class AsyncController {
 
     @Resource

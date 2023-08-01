@@ -1,6 +1,5 @@
 package com.icboluo.controller;
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.object.vo.FundInfoVO;
 import com.icboluo.service.FundInfoService;
 import jakarta.annotation.Resource;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/fundInfo")
-@ResponseResult
 public class FundInfoController {
     /**
      * 服务对象

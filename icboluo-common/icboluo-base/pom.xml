@@ -42,6 +42,7 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+            <!--            Optional标签代表依赖不会传递；-->
             <optional>true</optional>
         </dependency>
     </dependencies>

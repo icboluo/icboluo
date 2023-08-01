@@ -1,7 +1,6 @@
 package com.icboluo.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.entity.CultivationCareer;
 import com.icboluo.service.CultivationCareerService;
 import jakarta.annotation.Resource;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/cultivationCareer")
-@ResponseResult
 public class CultivationCareerController {
 
     @Resource

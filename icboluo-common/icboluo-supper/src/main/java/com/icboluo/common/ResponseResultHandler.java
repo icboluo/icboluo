@@ -1,21 +1,16 @@
 package com.icboluo.common;
 
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 
@@ -28,15 +23,16 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (ObjectUtils.isEmpty(sra)) {
-            return false;
-        }
-        HttpServletRequest request = sra.getRequest();
-        Object attribute = request.getAttribute(ResponseResultInterceptor.resAnno);
-        ResponseResult responseResultAnn = (ResponseResult) attribute;
-        request.removeAttribute(ResponseResultInterceptor.resAnno);
-        return responseResultAnn != null;
+//        ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        if (ObjectUtils.isEmpty(sra)) {
+//            return false;
+//        }
+//        HttpServletRequest request = sra.getRequest();
+//        Object attribute = request.getAttribute(ResponseResultInterceptor.resAnno);
+//        ResponseResult responseResultAnn = (ResponseResult) attribute;
+//        request.removeAttribute(ResponseResultInterceptor.resAnno);
+//        return responseResultAnn != null;
+        return true;
     }
 
     @Override

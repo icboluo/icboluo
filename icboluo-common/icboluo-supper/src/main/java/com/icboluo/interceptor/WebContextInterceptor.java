@@ -11,8 +11,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -23,13 +21,6 @@ import java.util.Optional;
  */
 @Slf4j
 public class WebContextInterceptor implements HandlerInterceptor {
-
-    private final List<String> exclude = new ArrayList<>();
-
-    {
-        exclude.add("aController.init");
-        exclude.add("bController.init");
-    }
 
     static {
         LocaleContextHolder.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);

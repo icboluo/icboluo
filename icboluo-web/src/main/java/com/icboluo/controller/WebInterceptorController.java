@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
  */
 @RestController
 @RequestMapping("webInterceptor")
-@ResponseResult
 //@WebContextAnno(service = WebContextEnum.WEB)
 public class WebInterceptorController {
 

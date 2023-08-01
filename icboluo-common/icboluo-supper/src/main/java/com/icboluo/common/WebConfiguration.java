@@ -42,7 +42,6 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 压根就不需要注入
-        registry.addInterceptor(new ResponseResultInterceptor());
         registry.addInterceptor(getAuthInterceptor());
 
         List<String> excludeList = excludePathPatterns();

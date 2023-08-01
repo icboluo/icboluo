@@ -1,6 +1,5 @@
 package com.icboluo.controller;
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.common.redis.RedisString;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
@@ -15,7 +14,6 @@ import java.util.concurrent.TimeUnit;
  * @author icboluo
  */
 @RestController
-@ResponseResult
 public class RedisController {
 
     @Resource

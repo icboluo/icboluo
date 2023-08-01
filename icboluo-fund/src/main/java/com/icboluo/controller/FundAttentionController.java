@@ -2,7 +2,6 @@ package com.icboluo.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
@@ -21,7 +20,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/fundAttention")
-@ResponseResult
 public class FundAttentionController {
 
     @Resource

@@ -1,6 +1,5 @@
 package com.icboluo.controller;
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.entity.Province;
 import com.icboluo.service.ProvinceService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/province")
-@ResponseResult
 public class ProvinceController {
     /**
      * 服务对象

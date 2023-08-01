@@ -1,6 +1,5 @@
 package com.icboluo.controller;
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.entity.Monster;
 import com.icboluo.pojo.PlayerVO;
 import com.icboluo.service.MonsterService;
@@ -20,7 +19,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/player")
-@ResponseResult
 public class PlayerController {
     /**
      * 服务对象

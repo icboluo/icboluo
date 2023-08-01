@@ -1,7 +1,6 @@
 package com.icboluo.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
@@ -26,7 +25,6 @@ import java.time.LocalDate;
  */
 @RestController
 @RequestMapping("/fundData")
-@ResponseResult
 public class FundDataController {
 
     @Resource

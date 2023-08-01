@@ -1,6 +1,5 @@
 package com.icboluo.controller;
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.feign.UserFeign;
 import com.icboluo.service.UserService;
 import com.icboluo.util.response.R;
@@ -22,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户")
-@ResponseResult
 @Slf4j
 public class UserController {
 

@@ -1,6 +1,5 @@
 package com.icboluo.controller;
 
-import com.icboluo.annotation.ResponseResult;
 import com.icboluo.entity.note.TimeNoteDO;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.mapper.TimeNoteMapper;
@@ -31,7 +30,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/timeNote")
 @Api(tags = "笔记本")
-@ResponseResult
 public class TimeNoteController {
     @Resource
     private TimeNoteMapper timeNoteMapper;
