@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 2022-02-26 19:43
  */
 @Slf4j
-public class AsyncTaskDecorator implements TaskDecorator {
+public class ThreadTaskDecorator implements TaskDecorator {
 
     @Override
     public Runnable decorate(@NonNull Runnable runnable) {

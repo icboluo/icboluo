@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author icboluo
  * @since 2020-08-27 19:21
  */
-@FeignClient("icboluo-user")
+@FeignClient(value = "icboluo-user",url = "http://127.0.0.1:7010")
 public interface UserFeign {
     /**
      * feign传参需要加上@RequestParam注解，否则对方服务无法识别参数

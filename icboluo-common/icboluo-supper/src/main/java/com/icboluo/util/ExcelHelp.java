@@ -1,8 +1,17 @@
 package com.icboluo.util;
 
+import com.alibaba.excel.support.ExcelTypeEnum;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author icboluo
@@ -10,6 +19,7 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExcelHelp {
+
     /**
      * Excel导出设置Content
      *
@@ -40,5 +50,49 @@ public class ExcelHelp {
             sum += ch - 'A' + 1;
         }
         return sum;
+    }
+
+    /**
+     * 文件名称校验 次方法应该属于FileUtil
+     *
+     * @param mf 上传文件
+     */
+    public static void xlsAndXlsxValid(MultipartFile mf) throws IOException {
+        String fileName = mf.getOriginalFilename();
+        if (fileName == null || !(fileName.endsWith(ExcelTypeEnum.XLSX.getValue()) || fileName.endsWith(ExcelTypeEnum.XLS.getValue()))) {
+            throw new IcBoLuoI18nException("{}.not.excel", new Object[]{fileName});
+        }
+        try (Workbook workbook = WorkbookFactory.create(mf.getInputStream())) {
+            boolean b1 = workbook instanceof XSSFWorkbook && Objects.requireNonNull(mf.getOriginalFilename()).endsWith(ExcelTypeEnum.XLS.getValue());
+            boolean b2 = workbook instanceof HSSFWorkbook && Objects.requireNonNull(mf.getOriginalFilename()).endsWith(ExcelTypeEnum.XLSX.getValue());
+            if (b1 || b2) {
+                throw new IcBoLuoI18nException("excel.suffix.not.match");
+            }
+        }
+    }
+
+    /**
+     * 校验文件大小
+     *
+     * @param mf 文件
+     */
+    public static void validateFile(MultipartFile mf) {
+        validateFile(mf, FileHelper.DEFAULT_MAX_SIZE);
+    }
+
+    /**
+     * 校验文件大小
+     *
+     * @param mf   文件
+     * @param size 文件限制大小
+     */
+    private static void validateFile(MultipartFile mf, long size) {
+        if (mf == null || mf.isEmpty()) {
+            throw new IcBoLuoI18nException("file.is.empty");
+        }
+        // MultipartFile.getSize 的单位是字节
+        if (mf.getSize() > size) {
+            throw new IcBoLuoI18nException("file.too.large");
+        }
     }
 }

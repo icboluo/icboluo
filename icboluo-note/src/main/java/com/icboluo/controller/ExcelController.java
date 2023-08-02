@@ -121,7 +121,7 @@ public class ExcelController {
 
     @GetMapping("/exportExcel")
     public void exportExcel() {
-        EasyExcel.write(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "student.xlsx").head(StudentBO.class).build();
+        EasyExcel.write(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "color.xlsx").head(StudentBO.class).build();
     }
 
     /**
@@ -130,9 +130,10 @@ public class ExcelController {
     @GetMapping("customizationExport")
     public void customizationExport() throws IllegalAccessException {
         String fileName = "title_customization_" + System.currentTimeMillis() + ".xlsx";
+        File file = new File(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "dir/" + fileName);
         ExcelExportResolve<StudentVO> resolve = new ExcelExportResolve<>(StudentVO.class);
         resolve.setSortFieldName(Arrays.asList("age", null, "name", "code", "id"));
-        EasyExcelFactory.write(fileName)
+        EasyExcelFactory.write(file)
                 // 实测这个自定义列宽最大值太宽了，需要修改为 100|150
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
                 .head(resolve.head())
@@ -142,15 +143,18 @@ public class ExcelController {
                                 .map(StudentVO::new).toList()));
     }
 
-    @GetMapping("/writeStudentExcel")
-    public void writeStudentExcel() {
+    /**
+     * 打印所有的Excel定义好的颜色
+     */
+    @GetMapping("/writeColor")
+    public void writeColor() {
         writeColor(EnumSet.allOf(HSSFColor.HSSFColorPredefined.class), HSSFColor.HSSFColorPredefined::getIndex, 3);
         writeColor(EnumSet.allOf(IndexedColors.class), IndexedColors::getIndex, 12);
     }
 
     @SneakyThrows
     private <E extends Enum<E>> void writeColor(EnumSet<E> allOf, Function<E, Short> getIndex, int firstRow) {
-        File file = new File(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "dir/student.xlsx");
+        File file = new File(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "dir/color.xlsx");
         int setSize = allOf.size();
         int rowSize = 8;
         int rowNum = (setSize + rowSize - 1) / rowSize;

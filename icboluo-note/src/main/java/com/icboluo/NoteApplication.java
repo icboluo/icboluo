@@ -4,11 +4,12 @@ import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 
 /**
  * DataSourceAutoConfiguration.class 会自动查找
@@ -26,8 +27,8 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("com.icboluo.mapper")
 @EnableDiscoveryClient
 @EnableConfigurationProperties({ReadExcelEntity.class, WriteExcelEntity.class})
-@EnableFeignClients
-@ComponentScan("com.icboluo") // 奇怪，为什么要加这个注解呢
+@EnableFeignClients("com.icboluo.feign")
+@ImportAutoConfiguration(FeignAutoConfiguration.class)
 public class NoteApplication {
 
     public static void main(String[] args) {

@@ -40,4 +40,14 @@ public class IcBoLuoI18nException extends RuntimeException {
         super(msg);
         this.status = status;
     }
+
+    public IcBoLuoI18nException(String msg, Object[] args) {
+        super(msg);
+        this.status = 500;
+    }
+
+    public IcBoLuoI18nException(String msg, Exception ex) {
+        super(msg);
+        this.status = 500;
+    }
 }
