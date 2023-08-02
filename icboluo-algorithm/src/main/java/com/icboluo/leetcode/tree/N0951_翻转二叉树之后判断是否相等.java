@@ -28,7 +28,7 @@ class N0951_翻转二叉树之后判断是否相等 {
         List<TreeNode> list2 = new ArrayList<>();
         dfs(root1, list1);
         dfs(root2, list2);
-        // TODO list的equals原理是比较里面是元素嘛？ FIXME ERROR
+        // list的equals原理是比较里面是元素嘛？应该是的，但是这个里面没有重写toString
         return list1.stream().map(treeNode -> treeNode.val).toList().equals(list2.stream().map(treeNode -> treeNode.val).toList());
     }
 

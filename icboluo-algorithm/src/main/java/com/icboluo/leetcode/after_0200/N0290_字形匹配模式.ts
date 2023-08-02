@@ -1,21 +1,31 @@
-// 字形
+// 0290 字形
 function wordPattern(pattern: string, s: string): boolean {
-    let arr: string[] = []
-    for (let i = 0; i < 26; i++) {
-        arr[i] = ""
-    }
-    const strArr = s.split(" ");
+    const strArr = s.split(" ")
     if (pattern.length != strArr.length) {
-        return false
+        return false;
     }
+    // @ts-ignore
+    let map: Map<String, String> = new Map();
     for (let i = 0; i < pattern.length; i++) {
-        if (arr[pattern.charCodeAt(i) - 'a'.charCodeAt(0)] == "") {
-            arr[pattern.charCodeAt(i) - 'a'.charCodeAt(0)] = strArr[i];
-        } else if (arr[pattern.charCodeAt(i) - 'a'.charCodeAt(0)] != strArr[i]) {
-            return false
+        const cur = pattern.charAt(i);
+        // 这块需要增加一个value值不重复的判断
+        if (!map[cur]) {
+            for (let value of [...map.values()]) {
+                if (cur == value) {
+                    return false;
+                }
+            }
+            // map的put要使用set，不能使用[]
+            map.set(cur, strArr[i]);
+        } else if (map[cur] != strArr[i]) {
+            return false;
         }
     }
     return true;
 }
+
 // FIXME ERROR
-console.log(wordPattern('abba','dog dog dog dog'))
+console.log(wordPattern('abba', 'dog cat cat dog'))
+console.log(wordPattern('abba', 'dog cat cat fish'))
+console.log(wordPattern('aaaa', 'dog cat cat dog'))
+console.log(wordPattern('abba', 'dog dog dog dog'))
