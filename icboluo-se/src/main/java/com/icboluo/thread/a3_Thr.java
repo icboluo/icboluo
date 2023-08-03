@@ -1,6 +1,6 @@
 package com.icboluo.thread;
 
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 
 /**
  * @author icboluo
@@ -9,6 +9,6 @@ import com.icboluo.util.ThreadUtil;
  class a3_Thr extends Thread {
     @Override
     public void run() {
-        ThreadUtil.sleep5s();
+        SimpleThreadUtil.sleep5s();
     }
 }

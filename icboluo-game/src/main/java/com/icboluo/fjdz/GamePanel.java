@@ -1,6 +1,6 @@
 package com.icboluo.fjdz;
 
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -176,7 +176,7 @@ public class GamePanel extends JPanel implements MouseMotionListener {
                 }
             }
 
-            ThreadUtil.sleep(5L);
+            SimpleThreadUtil.sleep(5L);
 
             if (hero.getNumber() > 1000) {
                 break;

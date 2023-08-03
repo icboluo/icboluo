@@ -6,7 +6,7 @@ import com.icboluo.plane2.BaseClass.MyPlane;
 import com.icboluo.plane2.BaseClass.Prop;
 import com.icboluo.plane2.UI.GameStart;
 import com.icboluo.util.RandomHelper;
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 
 import java.util.List;
 
@@ -83,7 +83,7 @@ public class CrashThread implements Runnable {
             crashPropList.forEach(player::eatProp);
             myPropList.removeAll(crashPropList);
 
-            ThreadUtil.sleep(5);
+            SimpleThreadUtil.sleep(5);
         }
         GameStart.gameOver();
     }

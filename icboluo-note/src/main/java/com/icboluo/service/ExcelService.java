@@ -22,7 +22,7 @@ import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.FileHelper;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.listenter.HeadDataListener;
-import com.icboluo.util.listenter.RowDataListener;
+import com.icboluo.util.listenter.RowDataListenerOld;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -272,7 +272,7 @@ public class ExcelService {
         ExcelReader er = EasyExcelFactory.read(excelPath).build();
         List<ReadSheet> readSheets = er.excelExecutor().sheetList();
         for (int i = 0; i < readSheets.size(); i++) {
-            RowDataListener listener = new RowDataListener();
+            RowDataListenerOld listener = new RowDataListenerOld();
             ReadSheet rs = EasyExcelFactory
                     .readSheet(i)
                     .head(RowCO.class)
@@ -334,8 +334,5 @@ public class ExcelService {
                 log.error("{}不匹配", cell);
             }
         }
-    }
-
-    public void write2(String database, String tableName) {
     }
 }

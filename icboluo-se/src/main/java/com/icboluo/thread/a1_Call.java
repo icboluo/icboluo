@@ -1,6 +1,6 @@
 package com.icboluo.thread;
 
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -15,7 +15,7 @@ import java.util.concurrent.FutureTask;
 class a1_Call implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
-        ThreadUtil.sleep5s();
+        SimpleThreadUtil.sleep5s();
         return 1;
     }
 

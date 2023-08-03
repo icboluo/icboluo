@@ -9,39 +9,22 @@ import java.util.List;
 
 /**
  * @author icboluo
- * @since 2022-04-05 18:58
+ * @since 2023-08-03 21:08
  */
-@Getter
-public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
+public class ExcelListener<T> extends AnalysisEventListener<T> {
 
     /**
      * 数据列表
      */
     @Getter
     private final List<T> list = new ArrayList<>();
-
-
-    /**
-     * 解析类型
-     */
-    protected final Class<T> clazz;
-
-    /**
-     * 获取头行数，用于Excel分析
-     */
-    public Integer head;
-
-    protected ExcelListener(Class<T> clazz) {
-        this(clazz, 1);
-    }
-
-    protected ExcelListener(Class<T> clazz, Integer head) {
-        this.clazz = clazz;
-        this.head = head;
+    @Override
+    public void invoke(T data, AnalysisContext context) {
+        list.add(data);
     }
 
     @Override
-    public void invoke(T data, AnalysisContext analysisContext) {
-        list.add(data);
+    public void doAfterAllAnalysed(AnalysisContext context) {
+        // Not need impl Method
     }
 }

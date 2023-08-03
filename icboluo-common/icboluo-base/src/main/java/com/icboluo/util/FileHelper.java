@@ -22,6 +22,7 @@ public class FileHelper {
      *
      * @param file 要删除的文件
      */
+    @Deprecated
     public static void delete(File file) {
 /*        import org.apache.commons.io.FileUtils;
         FileUtils.deleteQuietly(file);*/
@@ -69,8 +70,4 @@ public class FileHelper {
         }
         return is;
     }
-
-
-
-
 }

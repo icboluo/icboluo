@@ -1,6 +1,6 @@
 package com.icboluo.plane2.BaseClass;
 
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 import lombok.Data;
 
 import javax.imageio.ImageIO;
@@ -126,7 +126,7 @@ public class MyPlane extends FlyObject implements Runnable {
                 default:
                     break;
             }
-            ThreadUtil.sleep(300);
+            SimpleThreadUtil.sleep(300);
         }
     }
 

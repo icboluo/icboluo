@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ThreadUtil {
+public class SimpleThreadUtil {
 
     public static void sleep(long i) {
         try {

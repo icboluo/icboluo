@@ -1,6 +1,6 @@
-package com.icboluo.component;
+package com.icboluo.configuration;
 
-import com.icboluo.dataobject.Student;
+import com.icboluo.object.StatusStudent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class StudentConfig {
     @Bean
-    public Student student() {
+    public StatusStudent student() {
         log.warn("student config bean is init");
-        return new Student(18, "xiao ming");
+        return new StatusStudent(18, "xiao ming");
     }
 }

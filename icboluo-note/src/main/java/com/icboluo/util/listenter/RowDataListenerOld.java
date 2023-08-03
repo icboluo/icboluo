@@ -1,24 +1,19 @@
 package com.icboluo.util.listenter;
 
 import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
 import com.icboluo.object.client.RowCO;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author lp
  */
-public class NoListener extends AnalysisEventListener<RowCO> {
-
-    public List<RowCO> list = new ArrayList<>();
+public class RowDataListenerOld extends OldExcelListener<RowCO> {
 
     /**
      * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
      */
-    public NoListener() {
+    public RowDataListenerOld() {
+        super(null);
     }
 
     /**
@@ -29,7 +24,7 @@ public class NoListener extends AnalysisEventListener<RowCO> {
      */
     @Override
     public void invoke(RowCO data, AnalysisContext context) {
-        list.add(data);
+        super.getList().add(data);
     }
 
     /**
@@ -39,6 +34,6 @@ public class NoListener extends AnalysisEventListener<RowCO> {
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        System.out.println(JSON.toJSONString(list));
+        System.out.println(JSON.toJSONString(super.getList()));
     }
 }

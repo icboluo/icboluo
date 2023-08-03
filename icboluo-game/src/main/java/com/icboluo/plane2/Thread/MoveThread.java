@@ -1,7 +1,7 @@
 package com.icboluo.plane2.Thread;
 
 import com.icboluo.plane2.BaseClass.*;
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class MoveThread implements Runnable {
                 myPlane.moveY();
             }
 
-            ThreadUtil.sleep(30);
+            SimpleThreadUtil.sleep(30);
         }
     }
 }

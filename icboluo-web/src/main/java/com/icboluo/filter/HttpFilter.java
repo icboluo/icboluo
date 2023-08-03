@@ -22,7 +22,7 @@ public class HttpFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        // log.warn("in filter");
+        log.warn("in filter");
         filterChain.doFilter(request, response);
     }
 

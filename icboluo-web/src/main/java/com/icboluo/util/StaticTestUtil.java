@@ -1,6 +1,6 @@
 package com.icboluo.util;
 
-import com.icboluo.dataobject.Student;
+import com.icboluo.object.StatusStudent;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class StaticTestUtil {
 
-    private static Student student;
+    private static StatusStudent student;
 
     @Autowired
-    private Student studentConfig;
+    private StatusStudent studentConfig;
 
     static {
         log.warn("静态代码块加载了");
-        student = new Student();
+        student = new StatusStudent();
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.icboluo.network;
 
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class Client {
         System.out.println("client start");
         while (!status) {
             connect();
-            ThreadUtil.sleep(3000L);
+            SimpleThreadUtil.sleep(3000L);
         }
     }
 
@@ -47,7 +47,7 @@ public class Client {
         while (!status) {
             System.out.println("正在重新连接");
             connect();
-            ThreadUtil.sleep(3000L);
+            SimpleThreadUtil.sleep(3000L);
         }
     }
 
@@ -86,7 +86,7 @@ public class Client {
             Scanner sc = new Scanner(System.in);
             try {
                 while (true) {
-                    ThreadUtil.sleep(5000L);
+                    SimpleThreadUtil.sleep(5000L);
                     Map<String, String> map = new HashMap<>();
                     map.put("type", "heart");
                     map.put("msg", "心跳包");

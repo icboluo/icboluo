@@ -4,7 +4,7 @@ import com.icboluo.plane2.BaseClass.BackGround;
 import com.icboluo.plane2.BaseClass.MyPlane;
 import com.icboluo.plane2.GameBusiness;
 import com.icboluo.plane2.PlanConstant;
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -61,7 +61,7 @@ public class DrawThread implements Runnable {
             }
 
             GameBusiness.graphics.drawImage(bufferedImage, 0, 0, null);
-            ThreadUtil.sleep(30);
+            SimpleThreadUtil.sleep(30);
         }
     }
 }

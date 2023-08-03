@@ -10,9 +10,9 @@ import com.icboluo.object.view.FiledResultVO;
 import com.icboluo.object.view.NoteVO;
 import com.icboluo.service.NoteService;
 import com.icboluo.util.BeanHelper;
+import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
-import com.icboluo.util.validate.TimeNoteValidate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
@@ -35,8 +35,6 @@ public class TimeNoteController {
     private TimeNoteMapper timeNoteMapper;
     @Resource
     private NoteService noteService;
-    @Resource
-    private TimeNoteValidate timeNoteValidate;
 
 
     @GetMapping("/init")
@@ -64,9 +62,15 @@ public class TimeNoteController {
     @GetMapping("/update")
     @ApiOperation(value = "更新数据")
     public void update(TimeNoteCO client, String type) {
-        timeNoteValidate.validate(client);
+        validate(client);
         int id = client.getId();
         noteService.update(client, id, type);
+    }
+
+    public void validate(TimeNoteCO obj) {
+        if (BeanHelper.allIsNull(obj.getProblem(), obj.getResult(), obj.getBelongToScope())) {
+            throw new IcBoLuoException();
+        }
     }
 
     @GetMapping("/onlyUpdateTime")

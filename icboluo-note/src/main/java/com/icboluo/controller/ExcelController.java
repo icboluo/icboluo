@@ -1,25 +1,21 @@
 package com.icboluo.controller;
 
 
-import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.constant.FileRelativePathPre;
-import com.icboluo.object.business.StudentBO;
-import com.icboluo.object.client.RowCO;
-import com.icboluo.object.excel.StudentExcel;
 import com.icboluo.object.view.StudentVO;
 import com.icboluo.service.ExcelService;
 import com.icboluo.service.StudentService;
 import com.icboluo.service.impl.StudentServiceImpl;
 import com.icboluo.util.ExcelExportResolve;
+import com.icboluo.util.ExcelHelp;
 import com.icboluo.util.ExcelHelper;
-import com.icboluo.util.listenter.RowDataListener;
-import com.icboluo.util.listenter.StudentListener;
-import com.icboluo.util.response.R;
-import com.icboluo.util.response.Response;
+import com.icboluo.util.listenter.ValidHeadBodyListener;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
@@ -37,8 +33,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -55,7 +56,7 @@ public class ExcelController {
     @Resource
     private WriteExcelEntity writeExcelEntity;
 
-    private StudentService studentService = new StudentServiceImpl();
+    private final StudentService studentService = new StudentServiceImpl();
     /**
      * 将配置文件中的属性读取出来
      */
@@ -64,64 +65,46 @@ public class ExcelController {
 
     @GetMapping("/read")
     @ApiOperation(value = "将数据库excel文档读成建表语句")
-    public Response read() {
+    public void read() {
         excelService.readDbDocument(excelPath, readExcelEntity.getSheetName());
-        return R.correct();
     }
 
     @GetMapping("/write")
     @ApiOperation(value = "将数据库写成excel文档")
-    public Response write() {
+    public void write() {
         excelService.write(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
-        return R.correct();
     }
 
-    @GetMapping("/write2")
-    @ApiOperation(value = "将数据库写成excel文档")
-    public Response write2() {
-        excelService.write2(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
-        return R.correct();
-    }
-
-    @GetMapping("www")
-    public void www(HttpServletResponse response) {
-        List<StudentBO> data = new ArrayList<>();
-        StudentBO student = new StudentBO();
-        student.setAge(18);
-        student.setId("22");
-        data.add(student);
+    @GetMapping("customizationTitleExport")
+    public void customizationTitleExport(HttpServletResponse response) {
+        List<StudentVO> students = studentService.generateList(10).stream().map(StudentVO::new).toList();
         List<String> strings = Arrays.asList("name", "id", "age");
-        ExcelHelper.exportExcel(response, strings, StudentBO.class, data);
-    }
-
-    @GetMapping("/importExcel")
-    public void importExcel(HttpServletRequest request) {
-        LocalDateTime gmtStart = LocalDateTime.now();
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        MultipartFile mf = multipartRequest.getFile("data");
-        RowDataListener listener = new RowDataListener();
-        List<RowCO> read = ExcelHelper.read(mf, listener, RowCO.class);
-        String[][] arr = ExcelHelper.validateContext(read);
-        ExcelHelper.removeErrData(read, arr);
-        read.forEach(System.out::println);
+        ExcelHelper.exportExcel(response, strings, StudentVO.class, students);
     }
 
     @GetMapping("/importStudent")
-    public void importStudent(HttpServletRequest request) {
+    public void importStudent(HttpServletRequest request) throws IOException {
         LocalDateTime gmtStart = LocalDateTime.now();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile mf = multipartRequest.getFile("data");
-        StudentListener listener = new StudentListener(StudentExcel.class);
-        List<StudentExcel> read1 = ExcelHelper.read(mf, listener, StudentExcel.class);
-        List<StudentExcel> read = StudentExcel.generatorFactory(2);
-        String[][] arr = ExcelHelper.validateContext(read);
-        ExcelHelper.removeErrData(read, arr);
-        read.forEach(System.out::println);
-    }
+        assert mf != null;
+        ExcelHelp.validateFile(mf);
+        ExcelHelp.xlsAndXlsxValid(mf);
+        ValidHeadBodyListener<StudentVO> listener = new ValidHeadBodyListener<>(StudentVO.class, 1);
+        try (InputStream is = mf.getInputStream(); ExcelReader er = EasyExcelFactory.read(is).build()) {
+            // 默认为0行表头，是因为要进行模板校验
+            ReadSheet rs = EasyExcelFactory.readSheet(0)
+                    .head(StudentVO.class)
+                    .headRowNumber(listener.getHead())
+                    .registerReadListener(listener)
+                    .build();
+            er.read(rs);
+        }
 
-    @GetMapping("/exportExcel")
-    public void exportExcel() {
-        EasyExcel.write(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "color.xlsx").head(StudentBO.class).build();
+        List<StudentVO> read = listener.getList();
+        String[][] arr = listener.getArr();
+        ExcelHelper.removeErrData(read, arr, listener.getHead());
+        read.forEach(System.out::println);
     }
 
     /**

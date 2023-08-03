@@ -16,9 +16,12 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -27,6 +30,7 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author icboluo
@@ -49,6 +53,11 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(webContextInterceptor())
                 .addPathPatterns(includePathPatterns())
                 .excludePathPatterns(excludeList);
+
+        // 默认拦截器 其中lang表示切换语言的参数名
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+        registry.addInterceptor(localeChangeInterceptor);
     }
 
     /**
@@ -146,6 +155,18 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Bean
     public WebContextInterceptor webContextInterceptor() {
         return new WebContextInterceptor();
+    }
+
+    /**
+     * 替换默认的LocalResolver
+     *
+     * @return LocaleResolver
+     */
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+        localeResolver.setDefaultLocale(Locale.CHINESE);
+        return localeResolver;
     }
 
     /**

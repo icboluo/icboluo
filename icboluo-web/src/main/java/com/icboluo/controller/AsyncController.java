@@ -2,7 +2,7 @@ package com.icboluo.controller;
 
 import com.icboluo.service.AsyncService;
 import com.icboluo.util.IcBoLuoException;
-import com.icboluo.util.ThreadUtil;
+import com.icboluo.util.SimpleThreadUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +70,8 @@ public class AsyncController {
 
     @GetMapping("/spring")
     public void spring() {
-        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(ThreadUtil::sleep5s, asyncExecutor);
-        ThreadUtil.sleep5s();
+        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(SimpleThreadUtil::sleep5s, asyncExecutor);
+        SimpleThreadUtil.sleep5s();
         voidCompletableFuture.join();
         System.out.println("method end");
     }
@@ -91,14 +91,14 @@ public class AsyncController {
     @GetMapping("/daemon")
     public void daemon() {
         // TODO 为什么放在Http中守护线程不生效，只有main方法中才生效，是不是用的线程池的缘故
-        Thread thread = new Thread(() -> ThreadUtil.infiniteLoop());
+        Thread thread = new Thread(() -> SimpleThreadUtil.infiniteLoop());
         thread.setDaemon(true);
         thread.start();
         log.warn("daemon method finish");
     }
 
     public static void main(String[] args) {
-        Thread thread = new Thread(() -> ThreadUtil.infiniteLoop());
+        Thread thread = new Thread(() -> SimpleThreadUtil.infiniteLoop());
         thread.setDaemon(true);
         thread.start();
         log.warn("daemon method finish");

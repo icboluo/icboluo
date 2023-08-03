@@ -25,7 +25,7 @@ import java.util.concurrent.locks.LockSupport;
 @Slf4j
 public class ThreadUtil {
 
-    @Autowired
+//    @Autowired
     private PlatformTransactionManager transactionManager;
 
     @Autowired

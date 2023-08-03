@@ -1,53 +1,63 @@
 package com.icboluo.util.listenter;
 
 import com.alibaba.excel.context.AnalysisContext;
-import com.icboluo.common.ExcelTitleMap;
-import com.icboluo.util.ExcelHelp;
-import lombok.SneakyThrows;
+import com.icboluo.annotation.ExcelExport;
+import com.icboluo.util.ExcelExportResolve;
+import com.icboluo.util.IcBoLuoI18nException;
+import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author icboluo
- * @since 2023-07-05 18:57
+ * @since 2023-08-03 21:11
  */
-public class ValidHeadExcelListener<T extends ExcelTitleMap> extends ExcelListener<T> {
-    public ValidHeadExcelListener(Class<T> clazz) {
-        super(clazz);
-    }
+public class ValidHeadExcelListener<T> extends ExcelListener<T> {
 
-    public ValidHeadExcelListener(Class<T> clazz, Integer head) {
-        super(clazz, head);
+    private static final Map<Class<?>, Map<Integer, Field>> CLASS_NAME_FIELD_CACHE = new HashMap<>();
+    /**
+     * 解析类型
+     */
+    protected final Class<T> clazz;
+
+    @Getter
+    protected final int head;
+
+    public ValidHeadExcelListener(Class<T> excelType, int headNum) {
+        this.clazz = excelType;
+        this.head = headNum;
     }
 
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
-
-    }
-
-    @SneakyThrows
-    private List<String> validHead(Map<Integer, String> headMap) {
-        T head = getClazz().getConstructor().newInstance();
-        Map<String, String> titleMap = head.titleMap();
-        List<String> msg = new ArrayList<>();
-
-        // 校验基于java端，只要匹配java校验规则即可，Excel中多了的数据不处理
-        for (Map.Entry<String, String> entry : titleMap.entrySet()) {
-            String lineStr = entry.getKey();
-            String config = entry.getValue();
-            int line = ExcelHelp.titleToNumber(lineStr);
-            String excel = headMap.get(line);
-            if (excel == null || !excel.contains(config)) {
-                msg.add(lineStr);
+        for (Map.Entry<Integer, Field> entry : toCache().entrySet()) {
+            Integer entityIndex = entry.getKey();
+            Field entityField = entry.getValue();
+            ExcelExport excelExport = entityField.getAnnotation(ExcelExport.class);
+            String excelCell = headMap.get(entityIndex);
+            if (excelCell == null || !excelCell.contains(excelExport.columnNumber())) {
+                throw new IcBoLuoI18nException("index: " + entityIndex + " error, please check");
             }
         }
-        return msg;
     }
 
-    @Override
-    public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-        // Not need impl Method
+    private Map<Integer, Field> toCache() {
+        if (CLASS_NAME_FIELD_CACHE.containsKey(clazz)) {
+            return CLASS_NAME_FIELD_CACHE.get(clazz);
+        }
+        Map<Integer, Field> map = new HashMap<>();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            if (!field.isAnnotationPresent(ExcelExport.class)) {
+                continue;
+            }
+            ExcelExport excel = field.getAnnotation(ExcelExport.class);
+            ExcelExportResolve.shoichiIndex(field);
+            map.put(excel.columnIndex(), field);
+        }
+        CLASS_NAME_FIELD_CACHE.put(clazz, map);
+        return map;
     }
 }

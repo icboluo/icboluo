@@ -34,7 +34,7 @@ public class ExcelExportResolve<T> {
     /**
      * 名称，字段映射
      */
-    private Map<String, Field> nameFieldMap;
+    private final Map<String, Field> nameFieldMap;
 
     /**
      * 排序号的字段名，如果不 set ，认为无自定义排序，按照注解排序
@@ -75,18 +75,9 @@ public class ExcelExportResolve<T> {
     }
 
     private List<String> defaultSortFieldName() {
-        Integer max = nameFieldMap.values().stream().peek(field -> {
-                    ExcelExport excel = field.getAnnotation(ExcelExport.class);
-                    Map<String, Object> memberValues = getMemberValues(excel);
-                    if (StringUtils.hasText(excel.columnNumber())) {
-                        memberValues.put("columnIndex", titleToNumber(excel.columnNumber()) - 1);
-                    } else {
-                        if (field.isAnnotationPresent(ExcelProperty.class)) {
-                            ExcelProperty property = field.getAnnotation(ExcelProperty.class);
-                            memberValues.put("columnIndex", property.index());
-                        }
-                    }
-                }).map(field -> field.getAnnotation(ExcelExport.class))
+        Integer max = nameFieldMap.values().stream()
+                .peek(ExcelExportResolve::shoichiIndex)
+                .map(field -> field.getAnnotation(ExcelExport.class))
                 .map(ExcelExport::columnIndex)
                 .max(Integer::compareTo)
                 .orElse(0);
@@ -96,6 +87,24 @@ public class ExcelExportResolve<T> {
             arr[excel.columnIndex()] = entry.getKey();
         }
         return Arrays.stream(arr).toList();
+    }
+
+    /**
+     * 归一
+     *
+     * @param field
+     */
+    public static void shoichiIndex(Field field) {
+        ExcelExport excel = field.getAnnotation(ExcelExport.class);
+        Map<String, Object> memberValues = getMemberValues(excel);
+        if (StringUtils.hasText(excel.columnNumber())) {
+            memberValues.put("columnIndex", titleToNumber(excel.columnNumber()) - 1);
+        } else {
+            if (field.isAnnotationPresent(ExcelProperty.class)) {
+                ExcelProperty property = field.getAnnotation(ExcelProperty.class);
+                memberValues.put("columnIndex", property.index());
+            }
+        }
     }
 
 

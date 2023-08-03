@@ -9,9 +9,7 @@ import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.icboluo.annotation.Config;
-import com.icboluo.annotation.Date;
 import com.icboluo.object.client.RowCO;
-import com.icboluo.util.listenter.ExcelListener;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +18,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.constraints.NotEmpty;
@@ -32,9 +29,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -271,63 +266,6 @@ public class ExcelHelper {
         }
     }
 
-    public static <T> List<T> read(MultipartFile mf, ExcelListener<T> listener, Class<?> cla) {
-        if (mf == null) {
-            return new ArrayList<>();
-        }
-        validateSuffix(mf);
-        headMap.computeIfAbsent(cla, key -> listener.head);
-/*        try (InputStream is = mf.getInputStream();) {
-            ExcelReader er = EasyExcel.read(is).build();
-            // 默认为0行表头，是因为要进行模板校验
-            ReadSheet rs = EasyExcel.readSheet(0).head(cla).headRowNumber(0).registerReadListener(listener).build();
-            er.read(rs);
-            return listener.getList();
-        } catch (IOException e) {
-            throw new IcBoLuoException("excel export error");
-        }*/
-        return null;
-    }
-
-    private static void validateSuffix(MultipartFile mf) {
-        String of = mf.getOriginalFilename();
-        if (of != null && !of.endsWith("xlsx")) {
-            throw new IcBoLuoException();
-        }
-    }
-
-    public static <T> String[][] validateContext(List<T> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            return new String[0][0];
-        }
-        int headNum = getHeadNum(list);
-        int lineNum = getLineNum(list);
-        List<String> configList = getConfigList(list);
-        String[][] arr = new String[list.size() + headNum][lineNum];
-        for (int i = 0; i < list.size(); i++) {
-            T row = list.get(i);
-            Class<?> cla = row.getClass();
-            Field[] fields = cla.getDeclaredFields();
-            for (Field field : fields) {
-                field.setAccessible(true);
-                String name = field.getName();
-                Set<ConstraintViolation<T>> constraintViolations = ValidateUtil.validateProperty(row, name);
-                String msg;
-                if (CollectionUtils.isEmpty(constraintViolations)) {
-                    msg = validateOther(field, row);
-                } else {
-                    List<ConstraintViolation<T>> collect = constraintViolations.stream().sorted().toList();
-                    msg = collect.get(0).getMessage();
-                }
-                if (StringUtils.hasText(msg)) {
-                    ExcelProperty ep = field.getAnnotation(ExcelProperty.class);
-                    arr[i + headNum][ep.index()] = msg;
-                }
-            }
-        }
-        return arr;
-    }
-
     private static <T> List<String> getConfigList(List<T> list) {
         List<Field> headNum111 = getConfigField(list);
         return list.stream()
@@ -344,11 +282,10 @@ public class ExcelHelper {
                 .toList();
     }
 
-    public static <T> void removeErrData(List<T> list, String[][] arr) {
+    public static <T> void removeErrData(List<T> list, String[][] arr, int headNum) {
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
-        int headNum = getHeadNum(list);
         for (int i = list.size() - 1; i >= 0; i--) {
             String[] row = arr[i + headNum];
             boolean allEleIsEmpty = ArrayHelper.allEleIsNull(row);
@@ -356,26 +293,6 @@ public class ExcelHelper {
                 list.remove(i);
             }
         }
-    }
-
-    @SneakyThrows(IllegalAccessException.class)
-    private static <T> String validateOther(Field field, T row) {
-        if (field.isAnnotationPresent(Date.class)) {
-            Object o = field.get(row);
-            if (o == null) {
-                return null;
-            }
-            if (o instanceof LocalDate) {
-                return null;
-            }
-            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-            try {
-                format.parse((String) o);
-            } catch (ParseException e) {
-                return "date error";
-            }
-        }
-        return null;
     }
 
     private Comparator<ConstraintViolation<RowCO>> sort() {
@@ -387,7 +304,6 @@ public class ExcelHelper {
     }
 
     private static final Map<Class<?>, Integer> lineNumMap = new HashMap<>();
-    private static final Map<Class<?>, Integer> headMap = new HashMap<>();
     private static final Map<Class<?>, List<Field>> configMap = new HashMap<>();
 
 
@@ -412,18 +328,6 @@ public class ExcelHelper {
             lineNumMap.put(firCla, lineNum + 1);
             return lineNumMap.get(firCla);
         }
-    }
-
-    /**
-     * 获得头行数
-     *
-     * @param list 原列表
-     * @param <T>  列表中元素类型
-     * @return 头行数
-     */
-    private static <T> int getHeadNum(List<T> list) {
-        Class<?> firCla = list.get(0).getClass();
-        return headMap.get(firCla);
     }
 
     private static <T> List<Field> getConfigField(List<T> list) {
