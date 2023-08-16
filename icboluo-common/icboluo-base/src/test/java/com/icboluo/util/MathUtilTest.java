@@ -5,11 +5,17 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class MathUtilTest {
 
     @Test
-    void divice() {
-        BigDecimal divide = MathUtil.divide(10, 3, 2,RoundingMode.CEILING);
-        System.out.println("divide = " + divide);
+    void divide() {
+        assertEquals(0, MathUtil.divide(10, 3, 2, RoundingMode.CEILING).compareTo(BigDecimal.valueOf(3.34)));
+    }
+
+    @Test
+    void dividePercentage() {
+        assertEquals(0, MathUtil.dividePercentage(10, 100).compareTo(BigDecimal.valueOf(10)));
     }
 }

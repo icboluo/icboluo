@@ -11,7 +11,6 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -72,11 +71,17 @@ public class MathUtil {
     public static <M, D> BigDecimal dividePercentage(@NonNull M molecular, @NonNull D denominator, Integer scale, RoundingMode mode) {
         BigDecimal multiply = TypeUtils.castToBigDecimal(molecular).multiply(new BigDecimal(100));
         BigDecimal divide = divide(multiply, denominator, scale, mode);
-        if (divide.compareTo(BigDecimal.valueOf(100L)) == 0) {
-            return BigDecimal.valueOf(100);
+        if (divide.compareTo(BigDecimal.valueOf(100)) == 0) {
+            if (TypeUtils.castToBigDecimal(molecular).compareTo(TypeUtils.castToBigDecimal(denominator)) == 0) {
+                return BigDecimal.valueOf(100);
+            }
+            return BigDecimal.valueOf(99.99);
         }
         if (divide.compareTo(BigDecimal.ZERO) == 0) {
-            return BigDecimal.ZERO;
+            if (TypeUtils.castToBigDecimal(molecular).compareTo(BigDecimal.ZERO) == 0) {
+                return BigDecimal.ZERO;
+            }
+            return BigDecimal.valueOf(0.01);
         }
         return divide;
     }
@@ -89,49 +94,17 @@ public class MathUtil {
         return dividePercentage(molecular, denominator, null, null);
     }
 
-    public static int max(int... arr) {
-        OptionalInt max = Arrays.stream(arr).max();
-        return max.orElse(Integer.MIN_VALUE);
+    @SafeVarargs
+    public static <T extends Comparable<T>> T max(T... arr) {
+        return Arrays.stream(arr).max(T::compareTo).orElse(null);
     }
 
-    public static int min(int... arr) {
-        OptionalInt min = Arrays.stream(arr).min();
-        return min.orElse(Integer.MAX_VALUE);
+    @SafeVarargs
+    public static <T extends Comparable<T>> T min(T... arr) {
+        return Arrays.stream(arr).min(T::compareTo).orElse(null);
     }
 
-    public static Boolean byteToBoolean(Byte by) {
-        if (by == null) {
-            return null;
-        }
-        return switch (by) {
-            case 0 -> false;
-            case 1 -> true;
-            default -> null;
-        };
-    }
-
-    public static Byte booleanToByte(Boolean bool) {
-        if (bool == null) {
-            return null;
-        }
-        return bool ? Byte.valueOf("1") : Byte.valueOf("0");
-    }
-
-    public static Byte booleanToBaseByte(boolean bool) {
-        return bool ? Byte.valueOf("1") : Byte.valueOf("0");
-    }
-
-    public static <T extends Comparable<T>> T max(T a, T b) {
-        boolean aDaB = a.compareTo(b) > 0;
-        return aDaB ? a : b;
-    }
-
-    public static <T extends Comparable<T>> T min(T a, T b) {
-        boolean aDaB = a.compareTo(b) > 0;
-        return aDaB ? b : a;
-    }
-
-    public static <T extends Comparable<T>> boolean belongTo(T source, T a, T b) {
+    public static <T extends Comparable<T>> boolean between(T source, T a, T b) {
         if (source.compareTo(a) == 0 && source.compareTo(b) == 0) {
             return true;
         }

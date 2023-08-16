@@ -1,5 +1,6 @@
 package com.icboluo.converter;
 
+import lombok.NonNull;
 import org.springframework.core.convert.converter.Converter;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class StringToLocalDateConverter implements Converter<String, LocalDate> {
     @Override
-    public LocalDate convert(String str) {
+    public LocalDate convert(@NonNull String str) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(str, fmt);
     }

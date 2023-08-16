@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -151,25 +152,29 @@ public class BeanHelper {
         return first.orElse(null);
     }
 
-    public static boolean allIsNull(Object... arr) {
+    @SafeVarargs
+    public static <T> boolean allIsNull(T... arr) {
         return Arrays.stream(arr)
                 .map(Objects::isNull)
                 .reduce(true, (a, b) -> a && b);
     }
 
-    public static boolean allNotNull(Object... arr) {
+    @SafeVarargs
+    public static <T> boolean allNotNull(T... arr) {
         return Arrays.stream(arr)
                 .map(Objects::nonNull)
                 .reduce(true, (a, b) -> a && b);
     }
 
-    public static boolean anyEmpty(Object... arr) {
+    @SafeVarargs
+    public static <T> boolean anyEmpty(T... arr) {
         return Arrays.stream(arr)
                 .map(Objects::nonNull)
                 .reduce(false, (a, b) -> a || b);
     }
 
-    public static boolean haveNull(Object... arr) {
+    @SafeVarargs
+    public static <T> boolean haveNull(T... arr) {
         return Arrays.stream(arr)
                 .anyMatch(Objects::isNull);
     }
@@ -179,6 +184,42 @@ public class BeanHelper {
             return true;
         }
         return a != null && a.equals(b);
+    }
+
+    /**
+     * 将字节转换为bool
+     *
+     * @param by 字节 1|0
+     * @return bool值
+     * @deprecated 请使用fastjson工具类的api
+     */
+    @Deprecated
+    public static Boolean byteToBoolean(Byte by) {
+        return TypeUtils.castToBoolean(by);
+    }
+
+    /**
+     * 将bool值转换为字节
+     *
+     * @param bool bool值
+     * @return 字节0|1
+     * @deprecated 请使用fastjson工具类的api
+     */
+    @Deprecated
+    public static Byte booleanToByte(Boolean bool) {
+        return TypeUtils.castToByte(bool);
+    }
+
+    /**
+     * TypeUtils 拥有数据类型转换函数
+     *
+     * @param val 对象值
+     * @return int值
+     * @deprecated 不应该调用此方法，直接调用type转换工具类即可
+     */
+    @Deprecated(since = "all")
+    public static Integer toInt(Object val) {
+        return TypeUtils.castToInt(val);
     }
 
     public static <S, T, F> void notEmptyThenSet(S source, T target, Function<S, F> get, BiConsumer<T, F> set) {
@@ -262,18 +303,6 @@ public class BeanHelper {
         return PageInfo.of(new ArrayList<>(coll));
     }
 
-    /**
-     * TypeUtils 拥有数据类型转换函数
-     *
-     * @param val 对象值
-     * @return int值
-     * @deprecated 不应该调用此方法，直接调用type转换工具类即可
-     */
-    @Deprecated(since = "all")
-    public static Integer toInt(Object val) {
-        return TypeUtils.castToInt(val);
-    }
-
     public static ValueFilter localDateTimeValueFilter() {
         return (obj, name, val) -> {
             if (val == null) {
@@ -287,5 +316,12 @@ public class BeanHelper {
             }
             return val;
         };
+    }
+
+    public static <T> void batchConsumer(List<T> list, Consumer<List<T>> consumer) {
+        if (CollectionUtils.isEmpty(list)) {
+            return;
+        }
+        // TODO
     }
 }

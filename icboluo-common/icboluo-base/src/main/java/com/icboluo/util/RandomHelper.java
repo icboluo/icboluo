@@ -22,7 +22,7 @@ public class RandomHelper {
     public static int[] getRandom(int count) {
         int[] arr = new int[count];
         for (int i = 0; i < count; i++) {
-            arr[i] = (int) (Math.random() * count * 10);
+            arr[i] = RANDOM.nextInt(count * 10);
         }
         return arr;
     }

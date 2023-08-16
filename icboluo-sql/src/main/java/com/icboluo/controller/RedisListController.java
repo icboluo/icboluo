@@ -14,13 +14,13 @@ import java.util.List;
  * @since 2021-46-02 12:46
  */
 @RestController
-@RequestMapping("/listRedis")
-public class ListRedisController {
+@RequestMapping("redisList")
+public class RedisListController {
 
     @Resource
     private RedisList<Integer> redisList;
 
-    @GetMapping("/add")
+    @GetMapping("add")
     public Long add() {
         List<Integer> list = new ArrayList<>();
         list.add(1);
@@ -30,18 +30,18 @@ public class ListRedisController {
         return redisList.addAll("list:integer", list);
     }
 
-    @GetMapping("/update")
+    @GetMapping("update")
     public Boolean update() {
         redisList.set("list:integer", 0, 77);
         return true;
     }
 
-    @GetMapping("/remove")
+    @GetMapping("remove")
     public Long remove() {
         return redisList.remove("list:integer", 77, 5);
     }
 
-    @GetMapping("/size")
+    @GetMapping("size")
     public void size() {
         List<Integer> all = redisList.get("list:integer");
         System.out.println("all = " + all);

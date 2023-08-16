@@ -112,11 +112,7 @@ public class ArrayHelper {
      * @return 数组中的最大值
      */
     public static int findMaxVal(int[] arr) {
-        int max = Integer.MIN_VALUE;
-        for (int v : arr) {
-            max = Math.max(v, max);
-        }
-        return max;
+        return Arrays.stream(arr).max().orElse(Integer.MIN_VALUE);
     }
 
     /**
@@ -139,7 +135,7 @@ public class ArrayHelper {
      * @return k 数组元素，v 出现次数
      */
     public static Map<Integer, Integer> toMap(int[] arr) {
-        HashMap<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i : arr) {
             map.put(i, map.getOrDefault(i, 1));
         }

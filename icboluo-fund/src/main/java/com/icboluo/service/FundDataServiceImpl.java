@@ -9,7 +9,6 @@ import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
-import com.icboluo.service.FundDataService;
 import com.icboluo.util.BeanHelper;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.MathUtil;
@@ -232,7 +231,7 @@ public class FundDataServiceImpl implements FundDataService {
                 if (increaseRateDay == null) {
                     break;
                 }
-                boolean belong = MathUtil.belongTo(increaseRateDay, min, max);
+                boolean belong = MathUtil.between(increaseRateDay, min, max);
                 if (belong) {
                     sourceEleIndex++;
                 } else {

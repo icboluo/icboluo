@@ -80,19 +80,15 @@ public class RedisString<T> extends AbstractRedis<T> {
     }
 
     public Integer increment(String key) {
-        return incrementExpireAt(key, Integer.class, 1, null);
+        return incrementExpireAt(key, 1, null);
     }
 
     public <G extends Number> G increment(String key, G delta) {
-        return incrementExpireAt(key, (Class<G>) delta.getClass(), delta, null);
+        return incrementExpireAt(key, delta, null);
     }
 
     public Integer incrementExpireAt(String key, LocalDateTime localDateTime) {
-        return incrementExpireAt(key, Integer.class, 1, localDateTime);
-    }
-
-    public <G extends Number> G incrementExpireAt(String key, G delta, LocalDateTime localDateTime) {
-        return incrementExpireAt(key, (Class<G>) delta.getClass(), delta, localDateTime);
+        return incrementExpireAt(key, 1, localDateTime);
     }
 
     /**
@@ -101,15 +97,15 @@ public class RedisString<T> extends AbstractRedis<T> {
      * 过期时间是可以设置的，可是为什么有的情况下，用atomic的时候，会在redis中找不到键值
      *
      * @param key   键
-     * @param cla   要转化的数据类型
      * @param delta 递增因子
      * @param <G>   泛型类型
      * @return 递增之后的值
      */
-    public <G extends Number> G incrementExpireAt(String key, Class<G> cla, G delta, LocalDateTime localDateTime) {
+    public <G extends Number> G incrementExpireAt(String key, G delta, LocalDateTime localDateTime) {
         if (delta.intValue() < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
+        Class<G> cla = (Class<G>) delta.getClass();
         if (cla == Long.class) {
             RedisAtomicLong redisAtomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
             expireAt(redisAtomicLong, localDateTime);
@@ -129,19 +125,15 @@ public class RedisString<T> extends AbstractRedis<T> {
 
 
     public Integer decrease(String key) {
-        return decreaseExpireAt(key, Integer.class, 1, null);
+        return decreaseExpireAt(key, 1, null);
     }
 
     public <G extends Number> G decrease(String key, G g) {
-        return decreaseExpireAt(key, (Class<G>) g.getClass(), g, null);
+        return decreaseExpireAt(key, g, null);
     }
 
     public Integer decreaseExpireAt(String key, LocalDateTime localDateTime) {
-        return decreaseExpireAt(key, Integer.class, 1, localDateTime);
-    }
-
-    public <G extends Number> G decreaseExpireAt(String key, G delta, LocalDateTime localDateTime) {
-        return decreaseExpireAt(key, (Class<G>) delta.getClass(), delta, localDateTime);
+        return decreaseExpireAt(key, 1, localDateTime);
     }
 
     /**
@@ -149,15 +141,15 @@ public class RedisString<T> extends AbstractRedis<T> {
      * valueOperations.increment(key, -delta);
      *
      * @param key   键
-     * @param cla   要转化的数据类型
      * @param delta 递减因子
      * @param <G>   泛型类型
      * @return 递减之后的值
      */
-    public <G extends Number> G decreaseExpireAt(String key, Class<G> cla, G delta, LocalDateTime localDateTime) {
+    public <G extends Number> G decreaseExpireAt(String key, G delta, LocalDateTime localDateTime) {
         if (delta.intValue() < 0) {
             throw new RuntimeException("递减因子必须大于0");
         }
+        Class<G> cla = (Class<G>) delta.getClass();
         if (cla == Long.class) {
             RedisAtomicLong redisAtomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
             expireAt(redisAtomicLong, localDateTime);
