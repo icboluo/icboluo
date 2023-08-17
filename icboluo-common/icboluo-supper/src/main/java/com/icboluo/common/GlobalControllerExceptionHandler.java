@@ -63,7 +63,6 @@ public class GlobalControllerExceptionHandler {
      * @return 失败的响应信息
      */
     @ExceptionHandler(value = {IcBoLuoI18nException.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response icBoLuoI18nExceptionHandler(IcBoLuoI18nException e) {
         printLog(e);
         String message = messageSource.getMessage(e.getMessage(), null, LocaleContextHolder.getLocale());
@@ -71,7 +70,6 @@ public class GlobalControllerExceptionHandler {
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         printLog(e);
         BindingResult bindingResult = e.getBindingResult();
@@ -92,14 +90,12 @@ public class GlobalControllerExceptionHandler {
      * @return msg
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response constraintViolationExceptionHandler(ConstraintViolationException e) {
         printLog(e);
         return R.error(e.getMessage());
     }
 
     @ExceptionHandler(value = RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response runtimeExceptionHandler(RuntimeException e) {
         printLog(e);
         return R.error(ReEnum.UNEXPECTED_EXCEPTION);
@@ -115,7 +111,6 @@ public class GlobalControllerExceptionHandler {
      * @throws Exception {@code e} 最大异常
      */
     @ExceptionHandler(value = Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response exceptionHandler(Exception e) throws Exception {
         printLog(e);
         //如果异常上已经有 @ResponseStatus 注解，则让框架处理

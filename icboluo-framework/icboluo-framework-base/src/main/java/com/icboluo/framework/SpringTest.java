@@ -31,7 +31,7 @@ public class SpringTest {
 
     @Test
     public void http() {
-//        HttpStatus Spring包下也有
+        // HttpStatus Spring包下也有
     }
 
     @Test

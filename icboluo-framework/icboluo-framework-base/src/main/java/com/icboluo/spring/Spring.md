@@ -123,6 +123,15 @@ aop存在于spring中，是对一个类做一个切面，通过spring获取这�
 
 这块可以打断点调试，service层的aop，再controller注入的其实是cglib代理类
 
+在Spring AOP中，各个通知的执行顺序如下：
+
+1. 环绕通知（@Around）：环绕通知包裹了被切入的方法，在方法执行前后都可以执行额外的逻辑。环绕通知的执行顺序是先执行前置通知，然后执行被切入的方法，最后执行后置通知。
+2. 前置通知（@Before）：前置通知在目标方法执行之前执行，可以在方法执行前执行一些准备工作。
+3. 后置通知（@After）：后置通知在目标方法执行之后执行，无论目标方法是否抛出异常，后置通知都会执行。
+4. 返回通知（@AfterReturning）：返回通知在目标方法执行并成功返回结果后执行，可以获取到目标方法的返回值。
+5. 异常通知（@AfterThrowing）：异常通知在目标方法抛出异常时执行，可以捕获目标方法抛出的异常。
+   需要注意的是，以上通知的执行顺序可以通过配置来调整，也可以通过实现Ordered接口或使用@Order注解来指定通知的执行顺序。
+
 ## SpringMvc:Model View Controller 模型视图控制器
 
 ## 名词/注解
@@ -145,7 +154,7 @@ View:提供界面来与用户进行人机交互
 
 如果标记为false，说明整个对象都为null
 
-RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
+@RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
 
 @RequestParam@PathVariable@GetMapping@PostMapping@PutMapping@DeleteMapping
 

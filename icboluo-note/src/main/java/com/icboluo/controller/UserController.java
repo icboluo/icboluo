@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
  * @author icboluo
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("user")
 @Api(tags = "用户")
 @Slf4j
 public class UserController {
@@ -35,22 +35,22 @@ public class UserController {
 
     private static final String USER_SERVICE = "http://localhost:7010";
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public boolean login(@RequestParam String name, @RequestParam String password) {
         return userService.validate(name, password);
     }
 
-    @GetMapping("/updatePassword")
+    @GetMapping("updatePassword")
     public boolean updatePassword(@RequestParam Integer id, @RequestParam String password) {
         return userService.updatePassword(id, password);
     }
 
-    @GetMapping("/feign/getUserNameById")
+    @GetMapping("feign/getUserNameById")
     public String feignGetUserNameById(@RequestParam Integer id) {
         return userFeign.getUserNameById(id);
     }
 
-    @GetMapping("/restTemplate/getUserNameById")
+    @GetMapping("restTemplate/getUserNameById")
     public Response restTemplateGetUserNameById(@RequestParam Integer id) {
 /*        这个是放在请求体中传输的
         String obj = restTemplate.postForObject(USER_SERVICE + "/user/getUserNameById", id, String.class);*/

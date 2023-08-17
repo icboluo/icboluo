@@ -46,7 +46,7 @@ import java.util.function.Function;
  * @author icboluo
  */
 @RestController
-@RequestMapping("/excel")
+@RequestMapping("excel")
 @Api(tags = "mysql生成工具")
 public class ExcelController {
     @Resource
@@ -63,13 +63,13 @@ public class ExcelController {
     @Value("${read-excel-entity.excel-path}")
     private String excelPath;
 
-    @GetMapping("/read")
+    @GetMapping("read")
     @ApiOperation(value = "将数据库excel文档读成建表语句")
     public void read() {
         excelService.readDbDocument(excelPath, readExcelEntity.getSheetName());
     }
 
-    @GetMapping("/write")
+    @GetMapping("write")
     @ApiOperation(value = "将数据库写成excel文档")
     public void write() {
         excelService.write(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
@@ -82,7 +82,7 @@ public class ExcelController {
         ExcelHelper.exportExcel(response, strings, StudentVO.class, students);
     }
 
-    @GetMapping("/importStudent")
+    @GetMapping("importStudent")
     public void importStudent(HttpServletRequest request) throws IOException {
         LocalDateTime gmtStart = LocalDateTime.now();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -129,7 +129,7 @@ public class ExcelController {
     /**
      * 打印所有的Excel定义好的颜色
      */
-    @GetMapping("/writeColor")
+    @GetMapping("writeColor")
     public void writeColor() {
         writeColor(EnumSet.allOf(HSSFColor.HSSFColorPredefined.class), HSSFColor.HSSFColorPredefined::getIndex, 3);
         writeColor(EnumSet.allOf(IndexedColors.class), IndexedColors::getIndex, 12);

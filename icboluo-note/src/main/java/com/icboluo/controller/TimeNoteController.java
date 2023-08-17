@@ -28,7 +28,7 @@ import java.util.Map;
  * @author lp
  */
 @RestController
-@RequestMapping("/timeNote")
+@RequestMapping("timeNote")
 @Api(tags = "笔记本")
 public class TimeNoteController {
     @Resource
@@ -37,20 +37,20 @@ public class TimeNoteController {
     private NoteService noteService;
 
 
-    @GetMapping("/init")
+    @GetMapping("init")
     @ApiOperation(value = "初始化")
     public Response init(TimeNoteQuery query) {
         List<NoteVO> list = noteService.selectList(query);
         return R.correct(BeanHelper.fakePage(list, query));
     }
 
-    @GetMapping("/selectAmount")
+    @GetMapping("selectAmount")
     @ApiOperation(value = "查询问题剩余量")
     public Map<String, Integer> selectTimeNoteAmount() {
         return noteService.selectAmount();
     }
 
-    @GetMapping("/add")
+    @GetMapping("add")
     @ApiOperation(value = "增加")
     public Response add(TimeNoteCO client) {
         TimeNoteDO timeNoteDO = BeanHelper.copyProperties(client, TimeNoteDO.class);
@@ -59,7 +59,7 @@ public class TimeNoteController {
                 : R.error(ReEnum.ADD_ERROR);
     }
 
-    @GetMapping("/update")
+    @GetMapping("update")
     @ApiOperation(value = "更新数据")
     public void update(TimeNoteCO client, String type) {
         validate(client);
@@ -73,37 +73,37 @@ public class TimeNoteController {
         }
     }
 
-    @GetMapping("/onlyUpdateTime")
+    @GetMapping("onlyUpdateTime")
     @ApiOperation(value = "只更新时间")
     public void onlyUpdateTime(TimeUpdateCO client) {
         noteService.onlyUpdateTime(client);
     }
 
-    @GetMapping("/updateFinishTime")
+    @GetMapping("updateFinishTime")
     @ApiOperation(value = "更新为完成了一次")
     public void update(TimeUpdateCO client) {
         noteService.updateFinishTime(client);
     }
 
-    @GetMapping("/updateNotFinishTime")
+    @GetMapping("updateNotFinishTime")
     @ApiOperation(value = "更新为没有完成一次")
     public void updateNotFinishTime(TimeUpdateCO client) {
         noteService.updateNotFinishTime(client);
     }
 
-    @GetMapping("/toOnlyRead")
+    @GetMapping("toOnlyRead")
     @ApiOperation(value = "仅仅更新时间")
     public void toOnlyRead(TimeUpdateCO client) {
         noteService.toOnlyRead(client);
     }
 
-    @GetMapping("/selectByFiled")
+    @GetMapping("selectByFiled")
     @ApiOperation(value = "根据字段查询")
     public List<FiledResultVO> select(@RequestParam("filed") String file) {
         return noteService.select(file);
     }
 
-    @GetMapping("/updateProblem")
+    @GetMapping("updateProblem")
     public void updateProblem() {
 
     }

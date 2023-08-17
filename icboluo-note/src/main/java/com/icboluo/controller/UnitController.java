@@ -17,7 +17,7 @@ import java.util.List;
  * @since 2021-10-01 22:10
  */
 @RestController
-@RequestMapping("/unit")
+@RequestMapping("unit")
 public class UnitController {
 
     @Resource
