@@ -2,7 +2,7 @@ package com.icboluo.plane2.Thread;
 
 import com.icboluo.plane2.BaseClass.EnemyBullet;
 import com.icboluo.plane2.BaseClass.EnemyPlane;
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 import com.icboluo.util.SimpleThreadUtil;
 
 import static com.icboluo.plane2.AtkAll.enemyBullets;
@@ -26,7 +26,7 @@ public record EnemyBulletThread(EnemyPlane enemyPlane) implements Runnable {
             EnemyBullet enemyBullet = new EnemyBullet(bulletX, bulletY);
 
             enemyBullets.add(enemyBullet);
-            SimpleThreadUtil.sleep(2000 + RandomHelper.nextInt(2000));
+            SimpleThreadUtil.sleep(2000 + RandomUtil.nextInt(2000));
         }
     }
 }

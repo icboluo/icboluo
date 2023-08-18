@@ -2,7 +2,7 @@ package com.icboluo.object.view;
 
 import com.icboluo.annotation.ExcelExport;
 import com.icboluo.entity.Student;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +24,6 @@ public class StudentVO {
     private Integer age;
 
     public StudentVO(Student student) {
-        BeanHelper.copyProperties(student, this);
+        BeanUtil.copyProperties(student, this);
     }
 }

@@ -3,8 +3,7 @@ package com.icboluo.service;
 import com.icboluo.entity.FundInfo;
 import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.vo.FundInfoVO;
-import com.icboluo.service.FundInfoService;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,6 @@ public class FundInfoServiceImpl implements FundInfoService {
     @Override
     public FundInfoVO fundInfoInit(String id) {
         FundInfo fundInfo = fundInfoMapper.queryById(id);
-        return BeanHelper.copyProperties(fundInfo, FundInfoVO.class);
+        return BeanUtil.copyProperties(fundInfo, FundInfoVO.class);
     }
 }

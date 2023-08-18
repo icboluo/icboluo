@@ -5,7 +5,7 @@ import com.icboluo.plane2.BaseClass.EnemyPlane;
 import com.icboluo.plane2.BaseClass.MyPlane;
 import com.icboluo.plane2.BaseClass.Prop;
 import com.icboluo.plane2.UI.GameStart;
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 import com.icboluo.util.SimpleThreadUtil;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class CrashThread implements Runnable {
                                 enemyPlane.setAlive(false);
                                 player.score += 5;
                                 // 打中后随机掉落道具(1/4几率)
-                                if (RandomHelper.nextInt(4) == 1) {
+                                if (RandomUtil.nextInt(4) == 1) {
                                     Prop prop = new Prop();
                                     prop.setXY(enemyPlane.getX(), enemyPlane.getY());
                                     myPropList.add(prop);

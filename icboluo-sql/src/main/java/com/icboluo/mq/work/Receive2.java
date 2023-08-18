@@ -1,7 +1,7 @@
 package com.icboluo.mq.work;
 
 import com.icboluo.constant.MqConstant;
-import com.icboluo.util.ConnectionUtil;
+import com.icboluo.util.MqConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.SneakyThrows;
 
@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class Receive2 {
     @SneakyThrows
     public static void main(String[] args) {
-        Connection conn = ConnectionUtil.getConnection();
+        Connection conn = MqConnectionUtil.getConnection();
         Channel channel = conn.createChannel();
         channel.queueDeclare(MqConstant.QUEUE_NAME_WORK, false, false, false, null);
 

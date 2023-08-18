@@ -288,7 +288,7 @@ public class ExcelHelper {
         }
         for (int i = list.size() - 1; i >= 0; i--) {
             String[] row = arr[i + headNum];
-            boolean allEleIsEmpty = BeanHelper.allIsNull(row);
+            boolean allEleIsEmpty = BeanUtil.allIsNull(row);
             if (!allEleIsEmpty) {
                 list.remove(i);
             }

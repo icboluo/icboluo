@@ -1,6 +1,6 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 import com.icboluo.util.TimeRecord;
 
 import java.util.Arrays;
@@ -16,9 +16,9 @@ class BubbleSort {
         int[] arr = {3, 9, -1, 10, -2};
         //m1(arr);
         m2(arr);
-        m2(RandomHelper.getRandom(4000));
+        m2(RandomUtil.getRandom(4000));
         TimeRecord.recordMsg("第二次排序");
-        m2(RandomHelper.getRandom(4000));
+        m2(RandomUtil.getRandom(4000));
         TimeRecord.build();
     }
 

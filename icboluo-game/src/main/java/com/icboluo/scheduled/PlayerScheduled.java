@@ -7,7 +7,7 @@ import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.PlayerMapper;
 import com.icboluo.service.CultivationCareerService;
 import com.icboluo.service.PlayerService;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import jakarta.annotation.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -40,7 +40,7 @@ public class PlayerScheduled {
         for (Player player : playerList) {
             cultivationCareer.setPlayerId(player.getId());
             if (player.getAge() >= 100) {
-                DiePlayer diePlayer = BeanHelper.copyProperties(player, DiePlayer::new);
+                DiePlayer diePlayer = BeanUtil.copyProperties(player, DiePlayer::new);
                 diePlayerMapper.insert(diePlayer);
                 playerMapper.deleteById(player.getId());
                 cultivationCareer.setOper("you are 100 years old, you are die");

@@ -10,7 +10,7 @@ import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.MonsterMapper;
 import com.icboluo.mapper.PlayerMapper;
 import com.icboluo.pojo.PlayerVO;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.IcBoLuoI18nException;
 import jakarta.annotation.Resource;
@@ -68,7 +68,7 @@ public class PlayerServiceImpl implements PlayerService {
             }
             throw new IcBoLuoI18nException("cur.role.already.die");
         }
-        PlayerVO view = BeanHelper.copyProperties(player, PlayerVO::new);
+        PlayerVO view = BeanUtil.copyProperties(player, PlayerVO::new);
         PlayerLevel playerLevel = playerLevelService.queryById(player.getLevel());
         view.setLevel(playerLevel.getLevel());
         view.setCurTotalExperience(playerLevel.getExperience());

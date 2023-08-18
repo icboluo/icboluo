@@ -29,5 +29,4 @@ public class CollResponse<T> extends Response {
     public CollResponse(Integer code, String message) {
         super(code, message);
     }
-
 }

@@ -9,7 +9,7 @@ import com.icboluo.object.query.TimeNoteQuery;
 import com.icboluo.object.view.FiledResultVO;
 import com.icboluo.object.view.NoteVO;
 import com.icboluo.service.NoteService;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
@@ -41,7 +41,7 @@ public class TimeNoteController {
     @ApiOperation(value = "初始化")
     public Response init(TimeNoteQuery query) {
         List<NoteVO> list = noteService.selectList(query);
-        return R.correct(BeanHelper.fakePage(list, query));
+        return R.correct(BeanUtil.fakePage(list, query));
     }
 
     @GetMapping("selectAmount")
@@ -53,7 +53,7 @@ public class TimeNoteController {
     @GetMapping("add")
     @ApiOperation(value = "增加")
     public Response add(TimeNoteCO client) {
-        TimeNoteDO timeNoteDO = BeanHelper.copyProperties(client, TimeNoteDO.class);
+        TimeNoteDO timeNoteDO = BeanUtil.copyProperties(client, TimeNoteDO.class);
         int i = timeNoteMapper.insertSelective(timeNoteDO);
         return i == 1 ? R.correct(ReEnum.ADD_SUCCESSFUL)
                 : R.error(ReEnum.ADD_ERROR);
@@ -68,7 +68,7 @@ public class TimeNoteController {
     }
 
     public void validate(TimeNoteCO obj) {
-        if (BeanHelper.allIsNull(obj.getProblem(), obj.getResult(), obj.getBelongToScope())) {
+        if (BeanUtil.allIsNull(obj.getProblem(), obj.getResult(), obj.getBelongToScope())) {
             throw new IcBoLuoException();
         }
     }

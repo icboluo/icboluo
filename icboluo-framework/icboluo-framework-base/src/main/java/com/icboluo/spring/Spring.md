@@ -24,9 +24,13 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @RunWith（SpringJUnit4ClassRunner.class）：替换掉junit的运行器,换成一个可以初始化spring容器的运行器。
 
-@Controller @Service @Repository《仓库》
+#### @Controller @Service @Repository (仓库)
 
-@Autowired注入：先直接找子类，找的多了按id找
+@Controller:控制应用程序的流程和处理用户所发出的请求
+
+#### @RequestParam@PathVariable@GetMapping@PostMapping@PutMapping@DeleteMapping
+
+#### @Autowired注入：先直接找子类，找的多了按id找
 
     autowired作为方法注解的时候，需要注入参数；如果仅仅是在初始化的时候需要set默认值，我们可以使用PostConstruct
 
@@ -34,9 +38,9 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @Resource两者合一
 
-@Value注入url exa：
+#### @RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
 
-@Value注解是不需要增加额外的依赖说明书写提示的，参考note服务pom注释
+#### @Value注入url exa：
 
 > 注入必须加$符号，书写的时候需要注意
 
@@ -44,6 +48,10 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
       
        @Value("${jdbc.url}")
        private String name;
+
+@Value注解是不需要增加额外的依赖说明书写提示的，参考note服务pom注释
+
+@Value 属性注入,声明在属性（变量）上
 
 @Configuration
 
@@ -54,7 +62,14 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @Configuration（AnnotationApplicationContext.......class）：想要替换applicationContext创建的类上注解
 
-@ComponentScan:<context:component-scan base-package="cn.itcast"></context:component-scan>
+#### @ComponentScan
+
+   相当于
+
+      <context:component-scan base-package="com.icboluo">
+      </context:component-scan>
+
+#### @Bean @Component
 
 @Component《组件》 放在类上，把该类放进bean中，并设置其id（value）值
 
@@ -101,7 +116,7 @@ spring bean 默认单例
 
 如果bean中有成员变量的时候（成员变量存储数据，不要去注入（di，使用new，因为成员变量会被更改
 
-## 执行顺序
+## AOP执行顺序
 
 切面执行不知道什么顺序，但是可以设置执行顺序，用order即可
 
@@ -140,8 +155,6 @@ Model:封装应用的状态，并实现应用的功能
 
 View:提供界面来与用户进行人机交互
 
-@Controller:控制应用程序的流程和处理用户所发出的请求
-
 @ResponseBody 表示该方法的返回结果直接写入HTTP response body，
 
 @ResponseBody 是把Controller方法返回值转化为JSON，称为序列化
@@ -154,18 +167,12 @@ View:提供界面来与用户进行人机交互
 
 如果标记为false，说明整个对象都为null
 
-@RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
-
-@RequestParam@PathVariable@GetMapping@PostMapping@PutMapping@DeleteMapping
-
 @SpringBootApplication 申明让spring boot自动给程序进行必要的配置@Configuration ，@EnableAutoConfiguration 和
 @ComponentScan 三个配置。
 
 ConfigurationProperties 声明当前类为属性读取类
 
 Propertysource 指定外部属性文件
-
-@Value 属性注入,声明在属性（变量）上
 
 ## PostHandler
 

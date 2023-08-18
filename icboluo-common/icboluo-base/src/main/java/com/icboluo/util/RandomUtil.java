@@ -9,7 +9,7 @@ import java.util.Random;
  * @author icboluo
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RandomHelper {
+public class RandomUtil {
 
     private static final Random RANDOM = new Random();
 

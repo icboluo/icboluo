@@ -1,6 +1,6 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 
 import java.util.Arrays;
 
@@ -13,7 +13,7 @@ import java.util.Arrays;
     public static void main(String[] args) {
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
         //m1(arr);
-        int[] random = RandomHelper.getRandom(8000000);
+        int[] random = RandomUtil.getRandom(8000000);
         m3(random);
     }
 

@@ -3,7 +3,7 @@ package com.icboluo.entity.note;
 import com.icboluo.common.Constant;
 import com.icboluo.object.view.FiledResultVO;
 import com.icboluo.object.view.NoteVO;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import lombok.Data;
 
 import java.io.Serial;
@@ -62,20 +62,20 @@ public class YearTimeDO implements NoteViewInter, FiledResultInter, NoteCommonIn
 
     @Override
     public NoteVO toView() {
-        NoteVO noteVO = BeanHelper.copyProperties(this, NoteVO.class);
+        NoteVO noteVO = BeanUtil.copyProperties(this, NoteVO.class);
         noteVO.setType(Constant.YEAR_TYPE);
         return noteVO;
     }
 
     @Override
     public FiledResultVO toFiledResultView() {
-        FiledResultVO filedResult = BeanHelper.copyProperties(this, FiledResultVO.class);
+        FiledResultVO filedResult = BeanUtil.copyProperties(this, FiledResultVO.class);
         filedResult.setType(Constant.YEAR_TYPE);
         return filedResult;
     }
 
     public FinishDO toFinish() {
-        FinishDO finishDO = BeanHelper.copyProperties(this, FinishDO.class);
+        FinishDO finishDO = BeanUtil.copyProperties(this, FinishDO.class);
         finishDO.setId(null);
         finishDO.setGmtCreate(null);
         finishDO.setGmtModified(LocalDateTime.now());
@@ -84,7 +84,7 @@ public class YearTimeDO implements NoteViewInter, FiledResultInter, NoteCommonIn
     }
 
     public MonthTimeDO toMonth() {
-        MonthTimeDO monthTimeDO = BeanHelper.copyProperties(this, MonthTimeDO.class);
+        MonthTimeDO monthTimeDO = BeanUtil.copyProperties(this, MonthTimeDO.class);
         monthTimeDO.setId(null);
         monthTimeDO.setGmtCreate(null);
         monthTimeDO.setFinishTime(Constant.MONTH_NOT_FINISH_TIME);

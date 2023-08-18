@@ -1,7 +1,7 @@
 package com.icboluo.mq.simple;
 
 import com.icboluo.constant.MqConstant;
-import com.icboluo.util.ConnectionUtil;
+import com.icboluo.util.MqConnectionUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import lombok.SneakyThrows;
@@ -16,7 +16,7 @@ public class Product {
 
     @SneakyThrows
     public static void main(String[] args) {
-        Connection conn = ConnectionUtil.getConnection();
+        Connection conn = MqConnectionUtil.getConnection();
 //        从链接中创建通道，使用通道才能完成消息的相关操作
         Channel channel = conn.createChannel();
         /**

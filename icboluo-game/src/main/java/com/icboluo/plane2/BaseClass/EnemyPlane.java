@@ -1,7 +1,7 @@
 package com.icboluo.plane2.BaseClass;
 
 import com.icboluo.plane2.PlanConstant;
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class EnemyPlane extends FlyObject {
     public EnemyPlane() {
         sizeX = 90;
         sizeY = 70;
-        x = RandomHelper.nextInt(410);
+        x = RandomUtil.nextInt(410);
         y = -50;
         speedX = 0;
         speedY = 1;

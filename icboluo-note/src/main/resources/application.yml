@@ -5,6 +5,11 @@ spring:
     active: simple
   application:
     name: icboluo-note
+  messages:
+    #    必须有messages/messages.properties文件必须有（默认配置，内容可以为空），相反，其他文件可以瞎填类似的
+    basename: i18n/messages
+    #    找不到用 msg的code
+    use-code-as-default-message: true
 mybatis:
   configuration:
     #    自动小驼峰映射

@@ -5,8 +5,7 @@ import com.icboluo.common.PageQuery;
 import com.icboluo.common.redis.RedisList;
 import com.icboluo.entity.CultivationCareer;
 import com.icboluo.mapper.CultivationCareerMapper;
-import com.icboluo.service.CultivationCareerService;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +41,7 @@ public class CultivationCareerServiceImpl implements CultivationCareerService {
 /*        PageHelper.startPage(1, 10);
         List<CultivationCareer> list = cultivationCareerMapper.selectByPlayer(id);*/
         List<CultivationCareer> list = redisList.get("career:" + id);
-        return BeanHelper.fakePage(list, new PageQuery());
+        return BeanUtil.fakePage(list, new PageQuery());
     }
 
     @Override

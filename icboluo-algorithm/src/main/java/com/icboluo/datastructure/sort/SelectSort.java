@@ -1,6 +1,6 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 
 import java.util.Arrays;
 
@@ -14,7 +14,7 @@ class SelectSort {
         int[] arr = {101, 34, 119, 1};
         //selectSort(arr);
         selectSort2(arr);
-        selectSort2(RandomHelper.getRandom(80000));
+        selectSort2(RandomUtil.getRandom(80000));
     }
 
     private static void selectSort2(int[] arr) {

@@ -9,7 +9,7 @@ import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.MathUtil;
 import jakarta.annotation.Resource;
@@ -69,7 +69,7 @@ public class FundDataServiceImpl implements FundDataService {
             List<FundDataVO> allList = fundDataMapper.selectChooseAll(query.getFundId());
             List<FundDataVO> simChoose = findSimChoose(sourceList, allList, query.getChooseDateLength());
 
-            return BeanHelper.fakePage(simChoose, a -> {
+            return BeanUtil.fakePage(simChoose, a -> {
                 fillView(a);
                 return a;
             }, query);
@@ -84,7 +84,7 @@ public class FundDataServiceImpl implements FundDataService {
         List<FundDataVO> findList = fundDataMapper.selectByQuery(query);
         List<FundData> list = findList.stream()
                 .filter(item -> !ObjectUtils.isEmpty(item.getIncreaseRateDay()))
-                .map(item -> BeanHelper.copyProperties(item, FundData.class))
+                .map(item -> BeanUtil.copyProperties(item, FundData.class))
                 .toList();
         DoubleSummaryStatistics summaryStatistics = list.stream()
                 .map(FundData::getIncreaseRateDay)

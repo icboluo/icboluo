@@ -1,6 +1,6 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 
 import java.util.Arrays;
 
@@ -14,7 +14,7 @@ class InsertSort {
         int[] arr = {101, 34, 119, 1};
         //m1(arr);
         m2(arr);
-        m2(RandomHelper.getRandom(80000));
+        m2(RandomUtil.getRandom(80000));
     }
 
     private static void m2(int[] arr) {

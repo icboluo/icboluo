@@ -42,10 +42,8 @@ public abstract class Response implements Serializable {
      */
     private String message;
 
-    public Response(ReEnum reEnum) {
+    protected Response(ReEnum reEnum) {
         this.code = reEnum.getCode();
         this.message = reEnum.getMessage();
     }
-
-
 }

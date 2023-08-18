@@ -1,6 +1,6 @@
 package com.icboluo.designpattern.a4_behavior.state;
 
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 import lombok.AllArgsConstructor;
 
 /**
@@ -21,7 +21,7 @@ public class CanRaffleState extends State {
     @Override
     public boolean raffle() {
         System.out.println("正在抽奖");
-        int[] random = RandomHelper.getRandom(10);
+        int[] random = RandomUtil.getRandom(10);
         if (random[0] % 2 == 0) {
             actitvity.setState(actitvity.getDispenseState());
             return true;

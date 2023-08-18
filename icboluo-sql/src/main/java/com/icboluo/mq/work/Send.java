@@ -1,7 +1,7 @@
 package com.icboluo.mq.work;
 
 import com.icboluo.constant.MqConstant;
-import com.icboluo.util.ConnectionUtil;
+import com.icboluo.util.MqConnectionUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import lombok.SneakyThrows;
@@ -16,7 +16,7 @@ public class Send {
 
     @SneakyThrows
     public static void main(String[] args) {
-        Connection conn = ConnectionUtil.getConnection();
+        Connection conn = MqConnectionUtil.getConnection();
         Channel channel = conn.createChannel();
         channel.queueDeclare(MqConstant.QUEUE_NAME_WORK, false, false, false, null);
         for (int i = 0; i < 50; i++) {

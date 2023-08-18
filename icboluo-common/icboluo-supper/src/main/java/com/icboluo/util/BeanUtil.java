@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("unused")
-public class BeanHelper {
+public class BeanUtil {
 
     private static final String CONVERT_ERR_MESSAGE = "【数据转换】数据转换出错，目标对象{}构造函数异常";
 
@@ -81,14 +81,9 @@ public class BeanHelper {
      * @return 目标集合
      */
     public static <T> List<T> copyWithColl(List<?> sourceList, @NonNull Class<T> target) {
-        try {
-            return sourceList.stream()
-                    .map(s -> copyProperties(s, target))
-                    .toList();
-        } catch (Exception e) {
-            log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
-            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
-        }
+        return sourceList.stream()
+                .map(s -> copyProperties(s, target))
+                .toList();
     }
 
     public static <T> List<T> copyWithColl(List<?> sourceList, @NonNull Supplier<T> supplier) {
@@ -117,14 +112,9 @@ public class BeanHelper {
      * @return 目标集合
      */
     public static <T> Set<T> copyWithColl(Set<?> sourceList, @NonNull Class<T> target) {
-        try {
-            return sourceList.stream()
-                    .map(s -> copyProperties(s, target))
-                    .collect(Collectors.toSet());
-        } catch (Exception e) {
-            log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
-            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
-        }
+        return sourceList.stream()
+                .map(s -> copyProperties(s, target))
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -322,6 +312,8 @@ public class BeanHelper {
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
-        // TODO
+        for (int i = 0; i < (list.size() + 4999) / 5000; i++) {
+            consumer.accept(list.subList(i * 5000, (i + 1) + 5000));
+        }
     }
 }

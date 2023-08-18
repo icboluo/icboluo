@@ -14,6 +14,8 @@ fastjson需要放到序列化工具中的第一个，要不然都被别人执行
 
 jackson序列化使用@JsonProperty即可
 
+@JsonFormat jackson序列化使用这个
+
 ## 父类序列化
 
 当一个父类实现了序列化，它的子类也自动实现序列化，不用显示进行实现了

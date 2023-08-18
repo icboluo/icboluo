@@ -1,7 +1,7 @@
 package com.icboluo.plane2.BaseClass;
 
 import com.icboluo.plane2.PlanConstant;
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 import lombok.Data;
 
 import javax.imageio.ImageIO;
@@ -37,7 +37,7 @@ public class Prop extends FlyObject {
     int type;
 
     public Prop() {
-        type = RandomHelper.nextInt(10) % 3;
+        type = RandomUtil.nextInt(10) % 3;
 
         speedX = 0;
         speedY = 3;

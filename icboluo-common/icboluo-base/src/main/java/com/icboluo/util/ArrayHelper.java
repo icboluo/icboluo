@@ -213,15 +213,6 @@ public class ArrayHelper {
                 }).toList();
     }
 
-    public static <T> boolean allEleIsNull(T[] row) {
-        for (T t : row) {
-            if (!Objects.isNull(t)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * 打印一个表格，类似于打印一个Excel单元格
      *

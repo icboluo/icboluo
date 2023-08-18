@@ -8,7 +8,7 @@ import lombok.SneakyThrows;
  * @author icboluo
  * @since 2021-10-25 22:48
  */
-public class ConnectionUtil {
+public class MqConnectionUtil {
 
     @SneakyThrows
     public static Connection getConnection() {

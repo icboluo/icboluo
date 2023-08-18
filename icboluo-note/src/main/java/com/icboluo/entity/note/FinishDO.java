@@ -2,7 +2,7 @@ package com.icboluo.entity.note;
 
 import com.icboluo.common.Constant;
 import com.icboluo.object.view.FiledResultVO;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import lombok.Data;
 
 import java.io.Serial;
@@ -55,7 +55,7 @@ public class FinishDO implements FiledResultInter, Serializable {
 
     @Override
     public FiledResultVO toFiledResultView() {
-        FiledResultVO filedResult = BeanHelper.copyProperties(this, FiledResultVO.class);
+        FiledResultVO filedResult = BeanUtil.copyProperties(this, FiledResultVO.class);
         filedResult.setType(Constant.FINISH_TYPE);
         return filedResult;
     }

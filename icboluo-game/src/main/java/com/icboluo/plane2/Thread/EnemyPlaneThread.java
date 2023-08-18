@@ -1,7 +1,7 @@
 package com.icboluo.plane2.Thread;
 
 import com.icboluo.plane2.BaseClass.EnemyPlane;
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 import com.icboluo.util.SimpleThreadUtil;
 
 import static com.icboluo.plane2.AtkAll.enemyPlanes;
@@ -27,7 +27,7 @@ public class EnemyPlaneThread implements Runnable {
             EnemyPlane enemyPlane = new EnemyPlane();
             enemyPlanes.add(enemyPlane);
             new Thread(new EnemyBulletThread(enemyPlane)).start();
-            SimpleThreadUtil.sleep(sleepTime + RandomHelper.nextInt(300));
+            SimpleThreadUtil.sleep(sleepTime + RandomUtil.nextInt(300));
         }
     }
 }

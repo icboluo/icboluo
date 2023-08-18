@@ -9,7 +9,7 @@ import com.icboluo.object.client.TimeUpdateCO;
 import com.icboluo.object.query.TimeNoteQuery;
 import com.icboluo.object.view.FiledResultVO;
 import com.icboluo.object.view.NoteVO;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import com.icboluo.util.DateHelper;
 import com.icboluo.util.IcBoLuoException;
 import jakarta.annotation.Resource;
@@ -141,23 +141,23 @@ public class NoteServiceImpl implements NoteService {
     public void update(TimeNoteCO client, int id, String type) {
         if (Constant.TIME_TYPE.equals(type)) {
             TimeNoteDO timeNoteDO = timeNoteMapper.selectByPrimaryKey(id);
-            BeanHelper.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getBelongToScope, TimeNoteDO::setBelongToScope);
-            BeanHelper.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getProblem, TimeNoteDO::setProblem);
-            BeanHelper.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getResult, TimeNoteDO::setResult);
+            BeanUtil.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getBelongToScope, TimeNoteDO::setBelongToScope);
+            BeanUtil.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getProblem, TimeNoteDO::setProblem);
+            BeanUtil.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getResult, TimeNoteDO::setResult);
             timeNoteDO.setGmtModified(LocalDateTime.now());
             timeNoteMapper.updateByPrimaryKeySelective(timeNoteDO);
         } else if (Constant.WEEK_TYPE.equals(type)) {
             WeekTimeDO weekTimeDO = weekTimeMapper.selectByPrimaryKey(id);
-            BeanHelper.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getBelongToScope, WeekTimeDO::setBelongToScope);
-            BeanHelper.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getProblem, WeekTimeDO::setProblem);
-            BeanHelper.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getResult, WeekTimeDO::setResult);
+            BeanUtil.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getBelongToScope, WeekTimeDO::setBelongToScope);
+            BeanUtil.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getProblem, WeekTimeDO::setProblem);
+            BeanUtil.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getResult, WeekTimeDO::setResult);
             weekTimeDO.setGmtModified(LocalDateTime.now());
             weekTimeMapper.updateByPrimaryKeySelective(weekTimeDO);
         } else if (Constant.MONTH_TYPE.equals(type)) {
             MonthTimeDO monthTimeDO = monthTimeMapper.selectByPrimaryKey(id);
-            BeanHelper.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getBelongToScope, MonthTimeDO::setBelongToScope);
-            BeanHelper.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getProblem, MonthTimeDO::setProblem);
-            BeanHelper.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getResult, MonthTimeDO::setResult);
+            BeanUtil.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getBelongToScope, MonthTimeDO::setBelongToScope);
+            BeanUtil.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getProblem, MonthTimeDO::setProblem);
+            BeanUtil.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getResult, MonthTimeDO::setResult);
             monthTimeDO.setGmtModified(LocalDateTime.now());
             monthTimeMapper.updateByPrimaryKeySelective(monthTimeDO);
         }
@@ -188,7 +188,7 @@ public class NoteServiceImpl implements NoteService {
         Integer id = client.getId();
         TimeNoteDO timeNoteDO = timeNoteMapper.selectByPrimaryKey(id);
         timeNoteMapper.deleteByPrimaryKey(id);
-        OnlyReadDO onlyReadDO = BeanHelper.copyProperties(timeNoteDO, OnlyReadDO.class);
+        OnlyReadDO onlyReadDO = BeanUtil.copyProperties(timeNoteDO, OnlyReadDO.class);
         onlyReadDO.setGmtModified(null);
         onlyReadMapper.insertSelective(onlyReadDO);
     }

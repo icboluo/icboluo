@@ -15,7 +15,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * 包装类型比较大小的时候不要用equals，用compare
+ * 数学工具类
  *
  * @author icboluo
  * @since 2020/12/2 20:29
@@ -43,7 +43,7 @@ public class MathUtil {
         if (scale == null) {
             scale = 2;
         }
-        if (m.compareTo(BigDecimal.ZERO) == 0 || d.compareTo(BigDecimal.ZERO) == 0) {
+        if (equals(m, BigDecimal.ZERO) || equals(d, BigDecimal.ZERO)) {
             return BigDecimal.ZERO;
         }
         return m.divide(d, scale, mode);
@@ -69,16 +69,17 @@ public class MathUtil {
      * @return 百分数返回值
      */
     public static <M, D> BigDecimal dividePercentage(@NonNull M molecular, @NonNull D denominator, Integer scale, RoundingMode mode) {
-        BigDecimal multiply = TypeUtils.castToBigDecimal(molecular).multiply(new BigDecimal(100));
-        BigDecimal divide = divide(multiply, denominator, scale, mode);
-        if (divide.compareTo(BigDecimal.valueOf(100)) == 0) {
-            if (TypeUtils.castToBigDecimal(molecular).compareTo(TypeUtils.castToBigDecimal(denominator)) == 0) {
+        BigDecimal mBd = TypeUtils.castToBigDecimal(molecular);
+        BigDecimal dBd = TypeUtils.castToBigDecimal(denominator);
+        BigDecimal divide = divide(mBd.multiply(new BigDecimal(100)), dBd, scale, mode);
+        if (equals(divide, BigDecimal.valueOf(100))) {
+            if (equals(mBd, dBd)) {
                 return BigDecimal.valueOf(100);
             }
             return BigDecimal.valueOf(99.99);
         }
-        if (divide.compareTo(BigDecimal.ZERO) == 0) {
-            if (TypeUtils.castToBigDecimal(molecular).compareTo(BigDecimal.ZERO) == 0) {
+        if (equals(divide, BigDecimal.ZERO)) {
+            if (equals(mBd, BigDecimal.ZERO)) {
                 return BigDecimal.ZERO;
             }
             return BigDecimal.valueOf(0.01);
@@ -105,7 +106,7 @@ public class MathUtil {
     }
 
     public static <T extends Comparable<T>> boolean between(T source, T a, T b) {
-        if (source.compareTo(a) == 0 && source.compareTo(b) == 0) {
+        if (equals(source, a) || equals(source, b)) {
             return true;
         }
         return source.compareTo(a) * source.compareTo(b) == -1;
@@ -135,5 +136,17 @@ public class MathUtil {
         List<T> bdList = list.stream().filter(Objects::nonNull).toList();
         long sum = bdList.stream().filter(isSuccess).count();
         return dividePercentage(sum, bdList.size());
+    }
+
+    /**
+     * 数值是否相等 包装类型比较大小的时候不要用equals，用compare
+     *
+     * @param a   参数a
+     * @param b   参数b
+     * @param <T> 数据类型
+     * @return a和b是否相等
+     */
+    private static <T extends Comparable<T>> boolean equals(T a, T b) {
+        return a.compareTo(b) == 0;
     }
 }

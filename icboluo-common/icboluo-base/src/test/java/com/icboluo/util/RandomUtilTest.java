@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-class RandomHelperTest {
+class RandomUtilTest {
 
     @Test
     void getRandom() {
-        int[] random = RandomHelper.getRandom(10);
+        int[] random = RandomUtil.getRandom(10);
         System.out.println(Collections.singletonList(random));
     }
 }

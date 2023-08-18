@@ -3,7 +3,7 @@ package com.icboluo.entity.note;
 import com.icboluo.common.Constant;
 import com.icboluo.object.view.FiledResultVO;
 import com.icboluo.object.view.NoteVO;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import lombok.Data;
 
 import java.io.Serial;
@@ -56,20 +56,20 @@ public class TimeNoteDO implements NoteViewInter, FiledResultInter, NoteCommonIn
 
     @Override
     public NoteVO toView() {
-        NoteVO noteVO = BeanHelper.copyProperties(this, NoteVO.class);
+        NoteVO noteVO = BeanUtil.copyProperties(this, NoteVO.class);
         noteVO.setType(Constant.TIME_TYPE);
         return noteVO;
     }
 
     @Override
     public FiledResultVO toFiledResultView() {
-        FiledResultVO filedResult = BeanHelper.copyProperties(this, FiledResultVO.class);
+        FiledResultVO filedResult = BeanUtil.copyProperties(this, FiledResultVO.class);
         filedResult.setType(Constant.TIME_TYPE);
         return filedResult;
     }
 
     public WeekTimeDO toWeek() {
-        WeekTimeDO weekTimeDO = BeanHelper.copyProperties(this, WeekTimeDO.class);
+        WeekTimeDO weekTimeDO = BeanUtil.copyProperties(this, WeekTimeDO.class);
         weekTimeDO.setId(null);
         weekTimeDO.setGmtCreate(null);
         weekTimeDO.setGmtFirstCreate(this.getGmtCreate());

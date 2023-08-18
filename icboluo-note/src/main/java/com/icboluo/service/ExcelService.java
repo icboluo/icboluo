@@ -17,7 +17,7 @@ import com.icboluo.object.business.SheetBO;
 import com.icboluo.object.client.RowCO;
 import com.icboluo.object.view.RowVO;
 import com.icboluo.object.view.SheetVO;
-import com.icboluo.util.BeanHelper;
+import com.icboluo.util.BeanUtil;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.FileHelper;
 import com.icboluo.util.IcBoLuoException;
@@ -87,7 +87,7 @@ public class ExcelService {
     private void buildExcelBO(SheetBO sheetBO, List<RowCO> rowCOS) {
         List<RowBO> list = new ArrayList<>();
         for (RowCO rowCO : rowCOS) {
-            RowBO rowBO = BeanHelper.copyProperties(rowCO, RowBO.class);
+            RowBO rowBO = BeanUtil.copyProperties(rowCO, RowBO.class);
             list.add(rowBO);
         }
         sheetBO.setList(list);
@@ -109,7 +109,7 @@ public class ExcelService {
             if (tables.contains(table)) {
                 List<RowDO> data = excelMapper.selectTableConstruction(database, table);
                 SheetVO sheetVO = new SheetVO();
-                sheetVO.setList(BeanHelper.copyWithColl(data, RowVO.class));
+                sheetVO.setList(BeanUtil.copyWithColl(data, RowVO.class));
                 return Collections.singletonList(sheetVO);
             } else {
                 throw new IcBoLuoException("数据库" + database + "中没有" + table + "数据库");
@@ -124,7 +124,7 @@ public class ExcelService {
             List<RowDO> v = entry.getValue();
             SheetVO sheetVO = new SheetVO();
             sheetVO.setSheetName(tableName);
-            sheetVO.setList(BeanHelper.copyWithColl(v, RowVO.class));
+            sheetVO.setList(BeanUtil.copyWithColl(v, RowVO.class));
             list.add(sheetVO);
         }
         return list;

@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
-public class HttpHelper {
+public class HttpUtil {
 
     /**
      * 发送get请求

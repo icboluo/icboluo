@@ -1,6 +1,6 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 
 import java.util.Arrays;
 
@@ -15,7 +15,7 @@ class RadixSort {
     public static void main(String[] args) {
         int[] arr = {53, 3, 542, 748, 14, 214};
         //8千万*11个桶*4个字节/1024/1024/1024=3.3g
-        int[] random = RandomHelper.getRandom(80000000);
+        int[] random = RandomUtil.getRandom(80000000);
         m2(random);
     }
 

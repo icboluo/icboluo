@@ -1,6 +1,6 @@
 package com.icboluo.datastructure.sort;
 
-import com.icboluo.util.RandomHelper;
+import com.icboluo.util.RandomUtil;
 import com.icboluo.util.TimeRecord;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import java.util.Arrays;
     public static void main(String[] args) {
         TimeRecord.start();
         int[] arr = {4, 6, 8, 5, 9};
-        int[] random = RandomHelper.getRandom(8000000);
+        int[] random = RandomUtil.getRandom(8000000);
         TimeRecord.recordMsg();
         m2(random);
         TimeRecord.build();
