@@ -47,8 +47,8 @@
         </dependency>
         <!--        拥有 Validation，可以手动开启校验-->
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
         </dependency>
         <!--        上面只相当于有一个接口，具体实现得看这个，放在子项目比较合理，为了简单就放这里了-->
         <dependency>

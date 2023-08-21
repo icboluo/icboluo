@@ -2,14 +2,14 @@ package com.icboluo.util;
 
 import com.icboluo.function.SerialFunction;
 import com.icboluo.util.serialize.SerializedLambda;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import jakarta.validation.groups.Default;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.validation.groups.Default;
 import java.util.Set;
 
 /**
@@ -21,7 +21,7 @@ import java.util.Set;
  * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
  *
  * @author icboluo
- * @see javax.validation.Valid
+ * @see jakarta.validation.Valid
  * @see org.springframework.validation.annotation.Validated
  * <p>
  * validate 如果后面不加BindingResult则抛异常，如果加上，则会将错误的结果收集到bs中

@@ -8,19 +8,19 @@ import com.icboluo.util.response.Response;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolationException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  *
  * @author icboluo
  */
-@RestControllerAdvice({"com.icboluo"})
+@RestControllerAdvice
 @Slf4j
 public class GlobalControllerExceptionHandler {
 
@@ -48,16 +48,17 @@ public class GlobalControllerExceptionHandler {
      * @return 失败的响应信息
      */
     @ExceptionHandler(value = {IcBoLuoException.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @SuppressWarnings("all")
     public Response icBoLuoExceptionHandler(IcBoLuoException e) {
         printLog(e);
-        // response.setStatus(500); // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
+        // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
+        // response.setStatus(500);
         return R.error(500, e.getMessage());
     }
 
     /**
-     * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
+     * 自定义国际化异常
      *
      * @param e 异常信息
      * @return 失败的响应信息
@@ -69,8 +70,14 @@ public class GlobalControllerExceptionHandler {
         return R.error(500, message);
     }
 
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public Response httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        printLog(e);
+        return R.error(e.getStatusCode().value(), e.getMessage());
+    }
+
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public Response methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+    public Response methodArgumentNotValidException(MethodArgumentNotValidException e) {
         printLog(e);
         BindingResult bindingResult = e.getBindingResult();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -86,11 +93,13 @@ public class GlobalControllerExceptionHandler {
     }
 
     /**
+     * 参数异常
+     *
      * @param e exception
      * @return msg
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public Response constraintViolationExceptionHandler(ConstraintViolationException e) {
+    public Response constraintViolationException(ConstraintViolationException e) {
         printLog(e);
         return R.error(e.getMessage());
     }
@@ -130,6 +139,7 @@ public class GlobalControllerExceptionHandler {
     private void printLog(Throwable e) {
         if (log.isDebugEnabled()) {
             StringBuilder builder = new StringBuilder();
+            builder.append(e.getMessage());
             builder.append("\nURL:").append(request.getRequestURL().toString()).append('\n');
             builder.append("Method:").append(request.getMethod()).append('\n');
             builder.append("Headers:\n");
@@ -138,15 +148,16 @@ public class GlobalControllerExceptionHandler {
                 String name = headerNames.nextElement();
                 builder.append(name).append(":").append(request.getHeader(name)).append('\n');
             }
-            builder.append("Cookies:\n");
+            builder.append("Cookies:");
             Cookie[] cookies = request.getCookies();
             if (Objects.nonNull(cookies)) {
                 for (Cookie cookie : cookies) {
                     builder.append(cookie.getName()).append(":").append(cookie.getValue()).append('\n');
                 }
             }
-            log.debug("{}", builder);
+            log.error("{}", builder, e);
+        } else {
+            log.error("{}", e.getMessage(), e);
         }
-        log.error("{}", e.getMessage(), e);
     }
 }

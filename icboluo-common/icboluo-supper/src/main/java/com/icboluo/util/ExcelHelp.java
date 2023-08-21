@@ -34,6 +34,22 @@ public class ExcelHelp {
     }
 
     /**
+     * 0168 Excel 数字转换为列号
+     *
+     * @param n 数字，从1开始
+     * @return 列英文名称
+     */
+    public static String convertToTitle(int n) {
+        StringBuilder result = new StringBuilder();
+        while (n > 0) {
+            n--;
+            result.insert(0, (char) ('A' + n % 26));
+            n /= 26;
+        }
+        return result.toString();
+    }
+
+    /**
      * 0171 Excel 列号转数字
      * 我们可以发现 BCM=(2*26+3)26+13
      *
