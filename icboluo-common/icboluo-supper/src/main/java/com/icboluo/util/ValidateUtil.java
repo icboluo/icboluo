@@ -20,6 +20,8 @@ import java.util.Set;
  * NotEmpty.contain NotBlack+NotNull
  * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
  *
+ * @Valid 注解标记List类型的失效，需要在类上增加@Validated注解
+ *
  * @author icboluo
  * @see jakarta.validation.Valid
  * @see org.springframework.validation.annotation.Validated

@@ -25,10 +25,10 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
             <exclusions>
                 <!--                如果不取消，启动的时候会只有一个接口，没有实现类报错-->
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-validation</artifactId>
-                </exclusion>
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-validation</artifactId>-->
+<!--                </exclusion>-->
             </exclusions>
         </dependency>
         <dependency>

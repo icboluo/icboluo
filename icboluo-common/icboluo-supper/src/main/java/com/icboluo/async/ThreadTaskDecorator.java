@@ -1,10 +1,13 @@
 package com.icboluo.async;
 
 import com.icboluo.interceptor.UserContext;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.task.TaskDecorator;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -15,7 +18,10 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 2022-02-26 19:43
  */
 @Slf4j
+@AllArgsConstructor
 public class ThreadTaskDecorator implements TaskDecorator {
+
+    private String threadNamePre;
 
     @Override
     public Runnable decorate(@NonNull Runnable runnable) {
@@ -37,13 +43,16 @@ public class ThreadTaskDecorator implements TaskDecorator {
                 .filter(st -> !st.getClassName().contains("com.icboluo.async.AsyncTaskDecorator"))
                 .findFirst()
                 .ifPresent(st -> threadName.set(st.getMethodName()));
+        // 如果父线程是一个http请求，将父线程中的request传递到子线程，支持request的各种操作
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         try {
             // 部分操作
             return () -> {
                 try {
-                    Thread.currentThread().setName("async-" + threadName + Thread.currentThread().getName());
+                    Thread.currentThread().setName(threadNamePre + threadName + Thread.currentThread().getName());
                     UserContext.set("");
                     LocaleContextHolder.setLocale(locale);
+                    RequestContextHolder.setRequestAttributes(requestAttributes);
                     // 使用MDC也是可以的
                     // MDC.setContextMap(new HashMap<>());
                     runnable.run();

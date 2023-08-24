@@ -3,7 +3,6 @@ package com.icboluo.controller;
 import com.icboluo.feign.UserFeign;
 import com.icboluo.service.UserService;
 import com.icboluo.util.response.R;
-import com.icboluo.util.response.Response;
 import com.icboluo.util.response.SingleResponse;
 import io.swagger.annotations.Api;
 import jakarta.annotation.Resource;
@@ -47,11 +46,12 @@ public class UserController {
 
     @GetMapping("feign/getUserNameById")
     public String feignGetUserNameById(@RequestParam Integer id) {
-        return userFeign.getUserNameById(id);
+        SingleResponse<String> response = userFeign.getUserNameById(id);
+        return response.getData();
     }
 
     @GetMapping("restTemplate/getUserNameById")
-    public Response restTemplateGetUserNameById(@RequestParam Integer id) {
+    public Object restTemplateGetUserNameById(@RequestParam Integer id) {
 /*        这个是放在请求体中传输的
         String obj = restTemplate.postForObject(USER_SERVICE + "/user/getUserNameById", id, String.class);*/
         SingleResponse obj = restTemplate.getForObject(USER_SERVICE + "/user/getUserNameById?id=" + id, SingleResponse.class);
@@ -59,7 +59,7 @@ public class UserController {
         ResponseEntity<SingleResponse> entity = restTemplate.getForEntity(USER_SERVICE + "/user/getUserNameById?id=" + id, SingleResponse.class);
         log.info("发送 get 请求 取整个返回结果，返回的entity是：" + entity);
         if (entity.getStatusCode().is2xxSuccessful()) {
-            return R.correct(entity.getBody());
+            return entity.getBody();
         } else {
             return R.error();
         }

@@ -70,7 +70,7 @@
         <hutool.all.version>5.8.4</hutool.all.version>
         <common.io.version>2.8.0</common.io.version>
         <!--cloud-->
-        <cloud.dependencies.version>2021.0.1</cloud.dependencies.version>
+        <cloud.dependencies.version>2022.0.3</cloud.dependencies.version>
 
         <swagger.verison>3.0.0</swagger.verison>
         <jakarta.activation.version>2.0.0</jakarta.activation.version>

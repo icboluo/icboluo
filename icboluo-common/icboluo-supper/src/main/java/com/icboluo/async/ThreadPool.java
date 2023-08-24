@@ -20,25 +20,37 @@ public class ThreadPool {
         return ioExecutor();
     }
 
+    /**
+     * I/O 密集型任务的线程池
+     *
+     * @return 线程池任务执行器
+     */
     @Bean
-    public TaskExecutor ioExecutor() {
-        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setCorePoolSize(10);
-        threadPoolTaskExecutor.setMaxPoolSize(100);
-        threadPoolTaskExecutor.setTaskDecorator(new ThreadTaskDecorator());
-        threadPoolTaskExecutor.setThreadNamePrefix("-");
-        threadPoolTaskExecutor.initialize();
-        return threadPoolTaskExecutor;
+    public ThreadPoolTaskExecutor ioExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        int cpu = Runtime.getRuntime().availableProcessors();
+        int coreSize = Math.max(10, cpu * 2);
+        executor.setCorePoolSize(coreSize);
+        // 这个最大线程设置了意义不大啊，基本不会达到
+        executor.setMaxPoolSize(coreSize * 2);
+        executor.setQueueCapacity(coreSize * 100);
+        executor.setThreadNamePrefix("-");
+        executor.setTaskDecorator(new ThreadTaskDecorator("ioAsync-"));
+        executor.initialize();
+        return executor;
     }
 
     @Bean
-    public TaskExecutor cpuExecutor() {
-        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setCorePoolSize(10);
-        threadPoolTaskExecutor.setMaxPoolSize(100);
-        threadPoolTaskExecutor.setTaskDecorator(new ThreadTaskDecorator());
-        threadPoolTaskExecutor.setThreadNamePrefix("-");
-        threadPoolTaskExecutor.initialize();
-        return threadPoolTaskExecutor;
+    public ThreadPoolTaskExecutor cpuExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        int cpu = Runtime.getRuntime().availableProcessors();
+        int coreSize = Math.max(10, cpu + 1);
+        executor.setCorePoolSize(coreSize);
+        executor.setMaxPoolSize(coreSize * 2);
+        executor.setQueueCapacity(coreSize * 100);
+        executor.setThreadNamePrefix("-");
+        executor.setTaskDecorator(new ThreadTaskDecorator("ioAsync-"));
+        executor.initialize();
+        return executor;
     }
 }

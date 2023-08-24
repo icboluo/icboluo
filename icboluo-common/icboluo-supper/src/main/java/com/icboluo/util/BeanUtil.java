@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -212,6 +214,11 @@ public class BeanUtil {
         return TypeUtils.castToInt(val);
     }
 
+    @Deprecated
+    public static <T> String join(Collection<T> coll) {
+        return StringUtils.collectionToDelimitedString(coll, ";");
+    }
+
     public static <S, T, F> void notEmptyThenSet(S source, T target, Function<S, F> get, BiConsumer<T, F> set) {
         if (!ObjectUtils.isEmpty(get.apply(source))) {
             set.accept(target, get.apply(source));
@@ -279,6 +286,7 @@ public class BeanUtil {
         pi.setTotal(list.size());
         pi.setPageNum(query.getPageNum());
         pi.setPageSize(query.getPageSize());
+        pi.setPages((list.size() + query.getPageSize() - 1) / query.getPageSize());
         return pi;
     }
 
@@ -312,8 +320,55 @@ public class BeanUtil {
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
-        for (int i = 0; i < (list.size() + 4999) / 5000; i++) {
-            consumer.accept(list.subList(i * 5000, (i + 1) + 5000));
+        for (int i = 0; i < list.size(); i+=5000) {
+            List<T> subList = list.subList(i, Math.min(i + 5000, list.size()));
+            consumer.accept(subList);
         }
+    }
+
+    /**
+     * 将列表最大分成max组（自行判断传参的合理性：eg：分组大小不能为0，list不能为null...）
+     *
+     * @param stream       原始列表流
+     * @param maxGroupSize 最大分组大小
+     * @param <T>          元素类型
+     * @return 分组后列表
+     */
+    public static <T> List<List<T>> groupBySize(Stream<T> stream, int maxGroupSize) {
+        List<T> list = stream.toList();
+        if (maxGroupSize > list.size()) {
+            return list.stream().map(Arrays::asList).toList();
+        }
+        List<List<T>> res = new ArrayList<>();
+        for (int i = 0; i < maxGroupSize; i++) {
+            res.add(new ArrayList<>());
+        }
+        for (int i = 0; i < list.size(); i++) {
+            res.get(i % res.size()).add(list.get(i));
+        }
+        return res;
+    }
+
+    /**
+     * 根据一组大小分组，限制每组的最大数量
+     *
+     * @param coll 集合
+     * @param size 每组最大大小
+     * @param <T>  元素类型
+     * @return 分组后的集合
+     */
+    public static <T> List<List<T>> groupByOneGroupSize(Collection<T> coll, int size) {
+        List<T> list = new ArrayList<>(coll);
+        List<List<T>> res = new ArrayList<>();
+        for (int i = 0; i < (coll.size() + size - 1) / size; i++) {
+            List<T> row = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                if (i * size + j < list.size()) {
+                    row.add(list.get(i * size + j));
+                }
+            }
+            res.add(row);
+        }
+        return res;
     }
 }

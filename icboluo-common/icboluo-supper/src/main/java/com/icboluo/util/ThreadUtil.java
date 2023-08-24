@@ -8,9 +8,11 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -37,22 +39,24 @@ public class ThreadUtil {
      * @param runnableArr 多个任务
      */
     public void threadFailRollBack(Runnable... runnableArr) {
-        // 将任务平均分为多个组，分组的总大小不能超过线程池的大小
-        List<List<Runnable>> lists = new ArrayList<>();
+        // 数据分组的大小，和线程池大小密切相关，不可设置过大
+        List<List<Runnable>> lists = BeanUtil.groupBySize(Arrays.stream(runnableArr), 10);
         // 悬停线程||存储改未提交的数据
         List<Thread> hoverThread = Collections.synchronizedList(new ArrayList<>());
         // 所有子线程是否有发生异常的
         AtomicBoolean isException = new AtomicBoolean(false);
         AtomicInteger threadCount = new AtomicInteger(lists.size());
+
         CompletableFuture<Void> all = CompletableFuture.allOf(lists.stream()
                 .map(runList -> runnableToCf(hoverThread, isException, threadCount, runList))
                 .toArray(CompletableFuture[]::new));
         try {
             all.get(10, TimeUnit.SECONDS);
-        } catch (IcBoLuoI18nException ex) {
+        } catch (ExecutionException ex) {
+            // 这2句其实没必要，仅仅是再加一层保险
             isException.set(true);
             hoverThread.forEach(LockSupport::unpark);
-            throw ex;
+            throw new IcBoLuoI18nException("ExecutionException", ex);
         } catch (Exception ex) {
             // 最差情况，出现异常（基本上也是超时异常）之后，所有的线程均被唤醒且回滚，防止长时间占用线程或者出现事物问题
             isException.set(true);
@@ -76,17 +80,25 @@ public class ThreadUtil {
             TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition(3));
             try {
                 runList.forEach(Runnable::run);
-                // 任务完成后将当前线程添加到悬停线程
-                hoverThread.add(Thread.currentThread());
-                // 哦安定是否需要唤醒所有子线程（唤醒后将会获得许可证，下行代码不会再有阻塞效果
-                LockSupport.park();
-                if (isException.get()) {
-                    transactionManager.rollback(transactionStatus);
-                } else {
-                    transactionManager.commit(transactionStatus);
-                }
-            } catch (Exception exception) {
 
+            } catch (Exception exception) {
+                log.error("task run fail ", exception);
+                isException.set(true);
+            }
+
+            // 任务完成后将当前线程添加到悬停线程
+            hoverThread.add(Thread.currentThread());
+            // 判断是否需要唤醒所有子线程（唤醒后将会获得许可证，下行代码不会再有阻塞效果）
+            if (hoverThread.size() == threadCount.get()) {
+                hoverThread.forEach(LockSupport::unpark);
+            }
+            // 悬停当前线程
+            LockSupport.park();
+            if (isException.get()) {
+                transactionManager.rollback(transactionStatus);
+                throw new IcBoLuoException();
+            } else {
+                transactionManager.commit(transactionStatus);
             }
         }, asyncExecutor);
     }

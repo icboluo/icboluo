@@ -4,6 +4,8 @@
 
 # 序列化和toString没有什么关系
 
+序列化和java中的修饰符无关，例如 private final
+
 alibaba fastjson 序列化成字节数据的时候需要增加get方法，否则序列化不出来
 
 # get方法jackson是可以序列化的，防止序列化可以在方法上加@Transient注解
@@ -35,3 +37,9 @@ toString几乎相反，但又完全不一样
 当设置全局 date format的时候，这个注解对于单个的对象属性并没有什么 作用，用下面的注解可以解决
 
 JSONField(format ="yyyy-mm-dd HH:mm:ss")
+
+## @Transient
+
+@Transient注解在接口上也是有效果的，而且作为父类，加上此注解，子类重写的方法也不会被序列化
+
+需要导入jdk的包，使用lombok的时候，放在字段上不生效，需要放到get方法上

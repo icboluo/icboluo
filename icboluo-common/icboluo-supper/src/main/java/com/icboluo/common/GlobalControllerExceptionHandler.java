@@ -27,7 +27,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * 拦截异常并统一处理
+ * <p>拦截异常并统一处理
+ * <p>全局异常处理，相当于controller层增加了一个异常捕获，全局返回值处理，已经脱离了web层，属于返回值包装；先全局异常处理，然后再全局返回值捕获
+ * <p>@RestControllerAdvice 有时候不生效是因为指定了basePackages，这个指定规则不知道具体是什么样的，只要不指定默认烧麦所有的包就可以了，
  *
  * @author icboluo
  */

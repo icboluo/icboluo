@@ -33,6 +33,10 @@ public class ValidHeadBodyListener<T> extends ValidHeadExcelListener<T> {
 
     @Override
     public void invoke(T data, AnalysisContext context) {
+        if (arr == null) {
+            // 这个近似总行数会统计空行，目前没有遇到过近似行数不准确的情况
+            arr = new String[context.readSheetHolder().getApproximateTotalRowNumber()][8];
+        }
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);

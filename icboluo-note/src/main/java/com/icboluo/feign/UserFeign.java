@@ -1,5 +1,6 @@
 package com.icboluo.feign;
 
+import com.icboluo.util.response.SingleResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,5 +20,5 @@ public interface UserFeign {
      * @return 用户名
      */
     @GetMapping("/user/getUserNameById")
-    String getUserNameById(@RequestParam("id") Integer id);
+    SingleResponse<String> getUserNameById(@RequestParam("id") Integer id);
 }
