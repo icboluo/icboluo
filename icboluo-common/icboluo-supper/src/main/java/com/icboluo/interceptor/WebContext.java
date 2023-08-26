@@ -1,9 +1,6 @@
 package com.icboluo.interceptor;
 
-import com.icboluo.controller.Demo;
 import com.icboluo.util.IcBoLuoException;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -18,31 +15,8 @@ import org.springframework.util.ObjectUtils;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Component
 @Slf4j
-public class UserContext {
+public class WebContext {
     private static final ThreadLocal<AdminUser> USER_CONTEXT = new ThreadLocal<>();
-
-    private static String role;
-
-    /**
-     * @see jakarta.annotation.PreDestroy 和PostConstruct基本一致，但是我没有用过
-     */
-    @PostConstruct
-    private void setRole() {
-        role = "post construct set value for static field, second execution";
-        log.warn(role);
-    }
-
-    /**
-     * 成员方法给静态变量赋值
-     *
-     * @param demo 这个参数只是模拟DI而已，找一个spring容器中的赋值给静态变量即可
-     */
-    @Resource
-    private void setRole(Demo demo) {
-        role = "member di set value for static field, first execution";
-        log.warn(role);
-    }
-
 
     @AllArgsConstructor
     private static class AdminUser {

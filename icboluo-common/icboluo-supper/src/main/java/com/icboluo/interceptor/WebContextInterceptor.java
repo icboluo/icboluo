@@ -26,6 +26,8 @@ public class WebContextInterceptor implements HandlerInterceptor {
         LocaleContextHolder.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
     }
 
+    static InheritableThreadLocal<String> USER_CODE = new InheritableThreadLocal<>();
+
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod handlerMethod)) {
@@ -38,15 +40,17 @@ public class WebContextInterceptor implements HandlerInterceptor {
                 .isPresent();
         if (present) {
             String userCode = request.getHeader(HttpConstant.USER_CODE);
-            UserContext.set(userCode);
+            WebContext.set(userCode);
+            USER_CODE.set(userCode);
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
     @Override
     public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, Exception ex) throws Exception {
-        UserContext.remove();
-//        接口名.super.默认方法名 可以直接调用接口中的方法
+        WebContext.remove();
+        USER_CODE.remove();
+        // 接口名.super.默认方法名 可以直接调用接口中的方法
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

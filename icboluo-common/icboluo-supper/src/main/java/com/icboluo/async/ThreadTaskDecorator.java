@@ -1,6 +1,6 @@
 package com.icboluo.async;
 
-import com.icboluo.interceptor.UserContext;
+import com.icboluo.interceptor.WebContext;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class ThreadTaskDecorator implements TaskDecorator {
             return () -> {
                 try {
                     Thread.currentThread().setName(threadNamePre + threadName + Thread.currentThread().getName());
-                    UserContext.set("");
+                    WebContext.set("");
                     LocaleContextHolder.setLocale(locale);
                     RequestContextHolder.setRequestAttributes(requestAttributes);
                     // 使用MDC也是可以的
@@ -59,7 +59,7 @@ public class ThreadTaskDecorator implements TaskDecorator {
                 } catch (Exception e) {
                     log.error("async task decorator run fail,msg is", e);
                 } finally {
-                    UserContext.remove();
+                    WebContext.remove();
                     // MDC.clear();
                 }
             };

@@ -25,16 +25,16 @@ public class StaticTestUtil {
     private StatusStudent studentConfig;
 
     static {
-        log.warn("静态代码块加载了");
+        log.warn("静态代码块加载了, third execution");
         student = new StatusStudent();
     }
 
     /**
-     * PostConstruct修饰的方法会在服务器加载Servle的时候运行，并且只会被服务器执行一次。PostConstruct在构造函数之后执行,init()方法之前执行
+     * PostConstruct修饰的方法会在服务器加载Servlet的时候运行，并且只会被服务器执行一次。PostConstruct在构造函数之后执行,init()方法之前执行
      */
     @PostConstruct
     public void init() {
-        log.warn("post method 执行了");
+        log.warn("post method 执行了, five execution");
         student = this.studentConfig;
     }
 

@@ -3,7 +3,7 @@ package com.icboluo.controller;
 import com.icboluo.annotation.*;
 import com.icboluo.dataobject.OrderCO;
 import com.icboluo.enumerate.ServiceNameEnum;
-import com.icboluo.interceptor.UserContext;
+import com.icboluo.interceptor.WebContext;
 import com.icboluo.util.StaticTestUtil;
 import com.icboluo.util.ValidateUtil;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +27,7 @@ public class WebInterceptorController {
     @WebContextAnno(service = ServiceNameEnum.WEB)
     @RecordTime
     public String getUserCode() {
-        return UserContext.userCode();
+        return WebContext.userCode();
     }
 
     @GetMapping("/userCodeAnnotation")
