@@ -4,7 +4,8 @@ import com.icboluo.enumerate.ReEnum;
 import lombok.Getter;
 
 /**
- * 公共异常
+ * <p>公共异常
+ * <p>自定义异常应该继承 Exception|RuntimeException, 不应该继承 Throwable
  *
  * @author icboluo
  */

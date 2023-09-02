@@ -320,9 +320,22 @@ public class BeanUtil {
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
-        for (int i = 0; i < list.size(); i+=5000) {
+        for (int i = 0; i < list.size(); i += 5000) {
             List<T> subList = list.subList(i, Math.min(i + 5000, list.size()));
             consumer.accept(subList);
+        }
+    }
+
+    public static <T> void batchConsumerSkipFail(List<T> list, Consumer<List<T>> consumer, Consumer<T> log) {
+        try {
+            batchConsumer(list, consumer);
+        } catch (Exception ex) {
+            if (list.size() == 1) {
+                log.accept(list.get(0));
+                return;
+            }
+            batchConsumerSkipFail(list.subList(0, list.size() / 2), consumer, log);
+            batchConsumerSkipFail(list.subList(list.size() / 2, list.size()), consumer, log);
         }
     }
 
@@ -357,7 +370,9 @@ public class BeanUtil {
      * @param <T>  元素类型
      * @return 分组后的集合
      */
+    @Deprecated
     public static <T> List<List<T>> groupByOneGroupSize(Collection<T> coll, int size) {
+        // ListUtils.partition(new ArrayList<>(coll), size);
         List<T> list = new ArrayList<>(coll);
         List<List<T>> res = new ArrayList<>();
         for (int i = 0; i < (coll.size() + size - 1) / size; i++) {

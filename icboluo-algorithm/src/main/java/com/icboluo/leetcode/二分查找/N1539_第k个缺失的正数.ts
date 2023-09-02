@@ -16,4 +16,3 @@ function findKthPositive(arr: number[], k: number): number {
     }
     return left + k
 }
-// FIXME ERROR EXP 1

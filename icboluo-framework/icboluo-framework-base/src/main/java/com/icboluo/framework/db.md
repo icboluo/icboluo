@@ -284,3 +284,9 @@ select * from information schema.INNODB TRX;
 
 left join on 和where的区别，where纯过滤，left join on是将过滤的条件展示出来，不管on什么，后面有没有and，左表
 全部数据均展示，只是右表数据有没有而已，即便on后面and左表，依然至少右表没有数据
+
+## 死锁
+
+mysql在同一个会话窗口中，由于只有一个事物在执行，因此不会发生死锁
+
+同一个会话窗口是值同一个idea的console，同一个navicat的一个查询页面

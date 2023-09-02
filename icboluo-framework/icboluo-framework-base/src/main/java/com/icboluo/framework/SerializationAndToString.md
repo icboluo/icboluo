@@ -43,3 +43,19 @@ JSONField(format ="yyyy-mm-dd HH:mm:ss")
 @Transient注解在接口上也是有效果的，而且作为父类，加上此注解，子类重写的方法也不会被序列化
 
 需要导入jdk的包，使用lombok的时候，放在字段上不生效，需要放到get方法上
+
+@Transient 在 spring.data包中的作用主要是 hibernate里面，在其他地方，例如 mybatisPlus是没有效果的
+
+在 SpringBoot自动转换为JSON字符串时，使用的是Jackson, 而Jackson会利用java的反射机制来获取对象的所有属性
+
+(包括 @Transient标记的属性), 再将他们转换为json格式的字符串;
+
+所以在字段上加 Transient关键字是没有效果，但是在get方法上加 @Transient注解有效果
+
+mybatisPlus 没有绕过 Transient的检查，相对友好，但是mp又不支持注解
+
+也就是说mp支持的是字段上加关键字，不支持注解
+
+要想mp和jpa都起作用，需要在字段上和get方法上都加声明
+
+有一个 javax包里面的注解暂未调查

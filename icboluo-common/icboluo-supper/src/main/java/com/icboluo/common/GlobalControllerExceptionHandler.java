@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
  * <p>拦截异常并统一处理
  * <p>全局异常处理，相当于controller层增加了一个异常捕获，全局返回值处理，已经脱离了web层，属于返回值包装；先全局异常处理，然后再全局返回值捕获
  * <p>@RestControllerAdvice 有时候不生效是因为指定了basePackages，这个指定规则不知道具体是什么样的，只要不指定默认烧麦所有的包就可以了，
+ * <p>GlobalControllerExceptionHandler 相当于 try catch，如果异常处理机制里面没有log.error(ex),则系统日志是查询不到异常堆栈日志的
+ * <p>throw 不产生任何的日志, 仅仅只有log会产生日志
  *
  * @author icboluo
  */
@@ -106,9 +108,15 @@ public class GlobalControllerExceptionHandler {
         return R.error(e.getMessage());
     }
 
+    /**
+     * 如果异常不能被 RuntimeException 捕获，则为受检异常，需要显示捕获
+     *
+     * @param ex 异常
+     * @return msg
+     */
     @ExceptionHandler(value = RuntimeException.class)
-    public Response runtimeExceptionHandler(RuntimeException e) {
-        printLog(e);
+    public Response runtimeExceptionHandler(RuntimeException ex) {
+        printLog(ex);
         return R.error(ReEnum.UNEXPECTED_EXCEPTION);
     }
 

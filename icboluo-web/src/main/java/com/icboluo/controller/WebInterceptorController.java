@@ -7,10 +7,7 @@ import com.icboluo.interceptor.WebContext;
 import com.icboluo.util.StaticTestUtil;
 import com.icboluo.util.ValidateUtil;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -25,7 +22,6 @@ public class WebInterceptorController {
 
     @GetMapping("/getUserCode")
     @WebContextAnno(service = ServiceNameEnum.WEB)
-    @RecordTime
     public String getUserCode() {
         return WebContext.userCode();
     }
@@ -36,8 +32,8 @@ public class WebInterceptorController {
     }
 
     @GetMapping("/bodyParam")
-    public String bodyParam(@RequestBodyParam(required = false) String id, @RequestBodyParam(required = false) String name,
-                            @RequestBodyParam(required = false) String code
+    public String bodyParam(@RequestParam(required = false) String id, @RequestParam(required = false) String name,
+                            @RequestParam(required = false) String code
     ) {
         return id + name + code;
     }

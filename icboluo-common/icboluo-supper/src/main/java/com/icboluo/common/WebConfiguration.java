@@ -49,7 +49,6 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(getAuthInterceptor());
 
         List<String> excludeList = excludePathPatterns();
-        // 从content中获取bean WebContextInterceptor webContextInterceptor = (WebContextInterceptor) ApplicationContextHelper.getBean(WebContextInterceptor.class);
         registry.addInterceptor(webContextInterceptor())
                 .addPathPatterns(includePathPatterns())
                 .excludePathPatterns(excludeList);

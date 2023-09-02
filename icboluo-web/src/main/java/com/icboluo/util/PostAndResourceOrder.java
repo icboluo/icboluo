@@ -48,5 +48,4 @@ public class PostAndResourceOrder {
         log.warn("student config bean is init, four execution");
         return new StatusStudent(18, "xiao ming");
     }
-
 }

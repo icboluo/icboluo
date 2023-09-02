@@ -79,7 +79,9 @@ Here are some ideas to get you started:
 [EasyExcel](icboluo-note/src/main/java/com/icboluo/controller/ExcelController.java) 使用\
 [笔记本](icboluo-note/src/main/java/com/icboluo/controller/TimeNoteController.java)\
 [Feign](icboluo-note/src/main/java/com/icboluo/feign/UserFeign.java) 的简单使用\
-[Swagger2](icboluo-note/src/main/java/com/icboluo/Swagger2.java) 的简单使用
+[Swagger2](icboluo-note/src/main/java/com/icboluo/Swagger2.java) 的简单使用\
+[RestTemplate](icboluo-note/src/main/java/com/icboluo/Swagger2.java) 的简单使用\
+[Feign](icboluo-note/src/main/java/com/icboluo/Swagger2.java) 的简单使用
 
 ### se服务提供了Java SE 部分的内容
 

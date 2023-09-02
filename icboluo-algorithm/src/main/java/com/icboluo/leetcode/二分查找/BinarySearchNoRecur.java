@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 二分查找类题目的场景：一般很少有直接让二分查找的，大部分题目都是一些求最值的过程，比如吃饼干的最小速度，汽车的最低运载能力；
+ * 这些求最值的过程，都是一些求边界的过程
+ * <p>二分查找需要区分开闭区间
+ *
  * @author icboluo
  * @since 2023-03-29 21:47
  */
-class BinarySerarchNoRecur {
+class BinarySearchNoRecur {
     public static void main(String[] args) {
-        var cla = new BinarySerarchNoRecur();
+        var cla = new BinarySearchNoRecur();
         int[] arr1 = {1, 3, 8, 10, 11, 67, 100};
         System.out.println(cla.binarySearch1(arr1, 100));
         int[] arr2 = {1, 5};

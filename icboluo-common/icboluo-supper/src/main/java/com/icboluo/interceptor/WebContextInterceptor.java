@@ -26,7 +26,7 @@ public class WebContextInterceptor implements HandlerInterceptor {
         LocaleContextHolder.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
     }
 
-    static InheritableThreadLocal<String> USER_CODE = new InheritableThreadLocal<>();
+    static ThreadLocal<String> USER_CODE = new InheritableThreadLocal<>();
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {

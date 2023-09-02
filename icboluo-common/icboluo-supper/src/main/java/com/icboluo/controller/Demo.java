@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Demo {
 
     @GetMapping
-    public void dd() {
+    public void supperDemo() {
     //
     }
 }
