@@ -14,6 +14,4 @@ class FloydAlgorithm {
         Graph graph = new Graph(vertex.length, matrix, vertex);
         graph.show();
     }
-
-
 }

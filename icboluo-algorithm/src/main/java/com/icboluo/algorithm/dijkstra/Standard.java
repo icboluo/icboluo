@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
+ * 标准解法
+ *
  * @author icboluo
  * @since 2022-10-25 12:15
  */
-public class biaozhun {
+public class Standard {
 
     /**
      * 权重

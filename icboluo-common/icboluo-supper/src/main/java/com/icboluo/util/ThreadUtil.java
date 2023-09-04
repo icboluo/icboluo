@@ -20,6 +20,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.LockSupport;
 
 /**
+ * 如何理解 Executor 此接口提供了一种将任务提交与每个任务运行方式的机制解耦的方法这句话：
+ * 1.任务的提交是一个事件，任务的执行也是一个事件；书写方法如下：task.commit then task.executor,这个功能是在一个方法中完成的，
+ * 我们为其提供一个 Executor的接口，耦合接口的执行分发给子类，接口的提交作为方法的参数，这样就实现了互不相干；类似于中介者模式|桥接模式
+ *
  * @author icboluo
  * @since 2023-08-02 19:44
  */
@@ -27,7 +31,7 @@ import java.util.concurrent.locks.LockSupport;
 @Slf4j
 public class ThreadUtil {
 
-//    @Autowired
+    @Autowired
     private PlatformTransactionManager transactionManager;
 
     @Autowired
@@ -38,7 +42,7 @@ public class ThreadUtil {
      *
      * @param runnableArr 多个任务
      */
-    public void threadFailRollBack(Runnable... runnableArr) {
+    public void threadFailRollback(Runnable... runnableArr) {
         // 数据分组的大小，和线程池大小密切相关，不可设置过大
         List<List<Runnable>> lists = BeanUtil.groupBySize(Arrays.stream(runnableArr), 10);
         // 悬停线程||存储改未提交的数据

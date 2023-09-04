@@ -4,12 +4,14 @@ import com.icboluo.interceptor.WebContext;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.task.TaskDecorator;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -55,13 +57,13 @@ public class ThreadTaskDecorator implements TaskDecorator {
                     LocaleContextHolder.setLocale(locale);
                     RequestContextHolder.setRequestAttributes(requestAttributes);
                     // 使用MDC也是可以的
-                    // MDC.setContextMap(new HashMap<>());
+                    MDC.setContextMap(new HashMap<>());
                     runnable.run();
                 } catch (Exception e) {
                     log.error("async task decorator run fail,msg is", e);
                 } finally {
                     WebContext.remove();
-                    // MDC.clear();
+                    MDC.clear();
                 }
             };
         } catch (Exception e) {
