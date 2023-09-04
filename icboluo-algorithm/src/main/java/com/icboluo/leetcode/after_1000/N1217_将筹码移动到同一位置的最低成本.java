@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
  * @since 2023-06-12 0:48
  */
 class N1217_将筹码移动到同一位置的最低成本 {
-    // FIXME ERROR
-
     /**
      * 数组并不是代表每个位置上有多少筹码，而是代表每个筹码在什么位置
      *

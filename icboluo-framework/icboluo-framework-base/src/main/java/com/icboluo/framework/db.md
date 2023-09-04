@@ -192,6 +192,12 @@ left join 右表的条件列上要加上索引
 
 where条件中多过滤一些行，使驱动表小一点
 
+```mysql
+-- 这个是设置自动地增值为1，但是没有效果
+alter table base_operate_log
+    auto_increment = 1;
+```
+
 ## 数据库设计的三大范式
 
 1nf.原子性, 最小字段不可再分割；地址可以写成省市区+详细地址
@@ -279,6 +285,8 @@ select * from information schema.INNODB TRX;
 ## 时间
 
 为什么mybatis打印第一行日志的时候总是延迟10ms，不管是同步请求还是异步请求均会出现
+
+mysql 日期长短不一比较, 长地切短即可
 
 ## 注意
 

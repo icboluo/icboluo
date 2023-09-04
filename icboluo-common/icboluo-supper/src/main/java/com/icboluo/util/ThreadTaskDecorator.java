@@ -1,4 +1,4 @@
-package com.icboluo.async;
+package com.icboluo.util;
 
 import com.icboluo.interceptor.WebContext;
 import lombok.AllArgsConstructor;
@@ -44,6 +44,7 @@ public class ThreadTaskDecorator implements TaskDecorator {
                 .findFirst()
                 .ifPresent(st -> threadName.set(st.getMethodName()));
         // 如果父线程是一个http请求，将父线程中的request传递到子线程，支持request的各种操作
+        // request 是伴随着web的，子线程因为是从主线程分裂出来的，所以不存在web请求，需要在分裂的过程中增加一个 request设置
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         try {
             // 部分操作

@@ -1,7 +1,7 @@
 package com.icboluo.leetcode.dp;
 
 class N0091_解码方式 {
-    // 从递归->到dp FIXME ERROR
+    // 从递归->到dp 超时
     public int numDecodings(String s) {
         return s.length() == 0 ? 0 : numDecodings(0, s);
     }

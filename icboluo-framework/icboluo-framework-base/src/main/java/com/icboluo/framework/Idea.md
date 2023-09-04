@@ -29,3 +29,8 @@ idea的重写接口图标是不一致的，仔细看，接口重写具体类型�
 2.找到本地mysql的jar包，配置驱动就可以了
 
 ctrl shift r 全局搜索 可以搜索数据库中的表的使用
+
+## class]
+
+idea 出现class] 的现象是因为pom文件的问题，新版本的Spring想就有这样的问题，但是不太影响使用，和bean本身关系不大
+bean name还是蒸汽的，只是展示有问题，和toString 关系也不大

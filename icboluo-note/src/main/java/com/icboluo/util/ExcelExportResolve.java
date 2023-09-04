@@ -116,6 +116,8 @@ public class ExcelExportResolve<T> {
                 cell.add("");
             } else {
                 Field field = nameFieldMap.get(sortField);
+                // AnnotatedElementUtils 完全支持 AliasFor 注解
+                // AnnotationUtils 支持的是元注解
                 I18n i18n = AnnotatedElementUtils.findMergedAnnotation(field, I18n.class);
                 if (i18n == null) {
                     cell.add("");

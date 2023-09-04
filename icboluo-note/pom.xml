@@ -31,6 +31,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+<!--        记录一次异常排查：项目启动失败，无法加载feign的bean，解决思路1：手动加入bean，加入一个又需要另一个，进入了链式加bean的恶性循环，对于第三方组件，这样的处理方案不合适-->
+<!--        真实原因: feign是接口, 无法加载接口的实现类, 所以启动报错; 其实只要删除掉feign的注入,项目依然能够启动成功-->
+<!--        应该在启动类上指定feign的包,和mybatis是一样的,并且增加一个注解,这个时候报负载均衡的错误,按照提示增加负载均衡的包,然后没有效果,
+本质上是因为feign的包如果只有服务名,需要增加的依赖是cloud.starter的依赖,而这里增加的是单独的alibaba的依赖,无法根据服务名获取到具体的服务报错,在feign注解上指定具体的url接口
+或者使用cloud的依赖
+-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>

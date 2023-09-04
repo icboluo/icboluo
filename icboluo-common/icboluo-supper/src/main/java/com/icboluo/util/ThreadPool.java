@@ -1,8 +1,7 @@
-package com.icboluo.async;
+package com.icboluo.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
@@ -15,8 +14,12 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Configuration
 public class ThreadPool {
 
+    /**
+     * Bean 方法之间的调用在 Spring中保障的是单例，也就是说一个bean去调另一个bean的时候，方法不会二次执行，会直接去IOC容器中获取
+     * @return 线程池
+     */
     @Bean
-    public TaskExecutor asyncExecutor() {
+    public ThreadPoolTaskExecutor asyncExecutor() {
         return ioExecutor();
     }
 

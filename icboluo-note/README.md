@@ -39,3 +39,12 @@ ssm
 ## 3.mysql生成数据库文档
 
 https://github.com/alibaba/easyexcel/blob/master/docs/API.md
+
+
+## 笔记记录的先后顺序：
+
+    笔记尽量保存笔记仅记录一份，这样总量比较少，好阅读
+    common 服务优先于其他服务
+    base优先于supper层和mapper层
+    关于设计模式和算法的功能，xmind优于md
+    关于mvc的内容，web层优先，关于sql的功能，sql层优先
