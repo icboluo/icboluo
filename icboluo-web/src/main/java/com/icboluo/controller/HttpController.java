@@ -11,7 +11,7 @@ import java.net.http.HttpResponse;
  * @author icboluo
  * @since 2021-15-17 21:15
  */
-@RequestMapping("/http")
+@RequestMapping("http")
 public class HttpController {
     public static void main(String[] args) {
         HttpClient client = HttpClient.newHttpClient();

@@ -14,20 +14,20 @@ import java.util.UUID;
  * @since 2021-33-13 23:33
  */
 @RestController
-@RequestMapping(value = "/rest")
+@RequestMapping(value = "rest")
 public class ResultController {
 
-    @GetMapping("/uuid")
+    @GetMapping("uuid")
     public String uuid() {
         return UUID.randomUUID().toString();
     }
 
-    @GetMapping("/integer")
+    @GetMapping("integer")
     public Integer integer() {
         return 11;
     }
 
-    @GetMapping("/map")
+    @GetMapping("map")
     public Map<String, String> map() {
         HashMap<String, String> map = new HashMap<>();
         map.put("a", "b");
@@ -37,7 +37,7 @@ public class ResultController {
         return map;
     }
 
-    @GetMapping("/auth")
+    @GetMapping("auth")
     @AuthAnno(role = "1")
     public Integer auth() {
         return 11;

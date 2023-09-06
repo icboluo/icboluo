@@ -2,6 +2,7 @@ server:
   port: 1514
 spring:
   profiles:
+#    spring 多环境配置，在主yml中配置路径就可以了，使用的是路径匹配，不需要在dev、test里面再声明
     active: simple
   application:
     name: icboluo-note

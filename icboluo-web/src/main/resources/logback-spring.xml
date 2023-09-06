@@ -22,7 +22,7 @@
             <!--            设置过滤级别-->
             <level>DEBUG</level>
             <!--            用于配置符合过滤条件的操作-->
-            <conMatch>ACCEPT</conMatch>
+            <onMatch>ACCEPT</onMatch>
             <!--            用于配置不符合过滤条件的操作-->
             <onMismatch>DENY</onMismatch>
         </filter>

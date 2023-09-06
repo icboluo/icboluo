@@ -25,7 +25,7 @@ import java.util.concurrent.Executor;
  * @since 2021-27-19 21:27
  */
 @RestController
-@RequestMapping("/async")
+@RequestMapping("async")
 @Slf4j
 public class AsyncController {
 
@@ -45,17 +45,17 @@ public class AsyncController {
     @Autowired
     private Executor asyncExecutor;
 
-    @GetMapping("/simple")
+    @GetMapping("simple")
     public void simple() {
         asyncService.simpleException();
     }
 
-    @GetMapping("/sameClassTransfer")
+    @GetMapping("sameClassTransfer")
     public void sameClassTransfer() {
         excludeException();
     }
 
-    @GetMapping("/sameSubclassTransfer")
+    @GetMapping("sameSubclassTransfer")
     public void sameSubclassTransfer() {
         asyncService.linkTransferException();
     }
@@ -69,7 +69,7 @@ public class AsyncController {
     }
 
 
-    @GetMapping("/spring")
+    @GetMapping("spring")
     public void spring() {
         CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(SimpleThreadUtil::sleep5s, asyncExecutor);
         SimpleThreadUtil.sleep5s();
@@ -89,7 +89,7 @@ public class AsyncController {
      * <p> Java垃圾回收线程就是一个典型的守护线程；(当程序中不再有运行的Thread，程序就不会产生垃圾，垃圾回收器也就无事可做
      * <p> 内存资源或线程的管理，也可以用非守护线程
      */
-    @GetMapping("/daemon")
+    @GetMapping("daemon")
     public void daemon() {
         // TODO 为什么放在Http中守护线程不生效，只有main方法中才生效，是不是用的线程池的缘故
         Thread thread = new Thread(() -> SimpleThreadUtil.infiniteLoop());

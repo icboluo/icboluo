@@ -2,6 +2,7 @@ package com.icboluo;
 
 import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
+import com.icboluo.util.HttpUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -32,7 +33,7 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 public class NoteApplication {
 
     public static void main(String[] args) {
+        HttpUtil.nacosYml();
         SpringApplication.run(NoteApplication.class, args);
     }
-
 }

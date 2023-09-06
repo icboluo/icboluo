@@ -77,7 +77,45 @@ public class WebConfiguration implements WebMvcConfigurer {
         // 我们需要将处理 Object 类型的 HttpMessageConverter 放得靠前一些，这可以在 Configuration 类中完成
         // TODO 这个映射好像不对
         // converters.add(0, new MappingJackson2HttpMessageConverter());
+    }
 
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new StringToLocalDateConverter());
+        registry.addConverter(new StringToLocalDateTimeConverter());
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")
+                .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
+                .maxAge(3600);
+    }
+
+    @Bean
+    public AuthInterceptor getAuthInterceptor() {
+        return new AuthInterceptor();
+    }
+
+    @Bean
+    public WebContextInterceptor webContextInterceptor() {
+        return new WebContextInterceptor();
+    }
+
+    /**
+     * 替换默认的LocalResolver
+     *
+     * @return LocaleResolver
+     */
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+        localeResolver.setDefaultLocale(Locale.CHINESE);
+        return localeResolver;
+    }
+
+    public FastJsonHttpMessageConverter configureMessageConverters() {
         // 需要先定义一个 convert 转换消息的对象
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
 
@@ -129,43 +167,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         // 解决中文乱码问题，相当于在Controller上的@RequestMapping中加了个属性produces = "application/json"
         mediaTypeList.add(MediaType.APPLICATION_JSON);
         fastConverter.setSupportedMediaTypes(mediaTypeList);
-        converters.add(0, fastConverter);
-    }
-
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new StringToLocalDateConverter());
-        registry.addConverter(new StringToLocalDateTimeConverter());
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOriginPatterns("*")
-                .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
-                .maxAge(3600);
-    }
-
-    @Bean
-    public AuthInterceptor getAuthInterceptor() {
-        return new AuthInterceptor();
-    }
-
-    @Bean
-    public WebContextInterceptor webContextInterceptor() {
-        return new WebContextInterceptor();
-    }
-
-    /**
-     * 替换默认的LocalResolver
-     *
-     * @return LocaleResolver
-     */
-    @Bean
-    public LocaleResolver localeResolver() {
-        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.CHINESE);
-        return localeResolver;
+        return fastConverter;
     }
 
     /**

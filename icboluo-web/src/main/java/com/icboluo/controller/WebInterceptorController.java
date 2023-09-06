@@ -6,10 +6,12 @@ import com.icboluo.enumerate.ServiceNameEnum;
 import com.icboluo.interceptor.WebContext;
 import com.icboluo.util.StaticTestUtil;
 import com.icboluo.util.ValidateUtil;
+import jakarta.validation.ConstraintViolation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * @author icboluo
@@ -31,13 +33,6 @@ public class WebInterceptorController {
         return userCode;
     }
 
-    @GetMapping("/bodyParam")
-    public String bodyParam(@RequestParam(required = false) String id, @RequestParam(required = false) String name,
-                            @RequestParam(required = false) String code
-    ) {
-        return id + name + code;
-    }
-
     @GetMapping("/localDateTime")
     public LocalDateTime localDateTime() {
         LocalDateTime now = LocalDateTime.now();
@@ -52,7 +47,7 @@ public class WebInterceptorController {
 
     @GetMapping("/validate")
     public void validate(@Validated @RequestBody OrderCO client) {
-        ValidateUtil.validateProperty(client, "code");
-        System.out.println(client);
+        Set<ConstraintViolation<OrderCO>> msg = ValidateUtil.validateProperty(client, "code");
+        System.out.println(ValidateUtil.buildMsg(msg));
     }
 }

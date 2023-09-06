@@ -30,6 +30,7 @@
         <module>icboluo-sql</module>
         <module>icboluo-user</module>
         <module>icboluo-web</module>
+        <module>icboluo-mvc</module>
     </modules>
 
     <groupId>com.icboluo</groupId>

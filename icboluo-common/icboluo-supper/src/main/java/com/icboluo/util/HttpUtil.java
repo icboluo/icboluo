@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -52,5 +53,21 @@ public class HttpUtil {
                         httpRequest, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .join();
+    }
+
+    public static void nacosYml() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://127.0.0.1:3377/config/info"))
+                .build();
+        try {
+            String body = HttpClient.newHttpClient()
+                    .send(request, HttpResponse.BodyHandlers.ofString())
+                    .body();
+            System.setProperty("spring.profiles.active", body);
+        } catch (IOException e) {
+            System.setProperty("spring.profiles.active", "simple");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

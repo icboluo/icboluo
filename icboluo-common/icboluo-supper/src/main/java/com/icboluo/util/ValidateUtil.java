@@ -10,6 +10,8 @@ import jakarta.validation.groups.Default;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,9 +22,8 @@ import java.util.Set;
  * NotEmpty.contain NotBlack+NotNull
  * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
  *
- * @Valid 注解标记List类型的失效，需要在类上增加@Validated注解
- *
  * @author icboluo
+ * @Valid 注解标记List类型的失效，需要在类上增加@Validated注解
  * @see jakarta.validation.Valid
  * @see org.springframework.validation.annotation.Validated
  * <p>
@@ -35,33 +36,40 @@ public class ValidateUtil {
     private static final Validator VALIDATOR;
 
     static {
-        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        VALIDATOR = validatorFactory.getValidator();
+        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+            VALIDATOR = validatorFactory.getValidator();
+        }
     }
 
     /**
-     * TODO 返回值处理 校验属性
-     *
      * @param obj
      * @param propertyName
      * @param <T>
      */
     public static <T> Set<ConstraintViolation<T>> validateProperty(T obj, String propertyName) {
-        Set<ConstraintViolation<T>> constraintViolations = VALIDATOR.validateProperty(obj, propertyName, Default.class);
-        return constraintViolations;
+        return VALIDATOR.validateProperty(obj, propertyName, Default.class);
     }
 
     /**
-     * TODO 返回值处理 校验属性
-     *
      * @param obj
      * @param get
      * @param <T>
      */
-    public static <T> void validateProperty(T obj, SerialFunction<T, Object>... get) {
+    public static <T> List<Set<ConstraintViolation<T>>> validateProperty(T obj, SerialFunction<T, Object>... get) {
+        List<Set<ConstraintViolation<T>>> res = new ArrayList<>();
         for (SerialFunction<T, Object> serialFunction : get) {
             String columnName = SerializedLambda.getColumnName(serialFunction);
-            Set<ConstraintViolation<T>> constraintViolations = VALIDATOR.validateProperty(obj, columnName, Default.class);
+            Set<ConstraintViolation<T>> cvSet = VALIDATOR.validateProperty(obj, columnName, Default.class);
+            res.add(cvSet);
         }
+        return res;
+    }
+
+    public static <T> List<String> buildMsg(Set<ConstraintViolation<T>> cvSet) {
+        List<String> res = new ArrayList<>();
+        for (ConstraintViolation<T> cv : cvSet) {
+            res.add(cv.getPropertyPath() + " " + cv.getMessage());
+        }
+        return res;
     }
 }

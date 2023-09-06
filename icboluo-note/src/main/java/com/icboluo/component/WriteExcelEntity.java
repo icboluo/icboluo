@@ -14,7 +14,7 @@ public class WriteExcelEntity {
      * 写excel的完整路径
      */
     private String excelPath;
-    /**1
+    /**
      * 数据库名称
      */
     private String database;
