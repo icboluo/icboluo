@@ -43,5 +43,12 @@ public interface ProvinceMapper extends MyBaseMapper<Province> {
     default Province cacheQueryById(Serializable id) {
         return queryById(id);
     }
+
+    int insertProvince(Province province);
+    int updateProvince(Province province);
+
+    List<Province> selectProvince(Province province);
+
+    List<Province> queryByTableName(String tableName);
 }
 

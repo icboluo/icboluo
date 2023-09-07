@@ -2,12 +2,28 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!--加载外部资源文件-->
+    <properties resource="jdbc.properties"></properties>
+    <settings>
+        <!--开启驼峰命名规则：不用as-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--配置延时加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+    <!--配置别名:地址缩短-->
+    <typeAliases>
+        <!--
+                <typeAlias type="com.icboluo.entity.Area" alias="Area"></typeAlias>
+        -->
+        <!--所有实体都在这里面找-->
+        <package name="com.icboluo.entity"></package>
+    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="org.sqlite.JDBC"/>
-                <property name="url" value="jdbc:sqlite::../../document/sql/document.db"/>
+                <property name="driver" value="${jdbc.driverClass}"/>
+                <property name="url" value="jdbc:sqlite::../../../document/sql/document.db"/>
                 <property name="username" value=""/>
                 <property name="password" value=""/>
             </dataSource>
@@ -16,5 +32,9 @@
     <mappers>
         <mapper resource="mapper/ProvinceMapper.xml"/>
         <mapper resource="mapper/CityMapper.xml"/>
+        <!--扫描指定包，并管理包中的所有映射文件-->
+        <!--
+                <package name="com.task.mybatis.day02.dao"></package>
+        -->
     </mappers>
 </configuration>

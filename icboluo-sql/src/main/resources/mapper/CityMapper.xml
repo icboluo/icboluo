@@ -16,7 +16,7 @@
     <!--查询指定数据-->
     <select id="queryByAllField" resultMap="BaseResultMap">
         select
-          city_id, city_code, city_name, pro_code
+        city_id, city_code, city_name, pro_code
         from city
         <where>
             <if test="cityId != null">
@@ -34,15 +34,15 @@
         </where>
     </select>
 
-              <insert id="insertBatch" keyProperty="cityId" useGeneratedKeys="true">
+    <insert id="insertBatch" keyProperty="cityId" useGeneratedKeys="true">
         insert into city(city_code, city_name, pro_code)
         values
         <foreach collection="list" item="entity" separator=",">
-        (#{entity.cityCode}, #{entity.cityName}, #{entity.proCode})
+            (#{entity.cityCode}, #{entity.cityName}, #{entity.proCode})
         </foreach>
     </insert>
 
-        <insert id="insertOrUpdateBatch" keyProperty="cityId" useGeneratedKeys="true">
+    <insert id="insertOrUpdateBatch" keyProperty="cityId" useGeneratedKeys="true">
         insert into city(city_code, city_name, pro_code)
         values
         <foreach collection="list" item="entity" separator=",">

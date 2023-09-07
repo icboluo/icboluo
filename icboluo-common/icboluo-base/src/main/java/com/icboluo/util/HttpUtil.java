@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
 import java.net.URI;
@@ -47,7 +46,7 @@ public class HttpUtil {
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+//                .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .build();
         return HttpClient.newHttpClient().sendAsync(
                         httpRequest, HttpResponse.BodyHandlers.ofString())
