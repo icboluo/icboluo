@@ -38,6 +38,11 @@ public class TimeRecord {
         recordMsg(null);
     }
 
+    /**
+     * 日志记录的是从当前记录点到下一个记录点的功能
+     *
+     * @param msg 功能
+     */
     public static void recordMsg(String msg) {
         long now = System.currentTimeMillis();
         Time time = timeList.get(timeList.size() - 1);
@@ -71,6 +76,7 @@ public class TimeRecord {
         String rate = MathUtil.dividePercentage(maxTime, allTime) + "%";
         String msg = timeList.get(maxAfterIndex - 1).msg;
         if (msg != null && !"".equals(msg)) {
+            // 节点是从0开始的
             log.warn("第{}个节点到下一个节点消耗时间最久为 {} 毫秒，功能是：{}，占总时间 {}", maxAfterIndex - 1, maxTime, msg, rate);
         } else {
             log.warn("第{}个节点到下一个节点消耗时间最久为 {} 毫秒，占总时间 {}", maxAfterIndex - 1, maxTime, rate);

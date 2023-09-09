@@ -50,7 +50,7 @@
         <!--公共插件-->
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.12</log4j.version>
-        <lombok.version>1.18.26</lombok.version>
+        <lombok.version>1.18.28</lombok.version>
         <common.version>0.0.1-SNAPSHOT</common.version>
         <!--web -->
         <javax.servlet.version>4.0.1</javax.servlet.version>
