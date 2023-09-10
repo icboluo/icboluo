@@ -1,6 +1,5 @@
 package com.icboluo.util.response;
 
-import com.alibaba.fastjson.JSONObject;
 import com.icboluo.enumerate.ReEnum;
 import lombok.Data;
 
@@ -68,17 +67,6 @@ public class R implements Serializable {
         return new CollResponse<>(list, reEnum);
     }
 
-    public static <T, D> Response correct(T t, List<D> list) {
-        return correct(t, list, ReEnum.OPERATION_SUCCESSFUL);
-    }
-
-    public static <T, D> Response correct(T t, List<D> list, ReEnum reEnum) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("object", t);
-        jsonObject.put("list", list);
-        return new SingleResponse<>(jsonObject, reEnum);
-    }
-
     public static Response error() {
         return new SingleResponse<>(ReEnum.ERROR);
     }
@@ -87,11 +75,11 @@ public class R implements Serializable {
         return new SingleResponse<>(ReEnum.ERROR.getCode(), errMsg);
     }
 
-    public static Response error(int code, String errMsg) {
+    public static Response error(String code, String errMsg) {
         return new SingleResponse<>(code, errMsg);
     }
 
-    public static Response error(int code, Exception e) {
+    public static Response error(String code, Exception e) {
         return new SingleResponse<>(code, e.getMessage());
     }
 

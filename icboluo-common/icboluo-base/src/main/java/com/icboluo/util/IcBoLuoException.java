@@ -1,6 +1,7 @@
 package com.icboluo.util;
 
 import com.icboluo.enumerate.ReEnum;
+import com.icboluo.util.response.Response;
 import lombok.Getter;
 
 /**
@@ -15,16 +16,16 @@ public class IcBoLuoException extends RuntimeException {
     /**
      * 状态码
      */
-    private final int status;
+    private final String status;
 
     public IcBoLuoException() {
         super();
-        this.status = 500;
+        this.status = Response.ERROR_CODE;
     }
 
     public IcBoLuoException(String msg) {
         super(msg);
-        this.status = 500;
+        this.status = Response.ERROR_CODE;
     }
 
     public IcBoLuoException(ReEnum em) {
@@ -34,7 +35,7 @@ public class IcBoLuoException extends RuntimeException {
 
     public IcBoLuoException(Throwable throwable) {
         super(throwable.getMessage(), throwable);
-        this.status = 500;
+        this.status = Response.ERROR_CODE;
     }
 
     public IcBoLuoException(ReEnum em, Throwable throwable) {
@@ -42,7 +43,7 @@ public class IcBoLuoException extends RuntimeException {
         this.status = em.getCode();
     }
 
-    public IcBoLuoException(int status, String msg) {
+    public IcBoLuoException(String status, String msg) {
         super(msg);
         this.status = status;
     }

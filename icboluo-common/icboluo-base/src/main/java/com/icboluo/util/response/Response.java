@@ -33,10 +33,12 @@ import java.io.Serializable;
 public abstract class Response implements Serializable {
     @Serial
     private static final long serialVersionUID = 3840949955410953654L;
+
+    public static final String ERROR_CODE = "500";
     /**
      * 状态码
      */
-    private Integer code;
+    private String code;
     /**
      * 返回消息
      */

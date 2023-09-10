@@ -14,16 +14,16 @@ public class IcBoLuoI18nException extends RuntimeException {
     /**
      * 状态码
      */
-    private final int status;
+    private final String status;
 
     public IcBoLuoI18nException() {
         super();
-        this.status = 500;
+        this.status = "500";
     }
 
     public IcBoLuoI18nException(String msg) {
         super(msg);
-        this.status = 500;
+        this.status = "500";
     }
 
     public IcBoLuoI18nException(ReEnum em) {
@@ -36,18 +36,18 @@ public class IcBoLuoI18nException extends RuntimeException {
         this.status = em.getCode();
     }
 
-    public IcBoLuoI18nException(int status, String msg) {
+    public IcBoLuoI18nException(String status, String msg) {
         super(msg);
         this.status = status;
     }
 
     public IcBoLuoI18nException(String msg, Object[] args) {
         super(msg);
-        this.status = 500;
+        this.status = "500";
     }
 
     public IcBoLuoI18nException(String msg, Exception ex) {
         super(msg);
-        this.status = 500;
+        this.status = "500";
     }
 }

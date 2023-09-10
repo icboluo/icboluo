@@ -79,6 +79,11 @@ public class WebConfiguration implements WebMvcConfigurer {
         // converters.add(0, new MappingJackson2HttpMessageConverter());
     }
 
+    /**
+     * TODO 序列化和转换器有什么不同吗
+     *
+     * @param registry 格式化注册器
+     */
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new StringToLocalDateConverter());
@@ -158,7 +163,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         )
         ;
         // 缺点，这是过滤级别的序列化，序列化的结果取决于o1的值，如将LocalDateTime类型的o1转换为String类型的o1，后续将不会调用LocalDateTime的序列化器，因为已经不是LocalDateTime类型了
-        fastConfig.setSerializeFilters(BeanUtil.localDateTimeValueFilter(),valueFilter);
+        fastConfig.setSerializeFilters(BeanUtil.localDateTimeValueFilter(), valueFilter);
         // 缺点，指定后，将不会使用@JSONField注解上的format属性，包括并不限于Date类，LocalDateTime类，LocalDate类。（慎用）
         fastConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
         fastConverter.setFastJsonConfig(fastConfig);

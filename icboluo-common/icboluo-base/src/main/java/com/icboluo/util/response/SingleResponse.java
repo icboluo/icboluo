@@ -26,7 +26,7 @@ public class SingleResponse<T> extends Response {
         this.data = data;
     }
 
-    public SingleResponse(Integer code, String message) {
+    public SingleResponse(String code, String message) {
         super(code, message);
     }
 }

@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 /**
  * <p>拦截异常并统一处理
  * <p>全局异常处理，相当于controller层增加了一个异常捕获，全局返回值处理，已经脱离了web层，属于返回值包装；先全局异常处理，然后再全局返回值捕获
- * <p>@RestControllerAdvice 有时候不生效是因为指定了basePackages，这个指定规则不知道具体是什么样的，只要不指定默认烧麦所有的包就可以了，
+ * <p>@RestControllerAdvice 有时候不生效是因为指定了basePackages，这个指定规则不知道具体是什么样的，只要不指定扫描所有的包就可以了，
  * <p>GlobalControllerExceptionHandler 相当于 try catch，如果异常处理机制里面没有log.error(ex),则系统日志是查询不到异常堆栈日志的
  * <p>throw 不产生任何的日志, 仅仅只有log会产生日志
  *
@@ -58,7 +58,7 @@ public class GlobalControllerExceptionHandler {
         printLog(e);
         // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
         // response.setStatus(500);
-        return R.error(500, e.getMessage());
+        return R.error(Response.ERROR_CODE, e.getMessage());
     }
 
     /**
@@ -71,13 +71,13 @@ public class GlobalControllerExceptionHandler {
     public Response icBoLuoI18nExceptionHandler(IcBoLuoI18nException e) {
         printLog(e);
         String message = messageSource.getMessage(e.getMessage(), null, LocaleContextHolder.getLocale());
-        return R.error(500, message);
+        return R.error(Response.ERROR_CODE, message);
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public Response httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         printLog(e);
-        return R.error(e.getStatusCode().value(), e.getMessage());
+        return R.error(String.valueOf(e.getStatusCode().value()), e.getMessage());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -137,7 +137,7 @@ public class GlobalControllerExceptionHandler {
             throw e;
         }
         String msg = Objects.isNull(e.getMessage()) ? "操作失败，但没有失败消息" : e.getMessage();
-        return R.error(500, msg);
+        return R.error(Response.ERROR_CODE, msg);
     }
 
 

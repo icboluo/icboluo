@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
  * @since 2020/12/3 21:40
  */
 @Data
+@NoArgsConstructor
 public class CodeName extends Archives<String, String> {
 
+    public CodeName(String key, String val) {
+        super(key, val);
+    }
 }

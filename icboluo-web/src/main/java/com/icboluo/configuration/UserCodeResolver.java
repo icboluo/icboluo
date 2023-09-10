@@ -1,4 +1,4 @@
-package com.icboluo.resolver;
+package com.icboluo.configuration;
 
 import com.icboluo.annotation.UserCode;
 import com.icboluo.constant.HttpConstant;

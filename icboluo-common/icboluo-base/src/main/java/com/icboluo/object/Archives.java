@@ -1,6 +1,8 @@
 package com.icboluo.object;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 档案对象
@@ -9,6 +11,8 @@ import lombok.Data;
  * @since 2023-02-17 19:37
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Archives<I, N> {
 
     /**

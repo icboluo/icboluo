@@ -26,7 +26,7 @@ public class CollResponse<T> extends Response {
         this.data = data;
     }
 
-    public CollResponse(Integer code, String message) {
+    public CollResponse(String code, String message) {
         super(code, message);
     }
 }

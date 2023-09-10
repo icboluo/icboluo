@@ -42,6 +42,13 @@ public class DateHelper {
     private static DateTimeFormatter Y_M_D_H_M_S = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
+     * 此formatters需要修改默认支持的数据类型
+     */
+    private static List<DateTimeFormatter> dateTimeFormatters = Arrays.asList(Y_M_D_H_M_S, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+    private static List<DateTimeFormatter> dateFormatters = Arrays.asList(DateTimeFormatter.ISO_LOCAL_DATE);
+
+    /**
      * 获取当前的标准日期
      *
      * @return 2020-04-03 13:24:29
@@ -136,21 +143,16 @@ public class DateHelper {
     }
 
     /**
-     * 此formatters需要修改默认支持的数据类型
-     */
-    private static List<DateTimeFormatter> formatters = Arrays.asList(Y_M_D_H_M_S, Y_M_D_H_M_S);
-
-    /**
      * 把多种时间类型转换为LocalDateTime类型
      *
      * @param str 字符串时间
      * @return 日期
      */
-    public static LocalDateTime toDataTime(String str) {
+    public static LocalDateTime allToDateTime(String str) {
         if (str == null) {
             return null;
         }
-        for (DateTimeFormatter formatter : formatters) {
+        for (DateTimeFormatter formatter : dateTimeFormatters) {
             try {
                 return LocalDateTime.parse(str, formatter);
             } catch (Exception exception) {
@@ -158,6 +160,21 @@ public class DateHelper {
             }
         }
         return null;
+    }
+
+    public static LocalDate allToDate(String str) {
+        if (str == null) {
+            return null;
+        }
+        for (DateTimeFormatter formatter : dateFormatters) {
+            try {
+                return LocalDate.parse(str, formatter);
+            } catch (Exception exception) {
+                // do nothing
+            }
+        }
+        LocalDateTime localDateTime = allToDateTime(str);
+        return localDateTime == null ? null : localDateTime.toLocalDate();
     }
 
 

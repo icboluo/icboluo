@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.ProvinceMapper">
 
+
     <!--配置之定义结果集:解决名字不一样; true:如果sql和pojo中字段名称相同，不用配置-->
-     <resultMap id="BaseResultMap" type="com.icboluo.entity.Province" autoMapping="true">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.Province" autoMapping="true">
         <result property="proId" column="pro_id" jdbcType="INTEGER"/>
         <result property="proCode" column="pro_code" jdbcType="VARCHAR"/>
         <result property="proName" column="pro_name" jdbcType="VARCHAR"/>
@@ -12,6 +13,7 @@
     <sql id="Base_Column_List">
         pro_id, pro_code, pro_name
     </sql>
+
 
     <!--查询指定数据-->
     <select id="queryByAllField" resultMap="BaseResultMap">
@@ -50,6 +52,7 @@
         pro_name = values(pro_name)
     </insert>
 
+
     <!--useGeneratedKeys主键回显，keyColumn主键在sql中的名称，keyProperty主键在pojo中的名称-->
     <insert id="insertProvince" useGeneratedKeys="true" keyColumn="pro_id" keyProperty="proId">
         insert into province (pro_code,
@@ -66,7 +69,7 @@
     </update>
 
     <!--#{}相当于？，防止注入，${}-->
-    -- 这里可以省略前缀
+    <!--     这里可以省略前缀-->
     <select id="selectProvince" resultType="Province">
         <include refid="CommonSqlMapper.selectAllField"/>
         from province
@@ -84,6 +87,7 @@
             </otherwise>
         </choose>
     </select>
+
     <select id="queryByTableName" resultType="User">
         SELECT *
         FROM ${tableName}
