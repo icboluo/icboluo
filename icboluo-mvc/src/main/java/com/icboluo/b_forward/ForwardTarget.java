@@ -1,4 +1,4 @@
-package com.icboluo.b_redirect;
+package com.icboluo.b_forward;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,9 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-// 重定向
-@WebServlet(urlPatterns = "/myServlet02")
-public class MyServlet02 extends HttpServlet {
+/**
+ * @author icboluo
+ */
+@WebServlet(urlPatterns = "/forwardTarget")
+public class ForwardTarget extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -18,12 +20,9 @@ public class MyServlet02 extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-
-        String msg = request.getParameter("msg");
-        System.out.println(msg);
-
-        response.setStatus(302);
-        response.setHeader("location","/helpPeopleServlet02");
+        String info = (String) request.getAttribute("info");
+        System.out.println(info);
+        System.out.println("面试中.................................................");
+        response.getWriter().print("this people is ok");
     }
 }

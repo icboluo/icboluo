@@ -1,5 +1,8 @@
 package com.icboluo.spring;
 
+import com.icboluo.spring.bean.*;
+import com.icboluo.spring.util.LifecycleBean;
+import com.icboluo.spring.util.ScopeBean;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.BeanFactory;
@@ -19,19 +22,47 @@ import org.springframework.core.io.Resource;
 @Slf4j
 public class Demo {
     /**
-     * 定义bean
-     * 声明式定义bean的方式
-     * <p>
-     * bean 标签
-     *
-     * @Component 需要搭配@ComponentScan 来使用
-     * @Bean xml 创建bean(bean标签
+     * <p>声明式定义（创建）bean的方式
+     * <p>此块使用的是bean 标签创建bean举例
+     * <p>Component注解 需要搭配@ComponentScan 来使用
+     * <p>Bean注解创建bean
+     * <p>xml 创建bean(bean标签创建bean)
      */
     @Test
     public void xml() {
-        ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("spring.xml");
-        Student student = classPathXmlApplicationContext.getBean("student", Student.class);
+        ApplicationContext ac = new ClassPathXmlApplicationContext("spring.xml");
+        // 直接获取bean
+        Student student = ac.getBean("student", Student.class);
         log.info(student.toString());
+        // 构造方法获取bean
+        Student constructorStudent = ac.getBean("student2", Student.class);
+        log.info("constructor method create bean: " + constructorStudent);
+        // set方法获取bean
+        Student3 setStudent = ac.getBean("student3", Student3.class);
+        log.info("set method create bean: " + setStudent);
+        // 创建复杂bean
+        Student5 complexStudent = ac.getBean("student5", Student5.class);
+        log.info("create complex bean: " + complexStudent);
+        // 方法直接创建bean
+        Student staticMethodCreateStudent = ac.getBean("methodCreateStudent1", Student.class);
+        log.info("static method direct create bean " + staticMethodCreateStudent);
+
+        Student instanceMethodCreateStudent = ac.getBean("methodCreateStudent2", Student.class);
+        log.info("instance method indirect create bean " + instanceMethodCreateStudent);
+        // BeanFactory 创建bean
+        Student0 bfStudent = (Student0) com.icboluo.spring.util.BeanFactory.getBean("student0");
+        log.info("BeanFactory create bean: " + bfStudent);
+
+        // bean的作用域
+        ScopeBean scopeBean1 = (ScopeBean) ac.getBean("scopeBean");
+        log.info("scopeBean1 = " + scopeBean1);
+        ScopeBean scopeBean2 = (ScopeBean) ac.getBean("scopeBean");
+        log.info("scopeBean2 = " + scopeBean2);
+
+        // bean的声明周期
+        LifecycleBean lifecycleBean = (LifecycleBean) ac.getBean("lifecycleBean");
+        log.info("lifecycleBean = " + lifecycleBean);
+        ((ClassPathXmlApplicationContext) ac).close();
     }
 
     /**

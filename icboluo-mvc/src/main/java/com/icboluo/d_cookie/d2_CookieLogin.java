@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login")
-public class d2_Login extends HttpServlet {
+@WebServlet(urlPatterns = "/cookieLogin")
+public class d2_CookieLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);

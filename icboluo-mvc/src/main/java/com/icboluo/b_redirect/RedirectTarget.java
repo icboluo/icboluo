@@ -1,6 +1,5 @@
-package com.icboluo.c_dispatcher;
+package com.icboluo.b_redirect;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,8 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/myServlet")
-public class MyServlet extends HttpServlet {
+/**
+ * @author icboluo
+ */
+@WebServlet(urlPatterns = "/redirectTarget")
+public class RedirectTarget extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -18,12 +20,8 @@ public class MyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //接收数据
-        String msg = request.getParameter("msg");
-        //处理数据
-        request.setAttribute("info", "帮忙面试一下！");
-        //dispatch调度，分配
-        RequestDispatcher helppeople = request.getRequestDispatcher("/helpPeopleServlet");
-        helppeople.forward(request, response);
+        System.out.println("面试中");
+        response.setContentType("text/html;charset=utf-8");
+        response.getWriter().print("这个人可以录用");
     }
 }

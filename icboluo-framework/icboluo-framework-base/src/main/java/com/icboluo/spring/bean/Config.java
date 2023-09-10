@@ -1,4 +1,4 @@
-package com.icboluo.spring;
+package com.icboluo.spring.bean;
 
 import org.springframework.context.annotation.ComponentScan;
 

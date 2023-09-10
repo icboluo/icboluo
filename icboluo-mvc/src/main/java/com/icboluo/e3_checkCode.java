@@ -1,4 +1,4 @@
-package com.icboluo.tomcat.loginDemo.web;
+package com.icboluo;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,8 +12,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * 验证码
+ */
 @WebServlet(urlPatterns = "/checkCode")
-public class CheckCodeServlet extends HttpServlet {
+public class e3_checkCode extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);

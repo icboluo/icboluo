@@ -3,5 +3,70 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="student" class="com.icboluo.spring.Student"/>
+    <bean id="student" class="com.icboluo.spring.bean.Student"/>
+    <bean id="student0" class="com.icboluo.spring.bean.Student0"/>
+    <bean id="accountDao" class=" com.icboluo.spring.bean.AccountMapperImpl"></bean>
+    <bean id="student2" class="com.icboluo.spring.bean.Student">
+        <constructor-arg name="age" value="18"></constructor-arg>
+        <constructor-arg name="name" value="zhangsan"></constructor-arg>
+        <constructor-arg name="accountMapper" ref="accountDao"></constructor-arg>
+        <!--        <constructor-arg index="0" value="lisi"></constructor-arg>
+                <constructor-arg index="1" value="20"></constructor-arg>
+                <constructor-arg index="2" ref="myAccountDao"></constructor-arg>-->
+        <!--        <constructor-arg type="java.lang.String" value="wangwu"></constructor-arg>
+                <constructor-arg type="java.lang.Integer" value="22"></constructor-arg>
+                <constructor-arg type="com.task.spring.dao.MyAccountDao" ref="myAccountDao"></constructor-arg>-->
+    </bean>
+    <bean id="student3" class="com.icboluo.spring.bean.Student3">
+        <property name="age" value="20"></property>
+        <property name="name" value="zhangsan"></property>
+        <property name="accountMapper" ref="accountDao"></property>
+    </bean>
+
+    <bean id="student5" class="com.icboluo.spring.bean.Student5">
+        <property name="myStrs">
+            <array>
+                <value>zhangsan</value>
+                <value>zhangsan</value>
+                <value>zhangsan</value>
+            </array>
+        </property>
+        <property name="myList">
+            <list>
+                <value>a</value>
+                <value>b</value>
+                <value>a</value>
+            </list>
+        </property>
+        <property name="mySet">
+            <set>
+                <value>a</value>
+                <value>b</value>
+                <value>a</value>
+            </set>
+        </property>
+        <property name="myMap">
+            <map>
+                <entry key="name" value="zhangsan"></entry>
+                <entry key="password" value="123456"></entry>
+                <entry key="myAccountDao" value-ref="accountDao"></entry>
+            </map>
+        </property>
+        <property name="myProps">
+            <props>
+                <prop key="name">a</prop>
+                <prop key="accountService">com.icboluo.spring.bean.AccountMapperImpl</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="methodCreateStudent1" class="com.icboluo.spring.util.StaticFactory" factory-method="getStudent"></bean>
+    <bean id="methodCreateStudent2" factory-bean="instanceFactory" factory-method="getStudent"></bean>
+    <bean id="instanceFactory" class="com.icboluo.spring.util.InstanceFactory"></bean>
+
+    <!--singleton单列  prototype多列-->
+    <bean id="scopeBean" class="com.icboluo.spring.util.ScopeBean" scope="singleton"></bean>
+    <!--init-method destory-method 指定方法为初始或者销毁方法-->
+    <bean id="lifecycleBean" class="com.icboluo.spring.util.LifecycleBean" scope="prototype" init-method="start"
+          destroy-method="end"></bean>
 </beans>

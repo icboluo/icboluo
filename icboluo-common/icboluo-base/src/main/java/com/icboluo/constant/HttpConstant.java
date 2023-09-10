@@ -6,4 +6,6 @@ package com.icboluo.constant;
  */
 public interface HttpConstant {
     String USER_CODE = "user-code";
+
+    String USER_SERVICE = "http://localhost:7010";
 }

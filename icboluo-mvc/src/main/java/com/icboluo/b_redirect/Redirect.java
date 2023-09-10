@@ -8,8 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/helpPeopleServlet02")
-public class HelpPeopleServlet02 extends HttpServlet {
+/**
+ * 重定向，当浏览器请求一个URL的时候，服务器返回一个重定向指令，告诉服务器地址已经改变，需要使用新的URL再重新发送请求
+ *
+ * @author icboluo
+ */
+@WebServlet(urlPatterns = "/redirect")
+public class Redirect extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -17,9 +22,13 @@ public class HelpPeopleServlet02 extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("面试中");
+        request.setCharacterEncoding("utf-8");
 
-        response.setContentType("text/html;charset=utf-8");
-        response.getWriter().print("这个人可以录用");
+        String msg = request.getParameter("msg");
+        System.out.println(msg);
+
+        response.setStatus(302);
+        // 注意此块是端口号后面全路径
+        response.setHeader("location", "/icboluo_mvc_Web_exploded/redirectTarget");
     }
 }

@@ -4,7 +4,6 @@ package com.icboluo;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
@@ -20,13 +19,13 @@ public class e2_CharsetFilter implements Filter {
         //请求，post请求乱码
         HttpServletRequest request = (HttpServletRequest) req;
         String method = request.getMethod();
+        // 解决post请求中文数据乱码问题
         if ("post".equalsIgnoreCase(method)) {
-            req.setCharacterEncoding("utf-8");
+            request.setCharacterEncoding("utf-8");
         }
-        //处理乱码
-        HttpServletResponse response = (HttpServletResponse) resp;
-        resp.setContentType("test/html;charset=utf-8");
-        chain.doFilter(request, response);
+        //处理响应乱码
+        resp.setContentType("text/html;charset=utf-8");
+        chain.doFilter(request, resp);
     }
 
     @Override
