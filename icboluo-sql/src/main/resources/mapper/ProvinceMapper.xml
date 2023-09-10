@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.ProvinceMapper">
 
-
     <!--配置之定义结果集:解决名字不一样; true:如果sql和pojo中字段名称相同，不用配置-->
     <resultMap id="BaseResultMap" type="com.icboluo.entity.Province" autoMapping="true">
         <result property="proId" column="pro_id" jdbcType="INTEGER"/>
@@ -70,7 +69,7 @@
 
     <!--#{}相当于？，防止注入，${}-->
     <!--     这里可以省略前缀-->
-    <select id="selectProvince" resultType="Province">
+    <select id="selectProvince" resultType="com.icboluo.entity.Province">
         <include refid="CommonSqlMapper.selectAllField"/>
         from province
         where
@@ -88,7 +87,7 @@
         </choose>
     </select>
 
-    <select id="queryByTableName" resultType="User">
+    <select id="queryByTableName" resultType="com.icboluo.entity.Province">
         SELECT *
         FROM ${tableName}
     </select>

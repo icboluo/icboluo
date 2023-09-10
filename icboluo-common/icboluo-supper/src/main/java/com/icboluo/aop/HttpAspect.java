@@ -27,7 +27,7 @@ public class HttpAspect {
 
     @Pointcut("execution(public * com.icboluo.controller..*.*(..))")
     public void httpPointcut() {
-// only one Pointcut
+        // only one Pointcut
     }
 
     @Around("httpPointcut()")

@@ -1,0 +1,39 @@
+GET http://localhost:1514/excel/customizationExport
+
+<> 2023-08-02T192114.200.json
+<> 2023-08-02T190355.200.json
+<> 2023-08-02T190246.500.json
+
+###
+
+GET http://localhost:1514/excel/writeColor
+
+<> 2023-08-02T192259.200.json
+<> 2023-08-02T192200.500.json
+<> 2023-08-02T190443.200.json
+
+###
+
+GET http://localhost:1514/excel/exportExcel
+
+<> 2023-08-03T220903.200.json
+<> 2023-08-03T220737.200.json
+<> 2023-08-03T220607.200.json
+
+###
+
+GET http://localhost:1514/user/feign/getUserNameById?id=14
+
+<> 2023-08-16T193738.500.json
+<> 2023-08-16T193724.500.json
+
+###
+
+PUT http://localhost:1514/excel/importStudent
+
+<> 2023-08-21T213225.200.json
+<> 2023-08-21T212714.200.json
+<> 2023-08-21T212559.405.json
+
+###
+

@@ -1,6 +1,7 @@
 package com.icboluo.util;
 
 import com.alibaba.fastjson.JSON;
+import com.icboluo.constant.HttpConstant;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,15 +57,17 @@ public class HttpUtil {
 
     public static void nacosYml() {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://127.0.0.1:3377/config/info"))
+                .uri(URI.create(HttpConstant.NACOS_SERVICE + "/config/info"))
                 .build();
         try {
             String body = HttpClient.newHttpClient()
                     .send(request, HttpResponse.BodyHandlers.ofString())
                     .body();
-            System.setProperty("spring.profiles.active", body);
+            if ("simple".equals(body) || "test".equals(body)) {
+                System.setProperty("spring.profiles.active", body);
+            }
         } catch (IOException e) {
-            System.setProperty("spring.profiles.active", "simple");
+            // use local application.yml configuration
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

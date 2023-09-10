@@ -10,11 +10,9 @@
         <!--配置延时加载-->
         <setting name="lazyLoadingEnabled" value="true"/>
     </settings>
-    <!--配置别名:地址缩短-->
+    <!--配置别名:地址缩短 这个并不会生效-->
     <typeAliases>
-        <!--
-                <typeAlias type="com.icboluo.entity.Area" alias="Area"></typeAlias>
-        -->
+        <typeAlias type="com.icboluo.entity.Province" alias="Province"/>
         <!--所有实体都在这里面找-->
         <package name="com.icboluo.entity"></package>
     </typeAliases>

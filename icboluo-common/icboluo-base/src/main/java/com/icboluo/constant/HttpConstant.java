@@ -8,4 +8,5 @@ public interface HttpConstant {
     String USER_CODE = "user-code";
 
     String USER_SERVICE = "http://localhost:7010";
+    String NACOS_SERVICE = "http://127.0.0.1:3377";
 }

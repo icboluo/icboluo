@@ -22,7 +22,7 @@ public class UserProducer {
 
     private final Map<String, String> account = new HashMap<>();
 
-    @GetMapping("/getUserNameById")
+    @GetMapping("getUserNameById")
     public String getUserNameById(@RequestParam Integer id) {
         log.info("GET请求，进入icboluo-user服务了");
         Objects.requireNonNull(id, "id不能为空");
@@ -33,7 +33,7 @@ public class UserProducer {
         }
     }
 
-    @PostMapping("/postUserNameById")
+    @PostMapping("postUserNameById")
     public String postUserNameById(@RequestBody Integer id) {
         log.info("POST请求，进入icboluo-user服务了");
         Objects.requireNonNull(id, "id不能为空");
