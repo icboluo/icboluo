@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  */
 class N2570_通过对值求和合并2个二维数组 {
     public int[][] mergeArrays(int[][] nums1, int[][] nums2) {
-        // 这块需要使用treemap进行默认排序
+        // optimize map排序 这块需要使用treemap进行默认排序
         Map<Integer, Integer> map = Stream.concat(Arrays.stream(nums1), Arrays.stream(nums2))
                 .collect(Collectors.toMap(arr -> arr[0], arr -> arr[1], Integer::sum, TreeMap::new));
         int[][] res = new int[map.size()][2];

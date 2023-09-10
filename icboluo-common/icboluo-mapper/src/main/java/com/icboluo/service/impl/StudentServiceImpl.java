@@ -52,6 +52,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public String generateEnName() {
         Statement st = conn.createStatement();
+        // 数据库中的name字段可以使用attribute来替代
         ResultSet result1 = st.executeQuery("select count(*) from name where surname_or_name='surname' and language ='en'");
         result1.next();
         int enSurnameCount = result1.getInt("count(*)");

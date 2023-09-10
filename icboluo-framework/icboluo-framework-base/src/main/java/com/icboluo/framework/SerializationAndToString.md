@@ -59,3 +59,5 @@ mybatisPlus 没有绕过 Transient的检查，相对友好，但是mp又不支�
 要想mp和jpa都起作用，需要在字段上和get方法上都加声明
 
 有一个 javax包里面的注解暂未调查
+
+## @JsonAlias @JsonProperty

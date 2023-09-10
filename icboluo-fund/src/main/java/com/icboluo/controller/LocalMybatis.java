@@ -16,6 +16,12 @@ import java.time.LocalDateTime;
  */
 @Component
 public class LocalMybatis implements ApplicationContextAware {
+    /**
+     * mybatis 拦截器中 ApplicationContextAware 这个可以用 autowired代替，具体原因未知
+     *
+     * @param applicationContext the ApplicationContext object to be used by this object
+     * @throws BeansException exception
+     */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         SqlSessionFactory bean = applicationContext.getBean(SqlSessionFactory.class);

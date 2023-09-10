@@ -28,7 +28,12 @@ class N2544_2553_数字隔位相反求和 {
         return res;
     }
 
-    // 2553 分隔数组中的数字,拆成一位一位的
+    /**
+     * 2553 分隔数组中的数字,拆成一位一位的 optimize 写法特殊
+     *
+     * @param nums
+     * @return
+     */
     public static int[] separateDigits(int[] nums) {
         // 因为对每个数字我们只能做到逆序，所以我们把整体逆序，然后再反转
         return Stream.iterate(nums.length - 1, i -> --i)

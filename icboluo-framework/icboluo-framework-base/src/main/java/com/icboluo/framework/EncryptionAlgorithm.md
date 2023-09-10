@@ -12,10 +12,10 @@
 
 ## 鉴权可以分为
 
-> session/cookie
-> token
-> oauth
-> base64
+> session/cookie\
+> token\
+> oauth\
+> base64\
 > 
-> 
+
  私钥是敏感数据，公钥不是

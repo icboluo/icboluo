@@ -26,14 +26,9 @@ import java.lang.reflect.Proxy;
      装饰设计模式与动态代理的区别：
      1.装饰设计模式，重心在于增强，必须将接口或者抽象父类的所有的抽象方法都实现，很麻烦
      2.动态代理的重心在于拦截，只需要拦截想拦截的方法即可
-
-     在java中对于一个类的方法的增强有几种方式呢？？？
-     1.继承
-     2.装饰设计模式
-     3.动态代理
-
  */
 class DynamicProxyDemo {
+    // optimize 不错的排版方式
     public static void main(String[] args) {
 //要求在不修改那英类，并且不创建经纪人类的基础上还是要对那英的唱歌跳舞增加金额判断功能 ,只有动态代理
         NaYing naYing = new NaYing();
@@ -45,7 +40,7 @@ class DynamicProxyDemo {
         ClassLoader loader = naYing.getClass().getClassLoader();
         //被代理者的接口的类数组
         Class<?>[] interfaces = naYing.getClass().getInterfaces();
-        InvocationHandler h = new InvocationHandler() {
+        InvocationHandler ih = new InvocationHandler() {
             /*
                 proxy:表示就是动态代理对象也就是singerProxy（不用）
                 method:表示动态代理对象所调用的那个方法对象
@@ -72,7 +67,7 @@ class DynamicProxyDemo {
                 return method.invoke(naYing, args);
             }
         };
-        Singer singerProxy = (Singer) Proxy.newProxyInstance(loader, interfaces, h);
+        Singer singerProxy = (Singer) Proxy.newProxyInstance(loader, interfaces, ih);
         //注意：代理对象调用任意方法都会导致InvocationHandler中的invoke方法执行一次
         singerProxy.sing(150);
         singerProxy.eat();
