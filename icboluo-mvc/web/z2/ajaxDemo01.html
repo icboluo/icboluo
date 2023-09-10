@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn1">发送ajax get请求</button>
+<button id="btn2">发送ajax post请求</button>
+</body>
+<script>
+    //点击按钮
+    document.getElementById("btn1").onclick = function (ev) {
+        //1.创建ajax对象
+        var xhr;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else {
+            /*ie5,6*/
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        //2.给xhr设置监听事件\
+        xhr.onreadystatechange = function (ev2) {
+            //请求,state:情势，status：状态
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //接收正常的响应数据
+                var responseText = xhr.responseText;
+                alert(responseText);
+            } else if (xhr.readyState == 4 && xhr.status == 500) {
+                alert("get，500，加班");
+            }
+        };
+        //3.给xhr设置请求参数:async:默认true异步
+        xhr.open("get", "/ajaxDemoServlet?name=班长&age=22", true)
+        //4.发送请求post在这里传参
+        xhr.send();
+    };
+
+
+    document.getElementById("btn2").onclick = function (ev) {
+        var xhr;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhr.onreadystatechange = function (ev2) {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var responseText = xhr.responseText;
+                alert(responseText);
+            } else if (xhr.readyState == 4 && xhr.status == 500) {
+                alert("post，500，加班");
+            }
+        };
+        xhr.open("post", "/ajaxDemoServlet", true);
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhr.send("name=小花&age=20");
+    };
+</script>
+</html>

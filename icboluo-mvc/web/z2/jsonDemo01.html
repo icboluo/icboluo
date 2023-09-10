@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json</title>
+</head>
+<body>
+
+</body>
+<script>
+    //json对象格式
+    var stu1 = {"id": 1, "name": "张三"};
+    //json数组格式
+    var arr = [{"id": 1, "name": "张三"}, {"id": 2, "name": "李四"}];
+    for (var i = 0; i < arr.length; i++) {
+        var stu2 = arr[i];
+        document.write(stu2.id + " " + stu2.name);
+    }
+    //json复杂格式
+    var fuzajson = {"id": 1, arr: [{"id": 1, "name": "张三"}, {"id": 2, "name": "李四"}]}
+    var id = fuzajson.id;
+    var arr2 = fuzajson.arr;
+</script>
+</html>

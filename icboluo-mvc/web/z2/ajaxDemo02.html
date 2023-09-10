@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jq发送ajax的get请求,post一样</title>
+    <script src="/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<button id="btn1">发送jq的get请求</button>
+<button id="btn2">发送jq的ajax请求</button>
+</body>
+<script>
+    //给按钮绑定点击事件
+    $("#btn1").click(function () {
+//发送ajax的get请求,第二个parement可以用js对象{name:value，name:value}
+/*$.get("/ajaxDemoServlet","name=班长&age=19",function (ccc) {
+    alert(ccc);
+        },"text");*/
+$.get("/ajaxDemoServlet",{name:"班长",age:188},function (ccc) {
+    alert(ccc);
+        },"text");
+    });
+    $("#btn2").click(function () {
+        $.ajax({
+            type:"get",
+            url:"/ajaxDemoServlet",
+            dataType:"text",
+            async:true,
+            data:{name:"班长",age:18},
+            success:function (dddd) {
+                alert(dddd)
+            },
+            error:function() {
+                alert("出现异常了")
+            }
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/jquery-2.1.0.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $.get("/queryAjaxListServlet", function (result) {
+                //解析响应数据console.log控制台打印
+                console.log(result);
+                for (var i=0;i<result.length;i++) {
+                    var user = result[i];
+                    $("#userTable").append("<tr><td>"+user.id+"</td><td>"+user.id+"</td><td>"+user.name+"</td><td>"+user.sex+"</td><td>"+user.age+"</td><td></td><td></td><td></td></tr>")
+                }
+            }, "json");
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <h3 style="text-align: center">用户信息列表</h3>
+    <table id="userTable" border="1" class="table table-bordered table-hover">
+        <tr>
+            <td colspan="8" align="center"><a class="btn btn-primary" href="add.jsp">添加联系人</a></td>
+        </tr>
+        <tr class="success">
+            <th>计数</th>
+            <th>id</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>籍贯</th>
+            <th>QQ</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
