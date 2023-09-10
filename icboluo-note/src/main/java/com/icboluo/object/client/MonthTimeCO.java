@@ -1,6 +1,5 @@
 package com.icboluo.object.client;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,19 +10,27 @@ import java.util.Date;
 @Data
 public class MonthTimeCO {
 
-    @ApiModelProperty("所属范围")
+    /**
+     * 所属范围
+     */
     private String belongToScope;
 
-    @ApiModelProperty("修改时间")
+    /**
+     * 修改时间
+     */
     private Date gmtModified;
 
-    @ApiModelProperty("问题")
+    /**
+     * 问题
+     */
     private String problem;
-
-    @ApiModelProperty("完成次数")
+    /**
+     * 完成次数
+     */
     private Integer finishTime;
-
-    @ApiModelProperty("结果")
+    /**
+     * 结果
+     */
     private String result;
 
 }

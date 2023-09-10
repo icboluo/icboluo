@@ -4,7 +4,6 @@ import com.icboluo.feign.UserFeign;
 import com.icboluo.service.UserService;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.SingleResponse;
-import io.swagger.annotations.Api;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
  */
 @RestController
 @RequestMapping("user")
-@Api(tags = "用户")
 @Slf4j
 public class UserController {
 

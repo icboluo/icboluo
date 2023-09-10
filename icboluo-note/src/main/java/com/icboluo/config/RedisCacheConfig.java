@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
+ * 非 simple 环境，生效
+ *
  * @author icboluo
  * @since 2021-47-01 22:47
  */

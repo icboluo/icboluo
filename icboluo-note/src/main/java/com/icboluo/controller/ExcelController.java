@@ -16,8 +16,6 @@ import com.icboluo.util.ExcelExportResolve;
 import com.icboluo.util.ExcelHelp;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.listenter.ValidHeadBodyListener;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,7 +45,6 @@ import java.util.function.Function;
  */
 @RestController
 @RequestMapping("excel")
-@Api(tags = "mysql生成工具")
 public class ExcelController {
     @Resource
     private ExcelService excelService;
@@ -64,13 +61,11 @@ public class ExcelController {
     private String excelPath;
 
     @GetMapping("read")
-    @ApiOperation(value = "将数据库excel文档读成建表语句")
     public void read() {
         excelService.readDbDocument(excelPath, readExcelEntity.getSheetName());
     }
 
     @GetMapping("write")
-    @ApiOperation(value = "将数据库写成excel文档")
     public void write() {
         excelService.write(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
     }
