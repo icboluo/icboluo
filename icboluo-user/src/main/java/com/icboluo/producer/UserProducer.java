@@ -15,7 +15,7 @@ import java.util.Objects;
  * @since 2020-08-27 19:26
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("user")
 @Slf4j
 @Validated
 public class UserProducer {

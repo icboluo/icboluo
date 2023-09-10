@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class UserProducerTest {
-    private static UserProducer userProducer = new UserProducer();
+    private static final UserProducer userProducer = new UserProducer();
     @BeforeEach
     void setUp() {
     }

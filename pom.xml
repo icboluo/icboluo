@@ -174,7 +174,7 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate.validator.version}</version>
             </dependency>
-            <!--        包含javax.servlet.http.HttpServletResponse -->
+            <!--        javax 包已经被jakarta替换，包含javax.servlet.http.HttpServletResponse -->
 <!--            <dependency>-->
 <!--                <groupId>jakarta.servlet</groupId>-->
 <!--                <artifactId>jakarta.servlet-api</artifactId>-->
