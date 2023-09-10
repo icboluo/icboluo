@@ -5,7 +5,7 @@ package com.icboluo.spring;
              new时由  factory.getbean  替代
     spring：applicationContext <bean>将serviceimpl 放在bean中
                   加载配置文件，获取serviceimpl
-ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+ApplicationContext ac = new ClassPathXmlApplicationContext("applicationXml.xml");
 ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfiguration.class);
 
 1、默认无参构造实例化bean
@@ -84,7 +84,7 @@ spring容器在应用加载的时候创建一次即可。spring提供了一个�
     <!--指定applicationContext.xml的位置-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml</param-value>
+        <param-value>classpath:applicationXml.xml</param-value>
     </context-param>
     <!--配置spring监听器-->
     <listener>

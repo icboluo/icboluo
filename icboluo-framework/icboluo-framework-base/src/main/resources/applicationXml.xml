@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+    <bean id="accountService" class="com.icboluo.spring.accountxml.service.AccountService">
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+    <bean id="accountDao" class="com.icboluo.spring.accountxml.mapper.AccountMapper">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg index="0" ref="dataSource"></constructor-arg>
+    </bean>
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClass}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <bean id="logger" class="com.icboluo.spring.accountxml.utils.Logger"></bean>
+    <bean id="beanFactory" class="com.icboluo.spring.accountxml.utils.BeanFactory">
+        <property name="logger" ref="logger"></property>
+        <property name="accountService" ref="accountService"></property>
+    </bean>
+
+    <bean id="accountServiceProxy" factory-bean="beanFactory" factory-method="getAccountServiceProxy"></bean>
+
+    <!--    <context:component-scan base-package="com.task"></context:component-scan>
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>-->
+    <!--    <bean id="accountService" class="com.task.service.impl.AccountServiceImpl"></bean>
+        <bean id="logger" class="com.task.utils.Logger"></bean>
+
+        <aop:config>
+            <aop:pointcut id="pt1" expression="execution( * *..*.*(..))"></aop:pointcut>
+            <aop:aspect id="logAdvice" ref="logger">
+                &lt;!&ndash;            <aop:before method="printLog"
+                                        pointcut-ref="pt1"></aop:before>
+                            <aop:before method="printLog2"
+                                        pointcut-ref="pt1"></aop:before>
+                            <aop:before method="printLog3"
+                                        pointcut-ref="pt1"></aop:before>&ndash;&gt;
+    &lt;!&ndash;            <aop:before method="beforePrintLog" pointcut-ref="pt1"></aop:before>
+                <aop:after-returning method="afterReturningPrintLog" pointcut-ref="pt1"></aop:after-returning>
+                <aop:after-throwing method="afterThrowingPrintLog" pointcut-ref="pt1"></aop:after-throwing>
+                <aop:after method="afterPrintLog" pointcut-ref="pt1"></aop:after>&ndash;&gt;
+
+                <aop:around method="around" pointcut-ref="pt1"></aop:around>
+            </aop:aspect>
+        </aop:config>-->
+</beans>
