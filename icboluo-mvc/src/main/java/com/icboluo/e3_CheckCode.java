@@ -16,7 +16,7 @@ import java.util.Random;
  * 验证码
  */
 @WebServlet(urlPatterns = "/checkCode")
-public class e3_checkCode extends HttpServlet {
+public class e3_CheckCode extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);

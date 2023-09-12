@@ -2,6 +2,7 @@ package com.icboluo.e_login;
 
 
 import com.icboluo.Constant;
+import com.icboluo.util.response.SingleResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -31,16 +32,15 @@ public class LoginServlet extends HttpServlet {
 //            response.sendRedirect("login.jsp");
 //        }
         LoginMapper userService = new LoginMapper();
-        Integer login = userService.queryByUsernameAndPassword(username, password);
+        SingleResponse login = userService.queryByUsernameAndPassword(username, password);
 
 
-        if (200 != login) {
+        if (!login.isSuccessful()) {
             response.setContentType("text/html;charset=utf-8");
             //登录失败在原界面跳出警告字样:方案2：copy html加一句java
-            String msg = "用户名或密码错误";
-            //跳转：转发，重定向
-            request.setAttribute("errorMsg", msg);
-            request.getRequestDispatcher(Constant.context_path + "/login.jsp").forward(request, response);
+            request.setAttribute("errorMsg", "用户名或密码错误");
+            // 转发不需要使用全路径
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
         } else {
             //记住账号和密码功能
             Cookie nameCookie = new Cookie("username", "张三");
@@ -52,7 +52,9 @@ public class LoginServlet extends HttpServlet {
             // 登录成功之后将数据储存到session中
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", username);
-            request.getRequestDispatcher(Constant.context_path + "/loginSuccess.jsp").forward(request, response);
+            response.setStatus(302);
+            // 重定向需要使用全路径
+            response.setHeader("location", Constant.context_path + "/loginSuccess.jsp");
         }
     }
 }

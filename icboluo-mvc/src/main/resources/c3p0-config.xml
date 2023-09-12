@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <c3p0-config>
 	<default-config>
-		<property name="driverClass">com.mysql.jdbc.Driver</property>
-		<property name="jdbcUrl">jdbc:mysql:///stu_list?useUnicode=true&amp;characterEncoding=UTF8</property>
+		<property name="driverClass">org.sqlite.JDBC</property>
+		<!--jdbc:mysql:///usermanager?useUnicode=true&amp;&amp;characterEncoding=utf8-->
+		<property name="jdbcUrl">jdbc:sqlite:D:\IdeaProjects\icboluo\document\sql/document.db</property>
 		<property name="user">root</property>
 		<property name="password">root</property>
 		<property name="acquireIncrement">2</property>

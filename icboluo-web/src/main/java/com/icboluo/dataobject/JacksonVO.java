@@ -2,7 +2,7 @@ package com.icboluo.dataobject;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.icboluo.common.serializer.ArchivesFlatteningSerializer;
-import com.icboluo.common.serializer.BigDecimalSerializer;
+import com.icboluo.common.serializer.BigDecimalRemoveZeroSerializer;
 import com.icboluo.object.CodeName;
 import com.icboluo.object.IdName;
 import lombok.Data;
@@ -26,7 +26,7 @@ public class JacksonVO {
 
     private BigDecimal total;
 
-    @JsonSerialize(using = BigDecimalSerializer.class)
+    @JsonSerialize(using = BigDecimalRemoveZeroSerializer.class)
     private BigDecimal avg;
 
     /**

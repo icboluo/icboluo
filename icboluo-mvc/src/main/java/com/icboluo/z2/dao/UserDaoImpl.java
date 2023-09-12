@@ -2,7 +2,7 @@ package com.icboluo.z2.dao;
 
 
 import com.icboluo.z2.bean.User;
-import com.icboluo.z2.utils.JDBCUtil;
+import com.icboluo.z2.JDBCUtil;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

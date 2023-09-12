@@ -13,9 +13,11 @@ import java.math.BigDecimal;
  * @author icboluo
  * @since 2023-09-10 20:20
  */
-public class BigDecimalSerializer extends JsonSerializer<BigDecimal> {
+public class BigDecimalRemoveZeroSerializer extends JsonSerializer<BigDecimal> {
     @Override
     public void serialize(BigDecimal bigDecimal, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeNumber(bigDecimal.stripTrailingZeros().toPlainString());
+        // writeString 会序列化生成一个带""的数字，数字序列化应该保持原有的数字类型
+//        jsonGenerator.writeString(bigDecimal.stripTrailingZeros().toPlainString());
     }
 }

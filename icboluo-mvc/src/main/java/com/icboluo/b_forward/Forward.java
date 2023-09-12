@@ -23,11 +23,11 @@ public class Forward extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //接收数据
+        // 接收数据
         String msg = request.getParameter("msg");
-        //处理数据
+        // 处理数据
         request.setAttribute("info", "帮忙面试一下！");
-        //dispatch调度，分配
+        // dispatch调度，分配, 转发不需要全路径
         RequestDispatcher rd = request.getRequestDispatcher("/forwardTarget");
         rd.forward(request, response);
     }

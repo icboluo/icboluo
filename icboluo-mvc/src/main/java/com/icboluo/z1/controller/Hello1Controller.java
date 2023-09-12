@@ -46,13 +46,13 @@ public class Hello1Controller {
         return mv;
     }
 
-    @RequestMapping("**/show4.do")
-    public ModelAndView test4() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("hello");
-        mv.addObject("msg", "ant 风格的映射**");
-        return mv;
-    }
+//    @RequestMapping("**/show4.do")
+//    public ModelAndView test4() {
+//        ModelAndView mv = new ModelAndView();
+//        mv.setViewName("hello");
+//        mv.addObject("msg", "ant 风格的映射**");
+//        return mv;
+//    }
 
     @RequestMapping("show5/{name}/{userId}.do")
     public ModelAndView test5(@PathVariable("name") String name, @PathVariable("userId") Integer id) {

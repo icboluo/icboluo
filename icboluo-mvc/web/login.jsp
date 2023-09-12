@@ -16,5 +16,6 @@
     <input type="password" name="password"><br>
     <input type="submit" name="login"><br>
 </form>
+${errorMsg}
 </body>
 </html>

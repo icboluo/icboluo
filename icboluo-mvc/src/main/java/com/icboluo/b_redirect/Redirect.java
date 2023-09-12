@@ -1,5 +1,6 @@
 package com.icboluo.b_redirect;
 
+import com.icboluo.Constant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,6 +30,6 @@ public class Redirect extends HttpServlet {
 
         response.setStatus(302);
         // 注意此块是端口号后面全路径
-        response.setHeader("location", "/icboluo_mvc_Web_exploded/redirectTarget");
+        response.setHeader("location", Constant.context_path + "/redirectTarget");
     }
 }

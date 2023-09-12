@@ -1,6 +1,7 @@
 
 package com.icboluo.util.response;
 
+import com.alibaba.fastjson.JSON;
 import com.icboluo.enumerate.ReEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,9 @@ public class SingleResponse<T> extends Response {
 
     public SingleResponse(String code, String message) {
         super(code, message);
+    }
+
+    public static SingleResponse build(String json) {
+        return JSON.parseObject(json, SingleResponse.class);
     }
 }

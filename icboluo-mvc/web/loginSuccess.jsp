@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-login successful
+${loginUser} login successful
 </body>
 </html>

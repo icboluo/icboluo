@@ -149,4 +149,8 @@ public class MathUtil {
     private static <T extends Comparable<T>> boolean equals(T a, T b) {
         return a.compareTo(b) == 0;
     }
+
+    public static String toPlainString(BigDecimal bd) {
+        return bd == null ? null : bd.stripTrailingZeros().toPlainString();
+    }
 }

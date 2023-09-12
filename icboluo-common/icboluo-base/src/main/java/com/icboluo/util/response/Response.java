@@ -48,4 +48,8 @@ public abstract class Response implements Serializable {
         this.code = reEnum.getCode();
         this.message = reEnum.getMessage();
     }
+
+    public boolean isSuccessful() {
+        return code.matches("^(2\\d{2}|0)$");
+    }
 }

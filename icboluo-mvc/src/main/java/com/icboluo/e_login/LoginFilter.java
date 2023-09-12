@@ -1,7 +1,6 @@
 package com.icboluo.e_login;
 
 
-import com.icboluo.Constant;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ public class LoginFilter implements Filter {
             chain.doFilter(req, resp);
         } else {
             request.setAttribute("msg", "请先登录");
-            request.getRequestDispatcher(Constant.context_path + "/login.jsp").forward(request, resp);
+            request.getRequestDispatcher("/login.jsp").forward(request, resp);
         }
     }
 

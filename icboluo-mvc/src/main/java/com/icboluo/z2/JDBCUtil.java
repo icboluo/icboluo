@@ -1,4 +1,4 @@
-package com.icboluo.z2.utils;
+package com.icboluo.z2;
 
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 
 public class JDBCUtil {
     //初始化数据源
-    private static DataSource dataSource = new ComboPooledDataSource();
+    private static DataSource dataSource = new ComboPooledDataSource("c3p0-config.xml");
 
     //获取JdbcTemplate对象
     public static JdbcTemplate getJdbcTemplate() {
