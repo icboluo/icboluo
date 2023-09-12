@@ -19,7 +19,7 @@ public class JacksonConfig {
 
 
     /**
-     * 因为是配置类，所以它会加载到配置文件中
+     * 自定义构建器的目的就是给 ObjectMapper 设置一些属性，和下面的直接重写 ObjectMapper 功能上差不多
      *
      * @return Jackson2ObjectMapperBuilderCustomizer
      */

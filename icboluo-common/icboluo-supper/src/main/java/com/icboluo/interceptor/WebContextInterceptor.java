@@ -23,7 +23,10 @@ import java.util.Optional;
 public class WebContextInterceptor implements HandlerInterceptor {
 
     static {
+        // 这个是spring设置的环境
         LocaleContextHolder.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
+        // 这个是jdk设置的环境
+        Locale.setDefault(Locale.ENGLISH);
     }
 
     static ThreadLocal<String> USER_CODE = new InheritableThreadLocal<>();

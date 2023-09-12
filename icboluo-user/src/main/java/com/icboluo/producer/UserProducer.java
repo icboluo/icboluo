@@ -45,12 +45,12 @@ public class UserProducer {
     }
 
     @Validated
-    @GetMapping("/register")
+    @GetMapping("register")
     public void register(@Validated @NotEmpty String id, String pwd) {
         account.put(id, pwd);
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public void login(String id, String pwd) {
         if (!account.containsKey(id) || !Objects.equals(account.get(id), pwd)) {
             throw new IcBoLuoException("account or password error");

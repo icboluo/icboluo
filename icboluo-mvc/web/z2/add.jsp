@@ -25,7 +25,7 @@
 <body>
 <div class="container text-left">
     <center><h3>添加联系人页面</h3></center>
-    <form action="${pageContext.request.contextPath}/addUserServlet" method="post" class="form-horizontal">
+    <form action="${pageContext.request.contextPath}/addUserServlet" method="get" class="form-horizontal">
         ${errorMsg}
         <div class="form-group">
             <label class="col-lg-2 control-label" for="name">姓名：</label>

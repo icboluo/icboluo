@@ -38,7 +38,7 @@ public class ThreadPool {
         executor.setMaxPoolSize(coreSize * 2);
         executor.setQueueCapacity(coreSize * 100);
         executor.setThreadNamePrefix("-");
-        executor.setTaskDecorator(new ThreadTaskDecorator("ioAsync-"));
+        executor.setTaskDecorator(new ThreadTaskDecorator("ioExecutor-"));
         executor.initialize();
         return executor;
     }
@@ -52,7 +52,7 @@ public class ThreadPool {
         executor.setMaxPoolSize(coreSize * 2);
         executor.setQueueCapacity(coreSize * 100);
         executor.setThreadNamePrefix("-");
-        executor.setTaskDecorator(new ThreadTaskDecorator("ioAsync-"));
+        executor.setTaskDecorator(new ThreadTaskDecorator("cpuExecutor-"));
         executor.initialize();
         return executor;
     }

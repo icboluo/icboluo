@@ -1,7 +1,6 @@
 package com.icboluo.z2.web;
 
 
-import com.icboluo.Constant;
 import com.icboluo.z2.bean.User;
 import com.icboluo.z2.service.UserServiceImpl;
 import jakarta.servlet.ServletException;
@@ -47,7 +46,7 @@ public class PageQueryServlet extends HttpServlet {
         request.setAttribute("pageNum", pageNum);
         request.setAttribute("pageSize", pageSize);
         request.setAttribute("list", userList);
-        request.getRequestDispatcher(Constant.context_path + "/z2/list.jsp").forward(request, response);
+        request.getRequestDispatcher("/z2/list.jsp").forward(request, response);
 
     }
 }

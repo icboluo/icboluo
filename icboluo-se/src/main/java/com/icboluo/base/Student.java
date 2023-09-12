@@ -4,7 +4,7 @@ package com.icboluo.base;
  * @author icboluo
  * @since 2022-04-28 23:31
  */
-public class Student {
+class Student {
 
     public int age;
 

@@ -3,6 +3,7 @@ package com.icboluo.dataobject;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.icboluo.common.serializer.ArchivesFlatteningSerializer;
 import com.icboluo.common.serializer.BigDecimalRemoveZeroSerializer;
+import com.icboluo.common.serializer.NumberDefaultZeroSerializer;
 import com.icboluo.object.CodeName;
 import com.icboluo.object.IdName;
 import lombok.Data;
@@ -39,4 +40,9 @@ public class JacksonVO {
      */
     @JsonSerialize(contentUsing = ArchivesFlatteningSerializer.class)
     private List<IdName> statusList;
+    /**
+     * 这个需要设置为 nullsUsing才能起作用
+     */
+    @JsonSerialize(nullsUsing = NumberDefaultZeroSerializer.class)
+    private Integer zero;
 }

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--jstl属于jsp，目前已经过时，不再使用--%>
+<%--<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <!DOCTYPE html>
 <!-- 网页使用的语言 -->
 <html lang="zh-CN">
@@ -32,7 +33,7 @@
     <h3 style="text-align: center">用户信息列表</h3>
     <table border="1" class="table table-bordered table-hover">
         <tr>
-            <td colspan="8" align="center"><a class="btn btn-primary" href="add.jsp">添加联系人</a></td>
+            <td colspan="8" align="center"><a class="btn btn-primary" href="z2/add.jsp">添加联系人</a></td>
         </tr>
         <tr class="success">
             <th>计数</th>
@@ -58,7 +59,7 @@
                 <td>${user.email}</td>
                     <%--空链接href="#"/"javascript:;"/"javascript:void(0);"--%>
                 <td>
-                    <a class="btn btn-default btn-sm" href="/queryByIdServlet?id=${user.id}">修改</a>&nbsp;
+                    <a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/queryByIdServlet?id=${user.id}">修改</a>&nbsp;
                     <a class="btn btn-default btn-sm" onclick="delUserById(${user.id})" href="javascript:;">删除</a>
                 </td>
             </tr>
@@ -68,20 +69,20 @@
             <td colspan="8">
                 <div class="form-inline">
                     <c:if test="${pageNum>1}">
-                        <a class="btn btn-default" href="/pageQueryServlet?pageNum=${pageNum==1?1:pageNum-1}&pageSize=${pageSize}">上一页</a>
+                        <a class="btn btn-default" href="${pageContext.request.contextPath}/pageQueryServlet?pageNum=${pageNum==1?1:pageNum-1}&pageSize=${pageSize}">上一页</a>
                     </c:if>
                     <c:forEach begin="1" end="${totalPage}" var="i">
                         <c:if test="${pageNum==i}">
                             <a class="btn btn-success btn btn-default"
-                               href="/pageQueryServlet?pageNum=${i}&pageSize=${pageSize}">${i}</a>
+                               href="${pageContext.request.contextPath}/pageQueryServlet?pageNum=${i}&pageSize=${pageSize}">${i}</a>
                         </c:if>
                         <c:if test="${pageNum!=i}">
-                            <a class="btn btn-default" href="/pageQueryServlet?pageNum=${i}&pageSize=${pageSize}">${i}</a>
+                            <a class="btn btn-default" href="${pageContext.request.contextPath}/pageQueryServlet?pageNum=${i}&pageSize=${pageSize}">${i}</a>
                         </c:if>
                     </c:forEach>
                     <c:if test="${pageNum<totalPage}">
                         <a class="btn btn-default"
-                           href="/pageQueryServlet?pageNum=${pageNum==totalPage?totalPage:pageNum+1}&pageSize=${pageSize}">下一页</a>
+                           href="${pageContext.request.contextPath}/pageQueryServlet?pageNum=${pageNum==totalPage?totalPage:pageNum+1}&pageSize=${pageSize}">下一页</a>
                     </c:if>
                     <select class="form-control" name="pageSize" id="pageSize">
                         <option <c:if test="${pageSize==2}">selected</c:if> value="2">2条/页</option>
@@ -100,14 +101,14 @@
         var confirm = window.confirm("确认要删除？");
         /*console.log(confirm);控制台打印*/
         if (confirm) {
-            location.href = "/deleteByIdServlet?id=" + id
+            location.href = "${pageContext.request.contextPath}/deleteByIdServlet?id=" + id
         }
     }
 
     $("#pageSize").change(function () {
         var pageSize = this.value;
         /*        var pageSize = $("#pageSize").val();*/
-        location.href = "/pageQueryServlet?pageNum=1&pageSize=" + pageSize;
+        location.href = "${pageContext.request.contextPath}/pageQueryServlet?pageNum=1&pageSize=" + pageSize;
     });
 </script>
 </html>

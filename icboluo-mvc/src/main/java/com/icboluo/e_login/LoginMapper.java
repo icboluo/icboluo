@@ -23,4 +23,14 @@ public class LoginMapper {
                 .body();
         return SingleResponse.build(body);
     }
+
+    @SneakyThrows
+    public SingleResponse register(String username, String password) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(HttpConstant.USER_SERVICE + "/user/register?id=" + username + "&pwd=" + password))
+                .build();
+        String body = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+                .body();
+        return SingleResponse.build(body);
+    }
 }

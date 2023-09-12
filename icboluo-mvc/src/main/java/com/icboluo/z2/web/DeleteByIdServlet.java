@@ -1,7 +1,6 @@
 package com.icboluo.z2.web;
 
 
-import com.icboluo.Constant;
 import com.icboluo.z2.service.UserServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,7 +29,7 @@ public class DeleteByIdServlet extends HttpServlet {
             response.sendRedirect("/queryAllServlet");
         } else {
             request.setAttribute("errorMsg", "删除失败");
-            request.getRequestDispatcher(Constant.context_path + "/z2/error.jsp").forward(request, response);
+            request.getRequestDispatcher("/z2/error.jsp").forward(request, response);
         }
     }
 }
