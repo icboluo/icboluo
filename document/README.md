@@ -185,7 +185,7 @@ TODO
 
 提供sql的访问方式和sql的一些相关问题
 
-包含：jdbc JdbcTemplate 自定义连接池 c3p0 druid redis
+包含：jdbc JdbcTemplate 自定义连接池 druid redis
 
 ## user
 

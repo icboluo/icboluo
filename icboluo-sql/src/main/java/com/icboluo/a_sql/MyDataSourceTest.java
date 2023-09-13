@@ -37,7 +37,6 @@ public class MyDataSourceTest {
 
     @Test
     public void test2() throws SQLException {
-        DataSource c3P0DataSource = z_DataSourceSimpleFactory.getDataSource();
         DataSource druidDataSource = z_DataSourceSimpleFactory.getDataSource();
         Connection connection = druidDataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(z_MyJdbcUtil.UPDATE_SQL);

@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="../css/bootstrap.css">
-    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
     <style>
         .stuTable {
             width: 70%;
@@ -16,8 +15,9 @@
     </style>
 </head>
 <body>
-<table class="stuTable table table-bordered " id="stuTable">
+<table class="stuTable table table-bordered" id="stuTable">
     <caption class="text-center h2">学员列表</caption>
+    <thead>
     <tr>
         <th>ID</th>
         <th>姓名</th>
@@ -26,17 +26,35 @@
         <th>班级</th>
         <th>学科</th>
     </tr>
+    </thead>
+    <tbody id="stuListBody">
+    <!-- 学员列表数据行将在 JavaScript 代码中动态生成 -->
+    </tbody>
 </table>
-
 <script src="../js/jquery-3.3.1.js" charset="utf-8"></script>
-
-</body>
 <script>
-    //查询所有stu信息
+    // 查询所有stu信息
     $(function () {
-        $.get(${pageContext.request.contextPath}+"/queryAllServlet3", function (result) {
-            console.log(result)
-        }, "json")
-    })
+        $.get("/icboluo_mvc_Web_exploded/queryAllServlet3", function (result) {
+            console.log(result);
+            var stuList = result; // 假设接口返回的数据是一个数组
+            var tbody = $("#stuListBody");
+
+            // 遍历接口返回的数据，生成学员列表的数据行
+            for (var i = 0; i < stuList.length; i++) {
+                var student = stuList[i];
+                var row = "<tr>" +
+                    "<td>" + student.id + "</td>" +
+                    "<td>" + student.student_name + "</td>" +
+                    "<td>" + student.student_no + "</td>" +
+                    "<td>" + student.sex + "</td>" +
+                    "<td>" + student.class_id + "</td>" +
+                    "<td>" + student.subject_no + "</td>" +
+                    "</tr>";
+                tbody.append(row);
+            }
+        }, "json");
+    });
 </script>
+</body>
 </html>
