@@ -11,6 +11,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author icboluo
@@ -174,7 +175,7 @@ public class DateHelper {
             }
         }
         LocalDateTime localDateTime = allToDateTime(str);
-        return localDateTime == null ? null : localDateTime.toLocalDate();
+        return Optional.ofNullable(allToDateTime(str)).map(LocalDateTime::toLocalDate).orElse(null);
     }
 
 

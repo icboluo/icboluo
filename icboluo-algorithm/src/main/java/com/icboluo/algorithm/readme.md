@@ -64,7 +64,7 @@ ArrayList 是基于数组实现的，所以他的next就是简单的i++，但是
 
 LinkedList 是基于链表实现的，所以他的get()需要线性遍历
 
-AbstractSequentialList 抽象顺序列表 实现由 顺序访问 数据存储（如链表）支持的此接口锁需的工作量
+AbstractSequentialList 抽象顺序列表 实现由 顺序访问 数据存储（如链表）支持的此接口所需的工作量
 
 对于随机访问数据（如数组），应优先使用抽象列表，而不是此类
 

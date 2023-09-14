@@ -338,9 +338,7 @@ public class StreamTest {
 
     public Map<StatusStudent.Status, Map<String, List<StatusStudent>>> groupByStatusNameAns() {
         return stuList.stream()
-                .collect(Collectors.groupingBy(StatusStudent::getStatus,
-                        Collectors.collectingAndThen(Collectors.toList(), li -> li.stream()
-                                .collect(Collectors.groupingBy(StatusStudent::getName)))));
+                .collect(Collectors.groupingBy(StatusStudent::getStatus,Collectors.groupingBy(StatusStudent::getName)));
     }
 
     public Map<String, Integer> eleCountMapAns() {

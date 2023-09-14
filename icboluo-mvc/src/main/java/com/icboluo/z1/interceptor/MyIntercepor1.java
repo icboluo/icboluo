@@ -10,7 +10,7 @@ public class MyIntercepor1 implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("prehandle");
-        request.getRequestDispatcher("user.html").forward(request,response);
+//        request.getRequestDispatcher("user.html").forward(request,response);
         return true;
     }
 
