@@ -1,4 +1,4 @@
-package com.icboluo.z1.pojo;
+package com.icboluo.z4.pojo;
 
 import lombok.Data;
 

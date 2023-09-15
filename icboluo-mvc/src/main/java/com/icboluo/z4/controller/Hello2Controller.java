@@ -1,6 +1,6 @@
-package com.icboluo.z1.controller;
+package com.icboluo.z4.controller;
 
-import com.icboluo.z1.pojo.User;
+import com.icboluo.z4.pojo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

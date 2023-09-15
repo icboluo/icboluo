@@ -1,4 +1,4 @@
-package com.icboluo.z1.exception;
+package com.icboluo.z4.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
