@@ -39,14 +39,16 @@ public class FileTest {
 
     @Test
     public void test1() throws IOException {
-        /* 文件的创建 (只能创建文件, 不能创建文件夹)
-        如果硬盘上没有该文件, 文件可以创建成功.
-        如果硬盘上已经存在该文件, 文件就会创建失败.
-        如果指定的抽象路径, 文件的父目录如果不存在, 会发生异常.
-         */
         try {
+            // 文件的创建 (只能创建文件, 不能创建文件夹)
             boolean result = file.createNewFile();
+            if (result) {
+                log.info("如果硬盘上没有该文件，文件可以创建成功");
+            } else {
+                log.error("如果硬盘上已经存在该文件，文件就会创建失败");
+            }
         } catch (IOException e) {
+            // 如果指定的抽象路径, 文件的父目录如果不存在, 会发生异常
             log.error("文件父目录不存在,创建失败");
         }
 

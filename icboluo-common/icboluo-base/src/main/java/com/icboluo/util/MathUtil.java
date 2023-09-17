@@ -150,7 +150,7 @@ public class MathUtil {
         return a.compareTo(b) == 0;
     }
 
-    public static String toPlainString(BigDecimal bd) {
+    public static String removeSuffixZero(BigDecimal bd) {
         return bd == null ? null : bd.stripTrailingZeros().toPlainString();
     }
 }

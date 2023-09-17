@@ -1,16 +1,15 @@
 package com.icboluo.framework;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.util.StreamUtils;
+import org.springframework.util.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author icboluo
@@ -27,6 +26,8 @@ public class SpringTest {
         boolean innerClass = ClassUtils.isInnerClass(LinkedList.class);
         // 判断对象是否为代理对象
         boolean cglibProxy = ClassUtils.isCglibProxy(new LinkedList<>());
+        List<String> list = new ArrayList<>();
+        System.out.println(CollectionUtils.findCommonElementType(list));
     }
 
     @Test

@@ -28,12 +28,13 @@ class Floyd {
         for (int k = 0; k < dist.length; k++) {
             // 松弛I行
             for (int i = 0; i < dist.length; i++) {
-                // 松弛J列
+                // 松弛J列，dist: distance 距离的缩写
                 for (int j = 0; j < dist.length; j++) {
                     dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
                 }
             }
         }
+        // 上面算法实现的时间复杂度是 n3
         for (int i = 0; i < dist.length; i++) {
             System.out.print("节点 " + (i + 1) + " 的最短路径");
             for (int j = 0; j < dist.length; j++) {

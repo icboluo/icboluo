@@ -59,7 +59,7 @@ public class Demo {
         ScopeBean scopeBean2 = (ScopeBean) ac.getBean("scopeBean");
         log.info("scopeBean2 = " + scopeBean2);
 
-        // bean的声明周期
+        // bean的生命周期
         LifecycleBean lifecycleBean = (LifecycleBean) ac.getBean("lifecycleBean");
         log.info("lifecycleBean = " + lifecycleBean);
         ((ClassPathXmlApplicationContext) ac).close();

@@ -150,6 +150,7 @@ public class Stream03Test {
         }).collect(Collectors.toSet());
         System.out.println(set1);
 
+        // optimize 新写法
         Set<String> set2 = list.stream().<String>mapMulti((msg, consumer) -> {
             msg.correct.forEach(consumer);
             msg.error.forEach(consumer);

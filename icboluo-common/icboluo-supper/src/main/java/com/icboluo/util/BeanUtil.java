@@ -10,12 +10,15 @@ import com.icboluo.enumerate.ReEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -385,5 +388,61 @@ public class BeanUtil {
             res.add(row);
         }
         return res;
+    }
+
+    private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD = new HashMap<>();
+
+    /**
+     * 将源对象的属性值合并到目标对象中
+     *
+     * @param source 源对象
+     * @param target 目标对象
+     */
+    public static void mergeProperties(Object source, Object target) {
+        source = Optional.ofNullable(source).map(ObjectUtils::unwrapOptional).orElse(null);
+        target = Optional.ofNullable(target).map(ObjectUtils::unwrapOptional).orElse(null);
+        if (source == null || target == null) {
+            return;
+        }
+        cacheCLassNameFieldMap(source.getClass());
+        cacheCLassNameFieldMap(target.getClass());
+        mergePropertiesNotValid(source, target);
+    }
+
+    @SneakyThrows
+    private static void mergePropertiesNotValid(Object source, Object target) {
+        for (Map.Entry<String, Field> entry : CLASS_NAME_FIELD.get(target.getClass()).entrySet()) {
+            String name = entry.getKey();
+            Field targetField = entry.getValue();
+            Map<String, Field> sourceMap = CLASS_NAME_FIELD.get(source.getClass());
+            Field sourceField = sourceMap.get(name);
+            targetField.setAccessible(true);
+            if (targetField.get(target) == null && sourceMap.containsKey(name) && targetField.getType() == sourceField.getType()) {
+                sourceField.setAccessible(true);
+                targetField.set(target, sourceField.get(source));
+            }
+        }
+    }
+
+    private static void cacheCLassNameFieldMap(Class<?> clazz) {
+        if (CLASS_NAME_FIELD.containsKey(clazz)) {
+            return;
+        }
+        Map<String, Field> nameFieldMap = new HashMap<>();
+        // optimize 这个方法只能获取本来的属性，继承关系的属性需要用下面的方法获取
+        for (Field field : clazz.getDeclaredFields()) {
+            // 忽略静态变量
+            if (Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+            nameFieldMap.put(field.getName(), field);
+        }
+        for (Field field : clazz.getSuperclass().getDeclaredFields()) {
+            if (Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+            nameFieldMap.put(field.getName(), field);
+        }
+        CLASS_NAME_FIELD.put(clazz, nameFieldMap);
     }
 }

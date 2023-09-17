@@ -23,9 +23,9 @@ import java.util.Optional;
 public class WebContextInterceptor implements HandlerInterceptor {
 
     static {
-        // 这个是spring设置的环境
+        // 这个是spring设置的环境，主要用于web层，多线程
         LocaleContextHolder.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
-        // 这个是jdk设置的环境
+        // 这个是jdk设置的环境，是java原生的工具，会影响所用使用Locale的api，例如 DateFormat NumberFormat MessageFormat
         Locale.setDefault(Locale.ENGLISH);
     }
 

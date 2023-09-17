@@ -37,5 +37,8 @@ public class c1_Response extends HttpServlet {
         //简化方式
         // response.setContentType("text/html;charset=utf-8");
         response.getWriter().print("<h1>班长你好</h1>");
+        response.getWriter().print("<html><body>");
+        response.getWriter().print("<h1>hello</h1>");
+        response.getWriter().print("</body>班长你好</html>");
     }
 }

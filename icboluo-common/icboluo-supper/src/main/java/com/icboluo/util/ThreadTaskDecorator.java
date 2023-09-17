@@ -39,12 +39,12 @@ public class ThreadTaskDecorator implements TaskDecorator {
 
         Locale locale = LocaleContextHolder.getLocale();
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        AtomicReference<String> threadName = new AtomicReference<>("");
+        AtomicReference<String> methodName = new AtomicReference<>("");
         Arrays.stream(stackTrace)
                 .filter(st -> st.getClassName().contains("com.icboluo"))
                 .filter(st -> !st.getClassName().contains("com.icboluo.async.AsyncTaskDecorator"))
                 .findFirst()
-                .ifPresent(st -> threadName.set(st.getMethodName()));
+                .ifPresent(st -> methodName.set(st.getMethodName()));
         // 如果父线程是一个http请求，将父线程中的request传递到子线程，支持request的各种操作
         // request 是伴随着web的，子线程因为是从主线程分裂出来的，所以不存在web请求，需要在分裂的过程中增加一个 request设置
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -52,8 +52,9 @@ public class ThreadTaskDecorator implements TaskDecorator {
         try {
             // 部分操作
             return () -> {
+                String preName = Thread.currentThread().getName();
                 try {
-                    Thread.currentThread().setName(threadNamePre + threadName + Thread.currentThread().getName());
+                    Thread.currentThread().setName(threadNamePre + methodName + preName);
                     WebContext.set("");
                     LocaleContextHolder.setLocale(locale);
                     RequestContextHolder.setRequestAttributes(requestAttributes);
@@ -65,6 +66,7 @@ public class ThreadTaskDecorator implements TaskDecorator {
                 } finally {
                     WebContext.remove();
                     MDC.clear();
+                    Thread.currentThread().setName(preName);
                 }
             };
         } catch (Exception e) {

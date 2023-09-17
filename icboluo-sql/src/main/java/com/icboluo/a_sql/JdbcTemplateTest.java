@@ -1,7 +1,7 @@
 package com.icboluo.a_sql;
 
-import com.icboluo.dataobject.Book;
-import com.icboluo.dataobject.User;
+import com.icboluo.entity.Book;
+import com.icboluo.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

@@ -1,4 +1,4 @@
-package com.icboluo.dataobject;
+package com.icboluo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

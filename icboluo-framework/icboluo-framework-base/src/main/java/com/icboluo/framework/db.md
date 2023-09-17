@@ -297,4 +297,4 @@ left join on 和where的区别，where纯过滤，left join on是将过滤的条
 
 mysql在同一个会话窗口中，由于只有一个事物在执行，因此不会发生死锁
 
-同一个会话窗口是值同一个idea的console，同一个navicat的一个查询页面
+同一个会话窗口是指同一个idea的console，同一个navicat的一个查询页面，java的同一个线程
