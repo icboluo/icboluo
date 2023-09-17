@@ -19,7 +19,10 @@ class N0212_单词查找 {
                 {'e', 't', 'a', 'e'},// -----------------
                 {'i', 'h', 'k', 'r'},// -----------------
                 {'i', 'f', 'l', 'v'}};
-        System.out.println(cla.findWords(arr, new String[]{"oath", "pea", "eat", "rain"}));
+//        System.out.println(cla.findWords(arr, new String[]{"oath", "pea", "eat", "rain"}));
+
+        char[][] arr2 = {{'o', 'a', 'b', 'n'}, {'o', 't', 'a', 'e'}, {'a', 'h', 'k', 'r'}, {'a', 'f', 'l', 'v'}};
+        System.out.println(cla.findWords(arr2, new String[]{"oa","oaa"}));
     }
 
     Set<String> res;
@@ -34,13 +37,13 @@ class N0212_单词查找 {
         boolean[][] visited = new boolean[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                dfs(board, visited, i, j, root, "");
+                dfs1(board, visited, i, j, root, "");
             }
         }
         return new ArrayList<>(res);
     }
 
-    private void dfs(char[][] board, boolean[][] visited, int i, int j, Trie root, String str) {
+    private void dfs1(char[][] board, boolean[][] visited, int i, int j, Trie root, String str) {
         if (i < 0 || j < 0 || i >= board.length || j >= board[0].length) {
             return;
         }
@@ -48,26 +51,45 @@ class N0212_单词查找 {
             return;
         }
         str += board[i][j];
-        // 方法1，
-        // if (!root.startWith(str)) {
-        //     return;
-        // }
-        // // root中存储的就是单词，所以当前的通路走到str的时候，只要匹配单词，记录数据即可
-        // if (root.search(str)) {
-        //     res.add(str);
-        // }
-        // 方法2,这种方法好很多，简洁移动
+        // 方法1：嵌入到trie，各有利弊吧
+        if (!root.startWith(str)) {
+            return;
+        }
+        // root中存储的就是单词，所以当前的通路走到str的时候，只要匹配单词，记录数据即可
+        if (root.search(str)) {
+            res.add(str);
+        }
+        visited[i][j] = true;
+        dfs1(board, visited, i - 1, j, root, str);
+        dfs1(board, visited, i + 1, j, root, str);
+        dfs1(board, visited, i, j - 1, root, str);
+        dfs1(board, visited, i, j + 1, root, str);
+        visited[i][j] = false;
+    }
+
+    private void dfs2(char[][] board, boolean[][] visited, int i, int j, Trie root, String str) {
+        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length) {
+            return;
+        }
+        if (visited[i][j]) {
+            return;
+        }
+        str += board[i][j];
+        // 方法2,这种方法好很多，简洁移动,不过这种方法也复制很多，原本的root是一个完整的trie，现在的root跟随迭代过程发生了变化
         root = root.child[board[i][j] - 'a'];
-        if (root != null && root.isWord) {
+        if (root == null) {
+            return;
+        }
+        if (root.isWord) {
             res.add(str);
             // 将该单词标记为非单词，代表已访问，防止重复
             root.isWord = false;
         }
         visited[i][j] = true;
-        dfs(board, visited, i - 1, j, root, str);
-        dfs(board, visited, i + 1, j, root, str);
-        dfs(board, visited, i, j - 1, root, str);
-        dfs(board, visited, i, j + 1, root, str);
+        dfs2(board, visited, i - 1, j, root, str);
+        dfs2(board, visited, i + 1, j, root, str);
+        dfs2(board, visited, i, j - 1, root, str);
+        dfs2(board, visited, i, j + 1, root, str);
         visited[i][j] = false;
     }
 
@@ -83,10 +105,31 @@ class N0212_单词查找 {
                 if (temp.child[ch - 'a'] == null) {
                     temp.child[ch - 'a'] = new Trie();
                 }
-                temp.child[ch - 'a'] = new Trie();
                 temp = temp.child[ch - 'a'];
             }
             temp.isWord = true;
+        }
+
+        public boolean startWith(String str) {
+            Trie temp = this;
+            for (char ch : str.toCharArray()) {
+                if (temp.child[ch - 'a'] == null) {
+                    return false;
+                }
+                temp = temp.child[ch - 'a'];
+            }
+            return true;
+        }
+
+        public boolean search(String str) {
+            Trie temp = this;
+            for (char ch : str.toCharArray()) {
+                if (temp.child[ch - 'a'] == null) {
+                    return false;
+                }
+                temp = temp.child[ch - 'a'];
+            }
+            return temp.isWord;
         }
     }
 }

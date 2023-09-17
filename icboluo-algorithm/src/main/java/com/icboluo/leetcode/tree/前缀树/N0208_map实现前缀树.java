@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class N0208_map实现前缀树 {
-    private final Node root;
+    private final Trie root;
 
     public N0208_map实现前缀树() {
-        root = new Node();
+        root = new Trie();
     }
 
     public void insert(String word) {
@@ -22,15 +22,15 @@ public class N0208_map实现前缀树 {
         return root.startsWith(prefix);
     }
 
-    private static class Node {
-        private final Map<Character, Node> children = new HashMap<>();
+    private static class Trie {
+        private final Map<Character, Trie> children = new HashMap<>();
         private boolean isEnd;
 
         public void insert(String word) {
-            Node temp = this;
+            Trie temp = this;
             for (char ch : word.toCharArray()) {
                 if (!temp.children.containsKey(ch)) {
-                    temp.children.put(ch, new Node());
+                    temp.children.put(ch, new Trie());
                 }
                 temp = temp.children.get(ch);
             }
@@ -38,7 +38,7 @@ public class N0208_map实现前缀树 {
         }
 
         public boolean search(String word) {
-            Node temp = this;
+            Trie temp = this;
             for (char ch : word.toCharArray()) {
                 if (!temp.children.containsKey(ch)) {
                     return false;
@@ -49,7 +49,7 @@ public class N0208_map实现前缀树 {
         }
 
         public boolean startsWith(String prefix) {
-            Node temp = this;
+            Trie temp = this;
             for (char ch : prefix.toCharArray()) {
                 if (!temp.children.containsKey(ch)) {
                     return false;

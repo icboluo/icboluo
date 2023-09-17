@@ -27,4 +27,31 @@ class N0322_零钱兑换 {
         // 如果一种组合数都没有，就算了
         return dp[amount] == Integer.MAX_VALUE / 2 ? -1 : dp[amount];
     }
+
+    /**
+     * 322 零钱兑换 暴力解法
+     *
+     * @param arr
+     * @param target
+     * @return
+     */
+    private int m1(int[] arr, int target) {
+        int min = Integer.MAX_VALUE;
+        int[] dp = new int[target + 1];
+
+        dp[10] = 2;
+        dp[9] = 4;
+        dp[6] = 2;
+        dp[11] = dp[10] + 1;
+        dp[11] = Math.min(dp[9] + 1, dp[11]);
+        dp[11] = Math.min(dp[6] + 1, dp[11]);
+
+        for (int coin : arr) {
+            // 11-1+1 11-2+1 11-5+1
+            final int need = dp[target - coin] + 1;
+            min = Math.min(min, need);
+        }
+
+        return dp[target];
+    }
 }

@@ -5,15 +5,14 @@
  * @param s 现有的饼干大小
  */
 function findContentChildren(g: number[], s: number[]): number {
-    g.sort()
-    s.sort()
+    // ts sort 必须手写
+    g.sort((a, b) => a - b)
+    s.sort((a, b) => a - b)
     let i = 0;
-    for (let child of g) {
-        // 其实这里的i判断放到外面更合理一点
-        if (i < s.length && child <= s[i]) {
+    for (let cookies of s) {
+        if (i < g.length && cookies >= g[i]) {
             i++
         }
     }
     return i;
 }
-// FIXME ERROR
