@@ -26,7 +26,7 @@ class N0056_区间合并 {
     }
 
     public int[][] merge(int[][] arr) {
-        sortByStart(arr);
+        Arrays.sort(arr, Comparator.comparingInt(a -> a[0]));
         // 当前连续块开始索引
         int preStart = arr[0][0];
         // 前置节点结束索引
@@ -49,9 +49,5 @@ class N0056_区间合并 {
             }
         }
         return res.toArray(int[][]::new);
-    }
-
-    private void sortByStart(int[][] arr) {
-        Arrays.sort(arr, Comparator.comparingInt(a -> a[0]));
     }
 }

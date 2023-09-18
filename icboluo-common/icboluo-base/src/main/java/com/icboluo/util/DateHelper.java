@@ -174,7 +174,6 @@ public class DateHelper {
                 // do nothing
             }
         }
-        LocalDateTime localDateTime = allToDateTime(str);
         return Optional.ofNullable(allToDateTime(str)).map(LocalDateTime::toLocalDate).orElse(null);
     }
 
