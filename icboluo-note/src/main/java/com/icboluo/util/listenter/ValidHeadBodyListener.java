@@ -38,6 +38,7 @@ public class ValidHeadBodyListener<T> extends ValidHeadExcelListener<T> {
             arr = new String[context.readSheetHolder().getApproximateTotalRowNumber()][8];
         }
         Field[] fields = clazz.getDeclaredFields();
+        boolean rowValidFlag = true;
         for (Field field : fields) {
             field.setAccessible(true);
             String name = field.getName();
@@ -52,7 +53,11 @@ public class ValidHeadBodyListener<T> extends ValidHeadExcelListener<T> {
             if (StringUtils.hasText(msg)) {
                 ExcelExport ep = field.getAnnotation(ExcelExport.class);
                 arr[rowNum + head][ep.columnIndex()] = msg;
+                rowValidFlag = false;
             }
+        }
+        if (rowValidFlag) {
+            super.invoke(data, context);
         }
         rowNum++;
     }

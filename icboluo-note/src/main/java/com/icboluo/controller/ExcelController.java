@@ -87,7 +87,6 @@ public class ExcelController {
         ExcelHelp.xlsAndXlsxValid(mf);
         ValidHeadBodyListener<StudentVO> listener = new ValidHeadBodyListener<>(StudentVO.class, 1);
         try (InputStream is = mf.getInputStream(); ExcelReader er = EasyExcelFactory.read(is).build()) {
-            // 默认为0行表头，是因为要进行模板校验
             ReadSheet rs = EasyExcelFactory.readSheet(0)
                     .head(StudentVO.class)
                     .headRowNumber(listener.getHead())
