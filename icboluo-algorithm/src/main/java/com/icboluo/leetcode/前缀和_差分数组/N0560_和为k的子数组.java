@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.前缀和;
+package com.icboluo.leetcode.前缀和_差分数组;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -2,17 +2,42 @@ package com.icboluo.leetcode.linkedlist;
 
 import com.icboluo.common.ListNode;
 
+import java.util.Arrays;
+import java.util.PriorityQueue;
+
 /**
  * @author icboluo
  * @since 2020-10-09 20:57
  */
 class N0023_合并K个排序链表 {
     public static void main(String[] args) {
-        N0023_合并K个排序链表 cla = new N0023_合并K个排序链表();
+        var cla = new N0023_合并K个排序链表();
         ListNode listNode01 = new ListNode(1, 4, 5);
         ListNode listNode02 = new ListNode(1, 3, 4);
         ListNode listNode03 = new ListNode(2, 6);
-//        todo 最小堆解决
+        cla.mergeKLists1(Arrays.asList(listNode01,listNode02,listNode03).toArray(ListNode[]::new)).print();
+    }
+
+    // 堆解决
+    public ListNode mergeKLists1(ListNode[] lists) {
+        ListNode head = new ListNode(0);
+        ListNode cur = head;
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
+        for (ListNode oneHead : lists) {
+            if (oneHead != null) {
+                pq.add(oneHead);
+            }
+        }
+
+        while (!pq.isEmpty()) {
+            ListNode poll = pq.poll();
+            cur.next = poll;
+            if (poll.next != null) {
+                pq.add(poll.next);
+            }
+            cur = cur.next;
+        }
+        return head.next;
     }
 
     /**

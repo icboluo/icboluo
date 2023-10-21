@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author icboluo
  * @since 2023-06-05 23:16
  */
-class N0322_零钱兑换 {
+class N0322_0518_零钱兑换 {
     // 完全背包问题
     public int coinChange(int[] coins, int amount) {
         // i元最少需要多少个硬币
@@ -53,5 +53,33 @@ class N0322_零钱兑换 {
         }
 
         return dp[target];
+    }
+
+    // 0518
+    public int change(int amount, int[] coins) {
+        int[][] dp = new int[coins.length + 1][amount + 1];
+        // j使用第一种i类型的硬币组成的组合数
+        dp[0][0] = 1;
+        for (int i = 1; i <= coins.length; i++) {
+            dp[i][0] = 1;
+            for (int j = 1; j <= amount; j++) {
+                // 不使用当前 + 使用当前硬币（如果金额大于硬币面值，才有必要计算，计算剩余金额使用当前硬币的组合数
+                dp[i][j] = dp[i - 1][j] + (j >= coins[i - 1] ? dp[i][j - coins[i - 1]] : 0);
+            }
+        }
+        return dp[coins.length][amount];
+    }
+
+    public int change2(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+        // j使用第一种i类型的硬币组成的组合数
+        dp[0] = 1;
+        for (int i = 0; i < coins.length; i++) {
+            for (int j = coins[i]; j <= amount; j++) {
+                // 不使用当前 + 使用当前硬币（如果金额大于硬币面值，才有必要计算，计算剩余金额使用当前硬币的组合数
+                dp[j] = dp[j] + dp[j - coins[i]];
+            }
+        }
+        return dp[amount];
     }
 }

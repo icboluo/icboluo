@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.前缀和;
+package com.icboluo.leetcode.前缀和_差分数组;
 
 /**
  * 算出一共有几个和为 k 的子数组
@@ -8,7 +8,7 @@ package com.icboluo.leetcode.前缀和;
  */
 class 前缀和 {
     public static void main(String[] args) {
-        前缀和 cla = new 前缀和();
+        var cla = new 前缀和();
         int[] arr = {3, 5, 2, -2, 6, 4};
         int i = cla.subarraySum(arr, 8);
         System.out.println("i = " + i);
