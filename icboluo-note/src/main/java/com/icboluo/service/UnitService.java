@@ -2,7 +2,7 @@ package com.icboluo.service;
 
 import com.icboluo.common.Constant;
 import com.icboluo.common.redis.RedisList;
-import com.icboluo.entity.base.UnitDO;
+import com.icboluo.entity.base.Unit;
 import com.icboluo.mapper.UnitMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -21,10 +21,10 @@ public class UnitService {
     private UnitMapper unitMapper;
 
     @Resource
-    private RedisList<UnitDO> redisList;
+    private RedisList<Unit> redisList;
 
-    public List<UnitDO> getAll() {
-        List<UnitDO> list = redisList.rCap(
+    public List<Unit> getAll() {
+        List<Unit> list = redisList.rCap(
                 () -> redisList.get(Constant.UNIT),
                 unitMapper::selectAll,
                 db -> redisList.addAll(Constant.UNIT, db)
@@ -39,9 +39,9 @@ public class UnitService {
      * @param code 分组code
      * @return list
      */
-    public List<UnitDO> selectByCode(String code) {
+    public List<Unit> selectByCode(String code) {
         String key = Constant.UNIT + ":" + code;
-        List<UnitDO> list = redisList.rCap(
+        List<Unit> list = redisList.rCap(
                 () -> redisList.get(key),
                 () -> unitMapper.selectByCode(code),
                 db -> redisList.addAll(key, db)

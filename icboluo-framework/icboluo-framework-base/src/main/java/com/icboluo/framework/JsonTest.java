@@ -1,4 +1,4 @@
-package com.icboluo.test;
+package com.icboluo.framework;
 
 import com.alibaba.fastjson.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -16,9 +16,10 @@ public class JsonTest {
 
     @Test
     public void test1() {
-        String s = "{'data':'1','name':'1'}";
+        String s = """
+                {"data":1,"name":1}""";
         JSONObject jsonObject = JSONObject.parseObject(s);
-        //ClassCastException
+        // ClassCastException
         JSONObject data = jsonObject.getJSONObject("data");
         System.out.println("data = " + data);
     }

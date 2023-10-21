@@ -24,5 +24,4 @@ public class TimeNoteCO {
      * 结果
      */
     private String result;
-
 }

@@ -1,6 +1,6 @@
 package com.icboluo.controller;
 
-import com.icboluo.entity.base.UnitDO;
+import com.icboluo.entity.base.Unit;
 import com.icboluo.service.UnitService;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
@@ -25,13 +25,13 @@ public class UnitController {
 
     @GetMapping("getAll")
     public Response getAll() {
-        List<UnitDO> all = unitService.getAll();
+        List<Unit> all = unitService.getAll();
         return R.correct(all);
     }
 
     @GetMapping("selectByCode")
     public Response selectByCode(@RequestParam String code) {
-        List<UnitDO> all = unitService.selectByCode(code);
+        List<Unit> all = unitService.selectByCode(code);
         return R.correct(all);
     }
 }

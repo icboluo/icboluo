@@ -2,6 +2,7 @@ package com.icboluo.entity.base;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,7 +10,7 @@ import java.io.Serializable;
  *
  */
 @Data
-public class UnitDO implements Serializable {
+public class Unit implements Serializable {
     /**
      * id
      */
@@ -25,5 +26,6 @@ public class UnitDO implements Serializable {
      */
     private String name;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

@@ -2,6 +2,7 @@ package com.icboluo.entity.base;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -35,5 +36,6 @@ public class SoftwarePasswordDO implements Serializable {
      */
     private String password;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

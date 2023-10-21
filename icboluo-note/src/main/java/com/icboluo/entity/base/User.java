@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @author icboluo
  */
 @Data
-public class UserDO implements Serializable {
+public class User implements Serializable {
     /**
      * id
      */

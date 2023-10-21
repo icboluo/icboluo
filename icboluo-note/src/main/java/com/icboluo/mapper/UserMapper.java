@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.entity.base.UserDO;
+import com.icboluo.entity.base.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -10,15 +10,15 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(UserDO record);
+    int insert(User record);
 
-    int insertSelective(UserDO record);
+    int insertSelective(User record);
 
-    UserDO selectByPrimaryKey(Integer id);
+    User selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(UserDO record);
+    int updateByPrimaryKeySelective(User record);
 
-    int updateByPrimaryKey(UserDO record);
+    int updateByPrimaryKey(User record);
 
     Integer selectCountByNameAndPassword(@Param("name") String name, @Param("password") String password);
 }

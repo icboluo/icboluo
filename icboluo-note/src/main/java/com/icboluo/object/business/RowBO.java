@@ -42,7 +42,7 @@ public class RowBO {
     private String isPrimaryKey;
 
     public static boolean isPrimaryKey(String isPrimaryKey) {
-        if (StringUtils.hasText(isPrimaryKey)) {
+        if (!StringUtils.hasText(isPrimaryKey)) {
             return false;
         }
         return switch (isPrimaryKey) {
@@ -53,7 +53,7 @@ public class RowBO {
     }
 
     public boolean isNull(String isNullAble) {
-        if (StringUtils.hasText(isNullAble)) {
+        if (!StringUtils.hasText(isNullAble)) {
             return false;
         }
         return switch (isNullAble) {

@@ -61,7 +61,7 @@ public class RowCO {
     private String isPrimaryKey;
 
     public boolean isPrimaryKey(String isPrimaryKey) {
-        if (StringUtils.isEmpty(isPrimaryKey)) {
+        if (!StringUtils.hasText(isPrimaryKey)) {
             return false;
         }
         return switch (isPrimaryKey) {
@@ -72,7 +72,7 @@ public class RowCO {
     }
 
     public boolean isNull(String isNullAble) {
-        if (StringUtils.isEmpty(isNullAble)) {
+        if (!StringUtils.hasText(isNullAble)) {
             return false;
         }
         return switch (isNullAble) {

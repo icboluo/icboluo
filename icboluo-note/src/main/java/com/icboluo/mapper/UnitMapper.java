@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.entity.base.UnitDO;
+import com.icboluo.entity.base.Unit;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,17 +9,17 @@ import java.util.List;
 public interface UnitMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(UnitDO record);
+    int insert(Unit record);
 
-    int insertSelective(UnitDO record);
+    int insertSelective(Unit record);
 
-    UnitDO selectByPrimaryKey(Long id);
+    Unit selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(UnitDO record);
+    int updateByPrimaryKeySelective(Unit record);
 
-    int updateByPrimaryKey(UnitDO record);
+    int updateByPrimaryKey(Unit record);
 
-    List<UnitDO> selectAll();
+    List<Unit> selectAll();
 
-    List<UnitDO> selectByCode(String code);
+    List<Unit> selectByCode(String code);
 }

@@ -1,7 +1,7 @@
 package com.icboluo.service;
 
 
-import com.icboluo.entity.base.UserDO;
+import com.icboluo.entity.base.User;
 import com.icboluo.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +22,10 @@ public class UserService {
     }
 
     public boolean updatePassword(Integer id, String password) {
-        UserDO userDO = new UserDO();
-        userDO.setId(id);
-        userDO.setPassword(password);
-        int i = userMapper.updateByPrimaryKeySelective(userDO);
+        User user = new User();
+        user.setId(id);
+        user.setPassword(password);
+        int i = userMapper.updateByPrimaryKeySelective(user);
         return i == 1;
     }
 }
