@@ -7,12 +7,18 @@ class Solution:
         stack = []
         res = ''
         for i in range(len(s)):
+            if s[i] != ' ' or i == len(s) - 1:
+                stack.append(s[i])
             if s[i] == ' ' or i == len(s) - 1:
                 for _ in range(len(stack)):
                     pop = stack.pop()
                     res += pop
-                res += s[i]
-            else:
-                stack.append(s[i])
+                if s[i] == ' ':
+                    res += ' '
         return res
-FIXME ERROR
+
+
+if __name__ == '__main__':
+    cla = Solution()
+    print(cla.reverseWords("Let's take LeetCode contest"))
+    print(cla.reverseWords("God Ding"))

@@ -50,6 +50,12 @@ public abstract class Response implements Serializable {
         this.message = reEnum.getMessage();
     }
 
+    /**
+     * <p>响应是否是成功的
+     * <p>约定 2XX 为接口正常的返回，没必要再额外传输 success字段判断接口是否正常
+     *
+     * @return 接口是否正常
+     */
     @Transient
     public boolean isSuccessful() {
         return code.matches("^(2\\d{2}|0)$");

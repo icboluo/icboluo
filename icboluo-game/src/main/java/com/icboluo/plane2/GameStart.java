@@ -1,12 +1,8 @@
-package com.icboluo.plane2.UI;
+package com.icboluo.plane2;
 
-
-import com.icboluo.plane2.GameBusiness;
-import com.icboluo.plane2.Thread.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.CompletableFuture;
 
 import static com.icboluo.plane2.AtkAll.*;
 
@@ -63,11 +59,6 @@ public class GameStart extends JFrame {
         jf.setVisible(true);
         GameBusiness.panel.requestFocus();
         GameBusiness.graphics = GameBusiness.panel.getGraphics();
-
-        CompletableFuture.runAsync(new DrawThread());
-        CompletableFuture.runAsync(new MoveThread());
-        CompletableFuture.runAsync(new EnemyPlaneThread());
-        CompletableFuture.runAsync(new CrashThread());
     }
 
     // leftUp部分添加按钮

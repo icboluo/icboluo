@@ -1,7 +1,6 @@
 package com.icboluo.z3_jedis.test;
 
 import com.icboluo.z3_jedis.utils.JedisUtil;
-import com.icboluo.z3_jedis.utils.JedisUtil2;
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -42,11 +41,5 @@ public class JedisTest {
         Jedis jedis = JedisUtil.getJedis();
         String name = jedis.get("name");
         System.out.println(name);
-
-    }
-    @Test
-    public void testJdeisPool2() {
-        Jedis jedis = JedisUtil2.getJedis();
-        String s = jedis.get("name");
     }
 }

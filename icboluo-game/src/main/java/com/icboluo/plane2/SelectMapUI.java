@@ -1,6 +1,5 @@
-package com.icboluo.plane2.UI;
+package com.icboluo.plane2;
 
-import com.icboluo.plane2.GameBusiness;
 import lombok.AllArgsConstructor;
 
 import javax.swing.*;

@@ -7,7 +7,7 @@ package com.icboluo.leetcode.after_0000;
 class N0045_跳跃游戏 {
     // 从0到最终索引最小的跳跃时间
     // BFS 难以理解 需要打❤
-    public int jump(int[] nums) {
+    public int jump1(int[] nums) {
         if (nums.length <= 1) {
             return 0;
         }

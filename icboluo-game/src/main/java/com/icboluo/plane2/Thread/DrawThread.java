@@ -63,5 +63,6 @@ public class DrawThread implements Runnable {
             GameBusiness.graphics.drawImage(bufferedImage, 0, 0, null);
             SimpleThreadUtil.sleep(30);
         }
+
     }
 }

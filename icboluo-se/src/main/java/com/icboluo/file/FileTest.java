@@ -3,10 +3,15 @@ package com.icboluo.file;
 import com.icboluo.constant.FileRelativePathPre;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.util.Properties;
 
 /**
  * 关联硬盘路径, 获取文件对象.
@@ -125,6 +130,48 @@ public class FileTest {
         deleteNullDir(new File("aaa"));
     }
 
+    @Test
+    public void test4() throws IOException {
+        File file = new File("src/main/resources/a.txt");
+        System.out.println(file.exists());
+        System.out.println(new File("src/main/java/com/icboluo/file/FileTest.java").exists());
+
+        FileInputStream fis = new FileInputStream("src/main/resources/application.yml");
+        Properties properties = new Properties();
+        properties.load(fis);
+        System.out.println(properties);
+    }
+
+    @Test
+    public void test5() {
+        URL resource = getClass().getClassLoader().getResource("a.txt");
+        // 这个resource.getFile 代表的是完整路径
+        System.out.println(new File(resource.getFile()).exists());
+    }
+
+    @Autowired
+    private ResourceLoader resourceLoader;
+
+    @Test
+    public void test6() throws IOException {
+        System.out.println(ResourceUtils.getFile("classpath:a.txt").exists());
+        Resource resource = resourceLoader.getResource("classpath:a.txt");
+        System.out.println(resource.getFile().exists());
+    }
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+/*    @Autowired
+    private ServletContext servletContext;
+
+    @Test
+    public void test7() throws IOException {
+        Resource resource = applicationContext.getResource("classpath:a.txt");
+        InputStream inputStream1 = resource.getInputStream();
+        InputStream inputStream2 = servletContext.getResourceAsStream("WEB-INF/class/a.txt");
+    }*/
+
     private void deleteNullDir(File file) {
         if (file.isFile() && file.delete()) {
             count++;
@@ -183,6 +230,5 @@ public class FileTest {
                 System.out.println(f);
             }
         }
-
     }
 }

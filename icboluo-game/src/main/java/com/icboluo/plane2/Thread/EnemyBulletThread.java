@@ -6,6 +6,7 @@ import com.icboluo.util.RandomUtil;
 import com.icboluo.util.SimpleThreadUtil;
 
 import static com.icboluo.plane2.AtkAll.enemyBullets;
+import static com.icboluo.plane2.AtkAll.player;
 
 /**
  * 敌方子弹线程
@@ -20,7 +21,7 @@ public record EnemyBulletThread(EnemyPlane enemyPlane) implements Runnable {
     @Override
     public void run() {
         SimpleThreadUtil.sleep(2000);
-        while (enemyPlane.isAlive()) {
+        while (enemyPlane.isAlive() && player.isAlive()) {
             int bulletX = enemyPlane.getX() + 25;
             int bulletY = enemyPlane.getY() + 66;
             EnemyBullet enemyBullet = new EnemyBullet(bulletX, bulletY);

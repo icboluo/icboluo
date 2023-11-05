@@ -4,7 +4,7 @@ import com.icboluo.plane2.BaseClass.EnemyBullet;
 import com.icboluo.plane2.BaseClass.EnemyPlane;
 import com.icboluo.plane2.BaseClass.MyPlane;
 import com.icboluo.plane2.BaseClass.Prop;
-import com.icboluo.plane2.UI.GameStart;
+import com.icboluo.plane2.GameStart;
 import com.icboluo.util.RandomUtil;
 import com.icboluo.util.SimpleThreadUtil;
 
@@ -12,6 +12,9 @@ import java.util.List;
 
 import static com.icboluo.plane2.AtkAll.*;
 
+/**
+ * 碰撞线程
+ */
 public class CrashThread implements Runnable {
 
     @Override

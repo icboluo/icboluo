@@ -72,7 +72,7 @@ public class JDBCUtil {
         //./代表当前目录的路径
         File file2 = new File("./src/main/resources/spring-servlet.xml");
 
-        // ❤ 需要用此方法多校验
+        // ❤ 需要用此方法多校验，就是绝对路径进行校验
         Path path = Paths.get("src/main/resources/spring-servlet.xml");
         // 绝对路径，这玩意怎么跑到tomcat底下去了
         System.out.println(path.toAbsolutePath());

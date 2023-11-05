@@ -1,8 +1,12 @@
-package com.icboluo.plane2.UI;
+package com.icboluo.plane2;
 
-import com.icboluo.plane2.GameBusiness;
+import com.icboluo.plane2.Thread.CrashThread;
+import com.icboluo.plane2.Thread.DrawThread;
+import com.icboluo.plane2.Thread.EnemyPlaneThread;
+import com.icboluo.plane2.Thread.MoveThread;
 
 import java.awt.event.*;
+import java.util.concurrent.CompletableFuture;
 
 import static com.icboluo.plane2.AtkAll.myPlane;
 import static com.icboluo.plane2.AtkAll.player;
@@ -11,6 +15,7 @@ import static com.icboluo.plane2.AtkAll.player;
  * @author icboluo
  */
 public class Listener implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
+
     int speed = 5;
 
     private boolean isStart;
@@ -27,10 +32,10 @@ public class Listener implements ActionListener, KeyListener, MouseListener, Mou
         switch (actionCommand) {
             case "开始游戏":
                 if (!isStart) {
-//                    new Thread(new DrawThread(gameUI.g)).start();
-//                    new Thread(new MoveThread()).start();
-//                    new Thread(new EnemyPlaneThread()).start();
-//                    new Thread(new TestCrashThread()).start();
+                    CompletableFuture.runAsync(new DrawThread());
+                    CompletableFuture.runAsync(new MoveThread());
+                    CompletableFuture.runAsync(new EnemyPlaneThread());
+                    CompletableFuture.runAsync(new CrashThread());
                     isStart = true;
                 }
                 break;
@@ -55,10 +60,9 @@ public class Listener implements ActionListener, KeyListener, MouseListener, Mou
 
     @Override
     public void keyTyped(KeyEvent e) {
-
+        System.out.println(e);
     }
 
-    @SuppressWarnings("all")
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();

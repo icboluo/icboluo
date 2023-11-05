@@ -12,12 +12,16 @@ import java.util.Deque;
 class N0230_第k个最小元素 {
     // 二分查找 TODO 完全看不懂 FIXME ERROR
     public int kthSmallest1(TreeNode root, int k) {
+        if (root == null) {
+            return -1;
+        }
+        // 当前元素是第count+1个小的数
         int count = count(root);
         if (k <= count) {
-            // 如果当前节点所拥有的节点数较多
+            // 如果左子树比较大，继续左移
             return kthSmallest1(root.left, k);
         } else if (k > count + 1) {
-            // 如果总数过小，同时递减节点和k
+            // 如果左子树较小，右移，对于右节点而言，他的左子树已经有count+1个，所以不需要这些数字了，一起减了
             return kthSmallest1(root.right, k - 1 - count);
         } else {
             // k==count+1

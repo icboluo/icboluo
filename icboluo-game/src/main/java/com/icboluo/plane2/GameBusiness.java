@@ -1,7 +1,5 @@
 package com.icboluo.plane2;
 
-import com.icboluo.plane2.UI.Listener;
-
 import javax.swing.*;
 import java.awt.*;
 
