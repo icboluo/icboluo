@@ -84,6 +84,8 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 
 表字段用业务+字段属性...不要只用单纯的字段属性，不要觉得字段过长，这样，使用过程比较清晰
 
+数据库字段设置长一点，并没有什么明显的缺点，所以255在很多时候是个不错的选择
+
 ## 最佳实践
 
 - 对公共sql的更改需要在mapper接口上增加注释，更改公共sql的时候，需要merge，不准直接copy覆盖

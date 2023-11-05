@@ -10,7 +10,6 @@ import java.util.Set;
  * @since 2023-06-05 23:35
  */
 class N0212_单词查找 {
-    // FIXME
     public static void main(String[] args) {
         var cla = new N0212_单词查找();
         @SuppressWarnings("all")
@@ -22,7 +21,7 @@ class N0212_单词查找 {
 //        System.out.println(cla.findWords(arr, new String[]{"oath", "pea", "eat", "rain"}));
 
         char[][] arr2 = {{'o', 'a', 'b', 'n'}, {'o', 't', 'a', 'e'}, {'a', 'h', 'k', 'r'}, {'a', 'f', 'l', 'v'}};
-        System.out.println(cla.findWords(arr2, new String[]{"oa","oaa"}));
+        System.out.println(cla.findWords(arr2, new String[]{"oa", "oaa"}));
     }
 
     Set<String> res;

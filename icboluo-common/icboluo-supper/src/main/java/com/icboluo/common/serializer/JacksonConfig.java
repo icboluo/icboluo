@@ -26,6 +26,7 @@ public class JacksonConfig {
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+        // 默认的日期反序列化是如果序列化失败抛异常，此处是返回null
         return builder -> builder
                 .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer())
                 .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer())

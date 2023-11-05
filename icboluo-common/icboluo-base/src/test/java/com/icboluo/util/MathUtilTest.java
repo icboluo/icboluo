@@ -17,5 +17,7 @@ class MathUtilTest {
     @Test
     void dividePercentage() {
         assertEquals(0, MathUtil.dividePercentage(10, 100).compareTo(BigDecimal.valueOf(10)));
+        System.out.println(MathUtil.dividePercentage(0.02, 100000, 5));
+        System.out.println(MathUtil.dividePercentage(9999998, 9999999, 4));
     }
 }

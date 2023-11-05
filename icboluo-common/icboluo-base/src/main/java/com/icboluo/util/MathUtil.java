@@ -43,7 +43,7 @@ public class MathUtil {
         if (scale == null) {
             scale = 2;
         }
-        if (equals(m, BigDecimal.ZERO) || equals(d, BigDecimal.ZERO)) {
+        if (compareToIsZero(m, BigDecimal.ZERO) || compareToIsZero(d, BigDecimal.ZERO)) {
             return BigDecimal.ZERO;
         }
         return m.divide(d, scale, mode);
@@ -58,7 +58,8 @@ public class MathUtil {
     }
 
     /**
-     * 除法计算百分数
+     * <p/>除法计算百分数
+     * <p/> 计算结果进行了简单处理，并非严格四舍五入
      *
      * @param molecular   分子
      * @param denominator 分母
@@ -72,17 +73,17 @@ public class MathUtil {
         BigDecimal mBd = TypeUtils.castToBigDecimal(molecular);
         BigDecimal dBd = TypeUtils.castToBigDecimal(denominator);
         BigDecimal divide = divide(mBd.multiply(new BigDecimal(100)), dBd, scale, mode);
-        if (equals(divide, BigDecimal.valueOf(100))) {
-            if (equals(mBd, dBd)) {
+        if (compareToIsZero(divide, BigDecimal.valueOf(100))) {
+            if (compareToIsZero(mBd, dBd)) {
                 return BigDecimal.valueOf(100);
             }
-            return BigDecimal.valueOf(99.99);
+            return BigDecimal.valueOf(Double.parseDouble("99." + "9".repeat(divide.scale())));
         }
-        if (equals(divide, BigDecimal.ZERO)) {
-            if (equals(mBd, BigDecimal.ZERO)) {
+        if (compareToIsZero(divide, BigDecimal.ZERO)) {
+            if (compareToIsZero(mBd, BigDecimal.ZERO)) {
                 return BigDecimal.ZERO;
             }
-            return BigDecimal.valueOf(0.01);
+            return divide(BigDecimal.ONE, BigDecimal.TEN.pow(divide.scale()), divide.scale());
         }
         return divide;
     }
@@ -106,7 +107,7 @@ public class MathUtil {
     }
 
     public static <T extends Comparable<T>> boolean between(T source, T a, T b) {
-        if (equals(source, a) || equals(source, b)) {
+        if (compareToIsZero(source, a) || compareToIsZero(source, b)) {
             return true;
         }
         return source.compareTo(a) * source.compareTo(b) == -1;
@@ -146,7 +147,7 @@ public class MathUtil {
      * @param <T> 数据类型
      * @return a和b是否相等
      */
-    private static <T extends Comparable<T>> boolean equals(T a, T b) {
+    private static <T extends Comparable<T>> boolean compareToIsZero(T a, T b) {
         return a.compareTo(b) == 0;
     }
 

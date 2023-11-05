@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.icboluo</groupId>
-            <artifactId>icboluo-base</artifactId>
+            <artifactId>icboluo-all</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

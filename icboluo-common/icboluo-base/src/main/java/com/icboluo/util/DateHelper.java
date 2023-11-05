@@ -43,7 +43,7 @@ public class DateHelper {
     private static DateTimeFormatter Y_M_D_H_M_S = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
-     * 此formatters需要修改默认支持的数据类型
+     * ISO_LOCAL_DATE_TIME 这个支持的格式相当的多，秒以后的级别大部分都支持
      */
     private static List<DateTimeFormatter> dateTimeFormatters = Arrays.asList(Y_M_D_H_M_S, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
@@ -109,6 +109,7 @@ public class DateHelper {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
+    @Deprecated
     public static LocalDateTime dateToLocalDateTime(Date date) {
         return date.toInstant()
                 .atZone(ZoneId.systemDefault())

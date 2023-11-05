@@ -47,4 +47,13 @@ class DateHelperTest {
 
         of3.minusDays(3);
     }
+
+    @Test
+    void allToDate() {
+        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05 12:12:12"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05T13:13:13"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05T14:14:14.141"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05T15:15:15.123456789"));
+    }
 }

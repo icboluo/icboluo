@@ -372,10 +372,10 @@ public class BeanUtil {
      * @param size 每组最大大小
      * @param <T>  元素类型
      * @return 分组后的集合
+     * @see org.apache.commons.collections4.ListUtils#partition(List, int) 使用这个替换即可
      */
     @Deprecated
     public static <T> List<List<T>> groupByOneGroupSize(Collection<T> coll, int size) {
-        // ListUtils.partition(new ArrayList<>(coll), size);
         List<T> list = new ArrayList<>(coll);
         List<List<T>> res = new ArrayList<>();
         for (int i = 0; i < (coll.size() + size - 1) / size; i++) {

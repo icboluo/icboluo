@@ -42,7 +42,7 @@ public class ThreadTaskDecorator implements TaskDecorator {
         AtomicReference<String> methodName = new AtomicReference<>("");
         Arrays.stream(stackTrace)
                 .filter(st -> st.getClassName().contains("com.icboluo"))
-                .filter(st -> !st.getClassName().contains("com.icboluo.async.AsyncTaskDecorator"))
+                .filter(st -> !st.getClassName().contains("com.icboluo.util.ThreadTaskDecorator"))
                 .findFirst()
                 .ifPresent(st -> methodName.set(st.getMethodName()));
         // 如果父线程是一个http请求，将父线程中的request传递到子线程，支持request的各种操作

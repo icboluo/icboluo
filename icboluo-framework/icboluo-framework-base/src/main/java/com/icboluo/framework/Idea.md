@@ -34,3 +34,9 @@ ctrl shift r 全局搜索 可以搜索数据库中的表的使用
 
 idea 出现class] 的现象是因为pom文件的问题，新版本的Spring就有这样的问题，但是不太影响使用，和bean本身关系不大
 bean name还是正确的，只是展示有问题，和toString 关系也不大
+
+## 插件
+
+代码量统计插件
+
+statistic lines 包含了空行和注释，line code 仅包含代码，注释和空行不包括

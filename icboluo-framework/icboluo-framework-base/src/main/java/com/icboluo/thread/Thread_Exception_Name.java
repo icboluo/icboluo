@@ -2,6 +2,9 @@ package com.icboluo.thread;
 
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.IcBoLuoI18nException;
+import com.icboluo.util.ThreadPool;
+import org.junit.jupiter.api.Test;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
@@ -10,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author icboluo
  * @since 2023-11-05 19:12
  */
-public class Thread_Exception {
+public class Thread_Exception_Name {
     public static void main(String[] args) {
         // 如果要区分敏感异常和别的异常，可以提前全局变量存储异常msg，在()->异步函数中完成
         AtomicReference<String> errMsg = new AtomicReference<>("");
@@ -46,5 +49,24 @@ public class Thread_Exception {
         if (a <= 0) {
             throw new IcBoLuoI18nException("param.{0}.less.than.or.equal.to", new Object[]{a});
         }
+    }
+
+    ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPool().asyncExecutor();
+
+    @Test
+    public void threadName() {
+        // 默认线程名 ForkJoinPool.commonPool-worker-1
+        // 自定义线程池的线程名：ioExecutor-threadName-1 | ioExecutor-subMethod-2
+        // 如果自定义线程池不包含任何的东西，线程名是：ioExecutor-1  线程bean的名称加上序列后缀
+        CompletableFuture.runAsync(() -> {
+            System.out.println(Thread.currentThread().getName());
+            subMethod();
+        }, threadPoolTaskExecutor);
+    }
+
+    private void subMethod() {
+        CompletableFuture.runAsync(() -> {
+            System.out.println(Thread.currentThread().getName());
+        }, threadPoolTaskExecutor);
     }
 }
