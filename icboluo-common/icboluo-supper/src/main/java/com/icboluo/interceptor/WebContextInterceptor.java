@@ -16,6 +16,7 @@ import java.util.Optional;
 
 /**
  * 拦截器是不需要加入到bean容器中的，加了也没用
+ * 拦截器需要添加到 WebMvcConfigurer 里面才行，不能实现一个接口空放着，直接加入bean容器中也不行，完全不需要加入bean容器中
  *
  * @author icboluo
  */

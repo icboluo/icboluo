@@ -32,11 +32,11 @@ public class Demo {
     public void xml() {
         ApplicationContext ac = new ClassPathXmlApplicationContext("spring.xml");
         // 直接获取bean
-        Student student = ac.getBean("student", Student.class);
-        log.info(student.toString());
+        StudentA studentA = ac.getBean("student", StudentA.class);
+        log.info(studentA.toString());
         // 构造方法获取bean
-        Student constructorStudent = ac.getBean("student2", Student.class);
-        log.info("constructor method create bean: " + constructorStudent);
+        StudentA constructorStudentA = ac.getBean("student2", StudentA.class);
+        log.info("constructor method create bean: " + constructorStudentA);
         // set方法获取bean
         Student3 setStudent = ac.getBean("student3", Student3.class);
         log.info("set method create bean: " + setStudent);
@@ -44,11 +44,11 @@ public class Demo {
         Student5 complexStudent = ac.getBean("student5", Student5.class);
         log.info("create complex bean: " + complexStudent);
         // 方法直接创建bean
-        Student staticMethodCreateStudent = ac.getBean("methodCreateStudent1", Student.class);
-        log.info("static method direct create bean " + staticMethodCreateStudent);
+        StudentA staticMethodCreateStudentA = ac.getBean("methodCreateStudent1", StudentA.class);
+        log.info("static method direct create bean " + staticMethodCreateStudentA);
 
-        Student instanceMethodCreateStudent = ac.getBean("methodCreateStudent2", Student.class);
-        log.info("instance method indirect create bean " + instanceMethodCreateStudent);
+        StudentA instanceMethodCreateStudentA = ac.getBean("methodCreateStudent2", StudentA.class);
+        log.info("instance method indirect create bean " + instanceMethodCreateStudentA);
         // BeanFactory 创建bean
         Student0 bfStudent = (Student0) com.icboluo.spring.util.BeanFactory.getBean("student0");
         log.info("BeanFactory create bean: " + bfStudent);
@@ -71,8 +71,8 @@ public class Demo {
     @Test
     public void anno() {
         AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(Config.class);
-        annotationConfigApplicationContext.register(Student.class);
-        Student stu = annotationConfigApplicationContext.getBean(Student.class);
+        annotationConfigApplicationContext.register(StudentA.class);
+        StudentA stu = annotationConfigApplicationContext.getBean(StudentA.class);
         log.info(stu.toString());
     }
 
@@ -83,13 +83,13 @@ public class Demo {
     @Test
     public void definition() {
         AbstractBeanDefinition beanDefinition = BeanDefinitionBuilder.genericBeanDefinition().getBeanDefinition();
-        beanDefinition.setBeanClass(Student.class);
+        beanDefinition.setBeanClass(StudentA.class);
     }
 
     @Test
     public void beanFactory() {
         BeanFactory beanFactory = new DefaultListableBeanFactory();
-        Student bean = beanFactory.getBean(Student.class);
+        StudentA bean = beanFactory.getBean(StudentA.class);
     }
 
     @Test

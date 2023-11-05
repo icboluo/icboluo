@@ -1,9 +1,9 @@
 package com.icboluo.spring.util;
 
-import com.icboluo.spring.bean.Student;
+import com.icboluo.spring.bean.StudentA;
 
 public class StaticFactory {
-    public static Student getStudent() {
-        return new Student();
+    public static StudentA getStudent() {
+        return new StudentA();
     }
 }

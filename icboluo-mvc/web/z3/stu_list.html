@@ -42,14 +42,14 @@
 
             // 遍历接口返回的数据，生成学员列表的数据行
             for (var i = 0; i < stuList.length; i++) {
-                var student = stuList[i];
+                var studentA = stuList[i];
                 var row = "<tr>" +
-                    "<td>" + student.id + "</td>" +
-                    "<td>" + student.student_name + "</td>" +
-                    "<td>" + student.student_no + "</td>" +
-                    "<td>" + student.sex + "</td>" +
-                    "<td>" + student.class_id + "</td>" +
-                    "<td>" + student.subject_no + "</td>" +
+                    "<td>" + studentA.id + "</td>" +
+                    "<td>" + studentA.student_name + "</td>" +
+                    "<td>" + studentA.student_no + "</td>" +
+                    "<td>" + studentA.sex + "</td>" +
+                    "<td>" + studentA.class_id + "</td>" +
+                    "<td>" + studentA.subject_no + "</td>" +
                     "</tr>";
                 tbody.append(row);
             }

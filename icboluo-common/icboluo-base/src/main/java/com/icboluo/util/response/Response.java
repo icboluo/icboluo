@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.beans.Transient;
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -49,6 +50,7 @@ public abstract class Response implements Serializable {
         this.message = reEnum.getMessage();
     }
 
+    @Transient
     public boolean isSuccessful() {
         return code.matches("^(2\\d{2}|0)$");
     }

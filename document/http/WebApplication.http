@@ -31,7 +31,7 @@ GET http://localhost:50509/jackson/customize
 Content-Type: application/json
 
 {
-  "student": "张三"
+  "studentA": "张三"
 }
 <> 2023-09-10T210221.200.json
 <> 2023-09-10T210143.200.json

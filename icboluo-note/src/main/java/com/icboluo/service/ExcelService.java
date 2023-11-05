@@ -250,7 +250,7 @@ public class ExcelService {
     }
 
     private String buildComment(String s) {
-        if (StringUtils.hasText(s)) {
+        if (!StringUtils.hasText(s)) {
             return null;
         }
         return s.replace("'", "\\'");

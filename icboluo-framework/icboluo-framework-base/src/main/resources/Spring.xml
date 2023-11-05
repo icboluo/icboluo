@@ -3,10 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="student" class="com.icboluo.spring.bean.Student"/>
+    <bean id="studentA" class="com.icboluo.spring.bean.StudentA"/>
     <bean id="student0" class="com.icboluo.spring.bean.Student0"/>
     <bean id="accountDao" class=" com.icboluo.spring.bean.AccountMapperImpl"></bean>
-    <bean id="student2" class="com.icboluo.spring.bean.Student">
+    <bean id="student2" class="com.icboluo.spring.bean.StudentA">
         <constructor-arg name="age" value="18"></constructor-arg>
         <constructor-arg name="name" value="zhangsan"></constructor-arg>
         <constructor-arg name="accountMapper" ref="accountDao"></constructor-arg>

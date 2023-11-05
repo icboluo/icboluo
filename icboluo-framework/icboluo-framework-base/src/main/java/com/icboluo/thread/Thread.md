@@ -107,6 +107,9 @@ cf.isCompletedExceptionally()这个方法并不好用，因为这个需要等到
 
 2种方式均不友好：不要让cf抛异常，应该将异常结果收集起来，然后join判断
 
+    // 这块代码是没有阻塞效果的，创建的任务是异步任务，整个join都是异步执行的
+    CompletableFuture<Void> res=CompletableFuture.runAsync(()->calRes(list.join))
+
 ## CAS
 
 首先将内存位置的值和预期值比较，如果相匹配，处理器会自动将该内存位置的值更新为新值，并返回true；如果不匹配，处理器不进行任何操作，并返回false

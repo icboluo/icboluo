@@ -26,7 +26,7 @@ public class JdbcTemplateTest {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(z_DataSourceSimpleFactory.getDataSource());
         String sql = """
                 -- ----------------------------
-                -- Table structure for student
+                -- Table structure for studentA
                 -- ----------------------------
                 DROP TABLE IF EXISTS "student_temp";
                 CREATE TABLE "student_temp" (
@@ -44,7 +44,7 @@ public class JdbcTemplateTest {
     @Test
     public void Test02() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(z_DataSourceSimpleFactory.getDataSource());
-        String sql = "INSERT INTO student (code, name, age) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO studentA (code, name, age) VALUES (?, ?, ?);";
         int i = jdbcTemplate.update(sql, 2003, "李四", 27);
         log.info("insert: " + i);
     }
@@ -52,7 +52,7 @@ public class JdbcTemplateTest {
     @Test
     public void Test03() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(z_DataSourceSimpleFactory.getDataSource());
-        String sql = "INSERT INTO student (code, name, age) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO studentA (code, name, age) VALUES (?, ?, ?);";
         Object[] objs = {1007, "jav", 31};
         int i = jdbcTemplate.update(sql, objs);
         log.info("insert: " + i);
@@ -61,7 +61,7 @@ public class JdbcTemplateTest {
     @Test
     public void Test04() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(z_DataSourceSimpleFactory.getDataSource());
-        String sql = "update student set code=? where name='jav'";
+        String sql = "update studentA set code=? where name='jav'";
         Object[] objs = {444};
         int i = jdbcTemplate.update(sql, objs);
         System.out.println(i);
@@ -82,7 +82,7 @@ public class JdbcTemplateTest {
     @Test
     public void Test11() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(z_DataSourceSimpleFactory.getDataSource());
-        String sql = "select count(*) from student";
+        String sql = "select count(*) from studentA";
         Integer result = jdbcTemplate.queryForObject(sql, int.class);
         System.out.println(result);
     }

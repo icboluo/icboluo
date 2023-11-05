@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -75,12 +76,11 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         // 因为在所有的 HttpMessageConverter 实例集合中，StringHttpMessageConverter 要比其它的 Converter 排得靠前一些。
         // 我们需要将处理 Object 类型的 HttpMessageConverter 放得靠前一些，这可以在 Configuration 类中完成
-        // TODO 这个映射好像不对
-        // converters.add(0, new MappingJackson2HttpMessageConverter());
+        converters.add(0, new MappingJackson2HttpMessageConverter());
     }
 
     /**
-     * TODO 序列化和转换器有什么不同吗
+     * 增加格式化功能
      *
      * @param registry 格式化注册器
      */

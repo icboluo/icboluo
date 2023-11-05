@@ -113,6 +113,8 @@ public class ExcelController {
         EasyExcelFactory.write(file)
                 // 实测这个自定义列宽最大值太宽了，需要修改为 100|150
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                // 这个 api 会让 excel 上面空下来几行，可以做模版填充使用，给定表头模版，仅写入数据
+                .relativeHeadRowIndex(0)
                 .head(resolve.head())
                 .sheet("学生")
                 .doWrite(resolve.body(() ->

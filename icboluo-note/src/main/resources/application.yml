@@ -25,8 +25,8 @@ logging:
     console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:dd日 HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
 
 read-excel-entity:
-  excel-path: icboluo-note/database.xlsx
-  general-sql-path: icboluo-note/creat.sql
+  excel-path: icboluo-note/src/main/resources/dir/database.xlsx
+  general-sql-path: icboluo-note/src/main/resources/dir/creat.sql
   sheet-name:
 write-excel-entity:
   excel-path: database.xlsx

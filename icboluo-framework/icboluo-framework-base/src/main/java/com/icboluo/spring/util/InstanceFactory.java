@@ -1,9 +1,9 @@
 package com.icboluo.spring.util;
 
-import com.icboluo.spring.bean.Student;
+import com.icboluo.spring.bean.StudentA;
 
 public class InstanceFactory {
-    public Student getStudent() {
-        return new Student();
+    public StudentA getStudent() {
+        return new StudentA();
     }
 }

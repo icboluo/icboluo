@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!--    POM <Project Object Model> 项目对象模型-->
     <!--    clean的时候有时候会出现 Process terminated （加工终止-->
     <parent>
         <!--        我们在升级Spring的时候，应该把其他的stater同样升级到相同版本，例如mybatis-->
@@ -40,8 +41,10 @@
     <!--    申明是一个父工程-->
     <packaging>pom</packaging>
 
-    <!--统一管理jar包和版本-->
+    <!-- 统一管理jar包和版本，定义全局变量，没有其他作用-->
     <!-- maven仓库地址   https://mvnrepository.com/ -->
+    <!-- 如果依赖只在某个子项目中使用，则可以在子项目的pom中直接引入，避免父pom过度臃肿-->
+    <!-- pom版本号: 单个版本号有利于各个环境统一代码统一跑 区间版本号有利于依赖更新到最新-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
@@ -175,10 +178,10 @@
                 <version>${hibernate.validator.version}</version>
             </dependency>
             <!--        javax 包已经被jakarta替换，包含javax.servlet.http.HttpServletResponse -->
-<!--            <dependency>-->
-<!--                <groupId>jakarta.servlet</groupId>-->
-<!--                <artifactId>jakarta.servlet-api</artifactId>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>jakarta.servlet</groupId>-->
+            <!--                <artifactId>jakarta.servlet-api</artifactId>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
@@ -196,4 +199,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <!--    maven 拥有很多插件，可以手动引入，可以做到单元测试覆盖率-->
 </project>

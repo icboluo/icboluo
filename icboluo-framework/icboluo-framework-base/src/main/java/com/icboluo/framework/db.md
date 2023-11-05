@@ -91,6 +91,9 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 - 修改数据库字段的时候，需要修改整个xml，需要注意，不要漏掉sql
 - 使用该字段的时候，需要判断是否为null，防止npe的情况发生
 
+- 将多种类型（Integer,Sting,LocalDate,List）转换为字符串放入数据库，并且取出来，可以使用JSON.toJSONString(a) 和JSON.pares(b)
+- 整体需要使用反射操作
+
 ## 索引
 
 * not in 没有使用索引
@@ -306,3 +309,9 @@ left join on 和where的区别，where纯过滤，left join on是将过滤的条
 mysql在同一个会话窗口中，由于只有一个事物在执行，因此不会发生死锁
 
 同一个会话窗口是指同一个idea的console，同一个navicat的一个查询页面，java的同一个线程
+
+## 连接池
+
+hikari 默认访问后500ms 内如果不再访问数据库，会断掉连接，如果需要继续访问，会再次尝试访问一次，判断连接是否可用，整个过程耗时25ms左右；
+
+也就是把定制的select 1 再执行一次
