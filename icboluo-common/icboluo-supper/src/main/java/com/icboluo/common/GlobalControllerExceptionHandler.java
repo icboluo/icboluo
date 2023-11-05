@@ -9,10 +9,12 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.UnexpectedTypeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -59,6 +61,30 @@ public class GlobalControllerExceptionHandler {
         // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
         // response.setStatus(500);
         return R.error(Response.ERROR_CODE, e.getMessage());
+    }
+
+    /**
+     * 校验注解写错类型不匹配，单纯的后台校验器有问题
+     *
+     * @param e 异常类型
+     * @return 失败的响应信息
+     */
+    @ExceptionHandler(value = {UnexpectedTypeException.class})
+    public Response unexpectedTypeExceptionHandler(UnexpectedTypeException e) {
+        log.error("UnexpectedTypeException, Please check @valid code first", e);
+        return R.error(ReEnum.ERROR);
+    }
+
+    /**
+     * 前后端参数类型不匹配，反序列化异常
+     *
+     * @param e 异常类型
+     * @return 失败的响应信息
+     */
+    @ExceptionHandler(value = {HttpMessageNotReadableException.class})
+    public Response httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
+        log.error("HttpMessageNotReadableException: {}", ReEnum.UNEXPECTED_EXCEPTION, e);
+        return R.error(ReEnum.UNEXPECTED_EXCEPTION);
     }
 
     /**

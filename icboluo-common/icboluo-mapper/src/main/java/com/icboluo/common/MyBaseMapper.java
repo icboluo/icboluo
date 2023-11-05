@@ -24,7 +24,7 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      * <p>String类型的输入主键，需要在实体类上指定 @TableId(type = IdType.INPUT) 其中小括号里面的内容可以删掉
      * <p>Integer类型的自增主键，需要在实体类上指定 TableId(type = IdType.AUTO) 如果不指定AUTO，接口也不会报错，
      * 只是会产生一个较大的id（因为默认的策略是input），违背了自增属性；
-     * 当用Integer接受的时候（或者数据库字段长度不够），会导致set方法报错<p/>
+     * 生成的Input id 会随着字段类型长度变化，如果是Long类型，则生成的字段值会较长<p/>
      *
      * @param record 实体类
      * @return 受影响行数

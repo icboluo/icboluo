@@ -428,21 +428,31 @@ public class BeanUtil {
         if (CLASS_NAME_FIELD.containsKey(clazz)) {
             return;
         }
-        Map<String, Field> nameFieldMap = new HashMap<>();
-        // optimize 这个方法只能获取本来的属性，继承关系的属性需要用下面的方法获取
-        for (Field field : clazz.getDeclaredFields()) {
-            // 忽略静态变量
-            if (Modifier.isStatic(field.getModifiers())) {
-                continue;
-            }
-            nameFieldMap.put(field.getName(), field);
-        }
-        for (Field field : clazz.getSuperclass().getDeclaredFields()) {
-            if (Modifier.isStatic(field.getModifiers())) {
-                continue;
-            }
-            nameFieldMap.put(field.getName(), field);
-        }
+        List<Field> fields = getThisAndSupperDeclaredFields(clazz);
+        Map<String, Field> nameFieldMap = fields.stream()
+                .collect(Collectors.toMap(Field::getName, Function.identity(), (fir, sec) -> sec));
         CLASS_NAME_FIELD.put(clazz, nameFieldMap);
+    }
+
+    /**
+     * <p/>获取本类和父类的所有字段
+     * <p/> for(Field field : BeanUtil.getThisAndSupperDeclaredFields(client.getClass())) {} 增强for循环写成这样是不会循环执行的
+     *
+     * @param clazz 当前类
+     * @return 所有字段
+     */
+    public static List<Field> getThisAndSupperDeclaredFields(Class<?> clazz) {
+        List<Field> list = new ArrayList<>();
+        while (clazz != null) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                if (Modifier.isStatic(field.getModifiers())) {
+                    continue;
+                }
+                list.add(field);
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return list;
     }
 }

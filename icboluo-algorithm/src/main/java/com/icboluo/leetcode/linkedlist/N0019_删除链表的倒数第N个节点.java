@@ -9,7 +9,7 @@ import com.icboluo.common.ListNode;
 class N0019_删除链表的倒数第N个节点 {
     public static void main(String[] args) {
         ListNode listNode = new ListNode(1, 2, 3, 4, 5);
-        N0019_删除链表的倒数第N个节点 cla = new N0019_删除链表的倒数第N个节点();
+        var cla = new N0019_删除链表的倒数第N个节点();
         cla.removeNthFromEnd1(listNode, 2).print();
     }
 
@@ -67,6 +67,8 @@ class N0019_删除链表的倒数第N个节点 {
         ListNode left = fake;
         ListNode right = fake;
         while (right != null) {
+            // 循环拆成2部分，先移动右节点，再2个节点一起移动，代码比较简单
+            // 删除链表的倒数第n个节点，首先要找到链表的倒数第n+1个节点
             if (n >= 0) {
                 right = right.next;
                 n--;

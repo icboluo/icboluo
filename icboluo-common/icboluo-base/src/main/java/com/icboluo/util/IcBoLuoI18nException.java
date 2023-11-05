@@ -16,6 +16,11 @@ public class IcBoLuoI18nException extends RuntimeException {
      */
     private final String status;
 
+    /**
+     * 该字段仅做国际化时是使用，若无参数，完全没必要写
+     */
+    private transient Object[] args;
+
     public IcBoLuoI18nException() {
         super();
         this.status = "500";

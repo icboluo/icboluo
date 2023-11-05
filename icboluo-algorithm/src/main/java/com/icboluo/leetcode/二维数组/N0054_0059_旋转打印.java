@@ -8,10 +8,10 @@ import java.util.List;
  * @author icboluo
  * @since 2022-09-20 0:19
  */
-class N0054_旋转打印 {
+class N0054_0059_旋转打印 {
 
     public static void main(String[] args) {
-        N0054_旋转打印 cla = new N0054_旋转打印();
+        var cla = new N0054_0059_旋转打印();
         @SuppressWarnings("all") int[][] arr = new int[][]{//..................
                 {1, 2, 3, 4},//.......
                 {5, 6, 7, 8},//........
@@ -19,7 +19,7 @@ class N0054_旋转打印 {
         List<Integer> integers = cla.spiralOrder(arr);
         System.out.println("integers = " + integers);
 
-        int[][] ints = cla.genMatrix(3);
+        int[][] ints = cla.generateMatrix(3);
         for (int[] anInt : ints) {
             System.out.println(Arrays.toString(anInt));
         }
@@ -60,8 +60,14 @@ class N0054_旋转打印 {
         return ans;
     }
 
-    // TODO what`s this
-    public int[][] genMatrix(int n) {
+
+    /**
+     * 0059 旋转打印2
+     *
+     * @param n
+     * @return
+     */
+    public int[][] generateMatrix(int n) {
         int[][] arr = new int[n][n];
         int u = 0, l = 0;
         int d = n - 1, r = n - 1;

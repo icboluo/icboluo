@@ -56,6 +56,7 @@ class N0025_K个一组翻转链表 {
         ListNode end = header;
 
         ListNode pre = header;
+        // 本质上是循环做同一件事，只要while包裹即可
         while (end.next != null) {
             for (int i = 0; i < k; i++) {
                 if (end != null) {
