@@ -29,11 +29,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
             <exclusions>
-                <!--                如果不取消，启动的时候会只有一个接口，没有实现类报错-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-validation</artifactId>-->
-<!--                </exclusion>-->
+                <!--                这个依赖里面有valid，他是一个实现，不能删除，删除的话，启动的时候会只有一个接口，缺少实现类启动失败了-->
+                <!--                <exclusion>-->
+                <!--                    <groupId>org.springframework.boot</groupId>-->
+                <!--                    <artifactId>spring-boot-starter-validation</artifactId>-->
+                <!--                </exclusion>-->
             </exclusions>
         </dependency>
         <dependency>

@@ -1,8 +1,10 @@
 package com.icboluo.thread;
 
+import com.icboluo.interceptor.WebContext;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.IcBoLuoI18nException;
 import com.icboluo.util.ThreadPool;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -13,8 +15,11 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author icboluo
  * @since 2023-11-05 19:12
  */
+@Slf4j
 public class Thread_Exception_Name {
-    public static void main(String[] args) {
+
+    @Test
+    public void exception() {
         // 如果要区分敏感异常和别的异常，可以提前全局变量存储异常msg，在()->异步函数中完成
         AtomicReference<String> errMsg = new AtomicReference<>("");
         CompletableFuture.runAsync(() -> {
@@ -51,6 +56,31 @@ public class Thread_Exception_Name {
         }
     }
 
+    @Test
+    public void exceptionLog() {
+        // 会产生红色日志，红色代表异常，系统异常了之后就会被中断，中断了就不会执行后面的方法了
+        CompletableFuture.runAsync(() -> subException1()).join();
+        // 会产生log日志，但是系统不会中断
+        // cf.exceptionally 方法会将异常吃掉，如果异步线程执行失败的时候，期望处理逻辑是抛出异常（并且进行其他处理，例如log，不需要处理的话，
+        // 也就不用try了）将异步线程try住即可，不需要使用这个函数，这个函数的目的就是吃掉异常
+        CompletableFuture.runAsync(() -> subException1())
+                .exceptionally(ex -> {
+                    log.error("abc", ex);
+                    return null;
+                }).join();
+        // 会产生红色日志
+        subException2();
+        System.out.println("finish");
+    }
+
+    private void subException1() {
+        throw new IcBoLuoI18nException("subException1");
+    }
+
+    private void subException2() {
+        throw new IcBoLuoI18nException("subException2");
+    }
+
     ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPool().asyncExecutor();
 
     @Test
@@ -68,5 +98,15 @@ public class Thread_Exception_Name {
         CompletableFuture.runAsync(() -> {
             System.out.println(Thread.currentThread().getName());
         }, threadPoolTaskExecutor);
+    }
+
+    @Test
+    public void threadLocal() {
+        // 这种写法是不对的，WebContext 获取不到 属性值，需要使用自定义线程池
+        CompletableFuture.runAsync(() -> subMethod(WebContext.userCode()));
+    }
+
+    private void subMethod(String msg) {
+        // do nothing
     }
 }

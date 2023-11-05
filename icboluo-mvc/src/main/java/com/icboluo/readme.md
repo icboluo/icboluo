@@ -10,6 +10,7 @@ B/S架构的优点：
 2、系统升级维护简单：只需要安装一个浏览器即可访问不同服务器的资源；
 
 WEB资源：通过浏览器从网络中访问到的网络资源。分为：
+
 1. 静态资源：指web页面中供人们浏览的数据始终是不变。比如：HTML、CSS、JS、图片、多媒体。
 2. 动态资源：指web页面中供人们浏览的数据是由程序产生的，不同时
    间点访问web页面看到的内容各不相同。比如：JSP/Servlet、ASP、PHP
@@ -36,7 +37,7 @@ WEB资源：通过浏览器从网络中访问到的网络资源。分为：
    常见服务器：
 1. Tomcat：Apache组织提供一个免费开源的小型的服务器软件。支持Servlet和JSP规范,性能高。开源，免费，性能高。
 2. WebLogic：Bea公司的一个收费的大型的服务器软件，后被Oracle收购。支持EE的所有的规范
-3. WebSphere：IBM公司的一个收费的大型的服务器软件，支持EE的所有的规范。（IBM：    阿里云：5000 ）
+3. WebSphere：IBM公司的一个收费的大型的服务器软件，支持EE的所有的规范。（IBM： 阿里云：5000 ）
 4. JBoss：是一个基于J2EE的开放源代码的应用服务器。JBoss是一个管理EJB的容器和服务器，JBoss核心服务不包括支持servlet/JSP的WEB容器，一般与Tomcat或Jetty绑定使用。
 
 web项目：由web静态资源和动态资源组成；
@@ -56,13 +57,13 @@ web.xml：web项目核心配置文件
 
 	概念：Servlet 是一个 JavaWeb 开发中的一个小程序。客户端向服务器发送请求，由Servlet进行数据业务逻辑的处理，将处理的结果，响应回客户端。
 
-
 ## HTTP 协议 （HyperText Transfer Protocol，超文本传输协议）
 
 作用：规定了浏览器和服务器之间传输数据的格式
 HTTP1.0：发送一次请求，创建一个连接，获取一个网络资源，断开连接；
 HTTP1.1：发送一次请求，创建一个连接，获取多个网络资源，断开连接；
 特点：默认端口80，先请求在响应，成对出现
+
 1. 请求报文：浏览器可以抓取请求的数据（用Fiddler），浏览器给服务器发送的请求数据的格式
 2. 响应报文：服务器给客户端（浏览器）响应的报数据格式。
    请求报文的组成：请求行，请求头，请求体；
@@ -95,15 +96,60 @@ c:if,c:foreach就是这里面的
 
 Ajax：Asynchronous Javascript And XML（异步 JavaScript 和 XML）
 js原生Ajax的开发步骤
+
 1. 创建Ajax引擎对象--XMLHttpRequest对象；
-2.  引擎）；
+2. 引擎）；
 3. 绑定提交地址；
 4. 发送请求；
 5. 服务器接收请求并响应数据（文本或者xml数据）;
 6. 接收响应数据；
 
- ## tomcat
+## tomcat
 
 tomcat 需要10以上才可以支持jakarta
 
-tomcat项目还是要web文件夹有一个蓝色的圆圈标记，这样才不会idea各种打包异常 
+tomcat项目还是要web文件夹有一个蓝色的圆圈标记，这样才不会idea各种打包异常
+
+新建一个web服务的步骤：
+
+idea new java project; add framework web app...;
+
+web服务启动之后，会直接去找index.html文件
+
+如何启动tomcat服务
+1.新建一个模块
+2.新增一个web包，web包底下放一个index.html
+3.新增tomcat启动方式，fix error 之后启动即可，根目录地址就是访问这个index文件
+fix在 deployment 里面添加一个war包即可，这个war包的来源是project structure 里面的 artifacts
+使用idea的添加web包以及WEB-INF方式如下：project structure->modules-> +web 即可
+war包是可以启动的，但是web包不能启动，可以在web包里面将右边的class加入到打包程序里面即可，使用maven的话简单一点
+
+```xml
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+        <!--然后启动，注意：一定要将右边的东西放到 classes 目录下，整体目录是WEB-INF classes WEB-INF lig...-->
+```
+
+tomcat 修改配置要注意：setclasspath.bat server.xml catalina.bat 3个文件
+tomcat 服务需要检测out包里面的内容，例如index文件 检查一下artifacts里面的output文件路径
+
+jar包启动方式：
+idea打jar包，jar包大小应该为50m以上，如果打包结果显示较小，说明打包的内容比较少，不包含所依赖的jar包，需要增加repackage插件
+说明：spring-boot-maven插件的repackage(goal)有如下两个作用：
+1.在原始maven打包形成的jar包基础上，进行重新打包，新形成的jar包补单包含应用类文件和配置文件，而且还会包含应用所依赖的jar包以及
+springBoot启动相关类（loader等），以此来满足SpringBoot独立应用的特性
+2.将原始maven打包的jar重命名为xxx.jar.original作为原始文件；
+
+war包启动方式：
+默认将war包放到webapp下即可
+war包启动要注意，会打一个url前缀
+tomcat闪退，需要在倒数第二行增加一个 pause命令，闪退是因为报错，解决报错即可，不需要暂停窗口
+java home在这里配置 setclasspath.bat
+tomcat乱码也需要解决,tomcat的乱码，首先将vmOptional修改为UTF-8这个是比较重要的
+
+tomcat 乱码，需要将涉及的标记为 UTF-8,不要听网上的标记成 GBK
+
+catalina.bat 相当于项目启动时的jvm等配置，可以设置控制台log|print乱码

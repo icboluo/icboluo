@@ -22,6 +22,12 @@ import org.springframework.core.io.Resource;
 @Slf4j
 public class Demo {
     /**
+     * <p> Spring 属性注入的几种方式
+     * <p>1.set
+     * <p>2.构造方法
+     * <p>3.反射注入（字段注入
+     * <p>这个也是属性赋值的所有方式
+     * --------------------------------------------------------
      * <p>声明式定义（创建）bean的方式
      * <p>此块使用的是bean 标签创建bean举例
      * <p>Component注解 需要搭配@ComponentScan 来使用

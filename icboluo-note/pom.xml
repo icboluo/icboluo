@@ -41,6 +41,8 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+        <!--        此依赖并不会连接nacos服务器，仅仅相当于引入了一个包而已，没有和spring进行集成，需要修改为上面的依赖-->
+<!--        上面的依赖才和spring集成，可以再yml中看配置文件，如果用前面的，配置文件为黄色警告不生效，说明没有配置成功-->
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba.nacos</groupId>-->
         <!--            <artifactId>nacos-client</artifactId>-->
