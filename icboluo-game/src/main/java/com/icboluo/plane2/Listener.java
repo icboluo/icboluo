@@ -38,6 +38,7 @@ public class Listener implements ActionListener, KeyListener, MouseListener, Mou
                     CompletableFuture.runAsync(new CrashThread());
                     isStart = true;
                 }
+                GameBusiness.panel.requestFocus();
                 break;
             case "森林上空":
                 player.mapNum = 1;
