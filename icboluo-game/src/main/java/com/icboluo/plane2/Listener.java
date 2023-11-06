@@ -1,12 +1,6 @@
 package com.icboluo.plane2;
 
-import com.icboluo.plane2.Thread.CrashThread;
-import com.icboluo.plane2.Thread.DrawThread;
-import com.icboluo.plane2.Thread.EnemyPlaneThread;
-import com.icboluo.plane2.Thread.MoveThread;
-
 import java.awt.event.*;
-import java.util.concurrent.CompletableFuture;
 
 import static com.icboluo.plane2.AtkAll.myPlane;
 import static com.icboluo.plane2.AtkAll.player;
@@ -32,10 +26,7 @@ public class Listener implements ActionListener, KeyListener, MouseListener, Mou
         switch (actionCommand) {
             case "开始游戏":
                 if (!isStart) {
-                    CompletableFuture.runAsync(new DrawThread());
-                    CompletableFuture.runAsync(new MoveThread());
-                    CompletableFuture.runAsync(new EnemyPlaneThread());
-                    CompletableFuture.runAsync(new CrashThread());
+                    AtkAll.start();
                     isStart = true;
                 }
                 GameBusiness.panel.requestFocus();

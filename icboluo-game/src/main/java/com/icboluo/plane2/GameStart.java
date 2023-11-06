@@ -50,7 +50,6 @@ public class GameStart extends JFrame {
         leftDown.setPreferredSize(new Dimension(0, 550));
         left.add(leftDown, BorderLayout.SOUTH);
 
-
         //添加按钮
         addButton(leftUp);
         //添加标签（游戏说明）
@@ -59,6 +58,7 @@ public class GameStart extends JFrame {
         jf.setVisible(true);
         GameBusiness.panel.requestFocus();
         GameBusiness.graphics = GameBusiness.panel.getGraphics();
+        AtkAll.init();
     }
 
     // leftUp部分添加按钮

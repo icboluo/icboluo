@@ -1,5 +1,6 @@
 package com.icboluo.plane2.Thread;
 
+import com.icboluo.plane2.AtkAll;
 import com.icboluo.plane2.BaseClass.EnemyBullet;
 import com.icboluo.plane2.BaseClass.EnemyPlane;
 import com.icboluo.plane2.BaseClass.MyPlane;
@@ -88,6 +89,8 @@ public class CrashThread implements Runnable {
 
             SimpleThreadUtil.sleep(5);
         }
-        GameStart.gameOver();
+        while (AtkAll.isEnd()) {
+            GameStart.gameOver();
+        }
     }
 }
