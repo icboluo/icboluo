@@ -31,7 +31,8 @@ public class CrashThread implements Runnable {
                     for (int i = MyPlane.bulletList.size() - 1; i >= 0; i--) {
                         for (int j = enemyPlanes.size() - 1; j >= 0; j--) {
                             EnemyPlane enemyPlane = enemyPlanes.get(j);
-                            if (MyPlane.bulletList.get(i).isCrash(enemyPlane)) {
+                            // 见鬼了，应该用什么锁才可以
+                            if (i < MyPlane.bulletList.size() && MyPlane.bulletList.get(i).isCrash(enemyPlane)) {
                                 // 关闭死亡的敌机线程
                                 enemyPlane.setAlive(false);
                                 player.score += 5;
@@ -89,8 +90,9 @@ public class CrashThread implements Runnable {
 
             SimpleThreadUtil.sleep(5);
         }
-        while (AtkAll.isEnd()) {
-            GameStart.gameOver();
+        while (!AtkAll.isEnd()) {
+            SimpleThreadUtil.sleep(5);
         }
+        GameStart.gameOver();
     }
 }

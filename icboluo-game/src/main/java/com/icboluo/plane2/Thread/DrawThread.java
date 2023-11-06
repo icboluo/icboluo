@@ -32,7 +32,7 @@ public class DrawThread implements Runnable {
 
         CompletableFuture.runAsync(myPlane);
         int m = 0;
-        while (player.isAlive()) {
+        while (true) {
             // 画背景
             backGround.draw(m, player.mapNum);
             m = m + 2;

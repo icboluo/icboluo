@@ -96,18 +96,10 @@ public class GameStart extends JFrame {
         if (value != JOptionPane.CLOSED_OPTION) {
             switch (value) {
                 case 0:
-                    player.score = 0;
-                    player.hp = 100;
-                    myPlane.setGrade(1);
-                    for (int i = 0; i < enemyPlanes.size(); i++) {
-                        enemyPlanes.get(i).setAlive(false);
-                    }
-                    enemyPlanes.clear();
-                    enemyBullets.clear();
                     myPlane.setX(200);
                     myPlane.setY(600);
-                    player.setAlive(true);
-
+                    AtkAll.init();
+                    AtkAll.start();
                     break;
                 case 1:
                     System.exit(0);

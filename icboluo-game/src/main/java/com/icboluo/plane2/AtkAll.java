@@ -2,9 +2,9 @@ package com.icboluo.plane2;
 
 import com.icboluo.plane2.BaseClass.*;
 import com.icboluo.plane2.Thread.CrashThread;
-import com.icboluo.plane2.Thread.DrawThread;
 import com.icboluo.plane2.Thread.EnemyPlaneThread;
 import com.icboluo.plane2.Thread.MoveThread;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +17,7 @@ import java.util.concurrent.CompletableFuture;
  * @author icboluo
  * @since 2023-01-15 22:44
  */
+@Slf4j
 public class AtkAll {
     /**
      * 玩家
@@ -42,7 +43,7 @@ public class AtkAll {
     public static List<EnemyBullet> enemyBullets;
 
     static CompletableFuture<Void> a;
-    static CompletableFuture<Void> b;
+
     static CompletableFuture<Void> c;
     static CompletableFuture<Void> d;
 
@@ -54,13 +55,21 @@ public class AtkAll {
     }
 
     public static void start() {
-        a = CompletableFuture.runAsync(new CrashThread());
-        b = CompletableFuture.runAsync(new DrawThread());
-        c = CompletableFuture.runAsync(new EnemyPlaneThread());
-        d = CompletableFuture.runAsync(new MoveThread());
+        a = CompletableFuture.runAsync(new CrashThread()).exceptionally(ex -> {
+            log.error("a", ex);
+            return null;
+        });
+        c = CompletableFuture.runAsync(new EnemyPlaneThread()).exceptionally(ex -> {
+            log.error("c", ex);
+            return null;
+        });
+        d = CompletableFuture.runAsync(new MoveThread()).exceptionally(ex -> {
+            log.error("d", ex);
+            return null;
+        });
     }
 
     public static boolean isEnd() {
-        return CompletableFuture.allOf( c, d).isDone();
+        return CompletableFuture.allOf(c, d).isDone();
     }
 }

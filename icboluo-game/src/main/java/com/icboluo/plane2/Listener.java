@@ -1,6 +1,10 @@
 package com.icboluo.plane2;
 
+import com.icboluo.plane2.Thread.DrawThread;
+import lombok.extern.slf4j.Slf4j;
+
 import java.awt.event.*;
+import java.util.concurrent.CompletableFuture;
 
 import static com.icboluo.plane2.AtkAll.myPlane;
 import static com.icboluo.plane2.AtkAll.player;
@@ -8,6 +12,7 @@ import static com.icboluo.plane2.AtkAll.player;
 /**
  * @author icboluo
  */
+@Slf4j
 public class Listener implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
 
     int speed = 5;
@@ -27,6 +32,10 @@ public class Listener implements ActionListener, KeyListener, MouseListener, Mou
             case "开始游戏":
                 if (!isStart) {
                     AtkAll.start();
+                    CompletableFuture.runAsync(new DrawThread()).exceptionally(ex -> {
+                        log.error("b", ex);
+                        return null;
+                    });
                     isStart = true;
                 }
                 GameBusiness.panel.requestFocus();
