@@ -17,8 +17,11 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Proxy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -454,5 +457,31 @@ public class BeanUtil {
             clazz = clazz.getSuperclass();
         }
         return list;
+    }
+
+    /**
+     * 修改类的注解值
+     *
+     * @param clazz     类类型
+     * @param annoClass 注解类型
+     * @param paramName 注解名
+     * @param paramVal  需要修改的注解值
+     * @param <A>       注解类型
+     */
+    @SneakyThrows
+    public static <A extends Annotation> void updateClassAnnotationValue(Class<?> clazz, Class<A> annoClass, String paramName, Object paramVal) {
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            A anno = field.getAnnotation(annoClass);
+            // 获取 anno 这个代理实例所持有的 InvocationHandler
+            InvocationHandler ih = Proxy.getInvocationHandler(anno);
+            // 获取 AnnotationInvocationHandler 的 memberValues 字段
+            Field ihField = ih.getClass().getDeclaredField("memberValues");
+            // 因为这个字段事 private final 修饰，所以要打开权限
+            ihField.setAccessible(true);
+            // 获取 memberValues
+            Map<String, Object> memberValues = (Map<String, Object>) ihField.get(ih);
+            memberValues.put(paramName, paramVal);
+        }
     }
 }

@@ -1,7 +1,8 @@
 package com.icboluo.util;
 
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,17 +10,20 @@ import org.springframework.stereotype.Component;
  * @since 2023-08-22 1:08
  */
 @Component
-public class SpringUtil {
+public class SpringUtil implements ApplicationContextAware {
 
-    @Autowired
-    private BeanFactory beanFactory;
+    private static ApplicationContext applicationContext;
 
-
-    public Object getBean(String name) {
-        return beanFactory.getBean(name);
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        SpringUtil.applicationContext = applicationContext;
     }
 
-    public <T> T getBean(Class<T> cla) {
-        return beanFactory.getBean(cla);
+    public static Object getBean(String name) {
+        return applicationContext.getBean(name);
+    }
+
+    public static <T> T getBean(Class<T> cla) {
+        return applicationContext.getBean(cla);
     }
 }
