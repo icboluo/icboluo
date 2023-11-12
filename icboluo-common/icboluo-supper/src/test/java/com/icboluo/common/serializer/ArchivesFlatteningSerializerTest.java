@@ -18,16 +18,17 @@ class ArchivesFlatteningSerializerTest {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(people);
-        assert json.equals("{\"student\":\"张三\"}");
+        assert json.equals("""
+                {"student":"张三"}""");
 
         people.student.setName(null);
         String jsonNull = mapper.writeValueAsString(people);
-        assert jsonNull.equals("{\"student\":null}");
+        assert jsonNull.equals("""
+                {"student":null}""");
     }
 
     public static class SupperIdName {
         @JsonSerialize(using = ArchivesFlatteningSerializer.class)
         IdName student;
-
     }
 }
