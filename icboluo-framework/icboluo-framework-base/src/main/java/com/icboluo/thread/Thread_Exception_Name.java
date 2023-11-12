@@ -103,7 +103,7 @@ public class Thread_Exception_Name {
     @Test
     public void threadLocal() {
         // 这种写法是不对的，WebContext 获取不到 属性值，需要使用自定义线程池
-        CompletableFuture.runAsync(() -> subMethod(WebContext.userCode()));
+        CompletableFuture.runAsync(() -> subMethod(WebContext.user()));
     }
 
     private void subMethod(String msg) {

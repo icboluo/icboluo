@@ -28,7 +28,7 @@ public class WebInterceptorController {
     @GetMapping("getUserCode")
     @WebContextAnno(service = ServiceNameEnum.WEB)
     public String getUserCode() {
-        return WebContext.userCode();
+        return WebContext.user();
     }
 
     @GetMapping("userCodeAnnotation")

@@ -1,4 +1,4 @@
-package com.icboluo.interceptor;
+package com.icboluo.common.converter;
 
 import lombok.NonNull;
 import org.springframework.core.convert.converter.Converter;

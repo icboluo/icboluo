@@ -22,7 +22,7 @@ import java.sql.*;
  * @author icboluo
  * @since 2022-05-28 23:41
  */
-public class jdbcTest {
+public class JdbcTest {
 
     @Test
     public void jdbc() throws SQLException, ClassNotFoundException {

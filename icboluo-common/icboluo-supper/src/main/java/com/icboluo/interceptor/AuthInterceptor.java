@@ -2,6 +2,7 @@ package com.icboluo.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.icboluo.annotation.AuthAnno;
+import com.icboluo.annotation.WebContextAnno;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
@@ -31,6 +32,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         String role = request.getHeader("role");
         Method method = handlerMethod.getMethod();
+        WebContextAnno webContextAnno = handlerMethod.getBeanType().getAnnotation(WebContextAnno.class);
         AuthAnno auth = method.getAnnotation(AuthAnno.class);
         if (auth == null) {
             return true;

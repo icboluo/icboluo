@@ -13,6 +13,7 @@ import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpo
 import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.env.Environment;
 
 import java.util.*;
 
@@ -35,6 +36,8 @@ import java.util.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidateUtil {
 
+    private static final String I18N_MESSAGES = SpringUtil.getBean(Environment.class).getProperty("i18n/messages");
+
     private static final Validator VALIDATOR;
 
     static {
@@ -43,7 +46,7 @@ public class ValidateUtil {
                 .messageInterpolator(new RequestLocaleAwareMessageInterpolator(
                         // 提供 AggregateResourceBundleLocator 使得除了用框架提供的Validation ConstrainViolation Message 外
                         // 还可以用自己指定的或覆盖框架提供的
-                        new AggregateResourceBundleLocator(Collections.singletonList("i18n/messages"))
+                        new AggregateResourceBundleLocator(Collections.singletonList(I18N_MESSAGES))
                 ))
                 .buildValidatorFactory()
         ) {
@@ -62,11 +65,6 @@ public class ValidateUtil {
         @Override
         public String interpolate(String message, Context context) {
             return super.interpolate(message, context, LocaleContextHolder.getLocale());
-        }
-
-        @Override
-        public String interpolate(String message, Context context, Locale locale) {
-            return super.interpolate(message, context, locale);
         }
     }
 

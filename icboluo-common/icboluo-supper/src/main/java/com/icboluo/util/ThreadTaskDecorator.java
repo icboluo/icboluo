@@ -38,6 +38,7 @@ public class ThreadTaskDecorator implements TaskDecorator {
         }*/
 
         Locale locale = LocaleContextHolder.getLocale();
+        String user = WebContext.user();
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         AtomicReference<String> methodName = new AtomicReference<>("");
         Arrays.stream(stackTrace)
@@ -50,13 +51,11 @@ public class ThreadTaskDecorator implements TaskDecorator {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         RequestContextHolder.setRequestAttributes(RequestContextHolder.getRequestAttributes(), true);
         try {
-            // 部分操作
             return () -> {
                 String preName = Thread.currentThread().getName();
                 try {
                     Thread.currentThread().setName(threadNamePre + methodName + preName);
-                    WebContext.set("");
-                    LocaleContextHolder.setLocale(locale);
+                    WebContext.set(user, locale);
                     RequestContextHolder.setRequestAttributes(requestAttributes);
                     // 使用MDC也是可以的
                     MDC.setContextMap(new HashMap<>());

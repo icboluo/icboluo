@@ -4,10 +4,10 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.icboluo.interceptor.StringToLocalDateConverter;
-import com.icboluo.interceptor.StringToLocalDateTimeConverter;
+import com.icboluo.common.converter.StringToLocalDateConverter;
+import com.icboluo.common.converter.StringToLocalDateTimeConverter;
 import com.icboluo.interceptor.AuthInterceptor;
-import com.icboluo.interceptor.WebContextInterceptor;
+import com.icboluo.interceptor.WebInterceptor;
 import com.icboluo.util.BeanUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,17 +47,15 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 压根就不需要注入
-        registry.addInterceptor(getAuthInterceptor());
+        registry.addInterceptor(new AuthInterceptor());
 
         List<String> excludeList = excludePathPatterns();
-        registry.addInterceptor(webContextInterceptor())
+        registry.addInterceptor(new WebInterceptor())
                 .addPathPatterns(includePathPatterns())
                 .excludePathPatterns(excludeList);
 
-        // 默认拦截器 其中lang表示切换语言的参数名
+        // 默认拦截器 其中lang表示切换语言的参数名，但是参数传递是请求头拼接，难以使用
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("lang");
-        registry.addInterceptor(localeChangeInterceptor);
     }
 
     /**
@@ -96,16 +94,6 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .allowedOriginPatterns("*")
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
                 .maxAge(3600);
-    }
-
-    @Bean
-    public AuthInterceptor getAuthInterceptor() {
-        return new AuthInterceptor();
-    }
-
-    @Bean
-    public WebContextInterceptor webContextInterceptor() {
-        return new WebContextInterceptor();
     }
 
     /**

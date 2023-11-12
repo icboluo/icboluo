@@ -70,7 +70,7 @@
     <!--#{}相当于？，防止注入，${}-->
     <!--     这里可以省略前缀-->
     <select id="selectProvince" resultType="com.icboluo.entity.Province">
-        <include refid="CommonSqlMapper.selectAllField"/>
+       <!-- <include refid="CommonSqlMapper.selectAllField"/>-->
         from province
         where
         <if test="proCode!=null and proCode.trim() != ''">

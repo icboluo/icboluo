@@ -460,7 +460,7 @@ public class BeanUtil {
     }
 
     /**
-     * 修改类的注解值
+     * 修改类字段的注解值
      *
      * @param clazz     类类型
      * @param annoClass 注解类型
@@ -469,7 +469,7 @@ public class BeanUtil {
      * @param <A>       注解类型
      */
     @SneakyThrows
-    public static <A extends Annotation> void updateClassAnnotationValue(Class<?> clazz, Class<A> annoClass, String paramName, Object paramVal) {
+    public static <A extends Annotation> void updateFieldAnnotationValue(Class<?> clazz, Class<A> annoClass, String paramName, Object paramVal) {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             A anno = field.getAnnotation(annoClass);
