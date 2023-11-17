@@ -2,6 +2,7 @@ package com.icboluo.service;
 
 import com.icboluo.entity.Monster;
 import com.icboluo.mapper.MonsterMapper;
+import com.icboluo.service.impl.StudentServiceImpl;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.RandomUtil;
 import jakarta.annotation.Resource;
@@ -23,7 +24,7 @@ public class MonsterServiceImpl implements MonsterService {
     @Resource
     private MessageSource messageSource;
 
-    private StudentService studentService;
+    private StudentService studentService = new StudentServiceImpl();
 
     @Override
     public Monster nextMonster() {

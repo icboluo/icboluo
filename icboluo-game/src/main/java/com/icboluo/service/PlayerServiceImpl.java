@@ -10,6 +10,7 @@ import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.MonsterMapper;
 import com.icboluo.mapper.PlayerMapper;
 import com.icboluo.pojo.PlayerVO;
+import com.icboluo.service.impl.StudentServiceImpl;
 import com.icboluo.util.BeanUtil;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.IcBoLuoI18nException;
@@ -50,7 +51,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Resource
     private RedisTemplate redisTemplate;
 
-    private StudentService studentService;
+    private StudentService studentService = new StudentServiceImpl();
 
     /**
      * 通过ID查询单条数据

@@ -25,7 +25,8 @@ public class StudentServiceImpl implements StudentService {
 
     {
         try (HikariDataSource dataSource = new HikariDataSource()) {
-            dataSource.setJdbcUrl("jdbc:sqlite:../../document/sql/document.db");
+            // 这里有时候需要双:: 有时候需要1个
+            dataSource.setJdbcUrl("jdbc:sqlite::../../document/sql/document.db");
             dataSource.setDriverClassName("org.sqlite.JDBC");
             conn = dataSource.getConnection();
         } catch (SQLException ex) {
