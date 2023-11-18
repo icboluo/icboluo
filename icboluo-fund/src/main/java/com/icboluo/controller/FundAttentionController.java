@@ -1,7 +1,6 @@
 package com.icboluo.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.page.PageMethod;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
@@ -27,7 +26,6 @@ public class FundAttentionController {
 
     @GetMapping("/init")
     public PageInfo<FundAttentionVO> init(FundAttentionQuery query) {
-        PageMethod.startPage(query);
         List<FundAttentionVO> list = fundAttentionService.init(query);
         return PageInfo.of(list);
     }

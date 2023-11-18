@@ -1,8 +1,9 @@
-package com.icboluo.service;
+package com.icboluo.service.impl;
 
 import com.icboluo.entity.Monster;
 import com.icboluo.mapper.MonsterMapper;
-import com.icboluo.service.impl.StudentServiceImpl;
+import com.icboluo.service.MonsterService;
+import com.icboluo.service.StudentService;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.RandomUtil;
 import jakarta.annotation.Resource;

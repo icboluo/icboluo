@@ -20,7 +20,6 @@ import java.util.List;
  */
 @Component
 public class PlayerScheduled {
-
     @Resource
     private PlayerMapper playerMapper;
     @Resource

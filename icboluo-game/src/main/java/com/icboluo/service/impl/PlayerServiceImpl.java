@@ -1,4 +1,4 @@
-package com.icboluo.service;
+package com.icboluo.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -10,7 +10,10 @@ import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.MonsterMapper;
 import com.icboluo.mapper.PlayerMapper;
 import com.icboluo.pojo.PlayerVO;
-import com.icboluo.service.impl.StudentServiceImpl;
+import com.icboluo.service.CultivationCareerService;
+import com.icboluo.service.PlayerLevelService;
+import com.icboluo.service.PlayerService;
+import com.icboluo.service.StudentService;
 import com.icboluo.util.BeanUtil;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.IcBoLuoI18nException;
@@ -144,7 +147,7 @@ public class PlayerServiceImpl implements PlayerService {
                 JSONObject jo = JSON.parseObject(JSON.toJSONString(db));
                 redisHash.hmset(key + db.getId(), jo);
             }
-            redisString.set("game:player", "true");
+            redisString.set("game:player", "true", 300);
             return dbList;
         }
     }

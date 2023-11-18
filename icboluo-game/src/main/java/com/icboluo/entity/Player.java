@@ -1,7 +1,5 @@
 package com.icboluo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serial;
@@ -18,7 +16,7 @@ public class Player implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
+//    @TableId(type = IdType.AUTO)
     private Integer id;
     /**
      * 血量

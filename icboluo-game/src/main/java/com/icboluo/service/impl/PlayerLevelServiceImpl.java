@@ -1,4 +1,4 @@
-package com.icboluo.service;
+package com.icboluo.service.impl;
 
 import com.icboluo.entity.PlayerLevel;
 import com.icboluo.mapper.PlayerLevelMapper;

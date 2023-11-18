@@ -1,5 +1,6 @@
 package com.icboluo.service;
 
+import com.github.pagehelper.page.PageMethod;
 import com.icboluo.entity.FundData;
 import com.icboluo.mapper.FundAsyncRecordMapper;
 import com.icboluo.mapper.FundAttentionMapper;
@@ -7,8 +8,6 @@ import com.icboluo.mapper.FundDataMapper;
 import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
-import com.icboluo.service.FundAttentionService;
-import com.icboluo.service.FundDataService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +39,7 @@ public class FundAttentionServiceImpl implements FundAttentionService {
 
     @Override
     public List<FundAttentionVO> init(FundAttentionQuery query) {
+        PageMethod.startPage(query);
         List<FundAttentionVO> list = fundAttentionMapper.selectByQuery(query);
         List<FundData> fundDataList = fundDataMapper.selectAll();
 //                        倒序是因为希望最近的数据在前面（因为是最重要的
