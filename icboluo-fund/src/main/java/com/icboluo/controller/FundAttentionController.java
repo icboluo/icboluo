@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * (FundAttention)表控制层
  *
@@ -18,19 +16,18 @@ import java.util.List;
  * @since 2021-05-27 23:05:01
  */
 @RestController
-@RequestMapping("/fundAttention")
+@RequestMapping("fundAttention")
 public class FundAttentionController {
 
     @Resource
     private FundAttentionService fundAttentionService;
 
-    @GetMapping("/init")
+    @GetMapping("init")
     public PageInfo<FundAttentionVO> init(FundAttentionQuery query) {
-        List<FundAttentionVO> list = fundAttentionService.init(query);
-        return PageInfo.of(list);
+        return fundAttentionService.init(query);
     }
 
-    @GetMapping("/delete")
+    @GetMapping("delete")
     public void delete(String id) {
         fundAttentionService.delete(id);
     }

@@ -55,7 +55,7 @@ public class FundDataServiceImpl implements FundDataService {
             PageMethod.startPage(query.getPageNum(), query.getPageSize());
             List<FundDataVO> list = fundDataMapper.selectByQuery(query);
             fillView(list);
-            return PageInfo.of(list);
+            return BeanUtil.fakePage(list, query);
         } else {
             FundDataChooseQuery curQuery = FundDataChooseQuery.builder()
                     .fundId(query.getFundId())

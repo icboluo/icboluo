@@ -1,9 +1,8 @@
 package com.icboluo.service;
 
+import com.github.pagehelper.PageInfo;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
-
-import java.util.List;
 
 /**
  * (FundAttention)表服务接口
@@ -13,7 +12,7 @@ import java.util.List;
  */
 public interface FundAttentionService {
 
-    List<FundAttentionVO> init(FundAttentionQuery query);
+    PageInfo<FundAttentionVO> init(FundAttentionQuery query);
 
     void delete(String id);
 }

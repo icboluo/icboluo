@@ -1,5 +1,6 @@
 package com.icboluo.service;
 
+import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
 import com.icboluo.entity.FundData;
 import com.icboluo.mapper.FundAsyncRecordMapper;
@@ -8,6 +9,7 @@ import com.icboluo.mapper.FundDataMapper;
 import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
+import com.icboluo.util.BeanUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class FundAttentionServiceImpl implements FundAttentionService {
     private FundDataService fundDataService;
 
     @Override
-    public List<FundAttentionVO> init(FundAttentionQuery query) {
+    public PageInfo<FundAttentionVO> init(FundAttentionQuery query) {
         PageMethod.startPage(query);
         List<FundAttentionVO> list = fundAttentionMapper.selectByQuery(query);
         List<FundData> fundDataList = fundDataMapper.selectAll();
@@ -60,8 +62,8 @@ public class FundAttentionServiceImpl implements FundAttentionService {
         for (FundAttentionVO view : list) {
             List<FundData> fundList = fundMap.get(view.getId())
                     .stream()
-                    .filter(fundData -> fundData.getNetValueDate().compareTo(startDate) >= 0)
-                    .filter(fundData -> fundData.getNetValueDate().compareTo(endDate) <= 0)
+                    .filter(fundData -> !fundData.getNetValueDate().isBefore(startDate))
+                    .filter(fundData -> !fundData.getNetValueDate().isAfter(endDate))
                     .toList();
 //            因并非立即生效，所以天数必须2天以上才有意义
             BigDecimal yesterday = BigDecimal.ZERO;
@@ -142,7 +144,7 @@ public class FundAttentionServiceImpl implements FundAttentionService {
             }
         }
 
-        return list;
+        return BeanUtil.fakePage(list, query);
     }
 
     @Override
