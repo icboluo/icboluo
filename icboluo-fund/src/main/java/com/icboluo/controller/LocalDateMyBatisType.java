@@ -17,7 +17,7 @@ public class LocalDateMyBatisType implements TypeHandler<LocalDate> {
 
     @Override
     public void setParameter(PreparedStatement ps, int i, LocalDate parameter, JdbcType jdbcType) throws SQLException {
-
+        ps.setObject(i, parameter);
     }
 
     @Override
