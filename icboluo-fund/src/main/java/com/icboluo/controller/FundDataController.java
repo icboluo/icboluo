@@ -1,5 +1,7 @@
 package com.icboluo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
@@ -36,7 +38,9 @@ public class FundDataController {
         PageInfo<FundDataVO> pageInfo = fundDataService.selectByQuery(query);
         BigDecimal avg = pageInfo.getList().stream()
                 .collect(new MyCollector());
-        return R.correct(pageInfo);
+        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(pageInfo));
+        jsonObject.put("isPageAvg", avg);
+        return R.correct(jsonObject);
     }
 
     @GetMapping("cal")

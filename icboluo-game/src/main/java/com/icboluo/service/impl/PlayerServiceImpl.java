@@ -56,6 +56,8 @@ public class PlayerServiceImpl implements PlayerService {
 
     private StudentService studentService = new StudentServiceImpl();
 
+    static String KEY_PRE = "game:player:";
+
     /**
      * 通过ID查询单条数据
      *
@@ -64,7 +66,11 @@ public class PlayerServiceImpl implements PlayerService {
      */
     @Override
     public PlayerVO queryById(Integer id) {
-        Player player = playerMapper.queryById(id);
+        if (!redisHash.containsKey(KEY_PRE + id)) {
+            Player player = playerMapper.queryById(id);
+            redisHash.hmset(KEY_PRE + id, player, 600);
+        }
+        Player player = redisHash.hmget(KEY_PRE + id, Player.class);
         if (player == null) {
             DiePlayer diePlayer = diePlayerMapper.queryById(id);
             if (diePlayer == null) {
@@ -86,7 +92,11 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void attack(Integer playerId, Integer monsterId) {
         Monster monster = monsterMapper.queryById(monsterId);
-        Player player = playerMapper.queryById(playerId);
+        if (!redisHash.containsKey(KEY_PRE + playerId)) {
+            Player player = playerMapper.queryById(playerId);
+            redisHash.hmset(KEY_PRE + playerId, player, 600);
+        }
+        Player player = redisHash.hmget(KEY_PRE + playerId, Player.class);
         if (player == null || monster == null) {
             return;
         }
@@ -95,11 +105,11 @@ public class PlayerServiceImpl implements PlayerService {
             return;
         }
         experienceHand(player, monster);
-        playerMapper.updateByPrimaryKeySelective(player);
+        redisHash.hmset(KEY_PRE + playerId, player, 600);
     }
 
     @Override
-    public int startGame() {
+    public void addRole() {
         Player player = new Player();
         player.setBlood(200);
         player.setMaxBlood(200);
@@ -111,12 +121,12 @@ public class PlayerServiceImpl implements PlayerService {
 
         player.setName(studentService.generateZhName());
         playerMapper.insert(player);
+        redisHash.hmset(KEY_PRE + player.getId(), player, 600);
 
         CultivationCareer cultivationCareer = new CultivationCareer();
         cultivationCareer.setPlayerId(player.getId());
         cultivationCareer.setOper("Games start");
         cultivationCareerService.add(cultivationCareer);
-        return player.getId();
     }
 
     /**
@@ -128,10 +138,9 @@ public class PlayerServiceImpl implements PlayerService {
     public List<Player> selectAll() {
         // 对于分组查询，key需要增加冒号
         // 针对于项目启动需要同步进入redis的数据（初始化同步），需要增加同步功能
-        // 不要试图完全相信redis，要有一定的恢复机制（这个会造成性能的一些损失
-        String key = "game:player:";
-        if (Boolean.TRUE.equals(redisString.containsKey("game:player"))) {
-            ScanOptions build = ScanOptions.scanOptions().match(key + "*").count(10L).build();
+        // 不要试图完全相信redis，要有一定地恢复机制（这个会造成性能的一些损失
+        if (redisString.containsKey(KEY_PRE.substring(0, KEY_PRE.length() - 1))) {
+            ScanOptions build = ScanOptions.scanOptions().match(KEY_PRE + "*").count(10L).build();
             Cursor scan = redisTemplate.scan(build);
             List<Player> cacheList = new ArrayList<>();
             while (scan.hasNext()) {
@@ -145,17 +154,22 @@ public class PlayerServiceImpl implements PlayerService {
             List<Player> dbList = playerMapper.selectAll();
             for (Player db : dbList) {
                 JSONObject jo = JSON.parseObject(JSON.toJSONString(db));
-                redisHash.hmset(key + db.getId(), jo);
+                redisHash.hmset(KEY_PRE + db.getId(), jo);
             }
-            redisString.set("game:player", "true", 300);
+            redisString.set(KEY_PRE.substring(0, KEY_PRE.length() - 1), "true", 300);
             return dbList;
         }
     }
 
     @Override
     public void update(Player player) {
-        JSONObject jo = JSON.parseObject(JSON.toJSONString(player));
-        redisHash.hmset("game:player:" + player.getId(), jo);
+        redisHash.hmset(KEY_PRE + player.getId(), player, 600);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        playerMapper.deleteById(id);
+        redisHash.del(KEY_PRE + id);
     }
 
     /**

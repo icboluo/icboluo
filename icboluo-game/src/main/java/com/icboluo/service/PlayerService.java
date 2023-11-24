@@ -24,9 +24,11 @@ public interface PlayerService {
 
     void attack(Integer playerId, Integer monsterId);
 
-    int startGame();
+    void addRole();
 
     List<Player> selectAll();
 
     void update(Player player);
+
+    void deleteById(Integer id);
 }

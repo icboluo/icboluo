@@ -1,5 +1,6 @@
 package com.icboluo.common.redis;
 
+import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Component;
@@ -45,6 +46,11 @@ public class RedisHash<T> extends AbstractRedis<T> {
     public Map<String, T> hmget(String key) {
         return hashOperations.entries(key);
     }
+
+    public <O> O hmget(String key, Class<O> clazz) {
+        Map<String, T> entries = hashOperations.entries(key);
+        return JSON.parseObject(JSON.toJSONString(entries), clazz);
+    }
 //        3、添加一个Map类型值
 
     /**
@@ -75,6 +81,13 @@ public class RedisHash<T> extends AbstractRedis<T> {
      */
     public void hmset(String key, Map<String, T> map, long time) {
         hashOperations.putAll(key, map);
+        if (time > 0) {
+            expire(key, time);
+        }
+    }
+
+    public void hmset(String key, Object obj, long time) {
+        hashOperations.putAll(key, (Map<? extends String, ? extends T>) JSON.parseObject(JSON.toJSONString(obj)));
         if (time > 0) {
             expire(key, time);
         }

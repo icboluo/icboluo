@@ -4,7 +4,6 @@ import com.icboluo.entity.CultivationCareer;
 import com.icboluo.entity.DiePlayer;
 import com.icboluo.entity.Player;
 import com.icboluo.mapper.DiePlayerMapper;
-import com.icboluo.mapper.PlayerMapper;
 import com.icboluo.service.CultivationCareerService;
 import com.icboluo.service.PlayerService;
 import com.icboluo.util.BeanUtil;
@@ -20,8 +19,6 @@ import java.util.List;
  */
 @Component
 public class PlayerScheduled {
-    @Resource
-    private PlayerMapper playerMapper;
     @Resource
     private PlayerService playerService;
     @Resource
@@ -41,13 +38,12 @@ public class PlayerScheduled {
             if (player.getAge() >= 100) {
                 DiePlayer diePlayer = BeanUtil.copyProperties(player, DiePlayer::new);
                 diePlayerMapper.insert(diePlayer);
-                playerMapper.deleteById(player.getId());
+                playerService.deleteById(player.getId());
                 cultivationCareer.setOper("you are 100 years old, you are die");
             } else {
                 player.setAge(player.getAge() + 1);
                 int blood = Math.min(player.getMaxBlood(), player.getBlood() + 10);
                 player.setBlood(blood);
-                playerMapper.updateByPrimaryKeySelective(player);
                 playerService.update(player);
                 cultivationCareer.setOper("time flies, another year has passed");
             }

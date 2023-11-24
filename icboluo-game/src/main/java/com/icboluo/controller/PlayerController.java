@@ -1,12 +1,15 @@
 package com.icboluo.controller;
 
 import com.icboluo.entity.Monster;
+import com.icboluo.entity.Player;
+import com.icboluo.object.IdName;
 import com.icboluo.pojo.PlayerVO;
 import com.icboluo.service.MonsterService;
 import com.icboluo.service.PlayerService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,7 +21,7 @@ import java.util.List;
  * @since 2022-03-13 01:38:06
  */
 @RestController
-@RequestMapping("/player")
+@RequestMapping("player")
 public class PlayerController {
     /**
      * 服务对象
@@ -35,29 +38,42 @@ public class PlayerController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("/exhibit")
-    public PlayerVO queryById(Integer id) {
+    @GetMapping("exhibit")
+    public PlayerVO queryById(@RequestParam Integer id) {
         return playerService.queryById(id);
     }
 
-    @GetMapping("/nextMonster")
+    /**
+     * 我的角色
+     *
+     * @return 我的角色列表
+     */
+    @GetMapping("myRole")
+    public List<IdName> myRole() {
+        List<Player> players = playerService.selectAll();
+        return players.stream()
+                .map(player -> new IdName(player.getId(), player.getName()))
+                .toList();
+    }
+
+    @GetMapping("nextMonster")
     public Monster nextMonster() {
         return monsterService.nextMonster();
     }
 
-    @GetMapping("/attack")
-    public void attack(Integer playerId, Integer monsterId) {
+    @GetMapping("attack")
+    public void attack(@RequestParam Integer playerId, @RequestParam Integer monsterId) {
         playerService.attack(playerId, monsterId);
     }
 
-    @GetMapping("/allMonster")
+    @GetMapping("allMonster")
     public List<Monster> allMonster() {
         return monsterService.allMonster();
     }
 
-    @GetMapping("/startGame")
-    public int startGame() {
-        return playerService.startGame();
+    @GetMapping("addRole")
+    public void addRole() {
+        playerService.addRole();
     }
 }
 
