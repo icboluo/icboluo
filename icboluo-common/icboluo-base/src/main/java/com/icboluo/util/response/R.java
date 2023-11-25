@@ -4,9 +4,6 @@ import com.icboluo.enumerate.ReEnum;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * 这个工具类的目的是将值写到Response这个类的对象中；
@@ -47,24 +44,6 @@ public class R implements Serializable {
 
     public static <T> Response correct(T t) {
         return new SingleResponse<>(t, ReEnum.OPERATION_SUCCESSFUL);
-    }
-
-    public static <T> Response correct(Collection<T> list) {
-        return new CollResponse<>(list, ReEnum.OPERATION_SUCCESSFUL);
-    }
-
-    /**
-     * 这个分页有问题
-     *
-     * @param lists 多个list元素
-     * @return 响应
-     */
-    public static Response correct(List... lists) {
-        return new CollResponse<>(Arrays.asList(lists), ReEnum.OPERATION_SUCCESSFUL);
-    }
-
-    public static <T> Response correct(List<T> list, ReEnum reEnum) {
-        return new CollResponse<>(list, reEnum);
     }
 
     public static Response error() {

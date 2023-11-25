@@ -1,5 +1,6 @@
 package com.icboluo.file;
 
+import com.icboluo.constant.FileRelativePathPre;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -30,5 +31,15 @@ public class Super {
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
+
+    @Test
+    public void test2() throws FileNotFoundException {
+        String str = "print stream";
+        PrintStream ps = new PrintStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        ps.println(str);
+        ps.close();
+        // 修改打印位置，看不懂
+        System.setOut(ps);
     }
 }

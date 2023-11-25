@@ -35,12 +35,6 @@ public class FileTest {
     private final File dirFile = new File(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES, "a.txt");
 
     private final File parent = new File(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES);
-    /**
-     * 从父抽象路径名和子路径名字符串创建新的 File实例
-     */
-    private final File dirFile1 = new File(parent, "a.txt");
-    private static int count = 0;
-
 
     @Test
     public void test1() throws IOException {
@@ -127,7 +121,6 @@ public class FileTest {
         //scanDir(parent);
         //deleteDir(new File("aaa"));
         printDir(parent, ".java");
-        deleteNullDir(new File("aaa"));
     }
 
     @Test
@@ -171,18 +164,6 @@ public class FileTest {
         InputStream inputStream1 = resource.getInputStream();
         InputStream inputStream2 = servletContext.getResourceAsStream("WEB-INF/class/a.txt");
     }*/
-
-    private void deleteNullDir(File file) {
-        if (file.isFile() && file.delete()) {
-            count++;
-        }
-        File[] files = file.listFiles();
-        for (File f : files) {
-            if (f.isDirectory()) {
-                f.delete();
-            }
-        }
-    }
 
     private void printDir(File dir, String suffix) {
         //前置做法，直接不要不合法数据

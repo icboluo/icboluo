@@ -1,7 +1,10 @@
 package com.icboluo.file;
 
 import com.icboluo.constant.FileRelativePathPre;
+import com.icboluo.util.IoHelper;
+import org.junit.jupiter.api.Test;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -10,9 +13,10 @@ import java.io.IOException;
  * @since 2020-08-10 14:19
  */
 class Demo03FileWriter {
-    public static void main(String[] args) throws IOException {
+    @Test
+    public void test1() throws IOException {
 //      创建一个字符文件写入流对象
-        FileWriter fw = new FileWriter(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES +"a.txt");
+        FileWriter fw = new FileWriter(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
 //      写入数据  数据不是直接输出到硬盘的文件，它会先将数据保存到程序的缓冲区,必须通过刷新操作才会写到文件中
 //      字符流写入字符数据, 无需实现字节转换, 因为字符流底层拥有默认编码表.
         fw.write("How are you doing ?");
@@ -25,7 +29,19 @@ class Demo03FileWriter {
 
         注意事项：在一次流操作中，在流关闭之前所有的操作，都是续写*/
         String str = "我爱java，java爱我";
-        fw.write(str,7,6);
+        fw.write(str, 7, 6);
         fw.close();
+    }
+
+    @Test
+    public void test2() throws IOException {
+        // 创建一个字符读取流，流只能读取一次
+        FileReader fr = new FileReader(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        StringBuilder sb1 = IoHelper.readFileReader1(fr);
+        System.out.println(sb1);
+        System.out.println("-------------------------------");
+        StringBuilder sb2 = IoHelper.readFileReader2(fr);
+        System.out.println(sb2);
+        fr.close();
     }
 }

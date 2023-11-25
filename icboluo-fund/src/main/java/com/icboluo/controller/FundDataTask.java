@@ -61,7 +61,7 @@ public class FundDataTask {
         Map<String, FundAsyncRecord> recordMap = recordList.stream()
                 .collect(Collectors.groupingBy(FundAsyncRecord::getId,
                         Collectors.collectingAndThen(Collectors.toList(), li -> li.get(0))));
-        LocalDate startTime = LocalDate.of(2015, 1, 1);
+        LocalDate startTime = LocalDate.of(2018, 1, 1);
 
         for (FundAttention fundAttention : fundAttentions) {
             String fundId = fundAttention.getId();
@@ -72,12 +72,12 @@ public class FundDataTask {
                 haveUpdateFundData = true;
             } else {
 //            如果数据库中的开始时间比较大
-                if (dbFundAsync.getStartTime().toLocalDate().compareTo(startTime) > 0) {
+                if (dbFundAsync.getStartTime().toLocalDate().isAfter(startTime)) {
                     syncFundData(fundId, startTime, dbFundAsync.getStartTime().toLocalDate());
                     haveUpdateFundData = true;
                 }
 //            如果数据库结束时间比现在小
-                if (dbFundAsync.getEndTime().toLocalDate().compareTo(LocalDate.now()) < 0) {
+                if (dbFundAsync.getEndTime().toLocalDate().isBefore(LocalDate.now())) {
                     syncFundData(fundId, dbFundAsync.getEndTime().toLocalDate(), LocalDate.now());
                     haveUpdateFundData = true;
                 }
