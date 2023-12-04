@@ -27,6 +27,7 @@ public class SpringTest {
         // 判断对象是否为代理对象
         boolean cglibProxy = ClassUtils.isCglibProxy(new LinkedList<>());
         List<String> list = new ArrayList<>();
+        // 返回集合中的元素类型，如果集合.isEmpty | 拥有多种元素类型，返回的结果为null
         System.out.println(CollectionUtils.findCommonElementType(list));
     }
 

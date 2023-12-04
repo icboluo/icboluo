@@ -25,7 +25,7 @@ public class StudentServiceImpl implements StudentService {
 
     {
         try (HikariDataSource dataSource = new HikariDataSource()) {
-            // 这里有时候需要双:: 有时候需要1个
+            // 这里有时候需要双:: 有时候需要1个，不清楚具体需要几个，note服务启动的时候如果报错，加上2个
             dataSource.setJdbcUrl("jdbc:sqlite::../../document/sql/document.db");
             dataSource.setDriverClassName("org.sqlite.JDBC");
             conn = dataSource.getConnection();

@@ -39,6 +39,8 @@ public class KvvMap<K, V1, V2> {
         return map2.get(k);
     }
 
+//    MultiValueMap<String, String> kvv = new linkedMultiValueMap<>();
+
 /*    public static void main(String[] args) {
         Multimap<String, String> kvvMap = ArrayListMultimap.create();
         kvvMap.put("key", "1");

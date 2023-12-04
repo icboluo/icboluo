@@ -36,6 +36,8 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @Qualifier改id
 
+该注解并不一定要搭配 autowired 使用，在设置多数据源的时候，bean注解也会让参数从bean容器中获取，仅仅 @Qualifier即可
+
 @Resource两者合一
 
 #### @RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射

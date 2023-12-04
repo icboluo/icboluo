@@ -1,13 +1,17 @@
 package com.icboluo.util.listenter;
 
 import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.util.ClassUtils;
 import com.icboluo.annotation.ExcelExport;
 import com.icboluo.util.ExcelExportResolve;
 import com.icboluo.util.ExcelHelp;
 import com.icboluo.util.IcBoLuoI18nException;
 import lombok.Getter;
+import lombok.SneakyThrows;
+import org.springframework.data.util.CastUtils;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,12 +35,13 @@ public class ValidHeadExcelListener<T> extends ExcelListener<T> {
     public ValidHeadExcelListener(Class<T> excelType, int headNum) {
         this.clazz = excelType;
         this.head = headNum;
+        toCache();
     }
 
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
         String msg = "";
-        for (Map.Entry<Integer, Field> entry : toCache().entrySet()) {
+        for (Map.Entry<Integer, Field> entry : CLASS_NAME_FIELD_CACHE.get(clazz).entrySet()) {
             Integer entityIndex = entry.getKey();
             Field entityField = entry.getValue();
             ExcelExport excelExport = entityField.getAnnotation(ExcelExport.class);
@@ -50,9 +55,10 @@ public class ValidHeadExcelListener<T> extends ExcelListener<T> {
         }
     }
 
-    private Map<Integer, Field> toCache() {
+    @SneakyThrows
+    private void toCache() {
         if (CLASS_NAME_FIELD_CACHE.containsKey(clazz)) {
-            return CLASS_NAME_FIELD_CACHE.get(clazz);
+            return;
         }
         TreeMap<Integer, Field> map = new TreeMap<>();
         Field[] fields = clazz.getDeclaredFields();
@@ -65,6 +71,12 @@ public class ValidHeadExcelListener<T> extends ExcelListener<T> {
             map.put(excel.columnIndex(), field);
         }
         CLASS_NAME_FIELD_CACHE.put(clazz, map);
-        return map;
+        // 这里强制指定Excel的导出顺序，要求监听器创建于EasyExcel之前
+        Class<?> fieldCacheCla = Class.forName("com.alibaba.excel.util.ClassUtils$FIELD_CACHE");
+        Constructor<?> constructor = fieldCacheCla.getDeclaredConstructors()[0];
+        constructor.setAccessible(true);
+        Object fieldCache = constructor.newInstance(map, new TreeMap<>(), new HashMap<>());
+        Map<Class<?>, Object> fieldCacheMap = CastUtils.cast(ClassUtils.FIELD_CACHE);
+        fieldCacheMap.put(clazz, fieldCache);
     }
 }

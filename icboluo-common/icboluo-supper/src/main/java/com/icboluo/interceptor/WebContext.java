@@ -17,6 +17,10 @@ import java.util.Locale;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public class WebContext {
+    /**
+     * InheritableThreadLocal 这个类在主线程生成自选菜的时候会将主线程的值进行copy一次
+     * InheritableThreadLocal 本身是没有问题的，为什么Request多线程有问题
+     */
     private static final ThreadLocal<Header> HEADER_CONTEXT = new InheritableThreadLocal<>();
 
     static {
@@ -51,7 +55,7 @@ public class WebContext {
     public static void set(String userCode, Locale locale) {
         Header header = new Header(userCode);
         HEADER_CONTEXT.set(header);
-        LocaleContextHolder.setLocale(locale);
+        LocaleContextHolder.setLocale(locale, true);
     }
 
     public static void remove() {

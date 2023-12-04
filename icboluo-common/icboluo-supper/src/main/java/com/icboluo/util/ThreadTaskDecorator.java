@@ -5,14 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.task.TaskDecorator;
 import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -36,9 +33,6 @@ public class ThreadTaskDecorator implements TaskDecorator {
         } finally {
             UserContext.remove();
         }*/
-
-        Locale locale = LocaleContextHolder.getLocale();
-        String user = WebContext.user();
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         AtomicReference<String> methodName = new AtomicReference<>("");
         Arrays.stream(stackTrace)
@@ -48,15 +42,12 @@ public class ThreadTaskDecorator implements TaskDecorator {
                 .ifPresent(st -> methodName.set(st.getMethodName()));
         // 如果父线程是一个http请求，将父线程中的request传递到子线程，支持request的各种操作
         // request 是伴随着web的，子线程因为是从主线程分裂出来的，所以不存在web请求，需要在分裂的过程中增加一个 request设置
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         RequestContextHolder.setRequestAttributes(RequestContextHolder.getRequestAttributes(), true);
         try {
             return () -> {
                 String preName = Thread.currentThread().getName();
                 try {
                     Thread.currentThread().setName(threadNamePre + methodName + preName);
-                    WebContext.set(user, locale);
-                    RequestContextHolder.setRequestAttributes(requestAttributes);
                     // 使用MDC也是可以的
                     MDC.setContextMap(new HashMap<>());
                     runnable.run();

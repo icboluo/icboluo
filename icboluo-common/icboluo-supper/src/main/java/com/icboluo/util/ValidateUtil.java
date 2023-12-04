@@ -14,8 +14,13 @@ import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
+import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 如果不加 @Valid注解，可以使用本类开启手动校验，可以实现校验部分参数
@@ -95,6 +100,29 @@ public class ValidateUtil {
             res.add(cvSet);
         }
         return res;
+    }
+
+    public static <T> List<String> validateProperty(T obj) {
+        List<String> res = new ArrayList<>();
+        Field[] fields = obj.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            String name = field.getName();
+            Set<ConstraintViolation<T>> constraintViolations = validateProperty(obj, name);
+            String msg;
+            if (CollectionUtils.isEmpty(constraintViolations)) {
+                msg = validateOther(field, obj);
+            } else {
+                List<ConstraintViolation<T>> collect = constraintViolations.stream().sorted().toList();
+                msg = collect.get(0).getMessage();
+            }
+            res.add(msg);
+        }
+        return res;
+    }
+
+    private static <T> String validateOther(Field field, T row) {
+        return null;
     }
 
     /**

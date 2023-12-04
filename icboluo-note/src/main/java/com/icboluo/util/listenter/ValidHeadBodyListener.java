@@ -56,6 +56,7 @@ public class ValidHeadBodyListener<T> extends ValidHeadExcelListener<T> {
                 rowValidFlag = false;
             }
         }
+        List<String> strings = ValidateUtil.validateProperty(data);
         if (rowValidFlag) {
             super.invoke(data, context);
         }

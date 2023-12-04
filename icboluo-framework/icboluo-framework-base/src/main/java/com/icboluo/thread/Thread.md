@@ -246,7 +246,7 @@ public class MyThread {
 
 线程的状态切换如下图所示：（图源：《Java并发编程艺术》 4.1.4节
 
-![Java线程状态切换](thread2/ThreadStatusChange.png)
+![Java线程状态切换](thread2/thread)
 
 在操作系统层面线程有ready和runnable状态；在JVM层面只能看到runnable状态
 > （摘自：[java线程运行怎么有第六种状态？ - Dawell的回答](https://www.zhihu.com/question/56494969/answer/154053599) ）

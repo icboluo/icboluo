@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.*;
-import java.util.function.Function;
+import java.util.function.BiPredicate;
 
 /**
  * 操作数组的工具类
@@ -129,7 +129,7 @@ public class ArrayHelper {
     }
 
     /**
-     * 将数组存储到map中，如果map中已经出现，就+1
+     * 将数组存储到map中，如果map中已经出现，就+1 FIXME ERROR
      *
      * @param arr 数组
      * @return k 数组元素，v 出现次数
@@ -195,22 +195,33 @@ public class ArrayHelper {
         return findMaxVal(dp);
     }
 
-    public static <T, V> List<T> sort(List<T> list, Function<T, V> function, V[] arr) {
-        return list.stream()
-                .sorted((a, b) -> {
-//                    这里设置的值是-1，其他的元素会在前面显示
-                    int aInx = -1;
-                    int bInx = -1;
-                    for (int i = 0; i < arr.length; i++) {
-                        if (arr[i].equals(function.apply(a))) {
-                            aInx = i;
-                        }
-                        if (arr[i].equals(function.apply(b))) {
-                            bInx = i;
-                        }
-                    }
-                    return aInx - bInx;
-                }).toList();
+    /**
+     * 如果需要生成新列表，请增加新方法，此方法是将匹配元素放到最前面
+     */
+    public static <T, V> void sortByArr(List<T> list, BiPredicate<T, V> match, V[] arr) {
+        list.sort((a, b) -> {
+            int firstIdx = -1;
+            int secondIdx = -1;
+            for (int i = 0; i < arr.length; i++) {
+                if (firstIdx == -1 && match.test(a, arr[i])) {
+                    firstIdx = i;
+                }
+                if (secondIdx == -1 && match.test(b, arr[i])) {
+                    secondIdx = i;
+                }
+            }
+            // 包含a=b 或者 fir=second=-1
+            if (firstIdx == secondIdx) {
+                return 0;
+            }
+            if (firstIdx == -1) {
+                return 1;
+            }
+            if (secondIdx == -1) {
+                return -1;
+            }
+            return firstIdx - secondIdx;
+        });
     }
 
     /**
