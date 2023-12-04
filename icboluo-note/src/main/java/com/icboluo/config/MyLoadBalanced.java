@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 /**
  * <p>自定义负载均衡需要2步
  * <p>1.自定义一个Bean ReactorLoadBalancer<ServiceInstance>
- * 这个Bean的定义不需要在雷伤标记@Componet，需要一个类中只有一个Bean
+ * 这个Bean的定义不需要在类上标记@Componet，需要一个类中只有一个Bean
  * <p>2.在feign调用处标记出来使用的是那个 LoadBalanced
  *
  * @author icboluo

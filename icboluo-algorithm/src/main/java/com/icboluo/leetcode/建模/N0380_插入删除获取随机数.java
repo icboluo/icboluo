@@ -3,7 +3,7 @@ package com.icboluo.leetcode.建模;
 import java.util.*;
 
 /**
- * List 删除一个元素怎么保证时间复杂度为O(1)，首先，数组删除一个元素...是绝对不可能是心爱的
+ * List 删除一个元素怎么保证时间复杂度为O(1)，首先，数组删除一个元素...是绝对不可能实现的
  * List 删除尾部元素可以不进行扩容
  *
  * @author icboluo

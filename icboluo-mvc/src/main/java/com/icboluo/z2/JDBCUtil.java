@@ -55,7 +55,7 @@ public class JDBCUtil {
         // 注意：该方法返回的资源文件路径是相当于类加载器的根路径。因此，对于 resources 目录下的文件，需要在文件名前加上 “classpath:" 前缀，例如：”classpath:file.txt“
         // 但是实际测试并不需要
         InputStream is1 = JDBCUtil.class.getClassLoader().getResourceAsStream("springmvc-servlet.xml");
-        // ❤ 该方法返回的资源文件路径是相当于当前类的路径，因此，对于 resources 目录下的文件，需要在文件名前面奖赏 “/” 前缀
+        // ❤ 该方法返回的资源文件路径是相当于当前类的路径，因此，对于 resources 目录下的文件，需要在文件名前面加上 “/” 前缀
         InputStream is2 = JDBCUtil.class.getResourceAsStream("/springmvc-servlet.xml");
         // ❤
         // Resource resource = resourceLoader.getResource("classpath:file.txt");

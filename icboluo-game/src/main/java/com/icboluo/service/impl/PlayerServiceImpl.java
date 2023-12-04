@@ -120,7 +120,8 @@ public class PlayerServiceImpl implements PlayerService {
         player.setTotalExperience(0);
 
         player.setName(studentService.generateZhName());
-        playerMapper.insert(player);
+//        playerMapper.insert(player);
+        playerMapper.slInsert(player);
         redisHash.hmset(KEY_PRE + player.getId(), player, 600);
 
         CultivationCareer cultivationCareer = new CultivationCareer();

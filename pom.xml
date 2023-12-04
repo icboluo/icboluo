@@ -41,7 +41,7 @@
     <!--    申明是一个父工程-->
     <packaging>pom</packaging>
 
-    <!-- 统一管理jar包和版本，定义全局变量，没有其他作用-->
+    <!-- 统一管理jar包和版本，仅仅是定义全局变量，没有其他作用，子项目不需要 properties 标签-->
     <!-- maven仓库地址   https://mvnrepository.com/ -->
     <!-- 如果依赖只在某个子项目中使用，则可以在子项目的pom中直接引入，避免父pom过度臃肿-->
     <!-- pom版本号: 单个版本号有利于各个环境统一代码统一跑 区间版本号有利于依赖更新到最新-->
@@ -159,7 +159,7 @@
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
                 <!--                禁止删这个包，会导致 cglib包找不到，导出异常-->
-                <!--                <exclusions>-->
+                <!--                <exclusions>-->'@/components': 'components',
                 <!--                    <exclusion>-->
                 <!--                        <artifactId>asm</artifactId>-->
                 <!--                        <groupId>org.ow2.asm</groupId>-->

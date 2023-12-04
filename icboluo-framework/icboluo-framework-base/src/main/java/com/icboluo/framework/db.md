@@ -93,7 +93,7 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 - 修改数据库字段的时候，需要修改整个xml，需要注意，不要漏掉sql
 - 使用该字段的时候，需要判断是否为null，防止npe的情况发生
 
-- 将多种类型（Integer,Sting,LocalDate,List）转换为字符串放入数据库，并且取出来，可以使用JSON.toJSONString(a) 和JSON.pares(b)
+- 将多种类型（Integer,Sting,LocalDate,List）转换为字符串放入数据库，并且取出来，可以使用JSON.toJSONString(a) 和JSON.parse(b)
 - 整体需要使用反射操作
 
 ## 索引

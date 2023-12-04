@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * 哈希类型相关操作
+ * <p>哈希类型相关操作
+ * <p>使用场景：适合用于存储对象的各个属性，如用户信息，商品信息等
+ * <p>注意：redis 类型在某个地方要单独使用，不要混用；redisList 和 redisHash如果混用，会难以维护
  *
  * @author icboluo
  */

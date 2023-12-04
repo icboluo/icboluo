@@ -75,5 +75,14 @@
         age = values(age),
         name = values(name)
     </insert>
+    <insert id="slInsert">
+        insert into player(blood, attack, experience, total_experience, level, max_blood, age, name)
+        value
+        (#{entity.blood}, #{entity.attack}, #{entity.experience}, #{entity.totalExperience}, #{entity.level},
+        #{entity.maxBlood}, #{entity.age}, #{entity.name})
+        <selectKey keyProperty="id" resultType="java.lang.Integer">
+            select last_insert_rowid() as value
+        </selectKey>
+    </insert>
 </mapper>
 

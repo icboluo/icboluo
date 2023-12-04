@@ -22,7 +22,6 @@ import java.util.*;
  * 子类需要校验的时候需要在子类字段上加上@Valid注解，否则校验不到子类中
  * NotEmpty注解代表不能为null&&'',
  * NotBlack注解代表不能为''可以为null,没什么用
- * NotEmpty.contain NotBlack+NotNull
  * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
  *
  * @author icboluo
@@ -55,7 +54,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 自定义 ResourceBundleMessageInterpolator 的若干方法，使得可根据request指定的语言返回对应雨中的Validation
+     * 自定义 ResourceBundleMessageInterpolator 的若干方法，使得可根据request指定的语言返回对应语种的Validation
      */
     public static class RequestLocaleAwareMessageInterpolator extends ResourceBundleMessageInterpolator {
         public RequestLocaleAwareMessageInterpolator(ResourceBundleLocator userResourceBundleLocator) {
