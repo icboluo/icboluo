@@ -1,11 +1,13 @@
-package com.icboluo.network;
+package com.icboluo.file;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 /**
- * 配置文件的动态读取
+ * <p>配置文件的动态读取
+ * <p>1.读取文件所在的地址
+ * <p>2.将读取到的数据转换为易操作的数据
  *
  * @author icboluo
  * @since 2020-08-12 16:14

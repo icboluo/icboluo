@@ -4,7 +4,7 @@ import com.icboluo.util.IcBoLuoException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.EnumSet;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -61,8 +61,6 @@ public enum StatusEnum implements EnumInter {
     @Getter
     private final Integer id;
 
-    private static final EnumSet<StatusEnum> ALL_SET = EnumSet.allOf(StatusEnum.class);
-
     /**
      * 枚举的 match 方法禁止用static修饰
      *
@@ -86,7 +84,8 @@ public enum StatusEnum implements EnumInter {
     }
 
     /**
-     * 根据状态查询定义的枚举类型
+     * <p>根据状态查询定义的枚举类型
+     * <p>也可以这样取值 EnumSet.allOf(StatusEnum.class)
      *
      * @param status 状态
      * @return 定义的枚举类型
@@ -95,7 +94,7 @@ public enum StatusEnum implements EnumInter {
 //        校验写到底层会让所有的方法都通过校验，但是也会损耗性能（在这里的校验只是相当于移动到底层）
 //        校验并不一定需要写到最上层，有的时候需要准备校验参数，数据要写到函数内部
         validateStatusUniqueness();
-        return ALL_SET.stream()
+        return Arrays.stream(values())
                 .filter(e -> e.id.equals(status))
                 .findAny();
     }
@@ -114,12 +113,12 @@ public enum StatusEnum implements EnumInter {
      * 校验当前枚举类状态值(已包含空值校验)
      */
     private static void validateStatusUniqueness() {
-        long count = ALL_SET.stream()
+        long count = Arrays.stream(values())
                 .map(StatusEnum::getId)
                 .filter(Objects::nonNull)
                 .distinct()
                 .count();
-        if (count != ALL_SET.size()) {
+        if (count != values().length) {
             throw new IcBoLuoException(ReEnum.ENUM_DEFINED_ERROR);
         }
     }
