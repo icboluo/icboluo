@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Documented
 @I18n
-public @interface ExcelExport {
+public @interface Excel {
     /**
      * <p>AliasFor 起一个别名的作用，可以将a和b互通，常用的是value可以不写，然后对应attribute互通
      * <p>还有一个作用，@Service 注解继承 @Component 也可以使用这个指定

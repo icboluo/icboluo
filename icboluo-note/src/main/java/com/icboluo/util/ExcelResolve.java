@@ -1,7 +1,7 @@
 package com.icboluo.util;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.icboluo.annotation.ExcelExport;
+import com.icboluo.annotation.Excel;
 import com.icboluo.annotation.I18n;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * @author icboluo
  * @since 2023-06-25 18:50
  */
-public class ExcelExportResolve<T> {
+public class ExcelResolve<T> {
 
     private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new HashMap<>();
 
@@ -42,7 +42,7 @@ public class ExcelExportResolve<T> {
     @Setter
     private List<String> sortFieldName;
 
-    public ExcelExportResolve(Class<T> clazz) {
+    public ExcelResolve(Class<T> clazz) {
         this.clazz = clazz;
         this.toCache(clazz);
         this.nameFieldMap = CLASS_NAME_FIELD_CACHE.get(clazz);
@@ -61,10 +61,10 @@ public class ExcelExportResolve<T> {
         Map<String, Field> classMap = new HashMap<>();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
-            if (!field.isAnnotationPresent(ExcelExport.class)) {
+            if (!field.isAnnotationPresent(Excel.class)) {
                 continue;
             }
-            ExcelExport excel = field.getAnnotation(ExcelExport.class);
+            Excel excel = field.getAnnotation(Excel.class);
             if (StringUtils.hasText(excel.paramName())) {
                 classMap.put(excel.paramName(), field);
             } else {
@@ -76,14 +76,14 @@ public class ExcelExportResolve<T> {
 
     private List<String> defaultSortFieldName() {
         Integer max = nameFieldMap.values().stream()
-                .peek(ExcelExportResolve::shoichiIndex)
-                .map(field -> field.getAnnotation(ExcelExport.class))
-                .map(ExcelExport::columnIndex)
+                .peek(ExcelResolve::shoichiIndex)
+                .map(field -> field.getAnnotation(Excel.class))
+                .map(Excel::columnIndex)
                 .max(Integer::compareTo)
                 .orElse(0);
         String[] arr = new String[max + 1];
         for (Map.Entry<String, Field> entry : nameFieldMap.entrySet()) {
-            ExcelExport excel = entry.getValue().getAnnotation(ExcelExport.class);
+            Excel excel = entry.getValue().getAnnotation(Excel.class);
             arr[excel.columnIndex()] = entry.getKey();
         }
         return Arrays.stream(arr).toList();
@@ -95,7 +95,7 @@ public class ExcelExportResolve<T> {
      * @param field
      */
     public static void shoichiIndex(Field field) {
-        ExcelExport excel = field.getAnnotation(ExcelExport.class);
+        Excel excel = field.getAnnotation(Excel.class);
         Map<String, Object> memberValues = getMemberValues(excel);
         if (StringUtils.hasText(excel.columnNumber())) {
             memberValues.put("columnIndex", titleToNumber(excel.columnNumber()) - 1);

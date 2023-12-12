@@ -12,7 +12,7 @@ import com.icboluo.object.view.StudentVO;
 import com.icboluo.service.ExcelService;
 import com.icboluo.service.StudentService;
 import com.icboluo.service.impl.StudentServiceImpl;
-import com.icboluo.util.ExcelExportResolve;
+import com.icboluo.util.ExcelResolve;
 import com.icboluo.util.ExcelHelp;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.listenter.ValidHeadBodyListener;
@@ -108,7 +108,7 @@ public class ExcelController {
     public void customizationExport() throws IllegalAccessException {
         String fileName = "title_customization_" + System.currentTimeMillis() + ".xlsx";
         File file = new File(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "dir/" + fileName);
-        ExcelExportResolve<StudentVO> resolve = new ExcelExportResolve<>(StudentVO.class);
+        ExcelResolve<StudentVO> resolve = new ExcelResolve<>(StudentVO.class);
         resolve.setSortFieldName(Arrays.asList("age", null, "name", "code", "id"));
         EasyExcelFactory.write(file)
                 // 实测这个自定义列宽最大值太宽了，需要修改为 100|150

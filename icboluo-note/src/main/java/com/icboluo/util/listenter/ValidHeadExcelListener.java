@@ -2,8 +2,8 @@ package com.icboluo.util.listenter;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.util.ClassUtils;
-import com.icboluo.annotation.ExcelExport;
-import com.icboluo.util.ExcelExportResolve;
+import com.icboluo.annotation.Excel;
+import com.icboluo.util.ExcelResolve;
 import com.icboluo.util.ExcelHelp;
 import com.icboluo.util.IcBoLuoI18nException;
 import lombok.Getter;
@@ -44,10 +44,10 @@ public class ValidHeadExcelListener<T> extends ExcelListener<T> {
         for (Map.Entry<Integer, Field> entry : CLASS_NAME_FIELD_CACHE.get(clazz).entrySet()) {
             Integer entityIndex = entry.getKey();
             Field entityField = entry.getValue();
-            ExcelExport excelExport = entityField.getAnnotation(ExcelExport.class);
+            Excel excel = entityField.getAnnotation(Excel.class);
             String excelCell = headMap.get(entityIndex);
-            if (excelCell == null || !excelCell.contains(excelExport.zh())) {
-                msg += "line: " + ExcelHelp.convertToTitle(entityIndex + 1) + " error," + "should be contain " + excelExport.zh() + " please check";
+            if (excelCell == null || !excelCell.contains(excel.zh())) {
+                msg += "line: " + ExcelHelp.convertToTitle(entityIndex + 1) + " error," + "should be contain " + excel.zh() + " please check";
             }
         }
         if (StringUtils.hasText(msg)) {
@@ -63,11 +63,11 @@ public class ValidHeadExcelListener<T> extends ExcelListener<T> {
         TreeMap<Integer, Field> map = new TreeMap<>();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
-            if (!field.isAnnotationPresent(ExcelExport.class)) {
+            if (!field.isAnnotationPresent(Excel.class)) {
                 continue;
             }
-            ExcelExport excel = field.getAnnotation(ExcelExport.class);
-            ExcelExportResolve.shoichiIndex(field);
+            Excel excel = field.getAnnotation(Excel.class);
+            ExcelResolve.shoichiIndex(field);
             map.put(excel.columnIndex(), field);
         }
         CLASS_NAME_FIELD_CACHE.put(clazz, map);

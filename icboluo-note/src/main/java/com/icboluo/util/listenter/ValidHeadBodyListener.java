@@ -2,7 +2,7 @@ package com.icboluo.util.listenter;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.icboluo.annotation.Date;
-import com.icboluo.annotation.ExcelExport;
+import com.icboluo.annotation.Excel;
 import com.icboluo.util.ValidateUtil;
 import jakarta.validation.ConstraintViolation;
 import lombok.Getter;
@@ -51,7 +51,7 @@ public class ValidHeadBodyListener<T> extends ValidHeadExcelListener<T> {
                 msg = collect.get(0).getMessage();
             }
             if (StringUtils.hasText(msg)) {
-                ExcelExport ep = field.getAnnotation(ExcelExport.class);
+                Excel ep = field.getAnnotation(Excel.class);
                 arr[rowNum + head][ep.columnIndex()] = msg;
                 rowValidFlag = false;
             }

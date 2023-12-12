@@ -1,6 +1,6 @@
 package com.icboluo.object.view;
 
-import com.icboluo.annotation.ExcelExport;
+import com.icboluo.annotation.Excel;
 import com.icboluo.entity.Student;
 import com.icboluo.util.BeanUtil;
 import lombok.Data;
@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentVO {
 
-    @ExcelExport(zh = "序号", columnNumber = "d")
+    @Excel(zh = "序号", columnNumber = "d")
     private Integer id;
-    @ExcelExport(zh = "编码", columnNumber = "b")
+    @Excel(zh = "编码", columnNumber = "b")
     private Integer code;
-    @ExcelExport(zh = "姓名", columnNumber = "e")
+    @Excel(zh = "姓名", columnNumber = "e")
     private String name;
-    @ExcelExport(zh = "年龄", columnNumber = "g")
+    @Excel(zh = "年龄", columnNumber = "g")
     private Integer age;
 
     public StudentVO(Student student) {
