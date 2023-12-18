@@ -40,6 +40,9 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidateUtil {
 
+    /**
+     * Environment是可以直接获取到配置文件中的内容的 *.properties
+     */
     private static final String I18N_MESSAGES = SpringUtil.getBean(Environment.class).getProperty("i18n/messages");
 
     private static final Validator VALIDATOR;

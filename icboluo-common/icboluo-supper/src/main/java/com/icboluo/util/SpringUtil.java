@@ -14,6 +14,13 @@ public class SpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
 
+    /**
+     * <p>使用成员方法给静态变量赋值
+     * <p>Spring @Value注解不支持静态内容的注入，本质上是调用实例化set方法，就是说在字段上加相当于在任意实例化方法上加，由方法本身set进去
+     *
+     * @param applicationContext the ApplicationContext object to be used by this object
+     * @throws BeansException 异常
+     */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         SpringUtil.applicationContext = applicationContext;

@@ -22,6 +22,8 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <!--            feign 有时候调用失败是因为版本的问题，在spring官网上可以查看版本队友关系-->
+            <!--            项目启动失败分2种情况，一种是缺什么包什么的，这个可能是因为版本差距太大了；另一种会提示3.0x什么的，这种可以点进去链接具体看看-->
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <exclusions>
@@ -42,7 +44,7 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <!--        此依赖并不会连接nacos服务器，仅仅相当于引入了一个包而已，没有和spring进行集成，需要修改为上面的依赖-->
-<!--        上面的依赖才和spring集成，可以在yml中看配置文件，如果用下面的，配置文件为黄色警告不生效，说明没有配置成功-->
+        <!--        上面的依赖才和spring集成，可以在yml中看配置文件，如果用下面的，配置文件为黄色警告不生效，说明没有配置成功-->
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba.nacos</groupId>-->
         <!--            <artifactId>nacos-client</artifactId>-->

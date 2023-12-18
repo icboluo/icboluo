@@ -40,3 +40,7 @@ bean name还是正确的，只是展示有问题，和toString 关系也不大
 代码量统计插件
 
 statistic lines 包含了空行和注释，line code 仅包含代码，注释和空行不包括
+
+## debug
+
+idea 打断点卡住一个线程，其他的线程似乎也会被卡住，由当前线程分发的异步线程也就不动了，在Thread.sleep中

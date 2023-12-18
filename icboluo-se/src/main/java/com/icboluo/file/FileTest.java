@@ -165,6 +165,14 @@ public class FileTest {
         InputStream inputStream2 = servletContext.getResourceAsStream("WEB-INF/class/a.txt");
     }*/
 
+    @Test
+    public void test8() throws IOException {
+        // 可以加载配置文件，这个加载的相对路径前缀是classes 所以说，配置文件的加载使用类加载器更合适一点
+        InputStream is = Demo.class.getClassLoader().getResourceAsStream("Spring.xml");
+        Properties properties = new Properties();
+        properties.load(is);
+    }
+
     private void printDir(File dir, String suffix) {
         //前置做法，直接不要不合法数据
         File[] files = dir.listFiles(pathname ->

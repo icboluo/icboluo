@@ -3,7 +3,7 @@ package com.icboluo.util.listenter;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.util.ClassUtils;
 import com.icboluo.annotation.Excel;
-import com.icboluo.util.ExcelResolve;
+import com.icboluo.util.ExcelExportResolve;
 import com.icboluo.util.ExcelHelp;
 import com.icboluo.util.IcBoLuoI18nException;
 import lombok.Getter;
@@ -67,7 +67,7 @@ public class ValidHeadExcelListener<T> extends ExcelListener<T> {
                 continue;
             }
             Excel excel = field.getAnnotation(Excel.class);
-            ExcelResolve.shoichiIndex(field);
+            ExcelExportResolve.shoichiIndex(field);
             map.put(excel.columnIndex(), field);
         }
         CLASS_NAME_FIELD_CACHE.put(clazz, map);

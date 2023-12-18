@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * @author icboluo
  * @since 2023-06-25 18:50
  */
-public class ExcelResolve<T> {
+public class ExcelExportResolve<T> {
 
     private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new HashMap<>();
 
@@ -42,7 +42,7 @@ public class ExcelResolve<T> {
     @Setter
     private List<String> sortFieldName;
 
-    public ExcelResolve(Class<T> clazz) {
+    public ExcelExportResolve(Class<T> clazz) {
         this.clazz = clazz;
         this.toCache(clazz);
         this.nameFieldMap = CLASS_NAME_FIELD_CACHE.get(clazz);
@@ -76,7 +76,7 @@ public class ExcelResolve<T> {
 
     private List<String> defaultSortFieldName() {
         Integer max = nameFieldMap.values().stream()
-                .peek(ExcelResolve::shoichiIndex)
+                .peek(ExcelExportResolve::shoichiIndex)
                 .map(field -> field.getAnnotation(Excel.class))
                 .map(Excel::columnIndex)
                 .max(Integer::compareTo)
