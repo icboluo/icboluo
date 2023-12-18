@@ -5,10 +5,6 @@
 内嵌sqlite有点奇诡，不能直接放在resource包下面，放到下面造成查不出数据
 sqlite的sql文件不能和mysql共享，但是可以复制黏贴；如果sql内容比较多，可以先导成文件格式
 
-## ddl
-
-Data Definition Language ddl 数据定义语言
-
 ## 事物常见地并发问题
 
         String 丢失更新 = "撤销一个事物的时候，其他的线程如果已经把事物提交，会覆盖已提交的数据";
@@ -27,39 +23,15 @@ Data Definition Language ddl 数据定义语言
         String 隔离性 = "一个事务执行的过程中, 不应该受到其他事务的干扰";
         String 持久性 = "事务一旦结束, 数据就持久到数据库";
 
-## explain
-
-mysql对于查询语句用explain进行优化
-
-## 索引失效
-
-当作为状态值的时候，如果该值的出现的比率较高，则索引失效
-
-    首先进入该值的节点，然后进入下一个节点，这是用索引
-    进入下一个节点（虽然节点数多，但是只走树的一个分支，很可能比较快），这是用全局扫描
-
-索引要求离散度较高，才有区分度，没有使用索引是因为mysql优化认为不用索引效率更高
-
-group by 和order by的时候，很容易造成效率低下，可以对count语句进行优化
-
-- 联合索引的效率和普通索引的效率一致
-- 联合索引（a，b，c）相当于创建了a、ab、abc索引，最左匹配，对于b相当于没有创建索引，所以，创建联合索引的时候 需要仔细点
-
-uuid类型的主键，使用的时候用索引；自增类型的主键，使用的时候不用使用索引
-
-mysql全表扫描对应explain中的all，是对数据进行一行一行的扫描
-
-避免数据类型转换，会使索引失效
-
-## 唯一约束
-
-mysql 增加唯一约束有时候会失效，是因为一个字段为null，mysql认为，所有的null都是互不相同的
-
 ## left join
 
 - left join and 中的and是先进行右表筛选，再进行总数据匹配，如果筛选结果为空，则left join的整个右表数据为空
 - 业务中常进行整个数据筛选，用where比left join合适
 - mysql 左模糊 like 语句可以使用 locate（相当于 substring ）等语句替代
+- left join on 和where的区别，where纯过滤，left join on是将过滤的条件展示出来，不管on什么，后面有没有and，左表
+  全部数据均展示，只是右表数据有没有而已，即便on后面and左表，依然至少右表没有数据
+- mysql left join 语句需要增加索引提高执行效率
+- left join 右表的条件列上要加上索引
 
 ## or
 
@@ -95,6 +67,30 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 
 - 将多种类型（Integer,Sting,LocalDate,List）转换为字符串放入数据库，并且取出来，可以使用JSON.toJSONString(a) 和JSON.parse(b)
 - 整体需要使用反射操作
+
+## 索引失效
+
+当作为状态值的时候，如果该值的出现的比率较高，则索引失效
+
+    首先进入该值的节点，然后进入下一个节点，这是用索引
+    进入下一个节点（虽然节点数多，但是只走树的一个分支，很可能比较快），这是用全局扫描
+
+索引要求离散度较高，才有区分度，没有使用索引是因为mysql优化认为不用索引效率更高
+
+group by 和order by的时候，很容易造成效率低下，可以对count语句进行优化
+
+- 联合索引的效率和普通索引的效率一致
+- 联合索引（a，b，c）相当于创建了a、ab、abc索引，最左匹配，对于b相当于没有创建索引，所以，创建联合索引的时候 需要仔细点
+
+uuid类型的主键，使用的时候用索引；自增类型的主键，使用的时候不用使用索引
+
+mysql全表扫描对应explain中的all，是对数据进行一行一行的扫描
+
+避免数据类型转换，会使索引失效
+
+## 唯一约束
+
+mysql 增加唯一约束有时候会失效，是因为一个字段为null，mysql认为，所有的null都是互不相同的
 
 ## 索引
 
@@ -143,6 +139,10 @@ B+树遍历更加方便，B树需要遍历整棵树，B+树仅需要遍历叶子
 
 B+树数据获取效率相当，基本不怎么变化，因为数据都存储在叶子节点上
 
+## 排序
+
+mysql 只要where里面有索引，就会安装索引排序，有时候索引是相同的，排序出来的结果就是乱序的；有索引就不会按照主键进行排序
+
 ## 主键
 
 mysql无序主键会导致页分裂，页分裂会导致碎片数据
@@ -153,9 +153,15 @@ mysql无序主键会导致页分裂，页分裂会导致碎片数据
 
 ### mysql自增主键重置：
 
-删除数据：delete from crew_test
+删除数据：delete from base_operate_log
 
-删除主键数据：truncate table crew_test
+删除主键数据：truncate table base_operate_log
+
+```mysql
+-- 这个是设置自动地增值为1，但是没有效果
+alter table base_operate_log
+    auto_increment = 1;
+```
 
 ## select 语句
 
@@ -167,11 +173,7 @@ io问题：增大网络开销 扩展性：增减字段难以控制（但是可�
 
 索引问题：覆盖索引更可能出现（这个基本用不到吧
 
-## 字段映射
-
-tinyint == byte
-
-mysql 日期格式用 time stramp，不要使用 date time（date time 的日期只不过更靠前而已，但是不包含时区
+where条件中多过滤一些行，使驱动表小一点
 
 ## sql
 
@@ -185,30 +187,80 @@ select coalesce(name，总金额;) ,sum (money) from test group by name with rol
 
 这样写更合适
 
-mysql的日期格式比较可以先把时间转换为日期 data() 再between
+## 建议与不建议
 
-## 不建议
-
-不建议删除db中的约束，太难考虑所有的情况了；针对于保存的数据，新建表似乎最好
-
-## 建议
+#### 建议
 
 修改表字段类型并没有太复杂
 
-## mysql
+#### 不建议
 
-mysql left join 语句需要增加索引提高执行效率
+不建议删除db中的约束，太难考虑所有的情况了；针对于保存的数据，新建表似乎最好
 
-left join 右表的条件列上要加上索引
+## 关键字
 
-插入数据库的数据，不需要完整的展示出来
+#### ddl
 
-where条件中多过滤一些行，使驱动表小一点
+Data Definition Language ddl 数据定义语言
+
+#### explain
+
+mysql对于查询语句用explain进行优化
+
+## 数据类型与字段映射
+
+#### 时间
+
+数据库日期格式建立有2种，一种天级别的date，一种秒级别的datetime，不要均使用datetime
+
+为什么mybatis打印第一行日志的时候总是延迟10ms，不管是同步请求还是异步请求均会出现？
+
+    这个是因为 hikari 连接池 每次访问数据库之前会先测试数据库连接（select 1）是否正常
+    缓存时间500ms，2次接口中间只要相隔500ms以上，接口每次都会测试连接
+    hikari 默认访问后500ms 内如果不再访问数据库，会断掉连接，如果需要继续访问，会再次尝试访问一次，判断连接是否可用，整个过程耗时25ms左右；
+    也就是把定制的select 1 再执行一次
+
+mysql 日期长短不一比较, 长地切短即可
+
+mysql的日期格式比较可以先把时间转换为日期 data() 再between
+
+#### 字段映射
+
+tinyint == byte
+
+mysql 日期格式用 time stramp，不要使用 date time（date time 的日期只不过更靠前而已，但是不包含时区
+
+## 业务设计
+
+#### 插入数据库的数据，不需要完整的展示出来，（有时候不要返回entity）
+
+#### 表名的设计
+
+格式
+
+    项目_用途/页面_具体信息         表注释
+    eg: game_config_user_role       游戏--配置--用户角色
+        game_config_i18n_item       游戏--配置--i18n配置
+    省略项目前缀
+        config_user_account         配置--用户账户
+        base_http_msg               基础--HTTP消息
+
+#### 状态模式用于业务流程处理
+
+当一个主业务有不同的业务流程/不同的当前处理人逻辑：
+> 将当前处理人单独出来到一个表中，更好使用
 
 ```mysql
--- 这个是设置自动地增值为1，但是没有效果
-alter table base_operate_log
-    auto_increment = 1;
+create table best_practice_cur_handler
+(
+    id             bigint auto_increment comment 'id'
+        primary key,
+    cur_handler    varchar(32)       not null comment '当前处理人',
+    role           tinyint           not null comment '角色',
+    is_take_effect tinyint default 1 not null comment '是否生效',
+    main_id        bigint            null comment '主表id'
+)
+    comment '最佳实践-当前处理人';
 ```
 
 ## 数据库设计的三大范式
@@ -248,39 +300,6 @@ in应该这么写
 
 where find_in_set('1',replace(product1,';',','))
 
-## 表名的设计
-
-格式
-
-    项目_用途/页面_具体信息         表注释
-    eg: game_config_user_role       游戏--配置--用户角色
-        game_config_i18n_item       游戏--配置--i18n配置
-    省略项目前缀
-        config_user_account         配置--用户账户
-        base_http_msg               基础--HTTP消息
-
-## 状态模式用于业务流程处理
-
-当一个主业务有不同的业务流程/不同的当前处理人逻辑：
-> 将当前处理人单独出来到一个表中，更好使用
-
-```mysql
-create table best_practice_cur_handler
-(
-    id             bigint auto_increment comment 'id'
-        primary key,
-    cur_handler    varchar(32)       not null comment '当前处理人',
-    role           tinyint           not null comment '角色',
-    is_take_effect tinyint default 1 not null comment '是否生效',
-    main_id        bigint            null comment '主表id'
-)
-    comment '最佳实践-当前处理人';
-```
-
-## 数据类型
-
-数据库日期格式建立有2种，一种天级别的date，一种秒级别的datetime，不要均使用datetime
-
 ## 异常
 
 Cause: java.lang.IllegalArgumentException: argument type mismatch
@@ -295,25 +314,8 @@ select * from information schema.INNODB TRX;
 
 当此语句发现running的时候，说明有语句在运行；当多线程执行的时候，如果一直在running，说明有一个线程一直在占用
 
-## 时间
-
-为什么mybatis打印第一行日志的时候总是延迟10ms，不管是同步请求还是异步请求均会出现
-
-mysql 日期长短不一比较, 长地切短即可
-
-## 注意
-
-left join on 和where的区别，where纯过滤，left join on是将过滤的条件展示出来，不管on什么，后面有没有and，左表
-全部数据均展示，只是右表数据有没有而已，即便on后面and左表，依然至少右表没有数据
-
 ## 死锁
 
 mysql在同一个会话窗口中，由于只有一个事物在执行，因此不会发生死锁
 
 同一个会话窗口是指同一个idea的console，同一个navicat的一个查询页面，java的同一个线程
-
-## 连接池
-
-hikari 默认访问后500ms 内如果不再访问数据库，会断掉连接，如果需要继续访问，会再次尝试访问一次，判断连接是否可用，整个过程耗时25ms左右；
-
-也就是把定制的select 1 再执行一次

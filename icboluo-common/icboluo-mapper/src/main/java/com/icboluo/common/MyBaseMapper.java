@@ -10,9 +10,10 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * mybatis plus 默认新增策略是input
- * BaseMapper是允许重写的，我们假定的认为BaseMapper反射过程中生成了其他方法名的方法
- * MybatisPlus启动时是有主键检查的，如果没有设置主键会将id字段当成主键，如果也没有id字段才会报警告（必报警告）
+ * <p>mybatis plus 默认新增策略是input
+ * <p>BaseMapper 是允许重写的，我们假定的认为BaseMapper反射过程中生成了其他方法名的方法
+ * <p>MybatisPlus 启动时是有主键检查的，如果没有设置主键会将id字段当成主键，如果也没有id字段才会报警告（必报警告）
+ * <p>mybatis plus 的qw的使用：可以迁移到mapper层，这样代码整体比较简洁，并且方便复用
  *
  * @author icboluo
  * @since 2021-36-23 21:36

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper标签:配置各类声明，namespace防止crud语句的唯一标识被重复，需要设置空间名称-->
 <mapper namespace="com.icboluo.mapper.ProvinceMapper">
-
     <!--配置之定义结果集:解决名字不一样; true:如果sql和pojo中字段名称相同，不用配置-->
     <resultMap id="BaseResultMap" type="com.icboluo.entity.Province" autoMapping="true">
         <result property="proId" column="pro_id" jdbcType="INTEGER"/>
@@ -13,8 +13,6 @@
         pro_id, pro_code, pro_name
     </sql>
 
-
-    <!--查询指定数据-->
     <select id="queryByAllField" resultMap="BaseResultMap">
         select
         pro_id, pro_code, pro_name
@@ -70,23 +68,26 @@
     <!--#{}相当于？，防止注入，${}-->
     <!--     这里可以省略前缀-->
     <select id="selectProvince" resultType="com.icboluo.entity.Province">
-       <!-- <include refid="CommonSqlMapper.selectAllField"/>-->
+        <!-- <include refid="CommonSqlMapper.selectAllField"/>-->
         from province
         where
         <if test="proCode!=null and proCode.trim() != ''">
             pro_code=#{proCode},
             pro_code like '%' #{proCode} '%'
         </if>
+        <!--        sql可以用<if>  -->
         <choose>
             <when test="proCode != null">
                 and pro_code=#{proCode}
             </when>
+            <!--            所有不满足条件才执行执行-->
             <otherwise>
                 and pro_code ='123456';
             </otherwise>
         </choose>
     </select>
 
+    <!--    全局缩短名字后可直接用Province，也可以引用自定义的resultmap-->
     <select id="queryByTableName" resultType="com.icboluo.entity.Province">
         SELECT *
         FROM ${tableName}

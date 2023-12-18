@@ -1,13 +1,5 @@
 package com.icboluo.spring;
 /*
-
-    old：factory加载资源文件：private static ResourceBundle rb = ResourceBundle.getBundle("beans");
-             new时由  factory.getbean  替代
-    spring：applicationContext <bean>将serviceimpl 放在bean中
-                  加载配置文件，获取serviceimpl
-ApplicationContext ac = new ClassPathXmlApplicationContext("applicationXml.xml");
-ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfiguration.class);
-
 1、默认无参构造实例化bean
 2、静态工厂方法实例化bean：把静态方发返回的值放在bean中
 class后面加factory-method
@@ -68,16 +60,6 @@ new：JdbcDaoSupport，无法将dataSource注入到JdbcDaoSupport中注解用不
           <aop:pointcut id="pt2" expression="execution(* com.task.service.impl.*.* ( .. ) )"></aop:pointcut>
           配置事务管理器应用到切入点
           <aop:advisor advice-ref="txAdvice" pointcut-ref="pt2">...
-
-开启注解事务管理器
-<tx:annotation-driven></tx:annotation-driven>
-@Transactional 在类上、方法上、接口上使用事务注解
-
-
-每一个servlet都要手动初始化spring容器，然后从容器中获取service层实现类，如果有很多个servlet的话就要初始化多次spring容器
-Spring容器只有在客户端发送请求，请求到达服务端后才初始化spring容器，效率不高
-
-解决思路：保证容器只有一个。并且在应用加载的时候启动，应用卸载的时候销毁
 
 spring容器在应用加载的时候创建一次即可。spring提供了一个监听器ContextLoaderListener,位于spring-web-5.0.6.RELEASE.jar，
 该监听器会初始化一个全局唯一的spring容器，监听ServletContext对象的创建时机

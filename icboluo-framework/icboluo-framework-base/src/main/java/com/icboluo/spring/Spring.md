@@ -4,6 +4,11 @@
 
 去掉三层架构中的new
 
+每一个servlet都要手动初始化spring容器，然后从容器中获取service层实现类，如果有很多个servlet的话就要初始化多次spring容器
+Spring容器只有在客户端发送请求，请求到达服务端后才初始化spring容器，效率不高
+
+解决思路：保证容器只有一个。并且在应用加载的时候启动，应用卸载的时候销毁
+
 set注入一次只能注入单个bean(可以用来给静态变量附初始化值)？
 
 ## AOP（Aspect Oriented Programming 面向切面编程）:
@@ -66,7 +71,7 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 #### @ComponentScan
 
-   相当于
+相当于
 
       <context:component-scan base-package="com.icboluo">
       </context:component-scan>
@@ -250,6 +255,13 @@ public class StaticPri {
 }
 ```
 
-## 源码
+## SpringBoot
 
+* boot其最主要作用就是帮我们快速的构建庞大的spring项目，并且尽可能的
+* 减少一切xml配置，做到开箱即用，迅速上手，让我们关注与业务而非配置
 
+- @PropertySource：(性质来源)指定外部属性文件，一般用classpath指定路劲 spring的属性注入：SpringBoot强调的是约定大于配置，因此遵循约定，我们就能节省很多配置：
+- 首先，属性文件的名称有变化，文件名必须是：application.properties
+- 其次，要注入的属性的变量名要和配置文件中的属性名的最后一部分保持一致
+- 最后，要在类上声明这些属性在属性文件中的共同的前缀，并提供getter和setter方法 属性读取类激活的2中方式:
+  在属性读取类（jdbc.properties）中添加@Component（组成）注解 在配置类上使用@EnableConfigurationProperties(JdbcProperties.class)

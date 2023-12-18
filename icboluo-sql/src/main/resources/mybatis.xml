@@ -2,24 +2,30 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <!--加载外部资源文件-->
+    <!--    这个是全局配置文件（核心配置文件），作用：配置数据源（配置数据库连接信息）-->
+    <!--加载外部资源文件 resource:默认引入classpath路径下的资源文件-->
     <properties resource="jdbc.properties"></properties>
     <settings>
-        <!--开启驼峰命名规则：不用as-->
+        <!--开启驼峰命名规则：不用as，相当于去掉数据库中的名字的下划线，如果不想用这个，用resultmap-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
-        <!--配置延时加载-->
+        <!--配置延时加载，需要的时候再去查，修改idea默认select：settings java “tostring”去掉勾-->
         <setting name="lazyLoadingEnabled" value="true"/>
     </settings>
-    <!--配置别名:地址缩短 这个并不会生效-->
+    <!--配置别名:地址缩短,相当于数据库中的别名就是as 这个并不会生效-->
     <typeAliases>
         <typeAlias type="com.icboluo.entity.Province" alias="Province"/>
-        <!--所有实体都在这里面找-->
+        <!--所有实体都在这里面找，找到后直接用类名替换全路径-->
         <package name="com.icboluo.entity"></package>
     </typeAliases>
+    <!-- 配置环境：可以配置多个环境，default：配置某一个环境的唯一标识，表示默认使用哪个环境 -->
     <environments default="development">
+        <!-- 配置环境,id:环境的唯一标识 -->
         <environment id="development">
+            <!-- 事务管理器，type:使用jdbc的事务管理器 -->
             <transactionManager type="JDBC"/>
+            <!-- 数据源，type:池类型的数据源 -->
             <dataSource type="POOLED">
+                <!-- 配置连接信息 -->
                 <property name="driver" value="${jdbc.driverClass}"/>
                 <property name="url" value="jdbc:sqlite::../../../document/sql/document.db"/>
                 <property name="username" value=""/>
@@ -27,7 +33,9 @@
             </dataSource>
         </environment>
     </environments>
+    <!-- 配置映射文件：用来配置sql语句和结果集类型等 -->
     <mappers>
+<!--        映射文件：xxxMapper.xml，作用：配置sql语句、参数、结果集封装类型等-->
         <mapper resource="mapper/ProvinceMapper.xml"/>
         <mapper resource="mapper/CityMapper.xml"/>
         <!--扫描指定包，并管理包中的所有映射文件-->

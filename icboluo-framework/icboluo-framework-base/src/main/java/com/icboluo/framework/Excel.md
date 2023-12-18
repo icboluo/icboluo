@@ -41,5 +41,3 @@ EasyWriter.write 里面的data不需要EasyExcel支持，很简单的list即可
 ## 头校验
 
 EasyExcel是支持头校验的，（泛型一般new Arraylist获取不到里面的泛型，需要改写法，但是没必要，多传一个class参数吧
-
-算法分为线性结构和非线性结构：队列、栈、链表；树、图

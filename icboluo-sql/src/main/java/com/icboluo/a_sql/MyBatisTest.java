@@ -22,11 +22,12 @@ public class MyBatisTest {
         InputStream inputStream = Resources.getResourceAsStream("mybatis.xml");
         // 一个SqlSessionFactory只能连接一个数据库实例（聚合了数据库配置或者聚合了数据库通道
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        // 通过 SqlSession 操作数据库
+        // 增删改操作需要事务的提交。设置自动提交事务
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+        // 通过 SqlSession 操作数据库,会通过动态代理生成一个代理的实现类
         ProvinceMapper mapper = sqlSession.getMapper(ProvinceMapper.class);
         System.out.println(mapper.queryByAllField(new Province()).get(0));
-        // 此块使用的是 namespace
+        // 此块使用的是 namespace, 要求namespace和param一致
         System.out.println(sqlSession.selectList("com.icboluo.mapper.ProvinceMapper.queryByAllField", new Province()).get(0));
 
         sqlSession.commit();

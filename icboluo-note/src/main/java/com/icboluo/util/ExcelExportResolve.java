@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 /**
@@ -24,12 +25,15 @@ import java.util.function.Supplier;
  */
 public class ExcelExportResolve<T> {
 
-    private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new HashMap<>();
+    /**
+     * 全局的容器需要使用线程安全的容器
+     */
+    private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 导出模版类型
      */
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     /**
      * 名称，字段映射

@@ -44,5 +44,7 @@ public class LogDemo {
                 """;
         // 对于异常来说：runtimeException super(msg)，会生成一行 className:msg的error日志
         log.info(str1);
+
+        // mybatis的日志记录是实时的，日志中mybatis日志后于切面执行是因为cf根本没有join住，简单来说就是 cf.join() 方法没有执行到
     }
 }
