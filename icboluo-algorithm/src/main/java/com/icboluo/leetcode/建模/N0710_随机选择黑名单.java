@@ -1,4 +1,4 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.建模;
 
 import java.util.HashMap;
 import java.util.Map;

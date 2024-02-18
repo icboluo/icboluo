@@ -27,7 +27,7 @@ import java.util.Set;
  * 子类需要校验的时候需要在子类字段上加上@Valid注解，否则校验不到子类中
  * NotEmpty注解代表不能为null&&'',
  * NotBlack注解代表不能为''可以为null,没什么用
- * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上游区别
+ * Valid和Validate注解在基础功能上没有区别，在分组（valid没有分组），嵌套上有区别
  *
  * @author icboluo
  * Valid注解标记List类型的失效，需要在类上增加@Validated注解

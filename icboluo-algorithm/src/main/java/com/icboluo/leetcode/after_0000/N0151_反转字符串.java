@@ -1,10 +1,10 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.after_0000;
 
 /**
  * @author icboluo
  * @since 2023-12-26 8:32
  */
-class N0151_反正字符串 {
+class N0151_反转字符串 {
     // ab cd -> cd ab
     public String reverseWords(String s) {
         // 方法1：s.split reverse
