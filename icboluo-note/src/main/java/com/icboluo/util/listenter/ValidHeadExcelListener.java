@@ -4,7 +4,7 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.util.ClassUtils;
 import com.icboluo.annotation.Excel;
 import com.icboluo.util.ExcelExportResolve;
-import com.icboluo.util.ExcelHelp;
+import com.icboluo.util.ExcelUtil;
 import com.icboluo.util.IcBoLuoI18nException;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -47,7 +47,7 @@ public class ValidHeadExcelListener<T> extends ExcelListener<T> {
             Excel excel = entityField.getAnnotation(Excel.class);
             String excelCell = headMap.get(entityIndex);
             if (excelCell == null || !excelCell.contains(excel.zh())) {
-                msg += "line: " + ExcelHelp.convertToTitle(entityIndex + 1) + " error," + "should be contain " + excel.zh() + " please check";
+                msg += "line: " + ExcelUtil.convertToTitle(entityIndex + 1) + " error," + "should be contain " + excel.zh() + " please check";
             }
         }
         if (StringUtils.hasText(msg)) {

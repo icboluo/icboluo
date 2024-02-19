@@ -2,7 +2,6 @@
 package com.icboluo.util.response;
 
 import com.alibaba.fastjson.JSON;
-import com.icboluo.enumerate.ReEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,12 +17,12 @@ public class SingleResponse<T> extends Response {
      */
     private T data;
 
-    public SingleResponse(ReEnum reEnum) {
-        super(reEnum);
+    public SingleResponse(CodeMessage codeMessage) {
+        super(codeMessage);
     }
 
-    public SingleResponse(T data, ReEnum reEnum) {
-        super(reEnum);
+    public SingleResponse(T data, CodeMessage codeMessage) {
+        super(codeMessage);
         this.data = data;
     }
 

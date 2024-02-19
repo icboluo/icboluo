@@ -4,7 +4,7 @@ spring:
   application:
     name: icboluo-web
   messages:
-    basename: i18n/messages
+    basename: i18n/messages,i18n/supper
     use-code-as-default-message: true
 logging:
   level:

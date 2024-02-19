@@ -1,7 +1,6 @@
 
 package com.icboluo.util.response;
 
-import com.icboluo.enumerate.ReEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,9 +44,9 @@ public abstract class Response implements Serializable {
      */
     private String message;
 
-    protected Response(ReEnum reEnum) {
-        this.code = reEnum.getCode();
-        this.message = reEnum.getMessage();
+    protected Response(CodeMessage codeMessage) {
+        this.code = codeMessage.getCode();
+        this.message = codeMessage.getMsg();
     }
 
     /**

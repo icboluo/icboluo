@@ -32,12 +32,12 @@ public class IcBoLuoI18nException extends RuntimeException {
     }
 
     public IcBoLuoI18nException(ReEnum em) {
-        super(em.getMessage());
+        super(em.getMsg());
         this.status = em.getCode();
     }
 
     public IcBoLuoI18nException(ReEnum em, Throwable throwable) {
-        super(em.getMessage(), throwable);
+        super(em.getMsg(), throwable);
         this.status = em.getCode();
     }
 

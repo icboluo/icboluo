@@ -159,7 +159,7 @@
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
                 <!--                禁止删这个包，会导致 cglib包找不到，导出异常-->
-                <!--                <exclusions>-->'@/components': 'components',
+                <!--                <exclusions>-->
                 <!--                    <exclusion>-->
                 <!--                        <artifactId>asm</artifactId>-->
                 <!--                        <groupId>org.ow2.asm</groupId>-->

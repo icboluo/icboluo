@@ -1,5 +1,6 @@
 package com.icboluo.enumerate;
 
+import com.icboluo.util.response.CodeMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ReEnum {
+public enum ReEnum implements CodeMessage {
     /**
      * 操作成功
      */
@@ -47,7 +48,7 @@ public enum ReEnum {
     /**
      * 失败
      */
-    ERROR("-1", "失败"),
+    SYSTEM_ERROR("500", "system.error"),
 
 
     /**
@@ -99,6 +100,5 @@ public enum ReEnum {
     ;
 
     private final String code;
-    private final String message;
-
+    private final String msg;
 }

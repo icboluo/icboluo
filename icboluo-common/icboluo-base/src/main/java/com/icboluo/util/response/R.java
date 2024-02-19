@@ -2,16 +2,16 @@ package com.icboluo.util.response;
 
 import com.icboluo.enumerate.ReEnum;
 import lombok.Data;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * 这个工具类的目的是将值写到Response这个类的对象中；
  * <p>为了统一前端的取参格式，如果有多个对象，本类约定：
- * <p>1.只要返回值是消息、状态码，必须放在code/message里面，不准放在data里面；
- * <p>2.只要返回值是一个对象，那就必须放在data.object里面，不准直接放到data里面；
- * <p>3.只要返回值是一个list数据，那就必须放在data.list里面，不准直接放到data里面；
- * <p>4.本类只提供将数据放到Response里面，不准增加额外的属性（例如分页数据的构建），
+ * <p>只要返回值是消息、状态码，必须放在code/message里面，不准放在data里面；
  * 也就是说，本类所写的返回值中，绝对不会包含传入参数以外的数据（枚举项、异常除外）；
  *
  * @author icboluo
@@ -24,8 +24,8 @@ public class R implements Serializable {
         return new SingleResponse<>(ReEnum.OPERATION_SUCCESSFUL);
     }
 
-    public static Response correct(ReEnum reEnum) {
-        return new SingleResponse<>(reEnum);
+    public static Response correct(CodeMessage codeMessage) {
+        return new SingleResponse<>(codeMessage);
     }
 
     /**
@@ -38,8 +38,8 @@ public class R implements Serializable {
         return new SingleResponse<>(ReEnum.OPERATION_SUCCESSFUL.getCode(), message);
     }
 
-    public static Response correct(String data, ReEnum reEnum) {
-        return new SingleResponse<>(data, reEnum);
+    public static Response correct(String data, CodeMessage codeMessage) {
+        return new SingleResponse<>(data, codeMessage);
     }
 
     public static <T> Response correct(T t) {
@@ -47,11 +47,17 @@ public class R implements Serializable {
     }
 
     public static Response error() {
-        return new SingleResponse<>(ReEnum.ERROR);
+        return new SingleResponse<>(ReEnum.SYSTEM_ERROR);
+    }
+
+    public static Response error(String message, MessageSource messageSource) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String msg = messageSource.getMessage(message, null, locale);
+        return new SingleResponse<>(ReEnum.SYSTEM_ERROR.getCode(), msg);
     }
 
     public static Response error(String errMsg) {
-        return new SingleResponse<>(ReEnum.ERROR.getCode(), errMsg);
+        return new SingleResponse<>(ReEnum.SYSTEM_ERROR.getCode(), errMsg);
     }
 
     public static Response error(String code, String errMsg) {
@@ -62,11 +68,17 @@ public class R implements Serializable {
         return new SingleResponse<>(code, e.getMessage());
     }
 
-    public static Response error(ReEnum errEnum) {
-        return new SingleResponse<>(errEnum);
+    public static Response error(CodeMessage codeMessage) {
+        return new SingleResponse<>(codeMessage);
+    }
+
+    public static Response error(CodeMessage codeMessage, MessageSource messageSource) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String msg = messageSource.getMessage(codeMessage.getMsg(), null, locale);
+        return new SingleResponse<>(codeMessage.getCode(), msg);
     }
 
     public static Response error(Exception e) {
-        return new SingleResponse<>(ReEnum.ERROR.getCode(), e.getMessage());
+        return new SingleResponse<>(ReEnum.SYSTEM_ERROR.getCode(), e.getMessage());
     }
 }

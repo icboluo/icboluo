@@ -112,20 +112,13 @@ public class ValidateUtil {
             field.setAccessible(true);
             String name = field.getName();
             Set<ConstraintViolation<T>> constraintViolations = validateProperty(obj, name);
-            String msg;
-            if (CollectionUtils.isEmpty(constraintViolations)) {
-                msg = validateOther(field, obj);
-            } else {
+            if (!CollectionUtils.isEmpty(constraintViolations)) {
                 List<ConstraintViolation<T>> collect = constraintViolations.stream().sorted().toList();
-                msg = collect.get(0).getMessage();
+                String msg = collect.get(0).getMessage();
+                res.add(msg);
             }
-            res.add(msg);
         }
         return res;
-    }
-
-    private static <T> String validateOther(Field field, T row) {
-        return null;
     }
 
     /**

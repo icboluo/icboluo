@@ -40,12 +40,35 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class GlobalControllerExceptionHandler {
-
     @Resource
     private HttpServletRequest request;
 
     @Resource
     private MessageSource messageSource;
+
+    /**
+     * 校验注解写错类型不匹配，单纯的后台校验器有问题
+     *
+     * @param e 异常类型
+     * @return 失败的响应信息
+     */
+    @ExceptionHandler(value = {UnexpectedTypeException.class})
+    public Response unexpectedTypeExceptionHandler(UnexpectedTypeException e) {
+        log.error("UnexpectedTypeException, Please check @valid code first", e);
+        return R.error(ReEnum.SYSTEM_ERROR, messageSource);
+    }
+
+    /**
+     * 前后端参数类型不匹配，反序列化异常
+     *
+     * @param e 异常类型
+     * @return 失败的响应信息
+     */
+    @ExceptionHandler(value = {HttpMessageNotReadableException.class})
+    public Response httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
+        log.error("HttpMessageNotReadableException: {}", ReEnum.UNEXPECTED_EXCEPTION, e);
+        return R.error(ReEnum.UNEXPECTED_EXCEPTION, messageSource);
+    }
 
     /**
      * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
@@ -60,31 +83,8 @@ public class GlobalControllerExceptionHandler {
         printLog(e);
         // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
         // response.setStatus(500);
-        return R.error(Response.ERROR_CODE, e.getMessage());
-    }
-
-    /**
-     * 校验注解写错类型不匹配，单纯的后台校验器有问题
-     *
-     * @param e 异常类型
-     * @return 失败的响应信息
-     */
-    @ExceptionHandler(value = {UnexpectedTypeException.class})
-    public Response unexpectedTypeExceptionHandler(UnexpectedTypeException e) {
-        log.error("UnexpectedTypeException, Please check @valid code first", e);
-        return R.error(ReEnum.ERROR);
-    }
-
-    /**
-     * 前后端参数类型不匹配，反序列化异常
-     *
-     * @param e 异常类型
-     * @return 失败的响应信息
-     */
-    @ExceptionHandler(value = {HttpMessageNotReadableException.class})
-    public Response httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
-        log.error("HttpMessageNotReadableException: {}", ReEnum.UNEXPECTED_EXCEPTION, e);
-        return R.error(ReEnum.UNEXPECTED_EXCEPTION);
+        log.error("IcBoLuoException: ", e);
+        return R.error(ReEnum.SYSTEM_ERROR, messageSource);
     }
 
     /**
@@ -96,13 +96,14 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = {IcBoLuoI18nException.class})
     public Response icBoLuoI18nExceptionHandler(IcBoLuoI18nException e) {
         printLog(e);
-        String message = messageSource.getMessage(e.getMessage(), null, LocaleContextHolder.getLocale());
-        return R.error(Response.ERROR_CODE, message);
+        log.error("IcBoLuoI18nException: ", e);
+        return R.error(e.getMessage(), messageSource);
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public Response httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         printLog(e);
+        log.error("HttpRequestMethodNotSupportedException: ", e);
         return R.error(String.valueOf(e.getStatusCode().value()), e.getMessage());
     }
 
@@ -119,6 +120,7 @@ public class GlobalControllerExceptionHandler {
                     String message = messageSource.getMessage(defaultMessage, null, LocaleContextHolder.getLocale());
                     return field + " " + message;
                 }).collect(Collectors.joining(";"));
+        log.error("MethodArgumentNotValidException: ", e);
         return R.error(msg);
     }
 
@@ -131,6 +133,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = ConstraintViolationException.class)
     public Response constraintViolationException(ConstraintViolationException e) {
         printLog(e);
+        log.error("ConstraintViolationException: ", e);
         return R.error(e.getMessage());
     }
 
@@ -143,6 +146,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     public Response runtimeExceptionHandler(RuntimeException ex) {
         printLog(ex);
+        log.error("RuntimeException: ", ex);
         return R.error(ReEnum.UNEXPECTED_EXCEPTION);
     }
 
@@ -163,6 +167,7 @@ public class GlobalControllerExceptionHandler {
             throw e;
         }
         String msg = Objects.isNull(e.getMessage()) ? "操作失败，但没有失败消息" : e.getMessage();
+        log.error("Exception: ", e);
         return R.error(Response.ERROR_CODE, msg);
     }
 

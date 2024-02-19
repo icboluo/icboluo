@@ -45,6 +45,10 @@
             <!--            Optional标签代表依赖不会传递；-->
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -29,7 +29,7 @@ public class IcBoLuoException extends RuntimeException {
     }
 
     public IcBoLuoException(ReEnum em) {
-        super(em.getMessage());
+        super(em.getMsg());
         this.status = em.getCode();
     }
 
@@ -39,7 +39,7 @@ public class IcBoLuoException extends RuntimeException {
     }
 
     public IcBoLuoException(ReEnum em, Throwable throwable) {
-        super(em.getMessage(), throwable);
+        super(em.getMsg(), throwable);
         this.status = em.getCode();
     }
 

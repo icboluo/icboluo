@@ -18,7 +18,7 @@ import java.util.Objects;
  * @since 2023-06-30 20:43
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ExcelHelp {
+public class ExcelUtil {
 
     /**
      * Excel导出设置Content

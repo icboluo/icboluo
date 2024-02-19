@@ -92,7 +92,7 @@ public class ExcelHelper {
      * @param response
      */
     public static void download(HttpServletResponse response) throws IOException {
-        ExcelHelp.setContent(response, "test.xlsx");
+        ExcelUtil.setContent(response, "test.xlsx");
         ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream()).build();
  /*           WriteSheet writeSheet = EasyExcel.writerSheet(0, "sheet名称").head(IcOnhandnumExVO.class).build();
             excelWriter.write(list, writeSheet);*/
@@ -235,7 +235,7 @@ public class ExcelHelper {
 
     @SneakyThrows(IOException.class)
     public static <T> void exportExcel(HttpServletResponse response, List<String> titleId, Class<T> clazz, List<T> data) {
-        ExcelHelp.setContent(response, "aaa.xlsx");
+        ExcelUtil.setContent(response, "aaa.xlsx");
         setProper(clazz, titleId);
         ExcelWriter ew = EasyExcelFactory.write(response.getOutputStream(), clazz).includeColumnFiledNames(titleId).build();
         WriteSheet ws = EasyExcelFactory.writerSheet("aa").build();

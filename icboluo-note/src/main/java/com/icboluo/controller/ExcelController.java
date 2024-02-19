@@ -13,7 +13,7 @@ import com.icboluo.service.ExcelService;
 import com.icboluo.service.StudentService;
 import com.icboluo.service.impl.StudentServiceImpl;
 import com.icboluo.util.ExcelExportResolve;
-import com.icboluo.util.ExcelHelp;
+import com.icboluo.util.ExcelUtil;
 import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.listenter.ValidHeadBodyListener;
 import jakarta.annotation.Resource;
@@ -83,8 +83,8 @@ public class ExcelController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile mf = multipartRequest.getFile("data");
         assert mf != null;
-        ExcelHelp.validateFile(mf);
-        ExcelHelp.xlsAndXlsxValid(mf);
+        ExcelUtil.validateFile(mf);
+        ExcelUtil.xlsAndXlsxValid(mf);
         ValidHeadBodyListener<StudentVO> listener = new ValidHeadBodyListener<>(StudentVO.class, 1);
         try (InputStream is = mf.getInputStream(); ExcelReader er = EasyExcelFactory.read(is).build()) {
             ReadSheet rs = EasyExcelFactory.readSheet(0)
