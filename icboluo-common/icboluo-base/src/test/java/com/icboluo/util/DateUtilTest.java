@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DateHelperTest {
+class DateUtilTest {
 
     @Test
     void test1() {
@@ -50,10 +50,10 @@ class DateHelperTest {
 
     @Test
     void allToDate() {
-        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05"));
-        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05 12:12:12"));
-        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05T13:13:13"));
-        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05T14:14:14.141"));
-        assertEquals(LocalDate.of(2023, 11, 5), DateHelper.allToDate("2023-11-05T15:15:15.123456789"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateUtil.allToDate("2023-11-05"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateUtil.allToDate("2023-11-05 12:12:12"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateUtil.allToDate("2023-11-05T13:13:13"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateUtil.allToDate("2023-11-05T14:14:14.141"));
+        assertEquals(LocalDate.of(2023, 11, 5), DateUtil.allToDate("2023-11-05T15:15:15.123456789"));
     }
 }

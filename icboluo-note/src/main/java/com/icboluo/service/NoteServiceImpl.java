@@ -10,7 +10,7 @@ import com.icboluo.object.query.TimeNoteQuery;
 import com.icboluo.object.view.FiledResultVO;
 import com.icboluo.object.view.NoteVO;
 import com.icboluo.util.BeanUtil;
-import com.icboluo.util.DateHelper;
+import com.icboluo.util.DateUtil;
 import com.icboluo.util.IcBoLuoException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -82,8 +82,8 @@ public class NoteServiceImpl implements NoteService {
                 .map(o -> {
                     NoteVO vo = o.toView();
                     LocalDateTime gmtModified = o.getGmtModified();
-                    long planTime = DateHelper.toLong(gmtModified) + timeInterval;
-                    vo.setShouldFinishTime(DateHelper.toDateTime(planTime));
+                    long planTime = DateUtil.toLong(gmtModified) + timeInterval;
+                    vo.setShouldFinishTime(DateUtil.toDateTime(planTime));
                     return vo;
                 }).toList();
     }

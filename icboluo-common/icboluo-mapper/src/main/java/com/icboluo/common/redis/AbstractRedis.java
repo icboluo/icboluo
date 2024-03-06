@@ -2,7 +2,7 @@ package com.icboluo.common.redis;
 
 
 import com.icboluo.function.Procedure;
-import com.icboluo.util.DateHelper;
+import com.icboluo.util.DateUtil;
 import jakarta.annotation.Resource;
 import lombok.NonNull;
 import org.springframework.data.redis.connection.DataType;
@@ -60,7 +60,7 @@ public abstract class AbstractRedis<T> {
             return true;
         }
 //        诡异的函数,过期时间的取值竟然是redis里面,如果redis服务和本地服务时间不一致就会出现异常
-        return redisTemplate.expireAt(key, DateHelper.localDateTimeToDate(localDateTime));
+        return redisTemplate.expireAt(key, DateUtil.localDateTimeToDate(localDateTime));
     }
 
     /**

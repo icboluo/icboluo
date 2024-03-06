@@ -19,7 +19,7 @@ import java.util.Optional;
 @Data
 @SuppressWarnings("unused")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DateHelper {
+public class DateUtil {
     /**
      * 经过一年的时间戳增加值
      */

@@ -3,7 +3,7 @@ package com.icboluo.common.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.icboluo.util.DateHelper;
+import com.icboluo.util.DateUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -16,6 +16,6 @@ import java.time.LocalDateTime;
 public class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
     @Override
     public void serialize(LocalDateTime localDateTime, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(DateHelper.dateFormat(localDateTime));
+        jsonGenerator.writeString(DateUtil.dateFormat(localDateTime));
     }
 }

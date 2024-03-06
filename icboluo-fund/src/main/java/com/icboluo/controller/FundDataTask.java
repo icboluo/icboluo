@@ -16,7 +16,7 @@ import com.icboluo.object.bo.FundCompleteBO;
 import com.icboluo.object.bo.FundCompleteDateBO;
 import com.icboluo.object.bo.FundDataGetBO;
 import com.icboluo.object.bo.FundDateBO;
-import com.icboluo.util.DateHelper;
+import com.icboluo.util.DateUtil;
 import jakarta.annotation.Resource;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -85,8 +85,8 @@ public class FundDataTask {
             if (haveUpdateFundData) {
                 FundAsyncRecord fundAsyncRecord = new FundAsyncRecord();
                 fundAsyncRecord.setId(fundId);
-                fundAsyncRecord.setStartTime(DateHelper.firstTime(startTime));
-                fundAsyncRecord.setEndTime(DateHelper.firstTime(LocalDate.now().minusDays(1)));
+                fundAsyncRecord.setStartTime(DateUtil.firstTime(startTime));
+                fundAsyncRecord.setEndTime(DateUtil.firstTime(LocalDate.now().minusDays(1)));
                 fundAsyncRecordMapper.insertOrUpdateBatch(Collections.singletonList(fundAsyncRecord));
             }
         }
