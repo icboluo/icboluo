@@ -1,7 +1,7 @@
 package com.icboluo.file;
 
 import com.icboluo.constant.FileRelativePathPre;
-import com.icboluo.util.IoHelper;
+import com.icboluo.util.IoUtil;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
@@ -37,10 +37,10 @@ class Demo03FileWriter {
     public void test2() throws IOException {
         // 创建一个字符读取流，流只能读取一次
         FileReader fr = new FileReader(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
-        StringBuilder sb1 = IoHelper.readFileReader1(fr);
+        StringBuilder sb1 = IoUtil.readFileReader1(fr);
         System.out.println(sb1);
         System.out.println("-------------------------------");
-        StringBuilder sb2 = IoHelper.readFileReader2(fr);
+        StringBuilder sb2 = IoUtil.readFileReader2(fr);
         System.out.println(sb2);
         fr.close();
     }

@@ -1,7 +1,7 @@
 package com.icboluo.util.serialize;
 
 import com.icboluo.function.SerialFunction;
-import com.icboluo.util.IoHelper;
+import com.icboluo.util.IoUtil;
 
 import java.io.*;
 import java.lang.ref.WeakReference;
@@ -46,7 +46,7 @@ public class SerializedLambda implements Serializable {
         if (!lambda.getClass().isSynthetic()) {
             throw new RuntimeException("该方法仅能传入 lambda 表达式产生的合成类");
         }
-        byte[] serialize = IoHelper.serialize(lambda);
+        byte[] serialize = IoUtil.serialize(lambda);
         try (ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(serialize)) {
             @Override
             protected Class<?> resolveClass(ObjectStreamClass objectStreamClass) throws IOException, ClassNotFoundException {

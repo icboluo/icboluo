@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.othersource;
+package com.icboluo.leetcode.建模;
 
 import java.util.ArrayList;
 import java.util.Arrays;

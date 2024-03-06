@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @author icboluo
  * @since 2020/11/10 22:15
  */
-public class IoHelper {
+public class IoUtil {
 
     /**
      * Serialize the given object to a byte array.

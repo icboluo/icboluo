@@ -1,7 +1,7 @@
 package com.icboluo.file;
 
 import com.icboluo.constant.FileRelativePathPre;
-import com.icboluo.util.IoHelper;
+import com.icboluo.util.IoUtil;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
@@ -64,14 +64,14 @@ class Demo01FileOutputStream {
 //      创建一个文件输入流对象
         FileInputStream in1 = new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
 
-        StringBuilder sb1 = IoHelper.readFileInputStream(in1);
+        StringBuilder sb1 = IoUtil.readFileInputStream(in1);
         // 123ä¸­å½
         System.out.println(sb1);
         in1.close();
 
 //        读到的数据是编码
         FileInputStream in2 = new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
-        StringBuilder sb2 = IoHelper.readFileInputStream2(in2);
+        StringBuilder sb2 = IoUtil.readFileInputStream2(in2);
 //        [49, 50, 51, -28, -72, -83, -27, -101][-67, 13, 10, -28, -72, -83, -27, -101]
         System.out.println(sb2);
         in2.close();
