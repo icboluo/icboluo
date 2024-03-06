@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @SuppressWarnings("unused")
-public class IcBoLuoI18nException extends RuntimeException {
+public class I18nException extends RuntimeException {
     /**
      * 状态码
      */
@@ -21,37 +21,37 @@ public class IcBoLuoI18nException extends RuntimeException {
      */
     private transient Object[] args;
 
-    public IcBoLuoI18nException() {
+    public I18nException() {
         super();
         this.status = "500";
     }
 
-    public IcBoLuoI18nException(String msg) {
+    public I18nException(String msg) {
         super(msg);
         this.status = "500";
     }
 
-    public IcBoLuoI18nException(ReEnum em) {
+    public I18nException(ReEnum em) {
         super(em.getMsg());
         this.status = em.getCode();
     }
 
-    public IcBoLuoI18nException(ReEnum em, Throwable throwable) {
+    public I18nException(ReEnum em, Throwable throwable) {
         super(em.getMsg(), throwable);
         this.status = em.getCode();
     }
 
-    public IcBoLuoI18nException(String status, String msg) {
+    public I18nException(String status, String msg) {
         super(msg);
         this.status = status;
     }
 
-    public IcBoLuoI18nException(String msg, Object[] args) {
+    public I18nException(String msg, Object[] args) {
         super(msg);
         this.status = "500";
     }
 
-    public IcBoLuoI18nException(String msg, Exception ex) {
+    public I18nException(String msg, Exception ex) {
         super(msg);
         this.status = "500";
     }

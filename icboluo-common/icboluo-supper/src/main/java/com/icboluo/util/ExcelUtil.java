@@ -76,13 +76,13 @@ public class ExcelUtil {
     public static void xlsAndXlsxValid(MultipartFile mf) throws IOException {
         String fileName = mf.getOriginalFilename();
         if (fileName == null || !(fileName.endsWith(ExcelTypeEnum.XLSX.getValue()) || fileName.endsWith(ExcelTypeEnum.XLS.getValue()))) {
-            throw new IcBoLuoI18nException("{}.not.excel", new Object[]{fileName});
+            throw new I18nException("{}.not.excel", new Object[]{fileName});
         }
         try (Workbook workbook = WorkbookFactory.create(mf.getInputStream())) {
             boolean b1 = workbook instanceof XSSFWorkbook && Objects.requireNonNull(mf.getOriginalFilename()).endsWith(ExcelTypeEnum.XLS.getValue());
             boolean b2 = workbook instanceof HSSFWorkbook && Objects.requireNonNull(mf.getOriginalFilename()).endsWith(ExcelTypeEnum.XLSX.getValue());
             if (b1 || b2) {
-                throw new IcBoLuoI18nException("excel.suffix.not.match");
+                throw new I18nException("excel.suffix.not.match");
             }
         }
     }
@@ -104,11 +104,11 @@ public class ExcelUtil {
      */
     private static void validateFile(MultipartFile mf, long size) {
         if (mf == null || mf.isEmpty()) {
-            throw new IcBoLuoI18nException("file.is.empty");
+            throw new I18nException("file.is.empty");
         }
         // MultipartFile.getSize 的单位是字节
         if (mf.getSize() > size) {
-            throw new IcBoLuoI18nException("file.too.large");
+            throw new I18nException("file.too.large");
         }
     }
 }

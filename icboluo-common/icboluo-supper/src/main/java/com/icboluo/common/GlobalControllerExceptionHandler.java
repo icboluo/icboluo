@@ -2,7 +2,7 @@ package com.icboluo.common;
 
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.IcBoLuoException;
-import com.icboluo.util.IcBoLuoI18nException;
+import com.icboluo.util.I18nException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import jakarta.annotation.Resource;
@@ -93,8 +93,8 @@ public class GlobalControllerExceptionHandler {
      * @param e 异常信息
      * @return 失败的响应信息
      */
-    @ExceptionHandler(value = {IcBoLuoI18nException.class})
-    public Response icBoLuoI18nExceptionHandler(IcBoLuoI18nException e) {
+    @ExceptionHandler(value = {I18nException.class})
+    public Response icBoLuoI18nExceptionHandler(I18nException e) {
         printLog(e);
         log.error("IcBoLuoI18nException: ", e);
         return R.error(e.getMessage(), messageSource);

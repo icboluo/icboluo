@@ -5,7 +5,7 @@ import com.alibaba.excel.util.ClassUtils;
 import com.icboluo.annotation.Excel;
 import com.icboluo.util.ExcelExportResolve;
 import com.icboluo.util.ExcelUtil;
-import com.icboluo.util.IcBoLuoI18nException;
+import com.icboluo.util.I18nException;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.data.util.CastUtils;
@@ -51,7 +51,7 @@ public class ValidHeadExcelListener<T> extends ExcelListener<T> {
             }
         }
         if (StringUtils.hasText(msg)) {
-            throw new IcBoLuoI18nException(msg);
+            throw new I18nException(msg);
         }
     }
 

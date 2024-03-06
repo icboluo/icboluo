@@ -2,7 +2,7 @@ package com.icboluo.thread;
 
 import com.icboluo.interceptor.WebContext;
 import com.icboluo.util.IcBoLuoException;
-import com.icboluo.util.IcBoLuoI18nException;
+import com.icboluo.util.I18nException;
 import com.icboluo.util.ThreadPool;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class Thread_Exception_Name {
         CompletableFuture.runAsync(() -> {
             try {
                 greaterThanZero(-1);
-            } catch (IcBoLuoI18nException ex) {
+            } catch (I18nException ex) {
                 errMsg.set(ex.getMessage());
             }
         }).join();
@@ -37,7 +37,7 @@ public class Thread_Exception_Name {
                 return null;
             }
             // CompletableFuture handler 的异常类型全部是并发异常，判断子类型需要getCause
-            if (throwable.getCause() instanceof IcBoLuoI18nException) {
+            if (throwable.getCause() instanceof I18nException) {
                 // msg信息：param.less.than.or.equal.to
                 // ex.getMsg信息：com.icboluo...IcBoLuoI18nException: param.less.than.or.equal.to
                 errMsg.set(throwable.getCause().getMessage());
@@ -52,7 +52,7 @@ public class Thread_Exception_Name {
 
     public static void greaterThanZero(int a) {
         if (a <= 0) {
-            throw new IcBoLuoI18nException("param.{0}.less.than.or.equal.to", new Object[]{a});
+            throw new I18nException("param.{0}.less.than.or.equal.to", new Object[]{a});
         }
     }
 
@@ -74,11 +74,11 @@ public class Thread_Exception_Name {
     }
 
     private void subException1() {
-        throw new IcBoLuoI18nException("subException1");
+        throw new I18nException("subException1");
     }
 
     private void subException2() {
-        throw new IcBoLuoI18nException("subException2");
+        throw new I18nException("subException2");
     }
 
     ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPool().asyncExecutor();

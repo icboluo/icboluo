@@ -60,12 +60,12 @@ public class ThreadUtil {
             // 这2句其实没必要，仅仅是再加一层保险
             isException.set(true);
             hoverThread.forEach(LockSupport::unpark);
-            throw new IcBoLuoI18nException("ExecutionException", ex);
+            throw new I18nException("ExecutionException", ex);
         } catch (Exception ex) {
             // 最差情况，出现异常（基本上也是超时异常）之后，所有的线程均被唤醒且回滚，防止长时间占用线程或者出现事物问题
             isException.set(true);
             hoverThread.forEach(LockSupport::unpark);
-            throw new IcBoLuoI18nException("", ex);
+            throw new I18nException("", ex);
         }
     }
 

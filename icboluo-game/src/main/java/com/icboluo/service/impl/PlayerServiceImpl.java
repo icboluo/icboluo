@@ -16,7 +16,7 @@ import com.icboluo.service.PlayerService;
 import com.icboluo.service.StudentService;
 import com.icboluo.util.BeanUtil;
 import com.icboluo.util.IcBoLuoException;
-import com.icboluo.util.IcBoLuoI18nException;
+import com.icboluo.util.I18nException;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -76,7 +76,7 @@ public class PlayerServiceImpl implements PlayerService {
             if (diePlayer == null) {
                 throw new IcBoLuoException("no.find.the.role");
             }
-            throw new IcBoLuoI18nException("cur.role.already.die");
+            throw new I18nException("cur.role.already.die");
         }
         PlayerVO view = BeanUtil.copyProperties(player, PlayerVO::new);
         PlayerLevel playerLevel = playerLevelService.queryById(player.getLevel());
