@@ -4,13 +4,14 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p/>功能：打印方法的执行时间
- * <p/>注释使用的是功能执行前
+ * <p>功能：打印方法的执行时间
+ * <p>注释使用的是功能执行前
  *
  * @author icboluo
  * @since 2020/12/17 21:45
@@ -49,7 +50,7 @@ public class TimeRecord {
         long preTime = time.curTime;
         String preMsg = time.msg;
 
-        if (preMsg != null && !"".equals(preMsg)) {
+        if (StringUtils.hasText(preMsg)) {
             log.warn("功能：{} 消耗的时间为 {} 毫秒", preMsg, now - preTime);
         } else {
             log.warn("第{}个节点到下一个节点共消耗 {} 毫秒时间", timeList.size() - 1, now - preTime);
@@ -75,7 +76,7 @@ public class TimeRecord {
         }
         String rate = MathUtil.dividePercentage(maxTime, allTime) + "%";
         String msg = timeList.get(maxAfterIndex - 1).msg;
-        if (msg != null && !"".equals(msg)) {
+        if (StringUtils.hasText(msg)) {
             // 节点是从0开始的
             log.warn("第{}个节点到下一个节点消耗时间最久为 {} 毫秒，功能是：{}，占总时间 {}", maxAfterIndex - 1, maxTime, msg, rate);
         } else {

@@ -113,9 +113,7 @@ public class ValidateUtil {
             String name = field.getName();
             Set<ConstraintViolation<T>> constraintViolations = validateProperty(obj, name);
             if (!CollectionUtils.isEmpty(constraintViolations)) {
-                List<ConstraintViolation<T>> collect = constraintViolations.stream().sorted().toList();
-                String msg = collect.get(0).getMessage();
-                res.add(msg);
+                res.add(constraintViolations.iterator().next().getMessage());
             }
         }
         return res;
