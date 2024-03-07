@@ -10,3 +10,5 @@ spring:
     url: jdbc:sqlite::../../document/sql/document.db
     username:
     password:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect

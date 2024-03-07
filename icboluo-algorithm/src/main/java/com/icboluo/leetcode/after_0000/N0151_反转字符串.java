@@ -1,11 +1,18 @@
 package com.icboluo.leetcode.after_0000;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * @author icboluo
  * @since 2023-12-26 8:32
  */
 class N0151_反转字符串 {
-    // ab cd -> cd ab
+    public static void main(String[] args) {
+        var cla = new N0151_反转字符串();
+        System.out.println(cla.reverseWords("ab cd"));
+    }
+
     public String reverseWords(String s) {
         // 方法1：s.split reverse
         // 方法2：s.reverse word.reverse
@@ -24,7 +31,7 @@ class N0151_反转字符串 {
         for (char c : arr) {
             res += c;
         }
-        return res;
+        return Arrays.stream(res.split(" ")).filter(str -> !str.isBlank()).collect(Collectors.joining(" "));
     }
 
     public void reverse(char[] arr) {

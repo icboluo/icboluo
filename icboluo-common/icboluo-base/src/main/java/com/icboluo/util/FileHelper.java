@@ -10,12 +10,6 @@ import java.io.*;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileHelper {
-
-    /**
-     * 默认文件大小1G,运算单位是字节 1024*1024*1024
-     */
-    public static final long DEFAULT_MAX_SIZE = 1073741824L;
-
     /**
      * 静默删除
      * 递归删除

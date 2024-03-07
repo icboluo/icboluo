@@ -86,29 +86,4 @@ public class ExcelUtil {
             }
         }
     }
-
-    /**
-     * 校验文件大小
-     *
-     * @param mf 文件
-     */
-    public static void validateFile(MultipartFile mf) {
-        validateFile(mf, FileHelper.DEFAULT_MAX_SIZE);
-    }
-
-    /**
-     * 校验文件大小
-     *
-     * @param mf   文件
-     * @param size 文件限制大小
-     */
-    private static void validateFile(MultipartFile mf, long size) {
-        if (mf == null || mf.isEmpty()) {
-            throw new I18nException("file.is.empty");
-        }
-        // MultipartFile.getSize 的单位是字节
-        if (mf.getSize() > size) {
-            throw new I18nException("file.too.large");
-        }
-    }
 }
