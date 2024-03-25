@@ -11,17 +11,11 @@ Spring容器只有在客户端发送请求，请求到达服务端后才初始�
 
 set注入一次只能注入单个bean(可以用来给静态变量附初始化值)？
 
-## AOP（Aspect Oriented Programming 面向切面编程）:
 
-基于动态代理的功能增强方式
 
-        把重复代码抽取出来，使用的时候，利用动态代理在不修改源码的基础上增强
-        动态代理技术：要开始功能的增强了，就创建这个代理对象，对目标对象进行功能的增强。不可见
-        动态代理实现方案：
-        1、基于接口的JDK官方的动态代理（优先使用）要求：被代理类最少实现一个接口
-        2、基于子类的第三方的cglib的动态代理 要求：被代理类不能用final修饰的类
+## 类
 
-注意：直接调用Controller层方法和通过URL调用Controller接口，所经过的http切面是一致的，都无法避免
+CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实现项目启动之后执行代码（需要Component）
 
 ## 名词/注解
 
@@ -29,11 +23,21 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @RunWith（SpringJUnit4ClassRunner.class）：替换掉junit的运行器,换成一个可以初始化spring容器的运行器。
 
-#### @Controller @Service @Repository (仓库)
+#### @Controller @Service @Repository (仓库) @RestController，
 
-@Controller:控制应用程序的流程和处理用户所发出的请求
+> @Controller 控制应用程序的流程和处理用户所发出的请求
+> @RestController 将该注解使用在Controller类上，所有方法都默认是响应json格式的数据了
 
-#### @RequestParam@PathVariable@GetMapping@PostMapping@PutMapping@DeleteMapping
+#### @RequestParam@PathVariable@GetMapping@PostMapping@PutMapping@DeleteMapping@ResponseBody
+
+> RequestParam 并非完全没有作用，他比不加能适配的更多一些
+
+@ResponseBody 
+
+    表示该方法的返回结果直接写入HTTP response body，
+    是把Controller方法返回值转化为JSON，称为序列化
+    是把接收到的JSON数据转化为Pojo对象，称为反序列化
+    用于获取请求体内容。直接使用得到是key=value&key=value...结构的数据。 一般用于接收一个json数据，如果标记为false，说明整个对象都为null
 
 #### @Autowired注入：先直接找子类，找的多了按id找
 
@@ -96,6 +100,18 @@ set注入一次只能注入单个bean(可以用来给静态变量附初始化值
 
 @PostConstruct 在创建对象后执行，整个系统中只执行一次，可以用来系统启动初始化某些属性,方法设置成私有的也是可以执行的
 
+## AOP（Aspect Oriented Programming 面向切面编程）:
+
+基于动态代理的功能增强方式
+
+        把重复代码抽取出来，使用的时候，利用动态代理在不修改源码的基础上增强
+        动态代理技术：要开始功能的增强了，就创建这个代理对象，对目标对象进行功能的增强。不可见
+        动态代理实现方案：
+        1、基于接口的JDK官方的动态代理（优先使用）要求：被代理类最少实现一个接口
+        2、基于子类的第三方的cglib的动态代理 要求：被代理类不能用final修饰的类
+
+注意：直接调用Controller层方法和通过URL调用Controller接口，所经过的http切面是一致的，都无法避免
+
 Joinpoint 连接点 连接点表示应用执行过程中能够插入切面的一个点， 这个点可以是方法的调用、异常的抛出。在 Spring AOP
 中，连接点总是方法的调用
 
@@ -156,23 +172,9 @@ aop存在于spring中，是对一个类做一个切面，通过spring获取这�
 
 ## SpringMvc:Model View Controller 模型视图控制器
 
-## 名词/注解
-
 Model:封装应用的状态，并实现应用的功能
 
 View:提供界面来与用户进行人机交互
-
-@ResponseBody 表示该方法的返回结果直接写入HTTP response body，
-
-@ResponseBody 是把Controller方法返回值转化为JSON，称为序列化
-
-@RestController，将该注解使用在Controller类上，所有方法都默认是响应json格式的数据了
-
-@RequestBody 是把接收到的JSON数据转化为Pojo对象，称为反序列化
-
-@RequestBody用于获取请求体内容。直接使用得到是key=value&key=value...结构的数据。 一般用于接收一个json数据
-
-如果标记为false，说明整个对象都为null
 
 @SpringBootApplication 申明让spring boot自动给程序进行必要的配置@Configuration ，@EnableAutoConfiguration 和
 @ComponentScan 三个配置。
@@ -184,10 +186,6 @@ Propertysource 指定外部属性文件
 ## PostHandler
 
 post handler 在controller报异常的时候不会执行，需要用after handler
-
-## RequestParam
-
-requestParam并非完全没有作用，他比不加能适配的更多一些
 
 ```java
 public class SpringIoc {

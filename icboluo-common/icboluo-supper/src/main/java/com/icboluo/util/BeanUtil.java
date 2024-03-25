@@ -50,6 +50,7 @@ public class BeanUtil {
      * @param source 源对象
      * @param target 目标对象
      */
+    @Deprecated
     public static void copyProperties(Object source, Object target) {
         BeanUtils.copyProperties(source, target);
     }
@@ -478,7 +479,7 @@ public class BeanUtil {
             InvocationHandler ih = Proxy.getInvocationHandler(anno);
             // 获取 AnnotationInvocationHandler 的 memberValues 字段
             Field ihField = ih.getClass().getDeclaredField("memberValues");
-            // 因为这个字段事 private final 修饰，所以要打开权限
+            // 因为这个字段是 private final 修饰，所以要打开权限
             ihField.setAccessible(true);
             // 获取 memberValues
             Map<String, Object> memberValues = (Map<String, Object>) ihField.get(ih);

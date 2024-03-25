@@ -62,7 +62,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 自定义 ResourceBundleMessageInterpolator 的若干方法，使得可根据request指定的语言返回对应语种的Validation
+     * 自定义 ResourceBundleMessageInterpolator 的若干方法，使得可根据request指定的语言返回对应语种的Validation ConstrainViolation Message
      */
     public static class RequestLocaleAwareMessageInterpolator extends ResourceBundleMessageInterpolator {
         public RequestLocaleAwareMessageInterpolator(ResourceBundleLocator userResourceBundleLocator) {

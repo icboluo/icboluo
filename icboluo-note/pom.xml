@@ -22,7 +22,7 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <!--            feign 有时候调用失败是因为版本的问题，在spring官网上可以查看版本队友关系-->
+            <!--            feign 有时候调用失败是因为版本的问题，在spring官网上可以查看版本对应关系-->
             <!--            项目启动失败分2种情况，一种是缺什么包什么的，这个可能是因为版本差距太大了；另一种会提示3.0x什么的，这种可以点进去链接具体看看-->
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>

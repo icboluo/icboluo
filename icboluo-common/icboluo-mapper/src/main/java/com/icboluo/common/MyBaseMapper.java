@@ -27,11 +27,11 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      * 只是会产生一个较大的id（因为默认的策略是input），违背了自增属性；
      * 生成的Input id 会随着字段类型长度变化，如果是Long类型，则生成的字段值会较长<p/>
      *
-     * @param record 实体类
+     * @param entity 实体类
      * @return 受影响行数
      */
-    default int insertSelective(T record) {
-        return insert(record);
+    default int insertSelective(T entity) {
+        return insert(entity);
     }
 
     /**
@@ -69,11 +69,11 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      * <p> <if field!=null> do update</if>
      * <p> 注意，只是 not null，并不是 not empty
      *
-     * @param record 实例对象
+     * @param entity 实例对象
      * @return 影响行数
      */
-    default int updateByPrimaryKeySelective(T record) {
-        return updateById(record);
+    default int updateByPrimaryKeySelective(T entity) {
+        return updateById(entity);
     }
 
     /**
