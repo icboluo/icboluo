@@ -11,8 +11,6 @@ Spring容器只有在客户端发送请求，请求到达服务端后才初始�
 
 set注入一次只能注入单个bean(可以用来给静态变量附初始化值)？
 
-
-
 ## 类
 
 CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实现项目启动之后执行代码（需要Component）
@@ -27,8 +25,12 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
 
 > @Controller 控制应用程序的流程和处理用户所发出的请求
 > @RestController 将该注解使用在Controller类上，所有方法都默认是响应json格式的数据了
+ 
+#### @RequestMapping@GetMapping@PostMapping@PutMapping@DeleteMapping
 
-#### @RequestParam@PathVariable@GetMapping@PostMapping@PutMapping@DeleteMapping@ResponseBody
+> @RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
+
+#### @RequestParam@PathVariable@ResponseBody
 
 > RequestParam 并非完全没有作用，他比不加能适配的更多一些
 
@@ -48,8 +50,6 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
 该注解并不一定要搭配 autowired 使用，在设置多数据源的时候，bean注解也会让参数从bean容器中获取，仅仅 @Qualifier即可
 
 @Resource两者合一
-
-#### @RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
 
 #### @Value注入url exa：
 
