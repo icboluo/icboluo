@@ -11,52 +11,35 @@ sqlite的sql文件不能和mysql共享，但是可以复制黏贴；如果sql内
         String 脏读 = "读到一个事物未commit的数据";
         String 不可重复读 = "一个事务执行相同的查询两次或两次以上，但是每次都得到不同的数据（重点是修改）";
         String 幻读 = "第一个线程去更新全表，第二个线程去新增一个，发现更新全表没有全部实现（重点是新增和删除）";
-        //spring事物的隔离级别
+        // spring事物的隔离级别
         String 数据库默认级别 = "DEFAULT";
         String 读未提交 = "脏读、虚读/幻读、不可重复读都可能发生";
         String 读已提交 = "不可重复读和虚读有可能发生（锁定正在读取的行）";
         String 可重复读 = "幻读可能发生（锁定读取的所有行）";
         String 串型化的 = "避免以上所有问题（锁表）";
-        //事务特性
+        // 事务特性
         String 原子性 = "强调事务的不可分割";
         String 一致性 = "事务的执行的前后数据的完整性保持一致";
         String 隔离性 = "一个事务执行的过程中, 不应该受到其他事务的干扰";
         String 持久性 = "事务一旦结束, 数据就持久到数据库";
-
-## left join
-
-- left join and 中的and是先进行右表筛选，再进行总数据匹配，如果筛选结果为空，则left join的整个右表数据为空
-- 业务中常进行整个数据筛选，用where比left join合适
-- mysql 左模糊 like 语句可以使用 locate（相当于 substring ）等语句替代
-- left join on 和where的区别，where纯过滤，left join on是将过滤的条件展示出来，不管on什么，后面有没有and，左表
-  全部数据均展示，只是右表数据有没有而已，即便on后面and左表，依然至少右表没有数据
-- mysql left join 语句需要增加索引提高执行效率
-- left join 右表的条件列上要加上索引
-
-## or
-
-> or链接的时候，只有全部加索引索引才会生效，不建议用or；修改方式：
-
-- 同字段用in代替
-- 不同字段用union拼接
-
-mysql union 作用就是拼接上面查询出的结果和下面查询出的结果， 查询结果不变，数据量增加
-
-## 特殊sql
-
-SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business WHERE id=1
-
-查询，如果第一个结果为空，用第二个参数，如果第二个为空用下一个...
-
-分组中可以使用，先求和，再求总和
-
-使用场景：暂无，分组求和再代码中写更简单
 
 ## 建表
 
 表字段用业务+字段属性...不要只用单纯的字段属性，不要觉得字段过长，这样，使用过程比较清晰
 
 数据库字段设置长一点，并没有什么明显的缺点，所以255在很多时候是个不错的选择
+
+## 主键
+
+mysql无序主键会导致页分裂，页分裂会导致碎片数据
+
+自增主键用光就不动了，会报主键重复异常
+
+如果不指定主键，会有一个默认的row id作为主键，主键用光后更新操作会覆盖原有数据
+
+## 外键
+
+外键当数据量较大的时候，删除很慢，大约能到3s一条，删除外键之后24ms
 
 ## 最佳实践
 
@@ -67,6 +50,16 @@ SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business 
 
 - 将多种类型（Integer,Sting,LocalDate,List）转换为字符串放入数据库，并且取出来，可以使用JSON.toJSONString(a) 和JSON.parse(b)
 - 整体需要使用反射操作
+
+## 建议与不建议
+
+#### 建议
+
+修改表字段类型并没有太复杂
+
+#### 不建议
+
+不建议删除db中的约束，太难考虑所有的情况了；针对于保存的数据，新建表似乎最好
 
 ## 索引失效
 
@@ -143,18 +136,6 @@ B+树数据获取效率相当，基本不怎么变化，因为数据都存储在
 
 mysql 只要where里面有索引，就会按照索引排序，有时候索引是相同的，排序出来的结果就是乱序的；有索引就不会按照主键进行排序
 
-## 主键
-
-mysql无序主键会导致页分裂，页分裂会导致碎片数据
-
-自增主键用光就不动了，会报主键重复异常
-
-如果不指定主键，会有一个默认的row id作为主键，主键用光后更新操作会覆盖原有数据
-
-## 外键
-
-外键当数据量较大的时候，删除很慢，大约能到3s一条，删除外键之后24ms
-
 ### mysql自增主键重置：
 
 删除数据：delete from base_operate_log
@@ -179,6 +160,16 @@ io问题：增大网络开销 扩展性：增减字段难以控制（但是可�
 
 where条件中多过滤一些行，使驱动表小一点
 
+## 特殊sql
+
+SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business WHERE id=1
+
+查询，如果第一个结果为空，用第二个参数，如果第二个为空用下一个...
+
+分组中可以使用，先求和，再求总和
+
+使用场景：暂无，分组求和再代码中写更简单
+
 ## sql
 
 mybatis中批量sql是可以使用selective
@@ -191,15 +182,38 @@ select coalesce(name，总金额;) ,sum (money) from test group by name with rol
 
 这样写更合适
 
-## 建议与不建议
+## left join
 
-#### 建议
+- left join and 中的and是先进行右表筛选，再进行总数据匹配，如果筛选结果为空，则left join的整个右表数据为空
+- 业务中常进行整个数据筛选，用where比left join合适
+- mysql 左模糊 like 语句可以使用 locate（相当于 substring ）等语句替代
+- left join on 和where的区别，where纯过滤，left join on是将过滤的条件展示出来，不管on什么，后面有没有and，左表
+  全部数据均展示，只是右表数据有没有而已，即便on后面and左表，依然至少右表没有数据
+- mysql left join 语句需要增加索引提高执行效率
+- left join 右表的条件列上要加上索引
 
-修改表字段类型并没有太复杂
+## or
 
-#### 不建议
+> or链接的时候，只有全部加索引索引才会生效，不建议用or；修改方式：
 
-不建议删除db中的约束，太难考虑所有的情况了；针对于保存的数据，新建表似乎最好
+- 同字段用in代替
+- 不同字段用union拼接
+
+mysql union 作用就是拼接上面查询出的结果和下面查询出的结果， 查询结果不变，数据量增加
+
+## 异常
+
+Cause: java.lang.IllegalArgumentException: argument type mismatch
+
+mybatis select * from db,中db需要增加无参构造函数，否则会报上述错误
+
+## SQL
+
+select * from information schema.INNODB TRX;
+
+查看sql运行
+
+当此语句发现running的时候，说明有语句在运行；当多线程执行的时候，如果一直在running，说明有一个线程一直在占用
 
 ## 关键字
 
@@ -303,20 +317,6 @@ select '02a2bc'=2;--1 true
 in应该这么写
 
 where find_in_set('1',replace(product1,';',','))
-
-## 异常
-
-Cause: java.lang.IllegalArgumentException: argument type mismatch
-
-mybatis select * from db,中db需要增加无参构造函数，否则会报上述错误
-
-## SQL
-
-select * from information schema.INNODB TRX;
-
-查看sql运行
-
-当此语句发现running的时候，说明有语句在运行；当多线程执行的时候，如果一直在running，说明有一个线程一直在占用
 
 ## 死锁
 

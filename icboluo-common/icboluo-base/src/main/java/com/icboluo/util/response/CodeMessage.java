@@ -1,6 +1,7 @@
 package com.icboluo.util.response;
 
 /**
+ * <p> 状态码、消息接口
  * <p>如果有2个模块的异常枚举，拥有相同的i18n code，会按照就近原则优先使用
  *
  * @author icboluo

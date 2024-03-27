@@ -54,6 +54,9 @@ public class FundDataTask {
     @Resource
     private FundInfoMapper fundInfoMapper;
 
+    /**
+     * SchedulingConfigurer 是编程时定时任务；@Scheduled 注解是声明式定时任务
+     */
     @Scheduled(cron = "0 * * * * ?")
     public void asyncFundData() {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();

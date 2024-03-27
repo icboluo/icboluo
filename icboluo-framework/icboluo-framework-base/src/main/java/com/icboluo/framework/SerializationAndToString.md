@@ -1,10 +1,10 @@
 # idea的debug提示属于toString提示
 
-# 数据和外部交互的时候需要序列化和反序列化
-
 # 序列化和toString没有什么关系
 
-序列化和java中的修饰符无关，例如 private final
+    反序列化是别的变为java，序列化是java变为别的
+    数据和外部交互的时候需要序列化和反序列化
+    序列化和java中的修饰符无关，例如 private final
 
 alibaba fastjson 序列化成字节数据的时候需要增加get方法，否则序列化不出来
 
@@ -49,5 +49,3 @@ mybatisPlus 没有绕过 Transient的检查，相对友好，但是mp又不支�
 要想mp和jpa都起作用，需要在字段上和get方法上都加声明
 
 有一个 javax包里面的注解暂未调查
-
-反序列化是别的变为java，序列化是java变为别的

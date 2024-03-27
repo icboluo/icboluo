@@ -9,17 +9,19 @@ import org.springframework.context.annotation.Profile;
 import redis.embedded.RedisServer;
 
 /**
+ * 嵌入式redis配置
+ *
  * @author icboluo
  * @since 2023-11-12 14:06
  */
 @Configuration
 @Profile("simple")
 @Slf4j
-public class EmbededRedisConfiguration {
+public class EmbeddedRedisConfiguration {
 
     private final RedisServer redisServer;
 
-    public EmbededRedisConfiguration(@Value("${spring.data.redis.port}") final int redisPort) {
+    public EmbeddedRedisConfiguration(@Value("${spring.data.redis.port}") final int redisPort) {
         this.redisServer = RedisServer.builder().port(redisPort).setting("maxmemory 256m").build();
     }
 

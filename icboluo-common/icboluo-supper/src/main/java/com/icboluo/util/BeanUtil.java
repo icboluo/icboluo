@@ -255,6 +255,18 @@ public class BeanUtil {
                         entry -> valConvert.apply(entry.getValue())));
     }
 
+    /**
+     * map反转 （val的唯一性自行判断
+     *
+     * @param map 原本的键值对
+     * @param <K> key 类型
+     * @param <V> val 类型
+     * @return 反转后的键值对
+     */
+    public static <K, V> Map<V, K> reverseMap(Map<K, V> map) {
+        return map.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+    }
+
     public static <S, T> PageInfo<T> pageInfoConvert(PageInfo<S> source, List<T> target) {
         Page<T> page = new Page<>(source.getPageNum(), source.getPageSize());
         page.setTotal(source.getTotal());
@@ -324,12 +336,16 @@ public class BeanUtil {
     }
 
     public static <T> void batchConsumer(List<T> list, Consumer<List<T>> consumer) {
+        batchConsumer(list, consumer, 5000);
+    }
+
+    public static <T> void batchConsumer(List<T> list, Consumer<List<T>> con, int size) {
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
-        for (int i = 0; i < list.size(); i += 5000) {
-            List<T> subList = list.subList(i, Math.min(i + 5000, list.size()));
-            consumer.accept(subList);
+        for (int i = 0; i < list.size(); i += size) {
+            List<T> subList = list.subList(i, Math.min(i + size, list.size()));
+            con.accept(subList);
         }
     }
 
@@ -485,5 +501,74 @@ public class BeanUtil {
             Map<String, Object> memberValues = (Map<String, Object>) ihField.get(ih);
             memberValues.put(paramName, paramVal);
         }
+    }
+
+    /**
+     * 去除首尾双引号
+     *
+     * @param str 源字符串
+     * @return 当首尾有双引号的时候，清理多余的首尾双引号
+     */
+    public static String cleanFirstLastDoubleQuotes(String str) {
+        if (!StringUtils.hasText(str) || str.charAt(0) != '"' || str.charAt(str.length() - 1) != '"') {
+            return str;
+        }
+        return str.substring(0, str.length() - 1).replaceFirst("\"", "");
+    }
+
+    /**
+     * 判断不区分大小写，大的集合是否包含小的集合
+     *
+     * @param bigList   大的集合
+     * @param smallList 小的集合
+     * @return 如果大的集合包含小的集合，返回true
+     */
+    public static boolean containIgnoreCare(List<String> bigList, List<String> smallList) {
+        for (String small : smallList) {
+            boolean flag = false;
+            for (String big : bigList) {
+                if (big.equalsIgnoreCase(small)) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 从列表中删除指定集合中包含的所有元素
+     *
+     * @param bigList   较大的集合
+     * @param smallList 需要删除元素的集合
+     */
+    public static void removeAllIgnoreCase(List<String> bigList, List<String> smallList) {
+        for (int i = bigList.size() - 1; i >= 0; i--) {
+            String big = bigList.get(i);
+            for (String small : smallList) {
+                if (big.equalsIgnoreCase(small)) {
+                    bigList.remove(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * + 拼接字符串切割为数组
+     *
+     * @param str     待切割字符串
+     * @param convert 字符串转换函数
+     * @param <V>     转换后的值类型
+     * @return 字符粗数组
+     */
+    public static <V> List<V> parseJoin(String str, Function<String, V> convert) {
+        if (StringUtils.hasText(str)) {
+            return Arrays.stream(str.split(";")).filter(StringUtils::hasText).map(convert).collect(Collectors.toList());
+        }
+        return new ArrayList<>();
     }
 }

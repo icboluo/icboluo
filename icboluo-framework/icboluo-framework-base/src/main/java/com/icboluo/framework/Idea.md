@@ -10,6 +10,8 @@
 
 如果idea service无法移动相对位置，可能是因为他们颜色不同，删了重新搞一下
 
+service窗口无端口提示、actuator失败：将C:\Users{username}\AppData\Local\Temp\hsperfdata_{username}这个文件删掉就可以了
+
 ## .bak
 
 文件加 .bak后缀可以使文件失效
@@ -44,3 +46,35 @@ statistic lines 包含了空行和注释，line code 仅包含代码，注释和
 ## debug
 
 idea 打断点卡住一个线程，其他的线程似乎也会被卡住，由当前线程分发的异步线程也就不动了，在Thread.sleep中
+
+## Git
+
+git soft 是文件变为之前的待提交状态
+
+git远端回滚提交记录
+
+    1.reset返回到这次提交时候的代码，再强制提交
+    2.revert将选中的git记录作为要回滚的记录，然后再次commit回滚，再强制提交
+
+#### .gitignore
+
+    不要在idea中隐藏这个文件，往里面动态的添加不需要交给 git管理的东西，gitignore也必须提交
+    该文件会把文件里面标注的东西不交给git管理
+    .gitignore 项目均需要此文件，避免多于文件上传到远端分支，是一个很好的实践
+
+10054
+
+git config http.sslVerify "false"
+
+git config --global http.sslVerify "false"
+
+443
+
+git config --global --unset http.proxy
+
+git config --global --unset https.proxy
+
+git命令：git add把文件交于git管理（将工作目录的数据放到暂存区域） git commit 把暂存区的内容提交到本地仓库---本地仓库对应的是分布式版本控制系统
+git采用的是直接记录快照的方式，而非差异比较（差异比较相当于增量同步，当增量过多的时候，合并比较麻烦）
+
+github 绿色是增加，红色是减少；左边是原来的，右边是新的

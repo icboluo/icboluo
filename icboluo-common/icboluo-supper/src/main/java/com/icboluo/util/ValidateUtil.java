@@ -43,7 +43,8 @@ public class ValidateUtil {
     /**
      * Environment是可以直接获取到配置文件中的内容的 *.properties
      */
-    private static final String I18N_MESSAGES = SpringUtil.getBean(Environment.class).getProperty("i18n/messages");
+    private static final List<String> I18N_BUNDLE_ADDR = SpringUtil.getBean(Environment.class)
+            .getProperty("spring.messages.basename", List.class, Collections.singletonList("messages"));
 
     private static final Validator VALIDATOR;
 
@@ -53,7 +54,7 @@ public class ValidateUtil {
                 .messageInterpolator(new RequestLocaleAwareMessageInterpolator(
                         // 提供 AggregateResourceBundleLocator 使得除了用框架提供的Validation ConstrainViolation Message 外
                         // 还可以用自己指定的或覆盖框架提供的
-                        new AggregateResourceBundleLocator(Collections.singletonList(I18N_MESSAGES))
+                        new AggregateResourceBundleLocator(I18N_BUNDLE_ADDR)
                 ))
                 .buildValidatorFactory()
         ) {

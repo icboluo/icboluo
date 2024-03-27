@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
+ * 资源处理工具类
+ *
  * @author icboluo
  * @since 2024-03-07 22:37
  */
@@ -14,7 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class IoUtil {
 
     /**
-     * 默认文件大小1G,运算单位是字节 1024*1024*1024
+     * <p>默认文件大小1G,运算单位是字节 1024*1024*1024
+     * <p>1G为 1073741824 ，1M为 1048576；可以作为参考
      */
     public static final long DEFAULT_MAX_SIZE = 1073741824L;
 
@@ -22,6 +25,7 @@ public class IoUtil {
      * 校验文件大小
      *
      * @param mf 文件
+     *           * @throws  I18nException 校验失败抛出次异常
      */
     public static void validateFile(MultipartFile mf) {
         validateFile(mf, DEFAULT_MAX_SIZE);
@@ -32,6 +36,7 @@ public class IoUtil {
      *
      * @param mf   文件，单位为字节
      * @param size 文件限制大小
+     * @throws I18nException 校验失败抛出次异常
      */
     private static void validateFile(MultipartFile mf, long size) {
         if (mf == null || mf.isEmpty()) {

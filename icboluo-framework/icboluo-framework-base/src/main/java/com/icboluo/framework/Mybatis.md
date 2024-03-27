@@ -36,6 +36,8 @@ tableName.从java到sql就好接受数据了，${tableName},表名是动态的�
 
 $符号也有一定的用途，常用作写公共的sql，这个不是占位符，就相当于字符串拼接，可以使 sql更加动态
 
+> mybatis 在实体类中不能使用数组，只能使用list，在xml中的写法为[0]
+
 ## 名词/标签
 
 resultType:结果集类型

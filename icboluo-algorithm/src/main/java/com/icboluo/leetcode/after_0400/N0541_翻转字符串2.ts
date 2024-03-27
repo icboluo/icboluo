@@ -25,12 +25,13 @@ function reverseStr(s: string, k: number): string {
  * @param {number} end
  */
 function reverseArr(arr, start, end) {
-    for (let i = start; i < (end + start) / 2; i++) {
-        let temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp
+    for (let i = start, j = end; i < (end + start) / 2; i++, j--) {
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp
     }
 }
 
-// FIXME ERROR
-console.log(reverseStr("abcd",4))
+console.log(reverseStr("abcd", 4))
+console.log(reverseStr("abcdefg", 2))
+console.log(reverseStr("abcd", 2))

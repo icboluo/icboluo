@@ -17,6 +17,8 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
 
 ## 名词/注解
 
+API: application platform interface
+
 @Import：用于导入其他配置类
 
 @RunWith（SpringJUnit4ClassRunner.class）：替换掉junit的运行器,换成一个可以初始化spring容器的运行器。
@@ -25,7 +27,7 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
 
 > @Controller 控制应用程序的流程和处理用户所发出的请求
 > @RestController 将该注解使用在Controller类上，所有方法都默认是响应json格式的数据了
- 
+
 #### @RequestMapping@GetMapping@PostMapping@PutMapping@DeleteMapping
 
 > @RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
@@ -34,7 +36,7 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
 
 > RequestParam 并非完全没有作用，他比不加能适配的更多一些
 
-@ResponseBody 
+@ResponseBody
 
     表示该方法的返回结果直接写入HTTP response body，
     是把Controller方法返回值转化为JSON，称为序列化
@@ -43,26 +45,26 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
 
 #### @Autowired注入：先直接找子类，找的多了按id找
 
-    autowired作为方法注解的时候，需要注入参数；如果仅仅是在初始化的时候需要set默认值，我们可以使用PostConstruct
+    Autowired作为方法注解的时候，需要注入参数；如果仅仅是在初始化的时候需要set默认值，我们可以使用PostConstruct
+    @Qualifier改id
+    该注解并不一定要搭配 autowired 使用，在设置多数据源的时候，bean注解也会让参数从bean容器中获取，仅仅 @Qualifier即可
+    @jakarta.annotation.Resource = @Autowired+@Qualifier
 
-@Qualifier改id
+#### @Value 属性注入,声明在属性（变量）上
 
-该注解并不一定要搭配 autowired 使用，在设置多数据源的时候，bean注解也会让参数从bean容器中获取，仅仅 @Qualifier即可
+> 注入必须加$符号，书写的时候需要注意；@Value注入url exa：
 
-@Resource两者合一
-
-#### @Value注入url exa：
-
-> 注入必须加$符号，书写的时候需要注意
-
-    属性注入，将制定配置文件中的属性注入到变量中
-      
-       @Value("${jdbc.url}")
-       private String name;
+    // 属性注入，将制定配置文件中的属性注入到变量中
+    @Value("${jdbc.url}")
+    private String name;
 
 @Value注解是不需要增加额外的依赖说明书写提示的，参考note服务pom注释
 
-@Value 属性注入,声明在属性（变量）上
+## set注入
+
+    set注入只能注入单个参数
+    spring bean 默认单例
+    如果bean中有成员变量的时候（成员变量存储数据，不要去注入（di，使用new，因为成员变量会被更改
 
 @Configuration
 
@@ -75,10 +77,7 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
 
 #### @ComponentScan
 
-相当于
-
-      <context:component-scan base-package="com.icboluo">
-      </context:component-scan>
+相当于 <context:component-scan base-package="com.icboluo"/>
 
 #### @Bean @Component
 
@@ -92,7 +91,7 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
     
     声明在方法上，将方法的返回值加入Bean容器，代替<bean>标签，spring会自动调用bean
 
-    bean和Commponent的区别：component作用于类，bean作用于方法；bean可以随便找个地方随便注入类（第三方工具，component不行
+    bean和Component的区别：component作用于类，bean作用于方法；bean可以随便找个地方随便注入类（第三方工具，component不行
 
 @ContextConfiguration(locations={"classpath：......"})：加载配置类或者xml配置文件
 
@@ -110,7 +109,35 @@ CommandLineRunner ApplicationRunner 实现这2个任意一个接口，可以实�
         1、基于接口的JDK官方的动态代理（优先使用）要求：被代理类最少实现一个接口
         2、基于子类的第三方的cglib的动态代理 要求：被代理类不能用final修饰的类
 
-注意：直接调用Controller层方法和通过URL调用Controller接口，所经过的http切面是一致的，都无法避免
+#### 注意
+
+    需要把aop加入spring bean，要不然aop不会起作用（类上需要加@Component注解
+    直接调用Controller层方法和通过URL调用Controller接口，所经过的http切面是一致的，都无法避免
+    受检异常exception在aop执行中，如果不处理，会造成抛出java.lang.reflect.UndeclaredThrowableException异常
+    切面抛出的异常并非是因为受检异常什么的，jvm在处理动态代理的时候，如果出现顶层异常向下转型，会抛上述异常
+
+#### AOP与代理
+
+    aop存在于spring中，是对一个类做一个切面，通过spring获取这个类的时候（注入）其实就是调用到代理类；
+    本类之间的调用，没有获取spring的额外的bean，自然就不会产生代理了；
+    这块可以打断点调试，service层的aop，再controller注入的其实是cglib代理类
+
+## AOP执行顺序
+
+切面执行不知道什么顺序，但是可以设置执行顺序，用order即可
+
+先执行的切面最后执行完，满足一般规律
+
+在Spring AOP中，各个通知的执行顺序如下：
+
+1. 环绕通知（@Around）：环绕通知包裹了被切入的方法，在方法执行前后都可以执行额外的逻辑。环绕通知的执行顺序是先执行前置通知，然后执行被切入的方法，最后执行后置通知。
+2. 前置通知（@Before）：前置通知在目标方法执行之前执行，可以在方法执行前执行一些准备工作。
+3. 后置通知（@After）：后置通知在目标方法执行之后执行，无论目标方法是否抛出异常，后置通知都会执行。
+4. 返回通知（@AfterReturning）：返回通知在目标方法执行并成功返回结果后执行，可以获取到目标方法的返回值。
+5. 异常通知（@AfterThrowing）：异常通知在目标方法抛出异常时执行，可以捕获目标方法抛出的异常。
+   需要注意的是，以上通知的执行顺序可以通过配置来调整，也可以通过实现Ordered接口或使用@Order注解来指定通知的执行顺序。
+
+#### AOP名词
 
 Joinpoint 连接点 连接点表示应用执行过程中能够插入切面的一个点， 这个点可以是方法的调用、异常的抛出。在 Spring AOP
 中，连接点总是方法的调用
@@ -130,45 +157,6 @@ Proxy 代理类
 Aspect 切面 切面是通知和切点的结合，类上加这个注解，这个类就是切面
 
 引入（Introduction）：引入允许我们向现有的类添加新的方法或者属性
-
-## set注入
-
-set注入只能注入单个参数
-
-spring bean 默认单例
-
-如果bean中有成员变量的时候（成员变量存储数据，不要去注入（di，使用new，因为成员变量会被更改
-
-## AOP执行顺序
-
-切面执行不知道什么顺序，但是可以设置执行顺序，用order即可
-
-先执行的切面最后执行完，满足一般规律
-
-## aop
-
-需要把aop加入spring bean，要不然aop不会起作用（类上需要加@Component注解
-
-受检异常exception在aop执行中，如果不处理，会造成抛出java.lang.reflect.UndeclaredThrowableException异常
-
-切面抛出的异常并非是因为受检异常什么的，jvm在处理动态代理的时候，如果出现顶层异常向下转型，会抛上述异常
-
-aop 与代理
-
-aop存在于spring中，是对一个类做一个切面，通过spring获取这个类的时候（注入）其实就是调用到代理类；
-
-本类之间的调用，没有获取spring的额外的bean，自然就不会产生代理了；
-
-这块可以打断点调试，service层的aop，再controller注入的其实是cglib代理类
-
-在Spring AOP中，各个通知的执行顺序如下：
-
-1. 环绕通知（@Around）：环绕通知包裹了被切入的方法，在方法执行前后都可以执行额外的逻辑。环绕通知的执行顺序是先执行前置通知，然后执行被切入的方法，最后执行后置通知。
-2. 前置通知（@Before）：前置通知在目标方法执行之前执行，可以在方法执行前执行一些准备工作。
-3. 后置通知（@After）：后置通知在目标方法执行之后执行，无论目标方法是否抛出异常，后置通知都会执行。
-4. 返回通知（@AfterReturning）：返回通知在目标方法执行并成功返回结果后执行，可以获取到目标方法的返回值。
-5. 异常通知（@AfterThrowing）：异常通知在目标方法抛出异常时执行，可以捕获目标方法抛出的异常。
-   需要注意的是，以上通知的执行顺序可以通过配置来调整，也可以通过实现Ordered接口或使用@Order注解来指定通知的执行顺序。
 
 ## SpringMvc:Model View Controller 模型视图控制器
 
@@ -262,4 +250,83 @@ public class StaticPri {
 - 首先，属性文件的名称有变化，文件名必须是：application.properties
 - 其次，要注入的属性的变量名要和配置文件中的属性名的最后一部分保持一致
 - 最后，要在类上声明这些属性在属性文件中的共同的前缀，并提供getter和setter方法 属性读取类激活的2中方式:
-  在属性读取类（jdbc.properties）中添加@Component（组成）注解 在配置类上使用@EnableConfigurationProperties(JdbcProperties.class)
+  在属性读取类（jdbc.properties）中添加@Component（组成）注解 在配置类上使用@EnableConfigurationProperties(
+  JdbcProperties.class)
+
+## --------------------
+
+1、默认无参构造实例化bean
+2、静态工厂方法实例化bean：把静态方发返回的值放在bean中
+class后面加factory-method
+
+3、实例工厂方法实例化bean：非静态方法返回的值放在bean中
+先和无参一样bean实例化，再用新的bean中factory-bean接收，factory-method写入方法
+
+Dependency Injection（依赖注入）：构造方法注入、setter方法注入、p名称空间注入（基于set）等
+构造函数注入属性值：涉及的标签 constructor-arg， set 方法注入 标签：Property《性质》
+index:指定参数在构造函数参数列表的索引位置
+name:指定参数在构造函数中的名称,指定给谁赋值
+value:它能赋的值是基本数据类型和 String 类型
+ref:它能赋的值是其他 bean 类型，也就是说，必须得是在配置文件中配置过的 bean
+
+复杂注入 用<...<property>获取list...的name
+
+<context:property-placeholder location 加载外部资源文件
+<context《环境》 component-scan base-package扫描包下所有对应注解
+<bean>属性：
+scope：指定对象的作用范围
+singleton :默认值，单例的
+prototype :多例的
+init-method：指定类中的初始化方法名称(生命周期相关)
+destroy-method：指定类中销毁方法名称(生命周期相关)
+
+<aop:config>配置AOP
+<aop:aspect id="logAdvice" ref="logger">配置切面，ref:引用通知类
+<aop:pointcut expression=" execution(* cn.itcast.service.impl.*.*(..))" id="pt1"/>用于配置切入点表达式，pointcut-ref="
+pt1"调用表达式。用于优化下面代码
+<aop:before method="printLog" pointcut="execution...配置前置通知， method:配置通知方法（具体增强的方法）
+pointcut:配置AspectJ表达式，即将通知增强到哪个方法
+execution:使用AspectJ的切入点表达式，execution(修饰符 返回值类型 包名.类名.方法名(参数列表))
+<aop:after-returning>@AfterReturning
+<aop:after-throwing>@AfterThrowing
+<aop:after>@After（execution...）
+<aop:around>ProceedingJoinPoint需要传入该类参数
+@Pointcut切入点表达式：通过一个空方法单独配置切入点表达式
+
+<!--开启注解AOP-->
+<aop:aspectj-autoproxy></aop:aspectj-autoproxy>@EnableAspectJAutoProxy放在总配置类中
+@Aspect表示当前类是一个切面类（也可以称之为通知类）就是增强了什么的类
+
+old：jdbctemplate中:setDataSource(dataSource);注入<bean...
+new：JdbcDaoSupport，无法将dataSource注入到JdbcDaoSupport中注解用不了
+
+配置事务管理器
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">...数据源
+<!--配置事务策略
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+配置事务的属性
+          <tx:attributes>
+              <tx:method name="query*" read-only="false"/>
+          </tx:attributes>...
+配置AOP
+<aop:config>
+          配置切入点表达式-
+          <aop:pointcut id="pt2" expression="execution(* com.task.service.impl.*.* ( .. ) )"></aop:pointcut>
+          配置事务管理器应用到切入点
+          <aop:advisor advice-ref="txAdvice" pointcut-ref="pt2">...
+
+spring容器在应用加载的时候创建一次即可。spring提供了一个监听器ContextLoaderListener,位于spring-web-5.0.6.RELEASE.jar，
+该监听器会初始化一个全局唯一的spring容器，监听ServletContext对象的创建时机
+    <!--指定applicationContext.xml的位置-->
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationXml.xml</param-value>
+    </context-param>
+    <!--配置spring监听器-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+通过工具类获取spring容器
+WebApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
