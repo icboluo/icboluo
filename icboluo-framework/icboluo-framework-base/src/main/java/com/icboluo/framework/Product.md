@@ -118,7 +118,7 @@ HttpServletRequest 可以注入，也可以在Controller方法内获取，向后
 ```java
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 public class Http {

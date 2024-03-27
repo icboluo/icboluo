@@ -24,7 +24,7 @@ Here are some ideas to get you started:
 每个服务的stater名称是取消icboluo前缀的大驼峰式，有application后缀
 
 包路径：因为是cloud项目，涉及父子模块，为了清晰起见，我们给每个模块都添加了模块的前缀，使包路径由com.icboluo->com.icboluo.base
-单由于包路径较长，不好阅读，没有改
+但由于包路径较长，不好阅读，没有改
 
 # 技术选型
 

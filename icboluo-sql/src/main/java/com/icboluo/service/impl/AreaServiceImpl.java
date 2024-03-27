@@ -5,7 +5,7 @@ import com.icboluo.mapper.AreaMapper;
 import com.icboluo.service.AreaService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * (Area)表服务实现类

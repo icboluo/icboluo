@@ -7,7 +7,6 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -20,11 +19,12 @@ import java.util.stream.Collectors;
 
 /**
  * and name like concat ('%',#{name},'%') escape '/'
+ * TODO ERROR
  *
  * @author icboluo
  * @since 2023-07-05 19:13
  */
-@Component
+//@Component
 @Intercepts({
         @Signature(type = ProcessHandle.class, method = "setParameters", args = {PreparedStatement.class})
 })

@@ -11,4 +11,4 @@ spring:
     username:
     password:
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.SQLiteDialect

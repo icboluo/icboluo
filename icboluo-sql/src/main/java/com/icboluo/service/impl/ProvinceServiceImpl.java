@@ -4,7 +4,7 @@ import com.icboluo.common.redis.RedisList;
 import com.icboluo.entity.Province;
 import com.icboluo.mapper.ProvinceMapper;
 import com.icboluo.service.ProvinceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +17,9 @@ import java.util.List;
  */
 @Service
 public class ProvinceServiceImpl implements ProvinceService {
-    // TODO 为什么这里不能使用 resource
-    @Autowired
+    @Resource
     private ProvinceMapper provinceMapper;
-    @Autowired
+    @Resource
     private RedisList<Province> redisList;
 
     /**

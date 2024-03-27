@@ -5,7 +5,7 @@ import com.icboluo.mapper.CityMapper;
 import com.icboluo.service.CityService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * (City)表服务实现类
