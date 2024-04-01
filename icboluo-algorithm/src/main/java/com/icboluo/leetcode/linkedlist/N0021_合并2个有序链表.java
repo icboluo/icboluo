@@ -4,7 +4,7 @@ import com.icboluo.common.ListNode;
 
 class N0021_合并2个有序链表 {
     public static void main(String[] args) {
-        N0021_合并2个有序链表 cla = new N0021_合并2个有序链表();
+        var cla = new N0021_合并2个有序链表();
         ListNode listNode1 = new ListNode(1, 2, 4);
         ListNode listNode2 = new ListNode(1, 3, 4);
         ListNode listNode = cla.mergeTwoLists1(listNode1, listNode2);

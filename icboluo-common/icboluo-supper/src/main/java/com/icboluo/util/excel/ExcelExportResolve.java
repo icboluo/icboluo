@@ -1,4 +1,4 @@
-package com.icboluo.util;
+package com.icboluo.util.excel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.icboluo.annotation.Excel;

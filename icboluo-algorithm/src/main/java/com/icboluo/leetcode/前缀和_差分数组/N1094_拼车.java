@@ -4,7 +4,15 @@ package com.icboluo.leetcode.前缀和_差分数组;
  * @author icboluo
  * @since 2023-11-06 3:16
  */
-public class N1094_拼车 {
+class N1094_拼车 {
+    public static void main(String[] args) {
+        N1094_拼车 cla = new N1094_拼车();
+        int[][] arr1 = {{2, 1, 5}, {3, 3, 7}};
+        int[][] arr2 = {{2, 1, 5}, {3, 3, 7}};
+        System.out.println(cla.carPooling(arr1, 4));
+        System.out.println(cla.carPooling(arr2, 5));
+    }
+
     /**
      * 能否一次拉完
      *
@@ -17,7 +25,8 @@ public class N1094_拼车 {
         int[] arr = new int[1001];
         DifferenceArr diff = new DifferenceArr(arr);
         for (int[] trip : trips) {
-            diff.increment(trip[1], trip[2], trip[0]);
+            // 这个是左闭右开区间，在右边界，乘客已经下车了
+            diff.increment(trip[1], trip[2] - 1, trip[0]);
         }
         int[] res = diff.restore();
         for (int re : res) {

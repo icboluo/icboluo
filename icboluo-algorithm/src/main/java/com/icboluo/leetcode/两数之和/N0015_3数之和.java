@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.两数之和;
 
 import java.util.ArrayList;
 import java.util.Arrays;

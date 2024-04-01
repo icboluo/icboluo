@@ -1,6 +1,7 @@
 package com.icboluo.leetcode.linkedlist;
 
 import com.icboluo.common.ListNode;
+import org.springframework.lang.NonNull;
 
 /**
  * @author icboluo
@@ -11,17 +12,6 @@ class N0019_删除链表的倒数第N个节点 {
         ListNode listNode = new ListNode(1, 2, 3, 4, 5);
         var cla = new N0019_删除链表的倒数第N个节点();
         cla.removeNthFromEnd1(listNode, 2).print();
-    }
-
-    /**
-     * todo 双指针 使双指针的距离为n，移动右指针到最后即可
-     *
-     * @param listNode
-     * @param n
-     * @return
-     */
-    private static ListNode m2(ListNode listNode, int n) {
-        return null;
     }
 
     /**
@@ -79,5 +69,26 @@ class N0019_删除链表的倒数第N个节点 {
         }
         left.next = left.next.next;
         return fake.next;
+    }
+
+    public ListNode removeNthFromEnd3(@NonNull ListNode head, int n) {
+        int len = length(head, n);
+        if (len == n) {
+            return head.next;
+        }
+        return head;
+    }
+
+    private int length(ListNode node, int n) {
+        if (node == null) {
+            return 0;
+        }
+        // 强大的后序遍历
+        int len = length(node.next, n) + 1;
+        // 倒数第n+1个节点
+        if (len == n + 1) {
+            node.next = node.next.next;
+        }
+        return len;
     }
 }
