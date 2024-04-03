@@ -1,4 +1,4 @@
-package com.icboluo.util.excel;
+package com.icboluo.util;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;

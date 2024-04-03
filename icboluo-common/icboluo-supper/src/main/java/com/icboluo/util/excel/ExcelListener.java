@@ -34,7 +34,7 @@ public class ExcelListener<T> extends AnalysisEventListener<T> {
     protected String sheetName;
 
     /**
-     * 当前sheet页表头有多上行，默认有1行表头
+     * 当前sheet页表头有多少行，默认有1行表头
      */
     protected int head = 1;
 
@@ -54,13 +54,13 @@ public class ExcelListener<T> extends AnalysisEventListener<T> {
     }
 
     /**
-     * 根据字段去重，并且取最后一条
+     * 根据字段值去重，并且取最后一条
      *
-     * @param function 获取字段的函数（会在获取联合索引的函数
+     * @param function 获取字段的函数（或者获取联合索引的函数
      * @return 去重后的列表
      */
-    public List<T> getDistinctList(Function<T, Objects> function) {
-        LinkedHashMap<Objects, T> map = list.stream()
+    public List<T> getDistinctList(Function<T, Object> function) {
+        LinkedHashMap<Object, T> map = list.stream()
                 .collect(Collectors.toMap(function, Function.identity(), (fir, sec) -> sec, LinkedHashMap::new));
         return new ArrayList<>(map.values());
     }

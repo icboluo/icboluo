@@ -22,7 +22,7 @@ import com.icboluo.util.ExcelHelper;
 import com.icboluo.util.FileHelper;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.excel.ExcelListener;
-import com.icboluo.util.excel.HeadDataListener;
+import com.icboluo.util.HeadDataListener;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
