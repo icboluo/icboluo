@@ -1,39 +1,40 @@
 package com.icboluo.datastructure.stack;
 
+import com.icboluo.util.I18nException;
+
 /**
- * @author icboluo
+ * 数组实现栈
+ * 将栈中的其他方法迁移出去，将 HeroNode 中 nickName 删除
+ * 各个操作都是常数时间开销
+ * 每隔一段时间进行的倍数操作的时间开销较大
+ * <p>
+ * 链表栈
+ * 各个操作都是常数时间开销
+ * 栈规模的增加和减少都很容易
+ * 每个操作都需要使用额外的空间和时间开销来处理指针
+ * <p>
+ * 双端栈 也称为双端队列
+ *
+ * @see java.util.Stack
+ * @see java.util.Deque
  */
-public class ArrayStack {
-    /**
-     * 栈的大小
-     */
-    private final int maxSize;
-    /**
-     * 栈中的数据放在该数组
-     */
-    private final int[] stack;
-    /**
-     * 栈顶
-     */
-    private int top = -1;
+@SuppressWarnings("unused")
+class ArrayStack {
+    int[] stack;
 
-    public ArrayStack(int maxSize) {
-        this.maxSize = maxSize;
-        stack = new int[this.maxSize];
-    }
+    /**
+     * 栈顶索引
+     */
+    int top = -1;
 
-    public boolean isFull() {
-        return top == maxSize - 1;
-    }
-
-    public boolean isEmpty() {
-        return top == -1;
+    public ArrayStack(int size) {
+        stack = new int[size];
     }
 
     public void push(int value) {
-        if (isFull()) {
-            System.out.println("栈满");
-            return;
+        // is full
+        if (top == stack.length - 1) {
+            throw new I18nException("栈满");
         }
         top++;
         stack[top] = value;
@@ -41,70 +42,39 @@ public class ArrayStack {
 
     public int pop() {
         if (isEmpty()) {
-            throw new RuntimeException("栈空");
+            throw new I18nException("栈空");
         }
         int value = stack[top];
         top--;
         return value;
     }
 
-    public void list() {
-        if (isEmpty()) {
-            System.out.println("栈空");
-            return;
-        }
-        for (int i = top; i >= 0; i--) {
-            System.out.printf("stack[%d]=%d\n", i, stack[i]);
-        }
-    }
-
-    /**
-     * 返回运算符的优先级：假定数字越大，优先级越高
-     */
-    public int priority(int oper) {
-        if (oper == '*' || oper == '/') {
-            return 1;
-        } else if (oper == '+' || oper == '-') {
-            return 0;
-        } else {
-            return -1;
-        }
-    }
-
-    /**
-     * 是否是运算符
-     *
-     * @param val 运算符
-     * @return {true} if is operation
-     */
-    public boolean isOperation(char val) {
-        return val == '+' || val == '-' || val == '*' || val == '/';
-    }
-
-    public int calculate(int num1, int num2, int oper) {
-        int result = 0;
-        switch (oper) {
-            case '+':
-                result = num2 + num1;
-                break;
-            case '-':
-                result = num2 - num1;
-                break;
-            case '*':
-                result = num2 * num1;
-                break;
-            case '/':
-                result = num2 / num1;
-                break;
-            default:
-                break;
-        }
-        return result;
-    }
-
     public int peek() {
+        if (isEmpty()) {
+            throw new I18nException("栈空");
+        }
         return stack[top];
     }
 
+    public boolean isEmpty() {
+        return top == -1;
+    }
 
+    public void print() {
+        if (isEmpty()) {
+            System.out.println("栈空");
+        }
+        for (int i = top; i >= 0; i--) {
+            // %d 数字， %n 换行
+            System.out.printf("stack[%d] = %d%n", i, stack[i]);
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayStack stack = new ArrayStack(10);
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.print();
+    }
 }

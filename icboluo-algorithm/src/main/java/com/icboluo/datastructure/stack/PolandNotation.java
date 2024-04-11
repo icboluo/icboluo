@@ -15,7 +15,7 @@ import java.util.Stack;
  *
  * @author icboluo
  */
-public class PolandNotation {
+class PolandNotation {
     //notation 符号
     public static void main(String[] args) {
         //(3+4)*5-6=>3 4 + 5 * 6 -

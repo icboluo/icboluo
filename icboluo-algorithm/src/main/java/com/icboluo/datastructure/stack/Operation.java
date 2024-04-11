@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
  * @author icboluo
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Operation {
+class Operation {
     private static final int ADD = 1;
     private static final int SUB = 1;
     private static final int MUL = 2;

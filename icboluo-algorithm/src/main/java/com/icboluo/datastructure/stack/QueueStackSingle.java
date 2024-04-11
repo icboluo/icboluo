@@ -1,16 +1,21 @@
-package com.icboluo.leetcode.建模;
+package com.icboluo.datastructure.stack;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author icboluo
+ * N0225_单队列实现栈
+ *
  * @since 2023-01-14 14:03
  */
-class N0225_用队列实现栈 {
-    private Queue<Integer> queue;
+class QueueStackSingle {
+    /**
+     * 用队列的头做栈顶
+     */
+    Queue<Integer> queue;
 
-    public N0225_用队列实现栈() {
+    public QueueStackSingle() {
         this.queue = new LinkedList<>();
     }
 
@@ -33,5 +38,10 @@ class N0225_用队列实现栈 {
 
     public boolean empty() {
         return queue.isEmpty();
+    }
+
+    public void print() {
+        AtomicInteger i = new AtomicInteger();
+        queue.forEach(val -> System.out.printf("stack[%d] = %d%n", i.getAndIncrement(), val));
     }
 }

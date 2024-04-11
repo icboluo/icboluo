@@ -42,7 +42,7 @@ class QueueTest {
             System.out.println("element：显示第一个元素，抛异常");
             System.out.println("exit：退出程序");
             System.out.println("show：显示队列");
-            System.out.println("get：取出第一个元素");
+            System.out.println("remove：取出第一个元素");
             key = sc.next();
             switch (key) {
                 case "offer":
@@ -59,10 +59,10 @@ class QueueTest {
                     loop = false;
                     break;
                 case "show":
-                    queue.show();
+                    queue.print();
                     break;
-                case "get":
-                    queue.get();
+                case "remove":
+                    queue.remove();
                 default:
                     break;
             }
@@ -80,7 +80,7 @@ class QueueTest {
             System.out.println("element：显示第一个元素，抛异常");
             System.out.println("exit：退出程序");
             System.out.println("show：显示队列");
-            System.out.println("get：取出第一个元素");
+            System.out.println("remove：取出第一个元素");
             key = sc.next();
             switch (key) {
                 case "offer":
@@ -97,10 +97,10 @@ class QueueTest {
                     loop = false;
                     break;
                 case "show":
-                    queue.show();
+                    queue.print();
                     break;
-                case "get":
-                    queue.get();
+                case "remove":
+                    queue.remove();
                 default:
                     break;
             }

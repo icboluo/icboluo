@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * @author lp
  */
-public class StackTest {
+class StackTest {
 
     public static void main(String[] args) {
         ArrayStack stack = new ArrayStack(4);
@@ -31,7 +31,7 @@ public class StackTest {
             k = sc.next();
             switch (k) {
                 case "show":
-                    stack.list();
+                    stack.print();
                     break;
                 case "push":
                     System.out.println("请输入一个数：");
@@ -75,14 +75,14 @@ public class StackTest {
         StringBuilder keepNum = new StringBuilder();
         while (index < expression.length()) {
             ch = expression.substring(index, index + 1).charAt(0);
-            if (operStack.isOperation(ch)) {
+            if (isOperation(ch)) {
                 if (!operStack.isEmpty()) {
                     //如果当前优先级高,需要处理
-                    if (operStack.priority(ch) <= operStack.priority(operStack.peek())) {
+                    if (priority(ch) <= priority(operStack.peek())) {
                         num1 = numStack.pop();
                         num2 = numStack.pop();
                         operation = operStack.pop();
-                        result = numStack.calculate(num1, num2, operation);
+                        result = calculate(num1, num2, operation);
                         numStack.push(result);
                         operStack.push(ch);
                     } else {
@@ -97,7 +97,7 @@ public class StackTest {
                 if (index == expression.length() - 1) {
                     numStack.push(Integer.parseInt(keepNum.toString()));
                 } else {
-                    if (operStack.isOperation(expression.substring(index + 1, index + 2).charAt(0))) {
+                    if (isOperation(expression.substring(index + 1, index + 2).charAt(0))) {
                         numStack.push(Integer.parseInt(keepNum.toString()));
                         keepNum = new StringBuilder();
                     }
@@ -109,10 +109,53 @@ public class StackTest {
             num1 = numStack.pop();
             num2 = numStack.pop();
             operation = operStack.pop();
-            result = numStack.calculate(num1, num2, operation);
+            result = calculate(num1, num2, operation);
             numStack.push(result);
         }
         System.out.printf("表达式：%s=%d ", expression, numStack.pop());
     }
 
+    /**
+     * 返回运算符的优先级：假定数字越大，优先级越高
+     */
+    public static int priority(int oper) {
+        if (oper == '*' || oper == '/') {
+            return 1;
+        } else if (oper == '+' || oper == '-') {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * 是否是运算符
+     *
+     * @param val 运算符
+     * @return {true} if is operation
+     */
+    public static boolean isOperation(char val) {
+        return val == '+' || val == '-' || val == '*' || val == '/';
+    }
+
+    public static int calculate(int num1, int num2, int oper) {
+        int result = 0;
+        switch (oper) {
+            case '+':
+                result = num2 + num1;
+                break;
+            case '-':
+                result = num2 - num1;
+                break;
+            case '*':
+                result = num2 * num1;
+                break;
+            case '/':
+                result = num2 / num1;
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
 }

@@ -10,9 +10,8 @@ import java.util.List;
 class Queen8 {
     public static void main(String[] args) {
         var cla = new Queen8();
-        System.out.println(cla.solveNQueens(8));
-        cla.array = new int[8];
-        cla.backtrack2(0);
+        System.out.println(cla.solveNQueens1(8));
+        System.out.println(cla.solveNQueens2(8));
     }
 
     /**
@@ -29,16 +28,27 @@ class Queen8 {
      * @return [".Q..","...Q","Q...","..Q."] list 里面的一个元素代表一张图
      */
     public List<List<String>> solveNQueens(int n) {
+        return solveNQueens2(n);
+    }
+
+    public List<List<String>> solveNQueens1(int n) {
         chess = new boolean[n][n];
         res = new ArrayList<>();
-        backtrack(0);
+        backtrack1(0);
+        return res;
+    }
+
+    public List<List<String>> solveNQueens2(int n) {
+        array = new int[n];
+        res = new ArrayList<>();
+        backtrack2(0);
         return res;
     }
 
     /**
      * @param row 当前处理的行
      */
-    private void backtrack(int row) {
+    private void backtrack1(int row) {
         // 触发结束条件
         if (row == chess.length) {
             List<String> track = Arrays.stream(chess).map(a -> {
@@ -58,7 +68,7 @@ class Queen8 {
             }
             // 做选择，在这里路径直接记录到棋盘中，row只是代表被处理到第几行，所以这里的选择相对简单
             chess[row][col] = true;
-            backtrack(row + 1);
+            backtrack1(row + 1);
             chess[row][col] = false;
         }
     }
@@ -106,10 +116,15 @@ class Queen8 {
      */
     private void backtrack2(int n) {
         if (n == array.length) {
+            List<String> temp = new ArrayList<>();
             for (int value : array) {
-                System.out.print(value + " ");
+                String[] tempArr = new String[array.length];
+                Arrays.fill(tempArr, ".");
+                tempArr[value] = "Q";
+                String str = String.join("", tempArr);
+                temp.add(str);
             }
-            System.out.println();
+            res.add(temp);
             return;
         }
         for (int i = 0; i < array.length; i++) {
