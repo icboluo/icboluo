@@ -6,9 +6,9 @@ import lombok.Getter;
  * @author lp
  * 双向链表的（添加元素到链表结尾），（更新链表中的元素）做法是和单向链表相同的
  */
-public class DoubleLinkedList {
+class DoubleLinkedList {
     @Getter
-    private final HeroNode2 head = new HeroNode2(0, "", "");
+    private final HeroNode2 head = new HeroNode2(0, "");
 
 
     /**

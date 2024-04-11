@@ -4,7 +4,6 @@ import com.icboluo.util.I18nException;
 
 /**
  * 数组实现栈
- * 将栈中的其他方法迁移出去，将 HeroNode 中 nickName 删除
  * 各个操作都是常数时间开销
  * 每隔一段时间进行的倍数操作的时间开销较大
  * <p>

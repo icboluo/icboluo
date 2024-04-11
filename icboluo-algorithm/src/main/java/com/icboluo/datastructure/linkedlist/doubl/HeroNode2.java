@@ -7,14 +7,12 @@ package com.icboluo.datastructure.linkedlist.doubl;
 class HeroNode2 {
     public int no;
     public String name;
-    public String nickName;
     public HeroNode2 next;
     public HeroNode2 pre;
 
-    public HeroNode2(int no, String name, String nickName) {
+    public HeroNode2(int no, String name) {
         this.no = no;
         this.name = name;
-        this.nickName = nickName;
     }
 
     @Override
@@ -22,7 +20,7 @@ class HeroNode2 {
         return "HeroNode2{" +
                 "no=" + no +
                 ", name='" + name + '\'' +
-                ", nickName='" + nickName + '\'' +
+                ", nickName='" + + '\'' +
                 '}';
     }
 }

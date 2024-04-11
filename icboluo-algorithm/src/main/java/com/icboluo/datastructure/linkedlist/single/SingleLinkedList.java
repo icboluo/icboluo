@@ -7,7 +7,7 @@ class SingleLinkedList {
      * 初始化头节点，头节点不动，不存放具体的值
      */
     @Getter
-    private final HeroNode head = new HeroNode(0, "", "");
+    private final HeroNode head = new HeroNode(0, "");
 
     /**
      * 找到当前链表的最后节点，将最后节点的next域指向新的节点
@@ -76,7 +76,6 @@ class SingleLinkedList {
         }
         if (b) {
             temp.name = heroNode.name;
-            temp.nickName = heroNode.nickName;
         } else {
             System.out.printf("没有找到编号 %d 的节点\n", +heroNode.no);
         }

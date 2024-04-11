@@ -8,12 +8,12 @@ import java.util.Stack;
  *
  * @author lp
  */
-public class SingleLinkedListTest {
+class Test {
     public static void main(String[] args) {
-        HeroNode heroNode1 = new HeroNode(1, "宋江", "及时雨");
-        HeroNode heroNode2 = new HeroNode(2, "卢俊义", "玉麒麟");
-        HeroNode heroNode3 = new HeroNode(3, "吴用", "智多星");
-        HeroNode heroNode4 = new HeroNode(4, "林冲", "豹子头");
+        HeroNode heroNode1 = new HeroNode(1, "宋江");
+        HeroNode heroNode2 = new HeroNode(2, "卢俊义");
+        HeroNode heroNode3 = new HeroNode(3, "吴用");
+        HeroNode heroNode4 = new HeroNode(4, "林冲");
         SingleLinkedList list = new SingleLinkedList();
 /*        list.add(heroNode1);
         list.add(heroNode3);
@@ -26,7 +26,7 @@ public class SingleLinkedListTest {
         list.addByOrder(heroNode2);
         list.addByOrder(heroNode4);
 
-        HeroNode newHeroNode2 = new HeroNode(2, "猪", "猪猪猪");
+        HeroNode newHeroNode2 = new HeroNode(2, "猪");
         list.update(newHeroNode2);
         list.delete(5);
 
@@ -75,7 +75,7 @@ public class SingleLinkedListTest {
         HeroNode cur = head.next;
         //当前节点的下一个节点
         HeroNode next;
-        HeroNode reverseHead = new HeroNode(0, "", "");
+        HeroNode reverseHead = new HeroNode(0, "");
         //遍历原来的链表，每遍历一个节点，将其取出，并放在新的链表reverseHead 的最前面
         while (cur != null) {
             next = cur.next;

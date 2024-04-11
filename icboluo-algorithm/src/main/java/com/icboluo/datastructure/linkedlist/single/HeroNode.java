@@ -9,12 +9,10 @@ import lombok.ToString;
 class HeroNode {
     public int no;
     public String name;
-    public String nickName;
     public HeroNode next;
 
-    public HeroNode(int no, String name, String nickName) {
+    public HeroNode(int no, String name) {
         this.no = no;
         this.name = name;
-        this.nickName = nickName;
     }
 }
