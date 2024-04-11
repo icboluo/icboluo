@@ -69,7 +69,7 @@ public class BeanUtil {
             t = target.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             log.error(CONVERT_ERR_MESSAGE, target.getName(), e);
-            throw new IcBoLuoException(ReEnum.DATA_TRANSFER_ERROR);
+            throw new I18nException(ReEnum.DATA_TRANSFER_ERROR);
         }
         BeanUtils.copyProperties(source, t);
         return t;

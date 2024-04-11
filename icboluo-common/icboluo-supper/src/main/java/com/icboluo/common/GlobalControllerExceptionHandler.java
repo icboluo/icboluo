@@ -1,8 +1,8 @@
 package com.icboluo.common;
 
 import com.icboluo.enumerate.ReEnum;
-import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.I18nException;
+import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import jakarta.annotation.Resource;
@@ -68,7 +68,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = {HttpMessageNotReadableException.class})
     public Response httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
         log.error("HttpMessageNotReadableException: {}", ReEnum.UNEXPECTED_EXCEPTION, e);
-        return R.error(ReEnum.UNEXPECTED_EXCEPTION, messageSource);
+        return R.error(ReEnum.INTERFACE_NOT_SUPPORT, messageSource);
     }
 
     /**
@@ -79,7 +79,6 @@ public class GlobalControllerExceptionHandler {
      */
     @ExceptionHandler(value = {IcBoLuoException.class})
     // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @SuppressWarnings("all")
     public Response icBoLuoExceptionHandler(IcBoLuoException e) {
         printLog(e);
         // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用

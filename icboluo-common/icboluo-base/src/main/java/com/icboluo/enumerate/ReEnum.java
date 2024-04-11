@@ -13,11 +13,41 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ReEnum implements CodeMessage {
-
     /**
-     * 客户端异常
+     * A 类异常：客户端异常
      */
     CLIENT_ERROR("A0001", "client.error"),
+
+    INTERFACE_NOT_SUPPORT("A0002", "interface.not.support"),
+    /**
+     * 参数不合法
+     */
+    PARAM_ERROR("A1001", "param.error"),
+    /**
+     * 参数为空
+     */
+    PARAM_IS_EMPTY("A1002", "param.is.empty"),
+
+    CURRENT_DATA_NOT_PERMISSION_THIS_OPERATION("500", "current.data.not.permission.this.operation"),
+    NO_PERMISSION("500", "no.permission"),
+    NO_DATA("500", "no.data"),
+    /**
+     * 预料之外的异常
+     */
+    UNEXPECTED_EXCEPTION("500", "unexpected.exception"),
+
+    ROLE_ERROR("500", "role.error"),
+
+    /**
+     * 非法数据
+     */
+    ILLEGALITY_DATA("-1", "illegality.data"),
+
+    /**
+     * 失败
+     */
+    SYSTEM_ERROR("500", "system.error"),
+
     /**
      * 操作成功
      */
@@ -42,19 +72,6 @@ public enum ReEnum implements CodeMessage {
      * 新增失败
      */
     ADD_ERROR("-1", "新增失败"),
-    /**
-     * 参数为空
-     */
-    NULL_PARAM("-1", "参数为空"),
-    /**
-     * 非法数据
-     */
-    ILLEGALITY_DATA("-1", "非法数据"),
-    /**
-     * 失败
-     */
-    SYSTEM_ERROR("500", "system.error"),
-
 
     /**
      * 价格不能为空
@@ -94,14 +111,6 @@ public enum ReEnum implements CodeMessage {
     STATUS_VALUE_ERROR("560", "状态值异常"),
     STATUS_VALUE_NOT_FOUND("561", "状态值不存在"),
     SYSTEM_NOT_SUPPORT_EXCEPTION("601", "系统不支持异常"),
-
-    CUR_DATA_NOT_PERMISSION_THIS_OPERATION("500", "当前数据不允许次操作"),
-    NO_PERMISSION("500", "没有权限"),
-    NO_DATA("500", "没有数据"),
-    UNEXPECTED_EXCEPTION("500", "预料之外的异常"),
-    PARAM_ERROR("500", "参数不合法"),
-
-    ROLE_ERROR("500", "角色错误"),
     ;
 
     private final String code;

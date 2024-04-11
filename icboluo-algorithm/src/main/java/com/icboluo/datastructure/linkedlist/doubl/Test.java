@@ -5,10 +5,10 @@ package com.icboluo.datastructure.linkedlist.doubl;
  */
 class Test {
     public static void main(String[] args) {
-        HeroNode2 heroNode21 = new HeroNode2(1, "宋江");
-        HeroNode2 heroNode22 = new HeroNode2(2, "卢俊义");
-        HeroNode2 heroNode23 = new HeroNode2(3, "吴用");
-        HeroNode2 heroNode24 = new HeroNode2(4, "林冲");
+        HeroNode heroNode21 = new HeroNode(1, "宋江");
+        HeroNode heroNode22 = new HeroNode(2, "卢俊义");
+        HeroNode heroNode23 = new HeroNode(3, "吴用");
+        HeroNode heroNode24 = new HeroNode(4, "林冲");
         DoubleLinkedList list = new DoubleLinkedList();
         list.add(heroNode21);
         list.add(heroNode22);

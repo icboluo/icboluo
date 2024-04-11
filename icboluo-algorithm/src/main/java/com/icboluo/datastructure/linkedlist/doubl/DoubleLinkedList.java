@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 class DoubleLinkedList {
     @Getter
-    private final HeroNode2 head = new HeroNode2(0, "");
+    private final HeroNode head = new HeroNode(0, "");
 
 
     /**
@@ -19,7 +19,7 @@ class DoubleLinkedList {
             System.out.println("链表为null");
             return;
         }
-        HeroNode2 temp = head.next;
+        HeroNode temp = head.next;
         //判断链表是否到最后
         while (temp != null) {
             System.out.println(temp);
@@ -31,15 +31,15 @@ class DoubleLinkedList {
     /**
      * 添加一个节点到双向链表的最后
      *
-     * @param heroNode2 头节点
+     * @param heroNode 头节点
      */
-    public void add(HeroNode2 heroNode2) {
-        HeroNode2 temp = head;
+    public void add(HeroNode heroNode) {
+        HeroNode temp = head;
         while (temp.next != null) {
             temp = temp.next;
         }
-        temp.next = heroNode2;
-        heroNode2.pre = temp;
+        temp.next = heroNode;
+        heroNode.pre = temp;
     }
 
     /**
@@ -52,7 +52,7 @@ class DoubleLinkedList {
             System.out.println("链表为null，无法删除");
             return;
         }
-        HeroNode2 temp = this.head.next;
+        HeroNode temp = this.head.next;
         //是否找到待删除节点
         boolean b = false;
         while (true) {
