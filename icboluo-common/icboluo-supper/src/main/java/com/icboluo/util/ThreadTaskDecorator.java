@@ -54,6 +54,7 @@ public class ThreadTaskDecorator implements TaskDecorator {
                 } catch (Exception e) {
                     log.error("async task decorator run fail,msg is", e);
                 } finally {
+                    // 这里不remove不会造成内存泄漏吗，或者数据混乱 （在线程池中，会数据混乱
                     WebContext.remove();
                     MDC.clear();
                     Thread.currentThread().setName(preName);

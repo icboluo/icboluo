@@ -13,6 +13,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ReEnum implements CodeMessage {
+
+    /**
+     * 客户端异常
+     */
+    CLIENT_ERROR("A0001", "client.error"),
     /**
      * 操作成功
      */

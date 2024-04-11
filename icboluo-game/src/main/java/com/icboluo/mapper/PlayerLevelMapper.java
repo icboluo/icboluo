@@ -3,26 +3,16 @@ package com.icboluo.mapper;
 import com.icboluo.common.MyBaseMapper;
 import com.icboluo.entity.PlayerLevel;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 /**
  * (PlayerLevel)表数据库访问层
  *
- * @author makejava
+ * @author icboluo
  * @since 2022-03-13 12:17:47
  */
 public interface PlayerLevelMapper extends MyBaseMapper<PlayerLevel> {
-
-    /**
-     * 查询指定行数据
-     *
-     * @param playerLevel 查询条件
-     * @param pageable         分页对象
-     * @return 对象列表
-     */
-    List<PlayerLevel> queryAllByLimit(PlayerLevel playerLevel, @Param("pageable") Pageable pageable);
-
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *

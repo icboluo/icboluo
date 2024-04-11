@@ -78,3 +78,14 @@ git命令：git add把文件交于git管理（将工作目录的数据放到暂�
 git采用的是直接记录快照的方式，而非差异比较（差异比较相当于增量同步，当增量过多的时候，合并比较麻烦）
 
 github 绿色是增加，红色是减少；左边是原来的，右边是新的
+
+## maven
+
+maven settings 文件简介（猜测）
+
+        首先会使用 activeProfiles 去选择 Profiles （例如dev），如果该Profiles里面没有文件，会找mirrors，
+        在servers里面可以设置账号密码
+
+## 注释
+
+java注释里面的 <br> 换行 <pre> 再起一个段落

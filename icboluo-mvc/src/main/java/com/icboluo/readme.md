@@ -148,8 +148,18 @@ war包启动方式：
 war包启动要注意，会打一个url前缀
 tomcat闪退，需要在倒数第二行增加一个 pause命令，闪退是因为报错，解决报错即可，不需要暂停窗口
 java home在这里配置 setclasspath.bat
-tomcat乱码也需要解决,tomcat的乱码，首先将vmOptional修改为UTF-8这个是比较重要的
-
-tomcat 乱码，需要将涉及的标记为 UTF-8,不要听网上的标记成 GBK
 
 catalina.bat 相当于项目启动时的jvm等配置，可以设置控制台log|print乱码
+
+#### 乱码
+
+idea--tomcat service 窗口乱码，需要首先将vmOptional修改为UTF-8 这个比较重要
+
+      win cmd 如果启动jar包的时候乱码，首先要看一下右键--属性--当前代码页（编码）
+      直接在cmd中运行即可，保留一次
+      设置utf-8：chcp 65001
+      设置gbk：chcp 936
+
+maven 控制台目录乱码，是因为全部设置成utf-8了，但是电能是win采用的是gbk，将 maven--run 修改为gbk就可以了
+
+tomcat 乱码，需要将涉及的标记为 UTF-8,不要听网上的标记成 GBK

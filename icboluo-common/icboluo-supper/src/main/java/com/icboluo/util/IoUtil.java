@@ -5,6 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 /**
  * 资源处理工具类
  *
@@ -34,7 +38,7 @@ public class IoUtil {
     /**
      * 校验文件大小
      *
-     * @param mf   文件，单位为字节
+     * @param mf   文件，单位为字节 MultipartFile 再部分情况下是支持重复读取的
      * @param size 文件限制大小
      * @throws I18nException 校验失败抛出次异常
      */
@@ -45,5 +49,9 @@ public class IoUtil {
         if (mf.getSize() > size) {
             throw new I18nException("file.too.large");
         }
+    }
+
+    public static void copy(MultipartFile mf, File file) throws IOException {
+        Files.copy(mf.getInputStream(), file.toPath());
     }
 }

@@ -54,6 +54,7 @@ public class GlobalControllerExceptionHandler {
      */
     @ExceptionHandler(value = {UnexpectedTypeException.class})
     public Response unexpectedTypeExceptionHandler(UnexpectedTypeException e) {
+        // 全局异常处理需要增加log标识，否则找不到具体是哪一个异常捕获到了
         log.error("UnexpectedTypeException, Please check @valid code first", e);
         return R.error(ReEnum.SYSTEM_ERROR, messageSource);
     }

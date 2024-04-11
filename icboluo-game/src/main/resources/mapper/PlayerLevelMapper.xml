@@ -11,34 +11,6 @@
         <result property="age" column="age" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="PlayerLevelMap">
-        select
-          id, level, experience, increase_attack, increase_blood, age
-        from player_level
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="level != null and level != ''">
-                and level = #{level}
-            </if>
-            <if test="experience != null">
-                and experience = #{experience}
-            </if>
-            <if test="increaseAttack != null">
-                and increase_attack = #{increaseAttack}
-            </if>
-            <if test="increaseBlood != null">
-                and increase_blood = #{increaseBlood}
-            </if>
-            <if test="age != null">
-                and age = #{age}
-            </if>
-        </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
-    </select>
-
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into player_level(level, experience, increase_attack, increase_blood, age)
         values
