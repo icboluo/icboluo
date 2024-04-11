@@ -3,8 +3,10 @@ package com.icboluo.util.excel;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.icboluo.annotation.Excel;
 import com.icboluo.annotation.I18n;
+import com.icboluo.interceptor.WebContext;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.StringUtils;
 
@@ -16,13 +18,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 /**
- * 声明：Excel表头字段的获取方式：
- * 1.固定字段---对于固定字段，可以直接在视图上增加注解，使用 EasyExcel 原生 API 即可
- * 2.外部输入---（前段传参、数据库提前配置好），视图的字段名需要和参数有一定的关系 this.paramName
+ * <p> 声明：Excel表头字段的获取方式：
+ * <p> 1.固定字段---对于固定字段，可以直接在视图上增加注解，使用 EasyExcel 原生 API 即可
+ * <p> 2.外部输入---（前段传参、数据库提前配置好），视图的字段名需要和参数有一定的关系 this.paramName
+ * <p> Excel 导出解析器
+ * <p> 使用方式如下
+ * <p> <pre>{@code ExcelUtil.exportList(aList, A.class, fileName);}<pre/>
  *
  * @author icboluo
+ * @see Excel excel一切功能来源均取自该注解
  * @since 2023-06-25 18:50
  */
+@Slf4j
 public class ExcelExportResolve<T> {
 
     /**
@@ -96,19 +103,47 @@ public class ExcelExportResolve<T> {
     /**
      * 归一
      *
-     * @param field
+     * @param field 字段
      */
     public static void shoichiIndex(Field field) {
         Excel excel = field.getAnnotation(Excel.class);
         Map<String, Object> memberValues = getMemberValues(excel);
         if (StringUtils.hasText(excel.columnNumber())) {
-            memberValues.put("columnIndex", titleToNumber(excel.columnNumber()) - 1);
-        } else {
-            if (field.isAnnotationPresent(ExcelProperty.class)) {
-                ExcelProperty property = field.getAnnotation(ExcelProperty.class);
-                memberValues.put("columnIndex", property.index());
+            memberValues.put("columnIndex", ExcelUtil.titleToNumber(excel.columnNumber()) - 1);
+        } else if (field.isAnnotationPresent(ExcelProperty.class)) {
+            ExcelProperty property = field.getAnnotation(ExcelProperty.class);
+            memberValues.put("columnIndex", property.index());
+        }
+        if (excel.columnIndex() == -1) {
+            log.error("-11111");
+        }
+    }
+
+    private String searchI18nValue(Field field) {
+        // AnnotatedElementUtils 完全支持 AliasFor 注解
+        // AnnotationUtils 支持的是元注解
+        I18n i18n = AnnotatedElementUtils.findMergedAnnotation(field, I18n.class);
+        if (i18n == null) {
+            return field.getName();
+        }
+        if (StringUtils.hasText(i18n.en()) && StringUtils.hasText(i18n.zh())) {
+            return WebContext.isEn() ? i18n.en() : i18n.zh();
+        }
+        // 如果只填一个中文或者英文，尽可能的适配表头
+        if (StringUtils.hasText(i18n.en())) {
+            return i18n.en();
+        }
+        if (StringUtils.hasText(i18n.zh())) {
+            return i18n.zh();
+        }
+        // 如果中英文都没有配置，则取ExcelProperty 上的属性
+        if (field.isAnnotationPresent(ExcelProperty.class)) {
+            ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
+            if (excelProperty.value().length != 0) {
+                return excelProperty.value()[0];
             }
         }
+        return field.getName();
     }
 
 
@@ -120,14 +155,7 @@ public class ExcelExportResolve<T> {
                 cell.add("");
             } else {
                 Field field = nameFieldMap.get(sortField);
-                // AnnotatedElementUtils 完全支持 AliasFor 注解
-                // AnnotationUtils 支持的是元注解
-                I18n i18n = AnnotatedElementUtils.findMergedAnnotation(field, I18n.class);
-                if (i18n == null) {
-                    cell.add("");
-                } else {
-                    cell.add(i18n.zh() + System.currentTimeMillis());
-                }
+                cell.add(this.searchI18nValue(field));
             }
             res.add(cell);
         }
@@ -166,24 +194,5 @@ public class ExcelExportResolve<T> {
         mv.setAccessible(true);
         // --add-opens java.base/sun.reflect.annotation=ALL-UNNAMED  启动失败加 jvm参数即可解决
         return (Map<String, Object>) mv.get(ih);
-    }
-
-    /**
-     * 0171 Excel 列号转数字，从1开始
-     * 我们可以发现 BCM=(2*26+3)26+13
-     *
-     * @param columnTitle 列英文名称，不区分大小写
-     * @return 列对应的序号，从1开始
-     */
-    public static int titleToNumber(String columnTitle) {
-        if (columnTitle == null) {
-            return -1;
-        }
-        int sum = 0;
-        for (char ch : columnTitle.toUpperCase().toCharArray()) {
-            sum *= 26;
-            sum += ch - 'A' + 1;
-        }
-        return sum;
     }
 }

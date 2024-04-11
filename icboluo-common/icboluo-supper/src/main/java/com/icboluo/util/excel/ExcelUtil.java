@@ -8,9 +8,6 @@ import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.icboluo.util.I18nException;
-import com.icboluo.util.excel.EasyExcelWriteConfig;
-import com.icboluo.util.excel.ExcelExportResolve;
-import com.icboluo.util.excel.ValidHeadExcelListener;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
@@ -104,7 +101,7 @@ public class ExcelUtil {
         }
     }
 
-    private static void xlsAndXlsxNameValid(MultipartFile mf) {
+    public static void xlsAndXlsxNameValid(MultipartFile mf) {
         String fileName = mf.getOriginalFilename();
         if (fileName == null || !(fileName.endsWith(ExcelTypeEnum.XLSX.getValue()) || fileName.endsWith(ExcelTypeEnum.XLS.getValue()))) {
             throw new I18nException("{}.not.excel", new Object[]{fileName});
@@ -120,7 +117,7 @@ public class ExcelUtil {
      * @return 数据列表
      */
     @SneakyThrows
-    public static <T> List<T> getList(ValidHeadExcelListener<T> listener, MultipartFile mf) {
+    public static <T> List<T> getList(ValidHeadListener<T> listener, MultipartFile mf) {
         xlsAndXlsxNameValid(mf);
         try (InputStream is = mf.getInputStream(); ExcelReader er = EasyExcelFactory.read(is).build()) {
             ReadSheet rs = EasyExcelFactory.readSheet(0)

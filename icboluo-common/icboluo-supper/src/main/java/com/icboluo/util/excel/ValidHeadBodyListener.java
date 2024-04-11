@@ -1,85 +1,93 @@
 package com.icboluo.util.excel;
 
 import com.alibaba.excel.context.AnalysisContext;
-import com.icboluo.annotation.Date;
 import com.icboluo.annotation.Excel;
 import com.icboluo.util.ValidateUtil;
-import jakarta.validation.ConstraintViolation;
-import lombok.Getter;
-import lombok.SneakyThrows;
-import org.springframework.util.CollectionUtils;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
+ * 表头、表内容校验
+ *
  * @author icboluo
  * @since 2023-08-03 21:56
  */
-public class ValidHeadBodyListener<T> extends ValidHeadExcelListener<T> {
+public class ValidHeadBodyListener<T> extends ValidHeadListener<T> {
+
+    /**
+     * 记录多行错误消息，错误消息的位置和Excel完全匹配
+     */
+    private final List<String[]> msgList = new ArrayList<>();
+
+    /**
+     * 无参构造，cglib代理的时候使用，正常情况下不需要使用
+     */
+    public ValidHeadBodyListener() {
+
+    }
+
+    public ValidHeadBodyListener(Class<T> excelType) {
+        super(excelType);
+    }
+
     public ValidHeadBodyListener(Class<T> excelType, int headNum) {
         super(excelType, headNum);
     }
 
-    @Getter
-    private String[][] arr;
-
-    private int rowNum = 0;
 
     @Override
     public void invoke(T data, AnalysisContext context) {
-        if (arr == null) {
-            // 这个近似总行数会统计空行，目前没有遇到过近似行数不准确的情况
-            arr = new String[context.readSheetHolder().getApproximateTotalRowNumber()][8];
+        // 如果模版校验有问题，不做内容处理
+        if (!isTemplateValidThrow && StringUtils.hasText(headErrorMsg)) {
+            return;
         }
+        // 这个近似总行数会统计空行，目前没有遇到过近似行数不准确的情况(目前不需要
+        context.readSheetHolder().getApproximateTotalRowNumber();
+        if (msgList.isEmpty()) {
+            for (int i = 0; i < head; i++) {
+                msgList.add(new String[getMaxLine() + 1]);
+            }
+        }
+        msgList.add(new String[getMaxLine() + 1]);
         Field[] fields = clazz.getDeclaredFields();
-        boolean rowValidFlag = true;
-        for (Field field : fields) {
-            field.setAccessible(true);
-            String name = field.getName();
-            Set<ConstraintViolation<T>> constraintViolations = ValidateUtil.validateProperty(data, name);
-            String msg;
-            if (CollectionUtils.isEmpty(constraintViolations)) {
-                msg = validateOther(field, data);
-            } else {
-                List<ConstraintViolation<T>> collect = constraintViolations.stream().sorted().toList();
-                msg = collect.get(0).getMessage();
-            }
-            if (StringUtils.hasText(msg)) {
-                Excel ep = field.getAnnotation(Excel.class);
-                arr[rowNum + head][ep.columnIndex()] = msg;
-                rowValidFlag = false;
-            }
+        Map<Field, String> msgMap = ValidateUtil.validateFieldsToMap(data, fields);
+        for (Map.Entry<Field, String> entry : msgMap.entrySet()) {
+            Excel excel = entry.getKey().getAnnotation(Excel.class);
+            msgList.get(msgList.size() - 1)[excel.columnIndex()] = entry.getValue();
         }
-        List<String> strings = ValidateUtil.validateProperty(data);
-        if (rowValidFlag) {
-            super.invoke(data, context);
+        if (msgMap.isEmpty()) {
+            list.add(data);
         }
-        rowNum++;
     }
 
-    @SneakyThrows(IllegalAccessException.class)
-    private static <T> String validateOther(Field field, T row) {
-        if (field.isAnnotationPresent(Date.class)) {
-            Object o = field.get(row);
-            if (o == null) {
-                return null;
-            }
-            if (o instanceof LocalDate) {
-                return null;
-            }
-            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-            try {
-                format.parse((String) o);
-            } catch (ParseException e) {
-                return "date error";
+    public String getErrorMsg() {
+        return getErrorMsg(false);
+    }
+
+    public String getErrorMsg(boolean isNeedShowSheetName) {
+        List<String> msg = new ArrayList<>();
+        for (int i = 0; i < msgList.size(); i++) {
+            for (int j = 0; j < msgList.get(i).length; j++) {
+                if (msgList.get(i)[j] != null) {
+                    String message = MESSAGE_SOURCE.getMessage("row.{0}.col.{1}.error.{2}",
+                            new Object[]{i + 1, ExcelUtil.convertToTitle(j + 1), msgList.get(i)[j]},
+                            LocaleContextHolder.getLocale());
+                    msg.add(message);
+                }
             }
         }
-        return null;
+        if (msg.isEmpty()) {
+            return null;
+        }
+        if (isNeedShowSheetName) {
+            return "[" + sheetName + "]:<br/>" + String.join(";<br/>", msg);
+        } else {
+            return String.join(";<br/>", msg);
+        }
     }
 }

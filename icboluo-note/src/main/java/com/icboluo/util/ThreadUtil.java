@@ -20,9 +20,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.LockSupport;
 
 /**
- * 如何理解 Executor 此接口提供了一种将任务提交与每个任务运行方式的机制解耦的方法这句话：
- * 1.任务的提交是一个事件，任务的执行也是一个事件；书写方法如下：task.commit then task.executor,这个功能是在一个方法中完成的，
- * 我们为其提供一个 Executor的接口，耦合接口的执行分发给子类，接口的提交作为方法的参数，这样就实现了互不相干；类似于中介者模式|桥接模式
+ * <p>多线程工具
+ * <p>如何理解 Executor 此接口提供了一种将任务提交与每个任务运行方式的机制解耦的方法这句话：
+ * <p>1.任务的提交是一个事件，任务的执行也是一个事件；书写方法如下：task.commit then task.executor,这个功能是在一个方法中完成的，
+ * <p>我们为其提供一个 Executor的接口，耦合接口的执行分发给子类，接口的提交作为方法的参数，这样就实现了互不相干；类似于中介者模式|桥接模式
  *
  * @author icboluo
  * @since 2023-08-02 19:44
@@ -70,7 +71,7 @@ public class ThreadUtil {
     }
 
     /**
-     * 将任务转换为多线程回滚包装的任务
+     * 将任务转换为 多线程回滚包装的任务
      *
      * @param hoverThread 悬停线程
      * @param isException 多线程中是否发生异常
@@ -83,10 +84,13 @@ public class ThreadUtil {
             // Spring 事物传播
             TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition(3));
             try {
-                runList.forEach(Runnable::run);
-
-            } catch (Exception exception) {
-                log.error("task run fail ", exception);
+                for (Runnable runnable : runList) {
+                    if (!isException.get()) {
+                        runnable.run();
+                    }
+                }
+            } catch (Exception e) {
+                log.error("task run fail", e);
                 isException.set(true);
             }
 

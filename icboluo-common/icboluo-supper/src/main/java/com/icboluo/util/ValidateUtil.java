@@ -17,10 +17,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 如果不加 @Valid注解，可以使用本类开启手动校验，可以实现校验部分参数
@@ -76,6 +73,7 @@ public class ValidateUtil {
         }
     }
 
+
     /**
      * 校验属性
      *
@@ -106,15 +104,35 @@ public class ValidateUtil {
         return res;
     }
 
+    public static <T> List<Set<ConstraintViolation<T>>> validateFields(T obj, Field[] fields) {
+        List<Set<ConstraintViolation<T>>> res = new ArrayList<>();
+        for (Field field : fields) {
+            Set<ConstraintViolation<T>> cvSet = VALIDATOR.validateProperty(obj, field.getName(), Default.class);
+            res.add(cvSet);
+        }
+        return res;
+    }
+
+    public static <T> Map<Field, String> validateFieldsToMap(T obj, Field[] fields) {
+        Map<Field, String> map = new HashMap<>();
+        for (Field field : fields) {
+            Set<ConstraintViolation<T>> cvSet = VALIDATOR.validateProperty(obj, field.getName(), Default.class);
+            if (!cvSet.isEmpty()) {
+                map.put(field, cvSet.iterator().next().getMessage());
+            }
+        }
+        return map;
+    }
+
     public static <T> List<String> validateProperty(T obj) {
         List<String> res = new ArrayList<>();
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
             String name = field.getName();
-            Set<ConstraintViolation<T>> constraintViolations = validateProperty(obj, name);
-            if (!CollectionUtils.isEmpty(constraintViolations)) {
-                res.add(constraintViolations.iterator().next().getMessage());
+            Set<ConstraintViolation<T>> cvSet = validateProperty(obj, name);
+            if (!CollectionUtils.isEmpty(cvSet)) {
+                res.add(cvSet.iterator().next().getMessage());
             }
         }
         return res;

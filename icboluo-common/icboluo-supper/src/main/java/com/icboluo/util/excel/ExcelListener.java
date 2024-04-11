@@ -23,12 +23,12 @@ public class ExcelListener<T> extends AnalysisEventListener<T> {
     /**
      * 数据列表
      */
-    private final List<T> list = new ArrayList<>();
+    protected final List<T> list = new ArrayList<>();
 
     /**
      * 当前sheet名称
      *
-     * @see ValidHeadExcelListener sheetName当使用该子类的时候会被赋值
+     * @see ValidHeadListener sheetName当使用该子类的时候会被赋值
      * 这些属性本来是在子类中的，提取到父类中的唯一目的就是方便调用，但是在设计上有不合理的地方
      */
     protected String sheetName;

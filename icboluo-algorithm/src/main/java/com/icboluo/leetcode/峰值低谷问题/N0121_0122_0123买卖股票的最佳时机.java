@@ -1,10 +1,15 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.峰值低谷问题;
 
 /**
  * @author icboluo
  * @since 2024-02-26 22:36
  */
-class N0121_买卖股票的最佳时机 {
+class N0121_0122_0123买卖股票的最佳时机 {
+    public static void main(String[] args) {
+        var cla = new N0121_0122_0123买卖股票的最佳时机();
+        System.out.println(cla.maxProfit1(new int[]{3, 3, 5, 0, 0, 3, 1, 4}));
+    }
+
     /**
      * 只能买卖一次 TODO 好像有点看不懂了
      * 求左边最小，右边最大即可，这个方案采取的策略是跟进，每次出现降序的时候，将left指向right，所以left指针永远代表谷底
@@ -28,7 +33,7 @@ class N0121_买卖股票的最佳时机 {
         return max;
     }
 
-    public int maxProfit(int[] prices) {
+    public int maxProfit2(int[] prices) {
         // min 永远代表路过的最小值，max代表当前的最大值，有点类似于dp思想
         // 2种解法在谷底的寻找上是相似的
         int min = Integer.MAX_VALUE;
@@ -43,8 +48,33 @@ class N0121_买卖股票的最佳时机 {
         return max;
     }
 
-    // 123 最多只能交易2笔
+    /**
+     * N0122_可以多次买入卖出
+     *
+     * @param prices
+     * @return
+     */
     public int maxProfit3(int[] prices) {
+        int sum = 0;
+        int i = 0;
+        while (i < prices.length - 1) {
+            // 峰底，需要增加一个=号，表示非严格递增或者递减
+            while (i < prices.length - 1 && prices[i + 1] <= prices[i]) {
+                i++;
+            }
+            int a = prices[i];
+            // 峰顶
+            while (i < prices.length - 1 && prices[i + 1] >= prices[i]) {
+                i++;
+            }
+            int b = prices[i];
+            sum += b - a;
+        }
+        return sum;
+    }
+
+    // N0123 最多只能交易2笔
+    public int maxProfit4(int[] prices) {
         int buyOne = Integer.MAX_VALUE;
         int profileOne = 0;
         int buyTwo = Integer.MAX_VALUE;
@@ -61,12 +91,9 @@ class N0121_买卖股票的最佳时机 {
         return profileTwo;
     }
 
-    public static void main(String[] args) {
-        System.out.println(maxProfit4(new int[]{3, 3, 5, 0, 0, 3, 1, 4}));
-    }
 
     // TODO 完全看不懂
-    public static int maxProfit4(int[] prices) {
+    public static int maxProfit5(int[] prices) {
         if (prices.length < 2) {
             return 0;
         }
