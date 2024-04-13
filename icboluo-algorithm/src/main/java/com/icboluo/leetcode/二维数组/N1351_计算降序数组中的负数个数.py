@@ -1,7 +1,7 @@
 class Solution:
     # 计算降序数组中的负数个数 simple
     # 二分查找
-    def count_negatives(self, grid: List[List[int]]) -> int:
+    def countNegatives1(self, grid: List[List[int]]) -> int:
         count = 0
         # 读一半，只取正数
         for row in grid:
@@ -12,7 +12,7 @@ class Solution:
                     break
         return len(grid) * len(grid[0]) - count
 
-    def count_negatives2(self, grid: List[List[int]]) -> int:
+    def countNegatives2(self, grid: List[List[int]]) -> int:
         count = 0
         for row in grid:
             for item in reversed(row):
@@ -22,7 +22,7 @@ class Solution:
                     break
         return count
 
-    def count_negatives3(self, grid: List[List[int]]) -> int:
+    def countNegatives3(self, grid: List[List[int]]) -> int:
         count = 0
         for row in grid:
             left = 0

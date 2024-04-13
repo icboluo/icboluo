@@ -1,4 +1,4 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.stack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Stack;
 
 /**
  * @author icboluo
+ * @see N0739_每天的温度
  * @since 2024-02-26 22:23
  */
 class N0901_股票价格跨度 {
@@ -36,6 +37,7 @@ class N0901_股票价格跨度 {
 
     Stack<int[]> stack = new Stack<>();
 
+    // FIXME
     public int next2(int price) {
         int res = 1;
         while (!stack.isEmpty() && stack.peek()[0] < price) {

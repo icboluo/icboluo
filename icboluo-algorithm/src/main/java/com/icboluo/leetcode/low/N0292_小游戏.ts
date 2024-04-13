@@ -6,14 +6,13 @@ function canWinNim(n: number): boolean {
     } else if (n <= 3) {
         return true
     }
+    // 该方法没有问题，执行效率超时
     // return (canWinNim(n - 2) && canWinNim(n - 3) && canWinNim(n - 4))
     //     || (canWinNim(n - 3) && canWinNim(n - 4) && canWinNim(n - 5))
     //     || (canWinNim(n - 4) && canWinNim(n - 5) && canWinNim(n - 6));
-    return n % 4 == 0
+    return  (n & 3) != 0
 }
 
 console.log(canWinNim(4))
 console.log(canWinNim(1))
 console.log(canWinNim(2))
-
-// FIXME ERROR

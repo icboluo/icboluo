@@ -30,7 +30,7 @@ class N0033_搜索旋转排序数组 {
             } else if (nums[mid % nums.length] < target) {
                 left = mid + 1;
             } else {
-                return mid;
+                return mid % nums.length;
             }
         }
         return -1;

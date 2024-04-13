@@ -10,7 +10,7 @@ import java.util.Deque;
  * @since 2023-09-10 19:15
  */
 class N0230_第k个最小元素 {
-    // 二分查找 TODO 完全看不懂 FIXME ERROR
+    // 二分查找 TODO 完全看不懂
     public int kthSmallest1(TreeNode root, int k) {
         if (root == null) {
             return -1;

@@ -1,4 +1,4 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.计数排序;
 
 /**
  * @author icboluo
@@ -6,7 +6,7 @@ package com.icboluo.leetcode;
  */
 class N1608_特殊数组的特殊值 {
     // 非比较排序，将序列中的元素作为键存储在额外的数组空间中，将该元素的个数作为值存储在数组空间中，通过遍历该数组排序
-    // 适用场景：最大值最小值差值不能过大，防止空间浪费；元素为整数
+    // 适用场景：最大值最小值差值不能过大，防止空间浪费；元素为整数 hard
     public int specialArray(int[] nums) {
         int[] count = new int[1001];
         for (int num : nums) {

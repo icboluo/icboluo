@@ -1,24 +1,24 @@
 package com.icboluo.leetcode.after_0800;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeSet;
 
 /**
  * @author icboluo
  * @since 2023-12-18 22:41
  */
 class N0933_最近通话次数 {
-    List<Integer> list;
+    TreeSet<Integer> set;
 
-    // 最近通话次数 FIXME
+    // 最近通话次数
     public N0933_最近通话次数() {
-        list = new ArrayList<>();
+        set = new TreeSet<>();
     }
 
     // 在时间t添加请求，返回过去发生的请求数
     public int ping(int t) {
-        list.add(t);
-        return (int) list.stream().takeWhile(e -> e > t).count();
+        set.add(t);
+        // 找出大于等于这部分的
+        return set.tailSet(t - 3000).size();
     }
 
     public static void main(String[] args) {

@@ -5,10 +5,15 @@ function prisonAfterNDays(cells: number[], n: number): number[] {
     let temp = cells.join("")
     for (let i = 0; i < n; i++) {
         temp = cal(temp, cache)
+        // 预先处理
+        if (i == 0) {
+            temp = 0 + temp.substring(1, temp.length - 1) + 0;
+        }
     }
-    return cells
+    return temp.split("").map(s => parseInt(s));
 }
 
+// 答案是对的，不过超时了
 function cal(cells: string, cache: any): string {
     // db 不太容易找最优子结构的时候
     if (cache.has(cells)) {
@@ -28,6 +33,5 @@ function cal(cells: string, cache: any): string {
     return cache.get(cells)
 }
 
-// FIXME
 console.log(prisonAfterNDays([0, 1, 0, 1, 1, 0, 0, 1], 7));
 console.log(prisonAfterNDays([1, 0, 0, 1, 0, 0, 1, 0], 1000000000));

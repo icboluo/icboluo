@@ -5,7 +5,7 @@ class Solution:
         for i in range(len(flowerbed)):
             if flowerbed[i] == 0:
                 pre = flowerbed[i - 1] if i - 1 >= 0 else 0
-                next_ele = flowerbed[i + 1] if i + 1 < len(flowerbed) else 1
+                next_ele = flowerbed[i + 1] if i + 1 < len(flowerbed) else 0
                 if pre == 0 and next_ele == 0:
                     flowerbed[i] = 1
                     count += 1

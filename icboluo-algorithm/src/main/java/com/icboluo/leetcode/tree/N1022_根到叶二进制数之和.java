@@ -1,4 +1,4 @@
-package com.icboluo.leetcode;
+package com.icboluo.leetcode.tree;
 
 
 import com.icboluo.common.TreeNode;
@@ -12,7 +12,20 @@ import java.util.List;
  * @author icboluo
  * @since 2024-02-26 22:43
  */
-class N1022_ {
+class N1022_根到叶二进制数之和 {
+    public static void main(String[] args) {
+        var cla = new N1022_根到叶二进制数之和();
+        Integer[] arr = {1, 1};
+        TreeNode root = new TreeNode(arr);
+        cla.sumRootToLeaf(root);
+        System.out.println(cla.dfs(root, 0));
+        System.out.println(cla.ans);
+    }
+
+    public int sumRootToLeaf1(TreeNode root) {
+        return dfs(root,0);
+    }
+
     int ans = 0;
 
     Deque<TreeNode> stack;
@@ -30,11 +43,14 @@ class N1022_ {
         }
         stack = new ArrayDeque<>();
         dfs(root);
-        return ans;
+        return 0;
     }
 
     // 路径收集方法
     private void dfs(TreeNode root) {
+        if (root == null) {
+            return;
+        }
         // 这里用栈不如用linkedlist
         stack.push(root);
         if (root.left == null && root.right == null) {
