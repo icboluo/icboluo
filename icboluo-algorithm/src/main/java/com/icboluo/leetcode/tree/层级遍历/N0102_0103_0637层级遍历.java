@@ -210,7 +210,7 @@ class N0102_0103_0637层级遍历 {
     }
 
     public static void main(String[] args) {
-        N0102_0103_0637层级遍历 cla = new N0102_0103_0637层级遍历();
+        var cla = new N0102_0103_0637层级遍历();
         Integer[] arr = {1, 2, 3, 4, null, null, 5};
         TreeNode treeNode = new TreeNode(arr);
         List<List<Integer>> lists = cla.zigzagLevelOrder(treeNode);

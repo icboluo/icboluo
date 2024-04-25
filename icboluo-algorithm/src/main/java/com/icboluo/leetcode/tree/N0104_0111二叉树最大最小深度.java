@@ -8,18 +8,13 @@ import java.util.*;
  * @author icboluo
  * @since 2021-11-17 23:55
  */
-class N0104_二叉树最大深度 {
-
+class N0104_0111二叉树最大最小深度 {
     public static void main(String[] args) {
         Integer[] arr = {1, 2, 3, 4, null, null, 5};
         TreeNode treeNode = new TreeNode(arr);
-        var cla = new N0104_二叉树最大深度();
+        var cla = new N0104_0111二叉树最大最小深度();
         int i = cla.maxDepth4(treeNode);
         System.out.println("i = " + i);
-    }
-
-    public int maxDepth(TreeNode root) {
-        return maxDepth4(root);
     }
 
     public int maxDepth1(TreeNode root) {
@@ -42,7 +37,7 @@ class N0104_二叉树最大深度 {
         if (root == null) {
             return 0;
         }
-        Stack<TreeNode> stack = new Stack<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
         int max = 0;
         stack.push(root);
         while (!stack.isEmpty()) {
@@ -64,8 +59,6 @@ class N0104_二叉树最大深度 {
     }
 
     /**
-     * TODO 用的是addLast方法，没必要使用栈，应该使用队列linkedList
-     *
      * @param root
      * @return
      */
@@ -73,7 +66,7 @@ class N0104_二叉树最大深度 {
         if (root == null) {
             return 0;
         }
-        Deque<TreeNode> stack = new ArrayDeque<>();
+        LinkedList<TreeNode> stack = new LinkedList<>();
         int max = 0;
         stack.push(root);
         while (!stack.isEmpty()) {
@@ -96,8 +89,8 @@ class N0104_二叉树最大深度 {
         if (root == null) {
             return 0;
         }
-        Stack<TreeNode> stack = new Stack<>();
-        Stack<Integer> depthStack = new Stack<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        Deque<Integer> depthStack = new ArrayDeque<>();
         stack.push(root);
         depthStack.push(1);
         int max = 1;
@@ -105,7 +98,7 @@ class N0104_二叉树最大深度 {
             int size = stack.size();
             for (int i = 0; i < size; i++) {
                 TreeNode pop = stack.pop();
-                Integer depthPop = depthStack.pop();
+                int depthPop = depthStack.pop();
                 if (pop.left == null && pop.right == null) {
 //                    计算每个叶子节点的高度
                     max = Math.max(max, depthPop);
@@ -122,5 +115,21 @@ class N0104_二叉树最大深度 {
             }
         }
         return max;
+    }
+
+    /**
+     * N0111_二叉树最小深度
+     *
+     * @param root
+     * @return
+     */
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        return root.left == null || root.right == null ?
+                left + right + 1 : Math.min(left, right) + 1;
     }
 }
