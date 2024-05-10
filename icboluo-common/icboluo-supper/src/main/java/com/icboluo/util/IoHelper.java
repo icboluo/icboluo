@@ -17,7 +17,7 @@ import java.nio.file.Files;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
-public class IoUtil {
+public class IoHelper {
 
     /**
      * <p>默认文件大小1G,运算单位是字节 1024*1024*1024
@@ -42,7 +42,7 @@ public class IoUtil {
      * @param size 文件限制大小
      * @throws I18nException 校验失败抛出次异常
      */
-    private static void validateFile(MultipartFile mf, long size) {
+    public static void validateFile(MultipartFile mf, long size) {
         if (mf == null || mf.isEmpty()) {
             throw new I18nException("file.is.empty");
         }

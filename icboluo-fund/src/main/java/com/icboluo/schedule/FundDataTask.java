@@ -1,4 +1,4 @@
-package com.icboluo.controller;
+package com.icboluo.schedule;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
@@ -64,7 +64,7 @@ public class FundDataTask {
         Map<String, FundAsyncRecord> recordMap = recordList.stream()
                 .collect(Collectors.groupingBy(FundAsyncRecord::getId,
                         Collectors.collectingAndThen(Collectors.toList(), li -> li.get(0))));
-        LocalDate startTime = LocalDate.of(2018, 1, 1);
+        LocalDate startTime = LocalDate.of(2020, 1, 1);
 
         for (FundAttention fundAttention : fundAttentions) {
             String fundId = fundAttention.getId();
