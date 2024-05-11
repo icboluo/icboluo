@@ -11,9 +11,8 @@ import com.icboluo.service.FundDataService;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
@@ -26,15 +25,15 @@ import java.time.LocalDate;
  * @since 2021-05-28 00:12:38
  */
 @RestController
-@RequestMapping("/fundData")
+@RequestMapping("fundData")
 public class FundDataController {
 
     @Resource
     private FundDataService fundDataService;
 
 
-    @GetMapping("/init")
-    public Response init(FundDataQuery query) {
+    @PostMapping("init")
+    public Response init(@RequestBody @Valid FundDataQuery query) {
         PageInfo<FundDataVO> pageInfo = fundDataService.selectByQuery(query);
         BigDecimal avg = pageInfo.getList().stream()
                 .collect(new MyCollector());
@@ -43,6 +42,13 @@ public class FundDataController {
         return R.correct(jsonObject);
     }
 
+    /**
+     * 计算页面结果
+     *
+     * @param fundId    基金id
+     * @param startDate 开始日期
+     * @return 计算结果
+     */
     @GetMapping("cal")
     public FundDataCalVO cal(String fundId, LocalDate startDate) {
         return fundDataService.cal(fundId, startDate);

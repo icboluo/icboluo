@@ -5,7 +5,10 @@ spring:
     active: simple
   application:
     name: icboluo-fund
-mybatis:
+  messages:
+    use-code-as-default-message: true
+    basename: i18n/messages
+mybatis-plus:
   configuration:
     #    自动小驼峰映射
     map-underscore-to-camel-case: true

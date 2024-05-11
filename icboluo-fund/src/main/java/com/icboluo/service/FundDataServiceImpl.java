@@ -163,7 +163,7 @@ public class FundDataServiceImpl implements FundDataService {
                 .avg(BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(4, RoundingMode.HALF_UP))
                 .min(summaryStatistics.getMin())
                 .max(summaryStatistics.getMax())
-                .list(res)
+                .list(res.stream().sorted((a, b) -> -1).toList())
                 .nextAvg(BigDecimal.valueOf(summaryStatistics2.getAverage()).setScale(4, RoundingMode.HALF_UP))
                 .build();
     }

@@ -1,10 +1,10 @@
 package com.icboluo.common.converter;
 
+import com.icboluo.util.DateUtil;
 import lombok.NonNull;
 import org.springframework.core.convert.converter.Converter;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * @author icboluo
@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 public class StringToLocalDateTimeConverter implements Converter<String, LocalDateTime> {
     @Override
     public LocalDateTime convert(@NonNull String str) {
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.parse(str, fmt);
+        return DateUtil.allToDateTime(str);
     }
 }

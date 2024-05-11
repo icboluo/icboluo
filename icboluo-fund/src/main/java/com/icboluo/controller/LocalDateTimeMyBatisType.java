@@ -18,7 +18,8 @@ public class LocalDateTimeMyBatisType implements TypeHandler<LocalDateTime> {
 
     @Override
     public void setParameter(PreparedStatement ps, int i, LocalDateTime parameter, JdbcType jdbcType) throws SQLException {
-
+        // 此块如果不设置值，java->sql中的值为null
+        ps.setObject(i, parameter);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.icboluo.object.query;
 
 
 import com.icboluo.common.PageQuery;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Data
 public class FundDataQuery extends PageQuery {
 
+    @NotEmpty
     private String fundId;
 
     /**

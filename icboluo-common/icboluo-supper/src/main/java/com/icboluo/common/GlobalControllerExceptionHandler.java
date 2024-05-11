@@ -80,7 +80,6 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = {IcBoLuoException.class})
     // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response icBoLuoExceptionHandler(IcBoLuoException e) {
-        printLog(e);
         // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
         // response.setStatus(500);
         log.error("IcBoLuoException: ", e);
@@ -95,21 +94,18 @@ public class GlobalControllerExceptionHandler {
      */
     @ExceptionHandler(value = {I18nException.class})
     public Response icBoLuoI18nExceptionHandler(I18nException e) {
-        printLog(e);
         log.error("IcBoLuoI18nException: ", e);
         return R.error(e.getMessage(), messageSource);
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public Response httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        printLog(e);
         log.error("HttpRequestMethodNotSupportedException: ", e);
         return R.error(String.valueOf(e.getStatusCode().value()), e.getMessage());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Response methodArgumentNotValidException(MethodArgumentNotValidException e) {
-        printLog(e);
         BindingResult bindingResult = e.getBindingResult();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         String msg = fieldErrors.stream()
@@ -132,7 +128,6 @@ public class GlobalControllerExceptionHandler {
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
     public Response constraintViolationException(ConstraintViolationException e) {
-        printLog(e);
         log.error("ConstraintViolationException: ", e);
         return R.error(e.getMessage());
     }
@@ -145,7 +140,6 @@ public class GlobalControllerExceptionHandler {
      */
     @ExceptionHandler(value = RuntimeException.class)
     public Response runtimeExceptionHandler(RuntimeException ex) {
-        printLog(ex);
         log.error("RuntimeException: ", ex);
         return R.error(ReEnum.UNEXPECTED_EXCEPTION);
     }
@@ -161,7 +155,6 @@ public class GlobalControllerExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public Response exceptionHandler(Exception e) throws Exception {
-        printLog(e);
         //如果异常上已经有 @ResponseStatus 注解，则让框架处理
         if (Objects.nonNull(AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class))) {
             throw e;

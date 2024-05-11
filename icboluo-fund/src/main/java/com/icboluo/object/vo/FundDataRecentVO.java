@@ -24,5 +24,8 @@ public class FundDataRecentVO {
 
     private BigDecimal avg;
 
+    /**
+     * 紧接着10天的平均值
+     */
     private BigDecimal nextAvg;
 }

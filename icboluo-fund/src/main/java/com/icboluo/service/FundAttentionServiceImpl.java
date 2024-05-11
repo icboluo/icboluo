@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,7 +50,7 @@ public class FundAttentionServiceImpl implements FundAttentionService {
                 .collect(Collectors.groupingBy(FundData::getFundId, Collectors.collectingAndThen(Collectors.toList(), li -> li.stream()
                         .sorted((a, b) -> b.getNetValueDate().compareTo(a.getNetValueDate())).toList())));
         for (FundAttentionVO view : list) {
-            List<FundData> fundList = fundMap.get(view.getId());
+            List<FundData> fundList = fundMap.getOrDefault(view.getId(), new ArrayList<>());
             Map<Integer, BigDecimal> avgMap = fundDataService.yearAvg(fundList);
             view.setAvgMap(avgMap);
             BigDecimal tenAvg = fundDataService.last10DaysAvg(fundList);
@@ -60,7 +61,7 @@ public class FundAttentionServiceImpl implements FundAttentionService {
         LocalDate endDate = query.getEndDate() == null ? LocalDate.now() : query.getEndDate();
 //            计算定投收益
         for (FundAttentionVO view : list) {
-            List<FundData> fundList = fundMap.get(view.getId())
+            List<FundData> fundList = fundMap.getOrDefault(view.getId(), new ArrayList<>())
                     .stream()
                     .filter(fundData -> !fundData.getNetValueDate().isBefore(startDate))
                     .filter(fundData -> !fundData.getNetValueDate().isAfter(endDate))

@@ -12,7 +12,18 @@ import com.icboluo.object.vo.FundAttentionVO;
  */
 public interface FundAttentionService {
 
+    /**
+     * 基金列表初始化
+     *
+     * @param query 查询条件
+     * @return 主表值
+     */
     PageInfo<FundAttentionVO> init(FundAttentionQuery query);
 
+    /**
+     * 删除基金
+     *
+     * @param id 基金id
+     */
     void delete(String id);
 }

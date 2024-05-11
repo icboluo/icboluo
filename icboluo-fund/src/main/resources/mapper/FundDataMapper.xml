@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.FundDataMapper">
 
-    <resultMap id="FundDataMap" type="com.icboluo.entity.FundData">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.FundData">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="fundId" column="fund_id" jdbcType="VARCHAR"/>
-        <result property="increaseRateDay" column="increase_rate_day" jdbcType="VARCHAR"/>
+        <result property="increaseRateDay" column="increase_rate_day" jdbcType="DECIMAL"/>
         <result property="subscribeStatus" column="subscribe_status" jdbcType="VARCHAR"/>
         <result property="netValueDate" column="net_value_date" jdbcType="TIMESTAMP"/>
-        <result property="netAssetValue" column="net_asset_value" jdbcType="VARCHAR"/>
-        <result property="netValueCumulative" column="net_value_cumulative" jdbcType="VARCHAR"/>
+        <result property="netAssetValue" column="net_asset_value" jdbcType="DECIMAL"/>
+        <result property="netValueCumulative" column="net_value_cumulative" jdbcType="DECIMAL"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -17,41 +17,6 @@
         id, fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value, net_value_cumulative, create_time, update_time
     </sql>
 
-    <!--通过实体作为筛选条件查询-->
-    <select id="queryAllByData" resultMap="FundDataMap">
-        select
-        <include refid="Base_Column_List"/>
-        from fund_data
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="fundId != null and fundId != ''">
-                and fund_id = #{fundId}
-            </if>
-            <if test="increaseRateDay != null">
-                and increase_rate_day = #{increaseRateDay}
-            </if>
-            <if test="subscribeStatus != null and subscribeStatus != ''">
-                and subscribe_status = #{subscribeStatus}
-            </if>
-            <if test="netValueDate != null">
-                and net_value_date = #{netValueDate}
-            </if>
-            <if test="netAssetValue != null">
-                and net_asset_value = #{netAssetValue}
-            </if>
-            <if test="netValueCumulative != null">
-                and net_value_cumulative = #{netValueCumulative}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
-        </where>
-    </select>
     <select id="selectByFundId" resultType="com.icboluo.entity.FundData">
         select *
         from fund_data
@@ -89,7 +54,7 @@
     </select>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into note.fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+        insert into fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
         net_value_cumulative, create_time, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
@@ -99,18 +64,22 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into note.fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+        insert into fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
         net_value_cumulative, create_time, update_time)
         values
-        <foreach collection="entities" item="entity" separator=",">
+        <foreach collection="list" item="entity" separator=",">
             (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.subscribeStatus}, #{entity.netValueDate},
             #{entity.netAssetValue}, #{entity.netValueCumulative}, #{entity.createTime}, #{entity.updateTime})
         </foreach>
         on duplicate key update
-        fund_id = values(fund_id) , increase_rate_day = values(increase_rate_day) , subscribe_status =
-        values(subscribe_status) , net_value_date = values(net_value_date) , net_asset_value = values(net_asset_value) ,
-        net_value_cumulative = values(net_value_cumulative) , create_time = values(create_time) , update_time =
-        values(update_time)
+        fund_id = values(fund_id),
+        increase_rate_day = values(increase_rate_day),
+        subscribe_status = values(subscribe_status),
+        net_value_date = values(net_value_date),
+        net_asset_value = values(net_asset_value),
+        net_value_cumulative = values(net_value_cumulative),
+        create_time = values(create_time),
+        update_time = values(update_time)
     </insert>
 
     <delete id="deleteByFundId">
