@@ -1,6 +1,6 @@
 package com.icboluo.util;
 
-import com.alibaba.fastjson.util.TypeUtils;
+import com.alibaba.fastjson2.util.TypeUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -35,8 +35,8 @@ public class MathUtil {
      * @return 除法返回值
      */
     public static <M, D> BigDecimal divide(@NonNull M molecular, @NonNull D denominator, Integer scale, RoundingMode mode) {
-        BigDecimal m = TypeUtils.castToBigDecimal(molecular);
-        BigDecimal d = TypeUtils.castToBigDecimal(denominator);
+        BigDecimal m = TypeUtils.cast(molecular, BigDecimal.class);
+        BigDecimal d = TypeUtils.cast(denominator, BigDecimal.class);
         if (mode == null) {
             mode = RoundingMode.HALF_UP;
         }
@@ -70,8 +70,8 @@ public class MathUtil {
      * @return 百分数返回值
      */
     public static <M, D> BigDecimal dividePercentage(@NonNull M molecular, @NonNull D denominator, Integer scale, RoundingMode mode) {
-        BigDecimal mBd = TypeUtils.castToBigDecimal(molecular);
-        BigDecimal dBd = TypeUtils.castToBigDecimal(denominator);
+        BigDecimal mBd = TypeUtils.cast(molecular, BigDecimal.class);
+        BigDecimal dBd = TypeUtils.cast(denominator, BigDecimal.class);
         BigDecimal divide = divide(mBd.multiply(new BigDecimal(100)), dBd, scale, mode);
         if (compareToIsZero(divide, BigDecimal.valueOf(100))) {
             if (compareToIsZero(mBd, dBd)) {

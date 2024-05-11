@@ -1,6 +1,6 @@
 package com.icboluo.object.bo;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.icboluo.entity.FundData;
 import lombok.Data;
 

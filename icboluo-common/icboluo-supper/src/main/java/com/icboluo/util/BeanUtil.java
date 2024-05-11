@@ -1,8 +1,8 @@
 package com.icboluo.util;
 
 
-import com.alibaba.fastjson.serializer.ValueFilter;
-import com.alibaba.fastjson.util.TypeUtils;
+import com.alibaba.fastjson2.filter.ValueFilter;
+import com.alibaba.fastjson2.util.TypeUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.PageQuery;
@@ -194,7 +194,7 @@ public class BeanUtil {
      */
     @Deprecated
     public static Boolean byteToBoolean(Byte by) {
-        return TypeUtils.castToBoolean(by);
+        return TypeUtils.cast(by, Boolean.class);
     }
 
     /**
@@ -206,7 +206,7 @@ public class BeanUtil {
      */
     @Deprecated
     public static Byte booleanToByte(Boolean bool) {
-        return TypeUtils.castToByte(bool);
+        return TypeUtils.cast(bool, Byte.class);
     }
 
     /**
@@ -218,7 +218,7 @@ public class BeanUtil {
      */
     @Deprecated(since = "all")
     public static Integer toInt(Object val) {
-        return TypeUtils.castToInt(val);
+        return TypeUtils.cast(val, Integer.TYPE);
     }
 
     @Deprecated

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 注解 @RefreshScope 可以使应用程序重新加载配置信息，而不需要重新启动应用程序；可以让配置中心的配置信息实时生效
+ *
  * @author icboluo
  * @since 2020-08-25 20:43
  */
@@ -16,8 +17,16 @@ public class ConfigClientController {
     @Value("${config.info}")
     private String configInfo;
 
+    @Value("${config.yml}")
+    private String configYml;
+
     @GetMapping("/config/info")
     public String getConfigInfo() {
         return configInfo;
+    }
+
+    @GetMapping("/config/yml")
+    public String getConfigYml() {
+        return configYml;
     }
 }

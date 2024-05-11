@@ -2,8 +2,8 @@ package com.icboluo.schedule;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.icboluo.entity.FundAsyncRecord;
 import com.icboluo.entity.FundAttention;
 import com.icboluo.entity.FundData;

@@ -1,6 +1,6 @@
 package com.icboluo.util;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.icboluo.constant.HttpConstant;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -57,7 +57,7 @@ public class HttpUtil {
 
     public static void nacosYml() {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(HttpConstant.NACOS_SERVICE + "/config/info"))
+                .uri(URI.create(HttpConstant.NACOS_SERVICE + "/config/yml"))
                 .build();
         try {
             String body = HttpClient.newHttpClient()
