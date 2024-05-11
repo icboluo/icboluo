@@ -1,6 +1,6 @@
 package com.icboluo.service;
 
-import com.icboluo.entity.note.TimeNoteDO;
+import com.icboluo.entity.NoteTimeNote;
 
 /**
  * @author icboluo
@@ -8,5 +8,5 @@ import com.icboluo.entity.note.TimeNoteDO;
  */
 public interface TimeNoteService {
 
-    TimeNoteDO getUpdateObj(Integer id, Integer isFinish);
+    NoteTimeNote getUpdateObj(Integer id, Integer isFinish);
 }

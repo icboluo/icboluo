@@ -1,9 +1,8 @@
 package com.icboluo.service;
 
 import com.icboluo.common.Constant;
-import com.icboluo.entity.note.TimeNoteDO;
+import com.icboluo.entity.NoteTimeNote;
 import com.icboluo.mapper.TimeNoteMapper;
-import com.icboluo.service.TimeNoteService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +17,14 @@ public class TimeNoteServiceImpl implements TimeNoteService {
     private TimeNoteMapper timeNoteMapper;
 
     @Override
-    public TimeNoteDO getUpdateObj(Integer id, Integer isFinish) {
-        TimeNoteDO timeNote = timeNoteMapper.selectByPrimaryKey(id);
-        TimeNoteDO timeNoteDO = new TimeNoteDO();
+    public NoteTimeNote getUpdateObj(Integer id, Integer isFinish) {
+        NoteTimeNote timeNote = timeNoteMapper.selectByPrimaryKey(id);
+        NoteTimeNote noteTimeNote = new NoteTimeNote();
         if (isFinish == Constant.NOT_FINISH) {
-            timeNoteDO.setFinishTime(Math.max(timeNote.getFinishTime() - 1, 0));
+            noteTimeNote.setFinishTime(Math.max(timeNote.getFinishTime() - 1, 0));
         }
-        timeNoteDO.setId(id);
-        timeNoteDO.setGmtModified(LocalDateTime.now());
-        return timeNoteDO;
+        noteTimeNote.setId(id);
+        noteTimeNote.setGmtModified(LocalDateTime.now());
+        return noteTimeNote;
     }
 }

@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.entity.note.FinishDO;
+import com.icboluo.entity.NoteFinish;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ import java.util.List;
 public interface FinishMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(FinishDO record);
+    int insert(NoteFinish record);
 
-    int insertSelective(FinishDO record);
+    int insertSelective(NoteFinish record);
 
-    FinishDO selectByPrimaryKey(Integer id);
+    NoteFinish selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(FinishDO record);
+    int updateByPrimaryKeySelective(NoteFinish record);
 
-    int updateByPrimaryKey(FinishDO record);
+    int updateByPrimaryKey(NoteFinish record);
 
-    List<FinishDO> select(String file);
+    List<NoteFinish> select(String file);
 }

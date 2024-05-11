@@ -1,7 +1,10 @@
 package com.icboluo.service;
 
 import com.icboluo.common.Constant;
-import com.icboluo.entity.note.*;
+import com.icboluo.entity.*;
+import com.icboluo.entity.inter.FiledResultInter;
+import com.icboluo.entity.inter.NoteCommonInter;
+import com.icboluo.entity.inter.NoteViewInter;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.mapper.*;
 import com.icboluo.object.client.TimeNoteCO;
@@ -50,10 +53,10 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<NoteVO> selectList(TimeNoteQuery query) {
-        List<TimeNoteDO> timeList = timeNoteMapper.selectAll(query);
-        List<WeekTimeDO> weekList = weekTimeMapper.selectAll(query);
-        List<MonthTimeDO> monthList = monthTimeMapper.selectAll();
-        List<YearTimeDO> yearList = yearTimeMapper.selectAll();
+        List<NoteTimeNote> timeList = timeNoteMapper.selectAll(query);
+        List<NoteWeekTime> weekList = weekTimeMapper.selectAll(query);
+        List<NoteMonthTime> monthList = monthTimeMapper.selectAll();
+        List<NoteYearTime> yearList = yearTimeMapper.selectAll();
         List<NoteVO> noteList1 = deleteUnqualifiedObj(timeList, Constant.TIME_NOTE_INTERVAL);
         List<NoteVO> noteList2 = deleteUnqualifiedObj(weekList, Constant.WEEK_TIME_INTERVAL);
         List<NoteVO> noteList3 = deleteUnqualifiedObj(monthList, Constant.MONTH_TIME_INTERVAL);
@@ -99,40 +102,40 @@ public class NoteServiceImpl implements NoteService {
         String type = dd.getType();
         Integer id = dd.getId();
         if (Constant.TIME_TYPE.equals(type)) {
-            TimeNoteDO timeNoteDO = timeNoteService.getUpdateObj(id, Constant.NOT_FINISH);
-            timeNoteMapper.updateByPrimaryKeySelective(timeNoteDO);
+            NoteTimeNote noteTimeNote = timeNoteService.getUpdateObj(id, Constant.NOT_FINISH);
+            timeNoteMapper.updateByPrimaryKeySelective(noteTimeNote);
             return;
         }
         if (Constant.WEEK_TYPE.equals(type)) {
-            WeekTimeDO weekTimeDO = weekTimeMapper.selectByPrimaryKey(id);
-            if (0 == weekTimeDO.getFinishTime()) {
-                timeNoteMapper.insertSelective(weekTimeDO.toTime());
+            NoteWeekTime noteWeekTime = weekTimeMapper.selectByPrimaryKey(id);
+            if (0 == noteWeekTime.getFinishTime()) {
+                timeNoteMapper.insertSelective(noteWeekTime.toTime());
                 weekTimeMapper.deleteByPrimaryKey(id);
             } else {
-                weekTimeDO = weekTimeService.getUpdateObj(id, Constant.NOT_FINISH);
-                weekTimeMapper.updateByPrimaryKeySelective(weekTimeDO);
+                noteWeekTime = weekTimeService.getUpdateObj(id, Constant.NOT_FINISH);
+                weekTimeMapper.updateByPrimaryKeySelective(noteWeekTime);
             }
             return;
         }
         if (Constant.MONTH_TYPE.equals(type)) {
-            MonthTimeDO monthTime = monthTimeMapper.selectByPrimaryKey(id);
+            NoteMonthTime monthTime = monthTimeMapper.selectByPrimaryKey(id);
             if (0 == monthTime.getFinishTime()) {
                 weekTimeMapper.insertSelective(monthTime.toWeek());
                 monthTimeMapper.deleteByPrimaryKey(id);
             } else {
-                MonthTimeDO monthTimeDO = monthTimeService.getUpdateObj(id, Constant.NOT_FINISH);
-                monthTimeMapper.updateByPrimaryKeySelective(monthTimeDO);
+                NoteMonthTime noteMonthTime = monthTimeService.getUpdateObj(id, Constant.NOT_FINISH);
+                monthTimeMapper.updateByPrimaryKeySelective(noteMonthTime);
             }
             return;
         }
         if (Constant.YEAR_TYPE.equals(type)) {
-            YearTimeDO yearTime = yearTimeMapper.selectByPrimaryKey(id);
+            NoteYearTime yearTime = yearTimeMapper.selectByPrimaryKey(id);
             if (0 == yearTime.getFinishTime()) {
                 monthTimeMapper.insertSelective(yearTime.toMonth());
                 yearTimeMapper.deleteByPrimaryKey(id);
             } else {
-                YearTimeDO yearTimeDO = yearTimeService.getUpdateObj(id, Constant.NOT_FINISH);
-                yearTimeMapper.updateByPrimaryKeySelective(yearTimeDO);
+                NoteYearTime noteYearTime = yearTimeService.getUpdateObj(id, Constant.NOT_FINISH);
+                yearTimeMapper.updateByPrimaryKeySelective(noteYearTime);
             }
         }
     }
@@ -140,26 +143,26 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public void update(TimeNoteCO client, int id, String type) {
         if (Constant.TIME_TYPE.equals(type)) {
-            TimeNoteDO timeNoteDO = timeNoteMapper.selectByPrimaryKey(id);
-            BeanUtil.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getBelongToScope, TimeNoteDO::setBelongToScope);
-            BeanUtil.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getProblem, TimeNoteDO::setProblem);
-            BeanUtil.notEmptyThenSet(client, timeNoteDO, TimeNoteCO::getResult, TimeNoteDO::setResult);
-            timeNoteDO.setGmtModified(LocalDateTime.now());
-            timeNoteMapper.updateByPrimaryKeySelective(timeNoteDO);
+            NoteTimeNote noteTimeNote = timeNoteMapper.selectByPrimaryKey(id);
+            BeanUtil.notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getBelongToScope, NoteTimeNote::setBelongToScope);
+            BeanUtil.notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getProblem, NoteTimeNote::setProblem);
+            BeanUtil.notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getResult, NoteTimeNote::setResult);
+            noteTimeNote.setGmtModified(LocalDateTime.now());
+            timeNoteMapper.updateByPrimaryKeySelective(noteTimeNote);
         } else if (Constant.WEEK_TYPE.equals(type)) {
-            WeekTimeDO weekTimeDO = weekTimeMapper.selectByPrimaryKey(id);
-            BeanUtil.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getBelongToScope, WeekTimeDO::setBelongToScope);
-            BeanUtil.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getProblem, WeekTimeDO::setProblem);
-            BeanUtil.notEmptyThenSet(client, weekTimeDO, TimeNoteCO::getResult, WeekTimeDO::setResult);
-            weekTimeDO.setGmtModified(LocalDateTime.now());
-            weekTimeMapper.updateByPrimaryKeySelective(weekTimeDO);
+            NoteWeekTime noteWeekTime = weekTimeMapper.selectByPrimaryKey(id);
+            BeanUtil.notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getBelongToScope, NoteWeekTime::setBelongToScope);
+            BeanUtil.notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getProblem, NoteWeekTime::setProblem);
+            BeanUtil.notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getResult, NoteWeekTime::setResult);
+            noteWeekTime.setGmtModified(LocalDateTime.now());
+            weekTimeMapper.updateByPrimaryKeySelective(noteWeekTime);
         } else if (Constant.MONTH_TYPE.equals(type)) {
-            MonthTimeDO monthTimeDO = monthTimeMapper.selectByPrimaryKey(id);
-            BeanUtil.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getBelongToScope, MonthTimeDO::setBelongToScope);
-            BeanUtil.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getProblem, MonthTimeDO::setProblem);
-            BeanUtil.notEmptyThenSet(client, monthTimeDO, TimeNoteCO::getResult, MonthTimeDO::setResult);
-            monthTimeDO.setGmtModified(LocalDateTime.now());
-            monthTimeMapper.updateByPrimaryKeySelective(monthTimeDO);
+            NoteMonthTime noteMonthTime = monthTimeMapper.selectByPrimaryKey(id);
+            BeanUtil.notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getBelongToScope, NoteMonthTime::setBelongToScope);
+            BeanUtil.notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getProblem, NoteMonthTime::setProblem);
+            BeanUtil.notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getResult, NoteMonthTime::setResult);
+            noteMonthTime.setGmtModified(LocalDateTime.now());
+            monthTimeMapper.updateByPrimaryKeySelective(noteMonthTime);
         }
     }
 
@@ -171,11 +174,11 @@ public class NoteServiceImpl implements NoteService {
      */
     @Override
     public List<FiledResultVO> select(String file) {
-        List<TimeNoteDO> timeNoteList = timeNoteMapper.select(file);
-        List<WeekTimeDO> weekTimeList = weekTimeMapper.select(file);
-        List<MonthTimeDO> monthTimeList = monthTimeMapper.select(file);
-        List<YearTimeDO> yearTimeList = yearTimeMapper.select(file);
-        List<FinishDO> finishList = finishMapper.select(file);
+        List<NoteTimeNote> timeNoteList = timeNoteMapper.select(file);
+        List<NoteWeekTime> weekTimeList = weekTimeMapper.select(file);
+        List<NoteMonthTime> monthTimeList = monthTimeMapper.select(file);
+        List<NoteYearTime> yearTimeList = yearTimeMapper.select(file);
+        List<NoteFinish> finishList = finishMapper.select(file);
 
         return Stream.of(timeNoteList, weekTimeList, monthTimeList, yearTimeList, finishList)
                 .flatMap(Collection::stream)
@@ -186,11 +189,11 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public void toOnlyRead(TimeUpdateCO client) {
         Integer id = client.getId();
-        TimeNoteDO timeNoteDO = timeNoteMapper.selectByPrimaryKey(id);
+        NoteTimeNote noteTimeNote = timeNoteMapper.selectByPrimaryKey(id);
         timeNoteMapper.deleteByPrimaryKey(id);
-        OnlyReadDO onlyReadDO = BeanUtil.copyProperties(timeNoteDO, OnlyReadDO.class);
-        onlyReadDO.setGmtModified(null);
-        onlyReadMapper.insertSelective(onlyReadDO);
+        NoteOnlyRead noteOnlyRead = BeanUtil.copyProperties(noteTimeNote, NoteOnlyRead.class);
+        noteOnlyRead.setGmtModified(null);
+        onlyReadMapper.insertSelective(noteOnlyRead);
     }
 
     @SuppressWarnings("all")
@@ -203,20 +206,20 @@ public class NoteServiceImpl implements NoteService {
         noteCommonInter.setGmtModified(LocalDateTime.now());
         // 这个default我不想加的，代码规范过不去
         switch (type) {
-            case (Constant.TIME_TYPE) -> timeNoteMapper.updateByPrimaryKeySelective((TimeNoteDO) noteCommonInter);
-            case (Constant.WEEK_TYPE) -> weekTimeMapper.updateByPrimaryKeySelective((WeekTimeDO) noteCommonInter);
-            case (Constant.MONTH_TYPE) -> monthTimeMapper.updateByPrimaryKeySelective((MonthTimeDO) noteCommonInter);
-            case (Constant.YEAR_TYPE) -> yearTimeMapper.updateByPrimaryKeySelective((YearTimeDO) noteCommonInter);
+            case (Constant.TIME_TYPE) -> timeNoteMapper.updateByPrimaryKeySelective((NoteTimeNote) noteCommonInter);
+            case (Constant.WEEK_TYPE) -> weekTimeMapper.updateByPrimaryKeySelective((NoteWeekTime) noteCommonInter);
+            case (Constant.MONTH_TYPE) -> monthTimeMapper.updateByPrimaryKeySelective((NoteMonthTime) noteCommonInter);
+            case (Constant.YEAR_TYPE) -> yearTimeMapper.updateByPrimaryKeySelective((NoteYearTime) noteCommonInter);
             default -> throw new IcBoLuoException(ReEnum.PARAM_ERROR);
         }
     }
 
     private NoteCommonInter simpleFactory(String type) {
         return switch (type) {
-            case (Constant.TIME_TYPE) -> new TimeNoteDO();
-            case (Constant.WEEK_TYPE) -> new WeekTimeDO();
-            case (Constant.MONTH_TYPE) -> new MonthTimeDO();
-            case (Constant.YEAR_TYPE) -> new YearTimeDO();
+            case (Constant.TIME_TYPE) -> new NoteTimeNote();
+            case (Constant.WEEK_TYPE) -> new NoteWeekTime();
+            case (Constant.MONTH_TYPE) -> new NoteMonthTime();
+            case (Constant.YEAR_TYPE) -> new NoteYearTime();
             default -> throw new IcBoLuoException(ReEnum.PARAM_ERROR);
         };
     }
@@ -226,46 +229,46 @@ public class NoteServiceImpl implements NoteService {
         String type = dd.getType();
         Integer id = dd.getId();
         if (Constant.TIME_TYPE.equals(type)) {
-            TimeNoteDO timeNote = timeNoteMapper.selectByPrimaryKey(id);
+            NoteTimeNote timeNote = timeNoteMapper.selectByPrimaryKey(id);
             if (Constant.TIME_FINISH_TIME - 1 <= timeNote.getFinishTime()) {
                 weekTimeMapper.insertSelective(timeNote.toWeek());
                 timeNoteMapper.deleteByPrimaryKey(id);
             } else {
-                TimeNoteDO timeNoteDO = new TimeNoteDO();
-                timeNoteDO.setId(id);
-                timeNoteDO.setFinishTime(timeNote.getFinishTime() + 1);
-                timeNoteMapper.updateByPrimaryKeySelective(timeNoteDO);
+                NoteTimeNote noteTimeNote = new NoteTimeNote();
+                noteTimeNote.setId(id);
+                noteTimeNote.setFinishTime(timeNote.getFinishTime() + 1);
+                timeNoteMapper.updateByPrimaryKeySelective(noteTimeNote);
             }
         } else if (Constant.WEEK_TYPE.equals(type)) {
-            WeekTimeDO weekTime = weekTimeMapper.selectByPrimaryKey(id);
+            NoteWeekTime weekTime = weekTimeMapper.selectByPrimaryKey(id);
             if (Constant.WEEK_FINISH_TIME - 1 <= weekTime.getFinishTime()) {
                 monthTimeMapper.insertSelective(weekTime.toMonth());
                 weekTimeMapper.deleteByPrimaryKey(id);
             } else {
-                WeekTimeDO weekTimeDO = new WeekTimeDO();
-                weekTimeDO.setId(id);
-                weekTimeDO.setFinishTime(weekTime.getFinishTime() + 1);
-                weekTimeMapper.updateByPrimaryKeySelective(weekTimeDO);
+                NoteWeekTime noteWeekTime = new NoteWeekTime();
+                noteWeekTime.setId(id);
+                noteWeekTime.setFinishTime(weekTime.getFinishTime() + 1);
+                weekTimeMapper.updateByPrimaryKeySelective(noteWeekTime);
             }
         } else if (Constant.MONTH_TYPE.equals(type)) {
-            MonthTimeDO monthTime = monthTimeMapper.selectByPrimaryKey(id);
+            NoteMonthTime monthTime = monthTimeMapper.selectByPrimaryKey(id);
             if (Constant.MONTH_FINISH_TIME - 1 <= monthTime.getFinishTime()) {
                 yearTimeMapper.insertSelective(monthTime.toYear());
                 monthTimeMapper.deleteByPrimaryKey(id);
             } else {
-                MonthTimeDO monthTimeDO = new MonthTimeDO();
-                monthTimeDO.setId(id);
-                monthTimeDO.setFinishTime(monthTime.getFinishTime() + 1);
-                monthTimeMapper.updateByPrimaryKeySelective(monthTimeDO);
+                NoteMonthTime noteMonthTime = new NoteMonthTime();
+                noteMonthTime.setId(id);
+                noteMonthTime.setFinishTime(monthTime.getFinishTime() + 1);
+                monthTimeMapper.updateByPrimaryKeySelective(noteMonthTime);
             }
         } else if (Constant.YEAR_TYPE.equals(type)) {
-            YearTimeDO yearTime = yearTimeMapper.selectByPrimaryKey(id);
+            NoteYearTime yearTime = yearTimeMapper.selectByPrimaryKey(id);
             if (Constant.YEAR_FINISH_TIME - 1 <= yearTime.getFinishTime()) {
                 finishMapper.insertSelective(yearTime.toFinish());
                 yearTimeMapper.deleteByPrimaryKey(id);
             } else {
-                YearTimeDO yearTimeDO = new YearTimeDO();
-                yearTimeDO.setId(id);
+                NoteYearTime noteYearTime = new NoteYearTime();
+                noteYearTime.setId(id);
                 yearTime.setFinishTime(yearTime.getFinishTime() + 1);
                 yearTimeMapper.updateByPrimaryKeySelective(yearTime);
             }
@@ -275,9 +278,9 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Map<String, Integer> selectAmount() {
-        List<TimeNoteDO> timeList = timeNoteMapper.selectAll(new TimeNoteQuery());
-        List<WeekTimeDO> weekList = weekTimeMapper.selectAll(new TimeNoteQuery());
-        List<MonthTimeDO> monthList = monthTimeMapper.selectAll();
+        List<NoteTimeNote> timeList = timeNoteMapper.selectAll(new TimeNoteQuery());
+        List<NoteWeekTime> weekList = weekTimeMapper.selectAll(new TimeNoteQuery());
+        List<NoteMonthTime> monthList = monthTimeMapper.selectAll();
         List<NoteVO> noteList1 = deleteUnqualifiedObj(timeList, Constant.TIME_NOTE_INTERVAL);
         List<NoteVO> noteList2 = deleteUnqualifiedObj(weekList, Constant.WEEK_TIME_INTERVAL);
         List<NoteVO> noteList3 = deleteUnqualifiedObj(monthList, Constant.MONTH_TIME_INTERVAL);

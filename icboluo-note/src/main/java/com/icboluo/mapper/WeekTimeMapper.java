@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.entity.note.WeekTimeDO;
+import com.icboluo.entity.NoteWeekTime;
 import com.icboluo.object.query.TimeNoteQuery;
 
 import java.util.List;
@@ -13,17 +13,17 @@ public interface WeekTimeMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(WeekTimeDO record);
+    int insert(NoteWeekTime record);
 
-    int insertSelective(WeekTimeDO record);
+    int insertSelective(NoteWeekTime record);
 
-    WeekTimeDO selectByPrimaryKey(Integer id);
+    NoteWeekTime selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(WeekTimeDO record);
+    int updateByPrimaryKeySelective(NoteWeekTime record);
 
-    int updateByPrimaryKey(WeekTimeDO record);
+    int updateByPrimaryKey(NoteWeekTime record);
 
-    List<WeekTimeDO> selectAll(TimeNoteQuery query);
+    List<NoteWeekTime> selectAll(TimeNoteQuery query);
 
-    List<WeekTimeDO> select(String file);
+    List<NoteWeekTime> select(String file);
 }

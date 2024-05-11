@@ -1,7 +1,7 @@
 package com.icboluo.mapper;
 
 
-import com.icboluo.entity.note.OnlyReadDO;
+import com.icboluo.entity.NoteOnlyRead;
 
 /**
  * @author icboluo
@@ -9,13 +9,13 @@ import com.icboluo.entity.note.OnlyReadDO;
 public interface OnlyReadMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(OnlyReadDO record);
+    int insert(NoteOnlyRead record);
 
-    int insertSelective(OnlyReadDO record);
+    int insertSelective(NoteOnlyRead record);
 
-    OnlyReadDO selectByPrimaryKey(Integer id);
+    NoteOnlyRead selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(OnlyReadDO record);
+    int updateByPrimaryKeySelective(NoteOnlyRead record);
 
-    int updateByPrimaryKey(OnlyReadDO record);
+    int updateByPrimaryKey(NoteOnlyRead record);
 }

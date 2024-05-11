@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.OnlyReadMapper">
-  <resultMap id="BaseResultMap" type="com.icboluo.entity.note.OnlyReadDO">
+  <resultMap id="BaseResultMap" type="com.icboluo.entity.NoteOnlyRead">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="problem" jdbcType="VARCHAR" property="problem" />
     <result column="result" jdbcType="VARCHAR" property="result" />
@@ -16,23 +16,23 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from only_read
+    from note_only_read
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from only_read
+    delete from note_only_read
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.icboluo.entity.note.OnlyReadDO">
-    insert into only_read (id, problem, `result`,
+  <insert id="insert" parameterType="com.icboluo.entity.NoteOnlyRead">
+    insert into note_only_read (id, problem, `result`,
       finish_time, belong_to_scope, gmt_create,
       gmt_modified)
     values (#{id,jdbcType=INTEGER}, #{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR},
       #{finishTime,jdbcType=INTEGER}, #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
       #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.icboluo.entity.note.OnlyReadDO">
-    insert into only_read
+  <insert id="insertSelective" parameterType="com.icboluo.entity.NoteOnlyRead">
+    insert into note_only_read
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -80,8 +80,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.note.OnlyReadDO">
-    update only_read
+  <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.NoteOnlyRead">
+    update note_only_read
     <set>
       <if test="problem != null">
         problem = #{problem,jdbcType=VARCHAR},
@@ -104,8 +104,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.note.OnlyReadDO">
-    update only_read
+  <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.NoteOnlyRead">
+    update note_only_read
     set problem = #{problem,jdbcType=VARCHAR},
       `result` = #{result,jdbcType=VARCHAR},
       finish_time = #{finishTime,jdbcType=INTEGER},

@@ -1,6 +1,9 @@
-package com.icboluo.entity.note;
+package com.icboluo.entity;
 
 import com.icboluo.common.Constant;
+import com.icboluo.entity.inter.FiledResultInter;
+import com.icboluo.entity.inter.NoteCommonInter;
+import com.icboluo.entity.inter.NoteViewInter;
 import com.icboluo.object.view.FiledResultVO;
 import com.icboluo.object.view.NoteVO;
 import com.icboluo.util.BeanUtil;
@@ -15,7 +18,7 @@ import java.time.LocalDateTime;
  * @author icboluo
  */
 @Data
-public class MonthTimeDO implements NoteViewInter, FiledResultInter, NoteCommonInter, Serializable {
+public class NoteWeekTime implements NoteViewInter, FiledResultInter, NoteCommonInter, Serializable {
     /**
      * id
      */
@@ -56,39 +59,38 @@ public class MonthTimeDO implements NoteViewInter, FiledResultInter, NoteCommonI
      */
     private LocalDateTime gmtModified;
 
-
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Override
     public NoteVO toView() {
         NoteVO noteVO = BeanUtil.copyProperties(this, NoteVO.class);
-        noteVO.setType(Constant.MONTH_TYPE);
+        noteVO.setType(Constant.WEEK_TYPE);
         return noteVO;
     }
 
     @Override
     public FiledResultVO toFiledResultView() {
         FiledResultVO filedResult = BeanUtil.copyProperties(this, FiledResultVO.class);
-        filedResult.setType(Constant.MONTH_TYPE);
+        filedResult.setType(Constant.WEEK_TYPE);
         return filedResult;
     }
 
-    public YearTimeDO toYear() {
-        YearTimeDO yearTimeDO = BeanUtil.copyProperties(this, YearTimeDO.class);
-        yearTimeDO.setId(null);
-        yearTimeDO.setGmtCreate(null);
-        yearTimeDO.setGmtModified(LocalDateTime.now());
-        yearTimeDO.setFinishTime(0);
-        return yearTimeDO;
+    public NoteMonthTime toMonth() {
+        NoteMonthTime noteMonthTime = BeanUtil.copyProperties(this, NoteMonthTime.class);
+        noteMonthTime.setId(null);
+        noteMonthTime.setGmtCreate(null);
+        noteMonthTime.setGmtModified(LocalDateTime.now());
+        noteMonthTime.setFinishTime(0);
+        return noteMonthTime;
     }
 
-    public WeekTimeDO toWeek() {
-        WeekTimeDO weekTimeDO = BeanUtil.copyProperties(this, WeekTimeDO.class);
-        weekTimeDO.setId(null);
-        weekTimeDO.setGmtCreate(null);
-        weekTimeDO.setFinishTime(Constant.WEEK_NOT_FINISH_TIME);
-        weekTimeDO.setGmtModified(null);
-        return weekTimeDO;
+    public NoteTimeNote toTime() {
+        NoteTimeNote noteTimeNote = BeanUtil.copyProperties(this, NoteTimeNote.class);
+        noteTimeNote.setId(null);
+        noteTimeNote.setFinishTime(Constant.TIME_NOT_FINISH_TIME);
+        noteTimeNote.setGmtCreate(this.getGmtFirstCreate());
+        noteTimeNote.setGmtModified(null);
+        return noteTimeNote;
     }
 }

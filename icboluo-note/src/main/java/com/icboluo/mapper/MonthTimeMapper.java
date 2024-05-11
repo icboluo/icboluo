@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.entity.note.MonthTimeDO;
+import com.icboluo.entity.NoteMonthTime;
 
 import java.util.List;
 
@@ -13,17 +13,17 @@ public interface MonthTimeMapper{
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(MonthTimeDO record);
+    int insert(NoteMonthTime record);
 
-    int insertSelective(MonthTimeDO record);
+    int insertSelective(NoteMonthTime record);
 
-    MonthTimeDO selectByPrimaryKey(Integer id);
+    NoteMonthTime selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(MonthTimeDO record);
+    int updateByPrimaryKeySelective(NoteMonthTime record);
 
-    int updateByPrimaryKey(MonthTimeDO record);
+    int updateByPrimaryKey(NoteMonthTime record);
 
-    List<MonthTimeDO> selectAll();
+    List<NoteMonthTime> selectAll();
 
-    List<MonthTimeDO> select(String file);
+    List<NoteMonthTime> select(String file);
 }

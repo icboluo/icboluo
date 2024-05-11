@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.entity.note.TimeNoteDO;
+import com.icboluo.entity.NoteTimeNote;
 import com.icboluo.object.query.TimeNoteQuery;
 
 import java.util.List;
@@ -13,17 +13,17 @@ public interface TimeNoteMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(TimeNoteDO record);
+    int insert(NoteTimeNote record);
 
-    int insertSelective(TimeNoteDO record);
+    int insertSelective(NoteTimeNote record);
 
-    TimeNoteDO selectByPrimaryKey(Integer id);
+    NoteTimeNote selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(TimeNoteDO record);
+    int updateByPrimaryKeySelective(NoteTimeNote record);
 
-    int updateByPrimaryKey(TimeNoteDO record);
+    int updateByPrimaryKey(NoteTimeNote record);
 
-    List<TimeNoteDO> selectAll(TimeNoteQuery query);
+    List<NoteTimeNote> selectAll(TimeNoteQuery query);
 
-    List<TimeNoteDO> select(String file);
+    List<NoteTimeNote> select(String file);
 }

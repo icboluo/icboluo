@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.TimeNoteMapper">
-    <resultMap id="BaseResultMap" type="com.icboluo.entity.note.TimeNoteDO">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.NoteTimeNote">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="problem" jdbcType="VARCHAR" property="problem"/>
         <result column="result" jdbcType="VARCHAR" property="result"/>
@@ -16,24 +16,24 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from time_note
+        from note_time_note
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
-        from time_note
+        from note_time_note
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.icboluo.entity.note.TimeNoteDO">
-        insert into time_note (id, problem, `result`,
+    <insert id="insert" parameterType="com.icboluo.entity.NoteTimeNote">
+        insert into note_time_note (id, problem, `result`,
                                finish_time, belong_to_scope, gmt_create,
                                gmt_modified)
         values (#{id,jdbcType=INTEGER}, #{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR},
                 #{finishTime,jdbcType=INTEGER}, #{belongToScope,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
                 #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.icboluo.entity.note.TimeNoteDO">
-        insert into time_note
+    <insert id="insertSelective" parameterType="com.icboluo.entity.NoteTimeNote">
+        insert into note_time_note
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -81,8 +81,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.note.TimeNoteDO">
-        update time_note
+    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.NoteTimeNote">
+        update note_time_note
         <set>
             <if test="problem != null">
                 problem = #{problem,jdbcType=VARCHAR},
@@ -105,8 +105,8 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.note.TimeNoteDO">
-        update time_note
+    <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.NoteTimeNote">
+        update note_time_note
         set problem         = #{problem,jdbcType=VARCHAR},
             `result`        = #{result,jdbcType=VARCHAR},
             finish_time     = #{finishTime,jdbcType=INTEGER},
@@ -115,20 +115,20 @@
             gmt_modified    = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <select id="select" resultType="com.icboluo.entity.note.TimeNoteDO">
+    <select id="select" resultType="com.icboluo.entity.NoteTimeNote">
         select
         <include refid="Base_Column_List"/>
         from
-        time_note
+        note_time_note
         where
         problem like concat ('%',#{file},'%')
         or result like concat ('%',#{file},'%')
         or belong_to_scope like concat ('%',#{file},'%')
     </select>
-    <select id="selectAll" resultType="com.icboluo.entity.note.TimeNoteDO">
+    <select id="selectAll" resultType="com.icboluo.entity.NoteTimeNote">
         select
         <include refid="Base_Column_List"/>
-        from time_note
+        from note_time_note
         order by gmt_modified
     </select>
 </mapper>

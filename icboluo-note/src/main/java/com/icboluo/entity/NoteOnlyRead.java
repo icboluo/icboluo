@@ -1,4 +1,4 @@
-package com.icboluo.entity.note;
+package com.icboluo.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import lombok.Data;
  *
  */
 @Data
-public class OnlyReadDO implements Serializable {
+public class NoteOnlyRead implements Serializable {
     /**
      * id
      */

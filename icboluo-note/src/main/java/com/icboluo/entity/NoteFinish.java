@@ -1,8 +1,8 @@
-package com.icboluo.entity.note;
+package com.icboluo.entity;
 
 import com.icboluo.common.Constant;
+import com.icboluo.entity.inter.FiledResultInter;
 import com.icboluo.object.view.FiledResultVO;
-import com.icboluo.object.view.NoteVO;
 import com.icboluo.util.BeanUtil;
 import lombok.Data;
 
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @author icboluo
  */
 @Data
-public class TimeNoteDO implements NoteViewInter, FiledResultInter, NoteCommonInter, Serializable {
+public class NoteFinish implements FiledResultInter, Serializable {
     /**
      * id
      */
@@ -32,11 +32,6 @@ public class TimeNoteDO implements NoteViewInter, FiledResultInter, NoteCommonIn
     private String result;
 
     /**
-     * 完成次数
-     */
-    private Integer finishTime;
-
-    /**
      * 所属范围
      */
     private String belongToScope;
@@ -47,6 +42,11 @@ public class TimeNoteDO implements NoteViewInter, FiledResultInter, NoteCommonIn
     private LocalDateTime gmtCreate;
 
     /**
+     * 源头数据创建时间
+     */
+    private LocalDateTime gmtFirstCreate;
+
+    /**
      * 修改时间
      */
     private LocalDateTime gmtModified;
@@ -55,26 +55,9 @@ public class TimeNoteDO implements NoteViewInter, FiledResultInter, NoteCommonIn
     private static final long serialVersionUID = 1L;
 
     @Override
-    public NoteVO toView() {
-        NoteVO noteVO = BeanUtil.copyProperties(this, NoteVO.class);
-        noteVO.setType(Constant.TIME_TYPE);
-        return noteVO;
-    }
-
-    @Override
     public FiledResultVO toFiledResultView() {
         FiledResultVO filedResult = BeanUtil.copyProperties(this, FiledResultVO.class);
-        filedResult.setType(Constant.TIME_TYPE);
+        filedResult.setType(Constant.FINISH_TYPE);
         return filedResult;
-    }
-
-    public WeekTimeDO toWeek() {
-        WeekTimeDO weekTimeDO = BeanUtil.copyProperties(this, WeekTimeDO.class);
-        weekTimeDO.setId(null);
-        weekTimeDO.setGmtCreate(null);
-        weekTimeDO.setGmtFirstCreate(this.getGmtCreate());
-        weekTimeDO.setGmtModified(LocalDateTime.now());
-        weekTimeDO.setFinishTime(0);
-        return weekTimeDO;
     }
 }

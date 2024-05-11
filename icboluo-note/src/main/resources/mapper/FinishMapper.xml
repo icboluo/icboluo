@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icboluo.mapper.FinishMapper">
-    <resultMap id="BaseResultMap" type="com.icboluo.entity.note.FinishDO">
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.NoteFinish">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="problem" jdbcType="VARCHAR" property="problem"/>
         <result column="result" jdbcType="VARCHAR" property="result"/>
@@ -13,19 +13,20 @@
     <sql id="Base_Column_List">
         id, problem, `result`, belong_to_scope, gmt_create, gmt_first_create, gmt_modified
     </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from finish
+        from note_finish
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
-        from finish
+        from note_finish
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.icboluo.entity.note.FinishDO">
-        insert into finish (id, problem, `result`,
+    <insert id="insert" parameterType="com.icboluo.entity.NoteFinish">
+        insert into note_finish (id, problem, `result`,
                             belong_to_scope, gmt_create, gmt_first_create,
                             gmt_modified)
         values (#{id,jdbcType=INTEGER}, #{problem,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR},
@@ -33,8 +34,8 @@
                 #{gmtFirstCreate,jdbcType=TIMESTAMP},
                 #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.icboluo.entity.note.FinishDO">
-        insert into finish
+    <insert id="insertSelective" parameterType="com.icboluo.entity.NoteFinish">
+        insert into note_finish
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -82,7 +83,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.note.FinishDO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.icboluo.entity.NoteFinish">
         update finish
         <set>
             <if test="problem != null">
@@ -106,8 +107,8 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.note.FinishDO">
-        update finish
+    <update id="updateByPrimaryKey" parameterType="com.icboluo.entity.NoteFinish">
+        update note_finish
         set problem          = #{problem,jdbcType=VARCHAR},
             `result`         = #{result,jdbcType=VARCHAR},
             belong_to_scope  = #{belongToScope,jdbcType=VARCHAR},
@@ -117,11 +118,11 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="select" resultType="com.icboluo.entity.note.FinishDO">
+    <select id="select" resultType="com.icboluo.entity.NoteFinish">
         select
         <include refid="Base_Column_List"/>
         from
-        finish
+        note_finish
         where
         problem like concat ('%',#{file},'%')
         or result like concat ('%',#{file},'%')

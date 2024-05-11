@@ -1,4 +1,4 @@
-package com.icboluo.entity.note;
+package com.icboluo.entity.inter;
 
 import com.icboluo.object.view.NoteVO;
 

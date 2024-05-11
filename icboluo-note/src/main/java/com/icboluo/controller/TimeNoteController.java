@@ -1,6 +1,6 @@
 package com.icboluo.controller;
 
-import com.icboluo.entity.note.TimeNoteDO;
+import com.icboluo.entity.NoteTimeNote;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.mapper.TimeNoteMapper;
 import com.icboluo.object.client.TimeNoteCO;
@@ -47,8 +47,8 @@ public class TimeNoteController {
 
     @GetMapping("add")
     public Response add(TimeNoteCO client) {
-        TimeNoteDO timeNoteDO = BeanUtil.copyProperties(client, TimeNoteDO.class);
-        int i = timeNoteMapper.insertSelective(timeNoteDO);
+        NoteTimeNote noteTimeNote = BeanUtil.copyProperties(client, NoteTimeNote.class);
+        int i = timeNoteMapper.insertSelective(noteTimeNote);
         return i == 1 ? R.correct(ReEnum.ADD_SUCCESSFUL)
                 : R.error(ReEnum.ADD_ERROR);
     }

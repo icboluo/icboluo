@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.entity.note.YearTimeDO;
+import com.icboluo.entity.NoteYearTime;
 
 import java.util.List;
 
@@ -13,17 +13,17 @@ public interface YearTimeMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(YearTimeDO record);
+    int insert(NoteYearTime record);
 
-    int insertSelective(YearTimeDO record);
+    int insertSelective(NoteYearTime record);
 
-    YearTimeDO selectByPrimaryKey(Integer id);
+    NoteYearTime selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(YearTimeDO record);
+    int updateByPrimaryKeySelective(NoteYearTime record);
 
-    int updateByPrimaryKey(YearTimeDO record);
+    int updateByPrimaryKey(NoteYearTime record);
 
-    List<YearTimeDO> select(String file);
+    List<NoteYearTime> select(String file);
 
-    List<YearTimeDO> selectAll();
+    List<NoteYearTime> selectAll();
 }
