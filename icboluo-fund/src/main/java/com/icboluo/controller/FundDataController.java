@@ -3,6 +3,7 @@ package com.icboluo.controller;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.icboluo.common.MyCollector;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
@@ -68,6 +69,11 @@ public class FundDataController {
     @GetMapping("/addToday")
     public void addToday(String fundId, BigDecimal rate) {
         fundDataService.addToday(fundId, rate);
+    }
+
+    @PostMapping("delete")
+    public void delete(@RequestBody String id) {
+        fundDataService.delete(id);
     }
 
     @GetMapping("/dayOfWeekTest")

@@ -1,4 +1,4 @@
-package com.icboluo.controller;
+package com.icboluo.common;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;

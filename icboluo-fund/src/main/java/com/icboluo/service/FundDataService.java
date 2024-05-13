@@ -57,4 +57,6 @@ public interface FundDataService {
      * @return 年平均增长率
      */
     Map<Integer, BigDecimal> yearAvg(List<FundData> fundList);
+
+    void delete(String id);
 }

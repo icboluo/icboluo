@@ -1,4 +1,4 @@
-package com.icboluo.controller;
+package com.icboluo.common;
 
 import com.icboluo.object.vo.FundDataVO;
 

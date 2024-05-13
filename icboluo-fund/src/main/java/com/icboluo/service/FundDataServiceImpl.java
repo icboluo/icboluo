@@ -214,6 +214,11 @@ public class FundDataServiceImpl implements FundDataService {
         return avgMap;
     }
 
+    @Override
+    public void delete(String id) {
+        fundDataMapper.deleteById(id);
+    }
+
     private List<FundDataVO> findSimChoose(List<FundDataVO> sourceList, List<FundDataVO> allList, Integer length) {
         List<FundDataVO> res = new ArrayList<>();
 //        比如当前是10个，选择2天，10-2+1=9 i的取值为0-8，当取8的时候可以选择8/9，是符合边界条件的
