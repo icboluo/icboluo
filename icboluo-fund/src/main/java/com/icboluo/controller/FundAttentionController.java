@@ -5,9 +5,7 @@ import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * (FundAttention)表控制层
@@ -22,13 +20,14 @@ public class FundAttentionController {
     @Resource
     private FundAttentionService fundAttentionService;
 
-    @GetMapping("init")
-    public PageInfo<FundAttentionVO> init(FundAttentionQuery query) {
+    @PostMapping("init")
+    public PageInfo<FundAttentionVO> init(@RequestBody FundAttentionQuery query) {
         return fundAttentionService.init(query);
     }
 
-    @GetMapping("delete")
-    public void delete(String id) {
+    @PostMapping("delete")
+    public void delete(@RequestBody String id) {
+        id = id.substring(0, id.length() - 1);
         fundAttentionService.delete(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.icboluo.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.icboluo.common.MyBaseMapper;
 import com.icboluo.entity.FundData;
 import com.icboluo.object.query.FundDataChooseQuery;
@@ -45,5 +46,10 @@ public interface FundDataMapper extends MyBaseMapper<FundData> {
 
     void deleteByFundIdDate(@Param("fundId") String fundId, @Param("date") LocalDate date);
 
+    default List<FundData> selectByFundIds(List<String> fundIds) {
+        LambdaQueryWrapper<FundData> qw = new LambdaQueryWrapper<>();
+        qw.in(FundData::getFundId, fundIds);
+        return selectList(qw);
+    }
 }
 

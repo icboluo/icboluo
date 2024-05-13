@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -29,6 +30,7 @@ public class JacksonConfig {
         // 默认的日期反序列化是如果序列化失败抛异常，此处是返回null
         return builder -> builder
                 .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer())
+                .serializerByType(BigDecimal.class, new BigDecimal10Serializer())
                 .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer())
                 .deserializerByType(LocalDate.class, new LocalDateDeserializer())
                 ;

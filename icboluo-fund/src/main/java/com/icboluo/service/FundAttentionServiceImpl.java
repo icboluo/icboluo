@@ -42,9 +42,9 @@ public class FundAttentionServiceImpl implements FundAttentionService {
 
     @Override
     public PageInfo<FundAttentionVO> init(FundAttentionQuery query) {
-        PageMethod.startPage(query);
+        PageMethod.startPage(query.getPageNum(), query.getPageSize());
         List<FundAttentionVO> list = fundAttentionMapper.selectByQuery(query);
-        List<FundData> fundDataList = fundDataMapper.selectAll();
+        List<FundData> fundDataList = fundDataMapper.selectByFundIds(list.stream().map(FundAttentionVO::getId).toList());
 //                        倒序是因为希望最近的数据在前面（因为是最重要的
         Map<String, List<FundData>> fundMap = fundDataList.stream()
                 .collect(Collectors.groupingBy(FundData::getFundId, Collectors.collectingAndThen(Collectors.toList(), li -> li.stream()
