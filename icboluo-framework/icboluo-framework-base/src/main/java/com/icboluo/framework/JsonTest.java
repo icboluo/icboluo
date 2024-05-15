@@ -1,7 +1,7 @@
 package com.icboluo.framework;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -45,7 +45,7 @@ public class JsonTest {
         // json 转换为map
         Map<String, String> map1 = objectMapper.readValue(str1, new TypeReference<>() {
         });
-        Map<String, String> map2 = JSON.parseObject(str1, new com.alibaba.fastjson.TypeReference<>() {
+        Map<String, String> map2 = JSON.parseObject(str1, new com.alibaba.fastjson2.TypeReference<>() {
         });
         Assert.isTrue(map1.get("age").equals(map2.get("age")), "");
         // bean 转换为json

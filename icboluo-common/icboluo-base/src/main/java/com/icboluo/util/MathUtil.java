@@ -122,6 +122,13 @@ public class MathUtil {
         return divide(sum, bdList.size());
     }
 
+    public static <T> BigDecimal avg(T... paramList) {
+        BigDecimal sum = Arrays.stream(paramList)
+                .map(item -> TypeUtils.cast(item, BigDecimal.class))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return divide(sum, paramList.length);
+    }
+
     /**
      * 计算成功率
      *

@@ -25,7 +25,7 @@ public class LocalDateTimeMyBatisType implements TypeHandler<LocalDateTime> {
     @Override
     public LocalDateTime getResult(ResultSet rs, String columnName) throws SQLException {
         String str = rs.getString(columnName);
-        return DateUtil.toDateTime(str);
+        return DateUtil.allToDateTime(str);
     }
 
     @Override

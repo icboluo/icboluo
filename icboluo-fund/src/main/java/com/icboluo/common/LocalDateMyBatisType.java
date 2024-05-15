@@ -1,5 +1,6 @@
 package com.icboluo.common;
 
+import com.icboluo.util.DateUtil;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
@@ -23,7 +24,7 @@ public class LocalDateMyBatisType implements TypeHandler<LocalDate> {
     @Override
     public LocalDate getResult(ResultSet rs, String columnName) throws SQLException {
         String str = rs.getString(columnName);
-        return LocalDate.parse(str);
+        return DateUtil.allToDate(str);
     }
 
     @Override

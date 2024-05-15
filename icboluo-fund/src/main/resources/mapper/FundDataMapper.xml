@@ -21,6 +21,7 @@
         select *
         from fund_data
         where fund_id = #{fundId}
+        order by net_value_date
     </select>
     <select id="selectByQuery" resultType="com.icboluo.object.vo.FundDataVO">
         select fd.*

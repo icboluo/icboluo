@@ -3,9 +3,11 @@ package com.icboluo.service;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.entity.FundData;
 import com.icboluo.object.query.FundDataQuery;
+import com.icboluo.object.query.FundWeightQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
+import com.icboluo.object.vo.FundMetricVo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -59,4 +61,6 @@ public interface FundDataService {
     Map<Integer, BigDecimal> yearAvg(List<FundData> fundList);
 
     void delete(String id);
+
+    List<FundMetricVo> selectWeight(FundWeightQuery query);
 }

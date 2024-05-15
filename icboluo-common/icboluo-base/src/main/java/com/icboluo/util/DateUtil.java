@@ -130,6 +130,10 @@ public class DateUtil {
         return LocalDateTime.of(localDate, LocalTime.MAX);
     }
 
+
+    public static LocalDate firstDayOfMonth(LocalDate localDate) {
+        return localDate.with(TemporalAdjusters.firstDayOfMonth());
+    }
     /**
      * 本月的最后一天
      *
@@ -189,6 +193,10 @@ public class DateUtil {
         int year = localDate.getYear();
         int month = localDate.getMonthValue();
         return year + "-" + month;
+    }
+
+    public static boolean between(LocalDate cur, LocalDate before, LocalDate after) {
+        return !cur.isBefore(before) && !cur.isAfter(after);
     }
 
     /**
