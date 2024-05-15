@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icboluo.mapper.FundConfigWeightMapper">
+
+    <resultMap id="BaseResultMap" type="com.icboluo.entity.FundConfigWeight">
+        <result property="key" column="key" jdbcType="VARCHAR"/>
+        <result property="val" column="val" jdbcType="INTEGER"/>
+        <result property="desc" column="desc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+key, val, desc
+    </sql>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into fund_config_weight()
+        values
+        <foreach collection="list" item="entity" separator=",">
+            ()
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into fund_config_weight()
+        values
+        <foreach collection="list" item="entity" separator=",">
+            ()
+        </foreach>
+        on duplicate key update
+        key = values(key),
+        val = values(val),
+        desc = values(desc)
+    </insert>
+
+    <update id="updateBatchSelective">
+        <foreach collection="list" item="entity" separator=";">
+            update
+            fund_config_weight
+            <set>
+                <if test="entity.key != null and entity.key != ''">
+                    key = #{entity.key},
+                </if>
+                <if test="entity.val != null">
+                    val = #{entity.val},
+                </if>
+                <if test="entity.desc != null and entity.desc != ''">
+                    desc = #{entity.desc},
+                </if>
+            </set>
+            where id = #{entity.id}
+        </foreach>
+    </update>
+</mapper>
+

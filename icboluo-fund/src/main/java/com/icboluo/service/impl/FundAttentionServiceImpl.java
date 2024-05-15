@@ -1,4 +1,4 @@
-package com.icboluo.service;
+package com.icboluo.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
@@ -9,6 +9,8 @@ import com.icboluo.mapper.FundDataMapper;
 import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
+import com.icboluo.service.FundAttentionService;
+import com.icboluo.service.FundDataService;
 import com.icboluo.util.BeanUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

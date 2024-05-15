@@ -1,4 +1,4 @@
-package com.icboluo.service;
+package com.icboluo.service.impl;
 
 import com.icboluo.object.bo.I18ParamBO;
 import com.icboluo.object.bo.I18Res;

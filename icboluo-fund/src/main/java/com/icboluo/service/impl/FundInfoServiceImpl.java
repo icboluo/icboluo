@@ -1,8 +1,9 @@
-package com.icboluo.service;
+package com.icboluo.service.impl;
 
 import com.icboluo.entity.FundInfo;
 import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.vo.FundInfoVO;
+import com.icboluo.service.FundInfoService;
 import com.icboluo.util.BeanUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

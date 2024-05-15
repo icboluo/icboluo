@@ -1,4 +1,4 @@
-package com.icboluo.service;
+package com.icboluo.service.impl;
 
 import com.icboluo.entity.FundAsyncRecord;
 import com.icboluo.mapper.FundAsyncRecordMapper;

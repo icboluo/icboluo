@@ -1,4 +1,4 @@
-package com.icboluo.service;
+package com.icboluo.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
@@ -9,6 +9,7 @@ import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
 import com.icboluo.object.vo.FundDataVO;
+import com.icboluo.service.FundDataService;
 import com.icboluo.util.BeanUtil;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.MathUtil;

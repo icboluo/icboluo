@@ -27,7 +27,6 @@ public class FundAttentionController {
 
     @PostMapping("delete")
     public void delete(@RequestBody String id) {
-        id = id.substring(0, id.length() - 1);
         fundAttentionService.delete(id);
     }
 }
