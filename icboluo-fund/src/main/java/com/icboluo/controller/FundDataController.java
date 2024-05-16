@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.MyCollector;
+import com.icboluo.object.query.FundDataCalQuery;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
 import com.icboluo.object.vo.FundDataRecentVO;
@@ -46,13 +47,12 @@ public class FundDataController {
     /**
      * 计算页面结果
      *
-     * @param fundId    基金id
-     * @param startDate 开始日期
+     * @param query 基金id
      * @return 计算结果
      */
-    @GetMapping("cal")
-    public FundDataCalVO cal(String fundId, LocalDate startDate) {
-        return fundDataService.cal(fundId, startDate);
+    @PostMapping("cal")
+    public FundDataCalVO cal(@RequestBody FundDataCalQuery query) {
+        return fundDataService.cal(query.getFundId(), query.getStartDate());
     }
 
     @GetMapping("/simCal")

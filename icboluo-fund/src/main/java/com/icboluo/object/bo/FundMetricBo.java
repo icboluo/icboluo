@@ -2,7 +2,6 @@ package com.icboluo.object.bo;
 
 import com.icboluo.entity.FundData;
 import com.icboluo.object.Archives;
-import com.icboluo.util.MathUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,7 +37,11 @@ public class FundMetricBo {
 
     private Double max;
 
-    private BigDecimal allAvg;
+
+    /**
+     * 净增长值
+     */
+    private BigDecimal netIncreaseValue;
 
 
     public FundMetricBo(List<FundData> list) {
@@ -52,7 +55,7 @@ public class FundMetricBo {
         this.avg = BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(4, RoundingMode.HALF_UP);
         this.min = summaryStatistics.getMin();
         this.max = summaryStatistics.getMax();
-        this.allAvg = MathUtil.avg(avg, min, max);
+        calNetIncreaseValue();
     }
 
     public FundMetricBo(List<List<FundData>> lists, int i) {
@@ -69,7 +72,6 @@ public class FundMetricBo {
         this.avg = BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(4, RoundingMode.HALF_UP);
         this.min = summaryStatistics.getMin();
         this.max = summaryStatistics.getMax();
-        this.allAvg = MathUtil.avg(avg, min, max);
     }
 
     public List<Archives<String, Object>> toItemList() {
@@ -78,5 +80,15 @@ public class FundMetricBo {
         list.add(new Archives<>("min", min));
         list.add(new Archives<>("max", max));
         return list;
+    }
+
+    private void calNetIncreaseValue() {
+        BigDecimal start = BigDecimal.ONE;
+        if (dataList != null) {
+            for (FundData fundData : dataList) {
+                start = start.multiply(fundData.getNetAssetValue());
+            }
+            netIncreaseValue = start;
+        }
     }
 }

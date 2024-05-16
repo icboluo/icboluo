@@ -57,13 +57,13 @@ public class FundMetricVo {
         }
 
         public FundMetricVoBuilder businessData(final FundMetricBo business) {
-            if (business.getDataList() != null) {
-                this.dataList = business.getDataList().stream().sorted((a, b) -> b.getNetValueDate().compareTo(a.getNetValueDate())).toList();
-            }
-            if (business.getDoubleDataList() != null) {
-                this.doubleDataList = business.getDoubleDataList().stream().map(arr -> arr.stream().sorted((a, b) -> b.getNetValueDate().compareTo(a.getNetValueDate())).toList()).toList();
-            }
-            this.number = business.getAllAvg();
+//            if (business.getDataList() != null) {
+//                this.dataList = business.getDataList().stream().sorted((a, b) -> b.getNetValueDate().compareTo(a.getNetValueDate())).toList();
+//            }
+//            if (business.getDoubleDataList() != null) {
+//                this.doubleDataList = business.getDoubleDataList().stream().map(arr -> arr.stream().sorted((a, b) -> b.getNetValueDate().compareTo(a.getNetValueDate())).toList()).toList();
+//            }
+            this.number = business.getNetIncreaseValue();
             this.itemList = business.toItemList();
             return this;
         }
