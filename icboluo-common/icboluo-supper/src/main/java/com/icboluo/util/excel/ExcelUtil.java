@@ -151,9 +151,10 @@ public class ExcelUtil {
      * 到出列表
      *
      * @param list   需要导出的数据，该数据应该存在 @Excel注解功能
-     * @param clazz  导出数据的class
+     * @param clazz  导出列表的class
      * @param config 配置
      * @param <T>    导出数据的类型
+     * @see SimpleWriteConfig 简单的导出配置，拥有自适配列宽，和表头、体样式的调整
      */
     public static <T> void export(List<T> list, Class<T> clazz, EasyExcelWriteConfig config) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

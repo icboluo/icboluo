@@ -29,7 +29,7 @@ public class IoHelper {
      * 校验文件大小
      *
      * @param mf 文件
-     *           * @throws  I18nException 校验失败抛出次异常
+     * @throws  I18nException 校验失败抛出此异常
      */
     public static void validateFile(MultipartFile mf) {
         validateFile(mf, DEFAULT_MAX_SIZE);
@@ -38,9 +38,9 @@ public class IoHelper {
     /**
      * 校验文件大小
      *
-     * @param mf   文件，单位为字节 MultipartFile 再部分情况下是支持重复读取的
+     * @param mf   文件，单位为字节 MultipartFile 在部分情况下是支持重复读取的
      * @param size 文件限制大小
-     * @throws I18nException 校验失败抛出次异常
+     * @throws I18nException 校验失败抛出此异常
      */
     public static void validateFile(MultipartFile mf, long size) {
         if (mf == null || mf.isEmpty()) {

@@ -29,7 +29,7 @@ public class ListenerProxyFactory implements MethodInterceptor {
         enhancer.setSuperclass(target.getClass());
         // 设置回调函数
         enhancer.setCallback(this);
-        // 创建子类对象
+        // 创建子类对象（代理对象）
         return enhancer.create();
     }
 

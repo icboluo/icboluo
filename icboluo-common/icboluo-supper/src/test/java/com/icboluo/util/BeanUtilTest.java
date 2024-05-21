@@ -106,6 +106,9 @@ class BeanUtilTest {
         assertEquals(1, pi2.getPages());
     }
 
+    /**
+     * FIXME
+     */
     @Test
     void pageInfoConvert() {
         List<Integer> source = Stream.iterate(0, i -> ++i).limit(101).collect(Collectors.toList());

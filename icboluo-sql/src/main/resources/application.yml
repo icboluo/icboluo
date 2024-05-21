@@ -4,7 +4,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: none # 这里如果为create，每次都要重新创建表；如果是update，表若存在则不重建
   profiles:
     active: simple
   application:

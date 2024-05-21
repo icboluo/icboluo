@@ -64,7 +64,6 @@ class N0018_4数之和 {
     }
 
     public static void main(String[] args) {
-        // 将0015代码转移到2数之和
         var cla = new N0018_4数之和();
         int[] arr1 = {1, 0, -1, 0, -2, 2};
         int[] arr2 = {2, 2, 2, 2, 2};

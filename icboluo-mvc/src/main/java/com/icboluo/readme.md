@@ -160,6 +160,6 @@ idea--tomcat service 窗口乱码，需要首先将vmOptional修改为UTF-8 这�
       设置utf-8：chcp 65001
       设置gbk：chcp 936
 
-maven 控制台目录乱码，是因为全部设置成utf-8了，但是电能是win采用的是gbk，将 maven--run 修改为gbk就可以了
+maven 控制台目录乱码，是因为全部设置成utf-8了，但是电脑是win采用的是gbk，将 maven--run 修改为gbk就可以了
 
 tomcat 乱码，需要将涉及的标记为 UTF-8,不要听网上的标记成 GBK

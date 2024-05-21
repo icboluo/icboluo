@@ -18,8 +18,10 @@ import java.util.Locale;
 @Slf4j
 public class WebContext {
     /**
-     * InheritableThreadLocal 这个类在主线程生成自选菜的时候会将主线程的值进行copy一次
-     * InheritableThreadLocal 本身是没有问题的，为什么Request多线程有问题
+     * InheritableThreadLocal 这个类在主线程生成子线程时候会将主线程的值进行copy一次
+     * InheritableThreadLocal 多线程并不会产生问题，产生问题的根因是因为：因为不涉及新建线程，数据无法正常copy
+     * InheritableThreadLocal 可能造成线程池中取的线程数据为空或者用的是该线程上一个任务的值（数据混乱
+     * InheritableThreadLocal 所以线程池装饰器，增加字段值的传参是有必要的
      */
     private static final ThreadLocal<Header> HEADER_CONTEXT = new InheritableThreadLocal<>();
 

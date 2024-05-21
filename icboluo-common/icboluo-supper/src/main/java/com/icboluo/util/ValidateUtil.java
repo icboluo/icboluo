@@ -43,6 +43,9 @@ public class ValidateUtil {
     private static final List<String> I18N_BUNDLE_ADDR = SpringUtil.getBean(Environment.class)
             .getProperty("spring.messages.basename", List.class, Collections.singletonList("messages"));
 
+    /**
+     * 好像不加supper也可以调用到supper的内容，是直接取yml的，不是取代码中的
+     */
     private static final Validator VALIDATOR;
 
     static {

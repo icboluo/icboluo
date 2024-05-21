@@ -17,7 +17,7 @@ class N0933_最近通话次数 {
     // 在时间t添加请求，返回过去发生的请求数
     public int ping(int t) {
         set.add(t);
-        // 找出大于等于这部分的
+        // optimize 找出大于等于这部分的
         return set.tailSet(t - 3000).size();
     }
 

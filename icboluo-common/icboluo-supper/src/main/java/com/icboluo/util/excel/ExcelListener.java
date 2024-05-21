@@ -76,7 +76,7 @@ public class ExcelListener<T> extends AnalysisEventListener<T> {
         for (int i = 0; i < list.size(); i++) {
             String uk = getUk.apply(list.get(i));
             if (!map.containsKey(uk)) {
-                ArrayList<Integer> value = new ArrayList<>();
+                List<Integer> value = new ArrayList<>();
                 value.add(i);
                 map.put(uk, value);
             } else {

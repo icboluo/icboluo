@@ -86,7 +86,7 @@ public class FundMetricBo {
         BigDecimal start = BigDecimal.ONE;
         if (dataList != null) {
             for (FundData fundData : dataList) {
-                start = start.multiply(fundData.getNetAssetValue());
+                start = start.multiply(fundData.getIncreaseRateDay());
             }
             netIncreaseValue = start;
         }
