@@ -11,4 +11,8 @@ spring:
     username:
     password:
   jpa:
-    database-platform: org.hibernate.dialect.SQLiteDialect
+    #    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.DerbyDialect
+    datasource: derby  # 或者h2 ，可以使用这2种嵌入式数据库替换sqlite驱动，实测都不太行，感觉需要手写

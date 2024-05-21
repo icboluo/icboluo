@@ -27,10 +27,6 @@ class Queen8 {
      * @param n 矩阵行列
      * @return [".Q..","...Q","Q...","..Q."] list 里面的一个元素代表一张图
      */
-    public List<List<String>> solveNQueens(int n) {
-        return solveNQueens2(n);
-    }
-
     public List<List<String>> solveNQueens1(int n) {
         chess = new boolean[n][n];
         res = new ArrayList<>();

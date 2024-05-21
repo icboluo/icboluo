@@ -201,6 +201,11 @@ select coalesce(name，总金额;) ,sum (money) from test group by name with rol
 
 mysql union 作用就是拼接上面查询出的结果和下面查询出的结果， 查询结果不变，数据量增加
 
+## replace
+
+mysql insertOrUpdate 可以根据唯一索引确定一条数据，id是不会变的
+replace 语句id会变，本质上是先删后增
+
 ## 异常
 
 Cause: java.lang.IllegalArgumentException: argument type mismatch

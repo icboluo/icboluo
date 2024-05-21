@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @see N0401_二进制手表 .ts 提交
+ */
 class N0401_二进制手表 {
     public List<String> readBinaryWatch(int turnedOn) {
         int[] nums1 = new int[] {8, 4, 2, 1};

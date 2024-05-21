@@ -1,4 +1,5 @@
-// 二进制手表 FIXME ERROR
+// 二进制手表
+// @see N0401_二进制手表.java
 function readBinaryWatch(turnedOn: number): string[] {
     let arr: string[] = [];
     for (let h = 0; h < 12; h++) {

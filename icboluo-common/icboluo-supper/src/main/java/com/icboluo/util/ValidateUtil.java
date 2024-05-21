@@ -44,7 +44,9 @@ public class ValidateUtil {
             .getProperty("spring.messages.basename", List.class, Collections.singletonList("messages"));
 
     /**
-     * 好像不加supper也可以调用到supper的内容，是直接取yml的，不是取代码中的
+     * <p>好像不加supper也可以调用到supper的内容，是直接取yml的，不是取代码中的
+     * <p>valid 和 MessageSource 的工作原理是不同的，@Valid是使用valid.valid函数，用hibernate来校验的
+     * <p>MessageSource 是根据配置的国际化信息来校验的
      */
     private static final Validator VALIDATOR;
 
@@ -107,9 +109,28 @@ public class ValidateUtil {
         return res;
     }
 
+    /**
+     * 批量校验属性，如果校验失败，抛异常
+     *
+     * @param obj        需要校验的对象
+     * @param fieldNames 需要校验的属性名
+     * @param <T>        对象的类型
+     */
+    public static <T> void validatePropertyOrThrow(T obj, String... fieldNames) {
+        for (String fieldName : fieldNames) {
+            Set<ConstraintViolation<T>> cvSet = VALIDATOR.validateProperty(obj, fieldName, Default.class);
+            Iterator<ConstraintViolation<T>> it = cvSet.iterator();
+            if (it.hasNext()) {
+                ConstraintViolation<T> cv = it.next();
+                throw new I18nException(cv.getPropertyPath() + " " + cv.getMessage());
+            }
+        }
+    }
+
     public static <T> List<Set<ConstraintViolation<T>>> validateFields(T obj, Field[] fields) {
         List<Set<ConstraintViolation<T>>> res = new ArrayList<>();
         for (Field field : fields) {
+            field.setAccessible(true);
             Set<ConstraintViolation<T>> cvSet = VALIDATOR.validateProperty(obj, field.getName(), Default.class);
             res.add(cvSet);
         }
@@ -117,8 +138,9 @@ public class ValidateUtil {
     }
 
     public static <T> Map<Field, String> validateFieldsToMap(T obj, Field[] fields) {
-        Map<Field, String> map = new HashMap<>();
+        Map<Field, String> map = new LinkedHashMap<>();
         for (Field field : fields) {
+            field.setAccessible(true);
             Set<ConstraintViolation<T>> cvSet = VALIDATOR.validateProperty(obj, field.getName(), Default.class);
             if (!cvSet.isEmpty()) {
                 map.put(field, cvSet.iterator().next().getMessage());

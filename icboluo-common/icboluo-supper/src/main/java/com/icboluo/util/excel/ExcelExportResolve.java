@@ -75,6 +75,7 @@ public class ExcelExportResolve<T> {
             if (!field.isAnnotationPresent(Excel.class)) {
                 continue;
             }
+            shoichiIndex(field);
             Excel excel = field.getAnnotation(Excel.class);
             if (StringUtils.hasText(excel.paramName())) {
                 classMap.put(excel.paramName(), field);
@@ -87,7 +88,6 @@ public class ExcelExportResolve<T> {
 
     private List<String> defaultSortFieldName() {
         Integer max = nameFieldMap.values().stream()
-                .peek(ExcelExportResolve::shoichiIndex)
                 .map(field -> field.getAnnotation(Excel.class))
                 .map(Excel::columnIndex)
                 .max(Integer::compareTo)
@@ -101,7 +101,7 @@ public class ExcelExportResolve<T> {
     }
 
     /**
-     * 归一
+     * 归一（该方法永久的修改了字段的注解值，仅需要调用一次
      *
      * @param field 字段
      */
@@ -114,8 +114,9 @@ public class ExcelExportResolve<T> {
             ExcelProperty property = field.getAnnotation(ExcelProperty.class);
             memberValues.put("columnIndex", property.index());
         }
-        if (excel.columnIndex() == -1) {
-            log.error("-11111");
+        if (excel.columnIndex() < 0) {
+            log.error("Class [{}], Field name [{}] columnIndex is -1, However, a drop-down list box needs to be generated, it`s anomalous, Please check",
+                    field.getDeclaringClass().getSimpleName(), field.getName());
         }
     }
 
@@ -194,5 +195,14 @@ public class ExcelExportResolve<T> {
         mv.setAccessible(true);
         // --add-opens java.base/sun.reflect.annotation=ALL-UNNAMED  启动失败加 jvm参数即可解决
         return (Map<String, Object>) mv.get(ih);
+    }
+
+    /**
+     * 回调方法，用于在某种（异常）情况下，清理缓存
+     *
+     * @param cla 需要清理的缓存
+     */
+    public static void cleanCache(Class<?> cla) {
+        CLASS_NAME_FIELD_CACHE.remove(cla);
     }
 }

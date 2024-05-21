@@ -113,6 +113,27 @@ public class MathUtil {
         return source.compareTo(a) * source.compareTo(b) == -1;
     }
 
+    /**
+     * <p>数字a和数字b是否相似
+     * <p>相似：a和b去最短的小数位数，判断a和b是否相等
+     *
+     * @param a 数字a
+     * @param b 数字b
+     * @return a、b是否相似
+     */
+    public static boolean isSame(BigDecimal a, BigDecimal b) {
+        if (a == null && b == null) {
+            return true;
+        }
+        if (a == null || b == null) {
+            return false;
+        }
+        int minScale = Math.min(a.scale(), b.scale());
+        BigDecimal aVal = a.setScale(minScale, RoundingMode.HALF_UP);
+        BigDecimal bVal = b.setScale(minScale, RoundingMode.HALF_UP);
+        return compareToIsZero(aVal, bVal);
+    }
+
     public static <T> BigDecimal avg(List<T> list, Function<T, BigDecimal> mapFun) {
         if (list == null || list.isEmpty()) {
             return BigDecimal.ZERO;

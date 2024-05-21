@@ -18,12 +18,9 @@ class N1022_根到叶二进制数之和 {
         Integer[] arr = {1, 1};
         TreeNode root = new TreeNode(arr);
         cla.sumRootToLeaf(root);
-        System.out.println(cla.dfs(root, 0));
         System.out.println(cla.ans);
-    }
 
-    public int sumRootToLeaf1(TreeNode root) {
-        return dfs(root,0);
+        System.out.println(cla.dfs2(root, 0));
     }
 
     int ans = 0;
@@ -31,7 +28,6 @@ class N1022_根到叶二进制数之和 {
     Deque<TreeNode> stack;
 
     /**
-     * 瞎写的 FIXME
      * 前序遍历，遍历出从上到下的通路，栈用来回溯，奇怪的问题，有点看不懂
      *
      * @param root
@@ -42,16 +38,21 @@ class N1022_根到叶二进制数之和 {
             return 0;
         }
         stack = new ArrayDeque<>();
-        dfs(root);
-        return 0;
+        dfs1(root);
+        return ans;
     }
 
-    // 路径收集方法
-    private void dfs(TreeNode root) {
+    /**
+     * 路径收集方法
+     * optimize dfs的2种用法，用返回值和不用返回值
+     *
+     * @param root 根节点
+     */
+    private void dfs1(TreeNode root) {
         if (root == null) {
             return;
         }
-        // 这里用栈不如用linkedlist
+        // 这里用栈不如用 linkedList
         stack.push(root);
         if (root.left == null && root.right == null) {
             List<TreeNode> list = new ArrayList<>(stack);
@@ -61,14 +62,14 @@ class N1022_根到叶二进制数之和 {
             }
             ans += Integer.parseInt(str, 2);
         } else {
-            dfs(root.left);
-            dfs(root.right);
+            dfs1(root.left);
+            dfs1(root.right);
         }
         stack.pop();
     }
 
     // 计算方法
-    public int dfs(TreeNode root, int sum) {
+    public int dfs2(TreeNode root, int sum) {
         if (root == null) {
             return 0;
         }
@@ -76,7 +77,7 @@ class N1022_根到叶二进制数之和 {
         if (root.left == null && root.right == null) {
             return temp;
         } else {
-            return dfs(root.left, temp) + dfs(root.right, temp);
+            return dfs2(root.left, temp) + dfs2(root.right, temp);
         }
     }
 }

@@ -44,4 +44,12 @@ class QueueStackSingle {
         AtomicInteger i = new AtomicInteger();
         queue.forEach(val -> System.out.printf("stack[%d] = %d%n", i.getAndIncrement(), val));
     }
+
+    public static void main(String[] args) {
+        QueueStackSingle stack = new QueueStackSingle();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        System.out.println();
+    }
 }

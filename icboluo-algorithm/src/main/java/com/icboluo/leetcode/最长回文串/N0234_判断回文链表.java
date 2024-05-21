@@ -9,9 +9,9 @@ import java.util.List;
  * @author icboluo
  * @since 2022-10-31 13:02
  */
-class N0234_回文链表 {
+class N0234_判断回文链表 {
     public static void main(String[] args) {
-        N0234_回文链表 cla = new N0234_回文链表();
+        var cla = new N0234_判断回文链表();
         ListNode listNode = new ListNode(1, 2, 2, 1);
         boolean b = cla.isPalindrome1(listNode);
         System.out.println("b = " + b);
@@ -45,6 +45,7 @@ class N0234_回文链表 {
 
     /**
      * 链表后半段反转和前半段比较
+     * optimize 这道题的难点是单链表难以反向遍历，但是使用后序遍历，问题会变得简单
      *
      * @param listNode
      * @return

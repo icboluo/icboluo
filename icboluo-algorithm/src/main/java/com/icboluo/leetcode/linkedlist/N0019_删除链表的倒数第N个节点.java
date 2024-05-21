@@ -83,7 +83,7 @@ class N0019_删除链表的倒数第N个节点 {
         if (node == null) {
             return 0;
         }
-        // 强大的后序遍历
+        // optimize 强大的后序遍历
         int len = length(node.next, n) + 1;
         // 倒数第n+1个节点
         if (len == n + 1) {
