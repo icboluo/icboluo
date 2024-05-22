@@ -5,6 +5,8 @@ import java.util.*;
 /**
  * List 删除一个元素怎么保证时间复杂度为O(1)，首先，数组删除一个元素...是绝对不可能实现的
  * List 删除尾部元素可以不进行扩容
+ * <p>
+ * optimize 数组建模，降低时间复杂度
  *
  * @author icboluo
  * @since 2023-06-05 23:23
