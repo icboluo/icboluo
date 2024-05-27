@@ -16,7 +16,7 @@ import jakarta.annotation.Resource;
  * @since 2023-07-07 05:54:32
  */
 @RestController
-@RequestMapping("/area")
+@RequestMapping("area")
 public class AreaController {
 
     @Resource
@@ -28,7 +28,7 @@ public class AreaController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Area queryById(@PathVariable("id") Integer id) {
         return areaService.queryById(id);
     }

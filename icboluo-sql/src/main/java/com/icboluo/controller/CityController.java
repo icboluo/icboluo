@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-07-07 05:55:33
  */
 @RestController
-@RequestMapping("/city")
+@RequestMapping("city")
 public class CityController {
 
     @Resource
@@ -27,7 +27,7 @@ public class CityController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public City queryById(@PathVariable("id") Integer id) {
         return cityService.queryById(id);
     }

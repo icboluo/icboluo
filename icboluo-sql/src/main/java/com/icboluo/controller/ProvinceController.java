@@ -16,7 +16,7 @@ import java.util.List;
  * @since 2021-09-24 20:25:18
  */
 @RestController
-@RequestMapping("/province")
+@RequestMapping("province")
 public class ProvinceController {
     /**
      * 服务对象
@@ -30,12 +30,12 @@ public class ProvinceController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("/selectOne")
+    @GetMapping("selectOne")
     public Province selectOne(Integer id) {
         return provinceService.queryById(id);
     }
 
-    @GetMapping("/selectAll")
+    @GetMapping("selectAll")
     public List<Province> selectAll() {
         return provinceService.selectAll();
     }

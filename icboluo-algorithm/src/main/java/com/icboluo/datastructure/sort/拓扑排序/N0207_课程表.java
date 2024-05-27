@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0200;
+package com.icboluo.datastructure.sort.拓扑排序;
 
 import com.icboluo.common.Node;
 
@@ -10,7 +10,7 @@ import java.util.LinkedList;
  */
 class N0207_课程表 {
     public static void main(String[] args) {
-        N0207_课程表 cla = new N0207_课程表();
+        var cla = new N0207_课程表();
         int num = 2;
         int[][] arr = {{1, 0}};
         boolean b = cla.canFinish(num, arr);
@@ -143,9 +143,9 @@ class N0207_课程表 {
             return;
         }
         for (Node child : root.children) {
-            System.out.printf("从 %s 到 %s" + root, child);
+            System.out.printf("从 %s 到 %s", root, child);
             traverse2(child);
-            System.out.printf("从 %s 到 %s" + child, root);
+            System.out.printf("从 %s 到 %s", child, root);
         }
     }
 }
