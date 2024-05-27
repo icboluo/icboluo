@@ -4,6 +4,9 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.icboluo.common.MyCollector;
+import com.icboluo.object.co.FundDataTodayCo;
+import com.icboluo.object.co.FundIdDateCo;
+import com.icboluo.object.co.SimpleCalCo;
 import com.icboluo.object.query.FundDataCalQuery;
 import com.icboluo.object.query.FundDataQuery;
 import com.icboluo.object.vo.FundDataCalVO;
@@ -14,11 +17,13 @@ import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 
 /**
  * (FundData)表控制层
@@ -55,20 +60,20 @@ public class FundDataController {
         return fundDataService.cal(query.getFundId(), query.getStartDate());
     }
 
-    @GetMapping("/simCal")
-    public Double simCal(Double source, Double target) {
-        double divide = target - source;
-        return divide / source * 100;
+    @PostMapping("/simCal")
+    public Double simCal(@RequestBody SimpleCalCo client) {
+        double divide = client.getTarget() - client.getSource();
+        return divide / client.getSource() * 100;
     }
 
-    @GetMapping("/findRecentData")
-    public FundDataRecentVO findRecentData(String fundId, LocalDate myChooseDate) {
-        return fundDataService.findRecentData(fundId, myChooseDate);
+    @PostMapping("/findRecentData")
+    public FundDataRecentVO findRecentData(@RequestBody FundIdDateCo client) {
+        return fundDataService.findRecentData(client.getFundId(), client.getMyChooseDate());
     }
 
-    @GetMapping("/addToday")
-    public void addToday(String fundId, BigDecimal rate) {
-        fundDataService.addToday(fundId, rate);
+    @PostMapping("/addToday")
+    public void addToday(@RequestBody FundDataTodayCo client) {
+        fundDataService.addToday(client.getFundId(), client.getRate());
     }
 
     @PostMapping("delete")
@@ -76,7 +81,7 @@ public class FundDataController {
         fundDataService.delete(id);
     }
 
-    @GetMapping("/dayOfWeekTest")
+    @PostMapping("/dayOfWeekTest")
     public DayOfWeek dayOfWeekTest() {
         return DayOfWeek.FRIDAY;
     }

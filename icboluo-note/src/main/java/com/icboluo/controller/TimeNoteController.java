@@ -14,10 +14,7 @@ import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -34,26 +31,26 @@ public class TimeNoteController {
     private NoteService noteService;
 
 
-    @GetMapping("init")
-    public Response init(TimeNoteQuery query) {
+    @PostMapping("init")
+    public Response init(@RequestBody TimeNoteQuery query) {
         List<NoteVO> list = noteService.selectList(query);
         return R.correct(BeanUtil.fakePage(list, query));
     }
 
-    @GetMapping("selectAmount")
+    @PostMapping("selectAmount")
     public Map<String, Integer> selectTimeNoteAmount() {
         return noteService.selectAmount();
     }
 
-    @GetMapping("add")
-    public Response add(TimeNoteCO client) {
+    @PostMapping("add")
+    public Response add(@RequestBody TimeNoteCO client) {
         NoteTimeNote noteTimeNote = BeanUtil.copyProperties(client, NoteTimeNote.class);
         int i = timeNoteMapper.insertSelective(noteTimeNote);
         return i == 1 ? R.correct(ReEnum.ADD_SUCCESSFUL)
                 : R.error(ReEnum.ADD_ERROR);
     }
 
-    @GetMapping("update")
+    @PostMapping("update")
     public void update(TimeNoteCO client, String type) {
         validate(client);
         int id = client.getId();
@@ -66,32 +63,32 @@ public class TimeNoteController {
         }
     }
 
-    @GetMapping("onlyUpdateTime")
-    public void onlyUpdateTime(TimeUpdateCO client) {
+    @PostMapping("onlyUpdateTime")
+    public void onlyUpdateTime(@RequestBody TimeUpdateCO client) {
         noteService.onlyUpdateTime(client);
     }
 
-    @GetMapping("updateFinishTime")
-    public void update(TimeUpdateCO client) {
+    @PostMapping("updateFinishTime")
+    public void update(@RequestBody TimeUpdateCO client) {
         noteService.updateFinishTime(client);
     }
 
-    @GetMapping("updateNotFinishTime")
-    public void updateNotFinishTime(TimeUpdateCO client) {
+    @PostMapping("updateNotFinishTime")
+    public void updateNotFinishTime(@RequestBody TimeUpdateCO client) {
         noteService.updateNotFinishTime(client);
     }
 
-    @GetMapping("toOnlyRead")
-    public void toOnlyRead(TimeUpdateCO client) {
+    @PostMapping("toOnlyRead")
+    public void toOnlyRead(@RequestBody TimeUpdateCO client) {
         noteService.toOnlyRead(client);
     }
 
-    @GetMapping("selectByFiled")
-    public List<FiledResultVO> select(@RequestParam("filed") String file) {
+    @PostMapping("selectByFiled")
+    public List<FiledResultVO> select(@RequestBody String file) {
         return noteService.select(file);
     }
 
-    @GetMapping("updateProblem")
+    @PostMapping("updateProblem")
     public void updateProblem() {
 
     }

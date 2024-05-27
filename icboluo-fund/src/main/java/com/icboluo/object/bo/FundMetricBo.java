@@ -50,7 +50,7 @@ public class FundMetricBo {
 
         this.count = summaryStatistics.getCount();
         this.avg = BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(4, RoundingMode.HALF_UP);
-        calNetIncreaseValue();
+        netIncreaseValue = calNetIncreaseValue();
     }
 
     public FundMetricBo(List<List<FundData>> lists, int i) {
@@ -65,6 +65,7 @@ public class FundMetricBo {
         this.doubleDataList = lists;
         this.count = summaryStatistics.getCount();
         this.avg = BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(4, RoundingMode.HALF_UP);
+        netIncreaseValue = calNetIncreaseValue();
     }
 
     public List<Archives<String, Object>> toItemList() {
@@ -73,14 +74,15 @@ public class FundMetricBo {
         return list;
     }
 
-    private void calNetIncreaseValue() {
+    private BigDecimal calNetIncreaseValue() {
         BigDecimal n100 = BigDecimal.valueOf(100);
         BigDecimal start = n100;
         if (dataList != null) {
             for (FundData fundData : dataList) {
                 start = start.multiply(n100.add(fundData.getIncreaseRateDay())).divide(n100, 4, RoundingMode.HALF_UP);
             }
-            netIncreaseValue = start.subtract(n100);
+            return start.subtract(n100);
         }
+        return BigDecimal.ZERO;
     }
 }

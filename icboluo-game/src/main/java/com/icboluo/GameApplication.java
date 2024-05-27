@@ -15,5 +15,4 @@ public class GameApplication {
         HttpUtil.nacosYml();
         SpringApplication.run(GameApplication.class, args);
     }
-
 }

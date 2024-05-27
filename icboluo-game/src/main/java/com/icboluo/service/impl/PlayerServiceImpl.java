@@ -9,7 +9,7 @@ import com.icboluo.entity.*;
 import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.mapper.MonsterMapper;
 import com.icboluo.mapper.PlayerMapper;
-import com.icboluo.pojo.PlayerVO;
+import com.icboluo.object.vo.PlayerVO;
 import com.icboluo.service.CultivationCareerService;
 import com.icboluo.service.PlayerLevelService;
 import com.icboluo.service.PlayerService;
@@ -18,6 +18,8 @@ import com.icboluo.util.BeanUtil;
 import com.icboluo.util.I18nException;
 import com.icboluo.util.IcBoLuoException;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
@@ -34,17 +36,20 @@ import java.util.Map;
  * @since 2022-03-13 01:35:59
  */
 @Service
+@RequiredArgsConstructor
 public class PlayerServiceImpl implements PlayerService {
-    @Resource
-    private PlayerMapper playerMapper;
-    @Resource
-    private MonsterMapper monsterMapper;
-    @Resource
-    private PlayerLevelService playerLevelService;
-    @Resource
-    private DiePlayerMapper diePlayerMapper;
-    @Resource
-    private CultivationCareerService cultivationCareerService;
+    private final PlayerMapper playerMapper;
+
+    private final MonsterMapper monsterMapper;
+
+    private final PlayerLevelService playerLevelService;
+
+    private final DiePlayerMapper diePlayerMapper;
+
+    private final CultivationCareerService cultivationCareerService;
+
+    private final Environment environment;
+
     @Resource
     private RedisList<Player> redisList;
     @Resource
@@ -53,6 +58,7 @@ public class PlayerServiceImpl implements PlayerService {
     private RedisString<String> redisString;
     @Resource
     private RedisTemplate redisTemplate;
+
 
     private StudentService studentService = new StudentServiceImpl();
 
@@ -120,8 +126,13 @@ public class PlayerServiceImpl implements PlayerService {
         player.setTotalExperience(0);
 
         player.setName(studentService.generateZhName());
-//        playerMapper.insert(player);
-        playerMapper.slInsert(player);
+        String profiles = environment.getProperty("spring.profiles.active");
+        assert profiles != null;
+        if (profiles.equals("simple")) {
+            playerMapper.slInsert(player);
+        } else {
+            playerMapper.insert(player);
+        }
         redisHash.hmset(KEY_PRE + player.getId(), player, 600);
 
         CultivationCareer cultivationCareer = new CultivationCareer();

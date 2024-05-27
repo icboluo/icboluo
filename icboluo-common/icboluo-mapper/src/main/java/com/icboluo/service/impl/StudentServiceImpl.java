@@ -54,21 +54,21 @@ public class StudentServiceImpl implements StudentService {
     public String generateEnName() {
         Statement st = conn.createStatement();
         // 数据库中的name字段可以使用attribute来替代
-        ResultSet result1 = st.executeQuery("select count(*) from name where surname_or_name='surname' and language ='en'");
+        ResultSet result1 = st.executeQuery("select count(*) from base_name where surname_or_name='surname' and language ='en'");
         result1.next();
         int enSurnameCount = result1.getInt("count(*)");
 
-        ResultSet result2 = st.executeQuery("select count(*) from name where surname_or_name='name' and language ='en'");
+        ResultSet result2 = st.executeQuery("select count(*) from base_name where surname_or_name='name' and language ='en'");
         result2.next();
         int enNameCount = result2.getInt("count(*)");
 
         int a = RandomUtil.nextInt(enSurnameCount);
-        ResultSet result3 = st.executeQuery("select name from name where surname_or_name='surname' and language ='en' limit " + a + "," + (a + 1));
+        ResultSet result3 = st.executeQuery("select name from base_name where surname_or_name='surname' and language ='en' limit " + a + "," + (a + 1));
         result3.next();
         String enSurName = result3.getString("name");
 
         int b = RandomUtil.nextInt(enNameCount);
-        ResultSet result4 = st.executeQuery("select name from name where surname_or_name='name' and language ='en' limit " + b + "," + (b + 1));
+        ResultSet result4 = st.executeQuery("select name from base_name where surname_or_name='name' and language ='en' limit " + b + "," + (b + 1));
         result4.next();
         String enName = result4.getString("name");
 
@@ -79,21 +79,21 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public String generateZhName() {
         Statement st = conn.createStatement();
-        ResultSet result1 = st.executeQuery("select count(*) from name where surname_or_name='surname' and language ='zh'");
+        ResultSet result1 = st.executeQuery("select count(*) from base_name where surname_or_name='surname' and language ='zh'");
         result1.next();
         int zhSurnameCount = result1.getInt("count(*)");
 
-        ResultSet result2 = st.executeQuery("select count(*) from name where surname_or_name='name' and language ='zh'");
+        ResultSet result2 = st.executeQuery("select count(*) from base_name where surname_or_name='name' and language ='zh'");
         result2.next();
         int zhNameCount = result2.getInt("count(*)");
 
         int a = RandomUtil.nextInt(zhSurnameCount);
-        ResultSet result3 = st.executeQuery("select name from name where surname_or_name='surname' and language ='zh' limit " + a + "," + (a + 1));
+        ResultSet result3 = st.executeQuery("select name from base_name where surname_or_name='surname' and language ='zh' limit " + a + "," + (a + 1));
         result3.next();
         String zhSurName = result3.getString("name");
 
         int b = RandomUtil.nextInt(zhNameCount);
-        ResultSet result4 = st.executeQuery("select name from name where surname_or_name='name' and language ='zh' limit " + b + "," + (b + 1));
+        ResultSet result4 = st.executeQuery("select name from base_name where surname_or_name='name' and language ='zh' limit " + b + "," + (b + 1));
         result4.next();
         String zhName = result4.getString("name");
 

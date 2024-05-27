@@ -4,7 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.icboluo.entity.CultivationCareer;
 import com.icboluo.service.CultivationCareerService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +28,8 @@ public class CultivationCareerController {
      * @param id 主键
      * @return 分页数据
      */
-    @GetMapping("/cultivationCareer")
-    public PageInfo<CultivationCareer> cultivationCareer(Integer id) {
+    @PostMapping("/cultivationCareer")
+    public PageInfo<CultivationCareer> cultivationCareer(@RequestBody Integer id) {
         return cultivationCareerService.cultivationCareer(id);
     }
 }

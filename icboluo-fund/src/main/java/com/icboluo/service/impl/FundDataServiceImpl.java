@@ -236,7 +236,10 @@ public class FundDataServiceImpl implements FundDataService {
 
         List<FundMetricVo> res = new ArrayList<>();
         res.add(TEN_TRADING_AGO(list));
+        res.add(ONE_WEEK_AGO(list));
         res.add(ONE_MONTH_AGO(list));
+        res.add(THREE_MONTH_AGO(list));
+        res.add(SIX_MONTH_AGO(list));
         res.add(ONE_YEAR_AGO(list));
         res.add(TWO_YEAR_AGO(list));
         res.add(THREE_YEAR_AGO(list));
@@ -258,15 +261,54 @@ public class FundDataServiceImpl implements FundDataService {
                 .build();
     }
 
+    private FundMetricVo ONE_WEEK_AGO(List<FundData> dataList) {
+        LocalDate before = LocalDate.now().minusDays(7L);
+        List<FundData> list = dataList.stream()
+                .filter(item -> DateUtil.between(item.getNetValueDate(), before.plusDays(1L), LocalDate.now()))
+                .toList();
+        FundMetricBo business = calBusiness(list);
+
+        return FundMetricVo.builder()
+                .metric(FundMetricEnum.ONE_WEEK_AGO)
+                .businessData(business)
+                .build();
+    }
+
     private FundMetricVo ONE_MONTH_AGO(List<FundData> dataList) {
         LocalDate before = LocalDate.now().minusMonths(1L);
         List<FundData> list = dataList.stream()
-                .filter(item -> DateUtil.between(item.getNetValueDate(), before, LocalDate.now()))
+                .filter(item -> DateUtil.between(item.getNetValueDate(), before.plusDays(1L), LocalDate.now()))
                 .toList();
         FundMetricBo business = calBusiness(list);
 
         return FundMetricVo.builder()
                 .metric(FundMetricEnum.ONE_MONTH_AGO)
+                .businessData(business)
+                .build();
+    }
+
+    private FundMetricVo THREE_MONTH_AGO(List<FundData> dataList) {
+        LocalDate before = LocalDate.now().minusMonths(3L);
+        List<FundData> list = dataList.stream()
+                .filter(item -> DateUtil.between(item.getNetValueDate(), before.plusDays(1L), LocalDate.now()))
+                .toList();
+        FundMetricBo business = calBusiness(list);
+
+        return FundMetricVo.builder()
+                .metric(FundMetricEnum.THREE_MONTH_AGO)
+                .businessData(business)
+                .build();
+    }
+
+    private FundMetricVo SIX_MONTH_AGO(List<FundData> dataList) {
+        LocalDate before = LocalDate.now().minusMonths(6L);
+        List<FundData> list = dataList.stream()
+                .filter(item -> DateUtil.between(item.getNetValueDate(), before.plusDays(1L), LocalDate.now()))
+                .toList();
+        FundMetricBo business = calBusiness(list);
+
+        return FundMetricVo.builder()
+                .metric(FundMetricEnum.SIX_MONTH_AGO)
                 .businessData(business)
                 .build();
     }
@@ -380,14 +422,14 @@ public class FundDataServiceImpl implements FundDataService {
     private List<FundData> recentDayData(List<FundData> dataList, int beforeDay) {
         LocalDate before = LocalDate.now().minusDays(beforeDay);
         return dataList.stream()
-                .filter(item -> DateUtil.between(item.getNetValueDate(), before, LocalDate.now()))
+                .filter(item -> DateUtil.between(item.getNetValueDate(), before.plusDays(1L), LocalDate.now()))
                 .toList();
     }
 
     private List<FundData> recentYearData(List<FundData> dataList, int beforeYear) {
         LocalDate before = LocalDate.now().minusYears(beforeYear);
         return dataList.stream()
-                .filter(item -> DateUtil.between(item.getNetValueDate(), before, LocalDate.now()))
+                .filter(item -> DateUtil.between(item.getNetValueDate(), before.plusDays(1L), LocalDate.now()))
                 .toList();
     }
 

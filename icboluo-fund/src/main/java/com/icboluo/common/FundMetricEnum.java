@@ -10,19 +10,26 @@ public enum FundMetricEnum {
     /**
      * 10个交易日以前的数据
      */
-    @Desc("10个交易日以前的数据")
+    @Desc(value = "10个交易日以前的数据", recommend = Desc.Recommend.LESS_THAN)
     TEN_TRADING_AGO,
 
-    @Desc("最近一个月")
-    ONE_MONTH_AGO,
+    @Desc(value = "近一周", tip = "不包括上周的当天", recommend = Desc.Recommend.LESS_THAN)
+    ONE_WEEK_AGO,
 
-    @Desc("最近一年")
+    @Desc(value = "最近一个月", recommend = Desc.Recommend.LESS_THAN)
+    ONE_MONTH_AGO,
+    @Desc(value = "最近三个月", recommend = Desc.Recommend.LESS_THAN)
+    THREE_MONTH_AGO,
+    @Desc(value = "最近六个月", recommend = Desc.Recommend.LESS_THAN)
+    SIX_MONTH_AGO,
+
+    @Desc(value = "最近一年", recommend = Desc.Recommend.LESS_THAN)
     ONE_YEAR_AGO,
 
-    @Desc("最近二年")
+    @Desc(value = "最近二年", recommend = Desc.Recommend.LESS_THAN)
     TWO_YEAR_AGO,
 
-    @Desc("最近三年")
+    @Desc(value = "最近三年", recommend = Desc.Recommend.LESS_THAN)
     THREE_YEAR_AGO,
 
     @Desc("当收益率为当前的时候，5天内涨幅（以近一年数据为准）")

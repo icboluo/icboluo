@@ -3,14 +3,12 @@ package com.icboluo.controller;
 import com.icboluo.entity.Monster;
 import com.icboluo.entity.Player;
 import com.icboluo.object.IdName;
-import com.icboluo.pojo.PlayerVO;
+import com.icboluo.object.co.AttackCo;
+import com.icboluo.object.vo.PlayerVO;
 import com.icboluo.service.MonsterService;
 import com.icboluo.service.PlayerService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,8 +36,8 @@ public class PlayerController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("exhibit")
-    public PlayerVO queryById(@RequestParam Integer id) {
+    @PostMapping("exhibit")
+    public PlayerVO queryById(@RequestBody Integer id) {
         return playerService.queryById(id);
     }
 
@@ -48,7 +46,7 @@ public class PlayerController {
      *
      * @return 我的角色列表
      */
-    @GetMapping("myRole")
+    @PostMapping("myRole")
     public List<IdName> myRole() {
         List<Player> players = playerService.selectAll();
         return players.stream()
@@ -56,22 +54,22 @@ public class PlayerController {
                 .toList();
     }
 
-    @GetMapping("nextMonster")
+    @PostMapping("nextMonster")
     public Monster nextMonster() {
         return monsterService.nextMonster();
     }
 
-    @GetMapping("attack")
-    public void attack(@RequestParam Integer playerId, @RequestParam Integer monsterId) {
-        playerService.attack(playerId, monsterId);
+    @PostMapping("attack")
+    public void attack(@RequestBody AttackCo client) {
+        playerService.attack(client.getPlayerId(), client.getMonsterId());
     }
 
-    @GetMapping("allMonster")
+    @PostMapping("allMonster")
     public List<Monster> allMonster() {
         return monsterService.allMonster();
     }
 
-    @GetMapping("addRole")
+    @PostMapping("addRole")
     public void addRole() {
         playerService.addRole();
     }

@@ -2,7 +2,7 @@ package com.icboluo.service;
 
 
 import com.icboluo.entity.Player;
-import com.icboluo.pojo.PlayerVO;
+import com.icboluo.object.vo.PlayerVO;
 
 import java.util.List;
 

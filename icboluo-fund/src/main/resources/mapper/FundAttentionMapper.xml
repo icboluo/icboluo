@@ -13,6 +13,7 @@
     <select id="selectByQuery" resultType="com.icboluo.object.vo.FundAttentionVO">
         select *
         from fund_attention
+        order by amount desc
     </select>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
