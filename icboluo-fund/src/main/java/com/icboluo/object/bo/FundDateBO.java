@@ -59,7 +59,6 @@ public class FundDateBO {
         data.setNetAssetValue(netAssetValue);
         data.setNetValueCumulative(netValueCumulative);
         data.setIncreaseRateDay(increaseRateDay);
-        data.setSubscribeStatus(subscribeStatus);
         data.setCreateTime(LocalDateTime.now());
         data.setUpdateTime(LocalDateTime.now());
         return data;

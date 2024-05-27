@@ -37,14 +37,8 @@ public enum FundMetricEnum {
     @Desc("当收益率为当前的时候（取2天数据做比较），5天内涨幅（以近一年数据为准）")
     RISE_COMPARE_TWO_DAY_5,
 
-    @Desc("去年本月平均涨幅")
-    RISE_THIS_MONTH_LAST_YEAR,
-
     @Desc("去年最近一个月平均涨幅（从当前往后推一个月）")
     RISE_RECENT_THIS_MONTH_LAST_YEAR,
-
-    @Desc("前年本月平均涨幅")
-    RISE_THIS_MONTH_LAST_YEAR_2,
 
     @Desc("前年最近一个月平均涨幅（从当前往后推一个月）")
     RISE_RECENT_THIS_MONTH_LAST_YEAR_2,

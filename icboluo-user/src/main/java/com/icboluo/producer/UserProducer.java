@@ -1,6 +1,6 @@
 package com.icboluo.producer;
 
-import com.icboluo.util.IcBoLuoException;
+import com.icboluo.util.I18nException;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -53,7 +53,7 @@ public class UserProducer {
     @GetMapping("login")
     public void login(String id, String pwd) {
         if (!account.containsKey(id) || !Objects.equals(account.get(id), pwd)) {
-            throw new IcBoLuoException("account or password error");
+            throw new I18nException("account or password error");
         }
     }
 }

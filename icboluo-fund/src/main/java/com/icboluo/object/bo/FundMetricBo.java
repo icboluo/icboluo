@@ -31,13 +31,10 @@ public class FundMetricBo {
 
     private Long count;
 
+    /**
+     * 平均增长值
+     */
     private BigDecimal avg;
-
-    private Double min;
-
-    private Double max;
-
-
     /**
      * 净增长值
      */
@@ -53,8 +50,6 @@ public class FundMetricBo {
 
         this.count = summaryStatistics.getCount();
         this.avg = BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(4, RoundingMode.HALF_UP);
-        this.min = summaryStatistics.getMin();
-        this.max = summaryStatistics.getMax();
         calNetIncreaseValue();
     }
 
@@ -70,25 +65,22 @@ public class FundMetricBo {
         this.doubleDataList = lists;
         this.count = summaryStatistics.getCount();
         this.avg = BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(4, RoundingMode.HALF_UP);
-        this.min = summaryStatistics.getMin();
-        this.max = summaryStatistics.getMax();
     }
 
     public List<Archives<String, Object>> toItemList() {
         List<Archives<String, Object>> list = new ArrayList<>();
         list.add(new Archives<>("avg", avg));
-        list.add(new Archives<>("min", min));
-        list.add(new Archives<>("max", max));
         return list;
     }
 
     private void calNetIncreaseValue() {
-        BigDecimal start = BigDecimal.ONE;
+        BigDecimal n100 = BigDecimal.valueOf(100);
+        BigDecimal start = n100;
         if (dataList != null) {
             for (FundData fundData : dataList) {
-                start = start.multiply(fundData.getIncreaseRateDay());
+                start = start.multiply(n100.add(fundData.getIncreaseRateDay())).divide(n100, 4, RoundingMode.HALF_UP);
             }
-            netIncreaseValue = start;
+            netIncreaseValue = start.subtract(n100);
         }
     }
 }

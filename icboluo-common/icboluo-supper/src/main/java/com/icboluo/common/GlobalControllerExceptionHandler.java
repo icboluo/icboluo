@@ -72,7 +72,7 @@ public class GlobalControllerExceptionHandler {
     }
 
     /**
-     * 异常处理,符合就近原则，先处理具体的异常，不能识别交给较大的异常
+     * 异常处理,符合就近原则，先处理具体地异常，不能识别交给较大的异常
      *
      * @param e 异常信息
      * @return 失败的响应信息
@@ -83,7 +83,7 @@ public class GlobalControllerExceptionHandler {
         // 也可以使用这样的方式设置状态码，但是状态码只有200、400、500之类的有效，其他的都没用
         // response.setStatus(500);
         log.error("IcBoLuoException: ", e);
-        return R.error(ReEnum.SYSTEM_ERROR, messageSource);
+        return R.error(ReEnum.SYSTEM_ERROR);
     }
 
     /**
@@ -93,8 +93,8 @@ public class GlobalControllerExceptionHandler {
      * @return 失败的响应信息
      */
     @ExceptionHandler(value = {I18nException.class})
-    public Response icBoLuoI18nExceptionHandler(I18nException e) {
-        log.error("IcBoLuoI18nException: ", e);
+    public Response i18nExceptionHandler(I18nException e) {
+        log.error("I18nException: ", e);
         return R.error(e.getMessage(), messageSource);
     }
 

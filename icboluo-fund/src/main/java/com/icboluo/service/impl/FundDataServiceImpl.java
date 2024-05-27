@@ -243,9 +243,7 @@ public class FundDataServiceImpl implements FundDataService {
         res.add(ONE_WEEK_RISE_5(list));
         res.add(ONE_WEEK_RISE_10(list));
         res.add(ONE_WEEK_RISE_20(list));
-        res.add(RISE_THIS_MONTH_LAST_YEAR(list));
         res.add(RISE_RECENT_THIS_MONTH_LAST_YEAR(list));
-        res.add(RISE_THIS_MONTH_LAST_YEAR_2(list));
         res.add(RISE_RECENT_THIS_MONTH_LAST_YEAR_2(list));
         return res;
     }
@@ -350,19 +348,6 @@ public class FundDataServiceImpl implements FundDataService {
                 .build();
     }
 
-    private FundMetricVo RISE_THIS_MONTH_LAST_YEAR(List<FundData> dataList) {
-        LocalDate first = DateUtil.firstDayOfMonth(LocalDate.now().minusYears(1));
-        LocalDate last = DateUtil.lastDayOfMonth(LocalDate.now().minusYears(1));
-        List<FundData> list = dataList.stream()
-                .filter(item -> DateUtil.between(item.getNetValueDate(), first, last))
-                .toList();
-
-        FundMetricBo business = new FundMetricBo(list);
-        return FundMetricVo.builder()
-                .metric(FundMetricEnum.RISE_THIS_MONTH_LAST_YEAR)
-                .businessData(business)
-                .build();
-    }
 
     private FundMetricVo RISE_RECENT_THIS_MONTH_LAST_YEAR(List<FundData> dataList) {
         LocalDate first = LocalDate.now().minusYears(1);
@@ -374,20 +359,6 @@ public class FundDataServiceImpl implements FundDataService {
         FundMetricBo business = new FundMetricBo(list);
         return FundMetricVo.builder()
                 .metric(FundMetricEnum.RISE_RECENT_THIS_MONTH_LAST_YEAR)
-                .businessData(business)
-                .build();
-    }
-
-    private FundMetricVo RISE_THIS_MONTH_LAST_YEAR_2(List<FundData> dataList) {
-        LocalDate first = DateUtil.firstDayOfMonth(LocalDate.now().minusYears(2));
-        LocalDate last = DateUtil.lastDayOfMonth(LocalDate.now().minusYears(2));
-        List<FundData> list = dataList.stream()
-                .filter(item -> DateUtil.between(item.getNetValueDate(), first, last))
-                .toList();
-
-        FundMetricBo business = new FundMetricBo(list);
-        return FundMetricVo.builder()
-                .metric(FundMetricEnum.RISE_THIS_MONTH_LAST_YEAR_2)
                 .businessData(business)
                 .build();
     }

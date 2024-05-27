@@ -1,6 +1,8 @@
 package com.icboluo.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.icboluo.entity.FundAttention;
+import com.icboluo.mapper.FundAttentionMapper;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.query.FundWeightQuery;
 import com.icboluo.object.vo.FundAttentionVO;
@@ -27,7 +29,16 @@ import java.util.List;
 public class FundAttentionController {
 
     private final FundAttentionService fundAttentionService;
+
+    private final FundAttentionMapper fundAttentionMapper;
+
     private final FundDataService fundDataService;
+
+
+    @PostMapping("detail")
+    public FundAttention detail(@RequestBody String id) {
+        return fundAttentionMapper.selectById(id);
+    }
 
     @PostMapping("init")
     public PageInfo<FundAttentionVO> init(@RequestBody FundAttentionQuery query) {

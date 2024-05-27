@@ -14,15 +14,6 @@ import java.util.List;
  * @since 2021-05-27 23:04:59
  */
 public interface FundAttentionMapper extends MyBaseMapper<FundAttention> {
-
-    /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param fundAttention 实例对象
-     * @return 对象列表
-     */
-    List<FundAttention> queryAllByData(FundAttention fundAttention);
-
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *

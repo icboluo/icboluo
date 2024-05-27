@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.去掉一部分之后的平均值;
+package com.icboluo.leetcode.low;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

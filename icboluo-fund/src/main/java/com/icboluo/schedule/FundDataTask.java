@@ -7,11 +7,9 @@ import com.alibaba.fastjson2.JSONObject;
 import com.icboluo.entity.FundAsyncRecord;
 import com.icboluo.entity.FundAttention;
 import com.icboluo.entity.FundData;
-import com.icboluo.entity.FundInfo;
 import com.icboluo.mapper.FundAsyncRecordMapper;
 import com.icboluo.mapper.FundAttentionMapper;
 import com.icboluo.mapper.FundDataMapper;
-import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.bo.FundCompleteBO;
 import com.icboluo.object.bo.FundCompleteDateBO;
 import com.icboluo.object.bo.FundDataGetBO;
@@ -22,6 +20,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -36,7 +35,7 @@ import java.util.stream.Collectors;
  * @author icboluo
  * @since 2021-33-27 22:33
  */
-//@Component
+@Component
 @Slf4j
 @Profile("!simple")
 public class FundDataTask {
@@ -49,9 +48,6 @@ public class FundDataTask {
 
     @Resource
     private FundAsyncRecordMapper fundAsyncRecordMapper;
-
-    @Resource
-    private FundInfoMapper fundInfoMapper;
 
     /**
      * SchedulingConfigurer 是编程时定时任务；@Scheduled 注解是声明式定时任务
@@ -97,28 +93,19 @@ public class FundDataTask {
     @Scheduled(cron = "0 * * * * ?")
     public void asyncFundInfo() {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
-        List<FundInfo> fundInfos = fundInfoMapper.selectAll();
-        List<FundInfo> list = new ArrayList<>();
+        List<FundAttention> list = new ArrayList<>();
         for (FundAttention fundAttention : fundAttentions) {
-            boolean isExistName = false;
-            for (FundInfo dbInfo : fundInfos) {
-                if (dbInfo.getId().equals(fundAttention.getId())) {
-                    if (StringUtils.hasText(dbInfo.getName())) {
-                        isExistName = true;
-                    }
-                }
-            }
-            if (isExistName) {
+            if (StringUtils.hasText(fundAttention.getName())) {
                 continue;
             }
             String name = httpFundInfo(fundAttention.getId());
-            FundInfo fundInfo = new FundInfo();
+            FundAttention fundInfo = new FundAttention();
             fundInfo.setId(fundAttention.getId());
             fundInfo.setName(name);
             list.add(fundInfo);
         }
         if (!CollectionUtils.isEmpty(list)) {
-            fundInfoMapper.insertOrUpdateBatch(list);
+            fundAttentionMapper.insertOrUpdateBatch(list);
         }
     }
 

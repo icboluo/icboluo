@@ -6,7 +6,6 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="fundId" column="fund_id" jdbcType="VARCHAR"/>
         <result property="increaseRateDay" column="increase_rate_day" jdbcType="DECIMAL"/>
-        <result property="subscribeStatus" column="subscribe_status" jdbcType="VARCHAR"/>
         <result property="netValueDate" column="net_value_date" jdbcType="TIMESTAMP"/>
         <result property="netAssetValue" column="net_asset_value" jdbcType="DECIMAL"/>
         <result property="netValueCumulative" column="net_value_cumulative" jdbcType="DECIMAL"/>
@@ -14,7 +13,7 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value, net_value_cumulative, create_time, update_time
+        id, fund_id, increase_rate_day, net_value_date, net_asset_value, net_value_cumulative, create_time, update_time
     </sql>
 
     <select id="selectByFundId" resultType="com.icboluo.entity.FundData">
@@ -55,27 +54,26 @@
     </select>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+        insert into fund_data(fund_id, increase_rate_day, net_value_date, net_asset_value,
         net_value_cumulative, create_time, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.subscribeStatus}, #{entity.netValueDate},
+            (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.netValueDate},
             #{entity.netAssetValue}, #{entity.netValueCumulative}, #{entity.createTime}, #{entity.updateTime})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into fund_data(fund_id, increase_rate_day, subscribe_status, net_value_date, net_asset_value,
+        insert into fund_data(fund_id, increase_rate_day, net_value_date, net_asset_value,
         net_value_cumulative, create_time, update_time)
         values
         <foreach collection="list" item="entity" separator=",">
-            (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.subscribeStatus}, #{entity.netValueDate},
+            (#{entity.fundId}, #{entity.increaseRateDay}, #{entity.netValueDate},
             #{entity.netAssetValue}, #{entity.netValueCumulative}, #{entity.createTime}, #{entity.updateTime})
         </foreach>
         on duplicate key update
         fund_id = values(fund_id),
         increase_rate_day = values(increase_rate_day),
-        subscribe_status = values(subscribe_status),
         net_value_date = values(net_value_date),
         net_asset_value = values(net_asset_value),
         net_value_cumulative = values(net_value_cumulative),

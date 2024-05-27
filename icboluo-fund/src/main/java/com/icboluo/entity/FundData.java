@@ -38,10 +38,6 @@ public class FundData implements Serializable {
      */
     private BigDecimal increaseRateDay;
     /**
-     * 申购状态
-     */
-    private String subscribeStatus;
-    /**
      * 净值日期
      */
     private LocalDate netValueDate;

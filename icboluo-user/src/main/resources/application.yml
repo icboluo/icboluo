@@ -5,6 +5,9 @@ spring:
     active: simple
   application:
     name: icboluo-user
+  messages:
+    use-code-as-default-message: true
+    basename: i18n/messages
 logging:
   level:
     com.icboluo: debug

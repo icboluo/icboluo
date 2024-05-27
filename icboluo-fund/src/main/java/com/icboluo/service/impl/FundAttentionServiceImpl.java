@@ -6,7 +6,6 @@ import com.icboluo.entity.FundData;
 import com.icboluo.mapper.FundAsyncRecordMapper;
 import com.icboluo.mapper.FundAttentionMapper;
 import com.icboluo.mapper.FundDataMapper;
-import com.icboluo.mapper.FundInfoMapper;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
 import com.icboluo.service.FundAttentionService;
@@ -33,8 +32,6 @@ import java.util.stream.Collectors;
 public class FundAttentionServiceImpl implements FundAttentionService {
     @Resource
     private FundAttentionMapper fundAttentionMapper;
-    @Resource
-    private FundInfoMapper fundInfoMapper;
     @Resource
     private FundDataMapper fundDataMapper;
     @Resource
@@ -155,6 +152,5 @@ public class FundAttentionServiceImpl implements FundAttentionService {
         fundAttentionMapper.deleteById(id);
         fundAsyncRecordMapper.deleteById(id);
         fundDataMapper.deleteByFundId(id);
-        fundInfoMapper.deleteById(id);
     }
 }

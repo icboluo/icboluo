@@ -1,5 +1,6 @@
 package com.icboluo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serial;
@@ -16,7 +17,13 @@ public class FundAttention implements Serializable {
     /**
      * id
      */
+    @TableId
     private String id;
+
+    /**
+     * 基金名称
+     */
+    private String name;
 
     @Serial
     private static final long serialVersionUID = 187840623183179850L;
