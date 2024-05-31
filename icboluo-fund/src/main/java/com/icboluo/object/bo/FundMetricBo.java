@@ -42,8 +42,10 @@ public class FundMetricBo {
 
 
     public FundMetricBo(List<FundData> list) {
-        this.dataList = list;
-        DoubleSummaryStatistics summaryStatistics = list.stream()
+        this.dataList = list.stream()
+                .filter(item -> !ObjectUtils.isEmpty(item.getIncreaseRateDay()))
+                .toList();
+        DoubleSummaryStatistics summaryStatistics = dataList.stream()
                 .map(FundData::getIncreaseRateDay)
                 .filter(item -> !ObjectUtils.isEmpty(item))
                 .collect(Collectors.summarizingDouble(BigDecimal::doubleValue));
@@ -56,6 +58,7 @@ public class FundMetricBo {
     public FundMetricBo(List<List<FundData>> lists, int i) {
         List<FundData> list = lists.stream()
                 .flatMap(Collection::stream)
+                .filter(item -> !ObjectUtils.isEmpty(item.getIncreaseRateDay()))
                 .toList();
         DoubleSummaryStatistics summaryStatistics = list.stream()
                 .map(FundData::getIncreaseRateDay)
