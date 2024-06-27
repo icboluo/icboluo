@@ -1,6 +1,7 @@
 package com.icboluo.stream;
 
 import com.icboluo.object.StatusStudent;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.ObjectUtils;
 
@@ -239,116 +240,133 @@ public class StreamTest {
     }
 
 
-    /**
-     * TODO 总测试，写上一部分待实现的方法之后，可以运行总测试，判断结果是否正确
-     */
     @Test
-    public void test() throws InvocationTargetException, IllegalAccessException {
-        StreamTest streamTest = new StreamTest();
-        Class<StreamTest> cla = StreamTest.class;
-        Method[] methods = cla.getMethods();
-        List<Method> testMethods = Arrays.stream(methods)
-                .filter(method -> !method.getName().startsWith("test") && !method.getName().endsWith("Ans"))
-                .toList();
-        for (Method testMethod : testMethods) {
-            Method ansMethod;
-            try {
-                ansMethod = cla.getMethod(testMethod.getName() + "Ans");
-            } catch (NoSuchMethodException e) {
-                continue;
-            }
-            Object testInvoke = testMethod.invoke(streamTest);
-            if (testInvoke != null) {
-                System.out.println("运行结果为: " + testInvoke);
-                Object ansInvoke = ansMethod.invoke(streamTest);
-                if (ObjectUtils.nullSafeEquals(testInvoke, ansInvoke)) {
-                    System.out.println("结果正确");
-                } else {
-                    System.out.println("结果错误，期望结果为: " + ansInvoke);
-                }
-            }
-        }
+    public void getAllStuNameAns() {
+        List<String> ans = stuList.stream().map(StatusStudent::getName).toList();
+
+        Assertions.assertEquals(ans, getAllStuName());
     }
 
-    public List<String> getAllStuNameAns() {
-        return stuList.stream().map(StatusStudent::getName).toList();
+    @Test
+    public void busyStuCountAns() {
+        Integer ans = (int) stuList.stream().filter(stu -> StatusStudent.Status.BUSY.equals(stu.getStatus())).count();
+
+        Assertions.assertEquals(ans, busyStuCount());
     }
 
-    public Integer busyStuCountAns() {
-        return (int) stuList.stream().filter(stu -> StatusStudent.Status.BUSY.equals(stu.getStatus())).count();
+    @Test
+    public void countStatusAns() {
+        Integer ans = (int) stuList.stream().map(StatusStudent::getStatus).distinct().count();
+
+        Assertions.assertEquals(ans, countStatus());
     }
 
-    public Integer countStatusAns() {
-        return (int) stuList.stream().map(StatusStudent::getStatus).distinct().count();
+    @Test
+    public void limit3Ans() {
+        List<StatusStudent> ans = stuList.stream().limit(3).toList();
+
+        Assertions.assertEquals(ans, limit3());
     }
 
-    public List<StatusStudent> limit3Ans() {
-        return stuList.stream().limit(3).toList();
+    @Test
+    public void toUpperCaseAns() {
+        List<String> ans = stuList.stream().map(StatusStudent::getName).map(String::toUpperCase).toList();
+
+        Assertions.assertEquals(ans, toUpperCase());
     }
 
-    public List<String> toUpperCaseAns() {
-        return stuList.stream().map(StatusStudent::getName).map(String::toUpperCase).toList();
+    @Test
+    public void sortAns() {
+        List<StatusStudent> ans = stuList.stream().sorted((a, b) -> b.getAge() - a.getAge()).toList();
+
+        Assertions.assertEquals(ans, sort());
     }
 
-    public List<StatusStudent> sortAns() {
-        return stuList.stream().sorted((a, b) -> b.getAge() - a.getAge()).toList();
-    }
-
-    public List<Character> containCharAns() {
-        return stuList.stream()
+    @Test
+    public void containCharAns() {
+        List<Character> ans = stuList.stream()
                 .map(StatusStudent::getName)
                 .map(str -> IntStream.range(0, str.length()).mapToObj(str::charAt).toList())
                 .flatMap(Collection::stream)
                 .distinct()
                 .toList();
+
+        Assertions.assertEquals(ans, containChar());
     }
 
-    public int[] ageMaxAndMinAns() {
-        int[] arr = new int[3];
+    @Test
+    public void ageMaxAndMinAns() {
+        int[] ans = new int[3];
         IntSummaryStatistics summary = stuList.stream().collect(Collectors.summarizingInt(StatusStudent::getAge));
-        arr[0] = summary.getMin();
-        arr[1] = summary.getMax();
-        arr[2] = (int) summary.getCount();
-        return arr;
+        ans[0] = summary.getMin();
+        ans[1] = summary.getMax();
+        ans[2] = (int) summary.getCount();
+
+        Assertions.assertEquals(ans, ageMaxAndMin());
     }
 
-    public Boolean ageIsSmall3Ans() {
-        return stuList.stream().anyMatch(stu -> stu.getAge() < 3);
+    @Test
+    public void ageIsSmall3Ans() {
+        Boolean ans = stuList.stream().anyMatch(stu -> stu.getAge() < 3);
+
+        Assertions.assertEquals(ans, ageIsSmall3());
     }
 
-    public Optional<StatusStudent> findFirstStatusIsFreeAns() {
-        return stuList.stream().filter(stu -> stu.getStatus().equals(StatusStudent.Status.FREE)).findFirst();
+    @Test
+    public void findFirstStatusIsFreeAns() {
+        Optional<StatusStudent> ans = stuList.stream().filter(stu -> stu.getStatus().equals(StatusStudent.Status.FREE)).findFirst();
+
+        Assertions.assertEquals(ans, findFirstStatusIsFree());
     }
 
-    public Integer ageMultiplyAns() {
-        return stuList.stream().map(StatusStudent::getAge).reduce(1, (a, b) -> a * b);
+    @Test
+    public void ageMultiplyAns() {
+        Integer ans = stuList.stream().map(StatusStudent::getAge).reduce(1, (a, b) -> a * b);
+
+        Assertions.assertEquals(ans, ageMultiply());
     }
 
-    public Map<StatusStudent.Status, List<StatusStudent>> groupByStatusAns() {
-        return stuList.stream().collect(Collectors.groupingBy(StatusStudent::getStatus));
+    @Test
+    public void groupByStatusAns() {
+        Map<StatusStudent.Status, List<StatusStudent>> ans = stuList.stream().collect(Collectors.groupingBy(StatusStudent::getStatus));
+
+        Assertions.assertEquals(ans, groupByStatus());
     }
 
-    public Map<Boolean, List<StatusStudent>> groupByAgeAns() {
-        return stuList.stream().collect(Collectors.partitioningBy(stu -> stu.getAge() > 3));
+    @Test
+    public void groupByAgeAns() {
+        Map<Boolean, List<StatusStudent>> ans = stuList.stream().collect(Collectors.partitioningBy(stu -> stu.getAge() > 3));
+
+        Assertions.assertEquals(ans, groupByAge());
     }
 
-    public String joinNameAns() {
-        return stuList.stream().map(StatusStudent::getName).collect(Collectors.joining(";"));
+    @Test
+    public void joinNameAns() {
+        String ans = stuList.stream().map(StatusStudent::getName).collect(Collectors.joining(";"));
+
+        Assertions.assertEquals(ans, joinName());
     }
 
-    public Map<StatusStudent.Status, Map<String, List<StatusStudent>>> groupByStatusNameAns() {
-        return stuList.stream()
-                .collect(Collectors.groupingBy(StatusStudent::getStatus,Collectors.groupingBy(StatusStudent::getName)));
+    @Test
+    public void groupByStatusNameAns() {
+        Map<StatusStudent.Status, Map<String, List<StatusStudent>>> ans = stuList.stream()
+                .collect(Collectors.groupingBy(StatusStudent::getStatus, Collectors.groupingBy(StatusStudent::getName)));
+
+        Assertions.assertEquals(ans, groupByStatusName());
     }
 
-    public Map<String, Integer> eleCountMapAns() {
-        return stuList.stream().map(StatusStudent::getName).collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(ele -> 1)));
+    @Test
+    public void eleCountMapAns() {
+        Map<String, Integer> ans = stuList.stream().map(StatusStudent::getName).collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(ele -> 1)));
+
+        Assertions.assertEquals(ans, eleCountMap());
     }
 
-    public String getLinkedMethodAns() {
+    @Test
+    public void getLinkedMethodAns() {
         List<StatusStudent> list = new ArrayList<>(stuList);
         list.add(new StatusStudent(4, null, StatusStudent.Status.BUSY));
-        return list.stream()
+        String ans = list.stream()
                 .filter(stu -> stu.getAge() > 3)
                 .filter(stu -> stu.getStatus().equals(StatusStudent.Status.BUSY))
                 .map(StatusStudent::getName)
@@ -356,5 +374,6 @@ public class StreamTest {
                 .map(String::toUpperCase)
                 .findFirst()
                 .orElse("NOT HAVE THIS DATA");
+        Assertions.assertEquals(ans, getLinkedMethod());
     }
 }

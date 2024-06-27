@@ -95,7 +95,7 @@ public class ThreadTaskDecorator implements TaskDecorator {
         Object inheritableThreadLocals = inheritableField.get(thread);
         if (inheritableThreadLocals != null) {
             // 注意需要保证的是复制一个，而不是持有父类的引用，持有父类的话就违背了线程隔离的原则了
-            // 复制的话，可以采用Thread.
+            // 复制的话，可以采用ThreadLocal.createInheritedMap方法，需要传入参数类型
             Class<?> threadLocalMapClazz = inheritableField.getType();
             String createInheritedMap = "createInheritedMap";
             Method createMethod = ThreadLocal.class.getDeclaredMethod(createInheritedMap, threadLocalMapClazz);

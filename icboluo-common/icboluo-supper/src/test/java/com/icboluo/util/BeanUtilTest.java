@@ -6,6 +6,7 @@ import com.icboluo.object.CodeName;
 import com.icboluo.object.IdName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -137,6 +138,30 @@ class BeanUtilTest {
     @Test
     void parseJoin() {
         String str = "0;1;2;3;4;5;6;7;8;9";
-        assertEquals(10, BeanUtil.parseJoin(str, Integer::new).size());
+        assertEquals(10, BeanUtil.parseJoin(str, Integer::parseInt).size());
+    }
+
+    @Test
+    void getThisAndSupperDeclaredFields() {
+        // 不可使用成员内部类，会多一个this$0
+        List<Field> fieldList = BeanUtil.getThisAndSupperDeclaredFields(A.class);
+        assertEquals(4, fieldList.size());
+    }
+
+    static class A extends B {
+        String a;
+    }
+
+
+    static class B extends C {
+        String b;
+    }
+
+    static class C extends D {
+        String c;
+    }
+
+    static class D {
+        String d;
     }
 }

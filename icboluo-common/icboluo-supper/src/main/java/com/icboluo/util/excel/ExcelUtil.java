@@ -148,7 +148,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 到出列表
+     * 导出列表
      *
      * @param list   需要导出的数据，该数据应该存在 @Excel注解功能
      * @param clazz  导出列表的class

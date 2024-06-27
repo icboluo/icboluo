@@ -456,7 +456,7 @@ public class BeanUtil {
 
     /**
      * <p/>获取本类和父类的所有字段
-     * <p/> for(Field field : BeanUtil.getThisAndSupperDeclaredFields(client.getClass())) {} 增强for循环写成这样是不会循环执行的
+     * <p/> for(Field field : BeanUtil.getThisAndSupperDeclaredFields(client.getClass())) {} 增强for循环写成这样, 后面的方法是不会循环执行的
      *
      * @param clazz 当前类
      * @return 所有字段
