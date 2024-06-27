@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  * id-name注解的解析器
  *
  * @author icboluo
+ * @see IdToName
  * @since 2024-03-28 0:37
  */
 public class IdNameParser {
@@ -119,7 +120,22 @@ public class IdNameParser {
      * @param it
      * @param clazz
      */
-    private void collect(Iterable<?> it, Class<?> clazz) {
+    private void collect(Iterable<?> it, Class<?> clazz) throws IllegalAccessException {
+        for (Map.Entry<IdNameEnum, List<Field>> entry : CACHE.get(clazz).entrySet()) {
+            IdNameEnum key = entry.getKey();
+            if (fieldCodeMap.containsKey(key)) {
+                continue;
+            }
+            List<Field> fields = entry.getValue();
+            List<Object> fieldValList = fieldCodeMap.getOrDefault(key, new ArrayList<>());
+            for (Object object : it) {
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    collectField(fieldValList, object, field);
+                }
+            }
+            fieldCodeMap.put(key, fieldValList);
+        }
     }
 
     /**
@@ -137,6 +153,7 @@ public class IdNameParser {
         }
         for (Map.Entry<IdNameEnum, List<Field>> entry : CACHE.get(cla).entrySet()) {
             IdNameEnum key = entry.getKey();
+            key.findToCache(fieldCodeMap.get(key));
             for (Field field : entry.getValue()) {
                 field.setAccessible(true);
                 parseField(obj, cla, key, field);

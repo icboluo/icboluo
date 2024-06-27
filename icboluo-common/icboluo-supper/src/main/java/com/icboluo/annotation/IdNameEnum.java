@@ -9,6 +9,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 /**
+ * id 转换为name的枚举
+ *
  * @author icboluo
  * @since 2024-03-28 0:29
  */
@@ -25,6 +27,8 @@ public enum IdNameEnum {
     ;
 
     private Executor asyncExecutor;
+
+    private BaseI18nService baseI18nService;
 
 
     /**
@@ -52,12 +56,25 @@ public enum IdNameEnum {
         return new HashMap<>();
     }
 
+
+    /**
+     * 批量查询
+     *
+     * @param list 查询code
+     */
+    public void findToCache(List<Object> list) {
+        if (this == I18N) {
+            baseI18nService.findToCache(list.stream().map(String.class::cast));
+        }
+    }
+
     public String findNameByCode(Map<?, String> idNameMap, Object code) {
         if (this == I18N) {
-            return idNameMap.get(code);
+            return baseI18nService.findNameByCode((String) code).orElse(code + "");
         }
         return null;
     }
+
 
     /**
      * 本类唯一的作用就是间接将bean注入到枚举中
@@ -65,12 +82,12 @@ public enum IdNameEnum {
     @Component
     static class EnumAutowired {
         @Autowired
-        private Executor asyncExecutor;
+        private BaseI18nService baseI18nService;
 
         @PostConstruct
         public void postConstruct() {
             for (IdNameEnum item : EnumSet.allOf(IdNameEnum.class)) {
-                item.asyncExecutor = asyncExecutor;
+                item.baseI18nService = baseI18nService;
             }
         }
     }
