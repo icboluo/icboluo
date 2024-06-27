@@ -5,39 +5,34 @@ import com.github.benmanes.caffeine.cache.Cache;
 import lombok.AllArgsConstructor;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
+ * 简单缓存操作
+ *
  * @author icboluo
  * @since 2022-11-26 10:29
  */
-@AllArgsConstructor
-public class CacheTemplate<K, V> {
+public interface CacheTemplate<K, T extends CacheItem<K>> {
 
     /**
      * 缓存类型
      */
-    private Cache<K, V> cache;
+    Cache<K, T> cache();
 
-    /**
-     * ID获取函数
-     */
-    private Function<V, K> idGetFun;
+    List<T> selectByKeys(List<K> ids);
 
-    /**
-     * 根据id查询函数
-     */
-    private Function<K, V> selectByIdFun;
+    default Optional<String> findNameByCode(K code) {
+        Optional<T> item = findByCode(code);
+        return item.map(CacheItem::getName);
+    }
 
-    /**
-     * 根据id批量查询函数
-     */
-    private Function<List<K>, List<V>> selectByIdsFun;
-
-    public void findToCache(Stream<K> codeStream) {
+    default void findToCache(Stream<K> codeStream) {
+        Cache<K, T> cache = cache();
         // 获取缓存中没有的数据
         List<K> cacheNotHave = codeStream.filter(key -> !ObjectUtils.isEmpty(key))
                 .distinct()
@@ -48,41 +43,49 @@ public class CacheTemplate<K, V> {
             return;
         }
         // 否则将不存在的数据查询出来打进缓存
-        List<V> dbList = selectByIdsFun.apply(cacheNotHave);
-        for (V db : dbList) {
-            cache.put(idGetFun.apply(db), db);
+        List<T> dbList = selectByKeys(cacheNotHave);
+        for (T db : dbList) {
+            cache.put(db.getKey(), db);
         }
     }
 
-    public Optional<V> findByCode(K id) {
+    default Optional<T> findByCode(K id) {
         return findByCode(id, null);
     }
 
-    public Optional<V> findByCode(K id, Function<K, V> generateInvalidate) {
+    default Optional<T> findByCode(K id, Function<K, T> generateInvalidate) {
+        Cache<K, T> cache = cache();
         if (ObjectUtils.isEmpty(id)) {
             return Optional.empty();
         }
         // 如果缓存中存在，直接返回
-        V cacheData = cache.getIfPresent(id);
+        T cacheData = cache.getIfPresent(id);
         if (cacheData != null) {
             return Optional.of(cacheData);
         }
         // 缓存中不存在，从db中获取返回
-        V db = selectByIdFun.apply(id);
-        if (db != null) {
+        List<T> items = selectByKeys(Collections.singletonList(id));
+        if (!items.isEmpty()) {
+            T db = items.get(0);
             cache.put(id, db);
             return Optional.of(db);
         }
         // 缓存无效数据
         if (generateInvalidate != null) {
-            V invalidateData = generateInvalidate.apply(id);
+            T invalidateData = generateInvalidate.apply(id);
             cache.put(id, invalidateData);
             return Optional.of(invalidateData);
         }
         return Optional.empty();
     }
 
-    public void invalidate(K k) {
-        cache.invalidate(k);
+    /**
+     * 使无效
+     *
+     * @param keys 键集合
+     */
+    default void invalidate(List<?> keys) {
+        Cache<K, T> cache = cache();
+        BeanUtil.batchConsumer(keys, cache::invalidate);
     }
 }
