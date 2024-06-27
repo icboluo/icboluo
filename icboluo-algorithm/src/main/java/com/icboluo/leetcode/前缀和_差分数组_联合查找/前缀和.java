@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.前缀和_差分数组;
+package com.icboluo.leetcode.前缀和_差分数组_联合查找;
 
 /**
  * 算出一共有几个和为 k 的子数组

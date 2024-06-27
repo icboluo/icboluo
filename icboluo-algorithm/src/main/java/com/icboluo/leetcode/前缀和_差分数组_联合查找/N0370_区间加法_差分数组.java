@@ -1,10 +1,10 @@
-package com.icboluo.leetcode.前缀和_差分数组;
+package com.icboluo.leetcode.前缀和_差分数组_联合查找;
 
 /**
  * @author icboluo
- * @since 2024-03-26 0:06
+ * @since 2023-10-21 20:32
  */
-class N1109_公司航班系统_差分数组 {
+class N0370_区间加法_差分数组 {
     public int[] corpFlightBookings(int[][] bookings, int n) {
         DifferenceArr differenceArr = new DifferenceArr(new int[n]);
         for (int[] booking : bookings) {

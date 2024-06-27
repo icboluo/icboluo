@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.前缀和_差分数组;
+package com.icboluo.leetcode.前缀和_差分数组_联合查找;
 
 /**
  * @author icboluo
