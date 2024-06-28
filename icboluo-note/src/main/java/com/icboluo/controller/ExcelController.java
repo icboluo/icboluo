@@ -12,14 +12,12 @@ import com.icboluo.object.view.StudentVO;
 import com.icboluo.service.ExcelService;
 import com.icboluo.service.StudentService;
 import com.icboluo.service.impl.StudentServiceImpl;
+import com.icboluo.util.IoHelper;
 import com.icboluo.util.excel.ExcelExportResolve;
 import com.icboluo.util.excel.ExcelUtil;
-import com.icboluo.util.ExcelHelper;
-import com.icboluo.util.IoHelper;
 import com.icboluo.util.excel.ValidHeadBodyListener;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -71,13 +69,6 @@ public class ExcelController {
         excelService.write(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
     }
 
-    @GetMapping("customizationTitleExport")
-    public void customizationTitleExport(HttpServletResponse response) {
-        List<StudentVO> students = studentService.generateList(10).stream().map(StudentVO::new).toList();
-        List<String> strings = Arrays.asList("name", "id", "age");
-        ExcelHelper.exportExcel(response, strings, StudentVO.class, students);
-    }
-
     @GetMapping("importStudent")
     public void importStudent(HttpServletRequest request) throws IOException {
         LocalDateTime gmtStart = LocalDateTime.now();
@@ -95,10 +86,7 @@ public class ExcelController {
                     .build();
             er.read(rs);
         }
-
         List<StudentVO> read = listener.getList();
-        String errorMsg = listener.getErrorMsg();
-        ExcelHelper.removeErrData(read, null, listener.getHead());
         read.forEach(System.out::println);
     }
 

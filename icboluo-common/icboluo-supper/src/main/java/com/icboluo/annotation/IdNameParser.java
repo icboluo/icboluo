@@ -188,13 +188,13 @@ public class IdNameParser {
             String target = idToName.target();
             Field targetField = cla.getDeclaredField(target);
             targetField.setAccessible(true);
-            String name = key.findNameByCode(fieldValueMap.get(key).join(), field.get(obj));
+            String name = key.findNameByCode(field.get(obj));
             if (targetField.get(obj) == null) {
                 targetField.set(obj, name);
             }
         } else if (Archives.class.isAssignableFrom(field.getType())) {
             Archives<?, ?> arch = (Archives<?, ?>) field.get(obj);
-            String name = key.findNameByCode(fieldValueMap.get(key).join(), arch.getId());
+            String name = key.findNameByCode(arch.getId());
             if (arch.getId() != null && arch.getName() == null && name != null) {
                 arch.setName(BeanUtil.cast(name));
             }

@@ -84,8 +84,8 @@ public interface CacheTemplate<K, T extends CacheItem<K>> {
      *
      * @param keys 键集合
      */
-    default void invalidate(List<?> keys) {
+    default void invalidate(List<K> keys) {
         Cache<K, T> cache = cache();
-        BeanUtil.batchConsumer(keys, cache::invalidate);
+        BeanUtil.batchConsumer(keys, cache::invalidateAll);
     }
 }

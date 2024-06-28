@@ -1,11 +1,25 @@
 package com.icboluo.util;
 
 /**
+ * 缓存项
+ *
  * @author icboluo
- * @since 2024-06-28 上午12:41
+ * @since 2024-05-21 22:47
  */
 public interface CacheItem<K> {
-    String getName(K v);
 
+    /**
+     * 获取key
+     *
+     * @return key
+     */
     K getKey();
+
+    /**
+     * 获取名称
+     *
+     * @return 名称
+     */
+    String getName();
 }
+

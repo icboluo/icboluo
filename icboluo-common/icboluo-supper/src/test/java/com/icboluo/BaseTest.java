@@ -13,7 +13,6 @@ import org.springframework.web.context.WebApplicationContext;
  * @since 2024-06-28 上午1:23
  */
 @SpringBootTest(classes = SupperApplication.class)
-@RunWith(SpringRunner.class)
 public abstract class BaseTest {
     /**
      * <p>
@@ -32,7 +31,7 @@ public abstract class BaseTest {
      * <p>
      * 在这里，我们测试前注册了 mockMvc
      * <p>
-     * 我们使用的是 org.junit.jupiter.api 包地下的测试功能，所以使用的是 @BeforeEach 注解
+     * 我们使用的是 org.junit.jupiter.api 包底下的测试功能，所以使用的是 @BeforeEach 注解
      *
      * @see org.junit.Before 这个是旧版本的
      * @see org.junit.jupiter.api.BeforeEach

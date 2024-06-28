@@ -47,20 +47,6 @@ public enum IdNameEnum {
      * 批量查询
      *
      * @param list 查询code
-     * @return id-name映射
-     */
-    public Map<?, String> selectMap(List<Objects> list) {
-        if (this == I18N) {
-            return new HashMap<>();
-        }
-        return new HashMap<>();
-    }
-
-
-    /**
-     * 批量查询
-     *
-     * @param list 查询code
      */
     public void findToCache(List<Object> list) {
         if (this == I18N) {
@@ -68,7 +54,7 @@ public enum IdNameEnum {
         }
     }
 
-    public String findNameByCode(Map<?, String> idNameMap, Object code) {
+    public String findNameByCode(Object code) {
         if (this == I18N) {
             return baseI18nService.findNameByCode((String) code).orElse(code + "");
         }

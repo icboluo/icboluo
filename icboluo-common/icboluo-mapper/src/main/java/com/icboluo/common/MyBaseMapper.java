@@ -52,17 +52,7 @@ public interface MyBaseMapper<T> extends BaseMapper<T> {
      * @return 受影响行数
      */
     default int deleteByPrimaryKeys(Collection<? extends Serializable> idList) {
-        return deleteBatchIds(idList);
-    }
-
-    /**
-     * 删除（根据ID或实体 批量删除）
-     *
-     * @param idList 主键ID列表或实体列表(不能为 null 以及 empty)
-     * @return 受影响行数
-     */
-    default int deleteByIds(Collection<? extends Serializable> idList) {
-        return deleteBatchIds(idList);
+        return deleteByIds(idList);
     }
 
     /**

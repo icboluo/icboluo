@@ -7,12 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.util.Assert;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 class IdNameParserTest extends BaseTest {
 
@@ -21,10 +18,14 @@ class IdNameParserTest extends BaseTest {
 
     @Override
     protected void childBefore() {
-        Map<String, String> map = new HashMap<>();
-        map.put("id", "14");
-        map.put("name", "zhang shan");
-        Mockito.doReturn(map).when(baseI18nService).selectByKeys(Mockito.anyList());
+        BaseI18n item1 = new BaseI18n();
+        item1.setKey("id");
+        item1.setName("14");
+        BaseI18n item2 = new BaseI18n();
+        item2.setKey("name");
+        item2.setName("zhang shan");
+
+        Mockito.doReturn(Arrays.asList(item1, item2)).when(baseI18nService).selectByKeys(Mockito.anyList());
     }
 
     @Test
@@ -46,7 +47,7 @@ class IdNameParserTest extends BaseTest {
         item1.status = codeName;
         A item2 = new A();
         CodeName codeName2 = new CodeName();
-        codeName2.setId("id");
+        codeName2.setId("name");
         item2.status = codeName2;
 
         List<A> list = Arrays.asList(item1, item2);
@@ -57,6 +58,7 @@ class IdNameParserTest extends BaseTest {
 
     @Data
     public static class A {
+        @IdToName(data = IdNameEnum.I18N)
         CodeName status;
         Integer number;
     }

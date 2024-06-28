@@ -1,5 +1,6 @@
 package com.icboluo.annotation;
 
+import com.icboluo.util.CacheItem;
 import lombok.Data;
 
 /**
