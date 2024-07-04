@@ -163,35 +163,4 @@ public class GlobalControllerExceptionHandler {
         log.error("Exception: ", e);
         return R.error(Response.ERROR_CODE, msg);
     }
-
-
-    /**
-     * 打印 {@code request} 信息 和 {@code e} 信息
-     *
-     * @param e 错误信息
-     */
-    private void printLog(Throwable e) {
-        if (log.isDebugEnabled()) {
-            StringBuilder builder = new StringBuilder();
-            builder.append(e.getMessage());
-            builder.append("\nURL:").append(request.getRequestURL().toString()).append('\n');
-            builder.append("Method:").append(request.getMethod()).append('\n');
-            builder.append("Headers:\n");
-            Enumeration<String> headerNames = request.getHeaderNames();
-            while (headerNames.hasMoreElements()) {
-                String name = headerNames.nextElement();
-                builder.append(name).append(":").append(request.getHeader(name)).append('\n');
-            }
-            builder.append("Cookies:");
-            Cookie[] cookies = request.getCookies();
-            if (Objects.nonNull(cookies)) {
-                for (Cookie cookie : cookies) {
-                    builder.append(cookie.getName()).append(":").append(cookie.getValue()).append('\n');
-                }
-            }
-            log.error("{}", builder, e);
-        } else {
-            log.error("{}", e.getMessage(), e);
-        }
-    }
 }
