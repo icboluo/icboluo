@@ -142,8 +142,9 @@ mysql 只要where里面有索引，就会按照索引排序，有时候索引是
 
 删除主键数据：truncate table base_operate_log
 
+mysql 自增属性要先删除较大的，再增加自增索引
+
 ```mysql
--- 这个是设置自动地增值为1，但是没有效果
 alter table base_operate_log
     auto_increment = 1;
 ```
@@ -328,3 +329,7 @@ where find_in_set('1',replace(product1,';',','))
 mysql在同一个会话窗口中，由于只有一个事物在执行，因此不会发生死锁
 
 同一个会话窗口是指同一个idea的console，同一个navicat的一个查询页面，java的同一个线程
+
+## jpa
+
+jpa支持序列，序列要求新增一个自增主键独立起来

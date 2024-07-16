@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +20,7 @@ public class MyBatisTest {
     @Test
     public void test1() throws IOException {
         // 配置全局配置文件 通过工具类获取配置文件的输入流 该文件中拥有SQL的账号密码等设置
-        InputStream inputStream = Resources.getResourceAsStream("mybatis.xml");
+        InputStream inputStream = new ClassPathResource("mybatis.xml").getInputStream();
         // 一个SqlSessionFactory只能连接一个数据库实例（聚合了数据库配置或者聚合了数据库通道
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         // 增删改操作需要事务的提交。设置自动提交事务

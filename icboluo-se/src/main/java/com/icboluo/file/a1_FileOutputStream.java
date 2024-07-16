@@ -18,12 +18,12 @@ import java.io.IOException;
  * @author icboluo
  * @since 2020-08-10 14:03
  */
-class Demo01FileOutputStream {
+class a1_FileOutputStream {
 
     @Test
     public void test1() throws IOException {
         // 创建一个文件输出流对象, 如果文件不存在, 该对象会自动创建该文件，存在则覆盖
-        FileOutputStream out = new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        FileOutputStream out = new FileOutputStream(FileRelativePathPre.RESOURCES + "a.txt");
         // 向文件中输出数据
         out.write('7');
         out.write('8');
@@ -53,7 +53,7 @@ class Demo01FileOutputStream {
         out.close();
         System.out.println("写入完成...");
         // 创建了一个文件输出流对象, 实现文件数据的拼接.
-        FileOutputStream out2 = new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt", true);
+        FileOutputStream out2 = new FileOutputStream(FileRelativePathPre.RESOURCES + "a.txt", true);
 //      此时输出'中'，20013超出256范围,发生数据溢出，模运算再按照ascii码表输出
         out2.write('中');
         out2.close();
@@ -62,7 +62,7 @@ class Demo01FileOutputStream {
     @Test
     public void test2() throws IOException {
 //      创建一个文件输入流对象
-        FileInputStream in1 = new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        FileInputStream in1 = new FileInputStream(FileRelativePathPre.RESOURCES + "a.txt");
 
         StringBuilder sb1 = IoUtil.readFileInputStream(in1);
         // 123ä¸­å½
@@ -70,7 +70,7 @@ class Demo01FileOutputStream {
         in1.close();
 
 //        读到的数据是编码
-        FileInputStream in2 = new FileInputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+        FileInputStream in2 = new FileInputStream(FileRelativePathPre.RESOURCES + "a.txt");
         StringBuilder sb2 = IoUtil.readFileInputStream2(in2);
 //        [49, 50, 51, -28, -72, -83, -27, -101][-67, 13, 10, -28, -72, -83, -27, -101]
         System.out.println(sb2);

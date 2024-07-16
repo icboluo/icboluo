@@ -1,7 +1,6 @@
-package com.icboluo.z3_jedis.dao;
+package com.icboluo.z3_jedis;
 
 import com.icboluo.z2.JDBCUtil;
-import com.icboluo.z3_jedis.bean.Student;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 

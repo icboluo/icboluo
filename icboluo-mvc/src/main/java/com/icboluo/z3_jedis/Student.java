@@ -1,4 +1,4 @@
-package com.icboluo.z3_jedis.bean;
+package com.icboluo.z3_jedis;
 
 import lombok.Data;
 

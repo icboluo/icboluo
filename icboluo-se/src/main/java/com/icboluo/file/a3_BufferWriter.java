@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author icboluo
  * @since 2020-08-10 14:25
  */
-class Demo06BufferWriter {
+class a3_BufferWriter {
     public static void main(String[] args) throws IOException {
         //创建高效的缓冲字符写入流
         BufferedWriter writer = new BufferedWriter(new FileWriter(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"));

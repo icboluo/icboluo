@@ -1,6 +1,5 @@
-package com.icboluo.z3_jedis.web;
+package com.icboluo.z3_jedis;
 
-import com.icboluo.z3_jedis.service.StudentService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author icboluo
  * @since 2020-08-10 14:19
  */
-class Demo03FileWriter {
+class a2_FileWriter {
     @Test
     public void test1() throws IOException {
 //      创建一个字符文件写入流对象

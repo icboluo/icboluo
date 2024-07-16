@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
  * id转换为name的注解
  *
  * @author icboluo
+ * @see IdNameParser
  * @since 2024-03-28 0:28
  */
 @Retention(RetentionPolicy.RUNTIME)

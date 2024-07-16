@@ -1,6 +1,5 @@
-package com.icboluo.z3_jedis.test;
+package com.icboluo.z3_jedis;
 
-import com.icboluo.z3_jedis.utils.JedisUtil;
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

@@ -11,7 +11,7 @@ import java.util.List;
  * @author icboluo
  * @since 2020-08-12 15:32
  */
-class SerializeDemo {
+class a6_ObjectOutputStream {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         StatusStudent stu = new StatusStudent(18, "小明");
         // 对象流 TODO 这里会乱码应该怎么处理呢

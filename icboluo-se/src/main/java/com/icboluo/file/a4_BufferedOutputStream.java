@@ -8,7 +8,7 @@ import java.io.*;
  * @author icboluo
  * @since 2020-08-12 14:26
  */
-public class Demo07 {
+public class a4_BufferedOutputStream {
     public static void main(String[] args) throws IOException {
 //        利用高效字节输出流往C盘下的d.txt文件输出一个字节数
         FileOutputStream fos = new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");

@@ -1,10 +1,7 @@
-package com.icboluo.z3_jedis.service;
+package com.icboluo.z3_jedis;
 
 import com.alibaba.fastjson2.JSON;
 import com.icboluo.util.TimeRecord;
-import com.icboluo.z3_jedis.bean.Student;
-import com.icboluo.z3_jedis.dao.StudentDao;
-import com.icboluo.z3_jedis.utils.JedisUtil;
 import redis.clients.jedis.Jedis;
 
 import java.util.List;

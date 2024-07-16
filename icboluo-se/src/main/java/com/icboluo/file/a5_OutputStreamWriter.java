@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  * @author icboluo
  * @since 2020-08-12 15:03
  */
-class Demo11StreamWR {
+class a5_OutputStreamWriter {
     public static void main(String[] args) throws IOException {
         String str = "我爱Java";
         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt"), StandardCharsets.UTF_8);

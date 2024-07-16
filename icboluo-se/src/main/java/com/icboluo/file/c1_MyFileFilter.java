@@ -9,7 +9,7 @@ import java.io.FileFilter;
  * 自定义文件过滤器类
  */
 @AllArgsConstructor
-class MyFileFilter implements FileFilter {
+class c1_MyFileFilter implements FileFilter {
 
     private final String suffix;
 

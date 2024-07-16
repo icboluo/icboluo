@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  *          multipleSheet.handler(mf);
  *     }<pre/>
  *
- * 该类设计的目的是想采用模版方法模式，使用设计模式Template为后缀做表示；希望可以通过重写子类，实现自定义控制导入流程
+ * 该类设计的目的是想采用模版方法模式，使用设计模式Template为后缀做标识；希望可以通过重写子类，实现自定义控制导入流程
  * 所以本类大部分方法为public，目的就是方便重写
  * 不过建类是繁琐的，本类提供了一套默认实现，方便调用（因此本类没有设计为抽象类
  * @author icboluo

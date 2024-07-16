@@ -28,16 +28,19 @@ public class FileTest {
     /**
      * 通过将给定的路径名字符串转换为抽象路径名来创建新的 File实例
      */
-    private final File file = new File(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES + "a.txt");
+    private final File file = new File(FileRelativePathPre.RESOURCES + "c.txt");
     /**
      * 从父路径名字符串和子路径名字符串创建新的 File实例
      */
-    private final File dirFile = new File(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES, "a.txt");
+    private final File dirFile = new File(FileRelativePathPre.RESOURCES, "c.txt");
 
-    private final File parent = new File(FileRelativePathPre.SE + FileRelativePathPre.RESOURCES);
+    private final File parent = new File(FileRelativePathPre.RESOURCES);
 
     @Test
     public void test1() throws IOException {
+        // new File 不会创建文件或文件夹，只是进行装载
+        // 要创建可以使用 createNewFile; mkdirs
+        new File(FileRelativePathPre.RESOURCES + "d.txt");
         try {
             // 文件的创建 (只能创建文件, 不能创建文件夹)
             boolean result = file.createNewFile();
@@ -76,8 +79,8 @@ public class FileTest {
         }
 
 /*        情况一 : 文件, 直接删除.
-                情况二 : 空文件夹. 也可以直接删除.
-                情况三 : 非空文件夹, 不可以删除. (从内向外删除)*/
+          情况二 : 空文件夹. 也可以直接删除.
+          情况三 : 非空文件夹, 不可以删除. (从内向外删除)*/
         boolean result4 = dirFile.delete();
     }
 
@@ -89,9 +92,9 @@ public class FileTest {
         System.out.println("返回由此File表示的文件或目录的名称->" + dirFile.getName());
         System.out.println("文件中的数据长度（字节）->" + dirFile.length());
         System.out.println("父文件夹连续地址，没有盘符地址->" + dirFile.getParentFile());
-        //此File表示的文件或目录是否实际存在
+        // 此File表示的文件或目录是否实际存在
         boolean exists = file.exists();
-        //此File表示的是否为目录。 是否为目录/文件夹
+        // 此File表示的是否为目录。 是否为目录/文件夹
         boolean directory = file.isDirectory();
         //此File表示的是否为文件
         boolean isFile = file.isFile();
@@ -142,43 +145,12 @@ public class FileTest {
         System.out.println(new File(resource.getFile()).exists());
     }
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-
-    @Test
-    public void test6() throws IOException {
-        System.out.println(ResourceUtils.getFile("classpath:a.txt").exists());
-        Resource resource = resourceLoader.getResource("classpath:a.txt");
-        System.out.println(resource.getFile().exists());
-    }
-
-    @Autowired
-    private ApplicationContext applicationContext;
-
-/*    @Autowired
-    private ServletContext servletContext;
-
-    @Test
-    public void test7() throws IOException {
-        Resource resource = applicationContext.getResource("classpath:a.txt");
-        InputStream inputStream1 = resource.getInputStream();
-        InputStream inputStream2 = servletContext.getResourceAsStream("WEB-INF/class/a.txt");
-    }*/
-
-    @Test
-    public void test8() throws IOException {
-        // 可以加载配置文件，这个加载的相对路径前缀是classes 所以说，配置文件的加载使用类加载器更合适一点
-        InputStream is = Demo.class.getClassLoader().getResourceAsStream("Spring.xml");
-        Properties properties = new Properties();
-        properties.load(is);
-    }
-
     private void printDir(File dir, String suffix) {
         //前置做法，直接不要不合法数据
         File[] files = dir.listFiles(pathname ->
                 (pathname.isFile() && pathname.getName().endsWith(suffix)) || pathname.isDirectory());
 //        实现类做法
-        File[] files1 = dir.listFiles(new MyFileFilter(suffix));
+        File[] files1 = dir.listFiles(new c1_MyFileFilter(suffix));
 //        匿名内部类做法
         File[] files2 = dir.listFiles(new FileFilter() {
             @Override
