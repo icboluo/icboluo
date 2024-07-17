@@ -6,12 +6,9 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO 这里不是可以不要注入吗
- *
  * @author icboluo
  * @since 2023-08-22 1:08
  */
-@Component
 public class SpringUtil implements BeanFactoryAware {
 
     private static BeanFactory beanFactory;
