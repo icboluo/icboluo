@@ -1,5 +1,7 @@
 package com.icboluo.leetcode.bfs;
 
+import com.icboluo.leetcode.前缀和_差分数组_联合查找.UnionFind;
+
 import java.util.*;
 
 /**
@@ -11,6 +13,9 @@ class N1971_查找图中是否存在路径 {
         var cla = new N1971_查找图中是否存在路径();
         int[][] arr = {{0, 4}};
         System.out.println(cla.validPath1(5, arr, 0, 4));
+
+        int[][] arr1 = {{0, 7}, {0, 8}, {6, 1}, {2, 0}, {0, 4}, {5, 8}, {4, 7}, {1, 3}, {3, 5}, {6, 5}};
+        System.out.println(cla.validPath3(10, arr1, 7, 5));
     }
 
     /**
@@ -61,5 +66,13 @@ class N1971_查找图中是否存在路径 {
     public boolean validPath2(int n, int[][] edges, int source, int destination) {
         return false;
     }
-    // TODO 方案3 连通分量，因为是无向图，我们仅仅需要起点和终点在一个连通分量重（而不需要拓扑排序获取路径长度，代码复杂
+
+    // 方案3 连通分量，因为是无向图，我们仅仅需要起点和终点在一个连通分量重（而不需要拓扑排序获取路径长度
+    public boolean validPath3(int n, int[][] edges, int source, int destination) {
+        UnionFind uf = new UnionFind(n);
+        for (int[] edge : edges) {
+            uf.union(edge[0], edge[1]);
+        }
+        return uf.find(source) == uf.find(destination);
+    }
 }

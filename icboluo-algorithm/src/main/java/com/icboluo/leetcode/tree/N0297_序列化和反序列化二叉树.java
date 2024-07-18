@@ -4,41 +4,33 @@ import com.icboluo.common.TreeNode;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 /**
  * @author icboluo
  * @since 2023-05-22 21:19
  */
 class N0297_序列化和反序列化二叉树 {
-//    FIXME
     public static void main(String[] args) {
         var cla = new N0297_序列化和反序列化二叉树();
-        TreeNode tree = cla.deserialize("1,2,3,null,null,4,5");
-        tree.print();
-        System.out.println(cla.serialize(tree));
+        TreeNode tree = new TreeNode(1, 2, 3, null, null, 4, 5);
+        String sa1 = cla.serialize1(tree);
+        System.out.println(sa1);
+        // 题目本身没有做任何限制，只是让一组数据经过序列化和反序列化之后可以还原即可，层级遍历是一个易于想到的方案，但是不易实现；相反，前序遍历容易实现一点
+        // 方法1使用的是前序遍历，序列化也使用的是前序遍历，是合理的
+        cla.deserialize1(sa1).print();
 
-        // Positive test case
-        Queue<Integer> queue = new LinkedList<>(Arrays.asList(1, 2, 3, null, null, 4, 5));
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(3);
-        root.right.left = new TreeNode(4);
-        root.right.right = new TreeNode(5);
-        assertEquals(root, cla.buildTree1(queue));
-        // Negative test case
-        queue = new LinkedList<>(Arrays.asList(null, null, null));
-        assertNull(cla.buildTree1(queue));
+        // 方法2使用的是层级遍历，但是没有层级遍历的序列化代码，需要重新排版
+        String sa2 = cla.serialize2(tree);
+        cla.deserialize2(sa2).print();
     }
 
     String spliter = ",";
 
     String nullEle = "null";
 
-    // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        // 这个也就是层级遍历，可以将层级遍历的代码迁移过来
+    // optimize Encodes a tree to a single string.
+    // 序列化的结果并不是标准的完全二叉树层级遍历结果，而是一个前序遍历结果
+    // 同样，反序列化的过程也是针对于前序遍历的结果进行处理，此过程非常难以理解
+    public String serialize1(TreeNode root) {
         StringBuilder sb = new StringBuilder();
         preOrder(root, sb);
         return sb.toString();
@@ -56,22 +48,13 @@ class N0297_序列化和反序列化二叉树 {
     }
 
     // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
+    public TreeNode deserialize1(String data) {
         // 对于字符串是难以操作的，转换为可操作列表
-        Deque<Integer> queue = new LinkedList<>();
-        for (String val : data.split(spliter)) {
-            if (val.equals(nullEle)) {
-                queue.offer(null);
-            } else {
-                queue.offer(Integer.parseInt(val));
-            }
-        }
+        Deque<Integer> queue = buildDeque(data);
         return buildTree1(queue);
-//        return buildTree3(queue.toArray(Integer[]::new), 0);
     }
 
     // dfs的书写是简单的，理解难度挺简单
-    // TODO 将 TreeNode 里面的dfs也移动过来测试, 应该提取一个treeUtil
     private TreeNode buildTree1(Queue<Integer> queue) {
         Integer first = queue.poll();
         if (first == null) {
@@ -82,12 +65,19 @@ class N0297_序列化和反序列化二叉树 {
         root.right = buildTree1(queue);
         return root;
     }
-    // FIXME ERROR
+
+    public String serialize2(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        preOrder(root, sb);
+        return sb.toString();
+    }
+
+    public TreeNode deserialize2(String data) {
+        Deque<Integer> queue = buildDeque(data);
+        return buildTree2(new ArrayList<>(queue));
+    }
 
     private TreeNode buildTree2(List<Integer> list) {
-        if (list.get(0) == null) {
-            return null;
-        }
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(list.get(0));
         queue.add(root);
@@ -113,14 +103,15 @@ class N0297_序列化和反序列化二叉树 {
         return root;
     }
 
-    // FIXME ERROR
-    private TreeNode buildTree3(Integer[] arr, int index) {
-        if (index >= arr.length || arr[index] == null) {
-            return null;
+    private Deque<Integer> buildDeque(String data) {
+        Deque<Integer> queue = new LinkedList<>();
+        for (String val : data.split(spliter)) {
+            if (val.equals(nullEle)) {
+                queue.offer(null);
+            } else {
+                queue.offer(Integer.parseInt(val));
+            }
         }
-        TreeNode cur = new TreeNode(arr[index]);
-        cur.left = buildTree3(arr, index * 2 + 1);
-        cur.right = buildTree3(arr, index * 2 + 2);
-        return cur;
+        return queue;
     }
 }

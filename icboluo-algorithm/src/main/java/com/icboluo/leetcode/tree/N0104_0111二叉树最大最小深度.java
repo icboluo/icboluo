@@ -13,7 +13,7 @@ class N0104_0111二叉树最大最小深度 {
         Integer[] arr = {1, 2, 3, 4, null, null, 5};
         TreeNode treeNode = new TreeNode(arr);
         var cla = new N0104_0111二叉树最大最小深度();
-        int i = cla.maxDepth4(treeNode);
+        int i = cla.maxDepth3(treeNode);
         System.out.println("i = " + i);
     }
 
@@ -27,30 +27,24 @@ class N0104_0111二叉树最大最小深度 {
         return left > right ? left + 1 : right + 1;
     }
 
-    /**
-     * 错误解法：
-     *
-     * @param root
-     * @return
-     */
+
     public int maxDepth2(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        Deque<TreeNode> stack = new ArrayDeque<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         int max = 0;
-        stack.push(root);
-        while (!stack.isEmpty()) {
-            int size = stack.size();
-//            想法不错，把每一层都迭代一次
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
             for (int i = 0; i < size; i++) {
-//                每次刚push进去，下次循环立马pop出来没什么用，首部加，尾部取就可以了
-                TreeNode pop = stack.pop();
+                TreeNode pop = queue.poll();
+                assert pop != null;
                 if (pop.left != null) {
-                    stack.push(pop.left);
+                    queue.add(pop.left);
                 }
                 if (pop.right != null) {
-                    stack.push(pop.right);
+                    queue.add(pop.right);
                 }
             }
             max++;
@@ -58,34 +52,7 @@ class N0104_0111二叉树最大最小深度 {
         return max;
     }
 
-    /**
-     * @param root
-     * @return
-     */
     public int maxDepth3(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        LinkedList<TreeNode> stack = new LinkedList<>();
-        int max = 0;
-        stack.push(root);
-        while (!stack.isEmpty()) {
-            int size = stack.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode pop = stack.pop();
-                if (pop.left != null) {
-                    stack.addLast(pop.left);
-                }
-                if (pop.right != null) {
-                    stack.addLast(pop.right);
-                }
-            }
-            max++;
-        }
-        return max;
-    }
-
-    public int maxDepth4(TreeNode root) {
         if (root == null) {
             return 0;
         }

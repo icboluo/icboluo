@@ -3,6 +3,8 @@ package com.icboluo.leetcode.前缀和_差分数组_联合查找;
 import java.util.*;
 
 /**
+ * @see com.icboluo.leetcode.bfs.N1971_查找图中是否存在路径
+ * @see N0547_省数
  * @author icboluo
  * @since 2024-06-27 下午11:45
  */
@@ -19,7 +21,7 @@ class N0990_1202_联合查找 {
         System.out.println(cla.smallestStringWithSwaps("cab", Arrays.asList(Arrays.asList(0, 1), Arrays.asList(1, 2))));
     }
 
-    // 0990 联合查找 FIXME ["a==b","e==c","b==c","a!=e"]
+    // 0990 联合查找
     public boolean equationsPossible(String[] equations) {
         // 这里不建议使用map，因为是双向的
         HashMap<Character, Character> eq = new HashMap<>();
@@ -72,62 +74,6 @@ class N0990_1202_联合查找 {
             sb.append(group.get(uf.find(i)).poll());
         }
         return sb.toString();
-    }
-
-    class UnionFind {
-        private final int[] parent;
-
-        private final int[] rank;
-
-        private int count;
-
-        public UnionFind(int n) {
-            count = n;
-            parent = new int[n];
-            rank = new int[n];
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
-            }
-        }
-
-        /**
-         * 查找根节点
-         *
-         * @param x
-         * @return
-         */
-        public int find(int x) {
-            // 如果元素x的父节点不是自己，那么将x的父节点设置为x的父节点的父节点。这是路径压缩的过程，可以减少查找时间
-            if (parent[x] != x) {
-                parent[x] = find(parent[x]);
-            }
-            return parent[x];
-        }
-
-        /**
-         * 联合
-         *
-         * @param x
-         * @param y
-         */
-        public void union(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
-            if (rootX == rootY) {
-                return;
-            }
-            count--;
-            // 基于size进行优化，将小树安到大树上
-            // 基于rank进行优化，将矮树安到高树上（目前是这种方式
-            if (rank[rootX] < rank[rootY]) {
-                parent[rootX] = rootY;
-            } else if (rank[rootX] > rank[rootY]) {
-                parent[rootY] = rootX;
-            } else {
-                parent[rootY] = rootX;
-                rank[rootX]++;
-            }
-        }
     }
 }
 

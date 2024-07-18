@@ -118,16 +118,6 @@ public class TreeNode {
         return root;
     }
 
-    /**
-     * 收集节点val
-     *
-     * @param list 节点集合
-     * @return val集合
-     */
-    public static List<Integer> collectNodeVal(List<TreeNode> list) {
-        return list.stream().map(treeNode -> treeNode.val).toList();
-    }
-
     private TreeNode getInstance(Integer[] arr, int index) {
         if (index >= arr.length || arr[index] == null) {
             return null;

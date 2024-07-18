@@ -39,6 +39,10 @@ class N0105_0106前序中序构建二叉树 {
         TreeNode treeNode = cla.buildTree(pre, inorder);
         treeNode.print();
         cla.buildTree2(postorder, 0, postorder.length - 1, 0, inorder.length - 1).print();
+
+        cla.constructFromPrePost2(pre, postorder).print();
+        cla.constructFromPrePost2(new int[]{1, 2, 4, 5, 3, 6, 7}, new int[]{4, 5, 2, 6, 7, 3, 1}).print();
+        cla.constructFromPrePost2(new int[]{1}, new int[]{1}).print();
     }
 
     Map<Integer, Integer> inorderMap;
@@ -101,19 +105,59 @@ class N0105_0106前序中序构建二叉树 {
         return root;
     }
 
-    // N0889 FIXME
-    // preorder  mid  left  right
-    // postorder left right mid
-    private TreeNode buildTree3(int[] preorder, int preStart, int preEnd, int inStart, int inEnd) {
-        if (preStart > preEnd) {
+
+    // N0889
+    Map<Integer, Integer> postMap;
+
+    public TreeNode constructFromPrePost1(int[] pre, int[] post) {
+        postMap = new HashMap<>();
+        for (int i = 0; i < post.length; i++) {
+            postMap.put(post[i], i);
+        }
+        return dfs(pre, 0, pre.length - 1, 0, post.length - 1);
+    }
+
+    // 前序遍历：中 左 右
+    // 后序遍历：左 右 中 optimize 分而治之
+    private TreeNode dfs(int[] pre, int preStart, int preEnd, int postStart, int postEnd) {
+        if (preStart > preEnd || postStart > postEnd) {
             return null;
         }
-        int val = preorder[preStart];
-        int inorderIdx = inorderMap.get(val);
-        int leftSize = inorderIdx - inStart;
-        TreeNode root = new TreeNode(val);
-        root.left = buildTree3(preorder, preStart, preStart + leftSize - 1, inStart, inorderIdx - 1);
-        root.right = buildTree3(preorder, preStart + leftSize + 1, preEnd - 1, inorderIdx + 1, inEnd);
+        TreeNode root = new TreeNode(pre[preStart]);
+        if (preStart + 1 <= preEnd) {
+            // 前序遍历左子节点索引 - 后序遍历左子节点索引 = 左子树高度
+            int deltaIndex = postMap.get(pre[preStart + 1]) - postStart + 1;
+            //   左子树                     中（不包含）            左                      左                 右（不包含）
+            root.left = dfs(pre, preStart + 1, preStart + deltaIndex, postStart, postStart + deltaIndex - 1);
+            //   右子树                     左（不包含）                  右                右                                中（不包含）
+            root.right = dfs(pre, preStart + deltaIndex + 1, preEnd, postStart + deltaIndex, postEnd - 1);
+        }
+        return root;
+    }
+
+    int preIdx = 0;
+
+    int postIdx = 0;
+
+    public TreeNode constructFromPrePost2(int[] pre, int[] post) {
+        preIdx = 0;
+        postIdx = 0;
+        return constructFromPrePost21(pre, post);
+    }
+
+    // optimize 后序遍历
+    public TreeNode constructFromPrePost21(int[] pre, int[] post) {
+        // 首先根据前序遍历构建节点
+        TreeNode root = new TreeNode(pre[preIdx++]);
+        // 当我们遇到一个节点值pre[i]等于当前的时post[j]，这意味着我们已经完成了 的子树的构建pre[i]。
+        // 所以我们不应该继续向该子树添加子节点。相反，我们应该弹出该子树并继续到可以添加子节点的路径。
+        if (post[postIdx] != root.val) {
+            root.left = constructFromPrePost21(pre, post);
+        }
+        if (post[postIdx] != root.val) {
+            root.right = constructFromPrePost21(pre, post);
+        }
+        postIdx++;
         return root;
     }
 }
