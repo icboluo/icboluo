@@ -2,7 +2,14 @@ package com.icboluo.util.excel;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.icboluo.enumerate.ReEnum;
+import com.icboluo.util.BeanUtil;
+import com.icboluo.util.I18nException;
+import com.icboluo.util.SpringUtil;
 import lombok.Getter;
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.context.MessageSource;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.function.Function;
@@ -19,33 +26,32 @@ import java.util.stream.Collectors;
  * @since 2023-08-03 21:08
  */
 @Getter
-public class ExcelListener<T> extends AnalysisEventListener<T> {
-    /**
-     * 数据列表
-     */
-    protected final List<T> list = new ArrayList<>();
+public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
+    protected static final MessageSource MESSAGE_SOURCE = SpringUtil.getBean(MessageSource.class);
 
-    /**
-     * 当前sheet名称
-     *
-     * @see ValidHeadListener sheetName当使用该子类的时候会被赋值
-     * 这些属性本来是在子类中的，提取到父类中的唯一目的就是方便调用，但是在设计上有不合理的地方
-     */
-    protected String sheetName;
+    ExcelEntity<T> excelEntity;
 
-    /**
-     * 当前sheet页表头有多少行，默认有1行表头
-     */
-    protected int head = 1;
+    protected ExcelListener() {
+        excelEntity = new ExcelEntity<>();
+        excelEntity.clazz = BeanUtil.cast(Object.class);
+    }
 
-    /**
-     * 当前sheet页导入的数据类型
-     */
-    protected Class<T> clazz;
+    protected ExcelListener(Class<T> clazz, ExcelEntity<T> entity) {
+        excelEntity = entity;
+        excelEntity.clazz = clazz;
+        excelEntity.resolve = new ExcelExportResolve<>(clazz);
+    }
+
+    @Override
+    public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
+        if (!StringUtils.hasText(excelEntity.sheetName)) {
+            excelEntity.sheetName = context.readSheetHolder().getSheetName();
+        }
+    }
 
     @Override
     public void invoke(T data, AnalysisContext context) {
-        list.add(data);
+        excelEntity.list.add(data);
     }
 
     @Override
@@ -53,38 +59,54 @@ public class ExcelListener<T> extends AnalysisEventListener<T> {
         // Not need impl Method
     }
 
-    /**
-     * 根据字段值去重，并且取最后一条
-     *
-     * @param function 获取字段的函数（或者获取联合索引的函数
-     * @return 去重后的列表
-     */
-    public List<T> getDistinctList(Function<T, Object> function) {
-        LinkedHashMap<Object, T> map = list.stream()
-                .collect(Collectors.toMap(function, Function.identity(), (fir, sec) -> sec, LinkedHashMap::new));
-        return new ArrayList<>(map.values());
+    public Class<T> getClazz() {
+        return excelEntity.clazz;
     }
 
-    /**
-     * 获取重复数据的msg
-     *
-     * @param getUk 根据item获取uk的函数
-     * @return 重复数据的map k：uk； value：row num
-     */
-    public Map<String, List<Integer>> getRepeatMsg(Function<T, String> getUk) {
-        Map<String, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < list.size(); i++) {
-            String uk = getUk.apply(list.get(i));
-            if (!map.containsKey(uk)) {
-                List<Integer> value = new ArrayList<>();
-                value.add(i);
-                map.put(uk, value);
-            } else {
-                map.get(uk).add(i);
-            }
+    public int getHeadRowNumber() {
+        return excelEntity.headRowNumber;
+    }
+
+    public void setHeadRowNumber(int headRowNumber) {
+        excelEntity.headRowNumber = headRowNumber;
+    }
+
+    public List<T> getList() {
+        return excelEntity.list;
+    }
+
+    public String sheetName() {
+        return excelEntity.sheetName;
+    }
+
+    public void sheetName(String sheetName) {
+        excelEntity.sheetName = sheetName;
+    }
+
+    public List<T> getDistinctList(Function<T, Object> fun) {
+        return excelEntity.getDistinctList(fun);
+    }
+
+    public Map<String, List<Integer>> getRepeatMsg
+            (Function<T, String> getUk) {
+        return excelEntity.getRepeatMsg(getUk);
+    }
+
+    public void validRepeat(Function<T, String> getUk) {
+        excelEntity.validRepeat(getUk);
+    }
+
+    public void validEmpty() {
+        if (excelEntity.list.isEmpty()) {
+            throw new I18nException(ReEnum.EXCEL_DATA_IS_EMPTY);
         }
-        return map.entrySet().stream()
-                .filter(entry -> entry.getValue().size() > 1)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public void validBody() {
+
+    }
+
+    public int getMaxLine() {
+        return ExcelExportResolve.getIndexField(excelEntity.clazz).lastKey();
     }
 }

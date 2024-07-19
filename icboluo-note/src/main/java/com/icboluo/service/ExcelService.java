@@ -59,10 +59,9 @@ public class ExcelService {
      * 数据库文档读成建表语句
      *
      * @param filePathName 文件地址+名称
-     * @param sheet        sheet的名称
      */
-    public void readDbDocument(String filePathName, String sheet) {
-        List<SheetBO> list = this.readExcel(filePathName, sheet);
+    public void readDbDocument(String filePathName) {
+        List<SheetBO> list = this.readExcel(filePathName);
         this.toSql(list);
     }
 
@@ -291,10 +290,9 @@ public class ExcelService {
      * 把excel数据读成容器数据
      *
      * @param excelPath 文件地址+名称
-     * @param sheet     sheet名称
      * @return 保存excel数据的容器
      */
-    public List<SheetBO> readExcel(String excelPath, String sheet) {
+    public List<SheetBO> readExcel(String excelPath) {
         HeadDataListener headListener = readHead(excelPath);
         Class<RowCO> clazz = RowCO.class;
         this.buildClass(headListener.getHead(), clazz);
@@ -303,7 +301,7 @@ public class ExcelService {
         ExcelReader er = EasyExcelFactory.read(excelPath).build();
         List<ReadSheet> readSheets = er.excelExecutor().sheetList();
         for (int i = 0; i < readSheets.size(); i++) {
-            ExcelListener<RowCO> listener = new ExcelListener<>();
+            ExcelListener<RowCO> listener = new ExcelListener<>(){};
             ReadSheet rs = EasyExcelFactory
                     .readSheet(i)
                     .head(RowCO.class)

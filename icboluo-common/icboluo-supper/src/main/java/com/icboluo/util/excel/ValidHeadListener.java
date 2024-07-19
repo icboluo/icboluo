@@ -28,60 +28,41 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2023-08-03 21:11
  */
 public class ValidHeadListener<T> extends ExcelListener<T> {
-
-    private static final Map<Class<?>, TreeMap<Integer, Field>> CLASS_NAME_FIELD_CACHE = new ConcurrentHashMap<>();
-
-    @Getter
-    protected static final MessageSource MESSAGE_SOURCE = SpringUtil.getBean(MessageSource.class);
-
     /**
      * <p>是否在模版校验过程中，提示sheet名称
      * <p>如果是单个sheet，没必要增加sheet名称展示功能
      * <p>如果是多个sheet，需要不同的sheet页做区分
      */
     @Setter
-    private boolean isShowSheetName;
-
+    private boolean showSheetName;
     /**
      * 需要校验的行数，默认和head一致
      */
     @Setter
-    protected int validateHead;
-
+    protected int validateHead = excelEntity.headRowNumber;
     /**
      * 模版校验是否需要抛异常
      */
     @Setter
-    protected boolean isTemplateValidThrow = true;
-
+    protected boolean templateValidThrow = true;
     @Getter
     protected String headErrorMsg;
 
-    /**
-     * 无参构造，cglib代理的时候使用，正常情况下不需要使用
-     */
     public ValidHeadListener() {
-        this.clazz = BeanUtil.cast(Object.class);
+
     }
 
     public ValidHeadListener(Class<T> excelType) {
-        this.clazz = excelType;
-        this.validateHead = this.head;
-        toCache();
+        super(excelType, new ExcelEntity<>());
     }
 
-    public ValidHeadListener(Class<T> excelType, int headNum) {
-        this.clazz = excelType;
-        this.head = headNum;
-        this.validateHead = this.head;
-        toCache();
+    public ValidHeadListener(Class<T> excelType, ExcelEntity<T> entity) {
+        super(excelType, entity);
     }
 
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
-        if (!StringUtils.hasText(sheetName)) {
-            sheetName = context.readSheetHolder().getSheetName();
-        }
+        super.invokeHeadMap(headMap, context);
         if (context.readSheetHolder().getRowIndex() != validateHead - 1) {
             return;
         }
@@ -91,8 +72,7 @@ public class ValidHeadListener<T> extends ExcelListener<T> {
             Field entityField = entry.getValue();
             Excel excel = entityField.getAnnotation(Excel.class);
             String excelCell = headMap.get(entityIndex);
-            boolean containI18n = excelCell.contains(excel.en()) || excelCell.contains(excel.zh());
-            if (excelCell == null || !containI18n) {
+            if (!headCellMatch(excelCell, excel)) {
                 String tempMsg = MESSAGE_SOURCE.getMessage("line.{0}.error.should.contain.{1}",
                         new Object[]{ExcelUtil.convertToTitle(entityIndex + 1),
                                 WebContext.isEn() ? excel.en() : excel.zh()}, LocaleContextHolder.getLocale());
@@ -103,42 +83,33 @@ public class ValidHeadListener<T> extends ExcelListener<T> {
             return;
         }
         String templateMismatch = MESSAGE_SOURCE.getMessage("excel.template.mismatch", null, LocaleContextHolder.getLocale());
-        if (isShowSheetName) {
-            headErrorMsg = "[" + sheetName + "]" + templateMismatch + ":<br/>" + msg;
+        if (showSheetName) {
+            headErrorMsg = "[" + excelEntity.sheetName + "]" + templateMismatch + ":<br/>" + msg;
         } else {
             headErrorMsg = templateMismatch + ":<br/>" + msg;
         }
-        if (isTemplateValidThrow) {
+        if (templateValidThrow) {
             throw new I18nException(headErrorMsg);
         }
     }
 
-    @SneakyThrows
-    private void toCache() {
-        if (CLASS_NAME_FIELD_CACHE.containsKey(clazz)) {
-            return;
+    private boolean headCellMatch(String excelCell, Excel excel) {
+        if (!excel.check()) {
+            return true;
         }
-        TreeMap<Integer, Field> map = new TreeMap<>();
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            if (!field.isAnnotationPresent(Excel.class)) {
-                continue;
-            }
-            Excel excel = field.getAnnotation(Excel.class);
-            ExcelExportResolve.shoichiIndex(field);
-            map.put(excel.columnIndex(), field);
+        // 如果字段标记了要进行表头校验，但是又没有配表头的中英文，则不校验；如果代码走到这个if分支，代表编码有问题
+        if (!StringUtils.hasText(excel.en()) && !StringUtils.hasText(excel.zh())) {
+            return true;
         }
-        CLASS_NAME_FIELD_CACHE.put(clazz, map);
-        // 这里强制指定Excel的导出顺序，要求监听器创建于EasyExcel之前
-        Class<?> fieldCacheCla = Class.forName("com.alibaba.excel.util.ClassUtils$FIELD_CACHE");
-        Constructor<?> constructor = fieldCacheCla.getDeclaredConstructors()[0];
-        constructor.setAccessible(true);
-        Object fieldCache = constructor.newInstance(map, new TreeMap<>(), new HashMap<>());
-        Map<Class<?>, Object> fieldCacheMap = BeanUtil.cast(ClassUtils.FIELD_CACHE);
-        fieldCacheMap.put(clazz, fieldCache);
-    }
-
-    public int getMaxLine() {
-        return CLASS_NAME_FIELD_CACHE.get(clazz).lastKey();
+        if (!StringUtils.hasText(excelCell)) {
+            return false;
+        }
+        if (StringUtils.hasText(excel.en()) && excelCell.contains(excel.en())) {
+            return true;
+        }
+        if (StringUtils.hasText(excel.zh()) && excelCell.contains(excel.zh())) {
+            return true;
+        }
+        return false;
     }
 }

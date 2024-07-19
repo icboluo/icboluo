@@ -3,6 +3,7 @@ package com.icboluo.annotation;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
+import java.util.TreeMap;
 
 /**
  * <p>声明：导入使用的是client实例，导出得到的是view实例。2个是不同的实体承载，所以导入导出没有必要使用同一个注解，除非功能比较简单
@@ -22,8 +23,8 @@ public @interface Excel {
      * <p>注解的继承需要使用@Inherited, 其实不是注解的继承，是注解修饰的对象的继承，可以使用 @AliasFor使注解合并
      * <p>not meta-present 注解的合并需要把注解当做元注解，先修饰注解，然后使用@AliasFor互通，第二项不是必须的，第一项必须要，否则报错
      *
-     * @see org.springframework.stereotype.Service
      * @return 英文名
+     * @see org.springframework.stereotype.Service
      */
     @AliasFor(annotation = I18n.class) String en() default "";
 
@@ -50,4 +51,11 @@ public @interface Excel {
      * @return 映射参数名称
      */
     String paramName() default "";
+
+    /**
+     * 表头是否校验
+     *
+     * @return 默认校验
+     */
+    boolean check() default true;
 }

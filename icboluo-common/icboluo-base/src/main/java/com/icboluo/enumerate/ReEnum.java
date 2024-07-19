@@ -28,6 +28,8 @@ public enum ReEnum implements CodeMessage {
      */
     PARAM_IS_EMPTY("A1002", "param.is.empty"),
 
+    EXCEL_DATA_IS_EMPTY("A1003", "excel.data.is.empty"),
+
     CURRENT_DATA_NOT_PERMISSION_THIS_OPERATION("500", "current.data.not.permission.this.operation"),
     NO_PERMISSION("500", "no.permission"),
     NO_DATA("500", "no.data"),

@@ -61,7 +61,7 @@ public class ExcelController {
 
     @GetMapping("read")
     public void read() {
-        excelService.readDbDocument(excelPath, readExcelEntity.getSheetName());
+        excelService.readDbDocument(excelPath);
     }
 
     @GetMapping("write")
@@ -77,11 +77,11 @@ public class ExcelController {
         assert mf != null;
         IoHelper.validateFile(mf);
         ExcelUtil.xlsAndXlsxValid(mf);
-        ValidHeadBodyListener<StudentVO> listener = new ValidHeadBodyListener<>(StudentVO.class, 1);
+        ValidHeadBodyListener<StudentVO> listener = new ValidHeadBodyListener<>(StudentVO.class);
         try (InputStream is = mf.getInputStream(); ExcelReader er = EasyExcelFactory.read(is).build()) {
             ReadSheet rs = EasyExcelFactory.readSheet(0)
                     .head(StudentVO.class)
-                    .headRowNumber(listener.getHead())
+                    .headRowNumber(listener.getHeadRowNumber())
                     .registerReadListener(listener)
                     .build();
             er.read(rs);

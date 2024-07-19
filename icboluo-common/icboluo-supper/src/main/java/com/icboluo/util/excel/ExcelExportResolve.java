@@ -60,6 +60,10 @@ public class ExcelExportResolve<T> {
         this.sortFieldName = defaultSortFieldName();
     }
 
+    public static <T> TreeMap<Integer, Field> getIndexField(Class<T> clazz) {
+        return null;
+    }
+
     /**
      * 将类转换成缓存信息
      *

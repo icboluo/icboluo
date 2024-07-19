@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * 表头、表内容校验
@@ -17,77 +18,63 @@ import java.util.Map;
  * @author icboluo
  * @since 2023-08-03 21:56
  */
-public class ValidHeadBodyListener<T> extends ValidHeadListener<T> {
+public class ValidHeadBodyListener<T> extends ExcelListener<T> {
 
-    /**
-     * 记录多行错误消息，错误消息的位置和Excel完全匹配
-     */
-    private final List<String[]> msgList = new ArrayList<>();
+    private ValidHeadListener<T> validHeadListener;
+    private ValidBodyListener<T> validBodyListener;
 
-    /**
-     * 无参构造，cglib代理的时候使用，正常情况下不需要使用
-     */
     public ValidHeadBodyListener() {
 
     }
 
     public ValidHeadBodyListener(Class<T> excelType) {
-        super(excelType);
+        super(excelType, new ExcelEntity<>());
+        validHeadListener = new ValidHeadListener<>(excelType, excelEntity);
+        validBodyListener = new ValidBodyListener<>(excelType, excelEntity);
     }
 
-    public ValidHeadBodyListener(Class<T> excelType, int headNum) {
-        super(excelType, headNum);
+    @Override
+    public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
+        validHeadListener.invokeHeadMap(headMap, context);
     }
-
 
     @Override
     public void invoke(T data, AnalysisContext context) {
-        // 如果模版校验有问题，不做内容处理
-        if (!isTemplateValidThrow && StringUtils.hasText(headErrorMsg)) {
+        // context.readWorkBookHolder().setIgnoreEmptyRow(false) 默认为true，现在导入遇到空行会出现行号提示错乱，暂不处理
+        // 如果模板校验有问题，不做内容处理
+        if (!validHeadListener.templateValidThrow && StringUtils.hasText(validHeadListener.headErrorMsg)) {
             return;
         }
-        // 这个近似总行数会统计空行，目前没有遇到过近似行数不准确的情况(目前不需要
-        context.readSheetHolder().getApproximateTotalRowNumber();
-        if (msgList.isEmpty()) {
-            for (int i = 0; i < head; i++) {
-                msgList.add(new String[getMaxLine() + 1]);
-            }
-        }
-        msgList.add(new String[getMaxLine() + 1]);
-        Field[] fields = clazz.getDeclaredFields();
-        Map<Field, String> msgMap = ValidateUtil.validateFieldsToMap(data, fields);
-        for (Map.Entry<Field, String> entry : msgMap.entrySet()) {
-            Excel excel = entry.getKey().getAnnotation(Excel.class);
-            msgList.get(msgList.size() - 1)[excel.columnIndex()] = entry.getValue();
-        }
-        if (msgMap.isEmpty()) {
-            list.add(data);
-        }
+        validBodyListener.invoke(data, context);
     }
 
-    public String getErrorMsg() {
-        return getErrorMsg(false);
+    public void setTemplateValidThrow(boolean isThrow) {
+        validHeadListener.setTemplateValidThrow(isThrow);
     }
 
-    public String getErrorMsg(boolean isNeedShowSheetName) {
-        List<String> msg = new ArrayList<>();
-        for (int i = 0; i < msgList.size(); i++) {
-            for (int j = 0; j < msgList.get(i).length; j++) {
-                if (msgList.get(i)[j] != null) {
-                    String message = MESSAGE_SOURCE.getMessage("row.{0}.col.{1}.error.{2}",
-                            new Object[]{i + 1, ExcelUtil.convertToTitle(j + 1), msgList.get(i)[j]},
-                            LocaleContextHolder.getLocale());
-                    msg.add(message);
-                }
-            }
-        }
-        if (msg.isEmpty()) {
-            return null;
-        }
-        if (isNeedShowSheetName) {
-            return "[" + sheetName + "]:<br/>" + String.join(";<br/>", msg);
-        } else {
-            return String.join(";<br/>", msg);
-        }
+    public String getHeadErrorMsg() {
+        return validHeadListener.getHeadErrorMsg();
+    }
+
+    public String getArrErrorMsg() {
+        return validBodyListener.getBodyErrorMsg();
+    }
+
+    public String getArrErrorMsg(boolean isNeedShowSheetName) {
+        return validBodyListener.getBodyErrorMsg(isNeedShowSheetName);
+    }
+
+    public void validBodyRepeatEmpty(Function<T, String> getUk) {
+        validBodyListener.validBodyRepeatEmpty(getUk);
+    }
+
+    @Override
+    public void validBody() {
+        validBodyListener.validBody();
+    }
+
+    @Override
+    public void validEmpty() {
+        validBodyListener.validEmpty();
     }
 }
