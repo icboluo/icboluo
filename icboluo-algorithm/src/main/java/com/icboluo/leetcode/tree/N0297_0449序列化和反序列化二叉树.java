@@ -8,9 +8,9 @@ import java.util.*;
  * @author icboluo
  * @since 2023-05-22 21:19
  */
-class N0297_序列化和反序列化二叉树 {
+class N0297_0449序列化和反序列化二叉树 {
     public static void main(String[] args) {
-        var cla = new N0297_序列化和反序列化二叉树();
+        var cla = new N0297_0449序列化和反序列化二叉树();
         TreeNode tree = new TreeNode(1, 2, 3, null, null, 4, 5);
         String sa1 = cla.serialize1(tree);
         System.out.println(sa1);
@@ -114,4 +114,68 @@ class N0297_序列化和反序列化二叉树 {
         }
         return queue;
     }
+
+
+    // FIXME
+    // N0449 Encodes a tree to a single string.  ----------------------------------------------------------
+    public String serialize(TreeNode root) {
+        final StringBuilder sb = new StringBuilder();
+        ser(root, sb);
+        return sb.toString();
+    }
+
+    private void ser(TreeNode root, StringBuilder sb) {
+        // optimize 二叉搜索树不需要确定哪一个节点是最终节点
+        if (root == null) {
+            return;
+        }
+        sb.append(root.val).append(",");
+        ser(root.left, sb);
+        ser(root.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        final String[] split = data.split(",");
+        final Queue<String> queue = new LinkedList<>(Arrays.asList(split));
+        return des(queue, Integer.MAX_VALUE, Integer.MIN_VALUE);
+    }
+
+    private TreeNode des(Queue<String> queue, int max, int min) {
+        if (queue.isEmpty()) {
+            return null;
+        }
+        final int poll = Integer.parseInt(queue.poll());
+        // 在这里可以判断二叉搜索树的叶子节点；只有当节点比根节点的值低的时候，才能添加到树的左子节点
+        // 如果 val>supper ，则不要将其添加到左子节点  完整的写法是这样的poll > max || poll < min，因为是前序遍历，所以总是先遇到左节点，如果左节点不存在说明当前节点已经g了
+        if (poll > max || poll < min) {
+            return null;
+        }
+        final TreeNode cur = new TreeNode(poll);
+        cur.left = des(queue, min, poll);
+        cur.right = des(queue, poll, max);
+        return cur;
+    }
+
+    // N0255 验证二叉搜索树中的预排序序列 ---------------------------------------------------------------------
+    int start;
+
+    public boolean verifyPreorder(int[] preorder) {
+        helper(preorder, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return start == preorder.length;
+    }
+
+    public void helper(int[] preorder, int lower, int upper) {
+        if (start == preorder.length) {
+            return;
+        }
+        int val = preorder[start];
+        if (val < lower || val > upper) {
+            return;
+        }
+        start++;
+        helper(preorder, lower, val);
+        helper(preorder, val, upper);
+    }
 }
+

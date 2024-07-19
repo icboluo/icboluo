@@ -1,10 +1,15 @@
 package com.icboluo;
 
+import com.icboluo.util.response.R;
+import com.icboluo.util.response.Response;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -44,5 +49,18 @@ public abstract class BaseTest {
 
     protected void childBefore() {
 
+    }
+
+    /**
+     * 执行并获取响应体信息
+     *
+     * @param requestBuilder 请求
+     * @return 响应体
+     */
+    @SneakyThrows
+    protected Response executorGetResponseBody(MockHttpServletRequestBuilder requestBuilder) {
+        ResultActions perform = mockMvc.perform(requestBuilder);
+        String body = perform.andReturn().getResponse().getContentAsString();
+        return R.generate(body);
     }
 }

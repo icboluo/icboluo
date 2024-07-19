@@ -8,7 +8,7 @@ python 是一个强类型、动态、解释性语音;
 
 解释性：不需要编译，可以直接运行
 
-## JDK
+## JDK简述
 
 可以简单理解jvm为bin包、jre包含了bin+lib包、jdk包含jre+exe命令包
 
@@ -43,3 +43,8 @@ JRE：Java Runtime Environment 的简称，java 运行环境，为 java 的运�
 
 生命周期和线程一样
 
+## jdk
+
+jmm（java内存模型：为了屏蔽系统和硬件的差异，避免一套代码在不同平台效果不一致的情况
+
+cpu高速缓存：cpu内部的缓存，存储最近使用的数据，读取速度快 (解决cpu处理速度和内存处理速度不对等：处理逻辑和redis类似)

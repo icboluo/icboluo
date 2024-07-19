@@ -1,5 +1,6 @@
 package com.icboluo.util.response;
 
+import com.alibaba.fastjson2.JSON;
 import com.icboluo.enumerate.ReEnum;
 import lombok.Data;
 import org.springframework.context.MessageSource;
@@ -80,5 +81,9 @@ public class R implements Serializable {
 
     public static Response error(Exception e) {
         return new SingleResponse<>(ReEnum.SYSTEM_ERROR.getCode(), e.getMessage());
+    }
+
+    public static Response generate(String body) {
+        return JSON.parseObject(JSON.toJSONString(body), Response.class);
     }
 }

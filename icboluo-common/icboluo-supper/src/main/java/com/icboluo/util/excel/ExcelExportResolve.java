@@ -36,6 +36,7 @@ public class ExcelExportResolve<T> {
      * 全局的容器需要使用线程安全的容器
      */
     private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new ConcurrentHashMap<>();
+    public static final Map<Class<?>, Map<Integer, Field>> CLASS_INDEX_FIELD_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 导出模版类型

@@ -67,7 +67,7 @@ public class ValidHeadListener<T> extends ExcelListener<T> {
             return;
         }
         StringBuilder msg = new StringBuilder();
-        for (Map.Entry<Integer, Field> entry : CLASS_NAME_FIELD_CACHE.get(clazz).entrySet()) {
+        for (Map.Entry<Integer, Field> entry : ExcelExportResolve.CLASS_INDEX_FIELD_CACHE.get(excelEntity.clazz).entrySet()) {
             Integer entityIndex = entry.getKey();
             Field entityField = entry.getValue();
             Excel excel = entityField.getAnnotation(Excel.class);
