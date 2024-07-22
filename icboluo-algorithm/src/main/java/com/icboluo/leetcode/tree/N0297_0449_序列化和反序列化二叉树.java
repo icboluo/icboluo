@@ -8,9 +8,9 @@ import java.util.*;
  * @author icboluo
  * @since 2023-05-22 21:19
  */
-class N0297_0449序列化和反序列化二叉树 {
+class N0297_0449_序列化和反序列化二叉树 {
     public static void main(String[] args) {
-        var cla = new N0297_0449序列化和反序列化二叉树();
+        var cla = new N0297_0449_序列化和反序列化二叉树();
         TreeNode tree = new TreeNode(1, 2, 3, null, null, 4, 5);
         String sa1 = cla.serialize1(tree);
         System.out.println(sa1);
@@ -19,8 +19,12 @@ class N0297_0449序列化和反序列化二叉树 {
         cla.deserialize1(sa1).print();
 
         // 方法2使用的是层级遍历，但是没有层级遍历的序列化代码，需要重新排版
-        String sa2 = cla.serialize2(tree);
-        cla.deserialize2(sa2).print();
+        cla.deserialize2(sa1).print();
+        System.out.println("----------------------------------------");
+
+        String serialize = cla.serialize(new TreeNode(2, 1, 3));
+        System.out.println("serialize = " + serialize);
+        cla.deserialize(serialize).print();
     }
 
     String spliter = ",";
@@ -64,12 +68,6 @@ class N0297_0449序列化和反序列化二叉树 {
         root.left = buildTree1(queue);
         root.right = buildTree1(queue);
         return root;
-    }
-
-    public String serialize2(TreeNode root) {
-        StringBuilder sb = new StringBuilder();
-        preOrder(root, sb);
-        return sb.toString();
     }
 
     public TreeNode deserialize2(String data) {
@@ -138,19 +136,21 @@ class N0297_0449序列化和反序列化二叉树 {
     public TreeNode deserialize(String data) {
         final String[] split = data.split(",");
         final Queue<String> queue = new LinkedList<>(Arrays.asList(split));
-        return des(queue, Integer.MAX_VALUE, Integer.MIN_VALUE);
+        return des(queue, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    private TreeNode des(Queue<String> queue, int max, int min) {
+    private TreeNode des(Queue<String> queue, int min, int max) {
         if (queue.isEmpty()) {
             return null;
         }
-        final int poll = Integer.parseInt(queue.poll());
+        final int poll = Integer.parseInt(queue.peek());
         // 在这里可以判断二叉搜索树的叶子节点；只有当节点比根节点的值低的时候，才能添加到树的左子节点
         // 如果 val>supper ，则不要将其添加到左子节点  完整的写法是这样的poll > max || poll < min，因为是前序遍历，所以总是先遇到左节点，如果左节点不存在说明当前节点已经g了
-        if (poll > max || poll < min) {
+        if (poll > max) {
             return null;
         }
+        // poll函数一定要放到return的后面，也就是先peek
+        queue.poll();
         final TreeNode cur = new TreeNode(poll);
         cur.left = des(queue, min, poll);
         cur.right = des(queue, poll, max);

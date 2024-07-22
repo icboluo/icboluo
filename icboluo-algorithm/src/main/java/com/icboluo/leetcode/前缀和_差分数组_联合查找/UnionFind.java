@@ -11,11 +11,13 @@ public class UnionFind {
     private final int[] parent;
 
     private final int[] rank;
+    int count;
 
 
     public UnionFind(int n) {
         parent = new int[n];
         rank = new int[n];
+        count = n;
         for (int i = 0; i < n; i++) {
             parent[i] = i;
         }
@@ -47,6 +49,7 @@ public class UnionFind {
         if (rootX == rootY) {
             return;
         }
+        count--;
         // 基于size进行优化，将小树安到大树上
         // 基于rank进行优化，将矮树安到高树上（目前是这种方式
         if (rank[rootX] < rank[rootY]) {

@@ -23,7 +23,7 @@ class N1791_2497_寻找图的中心点 {
         return edges[0][0] == edges[1][0] || edges[0][0] == edges[1][1] ? edges[0][0] : edges[0][1];
     }
 
-    // 2497 图的中心点连接组多的边，只计算直接连接着的就可以了，不用计算连接着的连接着的 FIXME ERROR
+    // 2497 图的中心点连接组多的边，只计算直接连接着的就可以了，不用计算连接着的连接着的
     public int maxStarSum(int[] vals, int[][] edges, int k) {
         if (k == 0) {
             return Arrays.stream(vals).max().orElse(0);
@@ -52,7 +52,7 @@ class N1791_2497_寻找图的中心点 {
         }
         if (!pq.isEmpty()) {
             // 也可以在建图的时候直接不要这个边
-            return pq.stream().mapToInt(Integer::intValue).filter(a -> a > 0).limit(k).sum() + val;
+            return pq.stream().filter(a -> a > 0).sorted((a, b) -> b - a).limit(k).mapToInt(Integer::intValue).sum() + val;
         }
         return val;
     }

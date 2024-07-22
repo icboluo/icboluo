@@ -42,4 +42,16 @@ class N0547_省数 {
             }
         }
     }
+
+    public int findCircleNum2(int[][] isConnected) {
+        UnionFind uf = new UnionFind(isConnected.length);
+        for (int i = 0; i < isConnected.length; i++) {
+            for (int j = 0; j < isConnected[i].length; j++) {
+                if (isConnected[i][j] == 1) {
+                    uf.union(i, j);
+                }
+            }
+        }
+        return uf.count;
+    }
 }
