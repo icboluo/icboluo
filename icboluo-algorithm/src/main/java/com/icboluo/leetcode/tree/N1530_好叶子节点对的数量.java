@@ -11,7 +11,6 @@ class N1530_好叶子节点对的数量 {
     int ans;
 
     /**
-     * FIXME 答案中讨论中的抄过来
      * 如果2个叶子节点的最短路径小于等于 distance，那他们就是一对好叶子节点对
      *
      * @param root
@@ -47,15 +46,15 @@ class N1530_好叶子节点对的数量 {
         }
         int[] left = helper(root.left, distance);
         int[] right = helper(root.right, distance);
-        for (int i = 0; i <= distance; i++) {
-            for (int j = 0; j <= distance; j++) {
+        for (int i = 0; i < left.length; i++) {
+            for (int j = 0; j < right.length; j++) {
                 if (i + j <= distance) {
                     ans += left[i] * right[j];
                 }
             }
         }
         for (int i = 0; i < distance; i++) {
-            temp[i + 1] = left[i + 1] + right[i + 1];
+            temp[i + 1] = left[i] + right[i];
         }
         return temp;
     }

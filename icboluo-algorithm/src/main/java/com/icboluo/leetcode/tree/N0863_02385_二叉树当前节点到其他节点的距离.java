@@ -11,9 +11,9 @@ import java.util.Map;
  * @author icboluo
  * @since 2024-07-22 下午9:13
  */
-public class N0863_02383_二叉树当前节点到其他节点的距离 {
+class N0863_02385_二叉树当前节点到其他节点的距离 {
     public static void main(String[] args) {
-        N0863_02383_二叉树当前节点到其他节点的距离 cla = new N0863_02383_二叉树当前节点到其他节点的距离();
+        var cla = new N0863_02385_二叉树当前节点到其他节点的距离();
         TreeNode root = new TreeNode(3, 5, 1, 6, 2, 0, 8, null, null, 7, 4);
         TreeNode treeNode5 = new TreeNode(5);
         treeNode5.left = root.left.left;
@@ -22,7 +22,6 @@ public class N0863_02383_二叉树当前节点到其他节点的距离 {
         root.print();
         System.out.println(cla.distanceK(root, treeNode5, 2));
 
-        // TODO 这个方法好像有问题
         TreeNode root2 = new TreeNode(1, 5, 3, null, 4, 10, 6, 9, 2);
         root2.print();
         System.out.println(cla.amountOfTime(root2, 3));
@@ -115,13 +114,14 @@ public class N0863_02383_二叉树当前节点到其他节点的距离 {
     int ans = 0;
 
     private void search(TreeNode root, int dis) {
-        ans = Math.max(ans, dis);
         if (root == null) {
             return;
         }
         if (map.containsKey(root)) {
             dis = map.get(root);
         }
+        // ans 的赋值放到dis重置后
+        ans = Math.max(ans, dis);
         search(root.left, dis + 1);
         search(root.right, dis + 1);
     }

@@ -36,6 +36,7 @@ public class ExcelExportResolve<T> {
      * 全局的容器需要使用线程安全的容器
      */
     private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new ConcurrentHashMap<>();
+
     public static final Map<Class<?>, Map<Integer, Field>> CLASS_INDEX_FIELD_CACHE = new ConcurrentHashMap<>();
 
     /**
@@ -65,16 +66,21 @@ public class ExcelExportResolve<T> {
         return null;
     }
 
+    public static <T> Integer maxIdx(Class<T> clazz) {
+        return null;
+    }
+
     /**
      * 将类转换成缓存信息
      *
      * @param clazz 类
      */
     private void toCache(Class<T> clazz) {
-        if (CLASS_NAME_FIELD_CACHE.containsKey(clazz)) {
+        if (CLASS_NAME_FIELD_CACHE.containsKey(clazz) && CLASS_INDEX_FIELD_CACHE.containsKey(clazz)) {
             return;
         }
-        Map<String, Field> classMap = new HashMap<>();
+        Map<String, Field> nameMap = new HashMap<>();
+        Map<Integer, Field> indexMap = new HashMap<>();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             if (!field.isAnnotationPresent(Excel.class)) {
@@ -83,12 +89,14 @@ public class ExcelExportResolve<T> {
             shoichiIndex(field);
             Excel excel = field.getAnnotation(Excel.class);
             if (StringUtils.hasText(excel.paramName())) {
-                classMap.put(excel.paramName(), field);
+                nameMap.put(excel.paramName(), field);
             } else {
-                classMap.put(field.getName(), field);
+                nameMap.put(field.getName(), field);
             }
+            indexMap.put(excel.columnIndex(), field);
         }
-        CLASS_NAME_FIELD_CACHE.put(clazz, classMap);
+        CLASS_NAME_FIELD_CACHE.put(clazz, nameMap);
+        CLASS_INDEX_FIELD_CACHE.put(clazz, indexMap);
     }
 
     private List<String> defaultSortFieldName() {

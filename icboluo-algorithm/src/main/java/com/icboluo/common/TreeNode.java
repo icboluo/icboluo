@@ -22,12 +22,18 @@ public class TreeNode {
     }
 
     /**
-     * 完全二叉树的构造方法
+     * 二叉树的构造方法
      *
      * @param arr 层级遍历的数组
      */
     public TreeNode(Integer... arr) {
-        TreeNode treeNode = getInstance(arr, 0);
+        TreeNode treeNode;
+        try {
+            // 完全二叉树的构造方法
+            treeNode = getInstance1(arr, 0);
+        } catch (Exception e) {
+            treeNode = getInstance2(arr);
+        }
         if (treeNode == null) {
             return;
         }
@@ -118,14 +124,33 @@ public class TreeNode {
         return root;
     }
 
-    private TreeNode getInstance(Integer[] arr, int index) {
+    private TreeNode getInstance1(Integer[] arr, int index) {
         if (index >= arr.length || arr[index] == null) {
             return null;
         }
         TreeNode cur = new TreeNode(arr[index]);
-        cur.left = getInstance(arr, index * 2 + 1);
-        cur.right = getInstance(arr, index * 2 + 2);
+        cur.left = getInstance1(arr, index * 2 + 1);
+        cur.right = getInstance1(arr, index * 2 + 2);
         return cur;
+    }
+
+    private TreeNode getInstance2(Integer[] arr) {
+        TreeNode tempRoot = new TreeNode(arr[0]);
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(tempRoot);
+        int idx = 0;
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            if (++idx < arr.length && arr[idx] != null) {
+                poll.left = new TreeNode(arr[idx]);
+                queue.add(poll.left);
+            }
+            if (++idx < arr.length && arr[idx] != null) {
+                poll.right = new TreeNode(arr[idx]);
+                queue.add(poll.right);
+            }
+        }
+        return tempRoot;
     }
 
     public void print() {

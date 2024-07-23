@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0000;
+package com.icboluo.leetcode.tree;
 
 import com.icboluo.common.TreeNode;
 
@@ -61,7 +61,7 @@ class N0098_判断二叉查找树 {
 
     /**
      * 错误解法：少了一层遍历，叶子节点没有考虑到
-     * 禁止写法：while else break，这个break就是while的结束条件，这样写，代码难以理解
+     * optimize 禁止写法：while else break，这个break就是while的结束条件，这样写，代码难以理解
      *
      * @param root
      * @return
