@@ -113,13 +113,11 @@ class N0297_0449_序列化和反序列化二叉树 {
         return queue;
     }
 
-
-    // FIXME
     // N0449 Encodes a tree to a single string.  ----------------------------------------------------------
     public String serialize(TreeNode root) {
         final StringBuilder sb = new StringBuilder();
         ser(root, sb);
-        return sb.toString();
+        return sb.isEmpty() ? null : sb.toString();
     }
 
     private void ser(TreeNode root, StringBuilder sb) {
@@ -134,6 +132,9 @@ class N0297_0449_序列化和反序列化二叉树 {
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
+        if (data == null || data.isEmpty()) {
+            return null;
+        }
         final String[] split = data.split(",");
         final Queue<String> queue = new LinkedList<>(Arrays.asList(split));
         return des(queue, Integer.MIN_VALUE, Integer.MAX_VALUE);
