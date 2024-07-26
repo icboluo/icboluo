@@ -1,6 +1,8 @@
 
 package com.icboluo.util.response;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,5 +60,9 @@ public abstract class Response implements Serializable {
     @Transient
     public boolean isSuccessful() {
         return code.matches("^(2\\d{2}|0)$");
+    }
+
+    public static Response<Object> generate(String json) {
+        return JSON.parseObject(json, new TypeReference<Response<Object>>() {});
     }
 }

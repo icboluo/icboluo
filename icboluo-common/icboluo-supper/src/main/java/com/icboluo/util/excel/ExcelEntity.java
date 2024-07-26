@@ -1,10 +1,12 @@
 package com.icboluo.util.excel;
 
 import com.icboluo.annotation.Excel;
+import com.icboluo.util.I18nException;
 import com.icboluo.util.SpringUtil;
 import lombok.Data;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.*;
 import java.util.function.Function;
@@ -64,13 +66,14 @@ public class ExcelEntity<T> {
     public Map<String, List<Integer>> getRepeatMsg(Function<T, String> getUk) {
         Map<String, List<Integer>> map = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
+            int rowNo = i + headRowNumber + 1;
             String uk = getUk.apply(list.get(i));
             if (!map.containsKey(uk)) {
                 List<Integer> value = new ArrayList<>();
-                value.add(i);
+                value.add(rowNo);
                 map.put(uk, value);
             } else {
-                map.get(uk).add(i);
+                map.get(uk).add(rowNo);
             }
         }
         return map.entrySet().stream()
@@ -79,6 +82,15 @@ public class ExcelEntity<T> {
     }
 
     public void validRepeat(Function<T, String> getUk) {
-
+        Map<String, List<Integer>> repeatMsg = getRepeatMsg(getUk);
+        List<String> msg = new ArrayList<>();
+        for (Map.Entry<String, List<Integer>> entry : repeatMsg.entrySet()) {
+            String temp = MESSAGE_SOURCE.getMessage(ToolErrorEnum.EXCEL_REPEAT.getMsg(),
+                    new Object[]{entry.getValue()}, LocaleContextHolder.getLocale());
+            msg.add(temp);
+        }
+        if (!msg.isEmpty()) {
+            throw new I18nException(String.join("<br/><br/>", msg));
+        }
     }
 }

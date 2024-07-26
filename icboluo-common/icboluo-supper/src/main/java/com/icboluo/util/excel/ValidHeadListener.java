@@ -48,6 +48,10 @@ public class ValidHeadListener<T> extends ExcelListener<T> {
     @Getter
     protected String headErrorMsg;
 
+    /**
+     * 无参构造，cglib代理的时候使用，正常情况下不需要使用
+     * 如果调用，会报此异常：Caused by: java.beans.IntrospectionException: java.lang.Object not superclass of java.lang.Object
+     */
     public ValidHeadListener() {
 
     }
@@ -67,7 +71,7 @@ public class ValidHeadListener<T> extends ExcelListener<T> {
             return;
         }
         StringBuilder msg = new StringBuilder();
-        for (Map.Entry<Integer, Field> entry : ExcelExportResolve.CLASS_INDEX_FIELD_CACHE.get(excelEntity.clazz).entrySet()) {
+        for (Map.Entry<Integer, Field> entry : ExcelExportResolve.getIndexField(excelEntity.clazz).entrySet()) {
             Integer entityIndex = entry.getKey();
             Field entityField = entry.getValue();
             Excel excel = entityField.getAnnotation(Excel.class);
@@ -84,7 +88,7 @@ public class ValidHeadListener<T> extends ExcelListener<T> {
         }
         String templateMismatch = MESSAGE_SOURCE.getMessage("excel.template.mismatch", null, LocaleContextHolder.getLocale());
         if (showSheetName) {
-            headErrorMsg = "[" + excelEntity.sheetName + "]" + templateMismatch + ":<br/>" + msg;
+            headErrorMsg = "[" + excelEntity.sheetName + "] " + templateMismatch + ":<br/>" + msg;
         } else {
             headErrorMsg = templateMismatch + ":<br/>" + msg;
         }

@@ -83,12 +83,23 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
         excelEntity.sheetName = sheetName;
     }
 
+    /**
+     * 根据字段值去重，并且取最后一条
+     *
+     * @param fun 获取字段的函数（或者获取联合索引的函数
+     * @return 去重后的列表
+     */
     public List<T> getDistinctList(Function<T, Object> fun) {
         return excelEntity.getDistinctList(fun);
     }
 
-    public Map<String, List<Integer>> getRepeatMsg
-            (Function<T, String> getUk) {
+    /**
+     * 获取重复数据的msg
+     *
+     * @param getUk 根据item获取uk的函数
+     * @return 重复数据的map k：uk ，value：row num
+     */
+    public Map<String, List<Integer>> getRepeatMsg(Function<T, String> getUk) {
         return excelEntity.getRepeatMsg(getUk);
     }
 
