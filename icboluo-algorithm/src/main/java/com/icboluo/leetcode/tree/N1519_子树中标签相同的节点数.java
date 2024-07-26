@@ -6,12 +6,18 @@ import java.util.*;
  * @author icboluo
  * @since 2024-07-26 上午8:40
  */
-public class N1519_子树中标签相同的节点数 {
+class N1519_子树中标签相同的节点数 {
+    public static void main(String[] args) {
+        var cla = new N1519_子树中标签相同的节点数();
+        int[] ints = cla.countSubTrees(7, new int[][]{{0, 1}, {0, 2}, {1, 4}, {1, 5}, {2, 3}, {2, 6}}, "abaedcd");
+        System.out.println("ints = " + Arrays.toString(ints));
+    }
+
     int[] ans;
 
     Map<Integer, List<Integer>> nodeMap;
 
-    public int[] countSubTree(int n, int[][] edges, String labels) {
+    public int[] countSubTrees(int n, int[][] edges, String labels) {
         nodeMap = new HashMap<>();
         // 我一直在想为什么不建一个tree，直到我看到其他人发布的测试用例[[0,2],[0,3],[1,2]]
         for (int[] edge : edges) {
@@ -40,24 +46,4 @@ public class N1519_子树中标签相同的节点数 {
         ans[node] = count[ch - 'a'];
         return count;
     }
-    //    public static int maxIdx(Class<?> cla) {
-    //         toCache(cla);
-    //         return CLASS_NAME_FIELD_CACHE.get(cla)
-    //             .values()
-    //             .stream()
-    //             .map(field -> field.getAnnotation(Excel.class))
-    //             .map(Excel::columnIndex)
-    //             .max(Integer::compareTo)
-    //             .orElse(0);
-    //     }
-    //
-    //     public static synchronized void shoichiIndex(Field field) {
-    //         if (field.isAnnotationPresent(ExcelProperty.class)) {
-    //             ExcelProperty property = field.getAnnotation(ExcelProperty.class);
-    //             Map<String, Object> propertyMember = getMemberValues(property);
-    //             propertyMember.put("index", excel.columnIndex());
-    //
-    //             cleanCache.remove(Class);
-    //         }
-    //     }
 }

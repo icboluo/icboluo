@@ -1,6 +1,7 @@
 package com.icboluo.util.excel;
 
 import com.icboluo.annotation.Excel;
+import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.I18nException;
 import com.icboluo.util.SpringUtil;
 import lombok.Data;
@@ -85,7 +86,7 @@ public class ExcelEntity<T> {
         Map<String, List<Integer>> repeatMsg = getRepeatMsg(getUk);
         List<String> msg = new ArrayList<>();
         for (Map.Entry<String, List<Integer>> entry : repeatMsg.entrySet()) {
-            String temp = MESSAGE_SOURCE.getMessage(ToolErrorEnum.EXCEL_REPEAT.getMsg(),
+            String temp = MESSAGE_SOURCE.getMessage(ReEnum.EXCEL_REPEAT.getMsg(),
                     new Object[]{entry.getValue()}, LocaleContextHolder.getLocale());
             msg.add(temp);
         }

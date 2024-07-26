@@ -66,16 +66,25 @@ public class ExcelExportResolve<T> {
         return null;
     }
 
-    public static <T> Integer maxIdx(Class<T> clazz) {
-        return null;
+    public static int maxIdx(Class<?> cla) {
+        toCache(cla);
+        return CLASS_NAME_FIELD_CACHE.get(cla)
+                .values()
+                .stream()
+                .map(field -> field.getAnnotation(Excel.class))
+                .map(Excel::columnIndex)
+                .max(Integer::compareTo)
+                .orElse(0);
     }
+
+
 
     /**
      * 将类转换成缓存信息
      *
      * @param clazz 类
      */
-    private void toCache(Class<T> clazz) {
+    private static void toCache(Class<?> clazz) {
         if (CLASS_NAME_FIELD_CACHE.containsKey(clazz) && CLASS_INDEX_FIELD_CACHE.containsKey(clazz)) {
             return;
         }
@@ -130,6 +139,13 @@ public class ExcelExportResolve<T> {
         if (excel.columnIndex() < 0) {
             log.error("Class [{}], Field name [{}] columnIndex is -1, However, a drop-down list box needs to be generated, it`s anomalous, Please check",
                     field.getDeclaringClass().getSimpleName(), field.getName());
+        }
+        if (field.isAnnotationPresent(ExcelProperty.class)) {
+            ExcelProperty property = field.getAnnotation(ExcelProperty.class);
+            Map<String, Object> propertyMember = getMemberValues(property);
+            propertyMember.put("index", excel.columnIndex());
+
+            cleanCache(field.getDeclaringClass());
         }
     }
 

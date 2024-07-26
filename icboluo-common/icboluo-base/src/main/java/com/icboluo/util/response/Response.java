@@ -62,7 +62,8 @@ public abstract class Response implements Serializable {
         return code.matches("^(2\\d{2}|0)$");
     }
 
-    public static Response<Object> generate(String json) {
-        return JSON.parseObject(json, new TypeReference<Response<Object>>() {});
+    public static Response generate(String json) {
+        return JSON.parseObject(json, new TypeReference<>() {
+        });
     }
 }

@@ -46,14 +46,23 @@ public class ValidBodyListener<T> extends ExcelListener<T> {
     public void invoke(T data, AnalysisContext context) {
         // 这个近似总行数会统计空行，目前没有遇到过近似行数不准确的情况(目前不需要
         context.readSheetHolder().getApproximateTotalRowNumber();
+        // if只会执行一次
         if (msgList.isEmpty()) {
+            isEmpty = false;
             for (int i = 0; i < excelEntity.headRowNumber; i++) {
                 msgList.add(new String[getMaxLine() + 1]);
+                rowMsgList.add(null);
             }
         }
         msgList.add(new String[getMaxLine() + 1]);
         Field[] fields = excelEntity.clazz.getDeclaredFields();
         Map<Field, String> msgMap = ValidateUtil.validateFieldsToMap(data, fields);
+        if (data instanceof RowValidate rowValidate) {
+            String rowError = rowValidate.afterFieldValidate();
+            rowMsgList.add(rowError);
+        } else {
+            rowMsgList.add(null);
+        }
         for (Map.Entry<Field, String> entry : msgMap.entrySet()) {
             Excel excel = entry.getKey().getAnnotation(Excel.class);
             msgList.get(msgList.size() - 1)[excel.columnIndex()] = entry.getValue();
@@ -77,6 +86,11 @@ public class ValidBodyListener<T> extends ExcelListener<T> {
                             LocaleContextHolder.getLocale());
                     msg.add(message);
                 }
+            }
+            if (StringUtils.hasText(rowMsgList.get(i))) {
+                String rowMessage = MESSAGE_SOURCE.getMessage("row.{0}.error.{1}",
+                        new Object[] {i + 1, rowMsgList.get(i)}, LocaleContextHolder.getLocale());
+                msg.add(rowMessage);
             }
         }
         if (msg.isEmpty()) {

@@ -37,4 +37,8 @@ public class SingleResponse<T> extends Response {
         return JSON.parseObject(json, new TypeReference<>() {
         });
     }
+
+    public static  SingleResponse<String> generate(String json) {
+        return JSON.parseObject(json, new TypeReference<SingleResponse<String>>() {});
+    }
 }

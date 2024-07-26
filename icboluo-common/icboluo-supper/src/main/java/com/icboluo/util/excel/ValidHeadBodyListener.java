@@ -23,6 +23,9 @@ public class ValidHeadBodyListener<T> extends ExcelListener<T> {
     private ValidHeadListener<T> validHeadListener;
     private ValidBodyListener<T> validBodyListener;
 
+    /**
+     * 无参构造，cglib代理的时候使用，正常情况下不需要使用
+     */
     public ValidHeadBodyListener() {
 
     }
