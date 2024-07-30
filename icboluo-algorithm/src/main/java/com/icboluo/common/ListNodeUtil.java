@@ -6,7 +6,7 @@ package com.icboluo.common;
  */
 public class ListNodeUtil {
     public static void main(String[] args) {
-        ListNodeUtil cla = new ListNodeUtil();
+        var cla = new ListNodeUtil();
         ListNode listNode = new ListNode(1, 2, 3, 4, 5);
         // cla.reverseList1(listNode).print();
         cla.reverseList3(listNode, 2, 4).print();

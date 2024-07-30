@@ -163,9 +163,9 @@ public class TreeNode {
             for (int j = 0; j < arr[i].length; j++) {
                 if (i < arr.length - 1) {
                     if (" |-".equals(arr[i][j])) {
-                        System.out.print(" | ");
+                        System.out.print(" ↓ ");
                     } else if ("-| ".equals(arr[i][j])) {
-                        System.out.print(" | ");
+                        System.out.print(" ↓ ");
                     } else {
                         System.out.print("   ");
                     }
@@ -176,100 +176,80 @@ public class TreeNode {
     }
 
     private String[][] toArr(TreeNode root) {
-        sortIdx = 0;
+        Node.all = new ArrayList<>();
+        Node.startCol = 0;
+        Node node = new Node(root, 0);
         int height = height();
         int count = count();
-        Node[][] nodeArr = new Node[height][count];
-        String[][] arr = new String[height][count];
-        for (String[] row : arr) {
+        String[][] res = new String[height][count];
+        for (String[] row : res) {
             Arrays.fill(row, "   ");
         }
-        buildArr(root, 0, nodeArr);
-        Map<Integer, List<Node>> weiZhiMap = eleWeiZhi(nodeArr);
+        Map<Integer, List<Node>> rowMap = Node.all.stream().collect(Collectors.groupingBy(n -> n.row));
+
         for (int i = 0; i < height - 1; i++) {
-            List<Node> curList = weiZhiMap.get(i);
-            List<Node> nextList = weiZhiMap.get(i + 1);
-            Map<Integer, Node> nextValMap = nextList.stream().collect(Collectors.toMap(node -> node.val, node -> node));
+            List<Node> curList = rowMap.get(i);
             for (Node cur : curList) {
-                if (cur.left != -1) {
-                    Node left = nextValMap.get(cur.left);
-                    for (int j = left.idx + 1; j <= cur.idx - 1; j++) {
-                        arr[i][j] = "---";
+                if (cur.left != null) {
+                    for (int j = cur.left.col + 1; j <= cur.col - 1; j++) {
+                        res[i][j] = "---";
                     }
-                    arr[i][left.idx] = " |-";
+                    res[i][cur.left.col] = " |-";
                 }
-                if (cur.right != -1) {
-                    Node right = nextValMap.get(cur.right);
-                    for (int j = cur.idx + 1; j <= right.idx - 1; j++) {
-                        arr[i][j] = "---";
+                if (cur.right != null) {
+                    for (int j = cur.col + 1; j <= cur.right.col - 1; j++) {
+                        res[i][j] = "---";
                     }
-                    arr[i][right.idx] = "-| ";
+                    res[i][cur.right.col] = "-| ";
                 }
-                arr[i][cur.idx] = cur.print;
+                res[i][cur.col] = cur.print;
             }
         }
-        List<Node> last = weiZhiMap.get(height - 1);
+        List<Node> last = rowMap.get(height - 1);
         for (Node cur : last) {
-            arr[height - 1][cur.idx] = cur.print;
+            res[height - 1][cur.col] = cur.print;
         }
-        return arr;
+        return res;
     }
 
-    private Map<Integer, List<Node>> eleWeiZhi(Node[][] arr) {
-        Map<Integer, List<Node>> map = new HashMap<>();
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                if (arr[i][j] != null) {
-                    map.computeIfAbsent(i, key -> new ArrayList<>()).add(arr[i][j]);
-                }
-            }
-        }
-        return map;
-    }
+    static class Node {
+        TreeNode.Node left;
 
-    private static int sortIdx = 0;
+        TreeNode.Node right;
 
-    private void buildArr(TreeNode root, int level, Node[][] arr) {
-        if (root == null) {
-            return;
-        }
-        buildArr(root.left, level + 1, arr);
-        arr[level][sortIdx++] = new Node(root, sortIdx);
-        buildArr(root.right, level + 1, arr);
-    }
-
-    class Node {
         int val;
-        int left = -1;
-        int right = -1;
-        String print;
-        int idx;
 
-        public Node(TreeNode root, int sortIdx) {
+        int row;
+
+        int col;
+
+        String print;
+
+        static int startCol;
+
+        static List<TreeNode.Node> all = new ArrayList<>();
+
+        public Node(TreeNode root, int row) {
             this.val = root.val;
-            this.idx = sortIdx - 1;
-            if (root.left != null) {
-                left = root.left.val;
-            }
-            if (root.right != null) {
-                right = root.right.val;
-            }
+            this.row = row;
+            this.left = root.left == null ? null : new Node(root.left, row + 1);
+            // 中序遍历
+            this.col = startCol++;
+            this.right = root.right == null ? null : new Node(root.right, row + 1);
+            this.setPrint();
+            all.add(this);
+        }
+
+        private void setPrint() {
             String item;
             // 只有一位数
-            if (root.val < 10) {
-                item = " " + root.val + " ";
+            if (this.val < 10) {
+                item = " " + this.val + " ";
             } else {
-                item = "   " + root.val;
+                item = "   " + this.val;
                 item = item.substring(item.length() - 3);
             }
             this.print = item;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "val=" + val +
-                    '}';
         }
     }
 

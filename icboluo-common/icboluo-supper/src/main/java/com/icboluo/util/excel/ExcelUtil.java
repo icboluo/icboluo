@@ -123,7 +123,7 @@ public class ExcelUtil {
             ReadSheet rs = EasyExcelFactory.readSheet(0)
                     .registerReadListener(listener)
                     .head(listener.getClass())
-                    .headRowNumber(listener.getHead())
+                    .headRowNumber(listener.getHeadRowNumber())
                     .build();
             er.read(rs);
         } catch (IOException exception) {

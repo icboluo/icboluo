@@ -62,10 +62,6 @@ public class ExcelExportResolve<T> {
         this.sortFieldName = defaultSortFieldName();
     }
 
-    public static <T> TreeMap<Integer, Field> getIndexField(Class<T> clazz) {
-        return null;
-    }
-
     public static int maxIdx(Class<?> cla) {
         toCache(cla);
         return CLASS_NAME_FIELD_CACHE.get(cla)
@@ -76,7 +72,6 @@ public class ExcelExportResolve<T> {
                 .max(Integer::compareTo)
                 .orElse(0);
     }
-
 
 
     /**
@@ -106,6 +101,11 @@ public class ExcelExportResolve<T> {
         }
         CLASS_NAME_FIELD_CACHE.put(clazz, nameMap);
         CLASS_INDEX_FIELD_CACHE.put(clazz, indexMap);
+    }
+
+    public static <T> SortedMap<Integer, Field> getIndexField(Class<T> clazz) {
+        CLASS_INDEX_FIELD_CACHE.get(clazz);
+        return null;
     }
 
     private List<String> defaultSortFieldName() {
@@ -233,5 +233,6 @@ public class ExcelExportResolve<T> {
      */
     public static void cleanCache(Class<?> cla) {
         CLASS_NAME_FIELD_CACHE.remove(cla);
+        CLASS_INDEX_FIELD_CACHE.remove(cla);
     }
 }
