@@ -3,6 +3,7 @@ package com.icboluo.leetcode.tree;
 import com.icboluo.common.TreeNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,5 +44,30 @@ class N0971_翻转二叉树判断相等 {
             dfs(root.left, voyage);
             dfs(root.right, voyage);
         }
+    }
+
+
+    public List<Integer> flipMatchVoyage2(TreeNode root, int[] voyage) {
+        ans = new ArrayList<>();
+        idx = 0;
+        boolean b = dfs2(root, voyage);
+        return b ? ans : Collections.singletonList(-1);
+    }
+
+    private boolean dfs2(TreeNode root, int[] voyage) {
+        if (root == null) {
+            return true;
+        }
+        if (root.val != voyage[idx]) {
+            return false;
+        }
+        idx++;
+//        左边不为null，这里做答案汇总，应该是这种遍历顺序
+        if (root.left != null && root.left.val != voyage[idx]) {
+            ans.add(root.val);
+            return dfs2(root.right, voyage) && dfs2(root.left, voyage);
+        }
+//        前半部分是否没有必要...
+        return dfs2(root.left, voyage) && dfs2(root.right, voyage);
     }
 }
