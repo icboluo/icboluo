@@ -146,7 +146,7 @@ public class MultipleSheetTemplate {
         for (int i = 0; i < listeners.size(); i++) {
             ExcelListener<?> listener = listeners.get(i);
             ReadSheet readSheet = EasyExcelFactory.readSheet(i)
-                    .head(listener.clazz)
+                    .head(listener.getClazz())
                     .headRowNumber(listener.getHead())
                     .registerReadListener(listener)
                     .build();
@@ -172,7 +172,7 @@ public class MultipleSheetTemplate {
         String msgs = listeners.stream()
                 .filter(ValidHeadBodyListener.class::isInstance)
                 .map(ValidHeadBodyListener.class::cast)
-                .map(listener -> listener.getErrorMsg(true))
+                .map(listener -> listener.getArrErrorMsg(true))
                 .filter(StringUtils::hasText)
                 .collect(Collectors.joining("<br><br/>"));
         if (StringUtils.hasText(msgs)) {

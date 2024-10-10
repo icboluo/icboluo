@@ -7,13 +7,12 @@ import com.icboluo.util.BeanUtil;
 import com.icboluo.util.I18nException;
 import com.icboluo.util.SpringUtil;
 import lombok.Getter;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.context.MessageSource;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * <p>Excel 简单导入，单个监听器仅能监听一个sheet页导入的数据
@@ -119,5 +118,9 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
 
     public int getMaxLine() {
         return ExcelExportResolve.getIndexField(excelEntity.clazz).lastKey();
+    }
+
+    public Integer getHead() {
+        return excelEntity.headRowNumber;
     }
 }

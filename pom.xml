@@ -7,8 +7,8 @@
     <parent>
         <!--        我们在升级Spring的时候，应该把其他的stater同样升级到相同版本，例如mybatis-->
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.5</version>
+            <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
         <!--        relativePath元素中的地址–>本地仓库–>远程仓库-->
         <!--        如为空值将始终从仓库中获取，不从本地路径获取-->
         <!--        设定一个空值将始终从仓库中获取，不从本地路径获取，子模块禁止添加这个-->
@@ -47,13 +47,13 @@
     <!-- pom版本号: 单个版本号有利于各个环境统一代码统一跑 区间的版本号有利于依赖更新到最新-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <!--公共插件-->
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.12</log4j.version>
-        <lombok.version>1.18.28</lombok.version>
+        <lombok.version>1.18.32</lombok.version>
         <common.version>0.0.1-SNAPSHOT</common.version>
         <!--mapper -->
         <mysql-connector-j.version>8.4.0</mysql-connector-j.version>
@@ -71,7 +71,7 @@
         <hutool-all.version>5.8.27</hutool-all.version>
         <common-io.version>2.16.1</common-io.version>
         <!--cloud-->
-        <spring-cloud-dependencies.version>2023.0.1</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2023.0.3</spring-cloud-dependencies.version>
     </properties>
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->

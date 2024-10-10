@@ -48,7 +48,7 @@ public class AreaController {
     @Resource
     private AreaMapper areaMapper;
 
-    @Autowired
+    @Autowired(required = false)
     private DataSourceTransactionManager dataSourceTransactionManager;
 
     @Autowired
