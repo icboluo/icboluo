@@ -14,9 +14,17 @@ public class EasyExcelWriteConfig {
 
     private String fileName;
 
+    private String sheetName;
+
     private List<WriteHandler> writeHandlerList;
 
     public EasyExcelWriteConfig(String fileName) {
         this.fileName = fileName;
+        this.sheetName = fileName;
+    }
+
+    public EasyExcelWriteConfig(String fileName, String sheetName) {
+        this.fileName = fileName;
+        this.sheetName = sheetName;
     }
 }

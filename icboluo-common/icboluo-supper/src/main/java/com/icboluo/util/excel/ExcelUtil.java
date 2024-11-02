@@ -7,8 +7,9 @@ import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
-import com.icboluo.annotation.I18n;
+import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.I18nException;
+import com.icboluo.util.IoHelper;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
@@ -18,7 +19,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +45,7 @@ public class ExcelUtil {
      * @param name     文件名称
      */
     public static void setContent(HttpServletResponse response, String name) {
-        // 这个会造成中文乱码，需要先url编码后解码
+        // 这个会造成中文乱码，需要先url编码后解码,这个不是标准的URL文件传参，使用工具(postman...)导出会显示文件名中文乱码（因前台适配的是这种方式，浏览器导出不会有乱码问题）
         // response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xlsx");
         // 这个是标准的语法，不过2种都需要前段支持下
         response.setHeader("Content-Disposition", "attachment;filename*=utf-8" + name + ".xlsx");
@@ -186,32 +185,10 @@ public class ExcelUtil {
         }
     }
 
-    /**
-     * <p>Excel 注解，导入导出均使用的核心注解
-     * <p>使用方式如下：
-     * <pre>{@code     @Excel(columnNumber = "D", en = "Customer ID", zh = "客户ID")
-     *     private String customerId;}<pre/>
-     * @see com.huawei.smart.nos.common.open.utils.excel.listener.ExcelListener 导入
-     * @see ExcelExportResolve 导出
-     */
-    public @interface Excel {
-        /**
-         * <p>英文环境下的Excel表头
-         * <p>如果不区分中英文，写中文或者英文都可以
-         * <p>如果不区分中英文，并且中文和英文都配置了，会按照 default isEn=false 优先取中文值
-         * @return 英文环境的Excel表头
-         */
-        @AliasFor(annotation = I18n.class) String en() default "";
-
-        /**
-         * 表头是否校验，默认为校验；如果需要校验表头，至少配一个中文或者英文（不配则不校验）
-         */
-        boolean check() default true;
-    }
-
     public static <T> void writeWithTemplate(InputStream is, List<T> list, HttpServletResponse response, Class<T> clazz,
                                              String fileName) {
-        writeOrWithTemplate(is, list, response, clazz, new EasyExcelWriteConfig(fileName) {});
+        writeOrWithTemplate(is, list, response, clazz, new EasyExcelWriteConfig(fileName) {
+        });
     }
 
     @SneakyThrows
@@ -219,12 +196,9 @@ public class ExcelUtil {
                                                Class<T> clazz, EasyExcelWriteConfig config) {
         if (list.size() > 100000) {
             // 数据量超过
-            throw new I18nException("the.data.volume.exceeds.{0}", new Object[] {100000});
+            throw new I18nException("the.data.volume.exceeds.{0}", new Object[]{100000});
         }
-        // 这个不是标准的URL文件传参，使用工具(postman...)导出会显示文件名中文乱码（因前台适配的是这种方式，浏览器导出不会有乱码问题）
-        // 标准的传参是 "attachment;filename*=utf-8" + name + ".xlsx"
-        response.setHeader("Content-Disposition",
-                "attachment;filename=" + URLEncoder.encode(config.getFileName() + ".xlsx", "UTF-8"));
+        setContent(response, config.getFileName());
         ExcelExportResolve<T> resolve = new ExcelExportResolve<>(clazz);
         Optional<String> sheetName = Optional.ofNullable(config.getSheetName());
         try (ServletOutputStream os = response.getOutputStream(); ExcelWriter ew = createWriter(os, is)) {
@@ -234,14 +208,12 @@ public class ExcelUtil {
             if (is == null) {
                 builder = builder.head(resolve.head());
             }
-            WriteSheet writeSheet = builder.relativeHeadRowIndex(0)
-                    .registerWriteHandler(TEXT_CELL_TYPE_WRITE_HANDLER)
-                    .build();
+            WriteSheet writeSheet = builder.build();
             ew.write(resolve.body(() -> list), writeSheet);
         }
     }
 
-    -- IOUTIL
+
     private static ExcelWriter createWriter(OutputStream os, InputStream is) {
         if (is == null) {
             return EasyExcelFactory.write(os).build();
@@ -249,26 +221,14 @@ public class ExcelUtil {
             return EasyExcelFactory.write(os).withTemplate(is).build();
         }
     }
-    public static boolean validateFileName(MultipartFile mf, String... suffixArr) {
-        return validateFileName(mf.getOriginalFilename(), suffixArr);
-    }
-    public static boolean validateFileName(String originalFilename, String... suffixArr) {
-        if (originalFilename == null) {
-            return false;
-        }
-        for (String suffix : suffixArr) {
-            if (originalFilename.endsWith(suffix)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
     @SneakyThrows
     public static <T> List<T> read(MultipartFile mf, ExcelListener<T> listener) {
         try (InputStream is = mf.getInputStream()) {
             return read(is, mf.getOriginalFilename(), listener);
         }
     }
+
     @SneakyThrows
     public static <T> List<T> readThenValid(MultipartFile mf, ExcelListener<T> listener) {
         try (InputStream is = mf.getInputStream()) {
@@ -278,9 +238,11 @@ public class ExcelUtil {
             return list;
         }
     }
+
     public static <T> List<T> read(InputStream is, ExcelListener<T> listener) {
         return read(is, null, listener);
     }
+
     /**
      * 读取Excel文件(该方法使用场景是比较特殊的，需要获取到文件名后缀，一般情况下，直接传入File更合适
      *
@@ -290,7 +252,7 @@ public class ExcelUtil {
      * @param <T>          数据类型
      * @return 读取列表
      */
-    public static <T> List<T> read(InputStream is, @Nullable String filePathName, ExcelListener<T> listener) {
+    public static <T> List<T> read(InputStream is, String filePathName, ExcelListener<T> listener) {
         try (ExcelReader er = createExcelReader(filePathName, is)) {
             ReadSheet rs = EasyExcelFactory.readSheet(0)
                     .registerReadListener(listener)
@@ -303,16 +265,17 @@ public class ExcelUtil {
         }
         return listener.getList();
     }
+
     private static ExcelReader createExcelReader(String fileName, InputStream is) {
-        if (IoUtil.validateFileName(fileName, ExcelTypeEnum.CSV.getValue())) {
+        if (IoHelper.validateFileName(fileName, ExcelTypeEnum.CSV.getValue())) {
             return EasyExcelFactory.read(is).excelType(ExcelTypeEnum.CSV).charset(Charset.forName("gbk")).build();
-        } else if (IoUtil.validateFileName(fileName, ExcelTypeEnum.XLSX.getValue(), ExcelTypeEnum.XLS.getValue(),
+        } else if (IoHelper.validateFileName(fileName, ExcelTypeEnum.XLSX.getValue(), ExcelTypeEnum.XLS.getValue(),
                 "xlsm")) {
             return EasyExcelFactory.read(is).build();
         }
         // 如果文件名不是Excel，则抛异常
         if (org.springframework.util.StringUtils.hasText(fileName)) {
-            throw new I18nException(ToolErrorEnum.NOT_EXCEL);
+            throw new I18nException(ReEnum.NOT_EXCEL);
         } else {
             // 默认使用xlsx，xlsm文件读取
             return EasyExcelFactory.read(is).build();

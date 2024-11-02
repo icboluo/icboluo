@@ -29,7 +29,7 @@ public class IoHelper {
      * 校验文件大小
      *
      * @param mf 文件
-     * @throws  I18nException 校验失败抛出此异常
+     * @throws I18nException 校验失败抛出此异常
      */
     public static void validateFile(MultipartFile mf) {
         validateFile(mf, DEFAULT_MAX_SIZE);
@@ -49,6 +49,22 @@ public class IoHelper {
         if (mf.getSize() > size) {
             throw new I18nException("file.too.large");
         }
+    }
+
+    public static boolean validateFileName(MultipartFile mf, String... suffixArr) {
+        return validateFileName(mf.getOriginalFilename(), suffixArr);
+    }
+
+    public static boolean validateFileName(String originalFilename, String... suffixArr) {
+        if (originalFilename == null) {
+            return false;
+        }
+        for (String suffix : suffixArr) {
+            if (originalFilename.endsWith(suffix)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void copy(MultipartFile mf, File file) throws IOException {
