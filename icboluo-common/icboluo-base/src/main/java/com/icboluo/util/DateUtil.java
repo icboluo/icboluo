@@ -8,10 +8,7 @@ import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author icboluo
@@ -41,6 +38,57 @@ public class DateUtil {
     private static final Long MIN = 60 * 1000L;
 
     private static DateTimeFormatter Y_M_D_H_M_S = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    /**
+     * YYYY_MM_DD_HH_MM_SS-----2023-09-19 12:12:12
+     * ISO_LOCAL_DATE_TIME-----2023-09-19T12:12:12  2023-09-19T12:12:12.121  2023-09-19T12:12:12.123456789
+     * ISO_DATE_TIME-----------2023-09-19T12:12:12.001Z
+     */
+    private static final List<DateTimeFormatter> DATE_TIME_FORMATTERS = Arrays.asList(Y_M_D_H_M_S,
+            DateTimeFormatter.ISO_LOCAL_DATE_TIME, DateTimeFormatter.ISO_DATE_TIME);
+
+    private static final List<DateTimeFormatter> DATE_FORMATTERS = Collections.singletonList(
+            DateTimeFormatter.ISO_LOCAL_DATE);
+
+    // login 接口修改为POST请求，前端需要一起修改
+
+    // Object.assign(); // 对象合并
+    // toRefs() // 将响应式对象转换为普通对象
+    // toRef() // 将响应式对象的某个属性转换为普通对象
+    // computed() // 计算属性，可以缓存计算结果（类似于备忘录模式）
+    // watch() // 监听数据的变化
+    // watchEffect() // 监听数据的变化，并执行相应的操作
+    // 钩子函数
+    //     <div ref="a"/>  let a=ref()  a相当于div的容器
+//    public void aa() {
+//        CompletableFuture<String> ecare = syncProjectData();
+//        CompletableFuture<Void> trend = syncTrendData();
+//        asyncJoin(ecare, trend);
+//        return ecare.join();
+//    }
+//
+//    private void asyncJoin(CompletableFuture<?>... taskArr) {
+//        CompletableFuture.allOf(taskArr).handle((result, throwable) -> {
+//            if (throwable == null) {
+//                return null;
+//            }
+//            if (throwable.getCause() instanceof I18nException) {
+//                throw new I18nException(((I18nException) throwable.getCause()).getCode(),
+//                        throwable.getCause().getMessage());
+//            } else {
+//                log.error("", throwable);
+//                throw new BusinessException();
+//            }
+//        }).join();
+//    }
+//
+//    private CompletableFuture<String> syncProjectData() {
+//        CompletableFuture<Void> cf1 = CompletableFuture.runAsync(
+//                () -> voidFun());
+//        CompletableFuture<String> cfTime = CompletableFuture.supplyAsync(
+//                () -> stringRet());
+//        return cfTime.thenCombine(CompletableFuture.allOf(cf1), (res, ignore) -> res);
+//    }
 
     /**
      * ISO_LOCAL_DATE_TIME 这个支持的格式相当的多，秒以后的级别大部分都支持
@@ -134,6 +182,7 @@ public class DateUtil {
     public static LocalDate firstDayOfMonth(LocalDate localDate) {
         return localDate.with(TemporalAdjusters.firstDayOfMonth());
     }
+
     /**
      * 本月的最后一天
      *
@@ -157,6 +206,14 @@ public class DateUtil {
     public static LocalDateTime allToDateTime(String str) {
         if (str == null) {
             return null;
+        }
+        // 支持标准时间戳（毫秒值）转换为日期格式，此处亦可支持10位数秒级别的时间戳
+        if (str.length() == 13) {
+            try {
+                return toDateTime(Long.parseLong(str));
+            } catch (Exception ex) {
+
+            }
         }
         for (DateTimeFormatter formatter : dateTimeFormatters) {
             try {

@@ -92,4 +92,19 @@ public class TimeNoteController {
     public void updateProblem() {
 
     }
+
+    public static void main(String[] args) {
+        double dayOfMonth = 21.75;
+        int total = 15000;
+        double oneDayMonth = total / dayOfMonth;
+        System.out.println(oneDayMonth);
+        // 加班
+        int jbDay = 4;
+        double oneDayMonth2 = total / (dayOfMonth + jbDay);
+        System.out.println(oneDayMonth2);
+        // 加班工资
+        int jdMoney = 0;
+        double oneDayMonth3 = (total+jdMoney) / (dayOfMonth + jbDay);
+        System.out.println(oneDayMonth3);
+    }
 }
