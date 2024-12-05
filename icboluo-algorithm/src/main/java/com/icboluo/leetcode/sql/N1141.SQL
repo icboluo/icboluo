@@ -19,3 +19,7 @@ select query_name,
 from Queries
 WHERE query_name IS NOT NULL
 group by query_name
+-- 1378
+select uni.unique_id, e.name
+from Employees e
+         left join EmployeeUNI uni on e.id = uni = id

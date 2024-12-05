@@ -95,16 +95,18 @@ public class TimeNoteController {
 
     public static void main(String[] args) {
         double dayOfMonth = 21.75;
-        int total = 15000;
-        double oneDayMonth = total / dayOfMonth;
-        System.out.println(oneDayMonth);
+        int other = 0;
+        int base = 10000;
+        int total = other+base;
+        double oneDayMoney = total / dayOfMonth;
+        System.out.println("ont day money: "+oneDayMoney);
         // 加班
-        int jbDay = 4;
+        int jbDay = 2;
         double oneDayMonth2 = total / (dayOfMonth + jbDay);
-        System.out.println(oneDayMonth2);
+        System.out.println("jb money: "+oneDayMonth2);
         // 加班工资
         int jdMoney = 0;
         double oneDayMonth3 = (total+jdMoney) / (dayOfMonth + jbDay);
-        System.out.println(oneDayMonth3);
+        System.out.println("jb money: "+oneDayMonth3);
     }
 }

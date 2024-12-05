@@ -60,35 +60,6 @@ public class DateUtil {
     // watchEffect() // 监听数据的变化，并执行相应的操作
     // 钩子函数
     //     <div ref="a"/>  let a=ref()  a相当于div的容器
-//    public void aa() {
-//        CompletableFuture<String> ecare = syncProjectData();
-//        CompletableFuture<Void> trend = syncTrendData();
-//        asyncJoin(ecare, trend);
-//        return ecare.join();
-//    }
-//
-//    private void asyncJoin(CompletableFuture<?>... taskArr) {
-//        CompletableFuture.allOf(taskArr).handle((result, throwable) -> {
-//            if (throwable == null) {
-//                return null;
-//            }
-//            if (throwable.getCause() instanceof I18nException) {
-//                throw new I18nException(((I18nException) throwable.getCause()).getCode(),
-//                        throwable.getCause().getMessage());
-//            } else {
-//                log.error("", throwable);
-//                throw new BusinessException();
-//            }
-//        }).join();
-//    }
-//
-//    private CompletableFuture<String> syncProjectData() {
-//        CompletableFuture<Void> cf1 = CompletableFuture.runAsync(
-//                () -> voidFun());
-//        CompletableFuture<String> cfTime = CompletableFuture.supplyAsync(
-//                () -> stringRet());
-//        return cfTime.thenCombine(CompletableFuture.allOf(cf1), (res, ignore) -> res);
-//    }
 
     /**
      * ISO_LOCAL_DATE_TIME 这个支持的格式相当的多，秒以后的级别大部分都支持

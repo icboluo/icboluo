@@ -38,7 +38,7 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
     protected ExcelListener(Class<T> clazz, ExcelEntity<T> entity) {
         excelEntity = entity;
         excelEntity.clazz = clazz;
-        excelEntity.resolve = new ExcelExportResolve<>(clazz);
+        excelEntity.resolve = new ExcelResolve<>(clazz);
     }
 
     @Override
@@ -117,7 +117,7 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
     }
 
     public int getMaxLine() {
-        return ExcelExportResolve.getIndexField(excelEntity.clazz).lastKey();
+        return ExcelResolve.getIndexField(excelEntity.clazz).lastKey();
     }
 
     public Integer getHead() {

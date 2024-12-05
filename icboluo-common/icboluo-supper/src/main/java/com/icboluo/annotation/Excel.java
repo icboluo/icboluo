@@ -1,6 +1,6 @@
 package com.icboluo.annotation;
 
-import com.icboluo.util.excel.ExcelExportResolve;
+import com.icboluo.util.excel.ExcelResolve;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * <pre>{@code     @Excel(columnNumber = "D", en = "Customer ID", zh = "客户ID")
  *     private String customerId;}<pre/>
  * @see com.icboluo.util.excel.ExcelListener 导入
- * @see ExcelExportResolve 导出
+ * @see ExcelResolve 导出
  * <p>声明：导入使用的是client实例，导出得到的是view实例。2个是不同的实体承载，所以导入导出没有必要使用同一个注解，除非功能比较简单
  * <p>注解的注解（属于自定义元注解，以下简称元注解）；元注解需要写所有的属性值，好多不写是因为有默认值
  *

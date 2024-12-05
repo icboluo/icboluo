@@ -4,9 +4,7 @@ import lombok.SneakyThrows;
 
 import java.util.concurrent.Executors;
 
-public class a {
-     // * netstat -aon|findstr 123
-     //    * taskkill/pid 456 -t -f
+public class VirtualThreadDemo {
     @SneakyThrows
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {

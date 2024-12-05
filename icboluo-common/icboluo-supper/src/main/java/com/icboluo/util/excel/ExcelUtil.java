@@ -176,7 +176,7 @@ public class ExcelUtil {
 
     @SneakyThrows
     public static <T> void export(List<T> list, HttpServletResponse response, Class<T> clazz, EasyExcelWriteConfig config) {
-        ExcelExportResolve<T> resolve = new ExcelExportResolve<>(clazz);
+        ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
         try (ServletOutputStream sos = response.getOutputStream(); ExcelWriter ew = EasyExcelFactory.write(sos).build()) {
             ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0);
             config.getWriteHandlerList().forEach(builder::registerWriteHandler);
@@ -199,7 +199,7 @@ public class ExcelUtil {
             throw new I18nException("the.data.volume.exceeds.{0}", new Object[]{100000});
         }
         setContent(response, config.getFileName());
-        ExcelExportResolve<T> resolve = new ExcelExportResolve<>(clazz);
+        ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
         Optional<String> sheetName = Optional.ofNullable(config.getSheetName());
         try (ServletOutputStream os = response.getOutputStream(); ExcelWriter ew = createWriter(os, is)) {
             ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0, sheetName.orElse(null));

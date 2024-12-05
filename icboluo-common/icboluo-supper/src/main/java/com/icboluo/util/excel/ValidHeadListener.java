@@ -1,25 +1,16 @@
 package com.icboluo.util.excel;
 
 import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.util.ClassUtils;
 import com.icboluo.annotation.Excel;
 import com.icboluo.interceptor.WebContext;
-import com.icboluo.util.BeanUtil;
 import com.icboluo.util.I18nException;
-import com.icboluo.util.SpringUtil;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
-import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.StringUtils;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 表头校验
@@ -71,7 +62,7 @@ public class ValidHeadListener<T> extends ExcelListener<T> {
             return;
         }
         StringBuilder msg = new StringBuilder();
-        for (Map.Entry<Integer, Field> entry : ExcelExportResolve.getIndexField(excelEntity.clazz).entrySet()) {
+        for (Map.Entry<Integer, Field> entry : ExcelResolve.getIndexField(excelEntity.clazz).entrySet()) {
             Integer entityIndex = entry.getKey();
             Field entityField = entry.getValue();
             Excel excel = entityField.getAnnotation(Excel.class);

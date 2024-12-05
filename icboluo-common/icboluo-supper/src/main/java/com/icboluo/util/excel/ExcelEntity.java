@@ -1,11 +1,9 @@
 package com.icboluo.util.excel;
 
-import com.icboluo.annotation.Excel;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.I18nException;
 import com.icboluo.util.SpringUtil;
 import lombok.Data;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 public class ExcelEntity<T> {
 
     private static final MessageSource MESSAGE_SOURCE = SpringUtil.getBean(MessageSource.class);
-    protected ExcelExportResolve<T> resolve;
+    protected ExcelResolve<T> resolve;
     /**
      * 当前sheet名称
      *

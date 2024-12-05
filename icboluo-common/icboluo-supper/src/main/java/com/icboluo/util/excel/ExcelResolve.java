@@ -4,6 +4,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.icboluo.annotation.Excel;
 import com.icboluo.annotation.I18n;
 import com.icboluo.interceptor.WebContext;
+import com.icboluo.util.BeanUtil;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -30,14 +31,14 @@ import java.util.function.Supplier;
  * @since 2023-06-25 18:50
  */
 @Slf4j
-public class ExcelExportResolve<T> {
+public class ExcelResolve<T> {
 
     /**
      * 全局的容器需要使用线程安全的容器
      */
     private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new ConcurrentHashMap<>();
 
-    public static final Map<Class<?>, Map<Integer, Field>> CLASS_INDEX_FIELD_CACHE = new ConcurrentHashMap<>();
+    public static final Map<Class<?>, TreeMap<Integer, Field>> CLASS_INDEX_FIELD_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 导出模版类型
@@ -55,7 +56,7 @@ public class ExcelExportResolve<T> {
     @Setter
     private List<String> sortFieldName;
 
-    public ExcelExportResolve(Class<T> clazz) {
+    public ExcelResolve(Class<T> clazz) {
         this.clazz = clazz;
         this.toCache(clazz);
         this.nameFieldMap = CLASS_NAME_FIELD_CACHE.get(clazz);
@@ -84,8 +85,8 @@ public class ExcelExportResolve<T> {
             return;
         }
         Map<String, Field> nameMap = new HashMap<>();
-        Map<Integer, Field> indexMap = new HashMap<>();
-        Field[] fields = clazz.getDeclaredFields();
+        TreeMap<Integer, Field> indexMap = new TreeMap<>();
+        List<Field> fields = BeanUtil.getThisAndSupperDeclaredFields(clazz);
         for (Field field : fields) {
             if (!field.isAnnotationPresent(Excel.class)) {
                 continue;
@@ -104,8 +105,7 @@ public class ExcelExportResolve<T> {
     }
 
     public static <T> SortedMap<Integer, Field> getIndexField(Class<T> clazz) {
-        CLASS_INDEX_FIELD_CACHE.get(clazz);
-        return null;
+        return CLASS_INDEX_FIELD_CACHE.get(clazz);
     }
 
     private List<String> defaultSortFieldName() {
