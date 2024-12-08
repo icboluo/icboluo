@@ -56,4 +56,13 @@ public class UserProducer {
             throw new I18nException("account or password error");
         }
     }
+
+    @PostMapping("login")
+    public void login(@RequestBody Map<String,String> map) {
+        String id = map.get("id");
+        String pwd = map.get("password");
+        if (!account.containsKey(id) || !Objects.equals(account.get(id), pwd)) {
+            throw new I18nException("account or password error");
+        }
+    }
 }

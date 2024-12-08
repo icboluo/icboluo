@@ -161,6 +161,17 @@ io问题：增大网络开销 扩展性：增减字段难以控制（但是可�
 
 where条件中多过滤一些行，使驱动表小一点
 
+
+-- mysql
+-- on duplicate key update 语句根据主键id或唯一键来判断当前出入是否已存在
+-- 记录已存在时，只会更新 on duplicate key update 之后指定的字段
+-- 如果同时传递了主键和唯一键，以主键为判断存在依据，唯一键字段内容可以被修改
+-- 场景：可以实现 insertOrUpdate|insert
+
+-- replace into 语句会先删除原有记录，然后插入新的记录
+-- 场景：可以实现对自增id数据的 insertOrUpdate|insert 操作
+-- 注意：如果需要保留id，需要额外传入id，否则会重新生成id
+
 ## 特殊sql
 
 SELECT COALESCE(business_name,'no business_name') AS bus_coalesce FROM business WHERE id=1

@@ -1,4 +1,4 @@
-package com.icboluo;
+package com.icboluo.framework;
 
 import com.icboluo.util.I18nException;
 import lombok.extern.slf4j.Slf4j;

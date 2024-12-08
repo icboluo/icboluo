@@ -18,11 +18,13 @@ import com.icboluo.util.excel.ExcelUtil;
 import com.icboluo.util.excel.ValidHeadBodyListener;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,11 +71,11 @@ public class ExcelController {
         excelService.write(writeExcelEntity.getDatabase(), writeExcelEntity.getTableName());
     }
 
-    @GetMapping("importStudent")
+    @PostMapping("importStudent")
     public void importStudent(HttpServletRequest request) throws IOException {
         LocalDateTime gmtStart = LocalDateTime.now();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        MultipartFile mf = multipartRequest.getFile("data");
+        MultipartFile mf = multipartRequest.getFile("file");
         assert mf != null;
         IoHelper.validateFile(mf);
         ExcelUtil.xlsAndXlsxValid(mf);
@@ -88,6 +90,25 @@ public class ExcelController {
         }
         List<StudentVO> read = listener.getList();
         read.forEach(System.out::println);
+    }
+
+    @SneakyThrows
+    @PostMapping("simpleExport")
+    public void simpleExport(HttpServletResponse response) {
+        String fileName = "title_customization_" + System.currentTimeMillis() + ".xlsx";
+        ExcelResolve<StudentVO> resolve = new ExcelResolve<>(StudentVO.class);
+        resolve.setSortFieldName(Arrays.asList("age", null, "name", "code", "id"));
+        ExcelUtil.setContent(response, fileName);
+        EasyExcelFactory.write(response.getOutputStream())
+                // 实测这个自定义列宽最大值太宽了，需要修改为 100|150
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                // 这个 api 会让 excel 上面空下来几行，可以做模版填充使用，给定表头模版，仅写入数据
+                .relativeHeadRowIndex(0)
+                .head(resolve.head())
+                .sheet("学生")
+                .doWrite(resolve.body(() ->
+                        studentService.generateList(20).stream()
+                                .map(StudentVO::new).toList()));
     }
 
     /**

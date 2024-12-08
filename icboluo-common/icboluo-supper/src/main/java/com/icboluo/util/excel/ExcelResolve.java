@@ -58,7 +58,7 @@ public class ExcelResolve<T> {
 
     public ExcelResolve(Class<T> clazz) {
         this.clazz = clazz;
-        this.toCache(clazz);
+        toCache(clazz);
         this.nameFieldMap = CLASS_NAME_FIELD_CACHE.get(clazz);
         this.sortFieldName = defaultSortFieldName();
     }
