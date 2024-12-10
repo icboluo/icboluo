@@ -21,7 +21,7 @@ public class LoginMapper {
                 .build();
         String body = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
                 .body();
-        return SingleResponse.build(body);
+        return SingleResponse.generate(body);
     }
 
     @SneakyThrows
@@ -31,6 +31,6 @@ public class LoginMapper {
                 .build();
         String body = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
                 .body();
-        return SingleResponse.build(body);
+        return SingleResponse.generate(body);
     }
 }

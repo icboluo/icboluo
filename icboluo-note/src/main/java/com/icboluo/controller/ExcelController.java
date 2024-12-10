@@ -5,7 +5,6 @@ import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
-import com.icboluo.component.ReadExcelEntity;
 import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.constant.FileRelativePathPre;
 import com.icboluo.object.view.StudentVO;
@@ -49,8 +48,6 @@ import java.util.function.Function;
 public class ExcelController {
     @Resource
     private ExcelService excelService;
-    @Resource
-    private ReadExcelEntity readExcelEntity;
     @Resource
     private WriteExcelEntity writeExcelEntity;
 

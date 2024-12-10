@@ -31,14 +31,10 @@ public class SingleResponse<T> extends Response {
         super(code, message);
     }
 
-    public static SingleResponse<Object> build(String json) {
+    public static <T> SingleResponse<T> generate(String json) {
         // TypeReference 可以消除 <>.class 警告
         // return JSON.parseObject(json, SingleResponse.class);
-        return JSON.parseObject(json, new TypeReference<>() {
+        return JSON.parseObject(json, new TypeReference<SingleResponse<T>>() {
         });
-    }
-
-    public static  SingleResponse<String> generate(String json) {
-        return JSON.parseObject(json, new TypeReference<SingleResponse<String>>() {});
     }
 }
