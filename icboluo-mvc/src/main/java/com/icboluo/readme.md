@@ -2,7 +2,7 @@ Web（World Wide Web）即全球广域网，也称为万维网。
 Javaweb: 用Java技术来解决相关web领域的技术总和（Web前端+Web后台）。
 是用java技术开发web服务应用（软件）
 两种软件架构模式:
-B/S：Broswer / Server通过浏览器去访问网络资源
+B/S：Browser / Server通过浏览器去访问网络资源
 C/S：Client /Server打开特定的软件访问网络资源
 B/S通信模式是B/S软件架构的通信模式，也就是浏览器和服务器之间数据交互的方式。B/S的请求和访问应该成对出现
 B/S架构的优点：

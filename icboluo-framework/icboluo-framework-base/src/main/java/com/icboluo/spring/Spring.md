@@ -282,23 +282,6 @@ prototype :多例的
 init-method：指定类中的初始化方法名称(生命周期相关)
 destroy-method：指定类中销毁方法名称(生命周期相关)
 
-<aop:config>配置AOP
-<aop:aspect id="logAdvice" ref="logger">配置切面，ref:引用通知类
-<aop:pointcut expression=" execution(* cn.itcast.service.impl.*.*(..))" id="pt1"/>用于配置切入点表达式，pointcut-ref="
-pt1"调用表达式。用于优化下面代码
-<aop:before method="printLog" pointcut="execution...配置前置通知， method:配置通知方法（具体增强的方法）
-pointcut:配置AspectJ表达式，即将通知增强到哪个方法
-execution:使用AspectJ的切入点表达式，execution(修饰符 返回值类型 包名.类名.方法名(参数列表))
-<aop:after-returning>@AfterReturning
-<aop:after-throwing>@AfterThrowing
-<aop:after>@After（execution...）
-<aop:around>ProceedingJoinPoint需要传入该类参数
-@Pointcut切入点表达式：通过一个空方法单独配置切入点表达式
-
-<!--开启注解AOP-->
-<aop:aspectj-autoproxy></aop:aspectj-autoproxy>@EnableAspectJAutoProxy放在总配置类中
-@Aspect表示当前类是一个切面类（也可以称之为通知类）就是增强了什么的类
-
 old：jdbctemplate中:setDataSource(dataSource);注入<bean...
 new：JdbcDaoSupport，无法将dataSource注入到JdbcDaoSupport中注解用不了
 

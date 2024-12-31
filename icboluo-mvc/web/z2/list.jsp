@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--jstl属于jsp，目前已经过时，不再使用--%>
-<%--<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <!DOCTYPE html>
 <!-- 网页使用的语言 -->
 <html lang="zh-CN">
@@ -16,12 +15,6 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>用户信息管理系统</title>
 
-    <!-- 1. 导入CSS的全局样式 -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <!-- 2. jQuery导入，建议使用1.9以上的版本 -->
-    <script src="../js/jquery-2.1.0.min.js"></script>
-    <!-- 3. 导入bootstrap的js文件 -->
-    <script src="../js/bootstrap.min.js"></script>
     <style type="text/css">
         td, th {
             text-align: center;
@@ -98,7 +91,7 @@
 </body>
 <script>
     function delUserById(id) {
-        var confirm = window.confirm("确认要删除？");
+        const confirm = window.confirm("确认要删除？");
         /*console.log(confirm);控制台打印*/
         if (confirm) {
             location.href = "${pageContext.request.contextPath}/deleteByIdServlet?id=" + id
@@ -106,7 +99,7 @@
     }
 
     $("#pageSize").change(function () {
-        var pageSize = this.value;
+        const pageSize = this.value;
         /*        var pageSize = $("#pageSize").val();*/
         location.href = "${pageContext.request.contextPath}/pageQueryServlet?pageNum=1&pageSize=" + pageSize;
     });

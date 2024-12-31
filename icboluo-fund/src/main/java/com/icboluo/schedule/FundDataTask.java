@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -57,8 +58,7 @@ public class FundDataTask {
         List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
         List<FundAsyncRecord> recordList = fundAsyncRecordMapper.queryAll();
         Map<String, FundAsyncRecord> recordMap = recordList.stream()
-                .collect(Collectors.groupingBy(FundAsyncRecord::getId,
-                        Collectors.collectingAndThen(Collectors.toList(), List::getFirst)));
+                .collect(Collectors.toMap(FundAsyncRecord::getId, Function.identity(), (a, b) -> b));
         LocalDate startTime = LocalDate.of(2020, 1, 1);
 
         for (FundAttention fundAttention : fundAttentions) {
@@ -69,14 +69,15 @@ public class FundDataTask {
                 syncFundData(fundId, startTime, LocalDate.now());
                 haveUpdateFundData = true;
             } else {
-//            如果数据库中的开始时间比较大
+                // 如果数据库中的开始时间比较大
                 if (dbFundAsync.getStartTime().toLocalDate().isAfter(startTime)) {
                     syncFundData(fundId, startTime, dbFundAsync.getStartTime().toLocalDate());
                     haveUpdateFundData = true;
                 }
-//            如果数据库结束时间比现在小
-                if (dbFundAsync.getEndTime().toLocalDate().isBefore(LocalDate.now())) {
-                    syncFundData(fundId, dbFundAsync.getEndTime().toLocalDate(), LocalDate.now());
+                // 如果数据库结束时间比现在小
+                LocalDate dbEndDate = dbFundAsync.getEndTime().toLocalDate();
+                if (dbEndDate.plusDays(1).isBefore(LocalDate.now())) {
+                    syncFundData(fundId, dbEndDate.plusDays(1), LocalDate.now());
                     haveUpdateFundData = true;
                 }
             }

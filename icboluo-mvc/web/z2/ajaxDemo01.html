@@ -12,21 +12,16 @@
     //点击按钮
     document.getElementById("btn1").onclick = function (ev) {
         //1.创建ajax对象
-        var xhr;
-        if (window.XMLHttpRequest) {
-            xhr = new XMLHttpRequest();
-        } else {
-            /*ie5,6*/
-            xhr = new ActiveXObject("Microsoft.XMLHTTP");
-        }
+        const xhr = new XMLHttpRequest();
+
         //2.给xhr设置监听事件\
         xhr.onreadystatechange = function (ev2) {
             //请求,state:情势，status：状态
-            if (xhr.readyState == 4 && xhr.status == 200) {
+            if (xhr.readyState === 4 && xhr.status === 200) {
                 //接收正常的响应数据
-                var responseText = xhr.responseText;
+                const responseText = xhr.responseText;
                 alert(responseText);
-            } else if (xhr.readyState == 4 && xhr.status == 500) {
+            } else if (xhr.readyState === 4 && xhr.status === 500) {
                 alert("get，500，加班");
             }
         };
@@ -38,17 +33,12 @@
 
 
     document.getElementById("btn2").onclick = function (ev) {
-        var xhr;
-        if (window.XMLHttpRequest) {
-            xhr = new XMLHttpRequest();
-        } else {
-            xhr = new ActiveXObject("Microsoft.XMLHTTP");
-        }
+        let xhr= new XMLHttpRequest();
         xhr.onreadystatechange = function (ev2) {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var responseText = xhr.responseText;
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const responseText = xhr.responseText;
                 alert(responseText);
-            } else if (xhr.readyState == 4 && xhr.status == 500) {
+            } else if (xhr.readyState === 4 && xhr.status === 500) {
                 alert("post，500，加班");
             }
         };

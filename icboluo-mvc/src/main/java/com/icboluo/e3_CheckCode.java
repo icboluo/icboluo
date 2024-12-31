@@ -68,7 +68,6 @@ public class e3_CheckCode extends HttpServlet {
         }
 
         // end 将图片响应给浏览器
-
         ImageIO.write(image, "jpg", response.getOutputStream());
     }
 }
