@@ -1,1 +1,2 @@
-
+className: com.icboluo.framework.ReflectTest
+methodName: getName

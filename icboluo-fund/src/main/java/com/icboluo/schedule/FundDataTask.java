@@ -58,7 +58,7 @@ public class FundDataTask {
         List<FundAsyncRecord> recordList = fundAsyncRecordMapper.queryAll();
         Map<String, FundAsyncRecord> recordMap = recordList.stream()
                 .collect(Collectors.groupingBy(FundAsyncRecord::getId,
-                        Collectors.collectingAndThen(Collectors.toList(), li -> li.get(0))));
+                        Collectors.collectingAndThen(Collectors.toList(), List::getFirst)));
         LocalDate startTime = LocalDate.of(2020, 1, 1);
 
         for (FundAttention fundAttention : fundAttentions) {
@@ -168,7 +168,7 @@ public class FundDataTask {
      * 获取基金网数据2
      */
     public static String httpFundInfo(String code) {
-        String referer = "http://so.eastmoney.com/web/s?keyword=" + code + "";
+        String referer = "http://so.eastmoney.com/web/s?keyword=" + code;
         String url = "http://push2.eastmoney.com/api/qt/stock/get?ut=fa5fd1943c7b386f172d6893dbfba10b&fltt" +
                 "=2&fields=f59,f169,f170,f161,f163,f171,f126,f168,f164,f78,f162,f43,f46,f44,f45,f60,f47," +
                 "f48,f49,f84,f116,f55,f92,f71,f50,f167,f117,f85,f84,f58,f57,f86,f172,f108,f118,f107,f164," +

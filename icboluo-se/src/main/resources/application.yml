@@ -1,2 +1,2 @@
-className: com.icboluo.reflect.Person
-methodName: eat
+className: com.icboluo.framework.ReflectTest
+methodName: getName
