@@ -1,7 +1,8 @@
 -- 1141 查询近30天活跃用户数
 select activity_date day, count(distinct user_id) as active_users
 from Activity
-where activity_date > "2019-06-27" AND activity_date <= "2019-07-27"
+where activity_date > "2019-06-27"
+  AND activity_date <= "2019-07-27"
 group by activity_date
 -- 1148 文章浏览量
 select distinct (author_id) as id
@@ -23,3 +24,14 @@ group by query_name
 select uni.unique_id, e.name
 from Employees e
          left join EmployeeUNI uni on e.id = uni = id
+-- 1484 按日期分组销售产品
+select sell_date,
+       count(distinct product)                                       num_sold,
+       group_concat(distinct product order by product separator ',') products
+from Activities
+group by sell_date
+order by sell_date;
+-- 1517 查找拥有有效邮箱的用户
+select *
+from Users
+where mail regexp '^[a-zA-Z][a-zA-Z0-9_\.\-]*@leetcode(\\?com)?\\.com$'

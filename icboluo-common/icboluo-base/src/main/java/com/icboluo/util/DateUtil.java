@@ -175,6 +175,10 @@ public class DateUtil {
      * @return 日期
      */
     public static LocalDateTime allToDateTime(String str) {
+        return allToDateTime(str, dateTimeFormatters);
+    }
+
+    public static LocalDateTime allToDateTime(String str, List<DateTimeFormatter> formatters) {
         if (str == null) {
             return null;
         }
@@ -186,7 +190,7 @@ public class DateUtil {
 
             }
         }
-        for (DateTimeFormatter formatter : dateTimeFormatters) {
+        for (DateTimeFormatter formatter : formatters) {
             try {
                 return LocalDateTime.parse(str, formatter);
             } catch (Exception exception) {
@@ -271,5 +275,10 @@ public class DateUtil {
         long mills = duration.toMillis();
         // 毫秒占比+分钟数
         return MathUtil.divide(mills - min * DAY, DAY).add(BigDecimal.valueOf(min));
+    }
+
+    // TODO
+    public static LocalDateTime numberValueToDateTime(BigDecimal numberValue) {
+        return null;
     }
 }
