@@ -77,7 +77,6 @@ class Demo {
         if (i == 0) {
             System.out.println("程序正常");
         } else {
-//            用于抛出异常
             throw new IcBoLuoException();
         }
     }

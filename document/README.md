@@ -170,10 +170,6 @@ sql 工具类，包含redis、mysql、mybatis plus简单的工具
 
 配置中心
 
-TODO
-
-并没有在其他服务中使用配置中心的文件
-
 ## note
 
 > note 笔记本，提供笔记本的功能支持

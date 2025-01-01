@@ -39,7 +39,6 @@ Here are some ideas to get you started:
 [算法](icboluo-algorithm/src/main/java/com/icboluo/algorithm)\
 [数据结构](icboluo-algorithm/src/main/java/com/icboluo/datastructure)\
 [leetcode](icboluo-algorithm/src/main/java/com/icboluo/leetcode) 题目，2600以后题目不再维护\
-[简单算法](icboluo-algorithm/src/main/java/com/icboluo/leetcode/simple.md)
 
 解法有好多是来源于Discuss中的思路
 
@@ -61,6 +60,8 @@ Here are some ideas to get you started:
 [Thread](icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/thread)\
 [Redis](icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/framework/Redis.md)简述\
 [Mybatis](icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/framework/Mybatis.md) Learn\
+[反射](icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/framework/ReflectTest.java)\
+[正则](icboluo-framework/icboluo-framework-base/src/main/java/com/icboluo/framework/RegexTest.java)\
 
 ### fund服务是基金服务
 
@@ -98,7 +99,6 @@ Here are some ideas to get you started:
 [JDK源码](icboluo-se/src/main/java/com/icboluo/jdk)\
 [HashMap1.7源码](icboluo-se/src/main/java/com/icboluo/jdk/hashmap/HashMap7.java)\
 [内部类](icboluo-se/src/main/java/com/icboluo/nonameclass)\
-[反射](icboluo-se/src/main/java/com/icboluo/reflect)\
 [Stream](icboluo-se/src/main/java/com/icboluo/stream)\
 [线程](icboluo-se/src/main/java/com/icboluo/thread)\
 [File](icboluo-se/src/main/java/com/icboluo/file)

@@ -10,7 +10,7 @@ class Base64Demo {
     public static void main(String[] args) {
         String str = "hello world";
         // 将字符串str进行Base64编码
-        String encode = new String(Base64.getEncoder().encodeToString(str.getBytes()));
+        String encode = Base64.getEncoder().encodeToString(str.getBytes());
         System.out.println("Base64编码后的字符串: " + encode);
 
         // 将Base64编码后的字符串进行解码

@@ -9,7 +9,7 @@ import org.springframework.lang.NonNull;
  */
 class N0019_删除链表的倒数第N个节点 {
     public static void main(String[] args) {
-        ListNode listNode = new ListNode(1, 2, 3, 4, 5);
+        var listNode = new ListNode(1, 2, 3, 4, 5);
         var cla = new N0019_删除链表的倒数第N个节点();
         cla.removeNthFromEnd1(listNode, 2).print();
     }

@@ -4,6 +4,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.icboluo.common.redis.RedisString;
 import com.icboluo.entity.FundAsyncRecord;
 import com.icboluo.entity.FundAttention;
 import com.icboluo.entity.FundData;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -50,6 +52,9 @@ public class FundDataTask {
     @Resource
     private FundAsyncRecordMapper fundAsyncRecordMapper;
 
+    @Resource
+    private RedisString<Integer> redisString;
+
     /**
      * SchedulingConfigurer 是编程时定时任务；@Scheduled 注解是声明式定时任务
      */
@@ -66,19 +71,16 @@ public class FundDataTask {
             FundAsyncRecord dbFundAsync = recordMap.get(fundId);
             boolean haveUpdateFundData = false;
             if (dbFundAsync == null) {
-                syncFundData(fundId, startTime, LocalDate.now());
-                haveUpdateFundData = true;
+                haveUpdateFundData |= syncFundData(fundId, startTime, LocalDate.now());
             } else {
                 // 如果数据库中的开始时间比较大
                 if (dbFundAsync.getStartTime().toLocalDate().isAfter(startTime)) {
-                    syncFundData(fundId, startTime, dbFundAsync.getStartTime().toLocalDate());
-                    haveUpdateFundData = true;
+                    haveUpdateFundData |= syncFundData(fundId, startTime, dbFundAsync.getStartTime().toLocalDate());
                 }
                 // 如果数据库结束时间比现在小
                 LocalDate dbEndDate = dbFundAsync.getEndTime().toLocalDate();
-                if (dbEndDate.plusDays(1).isBefore(LocalDate.now())) {
-                    syncFundData(fundId, dbEndDate.plusDays(1), LocalDate.now());
-                    haveUpdateFundData = true;
+                if (dbEndDate.isBefore(LocalDate.now())) {
+                    haveUpdateFundData |= syncFundData(fundId, dbEndDate, LocalDate.now());
                 }
             }
             if (haveUpdateFundData) {
@@ -110,9 +112,19 @@ public class FundDataTask {
         }
     }
 
-    private void syncFundData(@NonNull String fundId, @NonNull LocalDate start, @NonNull LocalDate end) {
+    private boolean syncFundData(@NonNull String fundId, @NonNull LocalDate start, @NonNull LocalDate end) {
         if (start.isAfter(end)) {
-            return;
+            return false;
+        }
+        String key = fundId + "---" + start + "---" + end;
+        if (redisString.containsKey(key)) {
+            redisString.decrease(key);
+            if (redisString.getOfNullAble(key) < 0) {
+                redisString.del(key);
+            }
+            return false;
+        } else {
+            redisString.set(key, 10, 10, TimeUnit.MINUTES);
         }
         int countPage = 1;
         LocalDate temp = start;
@@ -121,6 +133,7 @@ public class FundDataTask {
             countPage++;
         }
         this.addFundData(fundId, start, end, countPage);
+        return true;
     }
 
     private void addFundData(String fundId, LocalDate startTime, LocalDate endTime, int countPage) {

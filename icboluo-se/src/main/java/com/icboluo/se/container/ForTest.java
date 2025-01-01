@@ -3,10 +3,7 @@ package com.icboluo.se.container;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * @author icboluo
@@ -19,16 +16,16 @@ public class ForTest {
      */
     @Test
     public void test1() {
-        HashMap<String, String> hm = new HashMap<>();
+        Map<String, String> hm = new HashMap<>();
         hm.put("黄晓明", "Baby");
         hm.put("邓超", "孙俪");
         hm.put("李晨", "范冰冰");
         hm.put("大黑牛", "范冰冰");
 
         Collection<String> values = hm.values();
-//        第一次获取迭代器时，光标位于第0个元素前
+        // 第一次获取迭代器时，光标位于第0个元素前
         Iterator<String> it = values.iterator();
-//        取出下一个元素光标并向后移一位
+        // 取出下一个元素光标并向后移一位
         while (it.hasNext()) {
             System.out.println(it.next());
         }

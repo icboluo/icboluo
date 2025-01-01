@@ -1,6 +1,8 @@
 package com.icboluo.leetcode.双指针;
 
 /**
+ * 接雨水问题：当前节点可以收集到的雨水是左边的最大值和右边的最大值中最小的决定的
+ *
  * @author icboluo
  * @since 2022-07-06 21:40
  */

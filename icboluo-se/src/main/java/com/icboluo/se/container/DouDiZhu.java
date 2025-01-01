@@ -9,8 +9,8 @@ import java.util.*;
 public class DouDiZhu {
 
     public static void main(String[] args) {
-        //准备扑克牌
-        HashMap<Integer, String> pokerMap = new HashMap<>();
+        // 准备扑克牌
+        Map<Integer, String> pokerMap = new HashMap<>();
         List<String> colors = new ArrayList<>();
         List<String> numbers = new ArrayList<>();
         Collections.addAll(colors, "♦", "♣", "♥", "♠");
@@ -29,10 +29,10 @@ public class DouDiZhu {
         List<Integer> keyList = new ArrayList<>(keys);
         Collections.shuffle(keyList);
         //发牌
-        ArrayList<Integer> noP1 = new ArrayList<>();
-        ArrayList<Integer> noP2 = new ArrayList<>();
-        ArrayList<Integer> noP3 = new ArrayList<>();
-        ArrayList<Integer> dipaiNo = new ArrayList<>();
+        List<Integer> noP1 = new ArrayList<>();
+        List<Integer> noP2 = new ArrayList<>();
+        List<Integer> noP3 = new ArrayList<>();
+        List<Integer> dipaiNo = new ArrayList<>();
         for (int i = 0; i < keyList.size(); i++) {
             Integer no = keyList.get(i);
             if (no >= 51) {
@@ -51,11 +51,11 @@ public class DouDiZhu {
         Collections.sort(noP2);
         Collections.sort(noP3);
         Collections.sort(dipaiNo);
-        //看牌
-        ArrayList<String> player1 = new ArrayList<String>();
-        ArrayList<String> player2 = new ArrayList<String>();
-        ArrayList<String> player3 = new ArrayList<String>();
-        ArrayList<String> dipai = new ArrayList<String>();
+        // 看牌
+        List<String> player1 = new ArrayList<>();
+        List<String> player2 = new ArrayList<>();
+        List<String> player3 = new ArrayList<>();
+        List<String> dipai = new ArrayList<>();
 
         for (Integer integer : noP1) {
             player1.add(pokerMap.get(integer));
@@ -70,10 +70,10 @@ public class DouDiZhu {
             dipai.add(pokerMap.get(integer));
         }
 
-        System.out.println("令狐冲："+player1);
-        System.out.println("石破天："+player2);
-        System.out.println("鸠摩智："+player3);
-        System.out.println("底牌："+dipai);
+        System.out.println("令狐冲：" + player1);
+        System.out.println("石破天：" + player2);
+        System.out.println("鸠摩智：" + player3);
+        System.out.println("底牌：" + dipai);
 
     }
 }

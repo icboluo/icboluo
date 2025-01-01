@@ -10,22 +10,6 @@ BaseExecutor聚合了PerpetualCache(永久缓存)impl Cache,PerpetualCache内部
 
 查看createCacheKey函数可得：CacheKey最终聚合了id、limit、sql、param参数成为一个list，利用参数生成hashCode
 
-## mybatis 生成工具介绍
-
-使用example，会生成好多的sql
-
-使用schema前缀 没用
-
-select 增加 for update 是增加事务，并没有什么用
-
-date and time api 是jdk1.8以后的date api
-
-使用实际的列名，不进行驼峰映射
-
-使用jpa注解，在实体类上增加注解
-
-使用as别名查询，会给base result map 增加表名前缀的别名
-
 ## 语法
 
 1、#{}预编译，就是sql中一个？传参一个怎么接受都可以全部都是行参，传参多了用@Param("userName") String userName

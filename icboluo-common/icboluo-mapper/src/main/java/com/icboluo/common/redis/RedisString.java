@@ -132,6 +132,12 @@ public class RedisString<T> extends AbstractRedis<T> {
         return decreaseExpireAt(key, g, null);
     }
 
+    /**
+     * @param key
+     * @param localDateTime
+     * @return
+     * @deprecated redis的时间和服务器的时间不一定是一致的，这样设置过期时间有问题
+     */
     public Integer decreaseExpireAt(String key, LocalDateTime localDateTime) {
         return decreaseExpireAt(key, 1, localDateTime);
     }
