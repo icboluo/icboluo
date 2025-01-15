@@ -40,10 +40,9 @@ public class AreaController {
         return areaService.queryById(id);
     }
 
-    //    事物加到controller层也是有用的
-//    子线程无法获取父线程写未提交的数据的时候，
-//    可以手动开启事物提交
-//            同类的方法之间调用子方法的事物注解不会生效
+    // 事物加到controller层也是有用的
+    // 子线程无法获取父线程写未提交的数据的时候，可以手动开启事物提交
+    // 同类的方法之间调用子方法的事物注解不会生效
 
     @Resource
     private AreaMapper areaMapper;

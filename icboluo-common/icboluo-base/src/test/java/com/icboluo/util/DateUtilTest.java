@@ -2,12 +2,13 @@ package com.icboluo.util;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DateUtilTest {
 
@@ -55,5 +56,14 @@ class DateUtilTest {
         assertEquals(LocalDate.of(2023, 11, 5), DateUtil.allToDate("2023-11-05T13:13:13"));
         assertEquals(LocalDate.of(2023, 11, 5), DateUtil.allToDate("2023-11-05T14:14:14.141"));
         assertEquals(LocalDate.of(2023, 11, 5), DateUtil.allToDate("2023-11-05T15:15:15.123456789"));
+    }
+
+    @Test
+    void numberValueToDateTime() {
+        BigDecimal bd = BigDecimal.valueOf(44546.5);
+        LocalDateTime time = DateUtil.numberValueToDateTime(bd);
+
+        LocalDateTime ans = LocalDateTime.of(2021, 12, 16, 12, 0, 0, 0);
+        assertEquals(ans, time);
     }
 }

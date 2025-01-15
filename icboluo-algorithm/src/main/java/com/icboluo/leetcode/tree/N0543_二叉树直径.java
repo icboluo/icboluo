@@ -21,6 +21,7 @@ import com.icboluo.common.TreeNode;
         int left = diameterTree(root.left);
         int right = diameterTree(root.right);
         ans = Math.max(ans, left + right);
+        // 返回的结果是当前节点的高度，ans在前面计算，所以ans计算的结果中不含当前节点
         return Math.max(left, right) + 1;
     }
 }

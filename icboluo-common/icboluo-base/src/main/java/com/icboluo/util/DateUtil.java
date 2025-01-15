@@ -277,8 +277,27 @@ public class DateUtil {
         return MathUtil.divide(mills - min * DAY, DAY).add(BigDecimal.valueOf(min));
     }
 
-    // TODO
-    public static LocalDateTime numberValueToDateTime(BigDecimal numberValue) {
-        return null;
+    /**
+     * 数字类型日期转换，主要用于excel中部分格式转换
+     *
+     * @param bd 数字值 例如: 44546
+     * @return 时间 例如：2021-12-16
+     */
+    public static LocalDateTime numberValueToDateTime(BigDecimal bd) {
+        LocalDate startDate = LocalDate.of(1900, 1, 1);
+
+        LocalDate date = startDate.plusDays(bd.longValue() - 2L);
+        BigDecimal tempDay = bd.subtract(BigDecimal.valueOf(bd.longValue()));
+
+        BigDecimal tempHour = tempDay.multiply(BigDecimal.valueOf(24));
+        int hour = tempHour.intValue();
+        BigDecimal tempMin = tempHour.subtract(BigDecimal.valueOf(hour)).multiply(BigDecimal.valueOf(60));
+        int min = tempMin.intValue();
+        BigDecimal tempSec = tempMin.subtract(BigDecimal.valueOf(min)).multiply(BigDecimal.valueOf(60));
+        int sec = tempSec.intValue();
+        int nano = tempSec.subtract(BigDecimal.valueOf(sec)).multiply(BigDecimal.valueOf(1000000000)).intValue();
+
+        LocalTime time = LocalTime.of(hour, min, sec, nano);
+        return LocalDateTime.of(date, time);
     }
 }

@@ -94,9 +94,12 @@ class N0104_0111二叉树最大最小深度 {
         if (root == null) {
             return 0;
         }
-        int left = minDepth(root.left);
-        int right = minDepth(root.right);
-        return root.left == null || root.right == null ?
-                left + right + 1 : Math.min(left, right) + 1;
+        if (root.left == null) {
+            return minDepth(root.right);
+        }
+        if (root.right == null) {
+            return minDepth(root.left);
+        }
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
     }
 }
