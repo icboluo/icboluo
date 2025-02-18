@@ -9,7 +9,7 @@ import java.util.Base64;
 class Base64Demo {
     public static void main(String[] args) {
         String str = "hello world";
-        // 将字符串str进行Base64编码
+        // 将字符串str进行Base64编码, Base64编码之后的结果是一致的
         String encode = Base64.getEncoder().encodeToString(str.getBytes());
         System.out.println("Base64编码后的字符串: " + encode);
 

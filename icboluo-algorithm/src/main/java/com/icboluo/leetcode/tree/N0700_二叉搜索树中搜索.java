@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_0600;
+package com.icboluo.leetcode.tree;
 
 import com.icboluo.common.TreeNode;
 
@@ -9,7 +9,14 @@ import java.util.Queue;
  * @author icboluo
  * @since 2021-39-10 12:39
  */
-class N0700 {
+class N0700_二叉搜索树中搜索 {
+    public static void main(String[] args) {
+        var cla = new N0700_二叉搜索树中搜索();
+        TreeNode root = new TreeNode(4, 2, 7, 1, 3);
+        root.print();
+        TreeNode treeNode = cla.searchBST(root, 2);
+        treeNode.print();
+    }
 
     public TreeNode searchBST(TreeNode root, int val) {
         return searchBST1(root, val);

@@ -6,7 +6,13 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-03-29 21:42
  */
- class N0543_二叉树直径 {
+class N0543_二叉树直径 {
+    public static void main(String[] args) {
+        var cla = new N0543_二叉树直径();
+        TreeNode root = new TreeNode(1, 2, 3, 4, 5);
+        System.out.println(cla.diameterTree(root));
+    }
+
     int ans = 0;
 
     public int diameterOfBinaryTree(TreeNode root) {
