@@ -5,7 +5,7 @@ import com.icboluo.util.RandomUtil;
 import java.util.Arrays;
 
 /**
- * 插入排序
+ * 插入排序：取第一个元素，认为已经排序，将新元素依次与已排序元素比较插入
  *
  * @author icboluo
  */
@@ -18,18 +18,16 @@ class InsertSort {
     }
 
     private static void m2(int[] arr) {
-        //定义待插入的数
-        int temp;
-        int index;
         for (int i = 1; i < arr.length; i++) {
             //定义待插入的数
-            temp = arr[i];
-            index = i - 1;
+            int temp = arr[i];
+            int index = i - 1;
             //给待插入的数找合适的位置
             while (index >= 0 && temp < arr[index]) {
                 arr[index + 1] = arr[index];
                 index--;
             }
+            // 如果待排序元素是最大的，则不重新赋值
             if (index + 1 != i) {
                 arr[index + 1] = temp;
             }
@@ -39,8 +37,9 @@ class InsertSort {
     }
 
     private static void m1(int[] arr) {
-//定义待插入的数
+        // 待排序元素（新元素
         int temp = arr[1];
+        // 已排序索引
         int index = 0;
         //给待插入的数找合适的位置
         while (index >= 0 && temp < arr[index]) {

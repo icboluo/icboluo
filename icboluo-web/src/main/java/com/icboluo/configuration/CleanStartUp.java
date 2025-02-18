@@ -1,5 +1,6 @@
 package com.icboluo.configuration;
 
+import com.icboluo.util.BeanUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -31,7 +32,7 @@ public class CleanStartUp implements BeanPostProcessor {
      */
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if (ListUtil.containIgnoreCase(postConstructBeanNames, beanName)) {
+        if (BeanUtil.containIgnoreCase(postConstructBeanNames, beanName)) {
             return null;
         } else {
             return bean;
@@ -60,16 +61,14 @@ public class CleanStartUp implements BeanPostProcessor {
     @Component
     public class Int {
         @Pointcut(
-                value = "execution(public * com.controller.aController.getName(..))")
+                value = "execution(public * com.icboluo.controller.ResultController.integer(..))")
         public void cut() {
 
         }
 
         @Around("cut()")
         public Object aroundCut(ProceedingJoinPoint joinPoint) {
-            Object obj = new Object();
-            obj.setValue("123");
-            return obj;
+            return 123;
         }
     }
 }

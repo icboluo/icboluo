@@ -114,13 +114,26 @@ public class StringTest {
     public void test22() {
         String s = "465.00500";
         Object bigDecimal = new BigDecimal(s).setScale(2, RoundingMode.HALF_UP).toString();
-        System.out.println("format = " + bigDecimal);
+        System.out.println(STR."format = \{bigDecimal}");
     }
 
     @Test
     public void test25() {
         Integer i = null;
         boolean b = 1 == i;
-        System.out.println("b = " + b);
+        System.out.println(STR."b = \{b}");
+    }
+
+    @Test
+    public void test26() {
+        String name = "xiao wang";
+        String msg = STR."name is : \{name}";
+        System.out.println("msg = " + msg);
+
+        String email = STR."""
+            Hello Mr \{name}
+                good morning;
+                            ByBy""";
+        System.out.println(email);
     }
 }

@@ -576,4 +576,9 @@ public class BeanUtil {
     public static <T> T cast(Object object) {
         return (T) object;
     }
+
+    // TODO
+    public static boolean containIgnoreCase(List<String> postConstructBeanNames, String beanName) {
+        return false;
+    }
 }

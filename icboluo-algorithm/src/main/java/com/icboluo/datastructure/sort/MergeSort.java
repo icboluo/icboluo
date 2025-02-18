@@ -11,10 +11,10 @@ import java.util.Arrays;
  */
 class MergeSort {
     public static void main(String[] args) {
-        //int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
+        // int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
         int[] arr = RandomUtil.getRandom(8000000);
-        int[] temp = new int[arr.length];
-        mergeSort(arr, 0, arr.length - 1, temp);
+        temp = new int[arr.length];
+        mergeSort(arr, 0, arr.length - 1);
         //System.out.println(Arrays.toString(arr));
         var cla = new MergeSort();
         var nums1 = new int[]{1, 2, 3, 0, 0, 0};
@@ -22,22 +22,23 @@ class MergeSort {
         System.out.println(Arrays.toString(nums1));
     }
 
+    static int[] temp;
+
     /**
      * @param arr
      * @param left
      * @param right
-     * @param temp  可以将temp抽取成全局变量，减少参数传递
      */
-    public static void mergeSort(int[] arr, int left, int right, int[] temp) {
+    public static void mergeSort(int[] arr, int left, int right) {
         // 也可以这样判断
 /*        if (left == right) {
             return;
         }*/
         if (left < right) {
             int mid = (left + right) / 2;
-            mergeSort(arr, left, mid, temp);
-            mergeSort(arr, mid + 1, right, temp);
-            merge(arr, left, mid, right, temp);
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
         }
     }
 
@@ -48,9 +49,8 @@ class MergeSort {
      * @param left  左边有序序列的初始索引
      * @param mid   中间...
      * @param right 右边索引
-     * @param temp  中转数组
      */
-    public static void merge(int[] arr, int left, int mid, int right, int[] temp) {
+    public static void merge(int[] arr, int left, int mid, int right) {
         int i = left;
         //右边有序数列的初始索引
         int j = mid + 1;

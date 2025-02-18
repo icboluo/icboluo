@@ -6,7 +6,7 @@ import com.icboluo.util.TimeRecord;
 import java.util.Arrays;
 
 /**
- * 冒泡排序：将最大的数排到最后
+ * 冒泡排序：相邻2个元素依次比较，将最大的数移动到最后，每次循环排好一个元素
  *
  * @author icboluo
  */
@@ -14,7 +14,7 @@ class BubbleSort {
     public static void main(String[] args) {
         TimeRecord.start();
         int[] arr = {3, 9, -1, 10, -2};
-        //m1(arr);
+        // m1(arr);
         m2(arr);
         m2(RandomUtil.getRandom(4000));
         TimeRecord.recordMsg("第二次排序");
@@ -24,9 +24,9 @@ class BubbleSort {
 
     private static void m2(int[] arr) {
         int temp;
-        boolean flag = false;
         for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = 0; j < arr.length - 1; j++) {
+            boolean flag = false;
+            for (int j = 0; j < arr.length - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
                     flag = true;
                     temp = arr[j];
@@ -37,8 +37,6 @@ class BubbleSort {
             //如果一次交换都没有发生
             if (!flag) {
                 break;
-            } else {
-                flag = false;
             }
         }
     }
