@@ -19,7 +19,7 @@ Here are some ideas to get you started:
 
 ## 项目主体
 
-* JDK17
+* JDK21
 * 采用简单的Spring全家桶
 * Mysql/Sqlite3/Redis
 * 装这些就可以啦,项目可以启动个七七八八了
@@ -44,8 +44,8 @@ Here are some ideas to get you started:
 
 ### common服务提供公共工具
 
-- 有[过滤器](icboluo-common/icboluo-supper/src/main/java/com/icboluo/filter/HttpFilter.java)
-  、[拦截器](icboluo-common/icboluo-supper/src/main/java/com/icboluo/interceptor/WebContextInterceptor.java)
+- 有[过滤器](icboluo-web/src/main/java/com/icboluo/filter/HttpFilter.java)
+  、[拦截器](icboluo-common/icboluo-supper/src/main/java/com/icboluo/interceptor/WebInterceptor.java)
   、[日志切面](icboluo-common/icboluo-supper/src/main/java/com/icboluo/aop/HttpAspect.java)
 - [统一返回值](icboluo-common/icboluo-supper/src/main/java/com/icboluo/common/ResponseResultHandler.java)
   、[全局异常处理](icboluo-common/icboluo-supper/src/main/java/com/icboluo/common/GlobalControllerExceptionHandler.java)

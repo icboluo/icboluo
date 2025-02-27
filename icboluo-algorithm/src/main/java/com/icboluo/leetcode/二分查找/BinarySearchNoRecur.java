@@ -9,6 +9,7 @@ import java.util.List;
  * <p>二分查找需要区分开闭区间
  *
  * @author icboluo
+ * @see com.icboluo.leetcode.after_0000.N0014_最长公共前缀#longestCommonPrefix6(String[])
  * @since 2023-03-29 21:47
  */
 class BinarySearchNoRecur {

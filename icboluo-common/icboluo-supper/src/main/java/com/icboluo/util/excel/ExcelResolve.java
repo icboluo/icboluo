@@ -16,7 +16,9 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * <p> 声明：Excel表头字段的获取方式：
@@ -37,8 +39,6 @@ public class ExcelResolve<T> {
      * 全局的容器需要使用线程安全的容器
      */
     private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new ConcurrentHashMap<>();
-
-    public static final Map<Class<?>, TreeMap<Integer, Field>> CLASS_INDEX_FIELD_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 导出模版类型
@@ -63,29 +63,16 @@ public class ExcelResolve<T> {
         this.sortFieldName = defaultSortFieldName();
     }
 
-    public static int maxIdx(Class<?> cla) {
-        toCache(cla);
-        return CLASS_NAME_FIELD_CACHE.get(cla)
-                .values()
-                .stream()
-                .map(field -> field.getAnnotation(Excel.class))
-                .map(Excel::columnIndex)
-                .max(Integer::compareTo)
-                .orElse(0);
-    }
-
-
     /**
      * 将类转换成缓存信息
      *
      * @param clazz 类
      */
     private static void toCache(Class<?> clazz) {
-        if (CLASS_NAME_FIELD_CACHE.containsKey(clazz) && CLASS_INDEX_FIELD_CACHE.containsKey(clazz)) {
+        if (CLASS_NAME_FIELD_CACHE.containsKey(clazz)) {
             return;
         }
         Map<String, Field> nameMap = new HashMap<>();
-        TreeMap<Integer, Field> indexMap = new TreeMap<>();
         List<Field> fields = BeanUtil.getThisAndSupperDeclaredFields(clazz);
         for (Field field : fields) {
             if (!field.isAnnotationPresent(Excel.class)) {
@@ -98,29 +85,56 @@ public class ExcelResolve<T> {
             } else {
                 nameMap.put(field.getName(), field);
             }
-            indexMap.put(excel.columnIndex(), field);
         }
         CLASS_NAME_FIELD_CACHE.put(clazz, nameMap);
-        CLASS_INDEX_FIELD_CACHE.put(clazz, indexMap);
     }
 
-    public static <T> SortedMap<Integer, Field> getIndexField(Class<T> clazz) {
-        return CLASS_INDEX_FIELD_CACHE.get(clazz);
-    }
-
-    private List<String> defaultSortFieldName() {
-        Integer max = nameFieldMap.values().stream()
+    public static int maxIdx(Class<?> cla) {
+        toCache(cla);
+        return CLASS_NAME_FIELD_CACHE.get(cla)
+                .values()
+                .stream()
+                .peek(ExcelResolve::shoichiIndex)
                 .map(field -> field.getAnnotation(Excel.class))
                 .map(Excel::columnIndex)
                 .max(Integer::compareTo)
                 .orElse(0);
+    }
+
+    public static SortedMap<Integer, Field> getIndexField(Class<?> cla) {
+        toCache(cla);
+        return CLASS_NAME_FIELD_CACHE.get(cla)
+                .values()
+                .stream()
+                .peek(ExcelResolve::shoichiIndex)
+                .collect(Collectors.toMap(field -> field.getAnnotation(Excel.class).columnIndex(), Function.identity(),
+                        (k1, k2) -> k1, TreeMap::new));
+    }
+
+    private List<String> defaultSortFieldName() {
+        int max = ExcelResolve.maxIdx(clazz);
         String[] arr = new String[max + 1];
         for (Map.Entry<String, Field> entry : nameFieldMap.entrySet()) {
             Excel excel = entry.getValue().getAnnotation(Excel.class);
             arr[excel.columnIndex()] = entry.getKey();
         }
-        return Arrays.stream(arr).toList();
+        return Arrays.stream(arr).collect(Collectors.toList());
     }
+
+    /**
+     * 清理字段
+     *
+     * @param fields 待清理字段
+     */
+    public void cleanField(String... fields) {
+        List<String> fieldList = Arrays.stream(fields).toList();
+        for (int i = sortFieldName.size() - 1; i >= 0; i--) {
+            if (fieldList.contains(sortFieldName.get(i))) {
+                sortFieldName.remove(i);
+            }
+        }
+    }
+
 
     /**
      * 归一（该方法永久的修改了字段的注解值，仅需要调用一次
@@ -144,8 +158,6 @@ public class ExcelResolve<T> {
             ExcelProperty property = field.getAnnotation(ExcelProperty.class);
             Map<String, Object> propertyMember = getMemberValues(property);
             propertyMember.put("index", excel.columnIndex());
-
-            cleanCache(field.getDeclaringClass());
         }
     }
 
@@ -224,15 +236,5 @@ public class ExcelResolve<T> {
         mv.setAccessible(true);
         // --add-opens java.base/sun.reflect.annotation=ALL-UNNAMED  启动失败加 jvm参数即可解决
         return (Map<String, Object>) mv.get(ih);
-    }
-
-    /**
-     * 回调方法，用于在某种（异常）情况下，清理缓存
-     *
-     * @param cla 需要清理的缓存
-     */
-    public static void cleanCache(Class<?> cla) {
-        CLASS_NAME_FIELD_CACHE.remove(cla);
-        CLASS_INDEX_FIELD_CACHE.remove(cla);
     }
 }

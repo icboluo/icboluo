@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * @author icboluo
  * @see com.icboluo.leetcode.dp.N0096_不同的二叉搜索树
+ * @see com.icboluo.leetcode.after_0000.N0014_最长公共前缀#longestCommonPrefix5(String[])
  * @since 2024-04-25 21:48
  */
 class N0095_不同的二叉搜索树 {
