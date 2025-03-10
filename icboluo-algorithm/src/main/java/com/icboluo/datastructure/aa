@@ -1,0 +1,84 @@
+
+-- 1795 重新排列产品表
+select product_id, 'store1' store, store1 price
+from products
+where store1 is not null
+union all
+select product_id, 'store2' store, store2 price
+from products
+where store2 is not null
+union all
+select product_id, 'store3' store, store3 price
+from products
+where store3 is not null
+-- 1873 计算特别奖金
+select employee_id, salary bonus
+from employees
+where employee_id% 2<>0 and  name not like 'M%'
+union
+select employee_id, salary bonus
+from employees
+where employee_id% 2=0 or  name  like 'M%'
+order by employee_id
+-- 1890 2020年最新登录
+select user_id, max(time_stamp) last_stamp
+from logins
+where year (time_stamp) =2020
+group by user_id
+
+-- 如果要增加唯一索引，需要先清理数据库中的重复数据，清理sql如下
+delete
+from a
+where id not in (select min(id) from a group by order_id, status);
+
+
+    void test1() {
+        BigDecimal bd = BigDecimal.valueOf(44546.5);
+        LocalDateTime time = DateUtil.numberValueToDateTime(bd);
+
+        LocalDateTime ans = LocalDateTime.of(2021, 12, 16, 12, 0, 0, 0);
+        assertEquals(ans, time);
+    }
+AreaController.45合并到40行
+nonull 和默认值是匹配的，如果字段给默认值了，也就是说明是非空了
+111         if (root.left == null) {
+            return minDepth(root.right);
+        }
+        if (root.right == null) {
+            return minDepth(root.left);
+        }
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+        543 增加测试用例，return：返回的结果是当前节点的高度，ans在前面计算，所以ans计算的结果中不含当前节点
+        110.将提交的代码拉取下来，并且迁移至tree.leetcode标记
+n496.增加测试用例
+
+
+    -- select p.product_id, ifnull(round(sum(units * price) / sum(units), 2), 0) average_price
+    -- from prices p
+    --          left join UnitsSold u
+    --                    on p.product_id = p.product_id
+    --                        and u.purchase_date between p.start_date and p.end_date
+    -- group by product_id
+    -- --1280 学生与考试
+    -- select e.student_id, student_name, subject_name, count(*) attended_exams
+    -- from examinations e
+    --          left join students sut on e.student_id = sut.student_id
+    --          left join subjects sub on e.subject_name = sub.subject_name
+    -- group by student_id, student_name, subject_name
+    -- order by student_id, sub.subject_name
+    -- --1327 列出某一时期内订购的产品
+    -- select p.project_name, sum(o.unit) unit
+    -- from products p
+    --          left join orders o on p.product_id = o.product_id
+    -- where year (o.order_date)='2020' and month (o.order_date)='02'
+    -- group by product_id
+    -- having sum (o.unit)>=100
+    -- order by product_id
+    -- --1407 顶级旅行者
+    -- select u.name, nullif(sum(r.distance), 0) travelled_distance
+    -- from user u
+    --          left join rides r on u.id = r.user_id
+    -- group by u.id
+    -- order by travelled_distance desc, u.name
+    --1527 患有某种疾病的患者
+    select * from patients where conditions regexp '\\bDIAB1'

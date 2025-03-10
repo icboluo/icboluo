@@ -149,7 +149,7 @@ public class ExcelUtil {
      * @param <T>      数据类型
      */
     public static <T> void export(List<T> list, Class<T> clazz, String fileName) {
-        export(list, clazz, new EasyExcelWriteConfig(fileName));
+        export(list, clazz, new ExcelWriteConfig(fileName));
     }
 
     /**
@@ -161,7 +161,7 @@ public class ExcelUtil {
      * @param <T>    导出数据的类型
      * @see SimpleWriteConfig 简单的导出配置，拥有自适配列宽，和表头、体样式的调整
      */
-    public static <T> void export(List<T> list, Class<T> clazz, EasyExcelWriteConfig config) {
+    public static <T> void export(List<T> list, Class<T> clazz, ExcelWriteConfig config) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
             return;
@@ -175,7 +175,7 @@ public class ExcelUtil {
     }
 
     @SneakyThrows
-    public static <T> void export(List<T> list, HttpServletResponse response, Class<T> clazz, EasyExcelWriteConfig config) {
+    public static <T> void export(List<T> list, HttpServletResponse response, Class<T> clazz, ExcelWriteConfig config) {
         ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
         try (ServletOutputStream sos = response.getOutputStream(); ExcelWriter ew = EasyExcelFactory.write(sos).build()) {
             ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0);
@@ -187,13 +187,13 @@ public class ExcelUtil {
 
     public static <T> void writeWithTemplate(InputStream is, List<T> list, HttpServletResponse response, Class<T> clazz,
                                              String fileName) {
-        writeOrWithTemplate(is, list, response, clazz, new EasyExcelWriteConfig(fileName) {
+        writeOrWithTemplate(is, list, response, clazz, new ExcelWriteConfig(fileName) {
         });
     }
 
     @SneakyThrows
     public static <T> void writeOrWithTemplate(InputStream is, List<T> list, HttpServletResponse response,
-                                               Class<T> clazz, EasyExcelWriteConfig config) {
+                                               Class<T> clazz, ExcelWriteConfig config) {
         if (list.size() > 100000) {
             // 数据量超过
             throw new I18nException("the.data.volume.exceeds.{0}", new Object[]{100000});
@@ -264,6 +264,18 @@ public class ExcelUtil {
             }
         }
         return listener.getList();
+    }
+
+    public static <T> void readBySheetNameThenValid(ExcelReader excelReader, String sheetName, ExcelListener<T> listener) {
+        ReadSheet readSheet = EasyExcelFactory.readSheet(sheetName)
+                .head(listener.getClazz())
+                .headRowNumber(listener.getHeadRowNumber())
+                .registerReadListener(listener)
+                .build();
+        excelReader.read(readSheet);
+
+        listener.validEmpty();
+        listener.validBody(true);
     }
 
     private static ExcelReader createExcelReader(String fileName, InputStream is) {

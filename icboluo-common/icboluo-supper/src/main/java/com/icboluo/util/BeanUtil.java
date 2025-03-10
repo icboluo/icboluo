@@ -581,4 +581,20 @@ public class BeanUtil {
     public static boolean containIgnoreCase(List<String> postConstructBeanNames, String beanName) {
         return false;
     }
+
+    /**
+     * 移除字符串的后缀
+     * @param str 源字符串
+     * @param suffix 后缀
+     * @return 移除后的字符串
+     */
+    public static String removeSuffix(String str, String suffix) {
+        if (!StringUtils.hasText(str)) {
+            return str;
+        }
+        if (str.endsWith(suffix)) {
+            return str.substring(0, str.lastIndexOf(suffix));
+        }
+        return str;
+    }
 }

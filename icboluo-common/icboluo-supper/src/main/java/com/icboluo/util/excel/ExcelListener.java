@@ -116,6 +116,10 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
 
     }
 
+    public void validBody(boolean isShowSheetName) {
+
+    }
+
     public int getMaxLine() {
         return ExcelResolve.getIndexField(excelEntity.clazz).lastKey();
     }
