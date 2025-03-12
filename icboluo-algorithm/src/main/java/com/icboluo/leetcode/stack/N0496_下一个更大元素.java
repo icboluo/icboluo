@@ -12,7 +12,7 @@ class N0496_下一个更大元素 {
         int[] arr1 = {4, 1, 2};
         int[] arr2 = {1, 3, 4, 2};
         int[] res = cla.nextGreaterElement(arr1, arr2);
-        System.out.println("res = " + Arrays.toString(res));
+        System.out.println(STR."res = \{Arrays.toString(res)}");
     }
 
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {

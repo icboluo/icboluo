@@ -20,10 +20,41 @@ select query_name,
 from Queries
 WHERE query_name IS NOT NULL
 group by query_name
+
+-- 1251 平均销售价格 FIXME
+select p.product_id, ifnull(round(sum(units * price) / sum(units), 2), 0) average_price
+from prices p
+         left join UnitsSold u
+                   on p.product_id = p.product_id
+                       and u.purchase_date between p.start_date and p.end_date
+group by product_id
+
+-- 1280 学生与考试 FIXME
+select e.student_id, student_name, subject_name, count(*) attended_exams
+from examinations e
+         left join students sut on e.student_id = sut.student_id
+         left join subjects sub on e.subject_name = sub.subject_name
+group by student_id, student_name, subject_name
+order by student_id, sub.subject_name
+
+--1327 列出某一时期内订购的产品 FIXME
+select p.project_name, sum(o.unit) unit
+from products p
+         left join orders o on p.product_id = o.product_id
+where year (o.order_date)='2020' and month (o.order_date)='02'
+group by product_id
+having sum (o.unit)>=100
+order by product_id
 -- 1378
 select uni.unique_id, e.name
 from Employees e
          left join EmployeeUNI uni on e.id = uni = id
+--1407 顶级旅行者 FIXME
+select u.name, nullif(sum(r.distance), 0) travelled_distance
+from user u
+         left join rides r on u.id = r.user_id
+group by u.id
+order by travelled_distance desc, u.name
 -- 1484 按日期分组销售产品
 select sell_date,
        count(distinct product)                                       num_sold,
@@ -35,3 +66,8 @@ order by sell_date;
 select *
 from Users
 where mail regexp '^[a-zA-Z][a-zA-Z0-9_\.\-]*@leetcode(\\?com)?\\.com$'
+
+--1527 患有某种疾病的患者 FIXME
+select *
+from patients
+where conditions regexp '\\bDIAB1'

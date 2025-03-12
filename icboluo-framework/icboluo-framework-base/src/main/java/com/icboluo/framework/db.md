@@ -51,6 +51,11 @@ mysql无序主键会导致页分裂，页分裂会导致碎片数据
 - 将多种类型（Integer,Sting,LocalDate,List）转换为字符串放入数据库，并且取出来，可以使用JSON.toJSONString(a) 和JSON.parse(b)
 - 整体需要使用反射操作
 
+-- 如果要增加唯一索引，需要先清理数据库中的重复数据，清理sql如下
+delete
+from a
+where id not in (select min(id) from a group by order_id, status);
+
 ## 建议与不建议
 
 #### 建议

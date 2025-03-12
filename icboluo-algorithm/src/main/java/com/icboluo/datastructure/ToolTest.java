@@ -1,18 +1,26 @@
 package com.icboluo.datastructure;
 
 import com.icboluo.util.MathUtil;
-
-import static java.lang.StringTemplate.STR;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author icboluo
  * @since 2025-03-10 8:37
  */
-public class aa {
-    public static void main(String[] args) {
+class ToolTest {
+
+    @Test
+    public void test1() {
         double gongXian = 8;
         double cur = 8;
-        int day = MathUtil.divide(gongXian, cur - 8, 0).intValue();
+        int totalDay = MathUtil.divide(gongXian, cur - 8, 0).intValue();
+        double[] arr = {};
+
+        System.out.println(STR."total day = \{totalDay}");
+    }
+
+    @Test
+    public void test2() {
         double a = 3115.4;
         double b = 2690.59;
         double sum = a + b;

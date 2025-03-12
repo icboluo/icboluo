@@ -480,27 +480,24 @@ public class BeanUtil {
      * <p>修改类字段的注解值，给注解赋值
      * <p>警告：危险函数，该方法是给Field的注解赋值，修改之后，该字段的注解值会保留下来，该类的注解值会被彻底改变
      *
-     * @param clazz     类类型
+     * @param field     待修改字段
      * @param annoClass 注解类型
      * @param paramName 注解名
      * @param paramVal  需要修改的注解值
      * @param <A>       注解类型
      */
     @SneakyThrows
-    public static <A extends Annotation> void updateFieldAnnotationValue(Class<?> clazz, Class<A> annoClass, String paramName, Object paramVal) {
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            A anno = field.getAnnotation(annoClass);
-            // 获取 anno 这个代理实例所持有的 InvocationHandler
-            InvocationHandler ih = Proxy.getInvocationHandler(anno);
-            // 获取 AnnotationInvocationHandler 的 memberValues 字段
-            Field ihField = ih.getClass().getDeclaredField("memberValues");
-            // 因为这个字段是 private final 修饰，所以要打开权限
-            ihField.setAccessible(true);
-            // 获取 memberValues
-            Map<String, Object> memberValues = (Map<String, Object>) ihField.get(ih);
-            memberValues.put(paramName, paramVal);
-        }
+    public static <A extends Annotation> void updateAnnoVal(Field field, Class<A> annoClass, String paramName, Object paramVal) {
+        A anno = field.getAnnotation(annoClass);
+        // 获取 anno 这个代理实例所持有的 InvocationHandler
+        InvocationHandler ih = Proxy.getInvocationHandler(anno);
+        // 获取 AnnotationInvocationHandler 的 memberValues 字段
+        Field ihField = ih.getClass().getDeclaredField("memberValues");
+        // 因为这个字段是 private final 修饰，所以要打开权限
+        ihField.setAccessible(true);
+        // 获取 memberValues
+        Map<String, Object> memberValues = (Map<String, Object>) ihField.get(ih);
+        memberValues.put(paramName, paramVal);
     }
 
     /**
@@ -584,7 +581,8 @@ public class BeanUtil {
 
     /**
      * 移除字符串的后缀
-     * @param str 源字符串
+     *
+     * @param str    源字符串
      * @param suffix 后缀
      * @return 移除后的字符串
      */

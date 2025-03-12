@@ -35,8 +35,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -301,7 +299,8 @@ public class ExcelService {
         ExcelReader er = EasyExcelFactory.read(excelPath).build();
         List<ReadSheet> readSheets = er.excelExecutor().sheetList();
         for (int i = 0; i < readSheets.size(); i++) {
-            ExcelListener<RowCO> listener = new ExcelListener<>(){};
+            ExcelListener<RowCO> listener = new ExcelListener<>() {
+            };
             ReadSheet rs = EasyExcelFactory
                     .readSheet(i)
                     .head(RowCO.class)
@@ -346,16 +345,7 @@ public class ExcelService {
                 if (!isContains) {
                     continue;
                 }
-                ExcelProperty ep = field.getAnnotation(ExcelProperty.class);
-                //获取 ep 这个代理实例所持有的 InvocationHandler
-                InvocationHandler ih = Proxy.getInvocationHandler(ep);
-                // 获取 AnnotationInvocationHandler 的 memberValues 字段
-                Field hField = ih.getClass().getDeclaredField("memberValues");
-                // 因为这个字段事 private final 修饰，所以要打开权限
-                hField.setAccessible(true);
-                // 获取 memberValues
-                Map memberValues = (Map) hField.get(ih);
-                memberValues.put("index", i);
+                BeanUtil.updateAnnoVal(field, ExcelProperty.class, "index", i);
                 haveMatch = true;
                 break;
             }
