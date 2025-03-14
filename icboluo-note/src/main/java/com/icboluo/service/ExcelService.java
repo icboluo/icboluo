@@ -25,7 +25,6 @@ import com.icboluo.util.HeadDataListener;
 import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.excel.ExcelListener;
 import jakarta.annotation.Resource;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -332,7 +331,6 @@ public class ExcelService {
         return listener;
     }
 
-    @SneakyThrows({NoSuchFieldException.class, IllegalAccessException.class})
     private <T> void buildClass(List<String> head, Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();
         for (int i = 0; i < head.size(); i++) {

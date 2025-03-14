@@ -88,7 +88,7 @@ public class ValidBodyListener<T> extends ExcelListener<T> {
             }
             if (StringUtils.hasText(rowMsgList.get(i))) {
                 String rowMessage = MESSAGE_SOURCE.getMessage("row.{0}.error.{1}",
-                        new Object[] {i + 1, rowMsgList.get(i)}, LocaleContextHolder.getLocale());
+                        new Object[]{i + 1, rowMsgList.get(i)}, LocaleContextHolder.getLocale());
                 msg.add(rowMessage);
             }
         }
@@ -111,6 +111,14 @@ public class ValidBodyListener<T> extends ExcelListener<T> {
     @Override
     public void validBody() {
         String msg = getBodyErrorMsg();
+        if (StringUtils.hasText(msg)) {
+            throw new I18nException(msg);
+        }
+    }
+
+    @Override
+    public void validBody(boolean needShowSheetName) {
+        String msg = getBodyErrorMsg(needShowSheetName);
         if (StringUtils.hasText(msg)) {
             throw new I18nException(msg);
         }

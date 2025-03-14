@@ -7,21 +7,21 @@ sqlite的sql文件不能和mysql共享，但是可以复制黏贴；如果sql内
 
 ## 事物常见地并发问题
 
-        String 丢失更新 = "撤销一个事物的时候，其他的线程如果已经把事物提交，会覆盖已提交的数据";
-        String 脏读 = "读到一个事物未commit的数据";
-        String 不可重复读 = "一个事务执行相同的查询两次或两次以上，但是每次都得到不同的数据（重点是修改）";
-        String 幻读 = "第一个线程去更新全表，第二个线程去新增一个，发现更新全表没有全部实现（重点是新增和删除）";
+        丢失更新 = 撤销一个事物的时候，其他的线程如果已经把事物提交，会覆盖已提交的数据
+        脏读 = 读到一个事物未commit的数据
+        不可重复读 = 一个事务执行相同的查询两次或两次以上，但是每次都得到不同的数据（重点是修改）
+        幻读 = 第一个线程去更新全表，第二个线程去新增一个，发现更新全表没有全部实现（重点是新增和删除）
         // spring事物的隔离级别
-        String 数据库默认级别 = "DEFAULT";
-        String 读未提交 = "脏读、虚读/幻读、不可重复读都可能发生";
-        String 读已提交 = "不可重复读和虚读有可能发生（锁定正在读取的行）";
-        String 可重复读 = "幻读可能发生（锁定读取的所有行）";
-        String 串型化的 = "避免以上所有问题（锁表）";
+        数据库默认级别 = "DEFAULT
+        读未提交 = 脏读、虚读/幻读、不可重复读都可能发生
+        读已提交 = 不可重复读和虚读有可能发生（锁定正在读取的行）
+        可重复读 = 幻读可能发生（锁定读取的所有行）
+        串型化的 = 避免以上所有问题（锁表）
         // 事务特性
-        String 原子性 = "强调事务的不可分割";
-        String 一致性 = "事务的执行的前后数据的完整性保持一致";
-        String 隔离性 = "一个事务执行的过程中, 不应该受到其他事务的干扰";
-        String 持久性 = "事务一旦结束, 数据就持久到数据库";
+        原子性 = 强调事务的不可分割
+        一致性 = 事务的执行的前后数据的完整性保持一致
+        隔离性 = 一个事务执行的过程中, 不应该受到其他事务的干扰
+        持久性 = 事务一旦结束, 数据就持久到数据库
 
 ## 建表
 
@@ -55,6 +55,13 @@ mysql无序主键会导致页分裂，页分裂会导致碎片数据
 delete
 from a
 where id not in (select min(id) from a group by order_id, status);
+
+--                         Selective
+-- 批量新增      insert into,  selective
+-- 批量更新      replace into, mysql: for update, sqlite beanCopy then replace
+-- 批量新增或更新 replace into,
+-- mysql:  insert into ... on duplicate key update
+-- sqlite: insert into ... on conflict do update set ...
 
 ## 建议与不建议
 
@@ -313,14 +320,13 @@ create table best_practice_cur_handler
 
 ## Sql优化
 
-        System.out.println("索引是找到键，找值，找键，找值，随机的，全表扫描是直接找值，有序的");
-        System.out.println("应尽量避免在 where 子句中对字段进行 null 值判断，" +
-                "否则将导致引擎放弃使用索引而进行全表扫描，可以通过设置字段默认值");
-        System.out.println("用Where子句替换HAVING 子句 因为HAVING 只会在检索出所有记录之后才对结果集进行过滤");
-        System.out.println("复合索引（先查第一个，第一个相同再查第二个）在查询中只对第一个有效果，");
-        System.out.println("or 两边都需要索引，有一个没有索引就会导致全表扫描");
-        System.out.println("mysql offset表示取出前m+n条数据，扔掉前m条，返回n条，大数据量慢");
-        System.out.println("用exists代替in 用 not exists代替 not in");
+        索引是找到键，找值，找键，找值，随机的，全表扫描是直接找值，有序的
+        应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，可以通过设置字段默认值
+        用Where子句替换HAVING 子句 因为HAVING 只会在检索出所有记录之后才对结果集进行过滤
+        复合索引（先查第一个，第一个相同再查第二个）在查询中只对第一个有效果，
+        or 两边都需要索引，有一个没有索引就会导致全表扫描
+        mysql offset表示取出前m+n条数据，扔掉前m条，返回n条，大数据量慢
+        用exists代替in 用 not exists代替 not in
 
 ## 易错点
 

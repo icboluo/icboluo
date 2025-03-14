@@ -46,6 +46,8 @@ public class BeanUtil {
 
     /**
      * 属性复制，也可以直接使用Spring的工具类
+     * 全属性copy覆盖，无论是否为null
+     * TODO 增加测试用例
      *
      * @param source 源对象
      * @param target 目标对象
@@ -574,8 +576,12 @@ public class BeanUtil {
         return (T) object;
     }
 
-    // TODO
-    public static boolean containIgnoreCase(List<String> postConstructBeanNames, String beanName) {
+    public static boolean containIgnoreCase(List<String> bigList, String val) {
+        for (String big : bigList) {
+            if (big.equalsIgnoreCase(val)) {
+                return true;
+            }
+        }
         return false;
     }
 

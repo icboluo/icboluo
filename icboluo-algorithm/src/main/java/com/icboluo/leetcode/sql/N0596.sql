@@ -11,6 +11,13 @@ where name in (select s.name
                         left join SalesPerson s on o.sales_id = s.sales_id
                         left join Company c on o.com_id = c.com_id
                where c.name != 'RED');
+select s.name
+from SalesPerson
+where s.name out in (select s.name
+from Orders o
+         left join SalesPerson s on o.sales_id = s.id
+         left join Company c on o.com_id = c.id
+where c.name = 'RED');
 -- 610 三角判决
 select *, if(x + y > z and x + z > y and y + z > x, 'Yes', 'No') triangle
 from Triangle

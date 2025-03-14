@@ -21,11 +21,11 @@ from Queries
 WHERE query_name IS NOT NULL
 group by query_name
 
--- 1251 平均销售价格 FIXME
+-- 1251 平均销售价格
 select p.product_id, ifnull(round(sum(units * price) / sum(units), 2), 0) average_price
 from prices p
          left join UnitsSold u
-                   on p.product_id = p.product_id
+                   on p.product_id = u.product_id
                        and u.purchase_date between p.start_date and p.end_date
 group by product_id
 

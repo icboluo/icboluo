@@ -22,8 +22,7 @@ from Weather w1,
      Weather w2
 where datediff(w1.recordDate, w2.recordDate) = 1
   and w1.temperature > w2.temperature;
--- 511 游戏玩法分析
--- FIXME
+-- 0511 游戏玩法分析 第一个解法是错误的
 select a1.player_id, a1.event_date first_login
 from Activity a1,
      Activity a2

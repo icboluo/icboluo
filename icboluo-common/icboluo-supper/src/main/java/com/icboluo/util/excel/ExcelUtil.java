@@ -125,11 +125,7 @@ public class ExcelUtil {
     public static <T> List<T> getList(ValidHeadListener<T> listener, MultipartFile mf) {
         xlsAndXlsxNameValid(mf);
         try (InputStream is = mf.getInputStream(); ExcelReader er = EasyExcelFactory.read(is).build()) {
-            ReadSheet rs = EasyExcelFactory.readSheet(0)
-                    .registerReadListener(listener)
-                    .head(listener.getClass())
-                    .headRowNumber(listener.getHeadRowNumber())
-                    .build();
+            ReadSheet rs = EasyExcelFactory.readSheet(0).registerReadListener(listener).head(listener.getClass()).headRowNumber(listener.getHeadRowNumber()).build();
             er.read(rs);
         } catch (IOException exception) {
             throw new I18nException("excel.parse.error");
@@ -140,87 +136,6 @@ public class ExcelUtil {
         return listener.getList();
     }
 
-    /**
-     * Excel 导出
-     *
-     * @param list     数据
-     * @param clazz    导出类型
-     * @param fileName 文件名（有没有.xlsx后缀都可以）和sheet名
-     * @param <T>      数据类型
-     */
-    public static <T> void export(List<T> list, Class<T> clazz, String fileName) {
-        export(list, clazz, new ExcelWriteConfig(fileName));
-    }
-
-    /**
-     * 导出列表
-     *
-     * @param list   需要导出的数据，该数据应该存在 @Excel注解功能
-     * @param clazz  导出列表的class
-     * @param config 配置
-     * @param <T>    导出数据的类型
-     * @see SimpleWriteConfig 简单的导出配置，拥有自适配列宽，和表头、体样式的调整
-     */
-    public static <T> void export(List<T> list, Class<T> clazz, ExcelWriteConfig config) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null) {
-            return;
-        }
-        HttpServletResponse response = requestAttributes.getResponse();
-        if (response == null) {
-            return;
-        }
-        setContent(response, config.getFileName());
-        export(list, response, clazz, config);
-    }
-
-    @SneakyThrows
-    public static <T> void export(List<T> list, HttpServletResponse response, Class<T> clazz, ExcelWriteConfig config) {
-        ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
-        try (ServletOutputStream sos = response.getOutputStream(); ExcelWriter ew = EasyExcelFactory.write(sos).build()) {
-            ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0);
-            config.getWriteHandlerList().forEach(builder::registerWriteHandler);
-            WriteSheet writeSheet = builder.head(resolve.head()).relativeHeadRowIndex(0).build();
-            ew.write(resolve.body(() -> list), writeSheet);
-        }
-    }
-
-    public static <T> void writeWithTemplate(InputStream is, List<T> list, HttpServletResponse response, Class<T> clazz,
-                                             String fileName) {
-        writeOrWithTemplate(is, list, response, clazz, new ExcelWriteConfig(fileName) {
-        });
-    }
-
-    @SneakyThrows
-    public static <T> void writeOrWithTemplate(InputStream is, List<T> list, HttpServletResponse response,
-                                               Class<T> clazz, ExcelWriteConfig config) {
-        if (list.size() > 100000) {
-            // 数据量超过
-            throw new I18nException("the.data.volume.exceeds.{0}", new Object[]{100000});
-        }
-        setContent(response, config.getFileName());
-        ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
-        Optional<String> sheetName = Optional.ofNullable(config.getSheetName());
-        try (ServletOutputStream os = response.getOutputStream(); ExcelWriter ew = createWriter(os, is)) {
-            ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0, sheetName.orElse(null));
-            config.getWriteHandlerList().forEach(builder::registerWriteHandler);
-            // 输入流等于空的时候，说明是自行生成文件头（不是根据模板生成文件
-            if (is == null) {
-                builder = builder.head(resolve.head());
-            }
-            WriteSheet writeSheet = builder.build();
-            ew.write(resolve.body(() -> list), writeSheet);
-        }
-    }
-
-
-    private static ExcelWriter createWriter(OutputStream os, InputStream is) {
-        if (is == null) {
-            return EasyExcelFactory.write(os).build();
-        } else {
-            return EasyExcelFactory.write(os).withTemplate(is).build();
-        }
-    }
 
     @SneakyThrows
     public static <T> List<T> read(MultipartFile mf, ExcelListener<T> listener) {
@@ -254,11 +169,7 @@ public class ExcelUtil {
      */
     public static <T> List<T> read(InputStream is, String filePathName, ExcelListener<T> listener) {
         try (ExcelReader er = createExcelReader(filePathName, is)) {
-            ReadSheet rs = EasyExcelFactory.readSheet(0)
-                    .registerReadListener(listener)
-                    .head(listener.getClazz())
-                    .headRowNumber(listener.getHeadRowNumber())
-                    .build();
+            ReadSheet rs = EasyExcelFactory.readSheet(0).registerReadListener(listener).head(listener.getClazz()).headRowNumber(listener.getHeadRowNumber()).build();
             if (er != null) {
                 er.read(rs);
             }
@@ -267,11 +178,7 @@ public class ExcelUtil {
     }
 
     public static <T> void readBySheetNameThenValid(ExcelReader excelReader, String sheetName, ExcelListener<T> listener) {
-        ReadSheet readSheet = EasyExcelFactory.readSheet(sheetName)
-                .head(listener.getClazz())
-                .headRowNumber(listener.getHeadRowNumber())
-                .registerReadListener(listener)
-                .build();
+        ReadSheet readSheet = EasyExcelFactory.readSheet(sheetName).head(listener.getClazz()).headRowNumber(listener.getHeadRowNumber()).registerReadListener(listener).build();
         excelReader.read(readSheet);
 
         listener.validEmpty();
@@ -281,8 +188,7 @@ public class ExcelUtil {
     private static ExcelReader createExcelReader(String fileName, InputStream is) {
         if (IoHelper.validateFileName(fileName, ExcelTypeEnum.CSV.getValue())) {
             return EasyExcelFactory.read(is).excelType(ExcelTypeEnum.CSV).charset(Charset.forName("gbk")).build();
-        } else if (IoHelper.validateFileName(fileName, ExcelTypeEnum.XLSX.getValue(), ExcelTypeEnum.XLS.getValue(),
-                "xlsm")) {
+        } else if (IoHelper.validateFileName(fileName, ExcelTypeEnum.XLSX.getValue(), ExcelTypeEnum.XLS.getValue(), "xlsm")) {
             return EasyExcelFactory.read(is).build();
         }
         // 如果文件名不是Excel，则抛异常
@@ -291,6 +197,93 @@ public class ExcelUtil {
         } else {
             // 默认使用xlsx，xlsm文件读取
             return EasyExcelFactory.read(is).build();
+        }
+    }
+
+    /**
+     * Excel 导出
+     *
+     * @param list     数据
+     * @param clazz    导出类型
+     * @param fileName 文件名（有没有.xlsx后缀都可以）和sheet名
+     * @param <T>      数据类型
+     */
+    public static <T> void write(List<T> list, Class<T> clazz, String fileName) {
+        write(list, clazz, new ExcelWriteConfig(fileName));
+    }
+
+    /**
+     * 导出列表
+     *
+     * @param list   需要导出的数据，该数据应该存在 @Excel注解功能
+     * @param clazz  导出列表的class
+     * @param config 配置
+     * @param <T>    导出数据的类型
+     * @see SimpleWriteConfig 简单的导出配置，拥有自适配列宽，和表头、体样式的调整
+     */
+    public static <T> void write(List<T> list, Class<T> clazz, ExcelWriteConfig config) {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (requestAttributes == null) {
+            return;
+        }
+        HttpServletResponse response = requestAttributes.getResponse();
+        if (response == null) {
+            return;
+        }
+        setContent(response, config.getFileName());
+        write(list, response, clazz, config);
+    }
+
+    @SneakyThrows
+    public static <T> void write(List<T> list, HttpServletResponse response, Class<T> clazz, ExcelWriteConfig config) {
+        ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
+        try (ServletOutputStream sos = response.getOutputStream(); ExcelWriter ew = EasyExcelFactory.write(sos).build()) {
+            ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0);
+            config.getWriteHandlerList().forEach(builder::registerWriteHandler);
+            WriteSheet writeSheet = builder.head(resolve.head()).relativeHeadRowIndex(0).build();
+            ew.write(resolve.body(() -> list), writeSheet);
+        }
+    }
+
+    public static <T> void write(InputStream is, List<T> list, HttpServletResponse response, Class<T> clazz, String fileName) {
+        writeOrWithTemplate(is, list, response, clazz, new ExcelWriteConfig(fileName) {
+        });
+    }
+
+    @SneakyThrows
+    public static <T> void writeOrWithTemplate(InputStream is, List<T> list, HttpServletResponse response, Class<T> clazz, ExcelWriteConfig config) {
+        setContent(response, config.getFileName());
+        ServletOutputStream os = response.getOutputStream();
+        writeOrWithTemplate(is, list, os, clazz, config);
+    }
+
+    @SneakyThrows
+    public static <T> void writeOrWithTemplate(InputStream is, List<T> list, OutputStream os, Class<T> clazz, ExcelWriteConfig config) {
+        if (list.size() > 100000) {
+            // 数据量超过
+            throw new I18nException("the.data.volume.exceeds.{0}", new Object[]{100000});
+        }
+
+        ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
+        Optional<String> sheetName = Optional.ofNullable(config.getSheetName());
+        try (ExcelWriter ew = createWriter(os, is)) {
+            ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0, sheetName.orElse(null));
+            config.getWriteHandlerList().forEach(builder::registerWriteHandler);
+            // 输入流等于空的时候，说明是自行生成文件头（不是根据模板生成文件
+            if (is == null) {
+                builder = builder.head(resolve.head());
+            }
+            WriteSheet writeSheet = builder.build();
+            ew.write(resolve.body(() -> list), writeSheet);
+        }
+    }
+
+
+    private static ExcelWriter createWriter(OutputStream os, InputStream is) {
+        if (is == null) {
+            return EasyExcelFactory.write(os).build();
+        } else {
+            return EasyExcelFactory.write(os).withTemplate(is).build();
         }
     }
 }
