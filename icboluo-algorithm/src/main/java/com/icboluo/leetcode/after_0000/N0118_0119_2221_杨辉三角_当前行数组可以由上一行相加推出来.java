@@ -11,6 +11,12 @@ class N0118_0119_2221_杨辉三角_当前行数组可以由上一行相加推出
         System.out.println(cla.getRow(3));
     }
 
+    /**
+     * N0118
+     *
+     * @param n
+     * @return
+     */
     public List<List<Integer>> generate(int n) {
         List<List<Integer>> ans = new ArrayList<>();
         List<Integer> list0 = new ArrayList<>();

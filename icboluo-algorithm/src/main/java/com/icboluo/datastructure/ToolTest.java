@@ -33,8 +33,8 @@ class ToolTest {
         double b = 2690.59;
         double sum = a + b;
         System.out.println(STR."sum: \{sum}");
-        System.out.println("利息 " + (a * 360 - 710000));
-        System.out.println("利息 " + (b * 360 - 650000));
+        System.out.println(STR."total interest \{a * 360 - 710000}");
+        System.out.println(STR."total interest \{b * 360 - 650000}");
         System.out.println(a - a * 61 / 71);
         System.out.println(a * 61 / 71);
     }
@@ -67,7 +67,7 @@ class ToolTest {
         }
         System.out.println("实际获取: " + total);
         System.out.println("最大获取: " + cur * count);
-        System.out.println("亏损: " + (cur * count - total));
+        System.out.println("相对亏损 : " + (cur * count - total));
     }
 
     private LocalDate printSleepDate(LocalDate sleep) {

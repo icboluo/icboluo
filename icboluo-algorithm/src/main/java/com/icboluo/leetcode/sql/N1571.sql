@@ -1,7 +1,7 @@
 -- 1581 到访但未进行任何交易的客户
 select v.customer_id, count(0) count_no_trans
 from Visits v
-         left join Transactions t on v.visit_id=t.visit_id
+         left join Transactions t on v.visit_id = t.visit_id
 where t.transaction_id is null
 group by v.customer_id
 
@@ -10,7 +10,7 @@ select u.name, sum(t.amount) balance
 from Users u
          left join Transactions t on u.account = t.account
 group by u.account, u.name
-having balance>10000;
+having balance > 10000;
 
 -- 1633 参加比赛的用户百分比
 select contest_id, round(count(distinct user_id) * 100 / (select count(user_id) from Users), 2) percentage
@@ -18,7 +18,7 @@ from Register
 group by contest_id
 order by percentage desc, contest_id
 
--- 1661 每台机器的平均加工时间 FIXME
+-- 1661 每台机器的平均加工时间
 select machine_id,
        round(
                (select avg(a1.timestamp)
@@ -29,7 +29,7 @@ select machine_id,
                (select avg(a1.timestamp)
                 from Activity a1
                 where a1.activity_type = 'start'
-                  and a1.machine_id = a.machine_id)
+                  and a1.machine_id = a.machine_id), 3
        ) processing_time
 from Activity a
 group by machine_id;
