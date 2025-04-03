@@ -30,11 +30,11 @@ from prices p
 group by product_id
 
 -- 1280 学生与考试 FIXME
-select e.student_id, sut.student_name, sub.subject_name, count(*) attended_exams
-from examinations e
-         left join students sut on e.student_id = sut.student_id
-         left join subjects sub on e.subject_name = sub.subject_name
-group by e.student_id, sut.student_name, sub.subject_name
+select e.student_id, sut.student_name, sub.subject_name, count(e.student_id) attended_exams
+from Students stu
+         left join Subjects sub
+         left join Examinations e on stu.student_id = e.student_id and sub.subject_name = e.subject_name
+group by e.student_id, stu.student_name, sub.subject_name
 order by e.student_id, sub.subject_name
 
 -- 1327 列出某一时期内订购的产品

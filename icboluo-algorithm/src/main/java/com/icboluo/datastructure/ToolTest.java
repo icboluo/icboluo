@@ -3,7 +3,6 @@ package com.icboluo.datastructure;
 import com.icboluo.util.MathUtil;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -15,16 +14,21 @@ class ToolTest {
 
     @Test
     public void test1() {
-        double gongXian = 4;
+        double contribute = 4;
         double monthAvg = 8.41;
-        int totalDay = MathUtil.divide(gongXian, monthAvg - 8, 0).intValue();
+        int totalDay = MathUtil.divide(contribute, monthAvg - 8, 0).intValue();
         double[] arr = {8};
-
-        System.out.println(STR."total day = \{totalDay}");
-
         double sum = Arrays.stream(arr).sum();
-        BigDecimal avg = MathUtil.divide(totalDay * monthAvg - sum, totalDay - arr.length);
+
+        int workDay = totalDay - arr.length;
+
+        System.out.println(STR."work day = \{totalDay}, overwork day = \{arr.length}");
+
+        double totalWorkTime = totalDay * monthAvg - sum;
+        double avg = MathUtil.divide(totalWorkTime, workDay, 2).doubleValue();
+
         System.out.println(STR."avg = \{avg}");
+        System.out.println(STR."total week overwork time = \{(avg - 8) * workDay}");
     }
 
     @Test

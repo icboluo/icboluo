@@ -15,7 +15,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
  * <p> 2.外部输入---（前段传参、数据库提前配置好），视图的字段名需要和参数有一定的关系 this.paramName
  * <p> Excel 导出解析器
  * <p> 使用方式如下
- * <p> <pre>{@code ExcelUtil.exportList(aList, A.class, fileName);}<pre/>
+ * <p> <pre>{@code ExcelUtil.write(aList, A.class, fileName);}<pre/>
  *
  * @author icboluo
  * @see Excel excel一切功能来源均取自该注解
@@ -36,19 +35,9 @@ import java.util.stream.Collectors;
 public class ExcelResolve<T> {
 
     /**
-     * 全局的容器需要使用线程安全的容器
-     */
-    private static final Map<Class<?>, Map<String, Field>> CLASS_NAME_FIELD_CACHE = new ConcurrentHashMap<>();
-
-    /**
      * 导出模版类型
      */
     private final Class<T> clazz;
-
-    /**
-     * 名称，字段映射
-     */
-    private final Map<String, Field> nameFieldMap;
 
     /**
      * 排序号的字段名，如果不 set ，认为无自定义排序，按照注解排序
@@ -58,43 +47,20 @@ public class ExcelResolve<T> {
 
     public ExcelResolve(Class<T> clazz) {
         this.clazz = clazz;
-        toCache(clazz);
-        this.nameFieldMap = CLASS_NAME_FIELD_CACHE.get(clazz);
         this.sortFieldName = defaultSortFieldName();
     }
 
-    /**
-     * 将类转换成缓存信息
-     *
-     * @param clazz 类
-     */
-    private static void toCache(Class<?> clazz) {
-        if (CLASS_NAME_FIELD_CACHE.containsKey(clazz)) {
-            return;
-        }
-        Map<String, Field> nameMap = new HashMap<>();
-        List<Field> fields = BeanUtil.getThisAndSupperDeclaredFields(clazz);
-        for (Field field : fields) {
-            if (!field.isAnnotationPresent(Excel.class)) {
-                continue;
-            }
-            shoichiIndex(field);
-            Excel excel = field.getAnnotation(Excel.class);
-            if (StringUtils.hasText(excel.paramName())) {
-                nameMap.put(excel.paramName(), field);
-            } else {
-                nameMap.put(field.getName(), field);
-            }
-        }
-        CLASS_NAME_FIELD_CACHE.put(clazz, nameMap);
+    public static List<Field> excelField(Class<?> cla) {
+        return BeanUtil.getThisAndSupperDeclaredFields(cla)
+                .stream().filter(f -> f.isAnnotationPresent(Excel.class))
+                .peek(ExcelResolve::shoichiIndex)
+                .filter(f -> f.getAnnotation(Excel.class).columnIndex() > -1)
+                .toList();
     }
 
     public static int maxIdx(Class<?> cla) {
-        toCache(cla);
-        return CLASS_NAME_FIELD_CACHE.get(cla)
-                .values()
+        return excelField(cla)
                 .stream()
-                .peek(ExcelResolve::shoichiIndex)
                 .map(field -> field.getAnnotation(Excel.class))
                 .map(Excel::columnIndex)
                 .max(Integer::compareTo)
@@ -102,11 +68,8 @@ public class ExcelResolve<T> {
     }
 
     public static SortedMap<Integer, Field> getIndexField(Class<?> cla) {
-        toCache(cla);
-        return CLASS_NAME_FIELD_CACHE.get(cla)
-                .values()
+        return excelField(cla)
                 .stream()
-                .peek(ExcelResolve::shoichiIndex)
                 .collect(Collectors.toMap(field -> field.getAnnotation(Excel.class).columnIndex(), Function.identity(),
                         (k1, k2) -> k1, TreeMap::new));
     }
@@ -114,9 +77,10 @@ public class ExcelResolve<T> {
     private List<String> defaultSortFieldName() {
         int max = ExcelResolve.maxIdx(clazz);
         String[] arr = new String[max + 1];
-        for (Map.Entry<String, Field> entry : nameFieldMap.entrySet()) {
-            Excel excel = entry.getValue().getAnnotation(Excel.class);
-            arr[excel.columnIndex()] = entry.getKey();
+        for (Field field : excelField(clazz)) {
+            Excel excel = field.getAnnotation(Excel.class);
+            arr[excel.columnIndex()] = field.getName();
+
         }
         return Arrays.stream(arr).collect(Collectors.toList());
     }
@@ -189,6 +153,7 @@ public class ExcelResolve<T> {
     }
 
 
+    @SneakyThrows
     public List<List<String>> head() {
         List<List<String>> res = new ArrayList<>();
         for (String sortField : sortFieldName) {
@@ -196,7 +161,7 @@ public class ExcelResolve<T> {
             if (sortField == null) {
                 cell.add("");
             } else {
-                Field field = nameFieldMap.get(sortField);
+                Field field = clazz.getDeclaredField(sortField);
                 cell.add(this.searchI18nValue(field));
             }
             res.add(cell);
@@ -204,6 +169,7 @@ public class ExcelResolve<T> {
         return res;
     }
 
+    @SneakyThrows
     public <V> List<List<Object>> body(Supplier<List<V>> selectList) throws IllegalAccessException {
         List<V> list = selectList.get();
         List<List<Object>> res = new ArrayList<>();
@@ -213,7 +179,7 @@ public class ExcelResolve<T> {
                 if (sortField == null) {
                     row.add("");
                 } else {
-                    Field field = nameFieldMap.get(sortField);
+                    Field field = clazz.getDeclaredField(sortField);
                     field.setAccessible(true);
                     row.add(field.get(v));
                 }

@@ -8,6 +8,7 @@ import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.icboluo.enumerate.ReEnum;
+import com.icboluo.util.BeanUtil;
 import com.icboluo.util.I18nException;
 import com.icboluo.util.IoHelper;
 import jakarta.servlet.ServletOutputStream;
@@ -222,22 +223,16 @@ public class ExcelUtil {
      * @see SimpleWriteConfig 简单的导出配置，拥有自适配列宽，和表头、体样式的调整
      */
     public static <T> void write(List<T> list, Class<T> clazz, ExcelWriteConfig config) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null) {
-            return;
-        }
-        HttpServletResponse response = requestAttributes.getResponse();
-        if (response == null) {
-            return;
-        }
+        HttpServletResponse response = findResponse().get();
         setContent(response, config.getFileName());
         write(list, response, clazz, config);
     }
 
     @SneakyThrows
     public static <T> void write(List<T> list, HttpServletResponse response, Class<T> clazz, ExcelWriteConfig config) {
+        ServletOutputStream sos = response.getOutputStream();
         ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
-        try (ServletOutputStream sos = response.getOutputStream(); ExcelWriter ew = EasyExcelFactory.write(sos).build()) {
+        try (ExcelWriter ew = EasyExcelFactory.write(sos).build()) {
             ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0);
             config.getWriteHandlerList().forEach(builder::registerWriteHandler);
             WriteSheet writeSheet = builder.head(resolve.head()).relativeHeadRowIndex(0).build();
@@ -246,15 +241,8 @@ public class ExcelUtil {
     }
 
     public static <T> void write(InputStream is, List<T> list, HttpServletResponse response, Class<T> clazz, String fileName) {
-        writeOrWithTemplate(is, list, response, clazz, new ExcelWriteConfig(fileName) {
-        });
-    }
-
-    @SneakyThrows
-    public static <T> void writeOrWithTemplate(InputStream is, List<T> list, HttpServletResponse response, Class<T> clazz, ExcelWriteConfig config) {
-        setContent(response, config.getFileName());
-        ServletOutputStream os = response.getOutputStream();
-        writeOrWithTemplate(is, list, os, clazz, config);
+        ServletOutputStream os = responseSetHeaderThenToStream(response, fileName);
+        writeOrWithTemplate(is, list, os, clazz, new ExcelWriteConfig(fileName));
     }
 
     @SneakyThrows
@@ -276,6 +264,25 @@ public class ExcelUtil {
             WriteSheet writeSheet = builder.build();
             ew.write(resolve.body(() -> list), writeSheet);
         }
+    }
+
+    @SneakyThrows
+    public static ServletOutputStream responseSetHeaderThenToStream(HttpServletResponse response, String fileName) {
+        fileName = BeanUtil.removeSuffix(fileName, ".xlsx");
+        setContent(response, fileName);
+        // ServletOutputStream和Workbook的关闭操作都是由容器自动完成的，所以不需要手动关闭
+        // 如果手动关闭，将无法再通过获取它来向client返回信息|在实现的filter（intercept）中就不能再使用了
+        // 如果你不再使用流的话，即使关闭了也不会有任何坏影响；整体考虑，自动关闭流会更适配一些，避免各种拦截器失效
+        return response.getOutputStream();
+    }
+
+    public static Optional<HttpServletResponse> findResponse() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (requestAttributes == null) {
+            return Optional.empty();
+        }
+        HttpServletResponse response = requestAttributes.getResponse();
+        return Optional.ofNullable(response);
     }
 
 

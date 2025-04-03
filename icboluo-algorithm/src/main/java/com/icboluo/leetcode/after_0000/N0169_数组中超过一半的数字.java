@@ -7,7 +7,7 @@ import java.util.Map;
  * @author icboluo
  * @since 2022-11-25 17:25
  */
-class N0169_数组中超过一般的数字 {
+class N0169_数组中超过一半的数字 {
     /**
      * 双层for
      *

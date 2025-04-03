@@ -66,7 +66,7 @@ class N0144_N0145_前序中序遍历 {
         ans.add(root.val);
     }
 
-    public List<Integer> postorderTraversa2(TreeNode root) {
+    public List<Integer> postorderTraversal2(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
         }
@@ -75,7 +75,7 @@ class N0144_N0145_前序中序遍历 {
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode pop = stack.pop();
-            list.add(0, pop);
+            list.addFirst(pop);
             // 先压左边，再压右边，可以保证先弹右边，完成后序遍历，难以理解
             if (pop.left != null) {
                 stack.push(pop.left);

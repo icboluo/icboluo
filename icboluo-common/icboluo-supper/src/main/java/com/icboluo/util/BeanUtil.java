@@ -31,6 +31,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -601,4 +602,31 @@ public class BeanUtil {
         }
         return str;
     }
+
+    public static <T> void sortByList(List<T> list, List<T> sortArr) {
+        sortByList(list, sortArr, Function.identity(), Function.identity());
+    }
+
+    public static <T, S, C> void sortByList(List<T> list, List<S> sortArr, Function<T, C> gen1, Function<S, C> gen2) {
+        Map<C, Integer> idxEleMap = IntStream.range(0, sortArr.size())
+                .boxed()
+                .collect(Collectors.toMap(i -> gen2.apply(sortArr.get(i)), Function.identity(), (a, v2) -> v2));
+        Comparator<T> comparator = (a, b) -> {
+            Integer aOrder = idxEleMap.get(gen1.apply(a));
+            Integer bOrder = idxEleMap.get(gen1.apply(b));
+            if (aOrder == null && bOrder == null) {
+                return 0;
+            }
+            // 处理不在sortArr中的元素，将其排在最后
+            if (aOrder == null) {
+                return 1;
+            }
+            if (bOrder == null) {
+                return -1;
+            }
+            return aOrder.compareTo(bOrder);
+        };
+        list.sort(comparator);
+    }
+
 }

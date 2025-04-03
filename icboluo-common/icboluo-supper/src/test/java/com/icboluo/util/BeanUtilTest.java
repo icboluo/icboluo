@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -146,6 +147,17 @@ class BeanUtilTest {
         // 不可使用成员内部类，会多一个this$0
         List<Field> fieldList = BeanUtil.getThisAndSupperDeclaredFields(A.class);
         assertEquals(4, fieldList.size());
+    }
+
+    @Test
+    void sortByList() {
+        List<Integer> sortArr = Arrays.asList(2, 4, 6, 8, 9, 7, 5, 3, 1);
+        List<Integer> list = Arrays.asList(1, 3, 2, 5, 6, 7, 4, 3);
+        List<String> list2 = Arrays.asList("1", "3", "2", "5", "6", "7", "4", "0", "3");
+        BeanUtil.sortByList(list, sortArr);
+        System.out.println(list);
+        BeanUtil.sortByList(list2, sortArr, Integer::parseInt, Function.identity());
+        System.out.println(list2);
     }
 
     static class A extends B {
