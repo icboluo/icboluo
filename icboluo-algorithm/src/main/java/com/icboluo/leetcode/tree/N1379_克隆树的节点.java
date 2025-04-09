@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.after_1300;
+package com.icboluo.leetcode.tree;
 
 import com.icboluo.common.TreeNode;
 
@@ -6,7 +6,7 @@ import com.icboluo.common.TreeNode;
  * @author icboluo
  * @since 2022-06-28 23:53
  */
-class N1379_克隆数的节点 {
+class N1379_克隆树的节点 {
     public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
         if (original == null) {
             return null;

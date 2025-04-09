@@ -1,12 +1,14 @@
-package com.icboluo.datastructure.sort.拓扑排序;
+package com.icboluo.leetcode.graph;
 
 import java.util.*;
 
 /**
+ * 拓扑排序
+ *
  * @author icboluo
  * @since 2022-07-10 20:42
  */
-public class O0113_课程顺序 {
+class O0113_课程顺序 {
 
     public static void main(String[] args) {
         var cla = new O0113_课程顺序();
@@ -15,20 +17,21 @@ public class O0113_课程顺序 {
         System.out.println(Arrays.toString(sort));
     }
 
+    // O0113 课程顺序
     private int[] sort(int total, Integer[][] arrs) {
         Map<Integer, List<Integer>> eleNeedMap = new HashMap<>();
-        int[] count = new int[total];
+        int[] inDegree = new int[total + 1];
         for (Integer[] arr : arrs) {
             if (arr[1] == null) {
                 continue;
             }
-            eleNeedMap.computeIfAbsent(arr[1], key -> new LinkedList<>()).add(arr[0]);
-            count[arr[0] - 1]++;
+            eleNeedMap.computeIfAbsent(arr[1], _ -> new LinkedList<>()).add(arr[0]);
+            inDegree[arr[0]]++;
         }
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < count.length; i++) {
-            if (count[i] == 0) {
-                queue.add(i + 1);
+        for (int i = 1; i < inDegree.length; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
             }
         }
         int[] ans = new int[total];
@@ -36,13 +39,9 @@ public class O0113_课程顺序 {
         while (!queue.isEmpty()) {
             Integer poll = queue.poll();
             ans[idx++] = poll;
-            List<Integer> subList = eleNeedMap.get(poll);
-            if (subList == null) {
-                continue;
-            }
-            for (Integer sub : subList) {
-                count[sub - 1]--;
-                if (count[sub - 1] == 0) {
+            for (Integer sub : eleNeedMap.getOrDefault(poll, new ArrayList<>())) {
+                inDegree[sub]--;
+                if (inDegree[sub] == 0) {
                     queue.add(sub);
                 }
             }

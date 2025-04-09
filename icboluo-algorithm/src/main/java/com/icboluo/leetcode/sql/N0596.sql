@@ -3,7 +3,7 @@ select class
 from Courses
 group by class
 having count(class) >= 5;
--- 607 销售人员 FIXME
+-- 607 销售人员
 select s.name
 from SalesPerson s
 where s.sales_id not in (select o.sales_id

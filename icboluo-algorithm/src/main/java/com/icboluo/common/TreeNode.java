@@ -42,6 +42,26 @@ public class TreeNode {
         this.right = treeNode.right;
     }
 
+    /**
+     * 生成完全二叉树
+     *
+     * @param arr 数组
+     * @return 完全二叉树
+     */
+    public static TreeNode inCompleteTree(Integer... arr) {
+        return getInstance2(arr);
+    }
+
+    /**
+     * 生成非完全二叉树
+     *
+     * @param arr 数组
+     * @return 非完全二叉树
+     */
+    public static TreeNode outCompleteTree(Integer... arr) {
+        return getInstance2(arr);
+    }
+
     public TreeNode(TreeNode root) {
         this.val = root.val;
         this.left = root.left == null ? null : new TreeNode(root.left);
@@ -53,7 +73,7 @@ public class TreeNode {
     }
 
     /**
-     * 二叉查找树的删除 TODO 这里是不是有些问题，没有细调查过
+     * 二叉查找树的删除
      *
      * @param root 根节点
      * @param key  要删除的val
@@ -71,7 +91,7 @@ public class TreeNode {
                 return root.left;
             }
             // 取右子树的最小节点|||||||左子树的最大节点
-            TreeNode rightMin = root;
+            TreeNode rightMin = root.right;
             while (rightMin.left != null) {
                 rightMin = rightMin.left;
             }
@@ -87,43 +107,6 @@ public class TreeNode {
         return root;
     }
 
-    /**
-     * TODO it is error
-     *
-     * @param arr 中序遍历数组
-     * @return 树的根节点
-     */
-    public static TreeNode getLevelOrderInstance(Integer[] arr) {
-        if (arr == null) {
-            return null;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        TreeNode root = new TreeNode(arr[0]);
-        queue.offer(root);
-        int index = 1;
-        while (index < arr.length - 1) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode poll = queue.poll();
-                if (poll == null) {
-                    continue;
-                }
-//                如果节点是值为null，代表left or right 为null，不需要构造空子树
-                if (arr[index] != null) {
-                    poll.left = new TreeNode(arr[index]);
-                    queue.offer(poll.left);
-                }
-                if (arr[index + 1] != null) {
-                    poll.right = new TreeNode(arr[index + 1]);
-                    queue.offer(poll.right);
-                }
-                index += 2;
-
-            }
-        }
-        return root;
-    }
-
     private TreeNode getInstance1(Integer[] arr, int index) {
         if (index >= arr.length || arr[index] == null) {
             return null;
@@ -134,7 +117,7 @@ public class TreeNode {
         return cur;
     }
 
-    private TreeNode getInstance2(Integer[] arr) {
+    private static TreeNode getInstance2(Integer[] arr) {
         TreeNode tempRoot = new TreeNode(arr[0]);
         LinkedList<TreeNode> queue = new LinkedList<>();
         queue.add(tempRoot);

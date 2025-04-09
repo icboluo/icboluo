@@ -3,6 +3,8 @@ package com.icboluo.datastructure;
 import com.icboluo.util.MathUtil;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -25,10 +27,13 @@ class ToolTest {
         System.out.println(STR."work day = \{totalDay}, overwork day = \{arr.length}");
 
         double totalWorkTime = totalDay * monthAvg - sum;
-        double avg = MathUtil.divide(totalWorkTime, workDay, 2).doubleValue();
+        double avg = MathUtil.divide(totalWorkTime, workDay, 3).doubleValue();
 
         System.out.println(STR."avg = \{avg}");
-        System.out.println(STR."total week overwork time = \{(avg - 8) * workDay}");
+        System.out.println(STR."total week overwork time = \{(BigDecimal.valueOf(avg - 8)).multiply(BigDecimal.valueOf(workDay)).setScale(3, RoundingMode.HALF_DOWN)}");
+
+        double cur = 8;
+        System.out.println(STR."cur avg = \{MathUtil.divide(totalWorkTime + cur, workDay + 1, 3)}");
     }
 
     @Test
@@ -56,7 +61,7 @@ class ToolTest {
 
     @Test
     public void test4() {
-        LocalDate sleep = LocalDate.of(2025, 3, 8);
+        LocalDate sleep = LocalDate.of(2025, 4, 12);
         for (int i = 0; i < 10; i++) {
             sleep = printSleepDate(sleep);
         }
@@ -65,19 +70,20 @@ class ToolTest {
     private void cal3(double[][] operation, double cur) {
         int count = 0;
         double total = 0;
-        for (int i = 0; i < operation.length; i++) {
-            count += (int) operation[i][1];
-            total += operation[i][0] * operation[i][1];
+        for (double[] doubles : operation) {
+            count += (int) doubles[1];
+            total += doubles[0] * doubles[1];
         }
-        System.out.println("实际获取: " + total);
-        System.out.println("最大获取: " + cur * count);
-        System.out.println("相对亏损 : " + (cur * count - total));
+        System.out.println(STR."实际获取: \{total}");
+        System.out.println(STR."最大获取: \{cur * count}");
+        System.out.println(STR."相对亏损 : \{cur * count - total}");
     }
 
     private LocalDate printSleepDate(LocalDate sleep) {
-        System.out.print(sleep + ", ");
-        System.out.print(sleep.plusDays(1) + ", ");
-        System.out.print(sleep.plusDays(2) + "");
+        System.out.print(STR."\{sleep}, ");
+        System.out.print(STR."\{sleep.plusDays(1)}, ");
+        System.out.print(STR."\{sleep.plusDays(2)}, ");
+        System.out.print(STR."\{sleep.plusDays(3)}");
         System.out.println();
         return sleep.plusDays(6);
     }
