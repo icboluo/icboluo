@@ -16,8 +16,8 @@ class ToolTest {
 
     @Test
     public void test1() {
-        double contribute = 4;
         double monthAvg = 8.41;
+        double contribute = 4;
         int totalDay = MathUtil.divide(contribute, monthAvg - 8, 0).intValue();
         double[] arr = {8};
         double sum = Arrays.stream(arr).sum();

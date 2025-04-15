@@ -49,7 +49,7 @@ public class TreeNode {
      * @return 完全二叉树
      */
     public static TreeNode inCompleteTree(Integer... arr) {
-        return getInstance2(arr);
+        return getInstance1(arr, 0);
     }
 
     /**
@@ -107,7 +107,7 @@ public class TreeNode {
         return root;
     }
 
-    private TreeNode getInstance1(Integer[] arr, int index) {
+    private static TreeNode getInstance1(Integer[] arr, int index) {
         if (index >= arr.length || arr[index] == null) {
             return null;
         }
@@ -136,7 +136,7 @@ public class TreeNode {
         return tempRoot;
     }
 
-    public void print() {
+    public TreeNode print() {
         String[][] arr = toArr(this);
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
@@ -156,6 +156,7 @@ public class TreeNode {
             }
             System.out.println();
         }
+        return this;
     }
 
     private String[][] toArr(TreeNode root) {
