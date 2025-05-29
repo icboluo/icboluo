@@ -32,8 +32,8 @@ class ToolTest {
         System.out.println(STR."avg = \{avg}");
         System.out.println(STR."total week overwork time = \{(BigDecimal.valueOf(avg - 8)).multiply(BigDecimal.valueOf(workDay)).setScale(3, RoundingMode.HALF_DOWN)}");
 
-        double cur = 8;
-        System.out.println(STR."cur avg = \{MathUtil.divide(totalWorkTime + cur, workDay + 1, 3)}");
+        double today = 8;
+        System.out.println(STR."today avg = \{MathUtil.divide(totalWorkTime + today, workDay + 1, 3)}");
     }
 
     @Test
@@ -61,7 +61,7 @@ class ToolTest {
 
     @Test
     public void test4() {
-        LocalDate sleep = LocalDate.of(2025, 4, 12);
+        LocalDate sleep = LocalDate.of(2025, 5, 24);
         for (int i = 0; i < 10; i++) {
             sleep = printSleepDate(sleep);
         }

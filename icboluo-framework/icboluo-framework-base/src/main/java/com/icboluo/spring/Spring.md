@@ -316,25 +316,6 @@ spring容器在应用加载的时候创建一次即可。spring提供了一个�
 通过工具类获取spring容器
 WebApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
 
-
-## MVC
-
-InternalResourceViewResolver：《内部的，资源，..，溶解》视图解析器的一种，ModelAndView..setviewname可配合增加前缀和后缀
-@RequestMapping(value="/show3.do" method={RequestMethod.POST，...}，params=”!userId”)可以用？和*，也可以用/{name}/占位符
-public ModelAndView test3() {
-ModelAndView mv = new ModelAndView();
-mv.setViewName("hello");
-mv.addObject("msg", "ant 风格的映射*");
-return mv;
-}
-@ResponseStatus(value=HttpStatus.OK)不响应view就相应状态
-public void test18(Model model，HttpServletRequest request, HttpServletResponse response, HttpSession session，@RequestParam(value="name")String name) {...接受servlet对象
-@CookieValue(value="JSESSIONID",required = false)String jsessionid获取cookie数据
-文件上传解析器CommonsMultipartResolver解决上传中文乱码，和上传文件大小
-/：表示绝对路径，指的是localhost:8080/springmvc（项目名称可以省略）
-不带/：表示相对路径，相对于当前请求的路径很近很近localhost:8080/springmvc（项目名称可以省略）/hello/show32，相当于show前面全部了
-
-
 ## 源码
 
 1.在boot项目启动之后---bean初始化之后---执行aware回调的时候---会初始化applicationContext(由ApplicationObjectSupport类承担)，会构建拦截器去List中

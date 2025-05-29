@@ -90,3 +90,9 @@ maven settings 文件简介（猜测）
 ## 注释
 
 java注释里面的 <br> 换行 <pre> 再起一个段落
+
+## 提示
+
+Another thread also reached a breakpoint
+
+idea多线程可能同时到一个断点，如果放过一次，会放过多个，可以点击线程选择其他线程打断点
