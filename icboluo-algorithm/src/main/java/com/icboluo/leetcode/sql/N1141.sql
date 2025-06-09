@@ -30,7 +30,7 @@ from prices p
 group by product_id
 
 -- 1280 学生与考试 FIXME
-select e.student_id, sut.student_name, sub.subject_name, count(e.student_id) attended_exams
+select e.student_id, stu.student_name, sub.subject_name, count(e.student_id) attended_exams
 from Students stu
          left join Subjects sub
          left join Examinations e on stu.student_id = e.student_id and sub.subject_name = e.subject_name
@@ -66,7 +66,7 @@ order by sell_date;
 select *
 from Users
 where mail regexp '^[a-zA-Z][a-zA-Z0-9_\.\-]*@leetcode(\\?com)?\\.com$';
--- 1527 患有某种疾病的患者 FIXME
-select *
-from patients
-where conditions regexp '\\bDIAB1'
+-- 1527 患有某种疾病的患者
+SELECT patient_id, patient_name, conditions
+FROM Patients
+WHERE conditions LIKE 'DIAB1%' OR conditions LIKE '% DIAB1%';

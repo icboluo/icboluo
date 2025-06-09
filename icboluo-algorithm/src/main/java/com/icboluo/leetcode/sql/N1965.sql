@@ -38,3 +38,12 @@ from products
 where regexp_like(description, 'SN[0-9]{4}-[0-9]{4}[^0-9]+')
    OR regexp_like(description, 'SN[0-9]{4}-[0-9]{4}$')
 ORDER BY product_id;
+
+-- 3570 查找没有可用副本的书籍
+select lb.book_id, lb.title, lb.author, lb.genre, lb.publication_year, lb.total_copies current_borrowers
+from library_books lb
+where lb.total_copies = (select count(*)
+                         from borrowing_records br
+                         where br.book_id = lb.book_id
+                           and br.return_date is null)
+order by lb.total_copies desc, lb.title

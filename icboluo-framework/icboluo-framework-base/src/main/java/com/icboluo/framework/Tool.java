@@ -17,7 +17,7 @@ public class Tool {
         // TreeMap values() 的顺序合keySet() 的顺序是一一对应的
         System.out.println(map.keySet());
         System.out.println(map.values());
-        // parallelStream 的顺序是不固定的 965.ok
+        // parallelStream 的顺序是不固定的
         map.keySet().parallelStream().filter(a -> a < 10).forEach(System.out::println);
     }
 }
