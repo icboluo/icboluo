@@ -24,7 +24,7 @@ class ToolTest {
 
         int workDay = totalDay - arr.length;
 
-        System.out.println(STR."work day = \{totalDay}, overwork day = \{arr.length}");
+        System.out.println(STR."work day = \{workDay}, overwork day = \{arr.length}");
 
         double totalWorkTime = totalDay * monthAvg - sum;
         double avg = MathUtil.divide(totalWorkTime, workDay, 3).doubleValue();

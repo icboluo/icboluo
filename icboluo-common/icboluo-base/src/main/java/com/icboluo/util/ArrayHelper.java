@@ -143,22 +143,6 @@ public class ArrayHelper {
     }
 
     /**
-     * 初始化一个为default的二维数组
-     *
-     * @param n 行数
-     * @param m 列数
-     * @return 初始化后的二维数组
-     */
-    public static int[][] initArr(int n, int m) {
-        int[][] v = new int[n][m];
-        for (int i = 0; i < v.length; i++) {
-            v[i][0] = 1;
-        }
-        Arrays.fill(v[0], 0);
-        return v;
-    }
-
-    /**
      * 生成递增的数组，第一个值从1开始
      *
      * @param max 数组的最大值

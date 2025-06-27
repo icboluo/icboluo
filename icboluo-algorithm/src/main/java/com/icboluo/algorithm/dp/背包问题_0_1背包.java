@@ -1,6 +1,8 @@
-package com.icboluo.algorithm;
+package com.icboluo.algorithm.dp;
 
 import com.icboluo.util.ArrayHelper;
+
+import java.util.Arrays;
 
 /**
  * 背包问题
@@ -8,7 +10,7 @@ import com.icboluo.util.ArrayHelper;
  * @author icboluo
  * @since 2020-08-05 12:26
  */
-class KnapsackProblem {
+class 背包问题_0_1背包 {
     public static void main(String[] args) {
         //物品重量
         int[] w = {1, 4, 3};
@@ -20,7 +22,7 @@ class KnapsackProblem {
         int n = val.length;
 
         int[][] path = new int[n + 1][m + 1];
-        int[][] v = ArrayHelper.initArr(n + 1, m + 1);
+        int[][] v = initArr(n + 1, m + 1);
 
         for (int i = 1; i < v.length; i++) {
             for (int j = 1; j < v[0].length; j++) {
@@ -47,6 +49,22 @@ class KnapsackProblem {
             }
             i--;
         }
+    }
+
+    /**
+     * 初始化一个为default的二维数组
+     *
+     * @param n 行数
+     * @param m 列数
+     * @return 初始化后的二维数组
+     */
+    public static int[][] initArr(int n, int m) {
+        int[][] v = new int[n][m];
+        for (int i = 0; i < v.length; i++) {
+            v[i][0] = 1;
+        }
+        Arrays.fill(v[0], 0);
+        return v;
     }
 }
 
