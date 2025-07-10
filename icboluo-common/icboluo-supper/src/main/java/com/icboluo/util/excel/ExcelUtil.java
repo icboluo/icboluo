@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Objects;
@@ -45,11 +46,16 @@ public class ExcelUtil {
      * @param response 响应
      * @param name     文件名称
      */
+    @SneakyThrows
     public static void setContent(HttpServletResponse response, String name) {
         // 这个会造成中文乱码，需要先url编码后解码,这个不是标准的URL文件传参，使用工具(postman...)导出会显示文件名中文乱码（因前台适配的是这种方式，浏览器导出不会有乱码问题）
         // response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xlsx");
         // 这个是标准的语法，不过2种都需要前段支持下
-        response.setHeader("Content-Disposition", "attachment;filename*=utf-8" + name + ".xlsx");
+        //  可以解决下载的Excel需要修复的问题
+        response.addHeader("Content-Length", String.valueOf("file.length()"));
+//        这行代码可以解决 下载的文件中空格转换为+号的问题
+        String name2 = URLEncoder.encode(name, "UTF-8").replace("+", "%20");
+        response.setHeader("Content-Disposition", "attachment;filename*=utf-8" + name2 + ".xlsx");
     }
 
     /**

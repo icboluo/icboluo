@@ -44,7 +44,7 @@ public class CleanStartUp implements BeanPostProcessor {
 
     @PostConstruct
     public void removeBeans() {
-        List<String> beanNames = Arrays.asList("cleanLogTask");
+        List<String> beanNames = Arrays.asList("");
         ConfigurableApplicationContext context = (ConfigurableApplicationContext) applicationContext;
         if (context == null) {
             return;
