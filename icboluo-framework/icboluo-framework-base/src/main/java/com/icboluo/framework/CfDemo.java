@@ -26,9 +26,8 @@ public class CfDemo {
             if (throwable == null) {
                 return null;
             }
-            if (throwable.getCause() instanceof I18nException) {
-                throw new I18nException(((I18nException) throwable.getCause()).getStatus(),
-                        throwable.getCause().getMessage());
+            if (throwable.getCause() instanceof I18nException i18nException) {
+                throw i18nException;
             } else {
                 log.error("", throwable);
                 throw new I18nException();
@@ -45,7 +44,8 @@ public class CfDemo {
     }
 
     private CompletableFuture<Void> voidRetFun() {
-        return null;
+        return CompletableFuture.runAsync(() -> {
+        });
     }
 
     private String stringRet() {
@@ -53,6 +53,6 @@ public class CfDemo {
     }
 
     private void voidFun() {
-
+        throw new I18nException("777");
     }
 }

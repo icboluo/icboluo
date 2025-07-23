@@ -1,14 +1,14 @@
 package com.icboluo.util;
 
 import com.icboluo.object.CodeName;
-import com.icboluo.util.serialize.SerializedLambda;
+import com.icboluo.util.serialize.LambdaUtil;
 import org.junit.jupiter.api.Test;
 
-class SerializedLambdaTest {
+class LambdaUtilTest {
 
     @Test
     void getColumnName() {
-        String columnName = SerializedLambda.getColumnName(CodeName::getName);
+        String columnName = LambdaUtil.getColumnName(CodeName::getName);
         System.out.println("columnName = " + columnName);
     }
 }

@@ -1,7 +1,7 @@
 package com.icboluo.util;
 
 import com.icboluo.function.SerialFunction;
-import com.icboluo.util.serialize.SerializedLambda;
+import com.icboluo.util.serialize.LambdaUtil;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -102,7 +102,7 @@ public class ValidateUtil {
     public static <T> List<Set<ConstraintViolation<T>>> validateProperty(T obj, SerialFunction<T, Object>... get) {
         List<Set<ConstraintViolation<T>>> res = new ArrayList<>();
         for (SerialFunction<T, Object> serialFunction : get) {
-            String columnName = SerializedLambda.getColumnName(serialFunction);
+            String columnName = LambdaUtil.getColumnName(serialFunction);
             Set<ConstraintViolation<T>> cvSet = VALIDATOR.validateProperty(obj, columnName, Default.class);
             res.add(cvSet);
         }

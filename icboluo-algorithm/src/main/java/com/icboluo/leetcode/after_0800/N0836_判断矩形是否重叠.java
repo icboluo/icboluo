@@ -1,4 +1,4 @@
-package com.icboluo.leetcode.图形;
+package com.icboluo.leetcode.after_0800;
 
 /**
  * @author icboluo

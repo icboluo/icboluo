@@ -2,9 +2,6 @@ package com.icboluo.leetcode.最长回文串;
 
 import com.icboluo.common.ListNode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author icboluo
  * @since 2022-10-31 13:02
@@ -24,17 +21,7 @@ class N0234_判断回文链表 {
      * @return
      */
     public boolean isPalindrome1(ListNode listNode) {
-        // TODO 移动至公共类
-        List<Integer> list = new ArrayList<>();
-        ListNode cur = listNode;
-        while (cur != null) {
-            list.add(cur.val);
-            cur = cur.next;
-        }
-        int[] arr = new int[list.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = list.get(i);
-        }
+        int[] arr = listNode.toValArr();
         for (int i = 0; i < arr.length / 2; i++) {
             if (arr[i] != arr[arr.length - i - 1]) {
                 return false;

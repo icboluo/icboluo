@@ -1,7 +1,9 @@
 package com.icboluo.common;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 /**
  * 单链表节点，为了做算法简单，只用节点做单链表，并不进行方法抽取
@@ -101,5 +103,21 @@ public class ListNode {
             System.out.print("->" + stack.pop());
         }
         System.out.println();
+    }
+
+    public List<ListNode> toList() {
+        List<ListNode> list = new ArrayList<>();
+        ListNode cur = this;
+        while (cur != null) {
+            list.add(cur);
+            cur = cur.next;
+        }
+        return list;
+    }
+
+    public int[] toValArr() {
+        return toList().stream()
+                .mapToInt(x -> x.val)
+                .toArray();
     }
 }
