@@ -43,7 +43,7 @@ class N0094_中序遍历 {
         LinkedList<TreeNode> list = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
-        while (true) {
+        while (cur != null || !stack.isEmpty()) {
             if (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
@@ -51,8 +51,6 @@ class N0094_中序遍历 {
                 cur = stack.pop();
                 list.add(cur);
                 cur = cur.right;
-            } else {
-                break;
             }
         }
         return list.stream().map(treeNode -> treeNode.val).collect(Collectors.toList());

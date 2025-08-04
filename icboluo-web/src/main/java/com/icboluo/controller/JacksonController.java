@@ -1,6 +1,6 @@
 package com.icboluo.controller;
 
-import com.icboluo.dataobject.JacksonVO;
+import com.icboluo.object.JacksonVO;
 import com.icboluo.object.CodeName;
 import com.icboluo.object.IdName;
 import lombok.extern.slf4j.Slf4j;

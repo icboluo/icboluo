@@ -1,4 +1,4 @@
-package com.icboluo.dataobject;
+package com.icboluo.object;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

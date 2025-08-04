@@ -98,18 +98,9 @@ public class LambdaUtil implements Serializable {
      * @return 转换好的字符串
      */
     public static String firstToLowerCase(String param) {
-        if (param == null || "".equals(param)) {
+        if (param == null || param.isEmpty()) {
             return "";
         }
         return param.substring(0, 1).toLowerCase() + param.substring(1);
-    }
-
-    /**
-     * 获取实现者的方法名称
-     *
-     * @return 方法名称
-     */
-    public String getImplMethodName() {
-        return implMethodName;
     }
 }

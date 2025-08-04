@@ -95,8 +95,8 @@ class a {
     boolean method1() {
         QueryWrapper<DB> qw = new QueryWrapper<>();
         qw.eq("user_id", webcontext.userId());
-        // equals判断交于mysql，减少服务器端再次校验（此块并不能说是有点，mysql是大小写不敏感的，其他的sql校验坑你需要写函数；相反校验
-        // 写到服务器端更加统一，会忽略sql的差异性
+        // equals判断交于mysql，减少服务器端再次校验（此块并不能说是优点，mysql是大小写不敏感的，其他的sql校验可能需要写函数；
+        // 相反校验写到服务器端更加统一，会忽略sql的差异性
         qe.eq("role", "admin");
         DB userRole = mapper.selectOne(qw);
         return userRole != null;

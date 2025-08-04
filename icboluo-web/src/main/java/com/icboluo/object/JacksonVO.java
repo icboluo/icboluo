@@ -1,11 +1,9 @@
-package com.icboluo.dataobject;
+package com.icboluo.object;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.icboluo.common.serializer.ArchivesFlatteningSerializer;
 import com.icboluo.common.serializer.BigDecimalRemoveZeroSerializer;
 import com.icboluo.common.serializer.NumberDefaultZeroSerializer;
-import com.icboluo.object.CodeName;
-import com.icboluo.object.IdName;
 import lombok.Data;
 
 import java.math.BigDecimal;

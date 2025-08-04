@@ -2,7 +2,7 @@ package com.icboluo.controller;
 
 import com.icboluo.annotation.UserCode;
 import com.icboluo.annotation.WebContextAnno;
-import com.icboluo.dataobject.OrderCO;
+import com.icboluo.object.OrderCO;
 import com.icboluo.enumerate.ServiceNameEnum;
 import com.icboluo.interceptor.WebContext;
 import com.icboluo.util.StaticTestUtil;
