@@ -2,6 +2,7 @@ package com.icboluo.util.response;
 
 import com.alibaba.fastjson2.JSON;
 import com.icboluo.enumerate.ReEnum;
+import com.icboluo.util.I18nException;
 import lombok.Data;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -54,6 +55,12 @@ public class R implements Serializable {
     public static Response error(String message, MessageSource messageSource) {
         Locale locale = LocaleContextHolder.getLocale();
         String msg = messageSource.getMessage(message, null, locale);
+        return new SingleResponse<>(ReEnum.SYSTEM_ERROR.getCode(), msg);
+    }
+
+    public static Response error(I18nException i18nException, MessageSource messageSource) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String msg = messageSource.getMessage(i18nException.getMessage(), i18nException.getArgs(), locale);
         return new SingleResponse<>(ReEnum.SYSTEM_ERROR.getCode(), msg);
     }
 

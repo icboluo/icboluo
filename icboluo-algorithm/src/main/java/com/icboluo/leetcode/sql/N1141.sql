@@ -29,22 +29,23 @@ from prices p
                        and u.purchase_date between p.start_date and p.end_date
 group by product_id
 
--- 1280 学生与考试 FIXME
-select e.student_id, stu.student_name, sub.subject_name, count(e.student_id) attended_exams
+-- 1280 学生与考试
+select stu.student_id, stu.student_name, sub.subject_name, count(e.student_id) attended_exams
 from Students stu
-         left join Subjects sub
+--     optimize cross
+         CROSS join Subjects sub
          left join Examinations e on stu.student_id = e.student_id and sub.subject_name = e.subject_name
-group by e.student_id, stu.student_name, sub.subject_name
-order by e.student_id, sub.subject_name
+group by stu.student_id, stu.student_name, sub.subject_name
+order by stu.student_id, stu.student_name, sub.subject_name
 
 -- 1327 列出某一时期内订购的产品
 select p.product_name, sum(o.unit) unit
 from products p
          inner join orders o on p.product_id = o.product_id
-where year(o.order_date) = '2020'
-  and month(o.order_date) = '02'
+where year (o.order_date) = '2020'
+  and month (o.order_date) = '02'
 group by p.product_id
-having sum(o.unit) >= 100;
+having sum (o.unit) >= 100;
 -- 1378
 select uni.unique_id, e.name
 from Employees e
@@ -69,4 +70,5 @@ where mail regexp '^[a-zA-Z][a-zA-Z0-9_\.\-]*@leetcode(\\?com)?\\.com$';
 -- 1527 患有某种疾病的患者
 SELECT patient_id, patient_name, conditions
 FROM Patients
-WHERE conditions LIKE 'DIAB1%' OR conditions LIKE '% DIAB1%';
+WHERE conditions LIKE 'DIAB1%'
+   OR conditions LIKE '% DIAB1%';

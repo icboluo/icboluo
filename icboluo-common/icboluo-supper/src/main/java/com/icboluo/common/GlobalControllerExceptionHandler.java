@@ -6,8 +6,6 @@ import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.UnexpectedTypeException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -40,9 +37,6 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class GlobalControllerExceptionHandler {
-    @Resource
-    private HttpServletRequest request;
-
     @Resource
     private MessageSource messageSource;
 
@@ -95,7 +89,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = {I18nException.class})
     public Response i18nExceptionHandler(I18nException e) {
         log.error("I18nException: ", e);
-        return R.error(e.getMessage(), messageSource);
+        return R.error(e, messageSource);
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
