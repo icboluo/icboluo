@@ -17,7 +17,7 @@ spring:
           predicates:
             - Path=/note/get/** # 断言，路径相匹配的进行路由
               #- After=2017-01-20T17:42:47.789-07:00[America/Denver] 这个时间以后可以访问
-              #- Before=2017-01-20T17:42:47.789-07:00[America/Denver]  这个时间以前可以访问
+            #- Before=2017-01-20T17:42:47.789-07:00[America/Denver]  这个时间以前可以访问
             #- Cookie=username,zzyy
             #- Header=X-Request-Id, \d+ #请求头要有X-Request-Id属性，并且值为正数
             #- Host=**.icboluo.com

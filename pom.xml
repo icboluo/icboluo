@@ -8,7 +8,7 @@
         <!--        我们在升级Spring的时候，应该把其他的stater同样升级到相同版本，例如mybatis-->
         <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <version>3.5.4</version>
         <!--        relativePath元素中的地址–>本地仓库–>远程仓库-->
         <!--        如为空值将始终从仓库中获取，不从本地路径获取-->
         <!--        设定一个空值将始终从仓库中获取，不从本地路径获取，子模块禁止添加这个-->
@@ -52,26 +52,26 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <!--公共插件-->
         <junit.version>4.12</junit.version>
-        <log4j.version>1.2.12</log4j.version>
-        <lombok.version>1.18.32</lombok.version>
+        <log4j.version>1.2.17</log4j.version>
+        <lombok.version>1.18.38</lombok.version>
         <common.version>0.0.1-SNAPSHOT</common.version>
         <!--mapper -->
-        <mysql-connector-j.version>8.4.0</mysql-connector-j.version>
-        <sqlite-jdbc.version>3.45.3.0</sqlite-jdbc.version>
-        <druid-spring-boot-starter.version>1.2.22</druid-spring-boot-starter.version>
-        <mybatis-plus-boot-starter.version>3.5.7</mybatis-plus-boot-starter.version>
-        <pagehelper-spring-boot-starter.version>2.1.0</pagehelper-spring-boot-starter.version>
+        <mysql-connector-j.version>9.4.0</mysql-connector-j.version>
+        <sqlite-jdbc.version>3.50.3.0</sqlite-jdbc.version>
+        <druid-spring-boot-starter.version>1.2.27</druid-spring-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.12</mybatis-plus-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>2.1.1</pagehelper-spring-boot-starter.version>
         <!--alibaba -->
-        <fastjson2.version>2.0.49</fastjson2.version>
-        <spring-cloud-alibaba-dependencies.version>2023.0.1.0</spring-cloud-alibaba-dependencies.version>
-        <easyexcel.version>3.3.4</easyexcel.version>
+        <fastjson2.version>2.0.58</fastjson2.version>
+        <spring-cloud-alibaba-dependencies.version>2023.0.3.3</spring-cloud-alibaba-dependencies.version>
+        <easyexcel.version>4.0.3</easyexcel.version>
         <!--校验器  -->
-        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
+        <hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
         <!--公共包-->
-        <hutool-all.version>5.8.27</hutool-all.version>
-        <common-io.version>2.16.1</common-io.version>
+        <hutool-all.version>5.8.39</hutool-all.version>
+        <common-io.version>2.20.0</common-io.version>
         <!--cloud-->
-        <spring-cloud-dependencies.version>2023.0.3</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version>
     </properties>
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->

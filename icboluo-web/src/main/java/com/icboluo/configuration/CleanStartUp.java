@@ -24,6 +24,7 @@ public class CleanStartUp implements BeanPostProcessor {
 
     /**
      * 清理后置处理器
+     * Aop的移除是在清理后置处理器方法中的
      *
      * @param bean     the new bean instance
      * @param beanName the name of the bean
@@ -44,7 +45,7 @@ public class CleanStartUp implements BeanPostProcessor {
 
     @PostConstruct
     public void removeBeans() {
-        List<String> beanNames = Arrays.asList("");
+        List<String> beanNames = Arrays.asList();
         ConfigurableApplicationContext context = (ConfigurableApplicationContext) applicationContext;
         if (context == null) {
             return;
