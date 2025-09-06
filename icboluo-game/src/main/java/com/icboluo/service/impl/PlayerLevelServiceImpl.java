@@ -25,6 +25,6 @@ public class PlayerLevelServiceImpl implements PlayerLevelService {
      */
     @Override
     public PlayerLevel queryById(Integer id) {
-        return playerLevelMapper.queryById(id);
+        return playerLevelMapper.selectById(id);
     }
 }

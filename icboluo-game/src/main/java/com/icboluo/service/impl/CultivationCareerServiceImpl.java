@@ -34,7 +34,7 @@ public class CultivationCareerServiceImpl implements CultivationCareerService {
      */
     @Override
     public CultivationCareer queryById(Integer id) {
-        return cultivationCareerMapper.queryById(id);
+        return cultivationCareerMapper.selectById(id);
     }
 
     @Override

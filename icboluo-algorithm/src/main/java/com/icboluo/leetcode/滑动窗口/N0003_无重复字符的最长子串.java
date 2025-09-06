@@ -12,7 +12,7 @@ import java.util.Map;
  */
 class N0003_无重复字符的最长子串 {
     public static void main(String[] args) {
-        N0003_无重复字符的最长子串 cla = new N0003_无重复字符的最长子串();
+        var cla = new N0003_无重复字符的最长子串();
         String str = "abcabcbb";
         int res = cla.lengthOfLongestSubstring(str);
         System.out.println("res = " + res);
@@ -28,16 +28,16 @@ class N0003_无重复字符的最长子串 {
         int ans = 0;
         // 字符出现的次数
         Map<Character, Integer> winMap = new HashMap<>();
-        int l = -1;
-        int r = -1;
+        int l = 0;
+        int r = 0;
         // 右指针扩大
-        while (r < str.length() - 1) {
+        while (r < str.length()) {
             // 这种情况我们将右指针放进结果集，就应该对右指针进行处理
-            char right = str.charAt(++r);
+            char right = str.charAt(r++);
             winMap.put(right, winMap.getOrDefault(right, 0) + 1);
             // 左指针扩大，寻找最优解，这里有先后关系；首先应该循环玩这个，才可能有最优解
             while (winMap.get(right) > 1) {
-                char left = str.charAt(++l);
+                char left = str.charAt(l++);
                 // 这里是窗口的数据销毁功能
                 winMap.put(left, winMap.getOrDefault(left, 0) - 1);
             }

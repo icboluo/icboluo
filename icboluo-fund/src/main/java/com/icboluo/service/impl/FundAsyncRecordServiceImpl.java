@@ -25,7 +25,7 @@ public class FundAsyncRecordServiceImpl implements FundAsyncRecordService {
      */
     @Override
     public FundAsyncRecord queryById(String id) {
-        return this.fundAsyncRecordMapper.queryById(id);
+        return this.fundAsyncRecordMapper.selectById(id);
     }
 
     /**

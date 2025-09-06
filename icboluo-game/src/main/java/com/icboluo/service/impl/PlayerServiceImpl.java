@@ -73,12 +73,12 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public PlayerVO queryById(Integer id) {
         if (!redisHash.containsKey(KEY_PRE + id)) {
-            Player player = playerMapper.queryById(id);
+            Player player = playerMapper.selectById(id);
             redisHash.hmset(KEY_PRE + id, player, 600);
         }
         Player player = redisHash.hmget(KEY_PRE + id, Player.class);
         if (player == null) {
-            DiePlayer diePlayer = diePlayerMapper.queryById(id);
+            DiePlayer diePlayer = diePlayerMapper.selectById(id);
             if (diePlayer == null) {
                 throw new IcBoLuoException("no.find.the.role");
             }
@@ -97,9 +97,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public void attack(Integer playerId, Integer monsterId) {
-        Monster monster = monsterMapper.queryById(monsterId);
+        Monster monster = monsterMapper.selectById(monsterId);
         if (!redisHash.containsKey(KEY_PRE + playerId)) {
-            Player player = playerMapper.queryById(playerId);
+            Player player = playerMapper.selectById(playerId);
             redisHash.hmset(KEY_PRE + playerId, player, 600);
         }
         Player player = redisHash.hmget(KEY_PRE + playerId, Player.class);

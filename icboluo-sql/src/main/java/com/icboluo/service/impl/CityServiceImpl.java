@@ -26,6 +26,6 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public City queryById(Integer cityId) {
-        return cityMapper.queryById(cityId);
+        return cityMapper.selectById(cityId);
     }
 }

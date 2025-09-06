@@ -41,7 +41,7 @@ public interface ProvinceMapper extends MyBaseMapper<Province> {
 
     @Cacheable(cacheNames = "province:info", key = "#p0")
     default Province cacheQueryById(Serializable id) {
-        return queryById(id);
+        return selectById(id);
     }
 
     int insertProvince(Province province);

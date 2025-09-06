@@ -27,6 +27,6 @@ public class AreaServiceImpl implements AreaService {
      */
     @Override
     public Area queryById(Integer areId) {
-        return areaMapper.queryById(areId);
+        return areaMapper.selectById(areId);
     }
 }

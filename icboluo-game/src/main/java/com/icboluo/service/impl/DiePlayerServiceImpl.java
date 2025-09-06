@@ -25,6 +25,6 @@ public class DiePlayerServiceImpl implements DiePlayerService {
      */
     @Override
     public DiePlayer queryById(Integer id) {
-        return diePlayerMapper.queryById(id);
+        return diePlayerMapper.selectById(id);
     }
 }
