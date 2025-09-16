@@ -43,6 +43,7 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
 
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
+        context.readWorkbookHolder().setIgnoreEmptyRow(false);
         if (!StringUtils.hasText(excelEntity.sheetName)) {
             excelEntity.sheetName = context.readSheetHolder().getSheetName();
         }
@@ -50,7 +51,10 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
 
     @Override
     public void invoke(T data, AnalysisContext context) {
-        excelEntity.list.add(data);
+        ExcelData<T> ed = new ExcelData<>();
+        ed.setData(data);
+        ed.setRowNo(context.readSheetHolder().getRowIndex() + excelEntity.headRowNumber);
+        excelEntity.list.add(ed);
     }
 
     @Override
@@ -71,7 +75,10 @@ public abstract class ExcelListener<T> extends AnalysisEventListener<T> {
     }
 
     public List<T> getList() {
-        return excelEntity.list;
+        return excelEntity.list.stream()
+                .filter(ExcelData::isSuccess)
+                .map(ExcelData::getData)
+                .toList();
     }
 
     public String sheetName() {

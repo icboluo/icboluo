@@ -41,7 +41,7 @@ public class ExcelEntity<T> {
     /**
      * 数据列表
      */
-    protected final List<T> list = new ArrayList<>();
+    protected final List<ExcelData<T>> list = new ArrayList<>();
 
     /**
      * 根据字段值去重，并且取最后一条
@@ -51,6 +51,8 @@ public class ExcelEntity<T> {
      */
     public List<T> getDistinctList(Function<T, Object> function) {
         LinkedHashMap<Object, T> map = list.stream()
+                .filter(ExcelData::isSuccess)
+                .map(ExcelData::getData)
                 .collect(Collectors.toMap(function, Function.identity(), (fir, sec) -> sec, LinkedHashMap::new));
         return new ArrayList<>(map.values());
     }
@@ -64,9 +66,9 @@ public class ExcelEntity<T> {
      */
     public Map<String, List<Integer>> getRepeatMsg(Function<T, String> getUk) {
         Map<String, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < list.size(); i++) {
-            int rowNo = i + headRowNumber + 1;
-            String uk = getUk.apply(list.get(i));
+        for (ExcelData<T> ed : list) {
+            int rowNo = ed.getRowNo();
+            String uk = getUk.apply(ed.getData());
             if (!map.containsKey(uk)) {
                 List<Integer> value = new ArrayList<>();
                 value.add(rowNo);

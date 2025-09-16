@@ -194,16 +194,20 @@ public class ExcelUtil {
 
     private static ExcelReader createExcelReader(String fileName, InputStream is) {
         if (IoHelper.validateFileName(fileName, ExcelTypeEnum.CSV.getValue())) {
-            return EasyExcelFactory.read(is).excelType(ExcelTypeEnum.CSV).charset(Charset.forName("gbk")).build();
+            return EasyExcelFactory.read(is)
+                    .ignoreEmptyRow(false)
+                    .excelType(ExcelTypeEnum.CSV)
+                    .charset(Charset.forName("gbk"))
+                    .build();
         } else if (IoHelper.validateFileName(fileName, ExcelTypeEnum.XLSX.getValue(), ExcelTypeEnum.XLS.getValue(), "xlsm")) {
-            return EasyExcelFactory.read(is).build();
+            return EasyExcelFactory.read(is).ignoreEmptyRow(false).build();
         }
         // 如果文件名不是Excel，则抛异常
         if (org.springframework.util.StringUtils.hasText(fileName)) {
             throw new I18nException(ReEnum.NOT_EXCEL);
         } else {
             // 默认使用xlsx，xlsm文件读取
-            return EasyExcelFactory.read(is).build();
+            return EasyExcelFactory.read(is).ignoreEmptyRow(false).build();
         }
     }
 

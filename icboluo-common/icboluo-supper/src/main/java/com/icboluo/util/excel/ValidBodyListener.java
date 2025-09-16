@@ -1,11 +1,11 @@
 package com.icboluo.util.excel;
 
 import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.enums.RowTypeEnum;
 import com.icboluo.annotation.Excel;
 import com.icboluo.enumerate.ReEnum;
 import com.icboluo.util.I18nException;
 import com.icboluo.util.ValidateUtil;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -20,11 +20,6 @@ import java.util.function.Function;
  * @param <T>
  */
 public class ValidBodyListener<T> extends ExcelListener<T> {
-    /**
-     * 记录多行错误消息，错误消息的位置和Excel完全匹配
-     */
-    private final List<String[]> msgList = new ArrayList<>();
-    private final List<String> rowMsgList = new ArrayList<>();
     protected boolean isEmpty = true;
 
     /**
@@ -44,32 +39,34 @@ public class ValidBodyListener<T> extends ExcelListener<T> {
 
     public void invoke(T data, AnalysisContext context) {
         // 这个近似总行数会统计空行，目前没有遇到过近似行数不准确的情况(目前不需要
-        context.readSheetHolder().getApproximateTotalRowNumber();
+        var c = context.readSheetHolder().getApproximateTotalRowNumber();
         // if只会执行一次
-        if (msgList.isEmpty()) {
+        if (isEmpty) {
             isEmpty = false;
-            for (int i = 0; i < excelEntity.headRowNumber; i++) {
-                msgList.add(new String[getMaxLine() + 1]);
-                rowMsgList.add(null);
+        }
+        ExcelData<T> ed = new ExcelData<>();
+        ed.setRowNo(context.readRowHolder().getRowIndex() + excelEntity.headRowNumber);
+        // 如果有空行
+        if (context.readRowHolder().getRowType() == RowTypeEnum.EMPTY) {
+            ed.setRowEmpty(true);
+        } else if (data instanceof RowValidate rowValidate) {
+            String rowMsg = rowValidate.afterFieldValidate();
+            ed.setRowMsg(rowMsg);
+        } else {
+            Field[] fields = excelEntity.clazz.getDeclaredFields();
+            Map<Field, String> msgMap = ValidateUtil.validateFieldsToMap(data, fields);
+            if (!msgMap.isEmpty()) {
+                String[] msgArr = new String[getMaxLine() + 1];
+                for (Map.Entry<Field, String> entry : msgMap.entrySet()) {
+                    Excel excel = entry.getKey().getAnnotation(Excel.class);
+                    msgArr[excel.columnIndex()] = entry.getValue();
+                }
+                ed.setCellMsg(msgArr);
             }
         }
-        msgList.add(new String[getMaxLine() + 1]);
-        Field[] fields = excelEntity.clazz.getDeclaredFields();
-        Map<Field, String> msgMap = ValidateUtil.validateFieldsToMap(data, fields);
-        if (data instanceof RowValidate rowValidate) {
-            String rowError = rowValidate.afterFieldValidate();
-            rowMsgList.add(rowError);
-        } else {
-            rowMsgList.add(null);
-        }
-        for (Map.Entry<Field, String> entry : msgMap.entrySet()) {
-            Excel excel = entry.getKey().getAnnotation(Excel.class);
-            msgList.get(msgList.size() - 1)[excel.columnIndex()] = entry.getValue();
-        }
-        if (msgMap.isEmpty()) {
-            excelEntity.list.add(data);
-        }
+        excelEntity.list.add(ed);
     }
+
 
     public String getBodyErrorMsg() {
         return getBodyErrorMsg(false);
@@ -77,20 +74,9 @@ public class ValidBodyListener<T> extends ExcelListener<T> {
 
     public String getBodyErrorMsg(boolean needShowSheetName) {
         List<String> msg = new ArrayList<>();
-        for (int i = 0; i < msgList.size(); i++) {
-            for (int j = 0; j < msgList.get(i).length; j++) {
-                if (msgList.get(i)[j] != null) {
-                    String message = MESSAGE_SOURCE.getMessage("row.{0}.col.{1}.error.{2}",
-                            new Object[]{i + 1, ExcelUtil.convertToTitle(j + 1), msgList.get(i)[j]},
-                            LocaleContextHolder.getLocale());
-                    msg.add(message);
-                }
-            }
-            if (StringUtils.hasText(rowMsgList.get(i))) {
-                String rowMessage = MESSAGE_SOURCE.getMessage("row.{0}.error.{1}",
-                        new Object[]{i + 1, rowMsgList.get(i)}, LocaleContextHolder.getLocale());
-                msg.add(rowMessage);
-            }
+        for (ExcelData<T> ed : excelEntity.list) {
+            msg.addAll(ed.cellError(MESSAGE_SOURCE));
+            ed.rowError(MESSAGE_SOURCE).ifPresent(msg::add);
         }
         if (msg.isEmpty()) {
             return null;

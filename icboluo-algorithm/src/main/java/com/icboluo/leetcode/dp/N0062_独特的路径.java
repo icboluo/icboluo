@@ -7,6 +7,12 @@ import java.util.Arrays;
  * @since 2023-05-16 21:13
  */
 class N0062_独特的路径 {
+    public static void main(String[] args) {
+        var cla = new N0062_独特的路径();
+        System.out.println(cla.uniquePaths(3, 7));
+        System.out.println(cla.uniquePaths(3, 2));
+    }
+
     // 从左上到右下的路径个数
     // 当然了，这个方法存在空间浪费，可以优化
     public int uniquePaths(int m, int n) {
