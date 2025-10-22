@@ -72,6 +72,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
     </dependencies>
 
     <!--    project build 标签针对于整个项目，是大包的一些配置，可以指定打包的文件目录等...-->

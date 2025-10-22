@@ -13,6 +13,8 @@ import java.util.Locale;
 
 /**
  * @author icboluo
+ * @see WebInterceptor
+ * @see com.icboluo.util.ThreadTaskDecorator
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
