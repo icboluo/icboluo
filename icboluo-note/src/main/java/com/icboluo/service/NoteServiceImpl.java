@@ -18,10 +18,13 @@ import com.icboluo.util.IcBoLuoException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
@@ -144,25 +147,31 @@ public class NoteServiceImpl implements NoteService {
     public void update(TimeNoteCO client, int id, String type) {
         if (Constant.TIME_TYPE.equals(type)) {
             NoteTimeNote noteTimeNote = timeNoteMapper.selectByPrimaryKey(id);
-            BeanUtil.notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getBelongToScope, NoteTimeNote::setBelongToScope);
-            BeanUtil.notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getProblem, NoteTimeNote::setProblem);
-            BeanUtil.notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getResult, NoteTimeNote::setResult);
+            notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getBelongToScope, NoteTimeNote::setBelongToScope);
+            notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getProblem, NoteTimeNote::setProblem);
+            notEmptyThenSet(client, noteTimeNote, TimeNoteCO::getResult, NoteTimeNote::setResult);
             noteTimeNote.setGmtModified(LocalDateTime.now());
             timeNoteMapper.updateByPrimaryKeySelective(noteTimeNote);
         } else if (Constant.WEEK_TYPE.equals(type)) {
             NoteWeekTime noteWeekTime = weekTimeMapper.selectByPrimaryKey(id);
-            BeanUtil.notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getBelongToScope, NoteWeekTime::setBelongToScope);
-            BeanUtil.notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getProblem, NoteWeekTime::setProblem);
-            BeanUtil.notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getResult, NoteWeekTime::setResult);
+            notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getBelongToScope, NoteWeekTime::setBelongToScope);
+            notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getProblem, NoteWeekTime::setProblem);
+            notEmptyThenSet(client, noteWeekTime, TimeNoteCO::getResult, NoteWeekTime::setResult);
             noteWeekTime.setGmtModified(LocalDateTime.now());
             weekTimeMapper.updateByPrimaryKeySelective(noteWeekTime);
         } else if (Constant.MONTH_TYPE.equals(type)) {
             NoteMonthTime noteMonthTime = monthTimeMapper.selectByPrimaryKey(id);
-            BeanUtil.notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getBelongToScope, NoteMonthTime::setBelongToScope);
-            BeanUtil.notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getProblem, NoteMonthTime::setProblem);
-            BeanUtil.notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getResult, NoteMonthTime::setResult);
+            notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getBelongToScope, NoteMonthTime::setBelongToScope);
+            notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getProblem, NoteMonthTime::setProblem);
+            notEmptyThenSet(client, noteMonthTime, TimeNoteCO::getResult, NoteMonthTime::setResult);
             noteMonthTime.setGmtModified(LocalDateTime.now());
             monthTimeMapper.updateByPrimaryKeySelective(noteMonthTime);
+        }
+    }
+
+    public <S, T, F> void notEmptyThenSet(S source, T target, Function<S, F> get, BiConsumer<T, F> set) {
+        if (!ObjectUtils.isEmpty(get.apply(source))) {
+            set.accept(target, get.apply(source));
         }
     }
 

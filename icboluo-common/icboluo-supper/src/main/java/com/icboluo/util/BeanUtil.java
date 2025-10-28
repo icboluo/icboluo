@@ -22,14 +22,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -227,18 +225,6 @@ public class BeanUtil {
     @Deprecated
     public static <T> String join(Collection<T> coll) {
         return StringUtils.collectionToDelimitedString(coll, ";");
-    }
-
-    public static <S, T, F> void notEmptyThenSet(S source, T target, Function<S, F> get, BiConsumer<T, F> set) {
-        if (!ObjectUtils.isEmpty(get.apply(source))) {
-            set.accept(target, get.apply(source));
-        }
-    }
-
-    public static <T> void notNullToAddAll(List<T> source, List<T> target) {
-        if (CollectionUtils.isEmpty(source)) {
-            target.addAll(source);
-        }
     }
 
     public static <K1, K2, V> Map<K2, V> mapKeyConvert(Map<K1, V> map, Function<K1, K2> keyConvert) {
@@ -629,4 +615,53 @@ public class BeanUtil {
         list.sort(comparator);
     }
 
+    public static List<String> compareObjectReturnDifferentField(Object obj1, Object obj2, String... excludeFields) {
+        List<String> excludeList = Arrays.stream(excludeFields).filter(Objects::nonNull).collect(Collectors.toList());
+        return compareObjectReturnDifferentField(obj1, obj2, null, excludeList);
+    }
+
+    @SneakyThrows
+    public static List<String> compareObjectReturnDifferentField(Object obj1, Object obj2, List<String> includeList, List<String> excludeList) {
+        Predicate<Field> include = fie -> CollectionUtils.isEmpty(includeList) || includeList.contains(fie.getName());
+        Predicate<Field> exclude = fie -> !CollectionUtils.isEmpty(excludeList) && excludeList.contains(fie.getName());
+        Field[] fields1 = BeanUtil.getThisAndSupperDeclaredFields(obj1.getClass()).toArray(new Field[0]);
+        Field[] fields2 = BeanUtil.getThisAndSupperDeclaredFields(obj2.getClass()).toArray(new Field[0]);
+        Map<String, Field> field2Map = Arrays.stream(fields2).collect(Collectors.toMap(Field::getName, Function.identity()));
+        List<String> res = new ArrayList<>();
+        for (Field field1 : fields1) {
+            // 跳过条件：静态字段, 没在包含字段里面， 在排除字段里面
+            if (Modifier.isStatic(field1.getModifiers()) || !include.test(field1) || exclude.test(field1)) {
+                continue;
+            }
+            // BeanUtil.setAccessible(field1);
+            if (!field2Map.containsKey(field1.getName())) {
+                res.add(field1.getName());
+                continue;
+            }
+            Field field2 = field2Map.get(field1.getName());
+            // BeanUtil.setAccessible(field2);
+            Object value1 = field1.get(obj1);
+            Object value2 = field2.get(obj2);
+            boolean fieldIsSame = fieldIsSame(field1, value1, field2, value2);
+            if (!fieldIsSame) {
+                res.add(field1.getName());
+            }
+        }
+        return res;
+    }
+
+    private static boolean fieldIsSame(Field field1, Object val1, Field field2, Object val2) {
+        if (field1.getType() == BigDecimal.class && field2.getType() == BigDecimal.class) {
+            return MathUtil.isSame((BigDecimal) val1, (BigDecimal) val2);
+        } else if (field1.getType() == String.class && field2.getType() == String.class) {
+            String str1 = (String) val1;
+            String str2 = (String) val2;
+            if (StringUtils.hasText(str1) && StringUtils.hasText(str2)) {
+                return str1.trim().equals(str2.trim());
+            }
+            return !StringUtils.hasText(str1) && !StringUtils.hasText(str2);
+        } else {
+            return Objects.equals(val1, val2);
+        }
+    }
 }

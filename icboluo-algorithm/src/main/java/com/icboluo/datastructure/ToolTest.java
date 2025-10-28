@@ -40,6 +40,14 @@ class ToolTest {
     }
 
     @Test
+    public void time() {
+        float contribute = 10.123F;
+        float avg = 8.456F;
+
+
+    }
+
+    @Test
     public void test2() {
         float a = 3115.4F;
         float b = 2690.59F;
@@ -49,6 +57,17 @@ class ToolTest {
         System.out.println(STR."total interest \{b * 360 - 650000}");
         System.out.println(a - a * 61 / 71);
         System.out.println(a * 61 / 71);
+    }
+
+
+    @Test
+    public void testMon() {
+//        2.85,3.3,----> 2.6,3.2
+        BigDecimal rn = BigDecimal.valueOf(0.033);
+        BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
+        BigDecimal r30 = r.add(BigDecimal.ONE).pow(360);
+        BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
+        System.out.println((z.multiply(BigDecimal.valueOf(710000))));
     }
 
     @Test
@@ -64,7 +83,7 @@ class ToolTest {
 
     @Test
     public void test4() {
-        LocalDate sleep = LocalDate.of(2025, 6, 5);
+        LocalDate sleep = LocalDate.of(2025, 10, 26);
         for (int i = 0; i < 10; i++) {
             sleep = printSleepDate(sleep);
         }
