@@ -1,12 +1,16 @@
 package com.icboluo.a_sql;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.icboluo.mysql.MyDataSource;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 
 import javax.sql.DataSource;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * @author icboluo
@@ -19,15 +23,14 @@ public class z_DataSourceSimpleFactory {
         return getDataSource("Druid");
     }
 
+    @SneakyThrows
     public static DataSource getDataSource(String dataSourceName) {
         if ("Druid".equals(dataSourceName)) {
-            DruidDataSource dataSource = new DruidDataSource();
             //        配置文件读取
-/*        Properties properties = new Properties();
-        properties.load(new FileInputStream("druiddb.properties"));
-        DataSource dataSource = DruidDataSourceFactory.createDataSource(properties);*/
-            dataSource.setDriverClassName("org.sqlite.JDBC");
-            dataSource.setUrl("jdbc:sqlite::../../../document/sql/document.db");
+            InputStream is = z_DataSourceSimpleFactory.class.getResourceAsStream("/application-simple.yml");
+            Properties properties = new Properties();
+            properties.load(is);
+            DruidDataSource dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
             dataSource.setUsername("root");
             dataSource.setPassword("root");
             dataSource.setValidationQuery("select 1");

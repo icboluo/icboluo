@@ -6,44 +6,27 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.time.Period;
 
 /**
  * @author icboluo
  * @since 2025-03-10 8:37
  */
 class ToolTest {
-
-    @Test
-    public void test1() {
-        double monthAvg = 8.41;
-        double contribute = 4;
-        int totalDay = MathUtil.divide(contribute, monthAvg - 8, 0).intValue();
-        double[] arr = {8};
-        double sum = Arrays.stream(arr).sum();
-
-        int workDay = totalDay - arr.length;
-
-        System.out.println(STR."work day = \{workDay}, overwork day = \{arr.length}");
-
-        double totalWorkTime = totalDay * monthAvg - sum;
-        double avg = MathUtil.divide(totalWorkTime, workDay, 3).doubleValue();
-
-        System.out.println(STR."avg = \{avg}");
-        System.out.println(STR."total week overwork time = \{(BigDecimal.valueOf(avg - 8)).multiply(BigDecimal.valueOf(workDay)).setScale(3, RoundingMode.HALF_DOWN)}");
-
-        double today1 = 7;
-        System.out.println(STR."today low avg = \{MathUtil.divide(totalWorkTime + today1, workDay + 1, 3)}");
-        double today2 = 9.65;
-        System.out.println(STR."today up avg = \{MathUtil.divide(totalWorkTime + today2, workDay + 1, 3)}");
-
-    }
-
     @Test
     public void time() {
         float contribute = 10.123F;
         float avg = 8.456F;
 
+        BigDecimal workDay = MathUtil.divide(contribute, avg - 8, 1);
+        System.out.println(STR."workDay = \{workDay}");
+        float target = 9F;
+        float need = (target - 8) * workDay.floatValue() - contribute;
+        System.out.println(STR."need = \{need}");
+        int a1 = 3;
+        int b1 = 1;
+        float excess1 = a1 * (9.65F - target) - b1 * (target - 7F) - need;
+        System.out.println(STR."excess1 = \{excess1}");
 
     }
 
@@ -61,13 +44,31 @@ class ToolTest {
 
 
     @Test
-    public void testMon() {
-//        2.85,3.3,----> 2.6,3.2
+    public void testMon1() {
+        // 3.3 ----> 3.2
         BigDecimal rn = BigDecimal.valueOf(0.033);
         BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
-        BigDecimal r30 = r.add(BigDecimal.ONE).pow(360);
+        BigDecimal r30 = r.add(BigDecimal.ONE).pow(338);
         BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
-        System.out.println((z.multiply(BigDecimal.valueOf(710000))));
+        System.out.println((z.multiply(BigDecimal.valueOf(685099))));
+    }
+
+    @Test
+    public void testMon2() {
+        // 2.85 ----> 2.6
+        BigDecimal rn = BigDecimal.valueOf(0.0285);
+        BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
+        BigDecimal r30 = r.add(BigDecimal.ONE).pow(338);
+        BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
+        System.out.println((z.multiply(BigDecimal.valueOf(624760))));
+    }
+
+    private static int monthPeriod() {
+        LocalDate start = LocalDate.of(2024, 1, 20);
+        LocalDate now = LocalDate.now();
+        Period period = Period.between(start, now);
+        int day = now.getDayOfMonth() > 20 ? 1 : 0;
+        return period.getMonths() + period.getYears() * 12 + day;
     }
 
     @Test

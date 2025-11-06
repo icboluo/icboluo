@@ -1,6 +1,8 @@
-package com.icboluo.a_sql;
+package com.icboluo.datasource;
 
 
+import com.icboluo.a_sql.z_DataSourceSimpleFactory;
+import com.icboluo.a_sql.z_MyJdbcUtil;
 import com.icboluo.mysql.MyDataSource;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /*
+动态代理的使用场景
 二.此时测试代码有1个问题：
 数据源用接口比类扩展好：修改为 DataSource dataSource=new MyDataSource()；
 可是DataSource没有backToPools方法
