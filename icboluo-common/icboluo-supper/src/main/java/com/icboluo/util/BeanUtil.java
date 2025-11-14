@@ -452,10 +452,11 @@ public class BeanUtil {
      */
     public static List<Field> getThisAndSupperDeclaredFields(Class<?> clazz) {
         List<Field> list = new ArrayList<>();
+        Set<String> nameSet = new HashSet<>();
         while (clazz != null) {
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                if (Modifier.isStatic(field.getModifiers())) {
+                if (Modifier.isStatic(field.getModifiers()) || nameSet.add(field.getName())) {
                     continue;
                 }
                 list.add(field);

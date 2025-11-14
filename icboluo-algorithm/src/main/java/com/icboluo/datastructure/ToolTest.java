@@ -20,14 +20,20 @@ class ToolTest {
 
         BigDecimal workDay = MathUtil.divide(contribute, avg - 8, 1);
         System.out.println(STR."workDay = \{workDay}");
+
         float target = 9F;
-        float need = (target - 8) * workDay.floatValue() - contribute;
-        System.out.println(STR."need = \{need}");
+        float excess = contribute - (target - 8) * workDay.floatValue();
+        System.out.println(STR."excess = \{excess}");
+
         int a1 = 3;
         int b1 = 1;
-        float excess1 = a1 * (9.65F - target) - b1 * (target - 7F) - need;
+        float excess1 = a1 * (9.65F - target) - b1 * (target - 7F) + excess;
         System.out.println(STR."excess1 = \{excess1}");
 
+        int a2 = 2;
+        int b2 = 2;
+        float excess2 = a2 * (9.65F - target) - b2 * (target - 7F) + excess;
+        System.out.println(STR."excess2 = \{excess2}");
     }
 
     @Test
@@ -48,7 +54,7 @@ class ToolTest {
         // 3.3 ----> 3.2
         BigDecimal rn = BigDecimal.valueOf(0.033);
         BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
-        BigDecimal r30 = r.add(BigDecimal.ONE).pow(338);
+        BigDecimal r30 = r.add(BigDecimal.ONE).pow(360 - monthPeriod());
         BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
         System.out.println((z.multiply(BigDecimal.valueOf(685099))));
     }
@@ -58,7 +64,7 @@ class ToolTest {
         // 2.85 ----> 2.6
         BigDecimal rn = BigDecimal.valueOf(0.0285);
         BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
-        BigDecimal r30 = r.add(BigDecimal.ONE).pow(338);
+        BigDecimal r30 = r.add(BigDecimal.ONE).pow(360 - monthPeriod());
         BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
         System.out.println((z.multiply(BigDecimal.valueOf(624760))));
     }
@@ -67,8 +73,7 @@ class ToolTest {
         LocalDate start = LocalDate.of(2024, 1, 20);
         LocalDate now = LocalDate.now();
         Period period = Period.between(start, now);
-        int day = now.getDayOfMonth() > 20 ? 1 : 0;
-        return period.getMonths() + period.getYears() * 12 + day;
+        return period.getMonths() + period.getYears() * 12 + 1;
     }
 
     @Test

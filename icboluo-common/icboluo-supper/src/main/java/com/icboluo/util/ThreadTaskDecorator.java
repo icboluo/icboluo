@@ -1,12 +1,10 @@
 package com.icboluo.util;
 
-import com.icboluo.interceptor.WebContext;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.core.task.TaskDecorator;
 
 import java.lang.reflect.Field;
@@ -73,11 +71,13 @@ public class ThreadTaskDecorator implements TaskDecorator {
                     log.error("async task decorator run fail,msg is", e);
                 } finally {
                     // 这里不remove不会造成内存泄漏吗，或者数据混乱 （在线程池中，会数据混乱
-                    WebContext.remove();
-                    MDC.clear();
+//                    WebContext.remove(); // 是不是因为子线程remove之后，父线程也会被remove???
                     thread.setName(preName);
                     // 线程执行完毕之后需要执行remove方法
-                    serFieldNull(field, thread);
+                    //     // 如果上面设置了field，线程执行完毕之后需要执行remove方法
+                    if (parentThreadLocals != null) {
+                        serFieldNull(field, thread);
+                    }
                 }
             };
         } catch (Exception e) {
