@@ -37,10 +37,6 @@ public class z_DataSourceSimpleFactory {
             return dataSource;
         } else if ("Hikari".equals(dataSourceName)) {
             HikariDataSource dataSource = new HikariDataSource();
-            //        配置文件读取
-//            Properties properties = new Properties();
-//            properties.load(new FileInputStream("druiddb.properties"));
-//            DataSource dataSource = DruidDataSourceFactory.createDataSource(properties);
             dataSource.setDriverClassName("com.mysql.jdbc.Driver");
             dataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/note");
             dataSource.setUsername("root");

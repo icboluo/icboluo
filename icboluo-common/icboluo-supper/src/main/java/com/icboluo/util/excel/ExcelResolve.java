@@ -170,7 +170,7 @@ public class ExcelResolve<T> {
     }
 
     @SneakyThrows
-    public <V> List<List<Object>> body(Supplier<List<V>> selectList) throws IllegalAccessException {
+    public <V> List<List<Object>> body(Supplier<List<V>> selectList) {
         List<V> list = selectList.get();
         List<List<Object>> res = new ArrayList<>();
         for (V v : list) {

@@ -52,7 +52,7 @@ public class ExcelUtil {
         // response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xlsx");
         // 这个是标准的语法，不过2种都需要前段支持下
         //  可以解决下载的Excel需要修复的问题
-        response.addHeader("Content-Length", String.valueOf("file.length()"));
+//        response.addHeader("Content-Length", String.valueOf("file.length()"));
 //        这行代码可以解决 下载的文件中空格转换为+号的问题
         String name2 = URLEncoder.encode(name, "UTF-8").replace("+", "%20");
         response.setHeader("Content-Disposition", "attachment;filename*=utf-8" + name2 + ".xlsx");
@@ -211,6 +211,21 @@ public class ExcelUtil {
         }
     }
 
+    @SneakyThrows(value = IOException.class)
+    public static <T> void writeByHeadName(List<T> list, Class<T> clazz, List<String> headList, String fileName) {
+        ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
+        resolve.setSortFieldName(headList);
+        Optional<HttpServletResponse> response = findResponse();
+        if (response.isEmpty()) {
+            return;
+        }
+        try (ServletOutputStream os = ExcelUtil.responseSetHeaderThenToStream(response.get(), fileName);
+             ExcelWriter excel = EasyExcelFactory.write(os).head(resolve.head()).build()) {
+            WriteSheet sheet = EasyExcelFactory.writerSheet(0).build();
+            excel.write(resolve.body(() -> list), sheet);
+        }
+    }
+
     /**
      * Excel 导出
      *
@@ -252,11 +267,10 @@ public class ExcelUtil {
 
     public static <T> void write(InputStream is, List<T> list, HttpServletResponse response, Class<T> clazz, String fileName) {
         ServletOutputStream os = responseSetHeaderThenToStream(response, fileName);
-        writeOrWithTemplate(is, list, os, clazz, new ExcelWriteConfig(fileName));
+        writeWithTemplate(is, list, os, clazz, new ExcelWriteConfig(fileName));
     }
 
-    @SneakyThrows
-    public static <T> void writeOrWithTemplate(InputStream is, List<T> list, OutputStream os, Class<T> clazz, ExcelWriteConfig config) {
+    public static <T> void write(List<T> list, OutputStream os, Class<T> clazz, ExcelWriteConfig config) {
         if (list.size() > 100000) {
             // 数据量超过
             throw new I18nException("the.data.volume.exceeds.{0}", new Object[]{100000});
@@ -264,13 +278,27 @@ public class ExcelUtil {
 
         ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
         Optional<String> sheetName = Optional.ofNullable(config.getSheetName());
-        try (ExcelWriter ew = createWriter(os, is)) {
+        try (ExcelWriter ew = EasyExcelFactory.write(os).build()) {
             ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0, sheetName.orElse(null));
             config.getWriteHandlerList().forEach(builder::registerWriteHandler);
-            // 输入流等于空的时候，说明是自行生成文件头（不是根据模板生成文件
-            if (is == null) {
-                builder = builder.head(resolve.head());
-            }
+            // 说明是自行生成文件头（不是根据模板生成文件
+            builder = builder.head(resolve.head());
+            WriteSheet writeSheet = builder.build();
+            ew.write(resolve.body(() -> list), writeSheet);
+        }
+    }
+
+    public static <T> void writeWithTemplate(InputStream is, List<T> list, OutputStream os, Class<T> clazz, ExcelWriteConfig config) {
+        if (list.size() > 100000) {
+            // 数据量超过
+            throw new I18nException("the.data.volume.exceeds.{0}", new Object[]{100000});
+        }
+
+        ExcelResolve<T> resolve = new ExcelResolve<>(clazz);
+        Optional<String> sheetName = Optional.ofNullable(config.getSheetName());
+        try (ExcelWriter ew = EasyExcelFactory.write(os).withTemplate(is).build()) {
+            ExcelWriterSheetBuilder builder = EasyExcelFactory.writerSheet(0, sheetName.orElse(null));
+            config.getWriteHandlerList().forEach(builder::registerWriteHandler);
             WriteSheet writeSheet = builder.build();
             ew.write(resolve.body(() -> list), writeSheet);
         }
@@ -293,14 +321,5 @@ public class ExcelUtil {
         }
         HttpServletResponse response = requestAttributes.getResponse();
         return Optional.ofNullable(response);
-    }
-
-
-    private static ExcelWriter createWriter(OutputStream os, InputStream is) {
-        if (is == null) {
-            return EasyExcelFactory.write(os).build();
-        } else {
-            return EasyExcelFactory.write(os).withTemplate(is).build();
-        }
     }
 }

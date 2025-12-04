@@ -41,3 +41,5 @@ EasyWriter.write 里面的data不需要EasyExcel支持，很简单的list即可
 ## 头校验
 
 EasyExcel是支持头校验的，（泛型一般new Arraylist获取不到里面的泛型，需要改写法，但是没必要，多传一个class参数吧
+
+easy-excel.当列用完之后，如果Excel还有多的列，会使用没有增加注解的字段
