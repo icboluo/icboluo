@@ -456,7 +456,7 @@ public class BeanUtil {
         while (clazz != null) {
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                if (Modifier.isStatic(field.getModifiers()) || nameSet.add(field.getName())) {
+                if (Modifier.isStatic(field.getModifiers()) || !nameSet.add(field.getName())) {
                     continue;
                 }
                 list.add(field);
