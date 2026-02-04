@@ -1,4 +1,4 @@
-package com.icboluo.algorithm.dp;
+package com.icboluo.leetcode.dp;
 
 import com.icboluo.util.ArrayHelper;
 
@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @author icboluo
  * @since 2020-08-05 12:26
  */
-class 背包问题_0_1背包 {
+class a_背包问题_0_1背包 {
     public static void main(String[] args) {
         //物品重量
         int[] w = {1, 4, 3};

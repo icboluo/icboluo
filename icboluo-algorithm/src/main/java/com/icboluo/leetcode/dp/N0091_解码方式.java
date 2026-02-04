@@ -1,6 +1,13 @@
 package com.icboluo.leetcode.dp;
 
 class N0091_解码方式 {
+    public static void main(String[] args) {
+        var cla = new N0091_解码方式();
+        assert cla.numDecodings("12") == 2;
+        assert cla.numDecodings("226") == 3;
+        assert cla.numDecodings("06") == 0;
+    }
+
     // 从递归->到dp 超时
     public int numDecodings(String s) {
         return s.length() == 0 ? 0 : numDecodings(0, s);

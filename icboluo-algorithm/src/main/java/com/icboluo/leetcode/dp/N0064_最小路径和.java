@@ -36,4 +36,13 @@ class N0064_最小路径和 {
         }
         return dp[dp.length - 1][dp[0].length - 1];
     }
+
+    public static void main(String[] args) {
+        var cla = new N0064_最小路径和();
+        var a = new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
+        assert cla.minPathSum(a) == 7;
+
+        var b = new int[][]{{1, 2, 3}, {4, 5, 6}};
+        assert cla.minPathSum(b) == 12;
+    }
 }

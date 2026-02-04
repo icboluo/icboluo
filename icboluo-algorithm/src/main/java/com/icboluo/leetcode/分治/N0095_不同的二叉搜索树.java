@@ -12,6 +12,14 @@ import java.util.List;
  * @since 2024-04-25 21:48
  */
 class N0095_不同的二叉搜索树 {
+    public static void main(String[] args) {
+        var cla = new N0095_不同的二叉搜索树();
+        List<TreeNode> treeNodes = cla.generateTrees(3);
+        treeNodes.getFirst().print();
+
+        List<TreeNode> treeNodes1 = cla.generateTrees(1);
+        treeNodes1.getFirst().print();
+    }
     public List<TreeNode> generateTrees(int n) {
         return generateTree(1, n);
     }

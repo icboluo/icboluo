@@ -8,6 +8,8 @@ class N0072_编辑距离 {
     public static void main(String[] args) {
         var cla = new N0072_编辑距离();
         System.out.println(cla.minDistance("", "a"));
+        assert cla.minDistance("horse", "ros") == 3;
+        assert cla.minDistance("intention", "execution") == 5;
     }
 
     // 超时,很不错的动态规划

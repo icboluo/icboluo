@@ -1,4 +1,4 @@
-package com.icboluo.algorithm.dp;
+package com.icboluo.leetcode.dp;
 
 import java.util.Arrays;
 
