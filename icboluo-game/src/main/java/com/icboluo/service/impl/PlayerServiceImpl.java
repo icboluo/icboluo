@@ -163,7 +163,7 @@ public class PlayerServiceImpl implements PlayerService {
             }
             return cacheList;
         } else {
-            List<Player> dbList = playerMapper.selectAll();
+            List<Player> dbList = playerMapper.selectList(null);
             for (Player db : dbList) {
                 JSONObject jo = JSON.parseObject(JSON.toJSONString(db));
                 redisHash.hmset(KEY_PRE + db.getId(), jo);
@@ -224,7 +224,7 @@ public class PlayerServiceImpl implements PlayerService {
         CultivationCareer cultivationCareer = new CultivationCareer();
         cultivationCareer.setPlayerId(player.getId());
         if (monster.getBlood() > 0) {
-            monsterMapper.updateByPrimaryKeySelective(monster);
+            monsterMapper.updateById(monster);
             cultivationCareer.setOper("You spend 1 year attacking a monster");
         } else {
             monsterMapper.deleteById(monster.getId());

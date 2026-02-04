@@ -36,7 +36,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Override
     public List<Province> selectAll() {
         String key = "province:all";
-        List<Province> provinces = provinceMapper.selectAll();
+        List<Province> provinces = provinceMapper.selectList(null);
         redisList.del(key);
         redisList.addAll(key, provinces);
         return provinces;

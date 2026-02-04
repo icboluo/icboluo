@@ -29,7 +29,7 @@ public class MonsterServiceImpl implements MonsterService {
 
     @Override
     public Monster nextMonster() {
-        List<Monster> list = monsterMapper.selectAll();
+        List<Monster> list = monsterMapper.selectList(null);
         if (list.size() >= 10) {
             throw new IcBoLuoException("monster.more.than.10.please.attack.before");
         }
@@ -46,6 +46,6 @@ public class MonsterServiceImpl implements MonsterService {
 
     @Override
     public List<Monster> allMonster() {
-        return monsterMapper.selectAll();
+        return monsterMapper.selectList(null);
     }
 }

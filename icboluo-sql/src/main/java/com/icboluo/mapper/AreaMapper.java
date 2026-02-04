@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.Area;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author icboluo
  * @since 2023-07-07 06:01:17
  */
-public interface AreaMapper extends MyBaseMapper<Area> {
+public interface AreaMapper extends BaseMapper<Area> {
 
     /**
      * 查询指定数据

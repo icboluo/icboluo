@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.PlayerLevel;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-03-13 12:17:47
  */
-public interface PlayerLevelMapper extends MyBaseMapper<PlayerLevel> {
+public interface PlayerLevelMapper extends BaseMapper<PlayerLevel> {
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *

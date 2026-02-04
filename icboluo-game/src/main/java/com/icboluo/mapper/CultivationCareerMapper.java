@@ -1,9 +1,10 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.CultivationCareer;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * @author icboluo
  * @since 2022-03-15 00:50:25
  */
-public interface CultivationCareerMapper extends MyBaseMapper<CultivationCareer> {
+public interface CultivationCareerMapper extends BaseMapper<CultivationCareer> {
 
     /**
      * 查询指定行数据

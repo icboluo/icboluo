@@ -118,7 +118,48 @@ insert自增主键的时候，可以返回主键id
 ```
 
 
+## xml
 
+有的方法似乎可以让integer类型==空字符串
+
+String name;
+
+    <if test="name != null and name != ''">
+    and name = #{name}
+    </if>
+    
+    <if test="name != null and name != ''">
+    and name like concat('%', #{name}, '%')
+    </if>
+    
+Integer age;
+
+    <if test="age != null">
+    and age = #{age}
+    </if>
+    List<String> studentList;
+    <if test="studentList != null and studentList.size > 0">
+    and student in
+    <foreach collection="studentList" item="item" open="(" separator="," close=")">
+    #{item}
+    </foreach>
+    </if>
+
+List<LocalDate> startAndEndTime
+
+    <if test="startAndEndTime !=null and startAndEndTime.size >= 2">
+    and date(coalesce(create_time,update_time)) between #{startAndEndTime[0]} and #{startAndEndTime[1]}
+    </if>
+
+List<String> productLine;
+
+    <if test="productLine != null and productLine.size > 0">
+    and (
+    <foreach collection="productLine" item="item" open="(" separator="or" close=")">
+    product_line regexp concat('(^|,)\\s*', #{item}, '\\s*($|,)')
+    </foreach>
+    )
+    </if>
 
 
 

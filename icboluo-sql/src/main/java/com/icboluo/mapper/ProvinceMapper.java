@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.Province;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-09-24 20:25:17
  */
-public interface ProvinceMapper extends MyBaseMapper<Province> {
+public interface ProvinceMapper extends BaseMapper<Province> {
 
     /**
      * 查询指定数据

@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.FundAsyncRecord;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-06-08 00:09:33
  */
-public interface FundAsyncRecordMapper extends MyBaseMapper<FundAsyncRecord> {
+public interface FundAsyncRecordMapper extends BaseMapper<FundAsyncRecord> {
 
     /**
      * 通过实体作为筛选条件查询

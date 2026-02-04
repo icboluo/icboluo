@@ -38,35 +38,35 @@ class ToolTest {
 
     @Test
     public void test2() {
-        float a = 3115.4F;
-        float b = 2690.59F;
+        float a = 3078.49F;
+        float b = 2609.49F;
         float sum = a + b;
         System.out.println(STR."sum: \{sum}");
-        System.out.println(STR."total interest \{a * 360 - 710000}");
-        System.out.println(STR."total interest \{b * 360 - 650000}");
-        System.out.println(a - a * 61 / 71);
-        System.out.println(a * 61 / 71);
+        System.out.println(STR."total interest \{a * 360 - 681375}");
+        System.out.println(STR."total interest \{b * 360 - 621096}");
+        System.out.println(a - a * 582633 / 681375);
+        System.out.println(a * 582633 / 681375);
     }
 
 
     @Test
     public void testMon1() {
-        // 3.3 ----> 3.2
-        BigDecimal rn = BigDecimal.valueOf(0.033);
+        // 3.2
+        BigDecimal rn = BigDecimal.valueOf(0.032);
         BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
         BigDecimal r30 = r.add(BigDecimal.ONE).pow(360 - monthPeriod());
         BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
-        System.out.println((z.multiply(BigDecimal.valueOf(685099))));
+        System.out.println((z.multiply(BigDecimal.valueOf(681375))));
     }
 
     @Test
     public void testMon2() {
-        // 2.85 ----> 2.6
-        BigDecimal rn = BigDecimal.valueOf(0.0285);
+        // 2.6
+        BigDecimal rn = BigDecimal.valueOf(0.026);
         BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
         BigDecimal r30 = r.add(BigDecimal.ONE).pow(360 - monthPeriod());
         BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
-        System.out.println((z.multiply(BigDecimal.valueOf(624760))));
+        System.out.println((z.multiply(BigDecimal.valueOf(621096))));
     }
 
     private static int monthPeriod() {
@@ -89,7 +89,7 @@ class ToolTest {
 
     @Test
     public void test4() {
-        LocalDate sleep = LocalDate.of(2025, 10, 26);
+        LocalDate sleep = LocalDate.of(2026, 1, 18);
         for (int i = 0; i < 10; i++) {
             sleep = printSleepDate(sleep);
         }

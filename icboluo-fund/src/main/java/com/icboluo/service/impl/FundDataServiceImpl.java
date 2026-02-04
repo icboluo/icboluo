@@ -190,7 +190,7 @@ public class FundDataServiceImpl implements FundDataService {
                 .build();
 
         fundDataMapper.deleteByFundIdDate(fundId, LocalDate.now());
-        fundDataMapper.insertSelective(data);
+        fundDataMapper.insert(data);
     }
 
     @Override

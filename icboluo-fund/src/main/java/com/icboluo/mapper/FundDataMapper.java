@@ -1,7 +1,7 @@
 package com.icboluo.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.FundData;
 import com.icboluo.object.query.FundDataChooseQuery;
 import com.icboluo.object.query.FundDataQuery;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-05-28 00:12:36
  */
-public interface FundDataMapper extends MyBaseMapper<FundData> {
+public interface FundDataMapper extends BaseMapper<FundData> {
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *

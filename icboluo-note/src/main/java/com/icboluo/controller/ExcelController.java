@@ -7,11 +7,12 @@ import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.icboluo.component.WriteExcelEntity;
 import com.icboluo.constant.FileRelativePathPre;
-import com.icboluo.object.view.StudentVO;
+import com.icboluo.object.view.StudentVo;
 import com.icboluo.service.ExcelService;
 import com.icboluo.service.StudentService;
 import com.icboluo.service.impl.StudentServiceImpl;
 import com.icboluo.util.IoHelper;
+import com.icboluo.util.excel.ColumnNameReadListener;
 import com.icboluo.util.excel.ExcelResolve;
 import com.icboluo.util.excel.ExcelUtil;
 import com.icboluo.util.excel.ValidHeadBodyListener;
@@ -76,24 +77,32 @@ public class ExcelController {
         assert mf != null;
         IoHelper.validateFile(mf);
         ExcelUtil.xlsAndXlsxValid(mf);
-        ValidHeadBodyListener<StudentVO> listener = new ValidHeadBodyListener<>(StudentVO.class);
+        ValidHeadBodyListener<StudentVo> listener = new ValidHeadBodyListener<>(StudentVo.class);
         try (InputStream is = mf.getInputStream(); ExcelReader er = EasyExcelFactory.read(is).build()) {
             ReadSheet rs = EasyExcelFactory.readSheet(0)
-                    .head(StudentVO.class)
+                    .head(StudentVo.class)
                     .headRowNumber(listener.getHeadRowNumber())
                     .registerReadListener(listener)
                     .build();
             er.read(rs);
         }
-        List<StudentVO> read = listener.getList();
+        List<StudentVo> read = listener.getList();
         read.forEach(System.out::println);
+    }
+
+    @PostMapping("readByColumnName")
+    public void readByColumnName() {
+        var listener = new ColumnNameReadListener<>(StudentVo.class);
+        ExcelReader reader = EasyExcelFactory.read().build();
+        ReadSheet readSheet = EasyExcelFactory.readSheet(1).headRowNumber(1).registerReadListener(listener).build();
+        reader.read(readSheet);
     }
 
     @SneakyThrows
     @PostMapping("simpleExport")
     public void simpleExport(HttpServletResponse response) {
         String fileName = "title_customization_" + System.currentTimeMillis() + ".xlsx";
-        ExcelResolve<StudentVO> resolve = new ExcelResolve<>(StudentVO.class);
+        ExcelResolve<StudentVo> resolve = new ExcelResolve<>(StudentVo.class);
         resolve.setSortFieldName(Arrays.asList("age", null, "name", "code", "id"));
         ExcelUtil.setContent(response, fileName);
         EasyExcelFactory.write(response.getOutputStream())
@@ -105,7 +114,7 @@ public class ExcelController {
                 .sheet("学生")
                 .doWrite(resolve.body(() ->
                         studentService.generateList(20).stream()
-                                .map(StudentVO::new).toList()));
+                                .map(StudentVo::new).toList()));
     }
 
     /**
@@ -115,7 +124,7 @@ public class ExcelController {
     public void customizationExport() throws IllegalAccessException {
         String fileName = "title_customization_" + System.currentTimeMillis() + ".xlsx";
         File file = new File(FileRelativePathPre.NOTE + FileRelativePathPre.RESOURCES + "dir/" + fileName);
-        ExcelResolve<StudentVO> resolve = new ExcelResolve<>(StudentVO.class);
+        ExcelResolve<StudentVo> resolve = new ExcelResolve<>(StudentVo.class);
         resolve.setSortFieldName(Arrays.asList("age", null, "name", "code", "id"));
         EasyExcelFactory.write(file)
                 // 实测这个自定义列宽最大值太宽了，需要修改为 100|150
@@ -126,7 +135,7 @@ public class ExcelController {
                 .sheet("学生")
                 .doWrite(resolve.body(() ->
                         studentService.generateList(20).stream()
-                                .map(StudentVO::new).toList()));
+                                .map(StudentVo::new).toList()));
     }
 
     /**

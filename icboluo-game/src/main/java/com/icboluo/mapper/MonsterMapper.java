@@ -1,9 +1,10 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.Monster;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * @author makejava
  * @since 2022-03-13 03:01:17
  */
-public interface MonsterMapper extends MyBaseMapper<Monster> {
+public interface MonsterMapper extends BaseMapper<Monster> {
 
     /**
      * 查询指定行数据

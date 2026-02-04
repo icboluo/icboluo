@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.City;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author icboluo
  * @since 2023-07-07 06:01:40
  */
-public interface CityMapper extends MyBaseMapper<City> {
+public interface CityMapper extends BaseMapper<City> {
 
     /**
      * 查询指定数据

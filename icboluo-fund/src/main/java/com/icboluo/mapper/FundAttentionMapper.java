@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.FundAttention;
 import com.icboluo.object.query.FundAttentionQuery;
 import com.icboluo.object.vo.FundAttentionVO;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author icboluo
  * @since 2021-05-27 23:04:59
  */
-public interface FundAttentionMapper extends MyBaseMapper<FundAttention> {
+public interface FundAttentionMapper extends BaseMapper<FundAttention> {
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *

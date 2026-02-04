@@ -2,9 +2,9 @@ package com.icboluo.object.view;
 
 import com.icboluo.annotation.Excel;
 import com.icboluo.entity.Student;
-import com.icboluo.util.BeanUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author icboluo
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class StudentVO {
+public class StudentVo {
 
     @Excel(zh = "序号", columnNumber = "d")
     private Integer id;
@@ -23,7 +23,7 @@ public class StudentVO {
     @Excel(zh = "年龄", columnNumber = "g")
     private Integer age;
 
-    public StudentVO(Student student) {
-        BeanUtil.copyProperties(student, this);
+    public StudentVo(Student student) {
+        BeanUtils.copyProperties(student, this);
     }
 }

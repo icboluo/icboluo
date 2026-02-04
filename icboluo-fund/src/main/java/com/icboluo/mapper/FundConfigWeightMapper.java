@@ -1,6 +1,6 @@
 package com.icboluo.mapper;
 
-import com.icboluo.common.MyBaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.icboluo.entity.FundConfigWeight;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author icboluo
  * @since 2024-05-15 18:41:03
  */
-public interface FundConfigWeightMapper extends MyBaseMapper<FundConfigWeight> {
+public interface FundConfigWeightMapper extends BaseMapper<FundConfigWeight> {
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *

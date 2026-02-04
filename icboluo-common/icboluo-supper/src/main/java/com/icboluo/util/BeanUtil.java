@@ -573,6 +573,13 @@ public class BeanUtil {
         return false;
     }
 
+    public static boolean containIgnoreCase(String big, String val) {
+        if (big.equalsIgnoreCase(val)) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 移除字符串的后缀
      *
@@ -663,6 +670,18 @@ public class BeanUtil {
             return !StringUtils.hasText(str1) && !StringUtils.hasText(str2);
         } else {
             return Objects.equals(val1, val2);
+        }
+    }
+
+    public static void fieldSetValue(Field field, Object obj, Object val) {
+        boolean accessible = field.canAccess(obj);
+        field.setAccessible(true);
+        try {
+            field.set(obj, val);
+        } catch (IllegalAccessException e) {
+            throw new I18nException("field set value error", e);
+        } finally {
+            field.setAccessible(accessible);
         }
     }
 }

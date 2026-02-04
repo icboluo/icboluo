@@ -60,8 +60,8 @@ public class FundDataTask {
      */
     @Scheduled(cron = "0 * * * * ?")
     public void asyncFundData() {
-        List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
-        List<FundAsyncRecord> recordList = fundAsyncRecordMapper.queryAll();
+        List<FundAttention> fundAttentions = fundAttentionMapper.selectList(null);
+        List<FundAsyncRecord> recordList = fundAsyncRecordMapper.selectList(null);
         Map<String, FundAsyncRecord> recordMap = recordList.stream()
                 .collect(Collectors.toMap(FundAsyncRecord::getId, Function.identity(), (a, b) -> b));
         LocalDate startTime = LocalDate.of(2020, 1, 1);
@@ -95,7 +95,7 @@ public class FundDataTask {
 
     @Scheduled(cron = "0 * * * * ?")
     public void asyncFundInfo() {
-        List<FundAttention> fundAttentions = fundAttentionMapper.queryAll();
+        List<FundAttention> fundAttentions = fundAttentionMapper.selectList(null);
         List<FundAttention> list = new ArrayList<>();
         for (FundAttention fundAttention : fundAttentions) {
             if (StringUtils.hasText(fundAttention.getName())) {
