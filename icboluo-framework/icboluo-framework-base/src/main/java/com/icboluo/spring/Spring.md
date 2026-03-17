@@ -126,39 +126,33 @@ API: application platform interface
 
 ## AOP执行顺序
 
-切面执行不知道什么顺序，但是可以设置执行顺序，用order即可
+切面、拦截器、等环绕通知一定要记得调用原有方法
 
-先执行的切面最后执行完，满足一般规律
+先执行的切面最后执行完，满足一般规律;先执行的切面最后执行完; 前置通知先执行，后置通知后执行（先进后出）
+多切面：使用 @Order(值) 或实现 Ordered 接口设置顺序。 order值小的切面，@Before先执行
 
-在Spring AOP中，各个通知的执行顺序如下：
+@around 最先开始执行，然后再执行before
+@after 放到最后一行，最后面执行，相当于finally
 
 1. 环绕通知（@Around）：环绕通知包裹了被切入的方法，在方法执行前后都可以执行额外的逻辑。环绕通知的执行顺序是先执行前置通知，然后执行被切入的方法，最后执行后置通知。
 2. 前置通知（@Before）：前置通知在目标方法执行之前执行，可以在方法执行前执行一些准备工作。
 3. 后置通知（@After）：后置通知在目标方法执行之后执行，无论目标方法是否抛出异常，后置通知都会执行。
 4. 返回通知（@AfterReturning）：返回通知在目标方法执行并成功返回结果后执行，可以获取到目标方法的返回值。
 5. 异常通知（@AfterThrowing）：异常通知在目标方法抛出异常时执行，可以捕获目标方法抛出的异常。
-   需要注意的是，以上通知的执行顺序可以通过配置来调整，也可以通过实现Ordered接口或使用@Order注解来指定通知的执行顺序。
 
 #### AOP名词
 
-Joinpoint 连接点 连接点表示应用执行过程中能够插入切面的一个点， 这个点可以是方法的调用、异常的抛出。在 Spring AOP
-中，连接点总是方法的调用
 
-PointCut 切点 可以插入增强处理的连接点
-
-Advice 通知 AOP 框架中的增强处理。通知描述了切面何时执行以及如何执行增强处理，有多种通知
-
-增强里面有各种通知
-
-Target 目标对象
-
-Weaving 织入 将增强处理添加到目标对象中，并创建一个被增强的对象，这个过程就是织入，放进去的过程
-
-Proxy 代理类
-
-Aspect 切面 切面是通知和切点的结合，类上加这个注解，这个类就是切面
-
-引入（Introduction）：引入允许我们向现有的类添加新的方法或者属性
+| 名词 | 含义 |
+|------|------|
+| **Joinpoint** 连接点 | 可插入切面的执行点（Spring 中仅方法调用） |
+| **Pointcut** 切点 | 筛选连接点的**表达式**，决定哪些连接点需要增强 |
+| **Advice** 通知 | 增强处理的逻辑（何时执行：Around/Before/After等） |
+| **Aspect** 切面 | 通知 + 切点的组合（@Aspect 注解的类） |
+| **Target** 目标对象 | 被增强的原始对象 |
+| **Weaving** 织入 | 将通知织入目标对象，创建代理对象的过程 |
+| **Proxy** 代理类 | 织入后生成的代理对象，封装了原始对象和通知逻辑 |
+| **Introduction** 引入 | 向现有类动态添加方法或属性 |
 
 ## SpringMvc:Model View Controller 模型视图控制器
 
@@ -245,15 +239,18 @@ public class StaticPri {
 
 ## SpringBoot
 
-* boot其最主要作用就是帮我们快速的构建庞大的spring项目，并且尽可能的
-* 减少一切xml配置，做到开箱即用，迅速上手，让我们关注与业务而非配置
+**@SpringBootApplication**：快速构建 Spring 项目，减少 XML 配置，开箱即用，关注业务而非配置。
 
-- @PropertySource：(性质来源)指定外部属性文件，一般用classpath指定路劲 spring的属性注入：SpringBoot强调的是约定大于配置，因此遵循约定，我们就能节省很多配置：
-- 首先，属性文件的名称有变化，文件名必须是：application.properties
-- 其次，要注入的属性的变量名要和配置文件中的属性名的最后一部分保持一致
-- 最后，要在类上声明这些属性在属性文件中的共同的前缀，并提供getter和setter方法 属性读取类激活的2中方式:
-  在属性读取类（jdbc.properties）中添加@Component（组成）注解 在配置类上使用@EnableConfigurationProperties(
-  JdbcProperties.class)
+**@PropertySource**：指定外部属性文件（通常配合 classpath 使用）。
+
+**属性注入原则（约定大于配置）**：
+- 属性文件名：`application.properties` 或 `application.yml`
+- 属性前缀：在类上声明 `@ConfigurationProperties(prefix = "前缀")`
+- 属性名映射：POJO 字段名 = 配置文件中属性名的最后一部分
+
+**激活方式**（二选一）：
+1. 属性类添加 `@Component`
+2. 配置类添加 `@EnableConfigurationProperties(属性类.class)`
 
 ## --------------------
 
