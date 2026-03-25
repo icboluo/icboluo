@@ -151,6 +151,7 @@ List<LocalDate> startAndEndTime
 
 List<String> productLine;
 
+    下拉多选精确匹配
     <if test="productLine != null and productLine.size > 0">
     and (
     <foreach collection="productLine" item="item" open="(" separator="or" close=")">
@@ -158,6 +159,9 @@ List<String> productLine;
     </foreach>
     )
     </if>
+
+    数组也可以这样写，但是写法本身是错误的
+    <if test="productLine != null and productLine != ''">
 
 
 

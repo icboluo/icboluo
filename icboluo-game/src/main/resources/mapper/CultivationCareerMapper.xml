@@ -6,6 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="playerId" column="player_id" jdbcType="INTEGER"/>
         <result property="oper" column="oper" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <!--查询指定行数据-->
@@ -23,6 +24,9 @@
             <if test="oper != null and oper != ''">
                 and oper = #{oper}
             </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
     </select>
@@ -34,22 +38,23 @@
     </select>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into cultivation_career(player_id, oper)
+        insert into cultivation_career(player_id, oper,create_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.playerId}, #{entity.oper})
+            (#{entity.playerId}, #{entity.oper}, #{entity.createTime})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into cultivation_career(player_id, oper)
+        insert into cultivation_career(player_id, oper,create_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.playerId}, #{entity.oper})
+            (#{entity.playerId}, #{entity.oper}, #{entity.createTime})
         </foreach>
         on duplicate key update
         player_id = values(player_id),
-        oper = values(oper)
+        oper = values(oper),
+        create_time = values(createTime),
     </insert>
 </mapper>
 

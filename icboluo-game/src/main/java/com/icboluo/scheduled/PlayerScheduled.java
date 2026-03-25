@@ -7,10 +7,12 @@ import com.icboluo.mapper.DiePlayerMapper;
 import com.icboluo.service.CultivationCareerService;
 import com.icboluo.service.PlayerService;
 import com.icboluo.util.BeanUtil;
+import com.icboluo.websocket.GameWebSocketHandler;
 import jakarta.annotation.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -47,7 +49,10 @@ public class PlayerScheduled {
                 playerService.update(player);
                 cultivationCareer.setOper("time flies, another year has passed");
             }
+            cultivationCareer.setCreateTime(LocalDateTime.now());
             cultivationCareerService.add(cultivationCareer);
+            // 通过 WebSocket 推送生涯数据到前端（同时推送玩家信息供前端更新）
+            GameWebSocketHandler.pushCareerData(player.getId(), cultivationCareer, player);
         }
     }
 }

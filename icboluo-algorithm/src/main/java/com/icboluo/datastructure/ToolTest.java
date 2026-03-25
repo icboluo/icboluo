@@ -70,7 +70,7 @@ class ToolTest {
         // 3.2
         BigDecimal rn = BigDecimal.valueOf(0.032);
         BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
-        // (1+r)^n
+        // (1+r)^n （1+月利率）^月数
         BigDecimal r30 = BigDecimal.ONE.add(r).pow(remainPeriod());
         BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
         System.out.println((z.multiply(BigDecimal.valueOf(TOTAL_A))));
