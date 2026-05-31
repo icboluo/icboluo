@@ -15,6 +15,6 @@ class Student {
     }
 
     public void attendClass2() {
-        System.out.println(name + "正在上课");
+        System.out.println(STR."\{name}正在上课");
     }
 }
