@@ -29,7 +29,6 @@ Here are some ideas to get you started:
 ## document
 
 [sql文件](document/sql)\
-[EasyCode settings](document/EasyCodeConfig.json)\
 [IDEA settings](document/settings.zip)
 
 ### 项目更新了LeetCode中的一些算法解法

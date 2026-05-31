@@ -14,10 +14,15 @@ import java.time.Period;
  */
 class ToolTest {
 
-    private static final Long TOTAL_A = 678849L;
-    private static final Long TOTAL_B = 618566L;
+    private static final int TOTAL_A = 657580;
+    private static final int TOTAL_B = 616025;
 
-    private static int remainPeriod() {
+
+    private static int aRemainPeriod() {
+        return 346 - monthPeriod();
+    }
+
+    private static int bRemainPeriod() {
         return 360 - monthPeriod();
     }
 
@@ -52,13 +57,15 @@ class ToolTest {
     }
 
     @Test
-    public void test2() {
+    public void totalMoney() {
         float a = 3078.49F;
         float b = 2609.49F;
-        System.out.println(STR."total sum: \{TOTAL_A + TOTAL_B}");
-        System.out.println(STR."sum: \{a + b}");
-        System.out.println(STR."total interest \{a * remainPeriod() - TOTAL_A}");
-        System.out.println(STR."total interest \{b * remainPeriod() - TOTAL_B}");
+        System.out.println(STR."all total sum: \{a * aRemainPeriod() + b * bRemainPeriod()}");
+        System.out.println(STR."next total sum: \{a * aRemainPeriod() + b * bRemainPeriod() - a - b}");
+        System.out.println(STR."principal sum: \{TOTAL_A + TOTAL_B}");
+        System.out.println(STR."month sum: \{a + b}");
+        System.out.println(STR."business interest \{a * aRemainPeriod() - TOTAL_A}");
+        System.out.println(STR."fund interest \{b * bRemainPeriod() - TOTAL_B}");
         float v = a * (TOTAL_A - 100000) / TOTAL_A;
         System.out.println(v);
         System.out.println(a - v);
@@ -71,7 +78,7 @@ class ToolTest {
         BigDecimal rn = BigDecimal.valueOf(0.032);
         BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
         // (1+r)^n （1+月利率）^月数
-        BigDecimal r30 = BigDecimal.ONE.add(r).pow(remainPeriod());
+        BigDecimal r30 = BigDecimal.ONE.add(r).pow(aRemainPeriod());
         BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
         System.out.println((z.multiply(BigDecimal.valueOf(TOTAL_A))));
     }
@@ -81,7 +88,7 @@ class ToolTest {
         // 2.6
         BigDecimal rn = BigDecimal.valueOf(0.026);
         BigDecimal r = rn.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
-        BigDecimal r30 = BigDecimal.ONE.add(r).pow(remainPeriod());
+        BigDecimal r30 = BigDecimal.ONE.add(r).pow(bRemainPeriod());
         BigDecimal z = r.multiply(r30).divide(r30.subtract(BigDecimal.ONE), 10, RoundingMode.HALF_DOWN);
         System.out.println((z.multiply(BigDecimal.valueOf(TOTAL_B))));
     }
@@ -99,7 +106,7 @@ class ToolTest {
 
     @Test
     public void test4() {
-        LocalDate sleep = LocalDate.of(2026, 1, 18);
+        LocalDate sleep = LocalDate.of(2026, 5, 30);
         for (int i = 0; i < 10; i++) {
             sleep = printSleepDate(sleep);
         }

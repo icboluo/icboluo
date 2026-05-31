@@ -1,15 +1,19 @@
 ## IoC（Inversion of Control 控制反转）：
 
-将对象创建权利交给Spring工厂进行管理
+IoC 把"对象创建"反转给框架，开发者从主动创建变为被动接收。
 
-去掉三层架构中的new
+将对象创建权力交给 Spring 工厂管理，替代手动 new。
 
-每一个servlet都要手动初始化spring容器，然后从容器中获取service层实现类，如果有很多个servlet的话就要初始化多次spring容器
-Spring容器只有在客户端发送请求，请求到达服务端后才初始化spring容器，效率不高
+#### 传统方式的问题
+
+每个 Servlet 都要手动初始化 Spring 容器，然后从容器中获取 Service 实现类。Servlet 多了会重复初始化，效率低下。
 
 解决思路：保证容器只有一个。并且在应用加载的时候启动，应用卸载的时候销毁
 
-set注入一次只能注入单个bean(可以用来给静态变量附初始化值)？
+为什么原本的main方法存活时间很短，现在的springboot项目存活时间很久：因为现在的main方法调用了死循环
+
+main() → SpringApplication.run() → 启动内嵌服务器（如Tomcat）→ 阻塞等待请求（while True:socket = serverSocket.accept(); //
+阻塞等待HTTP请求）
 
 ## 类
 
@@ -28,11 +32,11 @@ API: application platform interface
 > @Controller 控制应用程序的流程和处理用户所发出的请求
 > @RestController 将该注解使用在Controller类上，所有方法都默认是响应json格式的数据了
 
-#### @RequestMapping@GetMapping@PostMapping@PutMapping@DeleteMapping
+#### @RequestMapping @GetMapping @PostMapping @PutMapping @DeleteMapping
 
 > @RequestMapping 提供路由信息，负责URL到Controller中的具体函数的映射
 
-#### @RequestParam@PathVariable@ResponseBody
+#### @RequestParam @PathVariable @ResponseBody
 
 > RequestParam 并非完全没有作用，他比不加能适配的更多一些
 
@@ -142,17 +146,16 @@ API: application platform interface
 
 #### AOP名词
 
-
-| 名词 | 含义 |
-|------|------|
-| **Joinpoint** 连接点 | 可插入切面的执行点（Spring 中仅方法调用） |
-| **Pointcut** 切点 | 筛选连接点的**表达式**，决定哪些连接点需要增强 |
-| **Advice** 通知 | 增强处理的逻辑（何时执行：Around/Before/After等） |
-| **Aspect** 切面 | 通知 + 切点的组合（@Aspect 注解的类） |
-| **Target** 目标对象 | 被增强的原始对象 |
-| **Weaving** 织入 | 将通知织入目标对象，创建代理对象的过程 |
-| **Proxy** 代理类 | 织入后生成的代理对象，封装了原始对象和通知逻辑 |
-| **Introduction** 引入 | 向现有类动态添加方法或属性 |
+| 名词                  | 含义                                 |
+|---------------------|------------------------------------|
+| **Joinpoint** 连接点   | 可插入切面的执行点（Spring 中仅方法调用）           |
+| **Pointcut** 切点     | 筛选连接点的**表达式**，决定哪些连接点需要增强          |
+| **Advice** 通知       | 增强处理的逻辑（何时执行：Around/Before/After等） |
+| **Aspect** 切面       | 通知 + 切点的组合（@Aspect 注解的类）           |
+| **Target** 目标对象     | 被增强的原始对象                           |
+| **Weaving** 织入      | 将通知织入目标对象，创建代理对象的过程                |
+| **Proxy** 代理类       | 织入后生成的代理对象，封装了原始对象和通知逻辑            |
+| **Introduction** 引入 | 向现有类动态添加方法或属性                      |
 
 ## SpringMvc:Model View Controller 模型视图控制器
 
@@ -241,83 +244,277 @@ public class StaticPri {
 
 **@SpringBootApplication**：快速构建 Spring 项目，减少 XML 配置，开箱即用，关注业务而非配置。
 
-**@PropertySource**：指定外部属性文件（通常配合 classpath 使用）。
+**@PropertySource**：指定外部属性文件（通常配合 classpath 使用）。加载额外的外部配置文件
+
+```java
+
+@SpringBootApplication
+@PropertySource(value = "classpath:db.properties")
+public class App {
+}
+```
+
+这个注解**已经使用不多**，多数配置直接在这里写 application.yml，约定俗成
+
+替代方案: application.yml 直接导入（更常用）
+
+```yaml
+spring:
+  config:
+    import: classpath:db.properties
+```
 
 **属性注入原则（约定大于配置）**：
-- 属性文件名：`application.properties` 或 `application.yml`
-- 属性前缀：在类上声明 `@ConfigurationProperties(prefix = "前缀")`
-- 属性名映射：POJO 字段名 = 配置文件中属性名的最后一部分
+
+| 规则	 | 说明                                       |
+|-----|------------------------------------------|
+| 文件名 | application.properties 或 application.yml |
+| 注解  | @ConfigurationProperties(prefix = "前缀")  |
+| 映射  | POJO 字段名 = 配置键的最后一段                      |
+
+```yaml
+user:
+  name: tom
+  age: 18
+```
+
+```java
+
+@ConfigurationProperties(prefix = "user")
+public class User {
+    private String name;  // 映射 user.name
+    private Integer age;  // 映射 user.age
+}
+```
 
 **激活方式**（二选一）：
-1. 属性类添加 `@Component`
-2. 配置类添加 `@EnableConfigurationProperties(属性类.class)`
 
-## --------------------
+1. `@Component`：属性类添加注解扫描进容器
+2. `@EnableConfigurationProperties(属性类.class)`：在配置类上指定
 
-1、默认无参构造实例化bean
-2、静态工厂方法实例化bean：把静态方发返回的值放在bean中
-class后面加factory-method
+```java
+   // 方式1
+@Component
+@ConfigurationProperties(prefix = "user")
+public class User {
+}
 
-3、实例工厂方法实例化bean：非静态方法返回的值放在bean中
-先和无参一样bean实例化，再用新的bean中factory-bean接收，factory-method写入方法
+// 方式2
+@EnableConfigurationProperties(User.class)
+@SpringBootApplication
+public class App {
+}
+```
 
-Dependency Injection（依赖注入）：构造方法注入、setter方法注入、p名称空间注入（基于set）等
-构造函数注入属性值：涉及的标签 constructor-arg， set 方法注入 标签：Property《性质》
-index:指定参数在构造函数参数列表的索引位置
-name:指定参数在构造函数中的名称,指定给谁赋值
-value:它能赋的值是基本数据类型和 String 类型
-ref:它能赋的值是其他 bean 类型，也就是说，必须得是在配置文件中配置过的 bean
+一句话: 约定大于配置：按命名规范放置配置文件，Spring Boot 自动绑定属性值。
 
-复杂注入 用<...<property>获取list...的name
+## Spring Bean 实例化方式
 
-<context:property-placeholder location 加载外部资源文件
-<context《环境》 component-scan base-package扫描包下所有对应注解
+1. 无参构造（默认）
+
+```xml
+
+<bean id="user" class="com.icboluo.User"/>
+```
+
+调用类的无参构造函数创建 bean。
+
+2. 静态工厂方法
+
+```xml
+
+<bean id="user" class="com.icboluo.UserFactory" factory-method="createUser"/>
+```
+
+调用静态方法，返回值作为 bean。
+
+```java
+   public static User createUser() {
+    return new User();
+}
+```
+
+3. 实例工厂方法
+
+```xml
+
+<bean id="factory" class="com.icboluo.UserFactory"/>
+<bean id="user" factory-bean="factory" factory-method="createUser"/>
+```
+
+先实例化工厂，再调用非静态方法，返回值作为 bean。
+
+```java
+   public User createUser() {
+    return new User();
+}
+```
+
+## 依赖注入（DI）
+
+       Dependency Injection（依赖注入）：对象的依赖由 Spring 容器主动塞进来，而不是自己去找。
+       Spring 替我们自动给对象的属性赋值，无需手动 set。
+
+传统方式
+
+```
+UserService service = new UserServiceImpl();
+service.setUserDao(new UserDaoImpl()); // 手动注入
+```
+
+依赖注入
+// 只需要声明，Spring 自动赋值
+
+```java
+
+@Resource
+private UserDao userDao;
+```
+
+#### 注入方式
+
+1.构造注入
+
+```xml
+
+<bean id="user" class="com.icboluo.User">
+    <constructor-arg name="id" value="1"/>
+    <constructor-arg name="name" value="tom"/>
+</bean>
+```
+
+constructor-arg 属性
+
+| 属性    | 说明              |
+|-------|-----------------|
+| index | 参数在构造函数的索引位置    |
+| name  | 参数名称            |
+| value | 基本数据类型 / String |
+| ref   | 引用其他 bean       |
+
+2.set 注入
+
+```xml
+
+<bean id="user" class="com.icboluo.User">
+    <property name="id" value="1"/>
+    <property name="name" value="tom"/>
+</bean>
+```
+
+p 名称空间注入（简化 set 注入）
+p 名称空间就是 set 注入的简化写法，省掉 <property> 标签。
+需在xml文件上面先引入：xmlns:p="http://www.springframework.org/schema/p"
+
+```xml
+
+<bean id="user" class="com.icboluo.User" p:id="1" p:name="tom"/>
+```
+
+3.字段注入（字段上面增加注解）
+
+```xml
+<!-- 加载外部属性文件 -->
+<context:property-placeholder location="classpath:db.properties"/>
+```
+
+```xml
+<!-- 扫描包（开启注解驱动）扫描包下所有对应注解 -->
+<context:component-scan base-package="com.icboluo"/>
+```
+
 <bean>属性：
-scope：指定对象的作用范围
-singleton :默认值，单例的
-prototype :多例的
-init-method：指定类中的初始化方法名称(生命周期相关)
-destroy-method：指定类中销毁方法名称(生命周期相关)
 
-old：jdbctemplate中:setDataSource(dataSource);注入<bean...
-new：JdbcDaoSupport，无法将dataSource注入到JdbcDaoSupport中注解用不了
+| 属性             | 说明                              |
+|----------------|---------------------------------|
+| scope          | 作用域：singleton 单例 / prototype 多例 |
+| init-method    | 初始化方法                           |
+| destroy-method | 销毁方法                            |
 
-配置事务管理器
-<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">...数据源
-<!--配置事务策略
+JdbcTemplate 注入方式
+
+<!-- 旧方式：直接注入 -->
+
+```xml
+
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+```
+
+<!-- 新方式：继承 JdbcDaoSupport -->
+
+```xml
+
+<bean id="userDao" class="com.icboluo.UserDaoImpl">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+```
+
+JdbcDaoSupport 通过 setDataSource() 自动创建 JdbcTemplate。
+
+## Spring事务配置
+
+1. 配置事务管理器
+
+```xml
+
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+```
+
+2. 配置事务通知
+
+```xml
+
 <tx:advice id="txAdvice" transaction-manager="transactionManager">
-配置事务的属性
-          <tx:attributes>
-              <tx:method name="query*" read-only="false"/>
-          </tx:attributes>...
-配置AOP
+    <tx:attributes>
+        <tx:method name="query*" read-only="true"/>
+        <tx:method name="*" read-only="false"/>
+    </tx:attributes>
+</tx:advice>
+```
+
+3. AOP 织入
+
+```xml
+
 <aop:config>
-          配置切入点表达式-
-          <aop:pointcut id="pt2" expression="execution(* com.task.service.impl.*.* ( .. ) )"></aop:pointcut>
-          配置事务管理器应用到切入点
-          <aop:advisor advice-ref="txAdvice" pointcut-ref="pt2">...
+    <aop:pointcut id="pt2" expression="execution(* com.task.service.impl.*.*(..))"/>
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="pt2"/>
+</aop:config>
+```
 
-spring容器在应用加载的时候创建一次即可。spring提供了一个监听器ContextLoaderListener,位于spring-web-5.0.6.RELEASE.jar，
-该监听器会初始化一个全局唯一的spring容器，监听ServletContext对象的创建时机
-    <!--指定applicationContext.xml的位置-->
+## Spring容器初始化
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationXml.xml</param-value>
-    </context-param>
-    <!--配置spring监听器-->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+利用 ContextLoaderListener(该监听器会初始化一个全局唯一的spring容器) 监听 ServletContext 创建，在应用启动时创建全局唯一容器。
 
-通过工具类获取spring容器
-WebApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
+```xml
+<!--指定applicationContext.xml的位置-->
+<context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+</context-param>
+        <!--配置spring监听器-->
+<listener>
+<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+```
+
+获取容器(通过工具类获取spring容器)：
+
+```java
+   WebApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+```
 
 ## 源码
 
-1.在boot项目启动之后---bean初始化之后---执行aware回调的时候---会初始化applicationContext(由ApplicationObjectSupport类承担)，会构建拦截器去List中
+1.在boot项目启动之后---bean初始化之后---执行aware回调的时候---会初始化applicationContext(
+由ApplicationObjectSupport类承担)，会构建拦截器去List中
 2.启动之后当 InitializingBean 子实现 AbstractHandlerMethodMapping.afterPropertiesSet 执行的时候，会调用
-AbstractHandlerMethodMapping 会执行detectHandlerMethods 方法，Map.put(RequestMappingInfo(聚合请求路径)，MappingRegistration(映射注册；聚合类名、方法名))
+AbstractHandlerMethodMapping 会执行detectHandlerMethods 方法，Map.put(RequestMappingInfo(聚合请求路径)
+，MappingRegistration(映射注册；聚合类名、方法名))
 2在调用之后也会返回去调用1
 3.DispatchServlet继承http Servlet，tomcat容器启动的时候会调用servlet的init函数，分发给子类dispatch称为onRefresh函数，onRefresh函数调用多个init函数;
 mvc架构读取需要从上到下，上面的部分是接口部分功能，功能单一;例如aware通知接口;InitializingBean 接口
