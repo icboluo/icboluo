@@ -113,33 +113,40 @@ insert自增主键的时候，可以返回主键id
 </mapper>
 ```
 
-
 ## xml
 
 有的方法似乎可以让integer类型==空字符串
 
 String name;
 
-    <if test="name != null and name != ''">
+```xml
+
+<if test="name != null and name != ''">
     and name = #{name}
-    </if>
-    
-    <if test="name != null and name != ''">
-    and name like concat('%', #{name}, '%')
-    </if>
-    
+</if>
+
+<if test="name != null and name != ''">
+and name like concat('%', #{name}, '%')
+</if>
+```
+
 Integer age;
 
     <if test="age != null">
     and age = #{age}
     </if>
-    List<String> studentList;
-    <if test="studentList != null and studentList.size > 0">
+
+List<String> studentList; 下拉多选精确匹配
+
+```xml
+
+<if test="studentList != null and studentList.size > 0">
     and student in
     <foreach collection="studentList" item="item" open="(" separator="," close=")">
-    #{item}
+        #{item}
     </foreach>
-    </if>
+</if>
+```
 
 List<LocalDate> startAndEndTime
 
@@ -151,7 +158,7 @@ List<LocalDate> startAndEndTime
 
 List<String> productLine;
 
-    下拉多选精确匹配
+    下拉多选逗号隔开的精确匹配
     <if test="productLine != null and productLine.size > 0">
     and (
     <foreach collection="productLine" item="item" open="(" separator="or" close=")">
