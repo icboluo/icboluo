@@ -36,6 +36,8 @@ keyProperty：pojo中主键对应的属性
 
 <set>去，号
 
+转义: <![CDATA[ <= ]]>
+
 ## PageHelper
 
 mybatis 可以设置无论有没有PageHelper.startPage 都可以在调用sql的时候分页，只要调用sql的参数中有pageSize,
@@ -70,17 +72,6 @@ mybatis 的select all 函数是需要无参构造的
 
 mysql的count方法如果效率过低可以重写，重写的sql可以和以前的sql有些差距，只需要计算总数即可
 
-## 标签
-
-错误写法: <if test=date !=null and date !=''"></if>
-
-不能这样写, !='' 只针对于String类型, Integer Collection 均不能这样写
-
-mybatis 更改公共内容比如insert的时候需要增加注释，这些公共内容替换的时候要merge，不能直接替换，
-insert增加了注释，才能知道返回了id
-
-转义 <![CDATA[ <= ]]>
-
 ## 修改数据库
 
 修改数据库字段后，要同步修改xml中的base sql和映射关系，否则，查出来的数据为空
@@ -114,6 +105,13 @@ insert自增主键的时候，可以返回主键id
 ```
 
 ## xml
+
+错误写法: 不能这样写, !='' 只针对于String类型, Integer Collection 均不能这样写
+
+```xml
+ <if test="date !=null and date !=''">
+ </if>
+```
 
 有的方法似乎可以让integer类型==空字符串
 
