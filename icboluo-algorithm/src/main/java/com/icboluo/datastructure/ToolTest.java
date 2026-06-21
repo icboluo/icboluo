@@ -14,9 +14,9 @@ import java.time.Period;
  */
 class ToolTest {
 
-    private static final int TOTAL_A = 657580;
-    private static final int TOTAL_B = 616025;
-
+    private static final int TOTAL_A = 656255;
+//    5951.45
+    private static final int TOTAL_B = 614750;
 
     private static int aRemainPeriod() {
         return 346 - monthPeriod();
