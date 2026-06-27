@@ -24,11 +24,11 @@ public class SingletonTest06_ok {
      * @return 单例
      */
     public static SingletonTest06_ok getInstance() {
+//        99%的调用(instance已经初始化)直接返回，无需加锁，这是性能优化，避免每次调用都竞争锁
+//        静态方法增加方法锁，每次调用都要获取锁，开销大
         if (instance != null) {
             return instance;
         }
-        // sync 可以修饰静态内容和成员内容
-        // 即便进入了if条件,下面还有一重检查
         // sync修饰的方法没有使用monitor enter指令，使用的是acc...标志
         // volatile 关键字能保证数据的可见性，但不能保证数据的原子性。synchronized 关键字两者都能保证
         synchronized (SingletonTest06_ok.class) {

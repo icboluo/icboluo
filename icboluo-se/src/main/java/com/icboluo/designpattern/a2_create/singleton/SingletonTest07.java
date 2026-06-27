@@ -7,8 +7,6 @@ package com.icboluo.designpattern.a2_create.singleton;
  * @since 2020/10/17 18:20
  */
 public class SingletonTest07 {
-    private static SingletonTest07 instance;
-
     /**
      * 外部类装载，静态内部类不会执行（实现懒加载）
      */
