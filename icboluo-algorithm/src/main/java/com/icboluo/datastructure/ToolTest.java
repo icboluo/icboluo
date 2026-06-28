@@ -38,7 +38,7 @@ class ToolTest {
     }
 
     @Test
-    public void time() {
+    public void workTime() {
         float contribute = 10.123F;
         float avg = 8.456F;
 
@@ -88,25 +88,25 @@ class ToolTest {
     }
 
     @Test
-    public void test3() {
+    public void earnings() {
         double[][] arr1 = {
                 {1.499, 3000},// --------------------
                 {1.501, 3000},// --------------------
         };
         double cur1 = 1.500;
-        cal3(arr1, cur1);
+        calEarnings(arr1, cur1);
     }
 
 
     @Test
-    public void test4() {
+    public void sleepDate() {
         LocalDate sleep = LocalDate.of(2026, 5, 30);
         for (int i = 0; i < 10; i++) {
             sleep = printSleepDate(sleep);
         }
     }
 
-    private void cal3(double[][] operation, double cur) {
+    private void calEarnings(double[][] operation, double cur) {
         int count = 0;
         double total = 0;
         for (double[] doubles : operation) {
