@@ -8,7 +8,7 @@
         <!--        我们在升级Spring的时候，应该把其他的stater同样升级到相同版本，例如mybatis-->
         <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.15</version>
+        <version>4.0.2</version>
         <!--        relativePath元素中的地址–>本地仓库–>远程仓库-->
         <!--        如为空值将始终从仓库中获取，不从本地路径获取-->
         <!--        设定一个空值将始终从仓库中获取，不从本地路径获取，子模块禁止添加这个-->
@@ -68,10 +68,10 @@
         <!--校验器  -->
         <hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
         <!--公共包-->
-        <hutool-all.version>5.8.39</hutool-all.version>
+        <hutool-all.version>5.8.40</hutool-all.version>
         <common-io.version>2.20.0</common-io.version>
         <!--cloud-->
-        <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2025.1.0</spring-cloud-dependencies.version>
     </properties>
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->
