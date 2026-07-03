@@ -38,29 +38,6 @@ class ToolTest {
     }
 
     @Test
-    public void workTime() {
-        float contribute = 10.123F;
-        float avg = 8.456F;
-
-        BigDecimal workDay = MathUtil.divide(contribute, avg - 8, 1);
-        System.out.println(STR."workDay = \{workDay}");
-
-        float target = 9F;
-        float excess = contribute - (target - 8) * workDay.floatValue();
-        System.out.println(STR."excess = \{excess}");
-
-        int a1 = 3;
-        int b1 = 1;
-        float excess1 = a1 * (9.65F - target) - b1 * (target - 7F) + excess;
-        System.out.println(STR."excess1 = \{excess1}");
-
-        int a2 = 2;
-        int b2 = 2;
-        float excess2 = a2 * (9.65F - target) - b2 * (target - 7F) + excess;
-        System.out.println(STR."excess2 = \{excess2}");
-    }
-
-    @Test
     public void totalMoney() {
         float a = 3078.49F;
         float b = 2609.49F;
@@ -97,15 +74,6 @@ class ToolTest {
         calEarnings(arr1, cur1);
     }
 
-
-    @Test
-    public void sleepDate() {
-        LocalDate sleep = LocalDate.of(2026, 5, 30);
-        for (int i = 0; i < 10; i++) {
-            sleep = printSleepDate(sleep);
-        }
-    }
-
     private void calEarnings(double[][] operation, double cur) {
         int count = 0;
         double total = 0;
@@ -117,16 +85,6 @@ class ToolTest {
         System.out.println(STR."最大获取: \{cur * count}");
         System.out.println(STR."相对亏损 : \{cur * count - total}");
     }
-
-    private LocalDate printSleepDate(LocalDate sleep) {
-        System.out.print(STR."\{sleep}, ");
-        System.out.print(STR."\{sleep.plusDays(1)}, ");
-        System.out.print(STR."\{sleep.plusDays(2)}, ");
-        System.out.print(STR."\{sleep.plusDays(3)}");
-        System.out.println();
-        return sleep.plusDays(6);
-    }
-
 
     /**
      * 计算等额本息月供
