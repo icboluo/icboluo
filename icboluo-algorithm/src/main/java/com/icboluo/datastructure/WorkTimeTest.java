@@ -146,7 +146,7 @@ class WorkTimeTest {
 
     @Test
     public void sleepDate() {
-        LocalDate sleep = LocalDate.of(2026, 5, 30);
+        LocalDate sleep = LocalDate.of(2026, 6, 29);
         for (int i = 0; i < 10; i++) {
             sleep = printSleepDate(sleep);
         }
