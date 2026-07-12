@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.StringTemplate.STR;
+
 /**
  * @author lp
  */
@@ -95,18 +97,35 @@ public class TimeNoteController {
 
     public static void main(String[] args) {
         double dayOfMonth = 21.75;
-        int other = 0;
         int base = 10000;
-        int total = other+base;
-        double oneDayMoney = total / dayOfMonth;
-        System.out.println("ont day money: "+oneDayMoney);
+        int performance = 400;
+        int total = base + performance;
+        System.out.println(STR."one month total: \{total}");
+
+        double oneDay = total / dayOfMonth;
+        System.out.println(STR."ont day money: \{oneDay}");
+
+        double jb = base / dayOfMonth * 2;
+        System.out.println(STR."jb : \{jb}, ..." + jb * 0.8);
         // 加班
-        int jbDay = 2;
-        double oneDayMonth2 = total / (dayOfMonth + jbDay);
-        System.out.println("jb money: "+oneDayMonth2);
-        // 加班工资
-        int jdMoney = 0;
-        double oneDayMonth3 = (total+jdMoney) / (dayOfMonth + jbDay);
-        System.out.println("jb money: "+oneDayMonth3);
+        double jb1 = total + jb;
+        double oneDayMonth1 = jb1 / (dayOfMonth + 1);
+        System.out.println(STR."jb money: \{oneDayMonth1}");
+
+        double jb2 = total + jb * 2;
+        double oneDayMonth2 = jb2 / (dayOfMonth + 2);
+        System.out.println(STR."jb money: \{oneDayMonth2}");
+
+        double jb3 = total + jb * 3;
+        double oneDayMonth3 = jb3 / (dayOfMonth + 3);
+        System.out.println(STR."jb money: \{oneDayMonth3}");
+
+        double jb4 = total + jb * 4;
+        double oneDayMonth4 = jb4 / (dayOfMonth + 4);
+        System.out.println(STR."jb money: \{oneDayMonth4}");
+
+        double jb5 = total + jb * 5;
+        double oneDayMonth5 = jb5 / (dayOfMonth + 5);
+        System.out.println(STR."jb money: \{oneDayMonth5}");
     }
 }
