@@ -14,7 +14,7 @@ import java.time.Period;
  */
 class ToolTest {
 
-    private static final int TOTAL_A = 656255;
+    private static final int TOTAL_A = 606255;
     //    5951.45
     private static final int TOTAL_B = 614750;
 
@@ -23,7 +23,7 @@ class ToolTest {
     private static final BigDecimal MONTHLY_RATE_B = MathUtil.divide(0.026, 12, 10);
 
     private static int aRemainPeriod() {
-        return 346 - monthPeriod();
+        return 311 - monthPeriod() - 1;
     }
 
     private static int bRemainPeriod() {

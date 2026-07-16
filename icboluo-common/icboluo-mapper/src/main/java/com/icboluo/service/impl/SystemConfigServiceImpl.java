@@ -1,6 +1,6 @@
 package com.icboluo.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import com.icboluo.common.SystemConfigEnum;
 import com.icboluo.entity.BlacklistCo;
 import com.icboluo.entity.SystemConfig;

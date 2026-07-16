@@ -1,8 +1,9 @@
 package com.icboluo.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 import com.icboluo.common.ProjectEnum;
 import com.icboluo.entity.ProjectConfig;
 import com.icboluo.mapper.ProjectConfigMapper;
@@ -29,7 +30,7 @@ public class ProjectConfigServiceImpl implements ProjectConfigService {
         db.setKey(key.name());
         try {
             db.setValue(om.writeValueAsString(value));
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new I18nException("JsonProcessingException", e);
         }
         projectConfigMapper.deleteByPidAndKey(pid, key.name());
@@ -53,7 +54,7 @@ public class ProjectConfigServiceImpl implements ProjectConfigService {
         }
         try {
             return om.readValue(projectConfig.getValue(), valueTypeRef);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new I18nException("JsonProcessingException", e);
         }
     }

@@ -14,12 +14,13 @@ import com.icboluo.util.IcBoLuoException;
 import com.icboluo.util.response.R;
 import com.icboluo.util.response.Response;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
-
-import static java.lang.StringTemplate.STR;
 
 /**
  * @author lp
@@ -90,42 +91,45 @@ public class TimeNoteController {
         return noteService.select(file);
     }
 
-    @PostMapping("updateProblem")
-    public void updateProblem() {
+    public static void main(String[] args) {
+        int base = 10000;
+        int performance = 2000;
+        int normal = base + performance;
 
+        double jb = base / 21.75 * 2;
+        System.out.println(STR."jb : \{jb}, ..." + jb * 0.8);
+
+        extracted(normal, jb * 0, 0);
+
+        extracted(normal, jb * 1, 1);
+
+        extracted(normal, jb * 2, 2);
+
+        extracted(normal, jb * 3, 3);
+
+        extracted(normal, jb * 4, 4);
+
+        extracted(normal, jb * 5, 5);
     }
 
-    public static void main(String[] args) {
-        double dayOfMonth = 21.75;
-        int base = 10000;
-        int performance = 400;
-        int total = base + performance;
-        System.out.println(STR."one month total: \{total}");
+    private static void extracted(int normal, double jb, int x) {
+        double total = normal + jb;
+        double oneDayMonth = total / (21.75 + x);
+        double taxableIncome = total - 5000 - 1500;
+        double tax = tax(taxableIncome * 12) / 12;
+        System.out.printf("total money: %.2f, one day money: %.2f, actual money: %.2f%n", total, oneDayMonth, total - tax - 2092);
+    }
 
-        double oneDay = total / dayOfMonth;
-        System.out.println(STR."ont day money: \{oneDay}");
-
-        double jb = base / dayOfMonth * 2;
-        System.out.println(STR."jb : \{jb}, ..." + jb * 0.8);
-        // 加班
-        double jb1 = total + jb;
-        double oneDayMonth1 = jb1 / (dayOfMonth + 1);
-        System.out.println(STR."jb money: \{oneDayMonth1}");
-
-        double jb2 = total + jb * 2;
-        double oneDayMonth2 = jb2 / (dayOfMonth + 2);
-        System.out.println(STR."jb money: \{oneDayMonth2}");
-
-        double jb3 = total + jb * 3;
-        double oneDayMonth3 = jb3 / (dayOfMonth + 3);
-        System.out.println(STR."jb money: \{oneDayMonth3}");
-
-        double jb4 = total + jb * 4;
-        double oneDayMonth4 = jb4 / (dayOfMonth + 4);
-        System.out.println(STR."jb money: \{oneDayMonth4}");
-
-        double jb5 = total + jb * 5;
-        double oneDayMonth5 = jb5 / (dayOfMonth + 5);
-        System.out.println(STR."jb money: \{oneDayMonth5}");
+    private static double tax(double taxableIncome) {
+        if (taxableIncome <= 36000) {
+            return taxableIncome * 0.03 - 0;
+        } else if (taxableIncome <= 144000) {
+            return taxableIncome * 0.10 - 2520;
+        } else if (taxableIncome <= 300000) {
+            return taxableIncome * 0.20 - 16920;
+        } else if (taxableIncome <= 420000) {
+            return taxableIncome * 0.25 - 31920;
+        }
+        return -1;
     }
 }

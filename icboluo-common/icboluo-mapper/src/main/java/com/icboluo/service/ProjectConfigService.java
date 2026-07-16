@@ -1,7 +1,7 @@
 package com.icboluo.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.icboluo.common.ProjectEnum;
+import tools.jackson.core.type.TypeReference;
 
 /**
  * @author icboluo
