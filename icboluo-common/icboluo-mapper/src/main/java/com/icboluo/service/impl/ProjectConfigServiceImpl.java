@@ -31,7 +31,7 @@ public class ProjectConfigServiceImpl implements ProjectConfigService {
         try {
             db.setValue(om.writeValueAsString(value));
         } catch (JacksonException e) {
-            throw new I18nException("JsonProcessingException", e);
+            throw new I18nException("JacksonException", e);
         }
         projectConfigMapper.deleteByPidAndKey(pid, key.name());
         projectConfigMapper.insert(db);
@@ -55,7 +55,7 @@ public class ProjectConfigServiceImpl implements ProjectConfigService {
         try {
             return om.readValue(projectConfig.getValue(), valueTypeRef);
         } catch (JacksonException e) {
-            throw new I18nException("JsonProcessingException", e);
+            throw new I18nException("JacksonException", e);
         }
     }
 }

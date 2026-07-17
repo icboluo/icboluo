@@ -12,7 +12,6 @@ import org.apache.ibatis.javassist.bytecode.FieldInfo;
 import org.apache.ibatis.javassist.bytecode.annotation.Annotation;
 import org.apache.ibatis.javassist.bytecode.annotation.ArrayMemberValue;
 import org.apache.ibatis.javassist.bytecode.annotation.MemberValue;
-import org.springframework.data.util.CastUtils;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -116,13 +115,14 @@ public class Javassist {
             // 数组类型兼容处理
             if (memberValue instanceof ArrayMemberValue) {
                 MemberValue[] value = ((ArrayMemberValue) memberValue).getValue();
-                Class<T> type = CastUtils.cast(annoClazz.getMethod(property).getReturnType());
+                Class<T> type = (Class<T>) annoClazz.getMethod(property).getReturnType();
                 // 创建泛型数组
-                T[] arr = CastUtils.cast(Array.newInstance(type.getComponentType(), value.length));
+                T[] arr = (T[]) Array.newInstance(type.getComponentType(), value.length);
                 for (int i = 0; i < value.length; i++) {
                     MemberValue temp = value[i];
                     Method tempGetValue = temp.getClass().getMethod("getValue");
-                    arr[i] = CastUtils.cast(tempGetValue.invoke(temp));
+                    T element = (T) tempGetValue.invoke(temp);
+                    arr[i] = element;
                 }
                 return arr;
             } else {

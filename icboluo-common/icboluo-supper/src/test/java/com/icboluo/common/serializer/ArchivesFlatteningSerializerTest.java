@@ -1,6 +1,6 @@
 package com.icboluo.common.serializer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.icboluo.object.IdName;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class ArchivesFlatteningSerializerTest {
 
     @Test
-    void serialize() throws JsonProcessingException {
+    void serialize() throws JacksonException {
         IdName student = new IdName();
         student.setId(18);
         student.setName("张三");

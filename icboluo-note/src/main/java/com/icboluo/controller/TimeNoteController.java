@@ -93,7 +93,7 @@ public class TimeNoteController {
 
     public static void main(String[] args) {
         int base = 10000;
-        int performance = 2000;
+        int performance = 4000;
         int normal = base + performance;
 
         double jb = base / 21.75 * 2;
@@ -115,9 +115,10 @@ public class TimeNoteController {
     private static void extracted(int normal, double jb, int x) {
         double total = normal + jb;
         double oneDayMonth = total / (21.75 + x);
-        double taxableIncome = total - 5000 - 1500;
+        int other = 2093;
+        double taxableIncome = total - 5000 - other;
         double tax = tax(taxableIncome * 12) / 12;
-        System.out.printf("total money: %.2f, one day money: %.2f, actual money: %.2f%n", total, oneDayMonth, total - tax - 2092);
+        System.out.printf("total money: %.2f, one day money: %.2f, actual money: %.2f%n", total, oneDayMonth, total - tax - other);
     }
 
     private static double tax(double taxableIncome) {

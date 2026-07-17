@@ -1,10 +1,11 @@
 package com.icboluo.common.serializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -12,9 +13,9 @@ import java.math.RoundingMode;
  * @author icboluo
  * @since 2024-05-13 21:20
  */
-public class BigDecimal10Serializer extends JsonSerializer<BigDecimal> {
+public class BigDecimal10Serializer extends ValueSerializer<BigDecimal> {
     @Override
-    public void serialize(BigDecimal bigDecimal, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(BigDecimal bigDecimal, JsonGenerator jsonGenerator, SerializationContext SerializationContext) throws JacksonException {
         jsonGenerator.writeNumber(bigDecimal.setScale(10, RoundingMode.HALF_DOWN));
     }
 }

@@ -2,7 +2,7 @@ package com.icboluo.framework;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -36,7 +36,7 @@ public class JsonTest {
     }
 
     @Test
-    public void test2() throws JsonProcessingException {
+    public void test2() throws JacksonException {
         String str1 = """
                 {"name":"John","age":18}""";
         // 相当于转换为 jsonObject

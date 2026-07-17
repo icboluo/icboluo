@@ -1,17 +1,18 @@
 package com.icboluo.configuration;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
-import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+
 import org.springframework.context.annotation.Bean;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.*;
+import tools.jackson.databind.ext.javatime.deser.LocalDateDeserializer;
+import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateSerializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
+import tools.jackson.databind.ext.javatime.ser.LocalTimeSerializer;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
+import tools.jackson.databind.ser.BeanPropertyWriter;
+import tools.jackson.databind.ser.BeanSerializerFactory;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -32,25 +33,17 @@ public class LocalDateTimeSupport {
 
     @Bean
     public ObjectMapper getObjectMapper() {
-        ObjectMapper om = new ObjectMapper();
-        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        om.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
-        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
-
-        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        om.registerModule(javaTimeModule).registerModule(new ParameterNamesModule());
-
-
-        om.setSerializerFactory(
-                om.getSerializerFactory()
-                        .withSerializerModifier(new DateBeanSerializerModifier()));
-        return om;
-    }
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        module.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        module.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
+        module.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        module.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        return JsonMapper.builder()
+                .addModule(module)
+                .serializerFactory(BeanSerializerFactory.instance.withSerializerModifier(new DateBeanSerializerModifier()))
+                .build(); }
 
 
 /*    @Bean(name = "OBJECT_MAPPER_BEAN")
@@ -87,18 +80,18 @@ public class LocalDateTimeSupport {
             return LocalDateTime.class.isAssignableFrom(clazz);
         }
 
-        public static class LocalDateConverter extends JsonSerializer<Object> {
+        public static class LocalDateConverter extends ValueSerializer<Object> {
 
             @Override
-            public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            public void serialize(Object value, JsonGenerator gen, SerializationContext serializers) throws IOException {
                 gen.writeNumber(((LocalDate) value).atStartOfDay().toInstant(ZoneOffset.of("+8")).toEpochMilli());
             }
         }
 
-        public static class LocalDateTimeConverter extends JsonSerializer<Object> {
+        public static class LocalDateTimeConverter extends ValueSerializer<Object> {
 
             @Override
-            public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            public void serialize(Object value, JsonGenerator gen, SerializationContext serializers) throws IOException {
                 gen.writeNumber(((LocalDateTime) value).toInstant(ZoneOffset.of("+8")).toEpochMilli());
             }
         }

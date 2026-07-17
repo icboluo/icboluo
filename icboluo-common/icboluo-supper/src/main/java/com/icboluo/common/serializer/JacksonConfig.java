@@ -1,8 +1,9 @@
 package com.icboluo.common.serializer;
 
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.boot.jackson.autoconfigure.JsonMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tools.jackson.databind.module.SimpleModule;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,15 +27,14 @@ public class JacksonConfig {
      * @return Jackson2ObjectMapperBuilderCustomizer
      */
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        // 默认的日期反序列化是如果序列化失败抛异常，此处是返回null
-        return builder -> builder
-                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer())
-                .serializerByType(BigDecimal.class, new BigDecimal10Serializer())
-                .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer())
-                .deserializerByType(LocalDate.class, new LocalDateDeserializer())
-                ;
-    }
+    public JsonMapperBuilderCustomizer jsonMapperBuilderCustomizer() {
+// 默认的日期反序列化是如果序列化失败抛异常，此处是返回null
+        return builder -> builder.addModule(new SimpleModule()
+                .addSerializer(LocalDateTime.class, new LocalDateTimeSerializer())
+                .addSerializer(BigDecimal.class, new BigDecimal10Serializer())
+                .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer())
+                .addDeserializer(LocalDate.class, new LocalDateDeserializer())
+        ); }
 
 
 /*    @Bean(name = "mapperObject")

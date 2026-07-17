@@ -1,10 +1,10 @@
 package com.icboluo.common.serializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
 /**
  * Number 默认值为0
@@ -12,10 +12,10 @@ import java.io.IOException;
  * @author icboluo
  * @since 2023-09-10 20:20
  */
-public class NumberDefaultZeroSerializer extends JsonSerializer<Number> {
+public class NumberDefaultZeroSerializer extends ValueSerializer<Number> {
 
     @Override
-    public void serialize(Number value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    public void serialize(Number value, JsonGenerator gen, SerializationContext serializers) throws JacksonException {
         // 不需要判断是否为null
         gen.writeNumber(0);
     }
