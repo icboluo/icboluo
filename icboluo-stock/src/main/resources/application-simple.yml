@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:D:/IdeaProjects/icboluo/document/sql/document.db
+    driver-class-name: org.sqlite.JDBC
+sql:
+  init:
+    mode: always
+schema-locations:
+  classpath: schema.sql
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
