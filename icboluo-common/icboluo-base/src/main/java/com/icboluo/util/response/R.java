@@ -60,7 +60,7 @@ public class R implements Serializable {
 
     public static Response error(I18nException i18nException, MessageSource messageSource) {
         Locale locale = LocaleContextHolder.getLocale();
-        String msg = messageSource.getMessage(i18nException.getMessage(), i18nException.getArgs(), locale);
+        String msg = messageSource.getMessage(i18nException.getMessage(), i18nException.getArgs(), i18nException.getMessage(), locale);
         return new SingleResponse<>(ReEnum.SYSTEM_ERROR.getCode(), msg);
     }
 
