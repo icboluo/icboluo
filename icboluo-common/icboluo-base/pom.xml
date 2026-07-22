@@ -13,12 +13,6 @@
 
     <artifactId>icboluo-base</artifactId>
 
-    <properties>
-        <java.version>${java.version}</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>

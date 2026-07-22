@@ -1,6 +1,6 @@
 package com.icboluo.object;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 import com.icboluo.common.serializer.ArchivesFlatteningSerializer;
 import com.icboluo.common.serializer.BigDecimalRemoveZeroSerializer;
 import com.icboluo.common.serializer.NumberDefaultZeroSerializer;
@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2023-09-10 20:22
  */
 @Data
-public class JacksonVO {
+public class JacksonVo {
     private IdName level;
 
     @JsonSerialize(using = ArchivesFlatteningSerializer.class)

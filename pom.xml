@@ -7,8 +7,8 @@
     <parent>
         <!--        我们在升级Spring的时候，应该把其他的stater同样升级到相同版本，例如mybatis-->
         <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.2</version>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.0</version>
         <!--        relativePath元素中的地址–>本地仓库–>远程仓库-->
         <!--        如为空值将始终从仓库中获取，不从本地路径获取-->
         <!--        设定一个空值将始终从仓库中获取，不从本地路径获取，子模块禁止添加这个-->
@@ -56,22 +56,27 @@
         <lombok.version>1.18.40</lombok.version>
         <common.version>0.0.1-SNAPSHOT</common.version>
         <!--mapper -->
-        <mysql-connector-j.version>9.6.0</mysql-connector-j.version>
-        <sqlite-jdbc.version>3.51.1.0</sqlite-jdbc.version>
-        <druid-spring-boot-starter.version>1.2.27</druid-spring-boot-starter.version>
-        <mybatis-plus-boot-starter.version>3.5.16</mybatis-plus-boot-starter.version>
-        <pagehelper-spring-boot-starter.version>2.1.1</pagehelper-spring-boot-starter.version>
+        <mysql-connector-j.version>9.7.0</mysql-connector-j.version>
+        <sqlite-jdbc.version>3.53.2.0</sqlite-jdbc.version>
+        <druid-spring-boot-starter.version>1.2.28</druid-spring-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.17</mybatis-plus-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>4.1.1</pagehelper-spring-boot-starter.version>
         <!--alibaba -->
         <fastjson2.version>2.0.62</fastjson2.version>
         <spring-cloud-alibaba-dependencies.version>2025.1.0.0</spring-cloud-alibaba-dependencies.version>
         <easyexcel.version>4.0.3</easyexcel.version>
         <!--校验器  -->
-        <hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
+        <hibernate-validator.version>9.1.2.Final</hibernate-validator.version>
         <!--公共包-->
-        <hutool-all.version>5.8.40</hutool-all.version>
+        <hutool-all.version>5.8.47</hutool-all.version>
         <common-io.version>2.20.0</common-io.version>
         <!--cloud-->
-        <spring-cloud-dependencies.version>2025.1.0</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2025.1.2</spring-cloud-dependencies.version>
+        <!--mvc-->
+        <commons-fileupload.version>1.5</commons-fileupload.version>
+        <commons-beanutils.version>1.10.1</commons-beanutils.version>
+        <!--gateway-->
+        <embedded-redis.version>0.7.3</embedded-redis.version>
     </properties>
 
     <!--    子模块继承以后，提供作用：锁定版本+子module不用写groupId和version-->
@@ -142,7 +147,12 @@
             <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-spring</artifactId>
-                <version>3.0.3</version>
+                <version>3.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid-spring-boot-starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.xerial</groupId>
@@ -191,6 +201,92 @@
                 <groupId>com.rabbitmq</groupId>
                 <artifactId>amqp-client</artifactId>
                 <version>5.9.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons-fileupload.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>it.ozimov</groupId>
+                <artifactId>embedded-redis</artifactId>
+                <version>${embedded-redis.version}</version>
+            </dependency>
+            <!-- 内部模块版本管理 -->
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-base</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-supper</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-mapper</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-all</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-fund</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-game</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-gateway</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-mvc</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-nacos-config</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-note</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-se</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-sql</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-user</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.icboluo</groupId>
+                <artifactId>icboluo-web</artifactId>
+                <version>${common.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -4,3 +4,4 @@ spring:
     url: jdbc:sqlite::../../document/sql/game.db
     username:
     password:
+    type: com.zaxxer.hikari.HikariDataSource

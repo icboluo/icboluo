@@ -12,12 +12,6 @@
 
     <artifactId>icboluo-supper</artifactId>
 
-    <properties>
-        <java.version>${java.version}</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.icboluo</groupId>
@@ -80,13 +74,13 @@
 
     <!--    project build 标签针对于整个项目，是大包的一些配置，可以指定打包的文件目录等...-->
     <!--    project profile build 针对不同的profile进行配置-->
-    <build>
-        <!--        build plugins用于指定使用的插件-->
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        &lt;!&ndash;        build plugins用于指定使用的插件&ndash;&gt;-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 </project>

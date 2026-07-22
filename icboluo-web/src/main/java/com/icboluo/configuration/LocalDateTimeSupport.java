@@ -13,8 +13,8 @@ import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
 import tools.jackson.databind.ser.BeanPropertyWriter;
 import tools.jackson.databind.ser.BeanSerializerFactory;
+import tools.jackson.databind.ser.ValueSerializerModifier;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -43,7 +43,8 @@ public class LocalDateTimeSupport {
         return JsonMapper.builder()
                 .addModule(module)
                 .serializerFactory(BeanSerializerFactory.instance.withSerializerModifier(new DateBeanSerializerModifier()))
-                .build(); }
+                .build();
+    }
 
 
 /*    @Bean(name = "OBJECT_MAPPER_BEAN")
@@ -56,10 +57,10 @@ public class LocalDateTimeSupport {
     }*/
 
 
-    public static class DateBeanSerializerModifier extends BeanSerializerModifier {
+    public static class DateBeanSerializerModifier extends ValueSerializerModifier {
         @Override
         public List<BeanPropertyWriter> changeProperties(SerializationConfig config,
-                                                         BeanDescription beanDesc, List<BeanPropertyWriter> beanProperties) {
+                                                         BeanDescription.Supplier beanDesc, List<BeanPropertyWriter> beanProperties) {
             for (BeanPropertyWriter beanProperty : beanProperties) {
                 if (isLocalDateType(beanProperty)) {
                     beanProperty.assignSerializer(new LocalDateConverter());
@@ -83,7 +84,7 @@ public class LocalDateTimeSupport {
         public static class LocalDateConverter extends ValueSerializer<Object> {
 
             @Override
-            public void serialize(Object value, JsonGenerator gen, SerializationContext serializers) throws IOException {
+            public void serialize(Object value, JsonGenerator gen, SerializationContext serializers) {
                 gen.writeNumber(((LocalDate) value).atStartOfDay().toInstant(ZoneOffset.of("+8")).toEpochMilli());
             }
         }
@@ -91,7 +92,7 @@ public class LocalDateTimeSupport {
         public static class LocalDateTimeConverter extends ValueSerializer<Object> {
 
             @Override
-            public void serialize(Object value, JsonGenerator gen, SerializationContext serializers) throws IOException {
+            public void serialize(Object value, JsonGenerator gen, SerializationContext serializers) {
                 gen.writeNumber(((LocalDateTime) value).toInstant(ZoneOffset.of("+8")).toEpochMilli());
             }
         }

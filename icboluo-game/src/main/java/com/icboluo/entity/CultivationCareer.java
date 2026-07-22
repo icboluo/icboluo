@@ -1,17 +1,19 @@
 package com.icboluo.entity;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import lombok.Data;
 
-import java.io.IOException;
+import lombok.Data;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 修仙生涯(CultivationCareer)实体类
@@ -21,6 +23,9 @@ import java.time.LocalDateTime;
  */
 @Data
 public class CultivationCareer implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 593617170844456503L;
+
     /**
      * id
      */
@@ -38,22 +43,26 @@ public class CultivationCareer implements Serializable {
      * 创建时间
      */
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonDeserialize(using = CultivationCareer.CustomLocalDateTimeDeserializer.class)
     private LocalDateTime createTime;
 
     /**
      * 使用 DateUtil.allToDateTime 解析时间
      */
     public static class CustomLocalDateTimeDeserializer extends LocalDateTimeDeserializer {
+        public CustomLocalDateTimeDeserializer() {
+            super(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
+
         @Override
-        public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-            String value = p.getValueAsString();
-            return com.icboluo.util.DateUtil.allToDateTime(value);
+        public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws JacksonException {
+            try {
+                return super.deserialize(p, ctxt);
+            } catch (JacksonException e) {
+                String value = p.getValueAsString();
+                return com.icboluo.util.DateUtil.allToDateTime(value);
+            }
         }
     }
-
-
-    @Serial
-    private static final long serialVersionUID = 593617170844456503L;
 }
 

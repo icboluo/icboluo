@@ -97,7 +97,7 @@ public class TimeNoteController {
         int normal = base + performance;
 
         double jb = base / 21.75 * 2;
-        System.out.println(STR."jb : \{jb}, ..." + jb * 0.8);
+        System.out.println("jb : " + jb * 0.8 + ", ...");
 
         extracted(normal, jb * 0, 0);
 

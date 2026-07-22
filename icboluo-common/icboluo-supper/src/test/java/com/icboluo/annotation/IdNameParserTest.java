@@ -7,7 +7,7 @@ import lombok.Data;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,7 +15,7 @@ import java.util.List;
 
 class IdNameParserTest extends BaseTest {
 
-    @SpyBean
+    @MockitoSpyBean
     private BaseI18nService baseI18nService;
 
     @Override

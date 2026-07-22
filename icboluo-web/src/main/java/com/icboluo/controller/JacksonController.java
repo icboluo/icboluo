@@ -1,6 +1,6 @@
 package com.icboluo.controller;
 
-import com.icboluo.object.JacksonVO;
+import com.icboluo.object.JacksonVo;
 import com.icboluo.object.CodeName;
 import com.icboluo.object.IdName;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +37,8 @@ public class JacksonController {
     }
 
     @GetMapping("customize")
-    public JacksonVO customize() {
-        JacksonVO view = new JacksonVO();
+    public JacksonVo customize() {
+        JacksonVo view = new JacksonVo();
         view.setLevel(new IdName(14, "级别3"));
         view.setStatus(new IdName(null, "处理中"));
         view.setCountry(new CodeName(null, "中国"));

@@ -20,12 +20,6 @@
         <module>icboluo-mapper</module>
     </modules>
 
-    <properties>
-        <java.version>${java.version}</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-    </properties>
-
     <dependencies>
 
     </dependencies>
