@@ -5,7 +5,3 @@ spring:
     name: icboluo-stock
   profiles:
     active: simple
-  stock:
-    auto-advance:
-    enable: false
-    delay-ms: 6000

@@ -1,4 +1,4 @@
-package com.icboluo.config;
+package com.icboluo.websocket;
 
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;

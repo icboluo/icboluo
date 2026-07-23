@@ -16,7 +16,7 @@ class ToolTest {
 
     private static final int TOTAL_A = 606255;
     //    5951.45
-    private static final int TOTAL_B = 614750;
+    private static final int TOTAL_B = 613474;
 
     //   月RATE = 年RATE / 12
     private static final BigDecimal MONTHLY_RATE_A = MathUtil.divide(0.032, 12, 10);
