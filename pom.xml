@@ -130,6 +130,10 @@
                         <groupId>com.github.jsqlparser</groupId>
                         <artifactId>jsqlparser</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>com.github.jsqlparser</groupId>
+                        <artifactId>jsqlparser</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <!--            项目启动失败，报mybatis异常的时候：原因可能是因为Spring升级，删除部分文件导致mybatis引用Spring的时候失效

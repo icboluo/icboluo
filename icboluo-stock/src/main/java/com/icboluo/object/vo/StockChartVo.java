@@ -13,6 +13,15 @@ public class StockChartVo {
     private String stockCode;
     private String stockName;
     /**
+     * 该玩家在该股票上的总收益
+     */
+    private BigDecimal stockProfit;
+    /**
+     * 该玩家在该股票上的收益率（%）
+     */
+    private BigDecimal stockProfitRate;
+
+    /**
      * 价格走势：每个交易日的OHLCV数据
      */
     private List<PricePoint> prices;
@@ -32,6 +41,22 @@ public class StockChartVo {
         private BigDecimal highPrice;
         private BigDecimal lowPrice;
         private BigDecimal increaseRateDay;
+        /**
+         * 当日持仓市值（仅当玩家持有该股票时有值）
+         */
+        private BigDecimal holdMarketValue;
+        /**
+         * 当日累计投入成本
+         */
+        private BigDecimal holdCost;
+        /**
+         * 当日持仓收益
+         */
+        private BigDecimal holdProfit;
+        /**
+         * 当日持仓收益率（%）
+         */
+        private BigDecimal holdProfitRate;
     }
 
     @Data

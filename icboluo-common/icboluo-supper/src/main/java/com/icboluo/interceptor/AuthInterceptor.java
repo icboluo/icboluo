@@ -27,8 +27,8 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod handlerMethod)) {
-            log.error("handler 转换失败{}", handler);
-            return HandlerInterceptor.super.preHandle(request, response, handler);
+            // CORS预检请求(OPTIONS)等非Controller请求，直接放行
+            return true;
         }
         String role = request.getHeader("role");
         Method method = handlerMethod.getMethod();
