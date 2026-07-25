@@ -11,12 +11,6 @@ spring:
     basename: i18n/messages
     #    找不到用 msg的code
     use-code-as-default-message: true
-mybatis:
-  configuration:
-    #    自动小驼峰映射
-    map-underscore-to-camel-case: true
-  #    为什么这里指定 mybatis/*Mapper.xml不行（文件夹也改了
-  mapper-locations: mapper/*Mapper.xml.
 logging:
   level:
     #    level 后面直接跟日志级别会启动报错
@@ -33,6 +27,10 @@ write-excel-entity:
   database: note
   table-name:
 mybatis-plus:
+  configuration:
+    #    自动小驼峰映射
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/**/*.xml
   type-aliases-super-type:
   global-config:
     db-config:
