@@ -13,6 +13,7 @@ import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.object.vo.SeasonVo;
 import com.icboluo.service.SeasonService;
 import com.icboluo.service.StockTradeService;
+import com.icboluo.strategy.StrategyRegistry;
 import com.icboluo.util.I18nException;
 import com.icboluo.websocket.StockWebSocketHandler;
 import lombok.RequiredArgsConstructor;

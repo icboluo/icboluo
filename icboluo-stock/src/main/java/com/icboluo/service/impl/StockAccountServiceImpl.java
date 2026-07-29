@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class StockAccountServiceImpl implements StockAccountService {
-    StockAccountMapper stockAccountMapper;
-    StockPositionMapper stockPositionMapper;
-    StockSeasonMapper stockSeasonMapper;
-    StockSeasonQuoteMapper stockSeasonQuoteMapper;
-    StockDailyMapper stockDailyMapper;
-    StockInfoMapper stockInfoMapper;
-    StockTradeRecordMapper stockTradeRecordMapper;
+    private final StockAccountMapper stockAccountMapper;
+    private final StockPositionMapper stockPositionMapper;
+    private final StockSeasonMapper stockSeasonMapper;
+    private final StockSeasonQuoteMapper stockSeasonQuoteMapper;
+    private final StockDailyMapper stockDailyMapper;
+    private final StockInfoMapper stockInfoMapper;
+    private final StockTradeRecordMapper stockTradeRecordMapper;
 
     @Override
     public AccountVo getAccount(Integer seasonId, String playerName) {

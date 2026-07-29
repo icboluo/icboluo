@@ -12,6 +12,12 @@ import java.util.List;
 public class StockChartVo {
     private String stockCode;
     private String stockName;
+
+    /**
+     * 该玩家在该股票上的累计投入（买入总金额 - 卖出回笼金额）
+     */
+    private BigDecimal stockTotalInvest;
+
     /**
      * 该玩家在该股票上的总收益
      */
