@@ -1,12 +1,12 @@
 package com.icboluo.datastructure;
 
+import com.icboluo.util.LoanUtil;
 import com.icboluo.util.MathUtil;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.Period;
 
 /**
  * @author icboluo
@@ -22,19 +22,14 @@ class ToolTest {
     private static final BigDecimal MONTHLY_RATE_A = MathUtil.divide(0.032, 12, 10);
     private static final BigDecimal MONTHLY_RATE_B = MathUtil.divide(0.026, 12, 10);
 
+    private static final LocalDate LOAN_START = LocalDate.of(2024, 1, 20);
+
     private static int aRemainPeriod() {
-        return 311 - monthPeriod();
+        return LoanUtil.remainPeriod(LOAN_START, 311);
     }
 
     private static int bRemainPeriod() {
-        return 360 - monthPeriod();
-    }
-
-    private static int monthPeriod() {
-        LocalDate start = LocalDate.of(2024, 1, 20);
-        LocalDate now = LocalDate.now();
-        Period period = Period.between(start, now);
-        return period.getMonths() + period.getYears() * 12 + 1;
+        return LoanUtil.remainPeriod(LOAN_START, 360);
     }
 
     @Test
@@ -55,9 +50,9 @@ class ToolTest {
     @Test
     public void testMonth() {
 //        3.2
-        System.out.println(calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, aRemainPeriod()));
+        System.out.println(LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, aRemainPeriod()));
         // 2.6
-        System.out.println(calculateMonthlyPayment(TOTAL_B, MONTHLY_RATE_B, bRemainPeriod()));
+        System.out.println(LoanUtil.calculateMonthlyPayment(TOTAL_B, MONTHLY_RATE_B, bRemainPeriod()));
     }
 
     @Test
@@ -83,42 +78,6 @@ class ToolTest {
     }
 
     /**
-     * 计算等额本息月供
-     * 公式：月供 = 本金 × 月利率 × (1+r)^n ÷ ((1+r)^n - 1)
-     *
-     * @param principal   贷款本金
-     * @param monthlyRate 月利率
-     * @param periods     还款期数
-     * @return 月供金额
-     */
-    private static BigDecimal calculateMonthlyPayment(int principal, BigDecimal monthlyRate, int periods) {
-        BigDecimal compoundFactor = calculateCompoundFactor(monthlyRate, periods);
-        return BigDecimal.valueOf(principal).multiply(monthlyRate).multiply(compoundFactor).divide(compoundFactor.subtract(BigDecimal.ONE), 2, RoundingMode.HALF_UP);
-    }
-
-    /**
-     * 计算复利因子 (1+r)^n
-     *
-     * @param monthlyRate 月利率
-     * @param periods     还款期数
-     * @return 复利因子
-     */
-    private static BigDecimal calculateCompoundFactor(BigDecimal monthlyRate, int periods) {
-        return BigDecimal.ONE.add(monthlyRate).pow(periods);
-    }
-
-    /**
-     * 计算本月利息
-     *
-     * @param remainingPrincipal 剩余本金
-     * @param monthlyRate        月利率
-     * @return 本月利息
-     */
-    private static BigDecimal calculateMonthlyInterest(BigDecimal remainingPrincipal, BigDecimal monthlyRate) {
-        return remainingPrincipal.multiply(monthlyRate).setScale(2, RoundingMode.HALF_UP);
-    }
-
-    /**
      * 打印等额本息还款明细表头
      */
     private static void printEqualPrincipalHeader(String header) {
@@ -138,14 +97,14 @@ class ToolTest {
     public void testEqualPrincipal() {
         int periods = aRemainPeriod();
         // 计算月供
-        BigDecimal monthlyPayment = calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, periods);
+        BigDecimal monthlyPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, periods);
         BigDecimal remainingPrincipal = BigDecimal.valueOf(TOTAL_A);
         BigDecimal totalInterest = BigDecimal.ZERO;
         // 打印表头
         printEqualPrincipalHeader(STR."等额本息计算：贷款总额=\{TOTAL_A}，还款月数=\{periods}，每月还款=\{monthlyPayment}");
         // 逐月计算
         for (int month = 1; month <= periods; month++) {
-            BigDecimal monthlyInterest = calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
+            BigDecimal monthlyInterest = LoanUtil.calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
             BigDecimal principalPayment = monthlyPayment.subtract(monthlyInterest);
             remainingPrincipal = remainingPrincipal.subtract(principalPayment).max(BigDecimal.ZERO);
             totalInterest = totalInterest.add(monthlyInterest);
@@ -159,7 +118,7 @@ class ToolTest {
     @Test
     public void testEqualPrincipalWithMonthlyEarlyRepayment() {
         int periods = aRemainPeriod();
-        BigDecimal monthlyPayment = calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, periods);
+        BigDecimal monthlyPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, periods);
         BigDecimal earlyRepayment = BigDecimal.valueOf(10000);
         BigDecimal remainingPrincipal = BigDecimal.valueOf(TOTAL_A);
         BigDecimal totalInterest = BigDecimal.ZERO;
@@ -170,7 +129,7 @@ class ToolTest {
         System.out.printf("%-8s %-15s %-15s %-15s %-15s%n", "月份", "本月本金", "本月利息", "提前还款", "剩余本金");
         while (remainingPrincipal.compareTo(BigDecimal.ZERO) > 0 && actualMonth < 360) {
             actualMonth++;
-            BigDecimal monthlyInterest = calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
+            BigDecimal monthlyInterest = LoanUtil.calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
             BigDecimal principalPayment = monthlyPayment.subtract(monthlyInterest);
             remainingPrincipal = remainingPrincipal.subtract(principalPayment);
             remainingPrincipal = remainingPrincipal.subtract(earlyRepayment);
@@ -186,13 +145,11 @@ class ToolTest {
     public void testEqualPrincipalWithEarlyRepaymentReduceMonths() {
         BigDecimal principal = BigDecimal.valueOf(TOTAL_A);
         int originalPeriods = aRemainPeriod();
-        BigDecimal monthlyPayment = calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, originalPeriods);
+        BigDecimal monthlyPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, originalPeriods);
         BigDecimal earlyRepayment = BigDecimal.valueOf(50000);
         BigDecimal remainingAfterEarly = principal.subtract(earlyRepayment);
         // 计算缩短后的还款期数（利用对数公式）
-        double n = Math.log(monthlyPayment.doubleValue() / (monthlyPayment.doubleValue() - remainingAfterEarly.doubleValue() * MONTHLY_RATE_A.doubleValue()))
-                / Math.log(1 + MONTHLY_RATE_A.doubleValue());
-        int remainingMonths = (int) Math.ceil(n);
+        int remainingMonths = LoanUtil.calculateRemainingMonthsAfterEarlyRepayment(monthlyPayment, remainingAfterEarly, MONTHLY_RATE_A);
         BigDecimal remainingPrincipal = remainingAfterEarly;
         BigDecimal totalInterest = BigDecimal.ZERO;
         System.out.println(STR."等额本息+一次性提前还款计算：贷款总额=\{TOTAL_A}，原还款月数=\{originalPeriods}，提前还款=\{earlyRepayment}");
@@ -200,7 +157,7 @@ class ToolTest {
         System.out.println("-----------------------------------------------------------");
         System.out.printf("%-8s %-15s %-15s %-15s%n", "月份", "本月本金", "本月利息", "剩余本金");
         for (int month = 1; month <= remainingMonths; month++) {
-            BigDecimal monthlyInterest = calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
+            BigDecimal monthlyInterest = LoanUtil.calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
             BigDecimal principalPayment = monthlyPayment.subtract(monthlyInterest);
             remainingPrincipal = remainingPrincipal.subtract(principalPayment);
             totalInterest = totalInterest.add(monthlyInterest);
@@ -216,7 +173,7 @@ class ToolTest {
         BigDecimal noRepaymentTotalInterest = BigDecimal.ZERO;
         BigDecimal noRepaymentPrincipal = principal;
         for (int month = 1; month <= originalPeriods; month++) {
-            BigDecimal monthlyInterest = calculateMonthlyInterest(noRepaymentPrincipal, MONTHLY_RATE_A);
+            BigDecimal monthlyInterest = LoanUtil.calculateMonthlyInterest(noRepaymentPrincipal, MONTHLY_RATE_A);
             noRepaymentTotalInterest = noRepaymentTotalInterest.add(monthlyInterest);
             BigDecimal principalPayment = monthlyPayment.subtract(monthlyInterest);
             noRepaymentPrincipal = noRepaymentPrincipal.subtract(principalPayment).max(BigDecimal.ZERO);
@@ -226,16 +183,16 @@ class ToolTest {
     }
 
     @Test
-    public void testCityMonthlyYearlyCost() {
+    public void testCityCost() {
         CostItem[] items = new CostItem[]{
                 new CostItem("餐饮", BigDecimal.valueOf(1000)),
                 new CostItem("交通", BigDecimal.valueOf(100)),
                 new CostItem("停车费", BigDecimal.valueOf(200)),
                 new CostItem("水+燃气", BigDecimal.valueOf(50)),
-                new CostItem("电费", BigDecimal.valueOf(120)),
+                new CostItem("电费", BigDecimal.valueOf(270)),
                 new CostItem("通讯", BigDecimal.valueOf(70)),
                 new CostItem("物业费", BigDecimal.valueOf(246)),
-                new CostItem("贷款", BigDecimal.valueOf(5688)),
+                new CostItem("贷款", BigDecimal.valueOf(4288)),
         };
         printCost(items);
     }
