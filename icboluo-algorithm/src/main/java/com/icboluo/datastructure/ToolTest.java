@@ -23,7 +23,7 @@ class ToolTest {
     private static final BigDecimal MONTHLY_RATE_B = MathUtil.divide(0.026, 12, 10);
 
     private static int aRemainPeriod() {
-        return 311 - monthPeriod() - 1;
+        return 311 - monthPeriod();
     }
 
     private static int bRemainPeriod() {
@@ -53,13 +53,9 @@ class ToolTest {
     }
 
     @Test
-    public void testMonthA() {
+    public void testMonth() {
 //        3.2
         System.out.println(calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, aRemainPeriod()));
-    }
-
-    @Test
-    public void testMonthB() {
         // 2.6
         System.out.println(calculateMonthlyPayment(TOTAL_B, MONTHLY_RATE_B, bRemainPeriod()));
     }

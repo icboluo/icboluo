@@ -1,6 +1,9 @@
 package com.icboluo.object.vo;
 
+import com.icboluo.strategy.StrategyParamMeta;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class StrategyVo {
