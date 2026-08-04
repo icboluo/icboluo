@@ -1,4 +1,4 @@
-package com.icboluo.mysql;
+package com.icboluo.datasource;
 
 import com.icboluo.a_sql.z_MyJdbcUtil;
 
@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  * 2.关注DataSource接口的getConnection方法，从容器中获取连接（左边stucture）
  * 3.创建出一个存放连接的容器,并在构造方法中创建一些连接放入容器
  * 4.自定义一个将连接放回容器的方法
+ * opt 动态代理的使用场景
  *
  * @author icboluo
  * @since 2020-08-13 15:06

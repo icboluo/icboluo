@@ -8,7 +8,7 @@ import java.util.Deque;
  * @since 2022-08-25 20:53
  */
 class N0227_字符串计算器 {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         var cla = new N0227_字符串计算器();
         String str = "3*(4-5/2)-6";
         int ans = cla.calculate(str, 0);

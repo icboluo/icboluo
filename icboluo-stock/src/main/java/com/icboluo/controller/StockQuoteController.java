@@ -31,14 +31,6 @@ public class StockQuoteController {
     }
 
     /**
-     * CSV导入行情数据
-     */
-    @PostMapping("import")
-    public String importData(@RequestParam("file") MultipartFile file) {
-        return stockQuoteService.importFromCsv(file);
-    }
-
-    /**
      * 查询股票走势图数据（含买卖标记）
      */
     @PostMapping("chart")

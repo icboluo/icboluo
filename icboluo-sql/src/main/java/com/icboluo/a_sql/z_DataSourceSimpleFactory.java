@@ -2,7 +2,7 @@ package com.icboluo.a_sql;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.icboluo.mysql.MyDataSource;
+import com.icboluo.datasource.MyDataSource;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

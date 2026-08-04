@@ -2,14 +2,13 @@ package com.icboluo.service;
 
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.object.vo.StockChartVo;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 /**
  * 股票行情服务接口
  */
-interface StockQuoteService {
+public interface StockQuoteService {
     /**
      * 查询当前交易日行情
      *
@@ -17,14 +16,6 @@ interface StockQuoteService {
      * @return 行情列表
      */
     List<QuoteVo> getCurrentQuotes(Integer seasonId);
-
-    /**
-     * CSV导入行情数据
-     *
-     * @param file CSV文件
-     * @return 导入结果
-     */
-    String importFromCsv(MultipartFile file);
 
     /**
      * 获取股票走势图数据（含买卖标记）

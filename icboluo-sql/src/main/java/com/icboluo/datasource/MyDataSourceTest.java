@@ -3,7 +3,6 @@ package com.icboluo.datasource;
 
 import com.icboluo.a_sql.z_DataSourceSimpleFactory;
 import com.icboluo.a_sql.z_MyJdbcUtil;
-import com.icboluo.mysql.MyDataSource;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
