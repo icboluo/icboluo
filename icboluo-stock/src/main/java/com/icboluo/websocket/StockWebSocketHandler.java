@@ -103,6 +103,7 @@ public class StockWebSocketHandler extends TextWebSocketHandler {
                 try {
                     return Integer.parseInt(parts[i + 1]);
                 } catch (NumberFormatException e) {
+                    log.warn("WebSocket URI 中的 seasonId 解析失败: uri={}", uri);
                     return null;
                 }
             }

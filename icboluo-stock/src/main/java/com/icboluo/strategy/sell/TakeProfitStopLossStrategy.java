@@ -54,13 +54,12 @@ public class TakeProfitStopLossStrategy implements SellStrategy {
     public void execute(BotExecutionContext context) {
         BigDecimal takeProfit = SellUtil.getDecimalParam(context, PARAM_TAKE_PROFIT, DEFAULT_TAKE_PROFIT);
         BigDecimal stopLoss = SellUtil.getDecimalParam(context, PARAM_STOP_LOSS, DEFAULT_STOP_LOSS);
-        int currentTradeDay = context.getSeason().getCurrentTradeDay();
         Map<String, QuoteVo> quoteMap = context.getQuotes()
                 .stream()
                 .collect(Collectors.toMap(QuoteVo::getStockCode, q -> q, (a, b) -> a));
         for (StockPosition pos : context.getPositions()) {
             // T+1：当天买入的股票不可卖出
-            if (pos.getBuyTradeDay() >= currentTradeDay) {
+            if (!SellUtil.isSellable(context, pos)) {
                 continue;
             }
             var quote = quoteMap.get(pos.getStockCode());

@@ -5,6 +5,7 @@ import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * 买入策略通用工具：提供按金额买入股票、筛选有效行情等共享逻辑。
  */
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BuyUtil {
 
@@ -82,6 +84,8 @@ public final class BuyUtil {
             try {
                 return new BigDecimal(context.getParams().get(key).toString());
             } catch (NumberFormatException e) {
+                log.warn("策略参数解析失败，使用默认值: key={}, value={}, default={}",
+                        key, context.getParams().get(key), defaultValue);
                 return defaultValue;
             }
         }
@@ -96,6 +100,8 @@ public final class BuyUtil {
             try {
                 return Integer.parseInt(context.getParams().get(key).toString());
             } catch (NumberFormatException e) {
+                log.warn("策略参数解析失败，使用默认值: key={}, value={}, default={}",
+                        key, context.getParams().get(key), defaultValue);
                 return defaultValue;
             }
         }

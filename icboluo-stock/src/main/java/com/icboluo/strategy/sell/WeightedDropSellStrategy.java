@@ -7,6 +7,8 @@ import com.icboluo.strategy.BotExecutionContext;
 import com.icboluo.strategy.SellStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
 import com.icboluo.util.MathUtil;
+import com.icboluo.util.SellUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,9 +20,10 @@ import java.util.stream.Collectors;
  * 追跌卖出策略
  * <p>按跌幅加权卖出持仓，跌幅越大的持仓卖出越多。
  */
+@Slf4j
 @Component
 public class WeightedDropSellStrategy implements SellStrategy {
-    private static final String STRATEGY_ID = "WEIGHTED_WEIGHTED_DROP_SELL";
+    private static final String STRATEGY_ID = "WEIGHTED_DROP_SELL";
     String STRATEGY_NAME = "追跌卖出";
     String STRATEGY_DESCRIPTION = "按跌幅加权卖出持仓";
 
@@ -56,7 +59,7 @@ public class WeightedDropSellStrategy implements SellStrategy {
                 .collect(Collectors.toMap(QuoteVo::getStockCode, q -> q, (a, b) -> a)); // 筛选当日涨幅 < 0 且满足T+1的持仓
         var sellPositions = positions
                 .stream()
-                .filter(p -> p.getBuyTradeDay() < context.getSeason().getCurrentTradeDay()) // T+1
+                .filter(p -> SellUtil.isSellable(context, p)) // T+1
                 .filter(p -> {
                     var quote = quoteMap.get(p.getStockCode());
                     return quote != null && quote.getIncreaseRateDay() != null && quote.getIncreaseRateDay().compareTo(BigDecimal.ZERO) < 0;
@@ -88,6 +91,8 @@ public class WeightedDropSellStrategy implements SellStrategy {
                 context.getTradeService().sell(tradeCo, context.getPlayerName());
             } catch (Exception e) {
                 // 机器人卖出失败不影响正常流程
+                log.error("机器人加权跌幅卖出失败: playerName={}, stockCode={}, quantity={}",
+                        context.getPlayerName(), pos.getStockCode(), sellQty, e);
             }
         }
         // 卖出后刷新账户余额

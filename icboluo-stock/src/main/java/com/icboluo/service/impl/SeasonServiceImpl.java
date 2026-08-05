@@ -8,7 +8,6 @@ import com.icboluo.mapper.*;
 import com.icboluo.object.co.AdvanceDayCo;
 import com.icboluo.object.co.SeasonCreateCo;
 import com.icboluo.object.co.SeasonJoinCo;
-import com.icboluo.object.co.TradeCo;
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.object.vo.SeasonVo;
 import com.icboluo.service.SeasonService;
@@ -20,10 +19,12 @@ import com.icboluo.strategy.StrategyRegistry;
 import com.icboluo.util.I18nException;
 import com.icboluo.websocket.StockWebSocketHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
@@ -32,12 +33,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * 赛季服务实现
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SeasonServiceImpl implements SeasonService {
@@ -50,6 +53,12 @@ public class SeasonServiceImpl implements SeasonService {
     @Autowired
     @Lazy
     private SeasonServiceImpl self;
+    /**
+     * 进程内串行推进锁。SQLite 仅允许单一写者，自动推进(asyncAdvanceBotSeason)与
+     * 手动点击推进(SeasonController.advance)可能并发推进同一赛季，导致
+     * [SQLITE_BUSY] database is locked。用全局锁保证任意时刻只有一个线程在写库推进。
+     */
+    private static final ReentrantLock ADVANCE_LOCK = new ReentrantLock();
     private static final int REQUIRED_TRADE_DAYS = 120;
     private static final int MAX_TRADE_DAYS = 300;
     private final StockSeasonMapper stockSeasonMapper;
@@ -125,6 +134,10 @@ public class SeasonServiceImpl implements SeasonService {
         if (season == null) {
             throw new I18nException("赛季不存在");
         }
+        // 校验赛季处于准备阶段，开始后禁止玩家加入
+        if (!"PREPARING".equals(season.getStatus())) {
+            throw new I18nException("赛季已开始，无法加入");
+        }
         // 校验玩家未重复加入
         Long count = stockAccountMapper.selectCount(new LambdaQueryWrapper<StockAccount>()
                 .eq(StockAccount::getSeasonId, co.getSeasonId())
@@ -156,8 +169,8 @@ public class SeasonServiceImpl implements SeasonService {
         stockSeasonMapper.updateById(season);
         // 注册预置机器人（自动创建stock_bot_config和stock_account）
         registerPresetBots(seasonId, season.getInitialFund());
-        // 机器人执行首日策略
-        executeBotStrategies(seasonId, season);
+        // 机器人执行首日策略（通过代理调用，使 NOT_SUPPORTED 挂起外层事务）
+        self.executeBotStrategies(seasonId, season);
         // 推送首日进度
         broadcastProgress(seasonId, season);
         // 只有机器人的赛季，事务提交后异步推进后续交易日
@@ -219,7 +232,7 @@ public class SeasonServiceImpl implements SeasonService {
             throw new I18nException("赛季已结束");
         }
         // 赛季结束前强制清仓所有持仓
-        forceLiquidateSeason(seasonId);
+        forceLiquidateSeason(seasonId, season);
         season.setStatus("FINISHED");
         season.setHistoryRevealed(true);
         stockSeasonMapper.updateById(season);
@@ -235,43 +248,51 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     @Override
-    @Transactional
     public List<QuoteVo> advanceDay(AdvanceDayCo co) {
-        StockSeason season = stockSeasonMapper.selectById(co.getSeasonId());
-        if (season == null) {
-            throw new I18nException("赛季不存在");
-        }
-        if (!"PLAYING".equals(season.getStatus())) {
-            throw new RuntimeException("赛季状态不是PLAYING，无法推进交易日");
-        }
-        int nextTradeDay = season.getCurrentTradeDay() + 1;
-        // 赛季结束
-        if (nextTradeDay > season.getTotalTradeDays()) {
-            // 赛季结束前强制清仓所有持仓
-            forceLiquidateSeason(co.getSeasonId());
-            season.setStatus("FINISHED");
-            season.setHistoryRevealed(true);
+        // 注意：本方法刻意不加 @Transactional。SQLite 在事务 BEGIN 后即持有写锁直到 COMMIT，
+        // 若此处包长事务，executeBotStrategies 内 buy/sell 另起连接写库会被本连接持有的写锁阻塞，
+        // 触发 [SQLITE_BUSY]。改用进程内串行锁(ADVANCE_LOCK)保证推进串行，买/卖各自短事务提交。
+        // SQLite 仅允许单一写者，串行化推进避免并发触发 [SQLITE_BUSY] database is locked
+        ADVANCE_LOCK.lock();
+        try {
+            StockSeason season = stockSeasonMapper.selectById(co.getSeasonId());
+            if (season == null) {
+                throw new I18nException("赛季不存在");
+            }
+            if (!"PLAYING".equals(season.getStatus())) {
+                throw new RuntimeException("赛季状态不是PLAYING，无法推进交易日");
+            }
+            int nextTradeDay = season.getCurrentTradeDay() + 1;
+            // 赛季结束
+            if (nextTradeDay > season.getTotalTradeDays()) {
+                // 赛季结束前强制清仓所有持仓
+                forceLiquidateSeason(co.getSeasonId(), season);
+                season.setStatus("FINISHED");
+                season.setHistoryRevealed(true);
+                stockSeasonMapper.updateById(season);
+                return Collections.emptyList();
+            }
+            // 正常推进
+            season.setCurrentTradeDay(nextTradeDay);
             stockSeasonMapper.updateById(season);
-            return Collections.emptyList();
+            // 查询当日对应的实际交易日期
+            StockSeasonQuote seasonQuote = stockSeasonQuoteMapper.selectOne(new LambdaQueryWrapper<StockSeasonQuote>()
+                    .eq(StockSeasonQuote::getSeasonId, co.getSeasonId())
+                    .eq(StockSeasonQuote::getTradeDay, nextTradeDay));
+            LocalDate tradeDate = seasonQuote.getTradeDate();
+            // 查询当日行情
+            List<QuoteVo> quotes = getQuotesByDate(tradeDate);
+            // WebSocket 推送行情变化
+            stockWebSocketHandler.broadcastToSeason(co.getSeasonId(), "quote", quotes);
+            // 机器人执行策略（通过代理调用，使 NOT_SUPPORTED 挂起外层事务，单笔买卖失败不影响赛季元数据）
+            self.executeBotStrategies(co.getSeasonId(), season);
+            // 推送进度
+            broadcastProgress(co.getSeasonId(), season);
+            // 只有机器人的赛季，策略执行完后自动推进下一天（由 asyncAdvanceBotSeason 处理）
+            return quotes;
+        } finally {
+            ADVANCE_LOCK.unlock();
         }
-        // 正常推进
-        season.setCurrentTradeDay(nextTradeDay);
-        stockSeasonMapper.updateById(season);
-        // 查询当日对应的实际交易日期
-        StockSeasonQuote seasonQuote = stockSeasonQuoteMapper.selectOne(new LambdaQueryWrapper<StockSeasonQuote>()
-                .eq(StockSeasonQuote::getSeasonId, co.getSeasonId())
-                .eq(StockSeasonQuote::getTradeDay, nextTradeDay));
-        LocalDate tradeDate = seasonQuote.getTradeDate();
-        // 查询当日行情
-        List<QuoteVo> quotes = getQuotesByDate(tradeDate);
-        // WebSocket 推送行情变化
-        stockWebSocketHandler.broadcastToSeason(co.getSeasonId(), "quote", quotes);
-        // 机器人执行策略
-        executeBotStrategies(co.getSeasonId(), season);
-        // 推送进度
-        broadcastProgress(co.getSeasonId(), season);
-        // 只有机器人的赛季，策略执行完后自动推进下一天（由 asyncAdvanceBotSeason 处理）
-        return quotes;
     }
 
     /**
@@ -292,6 +313,7 @@ public class SeasonServiceImpl implements SeasonService {
                     break;
                 }
             } catch (Exception e) {
+                log.error("机器人赛季推进失败，终止推进: seasonId={}", seasonId, e);
                 break;
             }
         }
@@ -345,7 +367,8 @@ public class SeasonServiceImpl implements SeasonService {
     /**
      * 执行所有机器人策略（先卖后买：卖出释放的资金可用于当日买入）
      */
-    private void executeBotStrategies(Integer seasonId, StockSeason season) {
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public void executeBotStrategies(Integer seasonId, StockSeason season) {
 // 1. 查询该赛季的所有机器人配置
         List<StockBotConfig> botConfigs = stockBotConfigMapper.selectList(new LambdaQueryWrapper<StockBotConfig>()
                 .eq(StockBotConfig::getSeasonId, seasonId));
@@ -414,6 +437,7 @@ public class SeasonServiceImpl implements SeasonService {
                 }
             } catch (Exception e) {
                 // 机器人策略失败不影响其他机器人
+                log.error("机器人策略执行失败，跳过该机器人: seasonId={}, botName={}", seasonId, config.getBotName(), e);
             }
         }
     }
@@ -458,6 +482,7 @@ public class SeasonServiceImpl implements SeasonService {
             return JSON.parseObject(json, new TypeReference<Map<String, Object>>() {
             });
         } catch (Exception e) {
+            log.warn("策略参数JSON解析失败，使用空参数: json={}", json, e);
             return new HashMap<>();
         }
     }
@@ -479,37 +504,9 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     /**
-     * 强制清仓：赛季结束前将该赛季所有账户的持仓全部卖出
-     */
-    private void forceLiquidateSeason(Integer seasonId) {
-        // 查询该赛季所有账户
-        List<StockAccount> accounts = stockAccountMapper.selectList(new LambdaQueryWrapper<StockAccount>()
-                .eq(StockAccount::getSeasonId, seasonId));
-        for (StockAccount account : accounts) {
-            // 查询该账户所有持仓
-            List<StockPosition> positions = stockPositionMapper.selectList(new LambdaQueryWrapper<StockPosition>()
-                    .eq(StockPosition::getAccountId, account.getId()));
-            for (StockPosition position : positions) {
-                // 构造卖出请求，按持仓数量全部卖出
-                TradeCo sellCo = new TradeCo();
-                sellCo.setSeasonId(seasonId);
-                sellCo.setPlayerName(account.getPlayerName());
-                sellCo.setStockCode(position.getStockCode());
-                sellCo.setQuantity(position.getQuantity());
-                try {
-                    stockTradeService.sell(sellCo, account.getPlayerName());
-                } catch (Exception e) {
-                    // 单只卖出失败（如T+1限制）不影响其他持仓的清仓
-                }
-            }
-            // 清理剩余持仓（可能因T+1当天买入无法卖出，直接删除避免遗留）
-            stockPositionMapper.delete(new LambdaQueryWrapper<StockPosition>()
-                    .eq(StockPosition::getAccountId, account.getId()));
-        }
-    }
-
-    /**
-     * 赛季结束时强制清仓：所有账户的持仓按当日收盘价卖出
+     * 赛季结束时强制清仓：所有账户的持仓按当日收盘价卖出。
+     * <p>不走 {@code stockTradeService.sell()}，直接按收盘价结算并删除持仓，
+     * 因此豁免 T+1 限制，也不会因单只股票校验失败而把外层事务标记为 rollback-only。
      */
     private void forceLiquidateSeason(Integer seasonId, StockSeason season) {
         var seasonQuote = stockSeasonQuoteMapper.selectOne(new LambdaQueryWrapper<StockSeasonQuote>()
