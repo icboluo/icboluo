@@ -6,6 +6,7 @@ import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
 import com.icboluo.strategy.SellStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
+import com.icboluo.util.MathUtil;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -71,7 +72,7 @@ public class WeightedDropSellStrategy implements SellStrategy {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         for (StockPosition pos : sellPositions) {
             var dropAbs = quoteMap.get(pos.getStockCode()).getIncreaseRateDay().abs();
-            BigDecimal ratio = dropAbs.divide(totalDropAbs, 4, RoundingMode.DOWN);
+            BigDecimal ratio = MathUtil.divide(dropAbs, totalDropAbs, 4, RoundingMode.DOWN);
             int sellQty = ratio.multiply(BigDecimal.valueOf(pos.getQuantity())).setScale(0, RoundingMode.DOWN).intValue();
             sellQty = (sellQty / 100) * 100;
             // 100股取整

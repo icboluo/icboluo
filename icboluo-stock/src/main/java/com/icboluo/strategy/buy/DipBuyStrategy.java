@@ -3,6 +3,7 @@ package com.icboluo.strategy.buy;
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
 import com.icboluo.util.BuyUtil;
+import com.icboluo.util.MathUtil;
 import com.icboluo.strategy.BuyStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
 import org.springframework.stereotype.Component;
@@ -60,7 +61,7 @@ public class DipBuyStrategy implements BuyStrategy {
             return;
         }
         // 按股票数均分资金
-        BigDecimal fundPerStock = availableFund.divide(BigDecimal.valueOf(validQuotes.size()), 2, RoundingMode.DOWN);
+        BigDecimal fundPerStock = MathUtil.divide(availableFund, validQuotes.size(), 2, RoundingMode.DOWN);
         // 仅对符合跌幅条件的股票执行买入
         for (QuoteVo quote : validQuotes) {
             if (quote.getIncreaseRateDay() != null && quote.getIncreaseRateDay().compareTo(buyThreshold) <= 0) {

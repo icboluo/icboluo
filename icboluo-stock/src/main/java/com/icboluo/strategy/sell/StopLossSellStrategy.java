@@ -2,12 +2,14 @@ package com.icboluo.strategy.sell;
 
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
+import com.icboluo.util.MathUtil;
 import com.icboluo.util.SellUtil;
 import com.icboluo.strategy.SellStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -49,9 +51,9 @@ public class StopLossSellStrategy implements SellStrategy {
             if (cost == null || quote.getClosePrice() == null) {
                 continue;
             }
-            BigDecimal profitRate = quote.getClosePrice().subtract(cost)
-                    .multiply(BigDecimal.valueOf(100))
-                    .divide(cost, 2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal profitRate = MathUtil.divide(
+                    quote.getClosePrice().subtract(cost).multiply(BigDecimal.valueOf(100)),
+                    cost, 2, RoundingMode.HALF_UP);
             if (profitRate.compareTo(threshold) <= 0) {
                 SellUtil.sellAll(context, quote.getStockCode());
             }

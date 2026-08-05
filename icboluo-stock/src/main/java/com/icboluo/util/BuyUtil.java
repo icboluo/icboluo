@@ -30,7 +30,7 @@ public final class BuyUtil {
         if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
             return;
         }
-        BigDecimal qty = fund.divide(price, 0, RoundingMode.DOWN);
+        BigDecimal qty = MathUtil.divide(fund, price, 0, RoundingMode.DOWN);
         int lot = (qty.intValue() / LOT_SIZE) * LOT_SIZE;
         if (lot < LOT_SIZE) {
             return;
@@ -68,7 +68,7 @@ public final class BuyUtil {
         if (quotes.isEmpty() || fund.compareTo(BigDecimal.ZERO) <= 0) {
             return;
         }
-        BigDecimal fundPerStock = fund.divide(BigDecimal.valueOf(quotes.size()), 2, RoundingMode.DOWN);
+        BigDecimal fundPerStock = MathUtil.divide(fund, quotes.size(), 2, RoundingMode.DOWN);
         for (QuoteVo quote : quotes) {
             buyStock(context, quote.getStockCode(), quote.getClosePrice(), fundPerStock);
         }

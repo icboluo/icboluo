@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * 卖出策略通用工具：提供按数量卖出股票、筛选持仓股票行情等共享逻辑。
- * <p>类比买入侧的 {@code BuyHelper}。
+ * <p>类比买入侧的 {@code BuyUtil}。
  */
 public final class SellUtil {
 
@@ -91,7 +91,7 @@ public final class SellUtil {
         if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
             return 0;
         }
-        BigDecimal qty = amount.divide(price, 0, RoundingMode.DOWN);
+        BigDecimal qty = MathUtil.divide(amount, price, 0, RoundingMode.DOWN);
         return (qty.intValue() / LOT_SIZE) * LOT_SIZE;
     }
 
@@ -113,6 +113,6 @@ public final class SellUtil {
         if (totalQty <= 0) {
             return null;
         }
-        return totalAmount.divide(BigDecimal.valueOf(totalQty), 4, RoundingMode.HALF_UP);
+        return MathUtil.divide(totalAmount, totalQty, 4, RoundingMode.HALF_UP);
     }
 }

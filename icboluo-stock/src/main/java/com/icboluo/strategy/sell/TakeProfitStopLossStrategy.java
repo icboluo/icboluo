@@ -5,10 +5,12 @@ import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
 import com.icboluo.strategy.SellStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
+import com.icboluo.util.MathUtil;
 import com.icboluo.util.SellUtil;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -69,9 +71,9 @@ public class TakeProfitStopLossStrategy implements SellStrategy {
             if (cost == null) {
                 continue;
             }
-            BigDecimal profitRate = quote.getClosePrice().subtract(cost)
-                    .multiply(BigDecimal.valueOf(100))
-                    .divide(cost, 2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal profitRate = MathUtil.divide(
+                    quote.getClosePrice().subtract(cost).multiply(BigDecimal.valueOf(100)),
+                    cost, 2, RoundingMode.HALF_UP);
             if (profitRate.compareTo(takeProfit) >= 0 || profitRate.compareTo(stopLoss) <= 0) {
                 SellUtil.sellAll(context, pos.getStockCode());
             }

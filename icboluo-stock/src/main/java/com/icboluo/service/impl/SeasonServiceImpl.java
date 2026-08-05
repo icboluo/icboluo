@@ -20,6 +20,7 @@ import com.icboluo.strategy.StrategyRegistry;
 import com.icboluo.util.I18nException;
 import com.icboluo.websocket.StockWebSocketHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,15 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class SeasonServiceImpl implements SeasonService {
+    /**
+     * 自身代理，用于内部调用时让 @Async / @Transactional 切面生效。
+     * 注意：必须用 @Autowired 字段注入 + @Lazy，不能用构造器注入，
+     * 因为 Lombok 的 @RequiredArgsConstructor 不会把 @Lazy 复制到构造器参数上，
+     * 会导致启动时报循环依赖。
+     */
+    @Autowired
     @Lazy
-    private final SeasonServiceImpl self;
+    private SeasonServiceImpl self;
     private static final int REQUIRED_TRADE_DAYS = 120;
     private static final int MAX_TRADE_DAYS = 300;
     private final StockSeasonMapper stockSeasonMapper;
@@ -68,7 +76,13 @@ public class SeasonServiceImpl implements SeasonService {
         season.setHistoryRevealed(false);
         stockSeasonMapper.insert(season);
         // 查询所有不同交易日期，按日期排序
-        List<LocalDate> allTradeDates = stockDailyMapper.selectList(new LambdaQueryWrapper<StockDaily>().select(StockDaily::getTradeDate).groupBy(StockDaily::getTradeDate).orderByAsc(StockDaily::getTradeDate)).stream().map(StockDaily::getTradeDate).toList();
+        List<LocalDate> allTradeDates = stockDailyMapper.selectList(new LambdaQueryWrapper<StockDaily>()
+                        .select(StockDaily::getTradeDate)
+                        .groupBy(StockDaily::getTradeDate)
+                        .orderByAsc(StockDaily::getTradeDate))
+                .stream()
+                .map(StockDaily::getTradeDate)
+                .toList();
         // 确保有足够的交易日
         if (allTradeDates.isEmpty()) {
             throw new I18nException("stock_daily表无数据，请先通过 /stockQuote/import 导入CSV行情数据");
@@ -333,10 +347,12 @@ public class SeasonServiceImpl implements SeasonService {
      */
     private void executeBotStrategies(Integer seasonId, StockSeason season) {
 // 1. 查询该赛季的所有机器人配置
-        List<StockBotConfig> botConfigs = stockBotConfigMapper.selectList(new LambdaQueryWrapper<StockBotConfig>().eq(StockBotConfig::getSeasonId, seasonId));
+        List<StockBotConfig> botConfigs = stockBotConfigMapper.selectList(new LambdaQueryWrapper<StockBotConfig>()
+                .eq(StockBotConfig::getSeasonId, seasonId));
 // 2. 获取当日行情（转为 QuoteVo 列表）
         StockSeasonQuote seasonQuote = stockSeasonQuoteMapper.selectOne(new LambdaQueryWrapper<StockSeasonQuote>()
-                .eq(StockSeasonQuote::getSeasonId, seasonId).eq(StockSeasonQuote::getTradeDay, season.getCurrentTradeDay()));
+                .eq(StockSeasonQuote::getSeasonId, seasonId)
+                .eq(StockSeasonQuote::getTradeDay, season.getCurrentTradeDay()));
         if (seasonQuote == null) {
             return;
         }
@@ -345,7 +361,9 @@ public class SeasonServiceImpl implements SeasonService {
         for (StockBotConfig config : botConfigs) {
             try {
                 StockAccount botAccount =
-                        stockAccountMapper.selectOne(new LambdaQueryWrapper<StockAccount>().eq(StockAccount::getSeasonId, seasonId).eq(StockAccount::getPlayerName, config.getBotName()));
+                        stockAccountMapper.selectOne(new LambdaQueryWrapper<StockAccount>()
+                                .eq(StockAccount::getSeasonId, seasonId)
+                                .eq(StockAccount::getPlayerName, config.getBotName()));
                 if (botAccount == null) {
                     continue;
                 }
@@ -404,7 +422,8 @@ public class SeasonServiceImpl implements SeasonService {
      * 注册预置机器人：在stock_bot_config中插入6个预置机器人配置，同时为每个创建stock_account
      */
     private void registerPresetBots(Integer seasonId, BigDecimal initialFund) {
-        List<StockBotConfig> presets = List.of(createBotConfig(seasonId, "定投机器人", "FIXED_DCA", "NEVER_SELL", null, null),
+        List<StockBotConfig> presets = List.of(
+                createBotConfig(seasonId, "定投机器人", "FIXED_DCA", "NEVER_SELL", null, null),
                 createBotConfig(seasonId, "波段机器人", "DIP_BUY", "RISE_SELL", "{\"buyThreshold\":-2}", "{\"sellThreshold\":3}"),
                 createBotConfig(seasonId, "趋势机器人", "MOMENTUM_BUY", "WEIGHTED_DROP_SELL", null, null),
                 createBotConfig(seasonId, "逆向机器人", "DIP_BUY", "TIERED_SELL", "{\"buyThreshold\":-2}", null),

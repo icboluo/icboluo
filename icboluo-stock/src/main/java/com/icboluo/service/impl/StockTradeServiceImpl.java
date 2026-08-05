@@ -57,7 +57,8 @@ public class StockTradeServiceImpl implements StockTradeService {
         // 更新持仓（同一股票同一买入交易日合并）
         upsertPosition(account.getId(), co.getStockCode(), co.getQuantity(), season.getCurrentTradeDay());
         // 写交易记录
-        StockTradeRecord record = buildRecord(account.getId(), co.getStockCode(), "BUY", co.getQuantity(), price, amount, season.getCurrentTradeDay());
+        StockTradeRecord record = buildRecord(account.getId(), co.getStockCode(), "BUY", co.getQuantity(),
+                price, amount, season.getCurrentTradeDay());
         stockTradeRecordMapper.insert(record);
         return toVo(record);
     }
@@ -92,7 +93,8 @@ public class StockTradeServiceImpl implements StockTradeService {
         // 减少持仓（从最早批次开始扣减）
         reducePositions(positions, co.getQuantity());
         // 写交易记录
-        StockTradeRecord record = buildRecord(account.getId(), co.getStockCode(), "SELL", co.getQuantity(), price, amount, season.getCurrentTradeDay());
+        StockTradeRecord record = buildRecord(account.getId(), co.getStockCode(), "SELL", co.getQuantity(),
+                price, amount, season.getCurrentTradeDay());
         stockTradeRecordMapper.insert(record);
         return toVo(record);
     }
@@ -186,7 +188,8 @@ public class StockTradeServiceImpl implements StockTradeService {
     /**
      * 构造交易记录实体
      */
-    private StockTradeRecord buildRecord(Integer accountId, String stockCode, String tradeType, Integer quantity, BigDecimal price, BigDecimal amount, Integer tradeDay) {
+    private StockTradeRecord buildRecord(Integer accountId, String stockCode, String tradeType, Integer quantity,
+                                         BigDecimal price, BigDecimal amount, Integer tradeDay) {
         StockTradeRecord record = new StockTradeRecord();
         record.setAccountId(accountId);
         record.setStockCode(stockCode);

@@ -53,4 +53,6 @@ This is a **multi-module Maven reactor** (`packaging=pom`) of independent Spring
 
 **MyBatis-Plus 配置要点（易踩坑）:** `icboluo-common/icboluo-mapper` 中的 `MybatisPlusCompatConfig` 自定义了 `sqlSessionFactory` Bean，会触发 `MybatisPlusAutoConfiguration` 的 `@ConditionalOnMissingBean` 回退，导致 `MybatisPlusProperties` Bean 不被自动注册——表现为启动报 `required a bean of type 'MybatisPlusProperties' that could not be found`。因此该类必须标注 `@EnableConfigurationProperties(MybatisPlusProperties.class)`。各服务的 YAML 配置前缀必须用 `mybatis-plus:`（**不是** `mybatis:`），否则配置项不会被读取；`mapper-locations` 应写为 `classpath*:mapper/**/*.xml`（注意末尾不要有多余的 `.`）。YAML 不允许出现重复的顶级 key：若文件中已存在 `mybatis-plus` 块，需把 `mybatis` 块的配置**合并**进去，而不是再新增一个块（否则报 `Key 'mybatis-plus' is duplicated`）。
 
+**前端项目:** 前端代码仓位于 `D:\IdeaProjects\icboluo_web`（独立于本后端仓库）。涉及前后端联调、接口对接时需到该目录查看前端代码。
+
 **本地 SQLite 数据库:** `icboluo-stock` 等模块在 `simple` 模式下使用 SQLite，库文件位于 `document/sql/document.db`。表名默认由 MyBatis-Plus 将实体类名驼峰转下划线（如 `StockDaily` → `stock_daily`）。需要建表时 DDL 应使用 SQLite 语法（自增用 `INTEGER PRIMARY KEY AUTOINCREMENT`，布尔/日期通常用 `INTEGER`/`TEXT`）。跨库（MySQL ↔ SQLite）数据迁移可用纯 JDBC 程序完成，注意需显式 `Class.forName` 加载 `com.mysql.cj.jdbc.Driver` 与 `org.sqlite.JDBC` 两个驱动，且 sqlite-jdbc 运行时还依赖 `slf4j-api`。所有写入操作建议采用"先清空目标再插入"以保证可重复执行。

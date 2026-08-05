@@ -16,10 +16,12 @@ import com.icboluo.mapper.StockTradeRecordMapper;
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.object.vo.StockChartVo;
 import com.icboluo.service.StockQuoteService;
+import com.icboluo.util.MathUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -64,7 +66,8 @@ public class StockQuoteServiceImpl implements StockQuoteService {
     public StockChartVo getStockChart(Integer seasonId, String stockCode, String playerName) {
         StockChartVo vo = new StockChartVo();
         vo.setStockCode(stockCode);
-        StockInfo info = stockInfoMapper.selectOne(new LambdaQueryWrapper<StockInfo>().eq(StockInfo::getStockCode, stockCode));
+        StockInfo info = stockInfoMapper.selectOne(new LambdaQueryWrapper<StockInfo>()
+                .eq(StockInfo::getStockCode, stockCode));
         vo.setStockName(info != null ? info.getStockName() : stockCode);
 
         // 该赛季所有交易日，按序号升序
@@ -74,7 +77,8 @@ public class StockQuoteServiceImpl implements StockQuoteService {
 
         // 该股票每日行情，按交易日期索引
         Map<java.time.LocalDate, StockDaily> dailyMap = stockDailyMapper.selectList(new LambdaQueryWrapper<StockDaily>()
-                        .eq(StockDaily::getStockCode, stockCode)).stream()
+                        .eq(StockDaily::getStockCode, stockCode))
+                .stream()
                 .collect(Collectors.toMap(StockDaily::getTradeDate, Function.identity(), (a, b) -> a, LinkedHashMap::new));
 
         // 该玩家该股票的买卖记录，按交易日升序
@@ -82,7 +86,8 @@ public class StockQuoteServiceImpl implements StockQuoteService {
 
         // 回放计算每日持仓/成本/收益
         int holdQty = 0;
-        BigDecimal netCost = BigDecimal.ZERO; // 累计买入金额 - 累计卖出金额（净投入）
+        BigDecimal netCost = BigDecimal.ZERO;
+        // 累计买入金额 - 累计卖出金额（净投入）
         List<StockChartVo.PricePoint> prices = new ArrayList<>();
         for (StockSeasonQuote q : quotes) {
             StockDaily daily = dailyMap.get(q.getTradeDate());
@@ -110,14 +115,13 @@ public class StockQuoteServiceImpl implements StockQuoteService {
             }
             // 当日持仓市值与收益
             if (daily != null && daily.getClosePrice() != null && holdQty > 0) {
-                BigDecimal marketValue = daily.getClosePrice().multiply(BigDecimal.valueOf(holdQty)).setScale(2, BigDecimal.ROUND_HALF_UP);
+                BigDecimal marketValue = daily.getClosePrice()
+                        .multiply(BigDecimal.valueOf(holdQty)).setScale(2, BigDecimal.ROUND_HALF_UP);
                 BigDecimal profit = marketValue.subtract(netCost).setScale(2, BigDecimal.ROUND_HALF_UP);
                 point.setHoldMarketValue(marketValue);
                 point.setHoldCost(netCost.setScale(2, BigDecimal.ROUND_HALF_UP));
                 point.setHoldProfit(profit);
-                point.setHoldProfitRate(netCost.compareTo(BigDecimal.ZERO) != 0
-                        ? profit.multiply(HUNDRED).divide(netCost, 2, BigDecimal.ROUND_HALF_UP)
-                        : BigDecimal.ZERO);
+                point.setHoldProfitRate(MathUtil.divide(profit.multiply(HUNDRED), netCost, 2, RoundingMode.HALF_UP));
             } else {
                 point.setHoldMarketValue(BigDecimal.ZERO);
                 point.setHoldCost(netCost.setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -147,9 +151,7 @@ public class StockQuoteServiceImpl implements StockQuoteService {
                 : netCost.negate();
         vo.setStockTotalInvest(totalInvest.setScale(2, BigDecimal.ROUND_HALF_UP));
         vo.setStockProfit(totalProfit.setScale(2, BigDecimal.ROUND_HALF_UP));
-        vo.setStockProfitRate(totalInvest.compareTo(BigDecimal.ZERO) != 0
-                ? totalProfit.multiply(HUNDRED).divide(totalInvest, 2, BigDecimal.ROUND_HALF_UP)
-                : BigDecimal.ZERO);
+        vo.setStockProfitRate(MathUtil.divide(totalProfit.multiply(HUNDRED), totalInvest, 2, RoundingMode.HALF_UP));
         return vo;
     }
 
