@@ -2,7 +2,7 @@ package com.icboluo.strategy.sell;
 
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
-import com.icboluo.strategy.EqualSellStrategy;
+import com.icboluo.util.SellUtil;
 import com.icboluo.strategy.SellStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
 import org.springframework.stereotype.Component;
@@ -14,8 +14,8 @@ import java.util.List;
  * 下跌卖出策略（止损）：持仓收益率跌破阈值时清仓。
  */
 @Component
-public class DropSellStrategy implements SellStrategy {
-    private static final String STRATEGY_ID = "DROP_SELL";
+public class StopLossSellStrategy implements SellStrategy {
+    private static final String STOP_LOSS_SELL = "STOP_LOSS_SELL";
     private static final String STRATEGY_NAME = "下跌卖出";
     private static final String STRATEGY_DESCRIPTION = "持仓收益率为负且低于阈值时卖出全部持仓止损";
     private static final String PARAM_DROP_THRESHOLD = "dropThreshold";
@@ -23,7 +23,7 @@ public class DropSellStrategy implements SellStrategy {
 
     @Override
     public String getId() {
-        return STRATEGY_ID;
+        return STOP_LOSS_SELL;
     }
 
     @Override
@@ -43,9 +43,9 @@ public class DropSellStrategy implements SellStrategy {
 
     @Override
     public void execute(BotExecutionContext context) {
-        BigDecimal threshold = EqualSellStrategy.getDecimalParam(context, PARAM_DROP_THRESHOLD, DEFAULT_DROP_THRESHOLD);
-        for (QuoteVo quote : EqualSellStrategy.filterHeldQuotes(context)) {
-            BigDecimal cost = EqualSellStrategy.costPriceOf(context, quote.getStockCode());
+        BigDecimal threshold = SellUtil.getDecimalParam(context, PARAM_DROP_THRESHOLD, DEFAULT_DROP_THRESHOLD);
+        for (QuoteVo quote : SellUtil.filterHeldQuotes(context)) {
+            BigDecimal cost = SellUtil.costPriceOf(context, quote.getStockCode());
             if (cost == null || quote.getClosePrice() == null) {
                 continue;
             }
@@ -53,7 +53,7 @@ public class DropSellStrategy implements SellStrategy {
                     .multiply(BigDecimal.valueOf(100))
                     .divide(cost, 2, BigDecimal.ROUND_HALF_UP);
             if (profitRate.compareTo(threshold) <= 0) {
-                EqualSellStrategy.sellAll(context, quote.getStockCode());
+                SellUtil.sellAll(context, quote.getStockCode());
             }
         }
     }

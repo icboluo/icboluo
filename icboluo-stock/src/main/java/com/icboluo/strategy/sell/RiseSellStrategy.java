@@ -2,7 +2,7 @@ package com.icboluo.strategy.sell;
 
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
-import com.icboluo.strategy.EqualSellStrategy;
+import com.icboluo.util.SellUtil;
 import com.icboluo.strategy.SellStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
 import org.springframework.stereotype.Component;
@@ -43,10 +43,10 @@ public class RiseSellStrategy implements SellStrategy {
 
     @Override
     public void execute(BotExecutionContext context) {
-        BigDecimal threshold = EqualSellStrategy.getDecimalParam(context, PARAM_SELL_THRESHOLD, DEFAULT_SELL_THRESHOLD);
-        for (QuoteVo quote : EqualSellStrategy.filterHeldQuotes(context)) {
+        BigDecimal threshold = SellUtil.getDecimalParam(context, PARAM_SELL_THRESHOLD, DEFAULT_SELL_THRESHOLD);
+        for (QuoteVo quote : SellUtil.filterHeldQuotes(context)) {
             if (quote.getIncreaseRateDay() != null && quote.getIncreaseRateDay().compareTo(threshold) >= 0) {
-                EqualSellStrategy.sellAll(context, quote.getStockCode());
+                SellUtil.sellAll(context, quote.getStockCode());
             }
         }
     }

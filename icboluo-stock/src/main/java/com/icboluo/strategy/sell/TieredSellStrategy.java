@@ -2,7 +2,7 @@ package com.icboluo.strategy.sell;
 
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
-import com.icboluo.strategy.EqualSellStrategy;
+import com.icboluo.util.SellUtil;
 import com.icboluo.strategy.SellStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
 import org.springframework.stereotype.Component;
@@ -41,12 +41,12 @@ public class TieredSellStrategy implements SellStrategy {
 
     @Override
     public void execute(BotExecutionContext context) {
-        for (QuoteVo quote : EqualSellStrategy.filterHeldQuotes(context)) {
+        for (QuoteVo quote : SellUtil.filterHeldQuotes(context)) {
             if (quote.getIncreaseRateDay() == null) {
                 continue;
             }
             BigDecimal rate = quote.getIncreaseRateDay();
-            int held = EqualSellStrategy.heldQuantity(context, quote.getStockCode());
+            int held = SellUtil.heldQuantity(context, quote.getStockCode());
             if (held <= 0) {
                 continue;
             }
@@ -61,7 +61,7 @@ public class TieredSellStrategy implements SellStrategy {
                 continue;
             }
             if (sellPart > 0) {
-                EqualSellStrategy.sellStock(context, quote.getStockCode(), sellPart);
+                SellUtil.sellStock(context, quote.getStockCode(), sellPart);
             }
         }
     }

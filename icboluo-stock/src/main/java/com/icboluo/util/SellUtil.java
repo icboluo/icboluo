@@ -1,7 +1,8 @@
-package com.icboluo.strategy;
+package com.icboluo.util;
 
 import com.icboluo.object.co.TradeCo;
 import com.icboluo.object.vo.QuoteVo;
+import com.icboluo.strategy.BotExecutionContext;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,13 +10,13 @@ import java.util.List;
 
 /**
  * 卖出策略通用工具：提供按数量卖出股票、筛选持仓股票行情等共享逻辑。
- * <p>类比买入侧的 {@code EqualBuyStrategy}。
+ * <p>类比买入侧的 {@code BuyHelper}。
  */
-public final class EqualSellStrategy {
+public final class SellUtil {
 
     private static final int LOT_SIZE = 100;
 
-    private EqualSellStrategy() {
+    private SellUtil() {
     }
 
     /**

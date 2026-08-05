@@ -29,6 +29,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -405,7 +406,7 @@ public class SeasonServiceImpl implements SeasonService {
     private void registerPresetBots(Integer seasonId, BigDecimal initialFund) {
         List<StockBotConfig> presets = List.of(createBotConfig(seasonId, "定投机器人", "FIXED_DCA", "NEVER_SELL", null, null),
                 createBotConfig(seasonId, "波段机器人", "DIP_BUY", "RISE_SELL", "{\"buyThreshold\":-2}", "{\"sellThreshold\":3}"),
-                createBotConfig(seasonId, "趋势机器人", "MOMENTUM_BUY", "DROP_SELL", null, null),
+                createBotConfig(seasonId, "趋势机器人", "MOMENTUM_BUY", "WEIGHTED_DROP_SELL", null, null),
                 createBotConfig(seasonId, "逆向机器人", "DIP_BUY", "TIERED_SELL", "{\"buyThreshold\":-2}", null),
                 createBotConfig(seasonId, "止盈止损机器人", "EQUAL_BUY", "TAKE_PROFIT_STOP_LOSS", null, "{\"takeProfit\":10,\"stopLoss\":-5}"),
                 createBotConfig(seasonId, "分批建仓机器人", "SCALE_IN", "RISE_SELL", "{\"totalShares\":5}", "{\"sellThreshold\":3}"));
@@ -446,7 +447,9 @@ public class SeasonServiceImpl implements SeasonService {
      * 机器人不存在时自动加入赛季
      */
     private void addBotIfAbsent(Integer seasonId, String botName, BigDecimal initialFund) {
-        Long count = stockAccountMapper.selectCount(new LambdaQueryWrapper<StockAccount>().eq(StockAccount::getSeasonId, seasonId).eq(StockAccount::getPlayerName, botName));
+        Long count = stockAccountMapper.selectCount(new LambdaQueryWrapper<StockAccount>()
+                .eq(StockAccount::getSeasonId, seasonId)
+                .eq(StockAccount::getPlayerName, botName));
         if (count == 0) {
             StockAccount account = new StockAccount();
             account.setSeasonId(seasonId);
@@ -487,6 +490,59 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
     /**
+     * 赛季结束时强制清仓：所有账户的持仓按当日收盘价卖出
+     */
+    private void forceLiquidateSeason(Integer seasonId, StockSeason season) {
+        var seasonQuote = stockSeasonQuoteMapper.selectOne(new LambdaQueryWrapper<StockSeasonQuote>()
+                .eq(StockSeasonQuote::getSeasonId, seasonId)
+                .eq(StockSeasonQuote::getTradeDay, season.getCurrentTradeDay()));
+        if (seasonQuote == null) {
+            return;
+        }
+        var tradeDate = seasonQuote.getTradeDate();
+        var accounts = stockAccountMapper.selectList(new LambdaQueryWrapper<StockAccount>().eq(StockAccount::getSeasonId, seasonId));
+        for (StockAccount account : accounts) {
+            var positions = stockPositionMapper.selectList(new LambdaQueryWrapper<StockPosition>()
+                    .eq(StockPosition::getAccountId, account.getId()));
+            if (positions.isEmpty()) {
+                continue;
+            }
+            // 批量查询收盘价
+            var stockCodes = positions.stream().map(StockPosition::getStockCode).distinct().toList();
+            var closePriceMap = stockDailyMapper.selectList(new LambdaQueryWrapper<StockDaily>()
+                            .in(StockDaily::getStockCode, stockCodes)
+                            .eq(StockDaily::getTradeDate, tradeDate))
+                    .stream()
+                    .collect(Collectors.toMap(StockDaily::getStockCode, StockDaily::getClosePrice, (a, b) -> a));
+            BigDecimal totalProceeds = BigDecimal.ZERO;
+            for (StockPosition pos : positions) {
+                var closePrice = closePriceMap.getOrDefault(pos.getStockCode(), BigDecimal.ZERO);
+                var proceeds = closePrice.multiply(BigDecimal.valueOf(pos.getQuantity()));
+                totalProceeds = totalProceeds.add(proceeds);
+
+                // 创建卖出交易记录
+                var record = new StockTradeRecord();
+                record.setAccountId(account.getId());
+                record.setStockCode(pos.getStockCode());
+                record.setTradeType("SELL");
+                record.setQuantity(pos.getQuantity());
+                record.setPrice(closePrice);
+                record.setAmount(proceeds);
+                record.setTradeDay(season.getCurrentTradeDay());
+                record.setCreateTime(LocalDateTime.now());
+                stockTradeRecordMapper.insert(record);
+
+                // 删除持仓
+                stockPositionMapper.deleteById(pos.getId());
+            }
+            // 卖出所得加入可用资金
+            account.setAvailableFund(account.getAvailableFund().add(totalProceeds));
+            stockAccountMapper.updateById(account);
+        }
+    }
+
+
+    /**
      * 判断是否为纯机器人赛季：赛季没有任何真人玩家账户。
      * 判定依据：机器人账户名都登记在 stock_bot_config.bot_name 中，
      * 凡是账户名不在任何 bot_name 中的，即视为真人玩家。
@@ -521,8 +577,12 @@ public class SeasonServiceImpl implements SeasonService {
         vo.setCurrentTradeDay(season.getCurrentTradeDay());
         vo.setTotalTradeDays(season.getTotalTradeDays());
         vo.setHistoryRevealed(season.getHistoryRevealed());
-        vo.setHistoryStartDate(season.getHistoryStartDate());
-        vo.setHistoryEndDate(season.getHistoryEndDate());
+
+        // 仅在 historyRevealed=true 时填充历史日期
+        if (Boolean.TRUE.equals(season.getHistoryRevealed())) {
+            vo.setHistoryStartDate(season.getHistoryStartDate());
+            vo.setHistoryEndDate(season.getHistoryEndDate());
+        }
         return vo;
     }
 }

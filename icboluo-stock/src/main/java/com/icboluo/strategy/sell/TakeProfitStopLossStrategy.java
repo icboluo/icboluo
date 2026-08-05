@@ -1,14 +1,17 @@
 package com.icboluo.strategy.sell;
 
+import com.icboluo.entity.StockPosition;
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.strategy.BotExecutionContext;
-import com.icboluo.strategy.EqualSellStrategy;
 import com.icboluo.strategy.SellStrategy;
 import com.icboluo.strategy.StrategyParamMeta;
+import com.icboluo.util.SellUtil;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 止盈止损策略：持仓收益率达到止盈线清仓，跌破止损线清仓。
@@ -47,18 +50,30 @@ public class TakeProfitStopLossStrategy implements SellStrategy {
 
     @Override
     public void execute(BotExecutionContext context) {
-        BigDecimal takeProfit = EqualSellStrategy.getDecimalParam(context, PARAM_TAKE_PROFIT, DEFAULT_TAKE_PROFIT);
-        BigDecimal stopLoss = EqualSellStrategy.getDecimalParam(context, PARAM_STOP_LOSS, DEFAULT_STOP_LOSS);
-        for (QuoteVo quote : EqualSellStrategy.filterHeldQuotes(context)) {
-            BigDecimal cost = EqualSellStrategy.costPriceOf(context, quote.getStockCode());
-            if (cost == null || quote.getClosePrice() == null) {
+        BigDecimal takeProfit = SellUtil.getDecimalParam(context, PARAM_TAKE_PROFIT, DEFAULT_TAKE_PROFIT);
+        BigDecimal stopLoss = SellUtil.getDecimalParam(context, PARAM_STOP_LOSS, DEFAULT_STOP_LOSS);
+        int currentTradeDay = context.getSeason().getCurrentTradeDay();
+        Map<String, QuoteVo> quoteMap = context.getQuotes()
+                .stream()
+                .collect(Collectors.toMap(QuoteVo::getStockCode, q -> q, (a, b) -> a));
+        for (StockPosition pos : context.getPositions()) {
+            // T+1：当天买入的股票不可卖出
+            if (pos.getBuyTradeDay() >= currentTradeDay) {
+                continue;
+            }
+            var quote = quoteMap.get(pos.getStockCode());
+            if (quote == null || quote.getClosePrice() == null) {
+                continue;
+            }
+            BigDecimal cost = SellUtil.costPriceOf(context, pos.getStockCode());
+            if (cost == null) {
                 continue;
             }
             BigDecimal profitRate = quote.getClosePrice().subtract(cost)
                     .multiply(BigDecimal.valueOf(100))
                     .divide(cost, 2, BigDecimal.ROUND_HALF_UP);
             if (profitRate.compareTo(takeProfit) >= 0 || profitRate.compareTo(stopLoss) <= 0) {
-                EqualSellStrategy.sellAll(context, quote.getStockCode());
+                SellUtil.sellAll(context, pos.getStockCode());
             }
         }
     }

@@ -51,7 +51,7 @@ public class BotStrategyController {
         List<PresetBotVo> presets = new ArrayList<>();
         presets.add(buildPreset("定投机器人", "FIXED_DCA", "NEVER_SELL", null, null));
         presets.add(buildPreset("波段机器人", "DIP_BUY", "RISE_SELL", "{\"buyThreshold\":-2}", "{\"sellThreshold\":3}"));
-        presets.add(buildPreset("趋势机器人", "MOMENTUM_BUY", "DROP_SELL", null, null));
+        presets.add(buildPreset("趋势机器人", "MOMENTUM_BUY", "WEIGHTED_DROP_SELL", null, null));
         presets.add(buildPreset("逆向机器人", "DIP_BUY", "TIERED_SELL", "{\"buyThreshold\":-2}", null));
         presets.add(buildPreset("止盈止损机器人", "EQUAL_BUY", "TAKE_PROFIT_STOP_LOSS", null, "{\"takeProfit\":10,\"stopLoss\":-5}"));
         presets.add(buildPreset("分批建仓机器人", "SCALE_IN", "RISE_SELL", "{\"totalShares\":5}", "{\"sellThreshold\":3}"));
