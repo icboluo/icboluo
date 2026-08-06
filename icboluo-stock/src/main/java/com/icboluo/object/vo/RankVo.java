@@ -3,7 +3,6 @@ package com.icboluo.object.vo;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * 排行榜响应对象
@@ -30,8 +29,4 @@ public class RankVo {
      * 持仓股票种数
      */
     private Integer positionCount;
-    /**
-     * 持仓股票名称列表
-     */
-    private List<String> positionStockNames;
 }

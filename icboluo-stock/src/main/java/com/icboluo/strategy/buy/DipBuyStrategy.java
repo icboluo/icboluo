@@ -46,23 +46,14 @@ public class DipBuyStrategy implements BuyStrategy {
 
     @Override
     public void execute(BotExecutionContext context) {
-        BigDecimal buyThreshold;
-        if (context.getParams() != null && context.getParams().containsKey(PARAM_BUY_THRESHOLD)) {
-            buyThreshold = new BigDecimal(context.getParams().get(PARAM_BUY_THRESHOLD).toString());
-        } else {
-            buyThreshold = DEFAULT_BUY_THRESHOLD;
-        }
-        BigDecimal availableFund = context.getAccount().getAvailableFund();
-        if (availableFund.compareTo(BigDecimal.ZERO) <= 0) {
-            return;
-        }
+        BigDecimal buyThreshold = BuyUtil.getDecimalParam(context, PARAM_BUY_THRESHOLD, DEFAULT_BUY_THRESHOLD);
         List<QuoteVo> validQuotes = BuyUtil.filterValidQuotes(context.getQuotes());
         if (validQuotes.isEmpty()) {
             return;
         }
         // 按股票数均分资金
-        BigDecimal fundPerStock = MathUtil.divide(availableFund, validQuotes.size(), 2, RoundingMode.DOWN);
-        // 仅对符合跌幅条件的股票执行买入
+        BigDecimal fundPerStock = MathUtil.divide(context.getAccount().getAvailableFund(), validQuotes.size(), 2, RoundingMode.DOWN);
+        // 仅对符合跌幅条件的股票执行买入（buyStock 内部已校验价格与余额）
         for (QuoteVo quote : validQuotes) {
             if (quote.getIncreaseRateDay() != null && quote.getIncreaseRateDay().compareTo(buyThreshold) <= 0) {
                 BuyUtil.buyStock(context, quote.getStockCode(), quote.getClosePrice(), fundPerStock);

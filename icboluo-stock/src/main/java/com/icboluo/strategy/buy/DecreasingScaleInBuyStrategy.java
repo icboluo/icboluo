@@ -18,7 +18,7 @@ import java.util.List;
  * 在多个交易日平滑建仓，降低一次性买入的时点风险。
  */
 @Component
-public class ScaleInBuyStrategy implements BuyStrategy {
+public class DecreasingScaleInBuyStrategy implements BuyStrategy {
     private static final String STRATEGY_ID = "SCALE_IN";
     private static final String STRATEGY_NAME = "分批建仓";
     private static final String STRATEGY_DESCRIPTION = "将资金分成多批逐批均分买入，平滑建仓";

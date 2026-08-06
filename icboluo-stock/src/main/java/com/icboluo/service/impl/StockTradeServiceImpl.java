@@ -3,12 +3,14 @@ package com.icboluo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.icboluo.util.BeanUtil;
 import com.icboluo.entity.*;
 import com.icboluo.mapper.*;
 import com.icboluo.object.co.TradeCo;
 import com.icboluo.object.vo.TradeRecordVo;
 import com.icboluo.service.StockTradeService;
 import com.icboluo.util.I18nException;
+import com.icboluo.websocket.StockWebSocketHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,7 @@ public class StockTradeServiceImpl implements StockTradeService {
     private final StockSeasonMapper stockSeasonMapper;
     private final StockSeasonQuoteMapper stockSeasonQuoteMapper;
     private final StockDailyMapper stockDailyMapper;
+    private final StockWebSocketHandler webSocketHandler;
 
     @Override
     @Transactional
@@ -60,6 +63,8 @@ public class StockTradeServiceImpl implements StockTradeService {
         StockTradeRecord record = buildRecord(account.getId(), co.getStockCode(), "BUY", co.getQuantity(),
                 price, amount, season.getCurrentTradeDay());
         stockTradeRecordMapper.insert(record);
+        // WebSocket 推送交易事件
+        webSocketHandler.broadcastToSeason(co.getSeasonId(), "trade", toVo(record));
         return toVo(record);
     }
 
@@ -96,6 +101,8 @@ public class StockTradeServiceImpl implements StockTradeService {
         StockTradeRecord record = buildRecord(account.getId(), co.getStockCode(), "SELL", co.getQuantity(),
                 price, amount, season.getCurrentTradeDay());
         stockTradeRecordMapper.insert(record);
+        // WebSocket 推送交易事件
+        webSocketHandler.broadcastToSeason(co.getSeasonId(), "trade", toVo(record));
         return toVo(record);
     }
 
@@ -108,7 +115,7 @@ public class StockTradeServiceImpl implements StockTradeService {
                 .orderByDesc(StockTradeRecord::getTradeDay)
                 .orderByDesc(StockTradeRecord::getId));
         List<TradeRecordVo> vos = records.stream().map(this::toVo).toList();
-        return new PageInfo<>(vos);
+        return BeanUtil.pageInfoConvert(PageInfo.of(records), vos);
     }
 
     /**

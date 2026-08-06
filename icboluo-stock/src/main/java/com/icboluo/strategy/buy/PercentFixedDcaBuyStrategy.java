@@ -13,15 +13,15 @@ import java.math.RoundingMode;
 import java.util.List;
 
 /**
- * 定投买入策略
- * <p>每个交易日把固定比例（默认 10%）的可用资金均分到当日所有有效股票买入，
- * 长期坚持摊平成本，不择时。
+ * 按比例定投买入策略（PercentFixedDca）
+ * <p>每个交易日按可用资金的固定百分比（默认 10%）计算本期投入金额，再均分到当日所有有效股票买入，
+ * 长期坚持以固定比例投入摊平成本，不择时。
  */
 @Component
-public class FixedDcaStrategy implements BuyStrategy {
-    private static final String STRATEGY_ID = "FIXED_DCA";
-    private static final String STRATEGY_NAME = "定投买入";
-    private static final String STRATEGY_DESCRIPTION = "每个交易日按固定比例资金均分买入所有股票";
+public class PercentFixedDcaBuyStrategy implements BuyStrategy {
+    private static final String STRATEGY_ID = "PERCENT_FIXED_DCA";
+    private static final String STRATEGY_NAME = "按比例定投";
+    private static final String STRATEGY_DESCRIPTION = "每个交易日按可用资金的固定比例均分买入所有股票";
     private static final String PARAM_INVEST_RATIO = "investRatio";
     private static final BigDecimal DEFAULT_INVEST_RATIO = new BigDecimal("0.1");
 
@@ -59,6 +59,7 @@ public class FixedDcaStrategy implements BuyStrategy {
         if (validQuotes.isEmpty()) {
             return;
         }
+        // 按可用资金的固定比例计算本期投入金额
         BigDecimal investFund = availableFund.multiply(ratio).setScale(2, RoundingMode.DOWN);
         // 将本期投入资金均分至所有股票买入
         BigDecimal fundPerStock = MathUtil.divide(investFund, validQuotes.size(), 2, RoundingMode.DOWN);

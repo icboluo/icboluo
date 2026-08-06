@@ -17,15 +17,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 追跌卖出策略
- * <p>按跌幅加权卖出持仓，跌幅越大的持仓卖出越多。
+ * 按跌幅加权卖出策略
+ * <p>根据持仓当日跌幅进行加权，跌幅越大的持仓卖出占比越高，跌幅越小的卖出占比越低，
+ * 优先减持弱势仓位以控制下行风险。
  */
 @Slf4j
 @Component
 public class WeightedDropSellStrategy implements SellStrategy {
     private static final String STRATEGY_ID = "WEIGHTED_DROP_SELL";
-    String STRATEGY_NAME = "追跌卖出";
-    String STRATEGY_DESCRIPTION = "按跌幅加权卖出持仓";
+    String STRATEGY_NAME = "按跌幅加权卖出";
+    String STRATEGY_DESCRIPTION = "根据持仓跌幅加权卖出，跌幅越大卖出越多";
 
     @Override
     public String getId() {

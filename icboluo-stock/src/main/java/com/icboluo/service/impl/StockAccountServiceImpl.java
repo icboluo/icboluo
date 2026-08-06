@@ -121,20 +121,17 @@ public class StockAccountServiceImpl implements StockAccountService {
             BigDecimal initialFund = season.getInitialFund();
             BigDecimal profitRate = MathUtil.divide(totalAsset.subtract(initialFund), initialFund, 4, RoundingMode.HALF_UP)
                     .multiply(BigDecimal.valueOf(100));
-            // 持仓股票名称列表
-            Map<String, String> stockNameMap = getStockNameMap(positions);
-            List<String> positionStockNames = positions
+            // 持仓股票种数（按股票代码去重）
+            long positionCount = positions
                     .stream()
                     .map(StockPosition::getStockCode)
                     .distinct()
-                    .map(code -> stockNameMap.getOrDefault(code, code))
-                    .toList();
+                    .count();
             RankVo rankVO = new RankVo();
             rankVO.setPlayerName(account.getPlayerName());
             rankVO.setTotalAsset(totalAsset);
             rankVO.setProfitRate(profitRate);
-            rankVO.setPositionCount(positionStockNames.size());
-            rankVO.setPositionStockNames(positionStockNames);
+            rankVO.setPositionCount((int) positionCount);
             rankList.add(rankVO);
         }
         // 按 totalAsset 降序排列并设置排名

@@ -59,8 +59,8 @@ public class SeasonServiceImpl implements SeasonService {
      * [SQLITE_BUSY] database is locked。用全局锁保证任意时刻只有一个线程在写库推进。
      */
     private static final ReentrantLock ADVANCE_LOCK = new ReentrantLock();
-    private static final int REQUIRED_TRADE_DAYS = 120;
-    private static final int MAX_TRADE_DAYS = 300;
+    private static final int REQUIRED_TRADE_DAYS = 10;
+    private static final int MAX_TRADE_DAYS = 200;
     private final StockSeasonMapper stockSeasonMapper;
     private final StockSeasonQuoteMapper stockSeasonQuoteMapper;
     private final StockAccountMapper stockAccountMapper;
@@ -99,7 +99,7 @@ public class SeasonServiceImpl implements SeasonService {
         if (allTradeDates.size() < REQUIRED_TRADE_DAYS) {
             throw new I18nException("历史行情数据不足，当前" + allTradeDates.size() + "个交易日，至少需要" + REQUIRED_TRADE_DAYS + "个");
         }
-        // 随机确定赛季长度 [120, 300]，不超过可用交易日总数
+        // 随机确定赛季长度 [10, 200]，不超过可用交易日总数
         int tradeDays = REQUIRED_TRADE_DAYS + (int) (Math.random() * (MAX_TRADE_DAYS - REQUIRED_TRADE_DAYS + 1));
         tradeDays = Math.min(tradeDays, allTradeDates.size());
         int maxStartIndex = allTradeDates.size() - tradeDays;
@@ -447,7 +447,7 @@ public class SeasonServiceImpl implements SeasonService {
      */
     private void registerPresetBots(Integer seasonId, BigDecimal initialFund) {
         List<StockBotConfig> presets = List.of(
-                createBotConfig(seasonId, "定投机器人", "FIXED_DCA", "NEVER_SELL", null, null),
+                createBotConfig(seasonId, "定投机器人", "PERCENT_FIXED_DCA", "NEVER_SELL", null, null),
                 createBotConfig(seasonId, "波段机器人", "DIP_BUY", "RISE_SELL", "{\"buyThreshold\":-2}", "{\"sellThreshold\":3}"),
                 createBotConfig(seasonId, "趋势机器人", "MOMENTUM_BUY", "WEIGHTED_DROP_SELL", null, null),
                 createBotConfig(seasonId, "逆向机器人", "DIP_BUY", "TIERED_SELL", "{\"buyThreshold\":-2}", null),

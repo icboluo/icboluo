@@ -49,7 +49,7 @@ public class BotStrategyController {
     @PostMapping("preset/list")
     public List<PresetBotVo> presetList() {
         List<PresetBotVo> presets = new ArrayList<>();
-        presets.add(buildPreset("定投机器人", "FIXED_DCA", "NEVER_SELL", null, null));
+        presets.add(buildPreset("定投机器人", "PERCENT_FIXED_DCA", "NEVER_SELL", null, null));
         presets.add(buildPreset("波段机器人", "DIP_BUY", "RISE_SELL", "{\"buyThreshold\":-2}", "{\"sellThreshold\":3}"));
         presets.add(buildPreset("趋势机器人", "MOMENTUM_BUY", "WEIGHTED_DROP_SELL", null, null));
         presets.add(buildPreset("逆向机器人", "DIP_BUY", "TIERED_SELL", "{\"buyThreshold\":-2}", null));

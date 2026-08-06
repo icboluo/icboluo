@@ -17,15 +17,15 @@ import java.util.List;
  */
 @Component
 public class StopLossSellStrategy implements SellStrategy {
-    private static final String STOP_LOSS_SELL = "STOP_LOSS_SELL";
-    private static final String STRATEGY_NAME = "下跌卖出";
+    private static final String STRATEGY_ID = "STOP_LOSS_SELL";
+    private static final String STRATEGY_NAME = "止损卖出";
     private static final String STRATEGY_DESCRIPTION = "持仓收益率为负且低于阈值时卖出全部持仓止损";
     private static final String PARAM_DROP_THRESHOLD = "dropThreshold";
     private static final BigDecimal DEFAULT_DROP_THRESHOLD = new BigDecimal("-5");
 
     @Override
     public String getId() {
-        return STOP_LOSS_SELL;
+        return STRATEGY_ID;
     }
 
     @Override
