@@ -354,11 +354,7 @@ public class SeasonServiceImpl implements SeasonService {
             vo.setStockCode(daily.getStockCode());
             StockInfo info = infoMap.get(daily.getStockCode());
             vo.setStockName(info != null ? info.getStockName() : daily.getStockCode());
-            vo.setOpenPrice(daily.getOpenPrice());
             vo.setClosePrice(daily.getClosePrice());
-            vo.setHighPrice(daily.getHighPrice());
-            vo.setLowPrice(daily.getLowPrice());
-            vo.setVolume(daily.getVolume());
             vo.setIncreaseRateDay(daily.getIncreaseRateDay());
             return vo;
         }).toList();

@@ -43,4 +43,8 @@ public class PresetBotVo {
      * 卖出策略参数（JSON字符串）
      */
     private String sellParams;
+    /**
+     * 是否预置机器人（预置不可删除）
+     */
+    private Boolean isPreset;
 }

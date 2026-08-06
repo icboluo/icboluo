@@ -15,4 +15,6 @@ public interface StockAccountService {
     List<ProfitPointVo> getProfitCurve(Integer seasonId, String playerName);
 
     List<PositionDistributionVo> getPositionDistribution(Integer seasonId, String playerName);
+
+    List<String> listPlayers(Integer seasonId);
 }

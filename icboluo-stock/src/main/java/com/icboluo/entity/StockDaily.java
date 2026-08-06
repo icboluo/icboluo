@@ -32,25 +32,9 @@ public class StockDaily implements Serializable {
      */
     private LocalDate tradeDate;
     /**
-     * 开盘价
-     */
-    private BigDecimal openPrice;
-    /**
      * 收盘价（作为模拟交易的成交价）
      */
     private BigDecimal closePrice;
-    /**
-     * 最高价
-     */
-    private BigDecimal highPrice;
-    /**
-     * 最低价
-     */
-    private BigDecimal lowPrice;
-    /**
-     * 成交量（手）
-     */
-    private Long volume;
     /**
      * 日涨跌幅（%）
      */

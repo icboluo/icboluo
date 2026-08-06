@@ -14,7 +14,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,22 +43,19 @@ public class BotStrategyController {
     }
 
     /**
-     * 查询预置机器人列表
+     * 查询机器人列表（预置机器人与组合机器人合并返回，预置不可删除）
      */
-    @PostMapping("preset/list")
-    public List<PresetBotVo> presetList() {
-        List<PresetBotVo> presets = new ArrayList<>();
-        presets.add(buildPreset("定投机器人", "PERCENT_FIXED_DCA", "NEVER_SELL", null, null));
-        presets.add(buildPreset("波段机器人", "DIP_BUY", "RISE_SELL", "{\"buyThreshold\":-2}", "{\"sellThreshold\":3}"));
-        presets.add(buildPreset("趋势机器人", "MOMENTUM_BUY", "WEIGHTED_DROP_SELL", null, null));
-        presets.add(buildPreset("逆向机器人", "DIP_BUY", "TIERED_SELL", "{\"buyThreshold\":-2}", null));
-        presets.add(buildPreset("止盈止损机器人", "EQUAL_BUY", "TAKE_PROFIT_STOP_LOSS", null, "{\"takeProfit\":10,\"stopLoss\":-5}"));
-        presets.add(buildPreset("分批建仓机器人", "SCALE_IN", "RISE_SELL", "{\"totalShares\":5}", "{\"sellThreshold\":3}"));
-        return presets;
+    @PostMapping("list")
+    public List<PresetBotVo> list(@RequestBody BotComposeCo co) {
+        List<StockBotConfig> configs = stockBotConfigMapper.selectList(new LambdaQueryWrapper<StockBotConfig>()
+                .eq(StockBotConfig::getSeasonId, co.getSeasonId())
+                .orderByAsc(StockBotConfig::getIsPreset)
+                .orderByAsc(StockBotConfig::getId));
+        return configs.stream().map(this::toPresetBotVo).toList();
     }
 
     /**
-     * 查询组合机器人列表
+     * 查询组合机器人列表（兼容保留）
      */
     @PostMapping("compose/list")
     public List<PresetBotVo> composeList(@RequestBody BotComposeCo co) {
@@ -124,21 +120,6 @@ public class BotStrategyController {
         return vo;
     }
 
-    private PresetBotVo buildPreset(String name, String buyStrategyId, String sellStrategyId, String buyParams, String sellParams) {
-        PresetBotVo vo = new PresetBotVo();
-        vo.setName(name);
-        vo.setBotName(name);
-        vo.setBuyStrategyId(buyStrategyId);
-        vo.setSellStrategyId(sellStrategyId);
-        vo.setBuyParams(buyParams);
-        vo.setSellParams(sellParams);
-        BuyStrategy buyStrategy = strategyRegistry.getBuyStrategy(buyStrategyId);
-        vo.setBuyStrategyName(buyStrategy != null ? buyStrategy.getName() : buyStrategyId);
-        SellStrategy sellStrategy = strategyRegistry.getSellStrategy(sellStrategyId);
-        vo.setSellStrategyName(sellStrategy != null ? sellStrategy.getName() : sellStrategyId);
-        return vo;
-    }
-
     private PresetBotVo toPresetBotVo(StockBotConfig config) {
         PresetBotVo vo = new PresetBotVo();
         vo.setId(config.getId());
@@ -148,6 +129,7 @@ public class BotStrategyController {
         vo.setSellStrategyId(config.getSellStrategyId());
         vo.setBuyParams(config.getBuyParams());
         vo.setSellParams(config.getSellParams());
+        vo.setIsPreset(config.getIsPreset());
         BuyStrategy buyStrategy = strategyRegistry.getBuyStrategy(config.getBuyStrategyId());
         vo.setBuyStrategyName(buyStrategy != null ? buyStrategy.getName() : config.getBuyStrategyId());
         SellStrategy sellStrategy = strategyRegistry.getSellStrategy(config.getSellStrategyId());

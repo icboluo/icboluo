@@ -28,7 +28,7 @@ public class StockChartVo {
     private BigDecimal stockProfitRate;
 
     /**
-     * 价格走势：每个交易日的OHLCV数据
+     * 价格走势：每个交易日的收盘价等数据
      */
     private List<PricePoint> prices;
     /**
@@ -42,10 +42,7 @@ public class StockChartVo {
          * 赛季内第几个交易日（从1开始）
          */
         private int tradeDay;
-        private BigDecimal openPrice;
         private BigDecimal closePrice;
-        private BigDecimal highPrice;
-        private BigDecimal lowPrice;
         private BigDecimal increaseRateDay;
         /**
          * 当日持仓市值（仅当玩家持有该股票时有值）

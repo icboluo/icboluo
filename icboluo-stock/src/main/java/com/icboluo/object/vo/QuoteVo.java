@@ -18,25 +18,9 @@ public class QuoteVo {
      */
     private String stockName;
     /**
-     * 开盘价
-     */
-    private BigDecimal openPrice;
-    /**
      * 收盘价
      */
     private BigDecimal closePrice;
-    /**
-     * 最高价
-     */
-    private BigDecimal highPrice;
-    /**
-     * 最低价
-     */
-    private BigDecimal lowPrice;
-    /**
-     * 成交量
-     */
-    private Long volume;
     /**
      * 日涨跌幅
      */

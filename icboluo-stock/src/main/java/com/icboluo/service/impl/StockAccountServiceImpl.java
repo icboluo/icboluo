@@ -202,6 +202,20 @@ public class StockAccountServiceImpl implements StockAccountService {
     }
 
     @Override
+    public List<String> listPlayers(Integer seasonId) {
+        if (stockSeasonMapper.selectById(seasonId) == null) {
+            throw new I18nException("赛季不存在");
+        }
+        return stockAccountMapper.selectList(new LambdaQueryWrapper<StockAccount>()
+                .eq(StockAccount::getSeasonId, seasonId))
+                .stream()
+                .map(StockAccount::getPlayerName)
+                .distinct()
+                .sorted()
+                .toList();
+    }
+
+    @Override
     public List<PositionDistributionVo> getPositionDistribution(Integer seasonId, String playerName) {
         StockSeason season = stockSeasonMapper.selectById(seasonId);
         if (season == null) {

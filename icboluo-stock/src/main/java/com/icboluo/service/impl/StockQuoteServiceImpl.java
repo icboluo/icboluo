@@ -94,10 +94,7 @@ public class StockQuoteServiceImpl implements StockQuoteService {
             StockChartVo.PricePoint point = new StockChartVo.PricePoint();
             point.setTradeDay(q.getTradeDay());
             if (daily != null) {
-                point.setOpenPrice(daily.getOpenPrice());
                 point.setClosePrice(daily.getClosePrice());
-                point.setHighPrice(daily.getHighPrice());
-                point.setLowPrice(daily.getLowPrice());
                 point.setIncreaseRateDay(daily.getIncreaseRateDay());
             }
             // 处理该交易日发生的买卖
@@ -132,12 +129,16 @@ public class StockQuoteServiceImpl implements StockQuoteService {
         }
         vo.setPrices(prices);
 
-        // 买卖标记点
+        // 买卖标记点：价格统一取当日收盘价，确保与走势图收盘价完全一致
+        Map<Integer, StockDaily> quoteDailyMap = dailyMap.values().stream()
+                .collect(Collectors.toMap(d -> tradeDayByDate(quotes, d.getTradeDate()), Function.identity(), (a, b) -> a));
         List<StockChartVo.TradeMarker> markers = records.stream().map(r -> {
             StockChartVo.TradeMarker m = new StockChartVo.TradeMarker();
             m.setTradeDay(r.getTradeDay());
             m.setTradeType(r.getTradeType());
-            m.setPrice(r.getPrice());
+            // 以当日收盘价为买卖点，保证与收盘价线重合
+            StockDaily d = quoteDailyMap.get(r.getTradeDay());
+            m.setPrice(d != null && d.getClosePrice() != null ? d.getClosePrice() : r.getPrice());
             m.setQuantity(r.getQuantity());
             m.setAmount(r.getAmount());
             return m;
@@ -175,6 +176,17 @@ public class StockQuoteServiceImpl implements StockQuoteService {
                 .stream().map(StockTradeRecord::getStockCode).distinct().toList();
     }
 
+    /**
+     * 根据交易日期反查赛季内交易日序号
+     */
+    private Integer tradeDayByDate(List<StockSeasonQuote> quotes, java.time.LocalDate date) {
+        return quotes.stream()
+                .filter(q -> q.getTradeDate().equals(date))
+                .map(StockSeasonQuote::getTradeDay)
+                .findFirst()
+                .orElse(null);
+    }
+
     private List<StockTradeRecord> playerRecords(Integer seasonId, String playerName, String stockCode) {
         StockAccount account = stockAccountMapper.selectOne(new LambdaQueryWrapper<StockAccount>()
                 .eq(StockAccount::getSeasonId, seasonId)
@@ -202,11 +214,7 @@ public class StockQuoteServiceImpl implements StockQuoteService {
             v.setStockCode(d.getStockCode());
             StockInfo info = infoMap.get(d.getStockCode());
             v.setStockName(info != null ? info.getStockName() : d.getStockCode());
-            v.setOpenPrice(d.getOpenPrice());
             v.setClosePrice(d.getClosePrice());
-            v.setHighPrice(d.getHighPrice());
-            v.setLowPrice(d.getLowPrice());
-            v.setVolume(d.getVolume());
             v.setIncreaseRateDay(d.getIncreaseRateDay());
             return v;
         }).toList();

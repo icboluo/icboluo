@@ -56,4 +56,12 @@ public class StockAccountController {
     public List<PositionDistributionVo> getPositionDistribution(@RequestBody @Valid AccountQueryCo co) {
         return stockAccountService.getPositionDistribution(co.getSeasonId(), co.getPlayerName());
     }
+
+    /**
+     * 赛季玩家列表
+     */
+    @PostMapping("players")
+    public List<String> listPlayers(@RequestBody @Valid SeasonQueryCo co) {
+        return stockAccountService.listPlayers(co.getSeasonId());
+    }
 }
