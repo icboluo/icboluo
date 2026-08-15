@@ -15,4 +15,9 @@ public class TradeRecordQueryCo extends PageQuery {
 
     @NotBlank(message = "玩家名称不能为空")
     private String playerName;
+
+    /**
+     * 股票代码（可选，指定则只查询该股票记录）
+     */
+    private String stockCode;
 }

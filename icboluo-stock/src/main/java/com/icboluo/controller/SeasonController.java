@@ -3,6 +3,7 @@ package com.icboluo.controller;
 import com.icboluo.object.co.AdvanceDayCo;
 import com.icboluo.object.co.SeasonCreateCo;
 import com.icboluo.object.co.SeasonJoinCo;
+import com.icboluo.object.co.SeasonPrepareCo;
 import com.icboluo.object.co.SeasonQueryCo;
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.object.vo.SeasonVo;
@@ -39,6 +40,14 @@ public class SeasonController {
     @PostMapping("join")
     public SeasonVo join(@RequestBody @Valid SeasonJoinCo co) {
         return seasonService.joinSeason(co);
+    }
+
+    /**
+     * 玩家准备（所有玩家就绪后自动开始赛季）
+     */
+    @PostMapping("prepare")
+    public SeasonVo prepare(@RequestBody @Valid SeasonPrepareCo co) {
+        return seasonService.prepare(co);
     }
 
     /**

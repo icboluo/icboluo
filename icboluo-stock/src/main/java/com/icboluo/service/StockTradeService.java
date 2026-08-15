@@ -34,9 +34,10 @@ public interface StockTradeService {
      *
      * @param seasonId   赛季ID
      * @param playerName 玩家名称
+     * @param stockCode  股票代码（可选，非空则只查该股票）
      * @param pageNum    页码
      * @param pageSize   每页条数
      * @return 交易记录分页
      */
-    PageInfo<TradeRecordVo> getTradeRecords(Integer seasonId, String playerName, int pageNum, int pageSize);
+    PageInfo<TradeRecordVo> getTradeRecords(Integer seasonId, String playerName, String stockCode, int pageNum, int pageSize);
 }

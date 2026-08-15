@@ -115,10 +115,10 @@ public class TimeNoteController {
     private static void extracted(int normal, double jb, int x) {
         double total = normal + jb;
         double oneDayMonth = total / (21.75 + x);
-        int other = 2093;
+        int other = 2143;
         double taxableIncome = total - 5000 - other;
         double tax = tax(taxableIncome * 12) / 12;
-        System.out.printf("total money: %.2f, one day money: %.2f, actual money: %.2f%n", total, oneDayMonth, total - tax - other);
+        System.out.printf("total money(%d): %.2f, one day money: %.2f, actual money: %.2f%n", x, total, oneDayMonth, total - tax - other);
     }
 
     private static double tax(double taxableIncome) {

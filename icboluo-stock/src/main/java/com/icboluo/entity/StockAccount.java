@@ -33,6 +33,10 @@ public class StockAccount implements Serializable {
      */
     private BigDecimal availableFund;
     /**
+     * 是否已准备（赛季 PREPARING 阶段玩家点击准备后置为 true）
+     */
+    private Boolean ready;
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;

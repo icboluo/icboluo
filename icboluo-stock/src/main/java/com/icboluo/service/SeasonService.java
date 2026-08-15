@@ -3,6 +3,7 @@ package com.icboluo.service;
 import com.icboluo.object.co.AdvanceDayCo;
 import com.icboluo.object.co.SeasonCreateCo;
 import com.icboluo.object.co.SeasonJoinCo;
+import com.icboluo.object.co.SeasonPrepareCo;
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.object.vo.SeasonVo;
 
@@ -27,6 +28,14 @@ public interface SeasonService {
      * @return 赛季信息
      */
     SeasonVo joinSeason(SeasonJoinCo co);
+
+    /**
+     * 玩家准备（赛季 PREPARING 阶段）。所有真人玩家就绪后自动开始赛季。
+     *
+     * @param co 准备请求
+     * @return 赛季信息
+     */
+    SeasonVo prepare(SeasonPrepareCo co);
 
     /**
      * 开始赛季

@@ -8,6 +8,7 @@ import com.icboluo.mapper.*;
 import com.icboluo.object.co.AdvanceDayCo;
 import com.icboluo.object.co.SeasonCreateCo;
 import com.icboluo.object.co.SeasonJoinCo;
+import com.icboluo.object.co.SeasonPrepareCo;
 import com.icboluo.object.vo.QuoteVo;
 import com.icboluo.object.vo.SeasonVo;
 import com.icboluo.service.SeasonService;
@@ -150,8 +151,46 @@ public class SeasonServiceImpl implements SeasonService {
         account.setSeasonId(co.getSeasonId());
         account.setPlayerName(co.getPlayerName());
         account.setAvailableFund(season.getInitialFund());
+        account.setReady(false);
         stockAccountMapper.insert(account);
         return toSeasonVo(season);
+    }
+
+    @Override
+    @Transactional
+    public SeasonVo prepare(SeasonPrepareCo co) {
+        StockSeason season = stockSeasonMapper.selectById(co.getSeasonId());
+        if (season == null) {
+            throw new I18nException("赛季不存在");
+        }
+        if (!"PREPARING".equals(season.getStatus())) {
+            throw new I18nException("赛季已开始，无法准备");
+        }
+        // 校验玩家已加入
+        StockAccount account = stockAccountMapper.selectOne(new LambdaQueryWrapper<StockAccount>()
+                .eq(StockAccount::getSeasonId, co.getSeasonId())
+                .eq(StockAccount::getPlayerName, co.getPlayerName()));
+        if (account == null) {
+            throw new I18nException("请先加入赛季");
+        }
+        // 标记玩家已准备
+        account.setReady(true);
+        stockAccountMapper.updateById(account);
+        // 统计真人玩家（排除机器人）的准备情况
+        List<String> botNames = stockBotConfigMapper.selectList(new LambdaQueryWrapper<StockBotConfig>()
+                        .eq(StockBotConfig::getSeasonId, co.getSeasonId())).stream()
+                .map(StockBotConfig::getBotName).toList();
+        List<StockAccount> humanAccounts = stockAccountMapper.selectList(new LambdaQueryWrapper<StockAccount>()
+                        .eq(StockAccount::getSeasonId, co.getSeasonId())).stream()
+                .filter(a -> !botNames.contains(a.getPlayerName()))
+                .toList();
+        boolean allReady = !humanAccounts.isEmpty()
+                && humanAccounts.stream().allMatch(a -> Boolean.TRUE.equals(a.getReady()));
+        // 所有玩家准备就绪，自动开始赛季并推进首日
+        if (allReady) {
+            self.startSeason(co.getSeasonId());
+        }
+        return toSeasonVo(stockSeasonMapper.selectById(co.getSeasonId()));
     }
 
     @Override
@@ -595,6 +634,16 @@ public class SeasonServiceImpl implements SeasonService {
             vo.setHistoryStartDate(season.getHistoryStartDate());
             vo.setHistoryEndDate(season.getHistoryEndDate());
         }
+        // 统计已准备人数与总人数（仅统计真人玩家，排除机器人）
+        List<String> botNames = stockBotConfigMapper.selectList(new LambdaQueryWrapper<StockBotConfig>()
+                        .eq(StockBotConfig::getSeasonId, season.getId())).stream()
+                .map(StockBotConfig::getBotName).toList();
+        List<StockAccount> humanAccounts = stockAccountMapper.selectList(new LambdaQueryWrapper<StockAccount>()
+                        .eq(StockAccount::getSeasonId, season.getId())).stream()
+                .filter(a -> !botNames.contains(a.getPlayerName()))
+                .toList();
+        vo.setTotalCount(humanAccounts.size());
+        vo.setReadyCount((int) humanAccounts.stream().filter(a -> Boolean.TRUE.equals(a.getReady())).count());
         return vo;
     }
 }

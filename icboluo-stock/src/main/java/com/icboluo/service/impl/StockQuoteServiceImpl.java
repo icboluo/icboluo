@@ -70,6 +70,10 @@ public class StockQuoteServiceImpl implements StockQuoteService {
                 .eq(StockInfo::getStockCode, stockCode));
         vo.setStockName(info != null ? info.getStockName() : stockCode);
 
+        // 该赛季当前回合（只展示已开始回合的数据）
+        StockSeason season = stockSeasonMapper.selectById(seasonId);
+        int currentTradeDay = season != null && season.getCurrentTradeDay() != null ? season.getCurrentTradeDay() : 0;
+
         // 该赛季所有交易日，按序号升序
         List<StockSeasonQuote> quotes = stockSeasonQuoteMapper.selectList(new LambdaQueryWrapper<StockSeasonQuote>()
                 .eq(StockSeasonQuote::getSeasonId, seasonId)
@@ -90,6 +94,10 @@ public class StockQuoteServiceImpl implements StockQuoteService {
         // 累计买入金额 - 累计卖出金额（净投入）
         List<StockChartVo.PricePoint> prices = new ArrayList<>();
         for (StockSeasonQuote q : quotes) {
+            // 跳过尚未开始的回合
+            if (q.getTradeDay() > currentTradeDay) {
+                continue;
+            }
             StockDaily daily = dailyMap.get(q.getTradeDate());
             StockChartVo.PricePoint point = new StockChartVo.PricePoint();
             point.setTradeDay(q.getTradeDay());
@@ -132,7 +140,9 @@ public class StockQuoteServiceImpl implements StockQuoteService {
         // 买卖标记点：价格统一取当日收盘价，确保与走势图收盘价完全一致
         Map<Integer, StockDaily> quoteDailyMap = dailyMap.values().stream()
                 .collect(Collectors.toMap(d -> tradeDayByDate(quotes, d.getTradeDate()), Function.identity(), (a, b) -> a));
-        List<StockChartVo.TradeMarker> markers = records.stream().map(r -> {
+        List<StockChartVo.TradeMarker> markers = records.stream()
+                .filter(r -> r.getTradeDay() <= currentTradeDay)
+                .map(r -> {
             StockChartVo.TradeMarker m = new StockChartVo.TradeMarker();
             m.setTradeDay(r.getTradeDay());
             m.setTradeType(r.getTradeType());

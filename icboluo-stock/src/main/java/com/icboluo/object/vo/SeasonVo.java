@@ -46,4 +46,12 @@ public class SeasonVo {
      * 历史行情结束日期
      */
     private LocalDate historyEndDate;
+    /**
+     * 已准备人数
+     */
+    private Integer readyCount;
+    /**
+     * 总人数（赛季账户数）
+     */
+    private Integer totalCount;
 }
