@@ -107,13 +107,17 @@ public class StockTradeServiceImpl implements StockTradeService {
     }
 
     @Override
-    public PageInfo<TradeRecordVo> getTradeRecords(Integer seasonId, String playerName, int pageNum, int pageSize) {
+    public PageInfo<TradeRecordVo> getTradeRecords(Integer seasonId, String playerName, String stockCode, int pageNum, int pageSize) {
         StockAccount account = getAccount(seasonId, playerName);
         PageHelper.startPage(pageNum, pageSize);
-        List<StockTradeRecord> records = stockTradeRecordMapper.selectList(new LambdaQueryWrapper<StockTradeRecord>()
+        LambdaQueryWrapper<StockTradeRecord> wrapper = new LambdaQueryWrapper<StockTradeRecord>()
                 .eq(StockTradeRecord::getAccountId, account.getId())
                 .orderByDesc(StockTradeRecord::getTradeDay)
-                .orderByDesc(StockTradeRecord::getId));
+                .orderByDesc(StockTradeRecord::getId);
+        if (stockCode != null && !stockCode.isBlank()) {
+            wrapper.eq(StockTradeRecord::getStockCode, stockCode);
+        }
+        List<StockTradeRecord> records = stockTradeRecordMapper.selectList(wrapper);
         List<TradeRecordVo> vos = records.stream().map(this::toVo).toList();
         return BeanUtil.pageInfoConvert(PageInfo.of(records), vos);
     }

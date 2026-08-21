@@ -14,9 +14,9 @@ import java.time.LocalDate;
  */
 class ToolTest {
 
-    private static final int TOTAL_A = 606255;
-    //    5951.45
-    private static final int TOTAL_B = 613474;
+    //    1714811 / 827 = 2073
+    private static final int TOTAL_A = 604794;
+    private static final int TOTAL_B = 612192;
 
     //   月RATE = 年RATE / 12
     private static final BigDecimal MONTHLY_RATE_A = MathUtil.divide(0.032, 12, 10);
@@ -116,6 +116,74 @@ class ToolTest {
     }
 
     @Test
+    public void testEqualPrincipalBoth() {
+        int aPeriods = aRemainPeriod();
+        int bPeriods = bRemainPeriod();
+        BigDecimal aPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, aPeriods);
+        BigDecimal bPayment = LoanUtil.calculateMonthlyPayment(TOTAL_B, MONTHLY_RATE_B, bPeriods);
+
+        BigDecimal aRemaining = BigDecimal.valueOf(TOTAL_A);
+        BigDecimal bRemaining = BigDecimal.valueOf(TOTAL_B);
+        BigDecimal aInterestTotal = BigDecimal.ZERO;
+        BigDecimal bInterestTotal = BigDecimal.ZERO;
+        // 整笔贷款的总利息（固定值，非累计）
+        BigDecimal aTotalInterestFull = LoanUtil.calculateTotalInterest(TOTAL_A, MONTHLY_RATE_A, aPayment, aPeriods);
+        BigDecimal bTotalInterestFull = LoanUtil.calculateTotalInterest(TOTAL_B, MONTHLY_RATE_B, bPayment, bPeriods);
+
+        System.out.printf("%-6s | %-14s %-14s %-16s | %-14s %-14s %-16s | %-14s %-14s %-16s %-16s %-16s%n",
+                "月份", "A本金", "A利息", "A剩余本金", "B本金", "B利息", "B剩余本金",
+                "总本金", "总利息", "总剩余本金", "总剩余利息", "总剩余本息");
+        System.out.println("-".repeat(149));
+        int maxPeriods = Math.max(aPeriods, bPeriods);
+        for (int month = 1; month <= maxPeriods; month++) {
+            // 贷款 A 当月
+            String aP = "-", aI = "-", aR = "-";
+            BigDecimal aPrin = BigDecimal.ZERO;
+            if (month <= aPeriods) {
+                BigDecimal aInt = LoanUtil.calculateMonthlyInterest(aRemaining, MONTHLY_RATE_A);
+                aPrin = aPayment.subtract(aInt);
+                aRemaining = aRemaining.subtract(aPrin).max(BigDecimal.ZERO);
+                aInterestTotal = aInterestTotal.add(aInt);
+                aP = aPrin.setScale(2, RoundingMode.HALF_UP).toString();
+                aI = aInt.setScale(2, RoundingMode.HALF_UP).toString();
+                aR = aRemaining.setScale(2, RoundingMode.HALF_UP).toString();
+            }
+            // 贷款 B 当月
+            String bP = "-", bI = "-", bR = "-";
+            BigDecimal bPrin = BigDecimal.ZERO;
+            if (month <= bPeriods) {
+                BigDecimal bInt = LoanUtil.calculateMonthlyInterest(bRemaining, MONTHLY_RATE_B);
+                bPrin = bPayment.subtract(bInt);
+                bRemaining = bRemaining.subtract(bPrin).max(BigDecimal.ZERO);
+                bInterestTotal = bInterestTotal.add(bInt);
+                bP = bPrin.setScale(2, RoundingMode.HALF_UP).toString();
+                bI = bInt.setScale(2, RoundingMode.HALF_UP).toString();
+                bR = bRemaining.setScale(2, RoundingMode.HALF_UP).toString();
+            }
+            // a、b 同一行展示 + 合计列
+            // 总本金=当月a+b本金；总利息=整笔贷款总利息固定值；总剩余本金=当月a+b剩余
+            // 总剩余利息=整笔总利息-已还累计利息；总剩余本息=总剩余本金+总剩余利息
+            BigDecimal sumPrincipal = aPrin.add(bPrin);
+            BigDecimal sumInterest = aTotalInterestFull.add(bTotalInterestFull);
+            BigDecimal sumRemaining = aRemaining.add(bRemaining);
+            BigDecimal sumRemainingInterest = aTotalInterestFull.subtract(aInterestTotal)
+                    .add(bTotalInterestFull.subtract(bInterestTotal));
+            BigDecimal sumRemainingPrincipalInterest = sumRemaining.add(sumRemainingInterest);
+            System.out.printf("%-6d | %-14s %-14s %-16s | %-14s %-14s %-16s | %-14s %-14s %-16s %-16s %-16s%n",
+                    month, aP, aI, aR, bP, bI, bR,
+                    sumPrincipal.setScale(2, RoundingMode.HALF_UP),
+                    sumInterest.setScale(2, RoundingMode.HALF_UP),
+                    sumRemaining.setScale(2, RoundingMode.HALF_UP),
+                    sumRemainingInterest.setScale(2, RoundingMode.HALF_UP),
+                    sumRemainingPrincipalInterest.setScale(2, RoundingMode.HALF_UP));
+        }
+        System.out.println("-".repeat(85));
+        System.out.println(STR."贷款A 总本金=\{TOTAL_A}，总利息=\{aInterestTotal.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println(STR."贷款B 总本金=\{TOTAL_B}，总利息=\{bInterestTotal.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println(STR."两笔贷款总计本金=\{TOTAL_A + TOTAL_B}，总计利息=\{aInterestTotal.add(bInterestTotal).setScale(2, RoundingMode.HALF_UP)}");
+    }
+
+    @Test
     public void testEqualPrincipalWithMonthlyEarlyRepayment() {
         int periods = aRemainPeriod();
         BigDecimal monthlyPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, periods);
@@ -183,8 +251,58 @@ class ToolTest {
     }
 
     @Test
-    public void testCityCost() {
-        CostItem[] items = new CostItem[]{
+    public void testEqualPrincipalWithEarlyRepaymentReducePayment() {
+        // ===== 提前还款【降低月供】方式：提前还一笔，剩余期数不变，重新计算月供，以后每月月供变少 =====
+        BigDecimal principal = BigDecimal.valueOf(TOTAL_A);
+        int originalPeriods = aRemainPeriod();
+        // 原月供（剩余期数不变）
+        BigDecimal originalMonthlyPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, originalPeriods);
+        // 提前还款金额
+        BigDecimal earlyRepayment = BigDecimal.valueOf(10000);
+        // 提前还款后剩余本金
+        BigDecimal remainingAfterEarly = principal.subtract(earlyRepayment);
+        // 剩余期数不变，重新计算月供（降低后的月供）
+        BigDecimal reducedMonthlyPayment = LoanUtil.calculateReducedMonthlyPayment(remainingAfterEarly, MONTHLY_RATE_A, originalPeriods);
+        BigDecimal monthlyReduce = originalMonthlyPayment.subtract(reducedMonthlyPayment);
+
+        System.out.println("===== 提前还款-降低月供方式 =====");
+        System.out.println(STR."贷款总额=\{principal}，原还款月数=\{originalPeriods}");
+        System.out.println(STR."提前还款=\{earlyRepayment}");
+        System.out.println(STR."提前还款后剩余本金=\{remainingAfterEarly.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println(STR."原月供=\{originalMonthlyPayment.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println(STR."提前还款后新月供=\{reducedMonthlyPayment.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println(STR."以后每月月供减少=\{monthlyReduce.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println("-----------------------------------------------------------");
+        System.out.printf("%-8s %-15s %-15s %-15s%n", "月份", "本月本金", "本月利息", "剩余本金");
+
+        // 逐月计算降低月供后的还款明细
+        BigDecimal remainingPrincipal = remainingAfterEarly;
+        BigDecimal totalInterest = BigDecimal.ZERO;
+        for (int month = 1; month <= originalPeriods; month++) {
+            BigDecimal monthlyInterest = LoanUtil.calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
+            BigDecimal principalPayment = reducedMonthlyPayment.subtract(monthlyInterest);
+            // 最后一期本金补齐，避免剩余本金为负
+            if (remainingPrincipal.compareTo(principalPayment) < 0) {
+                principalPayment = remainingPrincipal;
+            }
+            remainingPrincipal = remainingPrincipal.subtract(principalPayment).max(BigDecimal.ZERO);
+            totalInterest = totalInterest.add(monthlyInterest);
+            System.out.printf("%-8d %-15.2f %-15.2f %-15.2f%n", month, principalPayment, monthlyInterest, remainingPrincipal);
+            if (remainingPrincipal.compareTo(BigDecimal.ZERO) <= 0) {
+                break;
+            }
+        }
+        System.out.println("-----------------------------------------------------------");
+        System.out.println(STR."降低月供方式总利息=\{totalInterest.setScale(2, RoundingMode.HALF_UP)}");
+
+        // 对比：不提前还款的总利息
+        BigDecimal noRepaymentTotalInterest = LoanUtil.calculateTotalInterest(TOTAL_A, MONTHLY_RATE_A, originalMonthlyPayment, originalPeriods);
+        System.out.println(STR."不提前还款总利息=\{noRepaymentTotalInterest.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println(STR."节省利息=\{noRepaymentTotalInterest.subtract(totalInterest).setScale(2, RoundingMode.HALF_UP)}");
+    }
+
+    @Test
+    public void testCityCost() {        CostItem[] items = new CostItem[]{
                 new CostItem("餐饮", BigDecimal.valueOf(1000)),
                 new CostItem("交通", BigDecimal.valueOf(100)),
                 new CostItem("停车费", BigDecimal.valueOf(200)),

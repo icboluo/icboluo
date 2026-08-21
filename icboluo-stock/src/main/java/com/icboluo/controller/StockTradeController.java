@@ -42,6 +42,6 @@ public class StockTradeController {
      */
     @PostMapping("records")
     public PageInfo<TradeRecordVo> records(@RequestBody @Valid TradeRecordQueryCo co) {
-        return stockTradeService.getTradeRecords(co.getSeasonId(), co.getPlayerName(), co.getPageNum(), co.getPageSize());
+        return stockTradeService.getTradeRecords(co.getSeasonId(), co.getPlayerName(), co.getStockCode(), co.getPageNum(), co.getPageSize());
     }
 }
