@@ -253,10 +253,12 @@ class ToolTest {
                 new CostItem("交通", BigDecimal.valueOf(100)),
                 new CostItem("停车费", BigDecimal.valueOf(200)),
                 new CostItem("水+燃气", BigDecimal.valueOf(50)),
+                CostItem.ofYearly("取暖费", BigDecimal.valueOf(2500)),
                 new CostItem("电费", BigDecimal.valueOf(270)),
                 new CostItem("通讯", BigDecimal.valueOf(70)),
                 new CostItem("物业费", BigDecimal.valueOf(246)),
-                new CostItem("贷款", BigDecimal.valueOf(4288)),
+                new CostItem("贷款A", BigDecimal.valueOf(3078)),
+                new CostItem("贷款B", BigDecimal.valueOf(1200)),
         };
         printCost(items);
     }
@@ -330,9 +332,17 @@ class ToolTest {
         System.out.printf("%-10s %-15s %-15s %-15s%n", "合计", monthlyTotal, yearlyTotal, "100%");
     }
 
-    public record CostItem(String name, BigDecimal monthlyAmount) {
-        public BigDecimal yearlyAmount() {
-            return monthlyAmount.multiply(BigDecimal.valueOf(12));
+    public record CostItem(String name, BigDecimal monthlyAmount, BigDecimal yearlyAmount) {
+
+        public CostItem(String name, BigDecimal monthlyAmount) {
+            this(name, monthlyAmount, monthlyAmount.multiply(BigDecimal.valueOf(12)));
+        }
+
+        /**
+         * 按年金额构造，月金额按 12 个月均摊（保留 2 位小数）
+         */
+        public static CostItem ofYearly(String name, BigDecimal yearlyAmount) {
+            return new CostItem(name, yearlyAmount.divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP), yearlyAmount);
         }
     }
 }
