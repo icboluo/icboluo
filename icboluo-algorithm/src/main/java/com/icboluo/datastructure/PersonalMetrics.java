@@ -18,17 +18,20 @@ public class PersonalMetrics {
                     new PersonalProfile.ExerciseRecord("哑铃推肩（单侧）", "8 KG"),
                     new PersonalProfile.ExerciseRecord("杠铃卧推（两侧）", "7.5 KG x 2 = 15 KG"),
                     new PersonalProfile.ExerciseRecord("硬拉（两侧）", "15 KG x 2 = 30 KG"),
+                    new PersonalProfile.ExerciseRecord("杠铃深蹲（两侧）", "15 KG x 2 = 30 KG"),
                     new PersonalProfile.ExerciseRecord("反向蝴蝶机夹背", "27 LB"),
+                    new PersonalProfile.ExerciseRecord("龙门架划船", "27 LB"),
                     new PersonalProfile.ExerciseRecord("正向蝴蝶机夹胸", "32 LB"),
                     new PersonalProfile.ExerciseRecord("引体向上-正手", "3 个"),
                     new PersonalProfile.ExerciseRecord("引体向上-反手", "5 个"),
-                    new PersonalProfile.ExerciseRecord("跑步机（配速 7.2）", "35 分钟，约 4.2 KG")
+                    new PersonalProfile.ExerciseRecord("跑步机（配速 7.2）", "35 分钟，约 4.2 KM")
             ),
             List.of(
                     "圆肩驼背",
                     "骨盆前倾",
                     "小腹略突出",
                     "脖子前倾（探颈）",
+                    "颈椎曲度变直",
                     "爱低头玩手机"
             ),
             List.of(

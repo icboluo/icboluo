@@ -257,6 +257,7 @@ class ToolTest {
                 new CostItem("电费", BigDecimal.valueOf(200)),
                 new CostItem("通讯", BigDecimal.valueOf(80)),
                 new CostItem("物业费", BigDecimal.valueOf(246)),
+                new CostItem("理发", BigDecimal.valueOf(25)),
                 new CostItem("贷款A", BigDecimal.valueOf(3078)),
                 new CostItem("贷款B", BigDecimal.valueOf(1200)),
         };
