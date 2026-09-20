@@ -14,9 +14,9 @@ import java.time.LocalDate;
  */
 class ToolTest {
 
-    //    1714811 / 827 = 2073
-    private static final int TOTAL_A = 604794;
-    private static final int TOTAL_B = 612192;
+    //    1698223 / 827 = 2053.47
+    private static final int TOTAL_A = 596138;
+    private static final int TOTAL_B = 610910;
 
     //   月RATE = 年RATE / 12
     private static final BigDecimal MONTHLY_RATE_A = MathUtil.divide(0.032, 12, 10);
@@ -25,16 +25,16 @@ class ToolTest {
     private static final LocalDate LOAN_START = LocalDate.of(2024, 1, 21);
 
     private static int aRemainPeriod() {
-        return LoanUtil.remainPeriod(LOAN_START, 311);
+        return LoanUtil.remainPeriod(LOAN_START, 311) - 1;
     }
 
     private static int bRemainPeriod() {
-        return LoanUtil.remainPeriod(LOAN_START, 360);
+        return LoanUtil.remainPeriod(LOAN_START, 360) - 1;
     }
 
     @Test
     public void totalMoney() {
-        float a = 3078.49F;
+        float a = 3039.28F;
         float b = 2609.49F;
         System.out.println(STR."all total sum: \{a * aRemainPeriod() + b * bRemainPeriod()}, next: \{a * aRemainPeriod() + b * bRemainPeriod() - a - b}");
         System.out.println(STR."principal sum: \{TOTAL_A + TOTAL_B}");
@@ -209,7 +209,7 @@ class ToolTest {
         BigDecimal principal = BigDecimal.valueOf(TOTAL_A);
         int originalPeriods = aRemainPeriod();
         BigDecimal monthlyPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, originalPeriods);
-        BigDecimal earlyRepayment = BigDecimal.valueOf(50000);
+        BigDecimal earlyRepayment = BigDecimal.valueOf(7000);
         BigDecimal remainingAfterEarly = principal.subtract(earlyRepayment);
         // 计算缩短后的还款期数（利用对数公式）
         int remainingMonths = LoanUtil.calculateRemainingMonthsAfterEarlyRepayment(monthlyPayment, remainingAfterEarly, MONTHLY_RATE_A);
@@ -258,7 +258,7 @@ class ToolTest {
                 new CostItem("通讯", BigDecimal.valueOf(80)),
                 new CostItem("物业费", BigDecimal.valueOf(246)),
                 new CostItem("理发", BigDecimal.valueOf(25)),
-                new CostItem("贷款A", BigDecimal.valueOf(3078)),
+                new CostItem("贷款A", BigDecimal.valueOf(3039)),
                 new CostItem("贷款B", BigDecimal.valueOf(1200)),
         };
         printCost(items);

@@ -24,7 +24,7 @@ public class PersonalMetrics {
                     new PersonalProfile.ExerciseRecord("正向蝴蝶机夹胸", "32 LB"),
                     new PersonalProfile.ExerciseRecord("引体向上-正手", "3 个"),
                     new PersonalProfile.ExerciseRecord("引体向上-反手", "5 个"),
-                    new PersonalProfile.ExerciseRecord("跑步机（配速 7.2）", "35 分钟，约 4.2 KM")
+                    new PersonalProfile.ExerciseRecord("跑步机（速度 7.2）", "跑跑停停 60 分钟，6.6 KM")
             ),
             List.of(
                     "圆肩驼背",
