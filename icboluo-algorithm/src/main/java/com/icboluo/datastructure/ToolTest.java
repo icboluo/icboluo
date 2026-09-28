@@ -16,7 +16,7 @@ class ToolTest {
 
     //    1698223 / 827 = 2053.47
     private static final int TOTAL_A = 596138;
-    private static final int TOTAL_B = 610910;
+    private static final int TOTAL_B = 610909;
 
     //   月RATE = 年RATE / 12
     private static final BigDecimal MONTHLY_RATE_A = MathUtil.divide(0.032, 12, 10);
@@ -25,11 +25,11 @@ class ToolTest {
     private static final LocalDate LOAN_START = LocalDate.of(2024, 1, 21);
 
     private static int aRemainPeriod() {
-        return LoanUtil.remainPeriod(LOAN_START, 311) - 1;
+        return LoanUtil.remainPeriod(LOAN_START, 311);
     }
 
     private static int bRemainPeriod() {
-        return LoanUtil.remainPeriod(LOAN_START, 360) - 1;
+        return LoanUtil.remainPeriod(LOAN_START, 360);
     }
 
     @Test
@@ -49,32 +49,10 @@ class ToolTest {
 
     @Test
     public void testMonth() {
-//        3.2
+        // 3.2
         System.out.println(LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, aRemainPeriod()));
         // 2.6
         System.out.println(LoanUtil.calculateMonthlyPayment(TOTAL_B, MONTHLY_RATE_B, bRemainPeriod()));
-    }
-
-    @Test
-    public void earnings() {
-        double[][] arr1 = {
-                {1.499, 3000},// --------------------
-                {1.501, 3000},// --------------------
-        };
-        double cur1 = 1.500;
-        calEarnings(arr1, cur1);
-    }
-
-    private void calEarnings(double[][] operation, double cur) {
-        int count = 0;
-        double total = 0;
-        for (double[] doubles : operation) {
-            count += (int) doubles[1];
-            total += doubles[0] * doubles[1];
-        }
-        System.out.println(STR."实际获取: \{total}");
-        System.out.println(STR."最大获取: \{cur * count}");
-        System.out.println(STR."相对亏损 : \{cur * count - total}");
     }
 
     @Test
@@ -182,23 +160,32 @@ class ToolTest {
     public void testMonthlyEarlyRepayment() {
         int periods = aRemainPeriod();
         BigDecimal monthlyPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, periods);
-        BigDecimal earlyRepayment = BigDecimal.valueOf(10000);
+        // 每月固定还款总额 10000，已包含当月应还的本金+利息；超出原月供的部分自动冲抵本金
+        BigDecimal monthlyTotal = BigDecimal.valueOf(10000);
+        // 每月额外冲抵本金 = 固定还款总额 - 原月供
+        BigDecimal extraPrincipal = monthlyTotal.subtract(monthlyPayment);
         BigDecimal remainingPrincipal = BigDecimal.valueOf(TOTAL_A);
         BigDecimal totalInterest = BigDecimal.ZERO;
         int actualMonth = 0;
-        System.out.println(STR."等额本息+每月提前还款计算：贷款总额=\{TOTAL_A}，原还款月数=\{periods}，每月提前还款=\{earlyRepayment}");
-        System.out.println(STR."每月还款=\{monthlyPayment}");
+        System.out.println(STR."等额本息+每月固定还款计算：贷款总额=\{TOTAL_A}，原还款月数=\{periods}，每月还款总额=\{monthlyTotal}");
+        System.out.println(STR."原月供=\{monthlyPayment.setScale(2, RoundingMode.HALF_UP)}，每月额外冲抵本金=\{extraPrincipal.setScale(2, RoundingMode.HALF_UP)}");
         System.out.println("-----------------------------------------------------------");
-        System.out.printf("%-7s %-12s %-13s %-13s %-13s%n", "月份", "本月本金", "本月利息", "提前还款", "剩余本金");
+        System.out.printf("%-7s %-12s %-13s %-13s %-13s%n", "月份", "本月本金", "本月利息", "本月还款", "剩余本金");
         while (remainingPrincipal.compareTo(BigDecimal.ZERO) > 0 && actualMonth < 360) {
             actualMonth++;
             BigDecimal monthlyInterest = LoanUtil.calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
-            BigDecimal principalPayment = monthlyPayment.subtract(monthlyInterest);
-            remainingPrincipal = remainingPrincipal.subtract(principalPayment);
-            remainingPrincipal = remainingPrincipal.subtract(earlyRepayment);
+            // 当月还款总额固定为 monthlyTotal，扣除当月利息后，剩余全部冲抵本金
+            BigDecimal principalPayment = monthlyTotal.subtract(monthlyInterest);
+            BigDecimal actualPayment = monthlyTotal;
+            // 最后一期：剩余本金+当月利息不足 monthlyTotal 时，按实际结清金额还款
+            if (remainingPrincipal.add(monthlyInterest).compareTo(monthlyTotal) <= 0) {
+                principalPayment = remainingPrincipal;
+                actualPayment = remainingPrincipal.add(monthlyInterest);
+            }
+            remainingPrincipal = remainingPrincipal.subtract(principalPayment).max(BigDecimal.ZERO);
             totalInterest = totalInterest.add(monthlyInterest);
 
-            System.out.printf("%-8d %-15.2f %-15.2f %-15.2f %-15.2f%n", actualMonth, principalPayment, monthlyInterest, earlyRepayment, remainingPrincipal);
+            System.out.printf("%-8d %-15.2f %-15.2f %-15.2f %-15.2f%n", actualMonth, principalPayment, monthlyInterest, actualPayment, remainingPrincipal);
         }
         System.out.println("-----------------------------------------------------------");
         System.out.println(STR."实际还款月数=\{actualMonth}，总利息=\{totalInterest}");

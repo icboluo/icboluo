@@ -160,4 +160,26 @@ class WorkTimeTest {
         System.out.println();
         return sleep.plusDays(6);
     }
+
+    @Test
+    public void earnings() {
+        double[][] arr1 = {
+                {1.499, 3000},// --------------------
+                {1.501, 3000},// --------------------
+        };
+        double cur1 = 1.500;
+        calEarnings(arr1, cur1);
+    }
+
+    private void calEarnings(double[][] operation, double cur) {
+        int count = 0;
+        double total = 0;
+        for (double[] doubles : operation) {
+            count += (int) doubles[1];
+            total += doubles[0] * doubles[1];
+        }
+        System.out.println(STR."实际获取: \{total}");
+        System.out.println(STR."最大获取: \{cur * count}");
+        System.out.println(STR."相对亏损 : \{cur * count - total}");
+    }
 }
