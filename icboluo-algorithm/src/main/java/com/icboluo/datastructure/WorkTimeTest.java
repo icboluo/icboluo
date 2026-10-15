@@ -5,148 +5,85 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.YearMonth;
 
 /**
  * @author icboluo
  * @since 2026-07-03 22:23
  */
 class WorkTimeTest {
-    private static final String[] WEEK_HEADERS = {"一", "二", "三", "四", "五", "六", "日"};
-
     @Test
     public void workTime() {
-        float contribute = 10.123F;
-        float avg = 8.456F;
+        // ===== 已知输入（本月统计值）=====
+        float contribute = 10F;   // 本月多余的贡献工时（相对 8 小时基准）
+        float avg = 9F;           // 每天的平均工时
+        float target = 8.5F;            // 平均每天的目标工时
 
+        // 由“多余贡献工时 + 日均工时”反推已经上班的天数（交叉校验用）
         BigDecimal workDay = MathUtil.divide(contribute, avg - 8, 1);
-        System.out.println(STR."workDay = \{workDay}");
+        System.out.println(STR."已经上班的天数 = \{workDay}");
 
-        float target = 9F;
-        float excess = contribute - (target - 8) * workDay.floatValue();
-        System.out.println(STR."excess = \{excess}");
+        // ===== 唯一需要手填的输入：这个月总上班天数 =====
+        int totalDays = 20;           // 本月总上班天数（直接填这个即可，a、b 会自动算出）
 
-        int a1 = 3;
-        int b1 = 1;
-        float excess1 = a1 * (9.65F - target) - b1 * (target - 7F) + excess;
-        System.out.println(STR."excess1 = \{excess1}");
+        // 加班天数(a) / 不加班天数(b) 由“总天数 + 日均工时”推导（无需手填）：
+        // 约定 加班日=10h、不加班日=7h、基线=8h；a+b=总天数，10a+7b=avg*总天数
+        // 解得 a = 总天数*(avg-7)/3，b = 总天数 - a
+        float overtimeDays = totalDays * (avg - 7F) / 3F;   // a：加班天数
+        float normalDays = totalDays - overtimeDays;        // b：不加班天数
+        System.out.println(STR."加班天数 a = \{overtimeDays}，不加班天数 b = \{normalDays}");
 
-        int a2 = 2;
-        int b2 = 2;
-        float excess2 = a2 * (9.65F - target) - b2 * (target - 7F) + excess;
-        System.out.println(STR."excess2 = \{excess2}");
+        // 目标线以上的多余贡献工时 = 加班日多做的 - 不加班日少做的
+        float excess = overtimeDays * (10F - target) - normalDays * (target - 7F);
+        System.out.println(STR."本月多余的贡献工时（相对目标） = \{excess}");
     }
 
     @Test
-    public void testCalendar() {
-        LocalDate startWorkDate = LocalDate.of(2026, 6, 27);
-        int startYear = LocalDate.now().getYear();
-        int startMonth = startWorkDate.getMonthValue();
-        LocalDate today = LocalDate.now();
-
-        for (int i = 0; i < 3; i++) {
-            YearMonth yearMonth = YearMonth.of(startYear, startMonth).plusMonths(i);
-            printMonthCalendar(yearMonth.getYear(), yearMonth.getMonthValue(), startWorkDate, 3, 3, false, today);
-            if (i < 2) {
-                System.out.println();
-            }
+    public void nightShift() {
+        // 晚班排班表（3 天一轮：每天由若干“上班/休息”时段组成）
+        record Segment(String day, String period, String status, double hours) {
         }
-    }
-
-    private void printMonthCalendar(int year, int month, LocalDate startWorkDate, int workDays, int restDays, boolean morningFirst, LocalDate today) {
-        int cycleDays = workDays + restDays;
-        YearMonth yearMonth = YearMonth.of(year, month);
-        int daysInMonth = yearMonth.lengthOfMonth();
-        // 计算每月第一天是周几（0=周一, 1=周二, ..., 6=周日）
-        int firstDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue() - 1;
-
-        System.out.println(year + "年" + month + "月日历");
-        System.out.println("==========================================");
-        System.out.println(String.join("\t\t ", WEEK_HEADERS));
-        int lastWorkDay = printMonthDays(yearMonth, daysInMonth, firstDayOfWeek, startWorkDate, cycleDays, workDays, morningFirst, today);
-        if (lastWorkDay > 0) {
-            printLastWorkDayInfo(year, month, lastWorkDay, cycleDays, morningFirst);
-        }
-    }
-
-    private int printMonthDays(YearMonth yearMonth, int daysInMonth, int firstDayOfWeek, LocalDate startWorkDate, int cycleDays, int workDays, boolean morningFirst, LocalDate today) {
-        int lastWorkDay = 0;
-        // 计算起始日期到当月第一天之间的天数，用于确定周期位置
-        LocalDate firstDayOfMonth = yearMonth.atDay(1);
-        long daysToFirstOfMonth = java.time.temporal.ChronoUnit.DAYS.between(startWorkDate, firstDayOfMonth);
-        // 判断是否为当前月份，用于标记今天
-        boolean isCurrentMonth = today.getYear() == yearMonth.getYear() && today.getMonthValue() == yearMonth.getMonthValue();
-
-        for (int day = 1; day <= daysInMonth; day++) {
-            // 计算该日期在周中的列位置，周日放最后
-            int dayOfWeek = (firstDayOfWeek + day - 1) % 7;
-            // 每月第一天打印空白对齐
-            if (day == 1 && firstDayOfWeek > 0) {
-                System.out.print("\t\t".repeat(firstDayOfWeek));
-            }
-
-            // 计算当前日期相对于起始日期的偏移量
-            long daysDiff = daysToFirstOfMonth + (day - 1);
-            // 计算在排班周期中的位置
-            int positionInCycle = (int) ((daysDiff % cycleDays + cycleDays) % cycleDays);
-            // 判断是否为工作日：周期内前workDays天为工作日
-            boolean isWorkDay = positionInCycle < workDays;
-
-            String label = getDayLabel(daysDiff, positionInCycle, isWorkDay, cycleDays, morningFirst);
-            // 标记今天
-            String dayStr = (isCurrentMonth && day == today.getDayOfMonth()) ? day + "*" : String.valueOf(day);
-            if (isWorkDay) {
-                lastWorkDay = day;
-            }
-
-            System.out.print(dayStr + "[" + label + "]\t");
-            // 周日换行（因为周日在最后一位）
-            if (dayOfWeek == 6) {
-                System.out.println();
-            }
-        }
-        // 如果月末不是周日，需要换行
-        int lastDayOfWeek = (firstDayOfWeek + daysInMonth - 1) % 7;
-        if (lastDayOfWeek != 6) {
-            System.out.println();
-        }
-        return lastWorkDay;
-    }
-
-    private String getDayLabel(long daysDiff, int positionInCycle, boolean isWorkDay, int cycleDays, boolean morningFirst) {
-        if (!isWorkDay) {
-            return "休";
-        }
-        // 计算当前是第几个完整周期
-        int cycleGroup = (int) (daysDiff / cycleDays);
-        // 根据班次起始和周期奇偶决定当日班次类型
-        String[] shiftsA = morningFirst ? new String[]{"早", "班", "下"} : new String[]{"下", "班", "晚"};
-        String[] shiftsB = morningFirst ? new String[]{"下", "班", "晚"} : new String[]{"早", "班", "下"};
-        return (cycleGroup % 2 == 0 ? shiftsA : shiftsB)[positionInCycle % 3];
-    }
-
-    private void printLastWorkDayInfo(int year, int month, int lastWorkDay, int cycleDays, boolean morningFirst) {
-        LocalDate startWorkDate = LocalDate.of(year, month, 1);
-        LocalDate lastDate = LocalDate.of(year, month, lastWorkDay);
-        long daysDiff = java.time.temporal.ChronoUnit.DAYS.between(startWorkDate, lastDate);
-        int positionInCycle = (int) ((daysDiff % cycleDays + cycleDays) % cycleDays);
-        int cycleGroup = (int) (daysDiff / cycleDays);
-        String[] shiftsA = morningFirst ? new String[]{"早", "班", "下"} : new String[]{"下", "班", "晚"};
-        String[] shiftsB = morningFirst ? new String[]{"下", "班", "晚"} : new String[]{"早", "班", "下"};
-        String shiftLabel = (cycleGroup % 2 == 0 ? shiftsA : shiftsB)[positionInCycle % 3];
-        String endTime = switch (shiftLabel) {
-            case "早" -> "早上上班";
-            case "班" -> "全天班";
-            case "下" -> "晚上下班";
-            case "晚" -> "深夜下班";
-            default -> "";
+        Segment[] schedule = {
+                new Segment("第1天", "07:00 - 15:00", "休息", 8.0),
+                new Segment("第1天", "15:00 - 01:30", "上班", 10.5),
+                new Segment("第2天", "01:30 - 07:00", "休息", 5.5),
+                new Segment("第2天", "07:00 - 16:30", "上班", 9.5),
+                new Segment("第2天", "16:30 - 22:00", "休息", 5.5),
+                new Segment("第2天", "22:00 - 06:00", "上班", 8.0),
+                new Segment("第3天", "06:00 - 10:30", "休息", 4.5),
+                new Segment("第3天", "10:30 - 22:00", "上班", 11.5),
         };
-        System.out.println("最后一天上班（" + lastWorkDay + "号）[" + shiftLabel + "]：" + endTime);
+        System.out.println("==================== 晚班排班表（3天一轮） ====================");
+        System.out.printf("%-8s %-20s %-6s %-10s%n", "天数", "时间段", "状态", "时长(h)");
+        System.out.println("------------------------------------------------------------");
+        double workTotal = 0, restTotal = 0;
+        for (Segment s : schedule) {
+            System.out.printf("%-8s %-20s %-6s %-10.1f%n", s.day(), s.period(), s.status(), s.hours());
+            if ("上班".equals(s.status())) {
+                workTotal += s.hours();
+            } else {
+                restTotal += s.hours();
+            }
+        }
+        System.out.println("------------------------------------------------------------");
+        System.out.printf("%-8s %-20s %-6s %-10.1f%n", "合计", "3天一轮", "上班", workTotal);
+        System.out.printf("%-8s %-20s %-6s %-10.1f%n", "合计", "3天一轮", "休息", restTotal);
+        double total = workTotal + restTotal;
+        System.out.printf("上班:休息 ≈ %.2f : 1（上班占 %.1f%%，休息占 %.1f%%）%n",
+                workTotal / restTotal, workTotal / total * 100, restTotal / total * 100);
+
+        // 宏观排班：上 onDays 天班（含上面的班内工作/休息） + 休 offDays 天（完全休息）
+        int onDays = 3, offDays = 3;
+        double cycleWork = workTotal;                // 上班 days 内的总工作
+        double cycleDays = onDays + offDays;
+        System.out.printf("总工作 ≈ %.1f h（日均 %.2f h）%n",
+                cycleWork / cycleDays * 7, cycleWork / cycleDays * 7 / 5);
+        System.out.println("============================================================");
     }
 
     @Test
     public void sleepDate() {
-        LocalDate sleep = LocalDate.of(2026, 6, 29);
+//      第一天下班时间
+        LocalDate sleep = LocalDate.of(2026, 10, 15);
         for (int i = 0; i < 10; i++) {
             sleep = printSleepDate(sleep);
         }

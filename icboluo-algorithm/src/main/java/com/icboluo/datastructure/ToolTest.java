@@ -14,9 +14,10 @@ import java.time.LocalDate;
  */
 class ToolTest {
 
-    //    1698223 / 827 = 2053.47
-    private static final int TOTAL_A = 596138;
-    private static final int TOTAL_B = 610909;
+    //    1682721 / 827 = 2034.73
+    //    1197352 / 827 = 1447.83
+    private static final int TOTAL_A = 587727;
+    private static final int TOTAL_B = 609625;
 
     //   月RATE = 年RATE / 12
     private static final BigDecimal MONTHLY_RATE_A = MathUtil.divide(0.032, 12, 10);
@@ -25,16 +26,16 @@ class ToolTest {
     private static final LocalDate LOAN_START = LocalDate.of(2024, 1, 21);
 
     private static int aRemainPeriod() {
-        return LoanUtil.remainPeriod(LOAN_START, 311);
+        return LoanUtil.remainPeriod(LOAN_START, 311) - 1;
     }
 
     private static int bRemainPeriod() {
-        return LoanUtil.remainPeriod(LOAN_START, 360);
+        return LoanUtil.remainPeriod(LOAN_START, 360) - 1;
     }
 
     @Test
     public void totalMoney() {
-        float a = 3039.28F;
+        float a = 3003.71F;
         float b = 2609.49F;
         System.out.println(STR."all total sum: \{a * aRemainPeriod() + b * bRemainPeriod()}, next: \{a * aRemainPeriod() + b * bRemainPeriod() - a - b}");
         System.out.println(STR."principal sum: \{TOTAL_A + TOTAL_B}");
@@ -157,7 +158,7 @@ class ToolTest {
     }
 
     @Test
-    public void testMonthlyEarlyRepayment() {
+    public void testEarlyRepayment() {
         int periods = aRemainPeriod();
         BigDecimal monthlyPayment = LoanUtil.calculateMonthlyPayment(TOTAL_A, MONTHLY_RATE_A, periods);
         // 每月固定还款总额 10000，已包含当月应还的本金+利息；超出原月供的部分自动冲抵本金
@@ -167,25 +168,23 @@ class ToolTest {
         BigDecimal remainingPrincipal = BigDecimal.valueOf(TOTAL_A);
         BigDecimal totalInterest = BigDecimal.ZERO;
         int actualMonth = 0;
-        System.out.println(STR."等额本息+每月固定还款计算：贷款总额=\{TOTAL_A}，原还款月数=\{periods}，每月还款总额=\{monthlyTotal}");
-        System.out.println(STR."原月供=\{monthlyPayment.setScale(2, RoundingMode.HALF_UP)}，每月额外冲抵本金=\{extraPrincipal.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println(STR."每月固定还款计算：贷款总额=\{TOTAL_A}，原还款月数=\{periods}，每月还款总额=\{monthlyTotal}");
+        System.out.println(STR."原月供=\{monthlyPayment.setScale(2, RoundingMode.HALF_UP)}，首月额外冲抵本金=\{extraPrincipal.setScale(2, RoundingMode.HALF_UP)}");
         System.out.println("-----------------------------------------------------------");
-        System.out.printf("%-7s %-12s %-13s %-13s %-13s%n", "月份", "本月本金", "本月利息", "本月还款", "剩余本金");
+        System.out.printf("%-7s %-12s %-13s %-13s%n", "月份", "本月本金", "本月利息", "剩余本金");
         while (remainingPrincipal.compareTo(BigDecimal.ZERO) > 0 && actualMonth < 360) {
             actualMonth++;
             BigDecimal monthlyInterest = LoanUtil.calculateMonthlyInterest(remainingPrincipal, MONTHLY_RATE_A);
             // 当月还款总额固定为 monthlyTotal，扣除当月利息后，剩余全部冲抵本金
             BigDecimal principalPayment = monthlyTotal.subtract(monthlyInterest);
-            BigDecimal actualPayment = monthlyTotal;
-            // 最后一期：剩余本金+当月利息不足 monthlyTotal 时，按实际结清金额还款
+            // 最后一期：剩余本金+当月利息不足 monthlyTotal 时，按实际结清
             if (remainingPrincipal.add(monthlyInterest).compareTo(monthlyTotal) <= 0) {
                 principalPayment = remainingPrincipal;
-                actualPayment = remainingPrincipal.add(monthlyInterest);
             }
             remainingPrincipal = remainingPrincipal.subtract(principalPayment).max(BigDecimal.ZERO);
             totalInterest = totalInterest.add(monthlyInterest);
 
-            System.out.printf("%-8d %-15.2f %-15.2f %-15.2f %-15.2f%n", actualMonth, principalPayment, monthlyInterest, actualPayment, remainingPrincipal);
+            System.out.printf("%-8d %-15.2f %-15.2f %-15.2f%n", actualMonth, principalPayment, monthlyInterest, remainingPrincipal);
         }
         System.out.println("-----------------------------------------------------------");
         System.out.println(STR."实际还款月数=\{actualMonth}，总利息=\{totalInterest}");
@@ -202,8 +201,9 @@ class ToolTest {
         int remainingMonths = LoanUtil.calculateRemainingMonthsAfterEarlyRepayment(monthlyPayment, remainingAfterEarly, MONTHLY_RATE_A);
         BigDecimal remainingPrincipal = remainingAfterEarly;
         BigDecimal totalInterest = BigDecimal.ZERO;
-        System.out.println(STR."等额本息+一次性提前还款计算：贷款总额=\{TOTAL_A}，原还款月数=\{originalPeriods}，提前还款=\{earlyRepayment}");
-        System.out.println(STR."剩余本金=\{remainingPrincipal}，原月供=\{monthlyPayment.setScale(2, RoundingMode.HALF_UP)}，缩短后期数=\{remainingMonths}");
+        System.out.println("===== 提前还款-降低期次方式 =====");
+        System.out.println(STR."贷款总额=\{TOTAL_A}，原还款月数=\{originalPeriods}，提前还款=\{earlyRepayment}，原月供=\{monthlyPayment.setScale(2, RoundingMode.HALF_UP)}");
+        System.out.println(STR."剩余本金=\{remainingPrincipal}，缩短后期数=\{remainingMonths}");
         System.out.println("-----------------------------------------------------------");
         System.out.printf("%-7s %-13s %-13s %-13s%n", "月份", "本月本金", "本月利息", "剩余本金");
         for (int month = 1; month <= remainingMonths; month++) {
@@ -232,7 +232,6 @@ class ToolTest {
         System.out.println(STR."节省利息=\{noRepaymentTotalInterest.subtract(totalInterest)}");
     }
 
-
     @Test
     public void testCityCost() {
         CostItem[] items = new CostItem[]{
@@ -242,10 +241,10 @@ class ToolTest {
                 new CostItem("水+燃气", BigDecimal.valueOf(50)),
                 CostItem.ofYearly("取暖费", BigDecimal.valueOf(2500)),
                 new CostItem("电费", BigDecimal.valueOf(200)),
-                new CostItem("通讯", BigDecimal.valueOf(80)),
+                new CostItem("通讯", BigDecimal.valueOf(70)),
                 new CostItem("物业费", BigDecimal.valueOf(246)),
                 new CostItem("理发", BigDecimal.valueOf(25)),
-                new CostItem("贷款A", BigDecimal.valueOf(3039)),
+                new CostItem("贷款A", BigDecimal.valueOf(3003)),
                 new CostItem("贷款B", BigDecimal.valueOf(1200)),
         };
         printCost(items);
@@ -267,9 +266,9 @@ class ToolTest {
         BigDecimal monthlyReduce = originalMonthlyPayment.subtract(reducedMonthlyPayment);
 
         System.out.println("===== 提前还款-降低月供方式 =====");
-        System.out.printf("贷款总额=%.2f，原还款月数=%d，原月供=%.2f%n", principal, originalPeriods, originalMonthlyPayment);
-        System.out.printf("提前还款=%.2f，剩余本金=%.2f，新月供=%.2f，每月少还=%.2f%n",
-                earlyRepayment, remainingAfterEarly, reducedMonthlyPayment, monthlyReduce);
+        System.out.printf("贷款总额=%d，原月供=%.2f，原还款月数=%d，提前还款=%.2f%n", principal.intValue(), originalMonthlyPayment, originalPeriods, earlyRepayment);
+        System.out.printf("剩余本金=%d，新月供=%.2f，每月少还=%.2f%n",
+                remainingAfterEarly.intValue(), reducedMonthlyPayment, monthlyReduce);
         System.out.println("-----------------------------------------------------------");
         System.out.printf("%-7s %-13s %-13s %-13s%n", "月份", "本月本金", "本月利息", "剩余本金");
 

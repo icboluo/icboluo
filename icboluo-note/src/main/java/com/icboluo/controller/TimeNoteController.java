@@ -97,26 +97,31 @@ public class TimeNoteController {
         int normal = base + performance;
 
         double jb = base / 21.75 * 2;
-        System.out.println("jb : " + jb * 0.8 + ", ...");
+        System.out.printf("total : %.2f, 10tax : %.2f, 20tax : %.2f%n", jb, jb * 0.9, jb * 0.8);
 
-        extracted(normal, jb * 0, 0);
+        double pension = base * 0.08;
+        double medical = base * 0.02 + 1.6;
+        double unemployment = base * 0.003;
+        double housingFund = base * 0.05;
+        double other = pension + medical + unemployment + housingFund;
 
-        extracted(normal, jb * 1, 1);
+        extracted(normal, jb * 0, 0, other);
 
-        extracted(normal, jb * 2, 2);
+        extracted(normal, jb * 1, 1, other);
 
-        extracted(normal, jb * 3, 3);
+        extracted(normal, jb * 2, 2, other);
 
-        extracted(normal, jb * 4, 4);
+        extracted(normal, jb * 3, 3, other);
 
-        extracted(normal, jb * 5, 5);
+        extracted(normal, jb * 4, 4, other);
+
+        extracted(normal, jb * 5, 5, other);
     }
 
-    private static void extracted(int normal, double jb, int x) {
+    private static void extracted(int normal, double jb, int x, double other) {
         double total = normal + jb;
         double oneDayMonth = total / (21.75 + x);
-        int other = 2143;
-        double taxableIncome = total - 5000 - other;
+        double taxableIncome = total - 5000 - 1500 - other;
         double tax = tax(taxableIncome * 12) / 12;
         System.out.printf("total money(%d): %.2f, one day money: %.2f, actual money: %.2f%n", x, total, oneDayMonth, total - tax - other);
     }
