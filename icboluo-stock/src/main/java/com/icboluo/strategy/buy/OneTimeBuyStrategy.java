@@ -58,12 +58,7 @@ public class OneTimeBuyStrategy implements BuyStrategy {
         if (tradeDay == null) {
             return;
         }
-        if (tradeDay <= 1) {
-            // 首日：全部可用资金一次性均分建仓（原始本金一次性投入）
-            BuyUtil.buyEqually(context, validQuotes, availableFund);
-        } else {
-            // 之后：原始本金首日已花光，当前可用资金通常来自卖出回款，将回款再均分投入
-            BuyUtil.buyEqually(context, validQuotes, availableFund);
-        }
+        // 首日为全部可用资金一次性均分建仓；之后可用资金通常来自卖出回款，同样均分再投入
+        BuyUtil.buyEqually(context, validQuotes, availableFund);
     }
 }

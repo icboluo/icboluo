@@ -36,7 +36,19 @@ public class StockAccountServiceImpl implements StockAccountService {
         if (season == null) {
             throw new I18nException("赛季不存在");
         }
-        StockAccount account = getOrCreateAccount(seasonId, playerName, season.getInitialFund());
+        BigDecimal initialFund = season.getInitialFund();
+        StockAccount account = findAccount(seasonId, playerName);
+        if (account == null) {
+            // 未加入赛季：返回"初始资金"口径的空账户（不落库），保持前端展示一致
+            AccountVo empty = new AccountVo();
+            empty.setPlayerName(playerName);
+            empty.setAvailableFund(initialFund);
+            empty.setTotalAsset(initialFund);
+            empty.setProfitRate(BigDecimal.ZERO);
+            empty.setInitialFund(initialFund);
+            empty.setPositions(Collections.emptyList());
+            return empty;
+        }
         // 查询持仓
         List<StockPosition> positions = stockPositionMapper.selectList(new LambdaQueryWrapper<StockPosition>()
                 .eq(StockPosition::getAccountId, account.getId()));
@@ -79,7 +91,6 @@ public class StockAccountServiceImpl implements StockAccountService {
         }
         // 计算总资产和收益率
         BigDecimal totalAsset = account.getAvailableFund().add(positionMarketValue);
-        BigDecimal initialFund = season.getInitialFund();
         BigDecimal profitRate = MathUtil.divide(totalAsset.subtract(initialFund), initialFund, 4, RoundingMode.HALF_UP)
                 .multiply(BigDecimal.valueOf(100));
         AccountVo accountVO = new AccountVo();
@@ -148,7 +159,12 @@ public class StockAccountServiceImpl implements StockAccountService {
         if (season == null) {
             throw new I18nException("赛季不存在");
         }
-        StockAccount account = getOrCreateAccount(seasonId, playerName, season.getInitialFund());
+        BigDecimal initialFund = season.getInitialFund();
+        StockAccount account = findAccount(seasonId, playerName);
+        if (account == null) {
+            // 未加入赛季：返回平坦曲线（不落库）
+            return buildFlatCurve(seasonId, initialFund, season.getCurrentTradeDay());
+        }
         // 查询该账户所有交易记录，按交易日分组计算每日资金变动
         List<StockTradeRecord> tradeRecords = stockTradeRecordMapper.selectList(new LambdaQueryWrapper<StockTradeRecord>()
                 .eq(StockTradeRecord::getAccountId, account.getId())
@@ -157,41 +173,61 @@ public class StockAccountServiceImpl implements StockAccountService {
         List<StockSeasonQuote> seasonQuotes = stockSeasonQuoteMapper.selectList(new LambdaQueryWrapper<StockSeasonQuote>()
                 .eq(StockSeasonQuote::getSeasonId, seasonId)
                 .orderByAsc(StockSeasonQuote::getTradeDay));
-        // 计算每个交易日的资金（从初始资金开始，逐日累加交易盈亏）
-        BigDecimal fund = season.getInitialFund();
-        // 按交易日汇总交易金额
-        Map<Integer, BigDecimal> tradeAmountByDay = new LinkedHashMap<>();
-        for (StockTradeRecord record : tradeRecords) {
-            // BUY: amount 为负（花钱），SELL: amount 为正（收入）
-            BigDecimal delta = "SELL".equals(record.getTradeType()) ? record.getAmount() : record.getAmount().negate();
-            tradeAmountByDay.merge(record.getTradeDay(), delta, BigDecimal::add);
+        // 预加载行情：仅加载本账户交易过的股票在赛季日期内的日线，建立 (股票代码|日期) -> 收盘价 映射
+        Set<String> tradedCodes = tradeRecords.stream().map(StockTradeRecord::getStockCode).collect(Collectors.toSet());
+        Set<LocalDate> seasonDates = seasonQuotes.stream()
+                .map(StockSeasonQuote::getTradeDate)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+        Map<String, BigDecimal> closePriceByCodeDate = Collections.emptyMap();
+        if (!tradedCodes.isEmpty() && !seasonDates.isEmpty()) {
+            List<StockDaily> dailies = stockDailyMapper.selectList(new LambdaQueryWrapper<StockDaily>()
+                    .in(StockDaily::getStockCode, new ArrayList<>(tradedCodes))
+                    .in(StockDaily::getTradeDate, new ArrayList<>(seasonDates)));
+            closePriceByCodeDate = dailies.stream()
+                    .collect(Collectors.toMap(
+                            d -> d.getStockCode() + "|" + d.getTradeDate(),
+                            StockDaily::getClosePrice,
+                            (a, b) -> a));
         }
+        // 按交易日回放交易记录：维护现金与每只股票的持仓数量。
+        // 不能用"当前持仓快照"回溯历史，否则已卖出的股票在持有期间的市值会被算成 0，导致曲线断层/跳变。
+        Map<Integer, List<StockTradeRecord>> recordsByDay = tradeRecords.stream()
+                .collect(Collectors.groupingBy(StockTradeRecord::getTradeDay));
+        BigDecimal cash = initialFund;
+        Map<String, Integer> holdQty = new HashMap<>();
         List<ProfitPointVo> curve = new ArrayList<>();
         int currentTradeDay = season.getCurrentTradeDay() != null ? season.getCurrentTradeDay() : 0;
         for (StockSeasonQuote sq : seasonQuotes) {
             if (sq.getTradeDay() > currentTradeDay) {
                 break;
             }
-            // 累加该日的交易金额变动
-            if (tradeAmountByDay.containsKey(sq.getTradeDay())) {
-                fund = fund.add(tradeAmountByDay.get(sq.getTradeDay()));
+            // 应用当日交易：买入扣减现金并增加持仓，卖出回笼现金并减少持仓
+            for (StockTradeRecord record : recordsByDay.getOrDefault(sq.getTradeDay(), Collections.emptyList())) {
+                Integer qtyObj = record.getQuantity();
+                int qty = qtyObj == null ? 0 : qtyObj;
+                if ("SELL".equals(record.getTradeType())) {
+                    cash = cash.add(record.getAmount());
+                    holdQty.merge(record.getStockCode(), -qty, Integer::sum);
+                } else {
+                    cash = cash.subtract(record.getAmount());
+                    holdQty.merge(record.getStockCode(), qty, Integer::sum);
+                }
             }
-            // 查询该日持仓市值
-            List<StockPosition> positions = stockPositionMapper.selectList(new LambdaQueryWrapper<StockPosition>()
-                    .eq(StockPosition::getAccountId, account.getId()));
-            LocalDate tradeDate = sq.getTradeDate();
+            // 当日持仓市值（缺行情记 0，与原逻辑一致）
             BigDecimal positionMarketValue = BigDecimal.ZERO;
-            if (!positions.isEmpty() && tradeDate != null) {
-                Map<String, BigDecimal> closePriceMap = getClosePriceMap(positions, tradeDate);
-                positionMarketValue = positions
-                        .stream()
-                        .map(p -> closePriceMap.getOrDefault(p.getStockCode(), BigDecimal.ZERO)
-                                .multiply(BigDecimal.valueOf(p.getQuantity())))
-                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+            for (Map.Entry<String, Integer> entry : holdQty.entrySet()) {
+                int qty = entry.getValue() == null ? 0 : entry.getValue();
+                if (qty <= 0) {
+                    continue;
+                }
+                BigDecimal price = closePriceByCodeDate.getOrDefault(
+                        entry.getKey() + "|" + sq.getTradeDate(), BigDecimal.ZERO);
+                positionMarketValue = positionMarketValue.add(price.multiply(BigDecimal.valueOf(qty)));
             }
-            BigDecimal totalAsset = fund.add(positionMarketValue);
-            BigDecimal profitRate = MathUtil.divide(totalAsset.subtract(season.getInitialFund()),
-                    season.getInitialFund(), 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
+            BigDecimal totalAsset = cash.add(positionMarketValue);
+            BigDecimal profitRate = MathUtil.divide(totalAsset.subtract(initialFund),
+                    initialFund, 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
             ProfitPointVo point = new ProfitPointVo();
             point.setTradeDay(sq.getTradeDay());
             point.setTotalAsset(totalAsset);
@@ -221,7 +257,10 @@ public class StockAccountServiceImpl implements StockAccountService {
         if (season == null) {
             throw new I18nException("赛季不存在");
         }
-        StockAccount account = getOrCreateAccount(seasonId, playerName, season.getInitialFund());
+        StockAccount account = findAccount(seasonId, playerName);
+        if (account == null) {
+            return Collections.emptyList();
+        }
         List<StockPosition> positions = stockPositionMapper.selectList(new LambdaQueryWrapper<StockPosition>()
                 .eq(StockPosition::getAccountId, account.getId()));
         if (positions.isEmpty()) {
@@ -259,20 +298,38 @@ public class StockAccountServiceImpl implements StockAccountService {
     }
 
     /**
-     * 查询账户，不存在则自动创建
+     * 查询账户（只读）。不存在时返回 null，<b>不自动创建</b>。
+     * <p>只读接口若自动建账户，任何拼写错误的玩家名都会凭空产生一个账户，
+     * 并以"总资产=初始资金、收益率0"进入玩家列表与榜单，造成数据污染。
+     * 账户只应由 {@code joinSeason}（真人）与机器人注册流程创建。
      */
-    private StockAccount getOrCreateAccount(Integer seasonId, String playerName, BigDecimal initialFund) {
-        StockAccount account = stockAccountMapper.selectOne(new LambdaQueryWrapper<StockAccount>()
+    private StockAccount findAccount(Integer seasonId, String playerName) {
+        return stockAccountMapper.selectOne(new LambdaQueryWrapper<StockAccount>()
                 .eq(StockAccount::getSeasonId, seasonId)
                 .eq(StockAccount::getPlayerName, playerName));
-        if (account == null) {
-            account = new StockAccount();
-            account.setSeasonId(seasonId);
-            account.setPlayerName(playerName);
-            account.setAvailableFund(initialFund);
-            stockAccountMapper.insert(account);
+    }
+
+    /**
+     * 未加入赛季时的平坦收益曲线（总资产恒为初始资金、收益率 0），不落库。
+     * 用于保持与"自动建空账户"时一致的展示口径。
+     */
+    private List<ProfitPointVo> buildFlatCurve(Integer seasonId, BigDecimal initialFund, Integer currentTradeDay) {
+        List<StockSeasonQuote> quotes = stockSeasonQuoteMapper.selectList(new LambdaQueryWrapper<StockSeasonQuote>()
+                .eq(StockSeasonQuote::getSeasonId, seasonId)
+                .orderByAsc(StockSeasonQuote::getTradeDay));
+        int day = currentTradeDay == null ? 0 : currentTradeDay;
+        List<ProfitPointVo> curve = new ArrayList<>();
+        for (StockSeasonQuote sq : quotes) {
+            if (sq.getTradeDay() > day) {
+                break;
+            }
+            ProfitPointVo point = new ProfitPointVo();
+            point.setTradeDay(sq.getTradeDay());
+            point.setTotalAsset(initialFund);
+            point.setProfitRate(BigDecimal.ZERO);
+            curve.add(point);
         }
-        return account;
+        return curve;
     }
 
     /**

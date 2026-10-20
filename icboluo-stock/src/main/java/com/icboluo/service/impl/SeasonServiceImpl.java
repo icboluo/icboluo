@@ -302,9 +302,10 @@ public class SeasonServiceImpl implements SeasonService {
                 throw new RuntimeException("赛季状态不是PLAYING，无法推进交易日");
             }
             int nextTradeDay = season.getCurrentTradeDay() + 1;
-            // 赛季结束
-            if (nextTradeDay > season.getTotalTradeDays()) {
-                // 赛季结束前强制清仓所有持仓
+            season.setCurrentTradeDay(nextTradeDay);
+            stockSeasonMapper.updateById(season);
+            // 最后交易日：仅执行强制清仓，不再进行机器人/手动交易，避免当天同时出现买入与卖出
+            if (nextTradeDay == season.getTotalTradeDays()) {
                 forceLiquidateSeason(co.getSeasonId(), season);
                 season.setStatus("FINISHED");
                 season.setHistoryRevealed(true);
@@ -312,8 +313,6 @@ public class SeasonServiceImpl implements SeasonService {
                 return Collections.emptyList();
             }
             // 正常推进
-            season.setCurrentTradeDay(nextTradeDay);
-            stockSeasonMapper.updateById(season);
             // 查询当日对应的实际交易日期
             StockSeasonQuote seasonQuote = stockSeasonQuoteMapper.selectOne(new LambdaQueryWrapper<StockSeasonQuote>()
                     .eq(StockSeasonQuote::getSeasonId, co.getSeasonId())
@@ -566,26 +565,35 @@ public class SeasonServiceImpl implements SeasonService {
                     .stream()
                     .collect(Collectors.toMap(StockDaily::getStockCode, StockDaily::getClosePrice, (a, b) -> a));
             BigDecimal totalProceeds = BigDecimal.ZERO;
+            // 按股票代码聚合持仓：同一只股票在最后交易日只生成一条卖出记录，
+            // 避免一只股票存在多个买入批次时产生多条 SELL（违反"每交易日每只股票仅一笔交易"）
+            Map<String, Integer> qtyByStock = new HashMap<>();
+            Map<String, BigDecimal> amountByStock = new HashMap<>();
             for (StockPosition pos : positions) {
                 var closePrice = closePriceMap.getOrDefault(pos.getStockCode(), BigDecimal.ZERO);
                 var proceeds = closePrice.multiply(BigDecimal.valueOf(pos.getQuantity()));
                 totalProceeds = totalProceeds.add(proceeds);
-
-                // 创建卖出交易记录
+                qtyByStock.merge(pos.getStockCode(), pos.getQuantity(), Integer::sum);
+                amountByStock.merge(pos.getStockCode(), proceeds, BigDecimal::add);
+            }
+            // 每只股票生成一条卖出记录
+            for (var entry : qtyByStock.entrySet()) {
+                String stockCode = entry.getKey();
+                var closePrice = closePriceMap.getOrDefault(stockCode, BigDecimal.ZERO);
                 var record = new StockTradeRecord();
                 record.setAccountId(account.getId());
-                record.setStockCode(pos.getStockCode());
+                record.setStockCode(stockCode);
                 record.setTradeType("SELL");
-                record.setQuantity(pos.getQuantity());
+                record.setQuantity(entry.getValue());
                 record.setPrice(closePrice);
-                record.setAmount(proceeds);
+                record.setAmount(amountByStock.get(stockCode));
                 record.setTradeDay(season.getCurrentTradeDay());
                 record.setCreateTime(LocalDateTime.now());
                 stockTradeRecordMapper.insert(record);
-
-                // 删除持仓
-                stockPositionMapper.deleteById(pos.getId());
             }
+            // 删除该账户全部持仓
+            stockPositionMapper.delete(new LambdaQueryWrapper<StockPosition>()
+                    .eq(StockPosition::getAccountId, account.getId()));
             // 卖出所得加入可用资金
             account.setAvailableFund(account.getAvailableFund().add(totalProceeds));
             stockAccountMapper.updateById(account);

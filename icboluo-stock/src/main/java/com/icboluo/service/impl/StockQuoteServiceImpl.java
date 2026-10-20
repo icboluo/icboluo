@@ -91,6 +91,12 @@ public class StockQuoteServiceImpl implements StockQuoteService {
         // 回放计算每日持仓/成本/收益
         int holdQty = 0;
         BigDecimal netCost = BigDecimal.ZERO;
+        // 累计买入金额（用于计算收益率分母）
+        BigDecimal totalBuy = BigDecimal.ZERO;
+        // 投资过程中最大净投入金额（持仓占用资金峰值，取非负值）
+        BigDecimal maxInvest = BigDecimal.ZERO;
+        // 记录最近一个可用交易日的收盘价，用于计算当前持仓市值
+        BigDecimal lastClose = null;
         // 累计买入金额 - 累计卖出金额（净投入）
         List<StockChartVo.PricePoint> prices = new ArrayList<>();
         for (StockSeasonQuote q : quotes) {
@@ -104,6 +110,7 @@ public class StockQuoteServiceImpl implements StockQuoteService {
             if (daily != null) {
                 point.setClosePrice(daily.getClosePrice());
                 point.setIncreaseRateDay(daily.getIncreaseRateDay());
+                lastClose = daily.getClosePrice();
             }
             // 处理该交易日发生的买卖
             for (StockTradeRecord r : records) {
@@ -113,12 +120,16 @@ public class StockQuoteServiceImpl implements StockQuoteService {
                 if ("BUY".equals(r.getTradeType())) {
                     holdQty += r.getQuantity();
                     netCost = netCost.add(r.getAmount());
+                    totalBuy = totalBuy.add(r.getAmount());
                 } else if ("SELL".equals(r.getTradeType())) {
                     holdQty -= r.getQuantity();
                     netCost = netCost.subtract(r.getAmount());
                 }
+                // 记录投资过程中的最大净投入（峰值持仓占用资金，取非负值）
+                maxInvest = maxInvest.max(netCost.max(BigDecimal.ZERO));
             }
             // 当日持仓市值与收益
+            point.setHoldQty(holdQty);
             if (daily != null && daily.getClosePrice() != null && holdQty > 0) {
                 BigDecimal marketValue = daily.getClosePrice()
                         .multiply(BigDecimal.valueOf(holdQty)).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -155,14 +166,42 @@ public class StockQuoteServiceImpl implements StockQuoteService {
         }).toList();
         vo.setTrades(markers);
 
-        // 该股票整体累计投入与收益（以最后一日视角）
+        // 该股票整体累计投入（净投入，取非负值，已全部回笼则为 0）
         BigDecimal totalInvest = netCost.max(BigDecimal.ZERO);
-        BigDecimal totalProfit = netCost.compareTo(BigDecimal.ZERO) >= 0
-                ? BigDecimal.ZERO
-                : netCost.negate();
+        // 当前持仓市值（收盘价 × 持仓数量）
+        BigDecimal marketValue = (lastClose != null && holdQty > 0)
+                ? lastClose.multiply(BigDecimal.valueOf(holdQty)).setScale(2, RoundingMode.HALF_UP)
+                : BigDecimal.ZERO;
+        // 总收益 = 当前持仓市值 + 累计卖出回笼 - 累计买入投入（含未实现盈亏）
+        BigDecimal totalProfit = marketValue.subtract(netCost).setScale(2, RoundingMode.HALF_UP);
+        // 原始可操作金额：赛季初始资金按股票个数平均分配（每只股票的参考基准）
+        // 股票个数 = 赛季交易日期范围内 StockDaily 去重后的股票代码数量（即可交易股票池大小）
+        BigDecimal initialFund = season.getInitialFund() != null ? season.getInitialFund() : BigDecimal.ZERO;
+        List<java.time.LocalDate> seasonTradeDates = quotes.stream().map(StockSeasonQuote::getTradeDate).distinct().toList();
+        long stockCount = seasonTradeDates.isEmpty()
+                ? 0
+                : stockDailyMapper.countDistinctStockCodeByTradeDates(seasonTradeDates);
+        BigDecimal initInvest = stockCount > 0
+                ? MathUtil.divide(initialFund, BigDecimal.valueOf(stockCount), 2, RoundingMode.HALF_UP)
+                : BigDecimal.ZERO;
+        // 收益率（按累计买入金额，分母为零则记为 0）
+        BigDecimal profitRate = totalBuy.compareTo(BigDecimal.ZERO) > 0
+                ? MathUtil.divide(totalProfit.multiply(HUNDRED), totalBuy, 2, RoundingMode.HALF_UP)
+                : BigDecimal.ZERO;
+        // 两种收益率：分别基于原始可操作金额、投资中最大投入金额（分母为零则记为 0）
+        BigDecimal profitRateByInit = initInvest.compareTo(BigDecimal.ZERO) > 0
+                ? MathUtil.divide(totalProfit.multiply(HUNDRED), initInvest, 2, RoundingMode.HALF_UP)
+                : BigDecimal.ZERO;
+        BigDecimal profitRateByMax = maxInvest.compareTo(BigDecimal.ZERO) > 0
+                ? MathUtil.divide(totalProfit.multiply(HUNDRED), maxInvest, 2, RoundingMode.HALF_UP)
+                : BigDecimal.ZERO;
         vo.setStockTotalInvest(totalInvest.setScale(2, BigDecimal.ROUND_HALF_UP));
-        vo.setStockProfit(totalProfit.setScale(2, BigDecimal.ROUND_HALF_UP));
-        vo.setStockProfitRate(MathUtil.divide(totalProfit.multiply(HUNDRED), totalInvest, 2, RoundingMode.HALF_UP));
+        vo.setStockMaxInvest(maxInvest.setScale(2, BigDecimal.ROUND_HALF_UP));
+        vo.setStockInitInvest(initInvest);
+        vo.setStockProfit(totalProfit);
+        vo.setStockProfitRate(profitRate);
+        vo.setStockProfitRateByInit(profitRateByInit);
+        vo.setStockProfitRateByMax(profitRateByMax);
         return vo;
     }
 

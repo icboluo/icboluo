@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -25,8 +27,8 @@ import java.util.stream.Collectors;
 @Component
 public class WeightedDropSellStrategy implements SellStrategy {
     private static final String STRATEGY_ID = "WEIGHTED_DROP_SELL";
-    String STRATEGY_NAME = "按跌幅加权卖出";
-    String STRATEGY_DESCRIPTION = "根据持仓跌幅加权卖出，跌幅越大卖出越多";
+    private static final String STRATEGY_NAME = "按跌幅加权卖出";
+    private static final String STRATEGY_DESCRIPTION = "根据持仓跌幅加权卖出，跌幅越大卖出越多";
 
     @Override
     public String getId() {
@@ -74,6 +76,9 @@ public class WeightedDropSellStrategy implements SellStrategy {
                 .stream()
                 .map(p -> quoteMap.get(p.getStockCode()).getIncreaseRateDay().abs())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        // 按股票聚合卖出数量：每个交易日每只股票只允许一笔交易，
+        // 避免同一股票存在多个买入批次时在同一天多次调用 sell() 触发"当日已有交易"校验
+        Map<String, Integer> sellQtyByStock = new HashMap<>();
         for (StockPosition pos : sellPositions) {
             var dropAbs = quoteMap.get(pos.getStockCode()).getIncreaseRateDay().abs();
             BigDecimal ratio = MathUtil.divide(dropAbs, totalDropAbs, 4, RoundingMode.DOWN);
@@ -83,17 +88,25 @@ public class WeightedDropSellStrategy implements SellStrategy {
             if (sellQty < 100) {
                 continue;
             }
+            sellQtyByStock.merge(pos.getStockCode(), sellQty, Integer::sum);
+        }
+        for (var entry : sellQtyByStock.entrySet()) {
+            String stockCode = entry.getKey();
+            int sellQty = entry.getValue();
+            if (sellQty < 100) {
+                continue;
+            }
             try {
                 TradeCo tradeCo = new TradeCo();
                 tradeCo.setSeasonId(context.getSeasonId());
                 tradeCo.setPlayerName(context.getPlayerName());
-                tradeCo.setStockCode(pos.getStockCode());
+                tradeCo.setStockCode(stockCode);
                 tradeCo.setQuantity(sellQty);
                 context.getTradeService().sell(tradeCo, context.getPlayerName());
             } catch (Exception e) {
                 // 机器人卖出失败不影响正常流程
                 log.error("机器人加权跌幅卖出失败: playerName={}, stockCode={}, quantity={}",
-                        context.getPlayerName(), pos.getStockCode(), sellQty, e);
+                        context.getPlayerName(), stockCode, sellQty, e);
             }
         }
         // 卖出后刷新账户余额

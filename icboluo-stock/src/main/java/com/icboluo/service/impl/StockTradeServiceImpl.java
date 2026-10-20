@@ -48,6 +48,19 @@ public class StockTradeServiceImpl implements StockTradeService {
         if (season == null) {
             throw new I18nException("赛季不存在");
         }
+        // 赛季已结束则不能再交易
+        if ("FINISHED".equals(season.getStatus())) {
+            throw new I18nException("赛季已结束，无法交易");
+        }
+        // 最后交易日仅执行清仓，不再接受手动买入/卖出
+        if (season.getCurrentTradeDay() != null && season.getTotalTradeDays() != null
+                && season.getCurrentTradeDay() >= season.getTotalTradeDays()) {
+            throw new I18nException("赛季已进入最后交易日，仅执行清仓，无法交易");
+        }
+        // 前置校验：同一交易日同一股票仅允许一笔交易（买入或卖出），已存在任何记录则拒绝
+        if (existsTradeOnDay(account.getId(), co.getStockCode(), season.getCurrentTradeDay())) {
+            throw new I18nException("该交易日已有交易记录，每个交易日同一股票仅允许一次交易");
+        }
         BigDecimal price = getClosePrice(co.getSeasonId(), season.getCurrentTradeDay(), co.getStockCode());
         BigDecimal amount = price.multiply(BigDecimal.valueOf(co.getQuantity())).setScale(2, RoundingMode.HALF_UP);
         // 校验资金是否充足
@@ -75,6 +88,19 @@ public class StockTradeServiceImpl implements StockTradeService {
         StockSeason season = stockSeasonMapper.selectById(co.getSeasonId());
         if (season == null) {
             throw new I18nException("赛季不存在");
+        }
+        // 赛季已结束则不能再交易
+        if ("FINISHED".equals(season.getStatus())) {
+            throw new I18nException("赛季已结束，无法交易");
+        }
+        // 最后交易日仅执行清仓，不再接受手动买入/卖出
+        if (season.getCurrentTradeDay() != null && season.getTotalTradeDays() != null
+                && season.getCurrentTradeDay() >= season.getTotalTradeDays()) {
+            throw new I18nException("赛季已进入最后交易日，仅执行清仓，无法交易");
+        }
+        // 前置校验：同一交易日同一股票仅允许一笔交易（买入或卖出），已存在任何记录则拒绝
+        if (existsTradeOnDay(account.getId(), co.getStockCode(), season.getCurrentTradeDay())) {
+            throw new I18nException("该交易日已有交易记录，每个交易日同一股票仅允许一次交易");
         }
         // 查询该股票持仓（取最早买入批次用于 T+1 校验）
         List<StockPosition> positions = stockPositionMapper.selectList(new LambdaQueryWrapper<StockPosition>()
@@ -211,6 +237,18 @@ public class StockTradeServiceImpl implements StockTradeService {
         record.setTradeDay(tradeDay);
         record.setCreateTime(LocalDateTime.now());
         return record;
+    }
+
+    /**
+     * 判断该账户在指定交易日、指定股票上是否已存在任意交易记录。
+     * 用于保证同一交易日的同一股票仅允许一笔交易（买入或卖出）。
+     */
+    private boolean existsTradeOnDay(Integer accountId, String stockCode, Integer tradeDay) {
+        Long count = stockTradeRecordMapper.selectCount(new LambdaQueryWrapper<StockTradeRecord>()
+                .eq(StockTradeRecord::getAccountId, accountId)
+                .eq(StockTradeRecord::getStockCode, stockCode)
+                .eq(StockTradeRecord::getTradeDay, tradeDay));
+        return count != null && count > 0;
     }
 
     /**

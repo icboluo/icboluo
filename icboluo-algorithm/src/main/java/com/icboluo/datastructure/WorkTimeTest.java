@@ -13,51 +13,54 @@ import java.time.LocalDate;
 class WorkTimeTest {
     @Test
     public void workTime() {
-        float contribute = 10F;
-        float avg = 9F;
-        float target = 8.5F;
-        int totalDays = 20;
+        float contribute = 12F;
+        float avg = 9.2F;
+        int totalDays = 18;
+
+        // 达到日均 avg 所需的总加班天数（加班日=10h、不加班日=7h）：a = totalDays*(avg-7)/3
+        float totalOvertimeDays = totalDays * (avg - 7F) / 3F;
+        System.out.println(STR."本月总需要加班的天数 = \{totalOvertimeDays}");
 
         BigDecimal workDay = MathUtil.divide(contribute, avg - 8, 1);
+        int workedDays = workDay.intValue();
         System.out.println(STR."已经上班的天数 = \{workDay}");
 
-        // 加班天数(a) / 不加班天数(b) 由“总天数 + 日均工时”推导（无需手填）：
-        // 约定 加班日=10h、不加班日=7h、基线=8h；a+b=总天数，10a+7b=avg*总天数
-        // 解得 a = 总天数*(avg-7)/3，b = 总天数 - a
-        float overtimeDays = totalDays * (avg - 7F) / 3F;   // a：原始加班天数（含小数）
+        // 剩余天数 = 总天数 - 已经上班的天数；再按日均 avg 把剩余天数拆成 剩余加班 / 剩余不加班
+        int remainingDays = totalDays - workedDays;
+        float remainingOvertimeTrue = remainingDays * (avg - 7F) / 3F;
+        System.out.println(STR."剩余天数 = \{remainingDays}");
 
-        // 第一组：加班天数向上取整（剩余不加班天数相应向下凑整）
-        int overtimeUp = (int) Math.ceil(overtimeDays);
-        int normalUp = totalDays - overtimeUp;
-        System.out.println(STR."（向上取整）剩余加班天数 a = \{overtimeUp}，剩余不加班天数 b = \{normalUp}");
-        float excessUp = overtimeUp * (10F - target) - normalUp * (target - 7F);
-        System.out.println(STR."本月多余的贡献工时（相对目标，向上取整） = \{excessUp}");
+        // 第一组：剩余加班天数向上取整（剩余不加班天数相应向下凑整）
+        int remainingOvertimeUp = (int) Math.ceil(remainingOvertimeTrue);
+        int remainingNormalUp = remainingDays - remainingOvertimeUp;
+        System.out.println(STR."（向上取整）剩余加班天数 = \{remainingOvertimeUp}，剩余不加班天数 = \{remainingNormalUp}");
+        float excessUp = (remainingOvertimeUp - remainingOvertimeTrue) * 3F;
+        System.out.println(STR."本月多余的贡献工时（相对日均工时，向上取整） = \{String.format("%.2f", excessUp)}");
 
-        // 第二组：加班天数向下取整（剩余不加班天数相应向上凑整）
-        int overtimeDown = (int) Math.floor(overtimeDays);
-        int normalDown = totalDays - overtimeDown;
-        System.out.println(STR."（向下取整）剩余加班天数 a = \{overtimeDown}，剩余不加班天数 b = \{normalDown}");
-        float excessDown = overtimeDown * (10F - target) - normalDown * (target - 7F);
-        System.out.println(STR."本月多余的贡献工时（相对目标，向下取整） = \{excessDown}");
+        // 第二组：剩余加班天数向下取整（剩余不加班天数相应向上凑整）
+        int remainingOvertimeDown = (int) Math.floor(remainingOvertimeTrue);
+        int remainingNormalDown = remainingDays - remainingOvertimeDown;
+        System.out.println(STR."（向下取整）剩余加班天数 = \{remainingOvertimeDown}，剩余不加班天数 = \{remainingNormalDown}");
+        float excessDown = (remainingOvertimeDown - remainingOvertimeTrue) * 3F;
+        System.out.println(STR."本月多余的贡献工时（相对日均工时，向下取整） = \{String.format("%.2f", excessDown)}");
     }
 
+
     @Test
-    public void nightShift() {
-        // 晚班排班表（3 天一轮：每天由若干“上班/休息”时段组成）
-        // meal：该时段内的吃饭时间（小时），默认 0，第二行夜班含 0.5h 吃饭
+    public void dayShift() {
+        // 早班排班表（3 天一轮：每天由若干“上班/休息”时段组成）
         record Segment(String day, String period, String status, double hours, double meal) {
         }
         Segment[] schedule = {
-                new Segment("第1天", "07:00 - 15:00", "休息", 8.0, 0.0),
-                new Segment("第1天", "15:00 - 01:30", "上班", 10.5, 0.5),
-                new Segment("第2天", "01:30 - 07:00", "休息", 5.5, 0.0),
-                new Segment("第2天", "07:00 - 16:30", "上班", 9.5, 1),
-                new Segment("第2天", "16:30 - 22:00", "休息", 5.5, 0.0),
-                new Segment("第2天", "22:00 - 06:00", "上班", 8.0, 0.5),
-                new Segment("第3天", "06:00 - 10:30", "休息", 4.5, 0.0),
-                new Segment("第3天", "10:30 - 22:00", "上班", 11.5, 1),
+                new Segment("第1天", "07:00 - 18:00", "上班", 11.0, 1),
+                new Segment("第1天", "18:00 - 24:00", "休息", 6.0, 0.0),
+                new Segment("第1天", "24:00 - 07:00", "上班", 7.0, 0.5),
+                new Segment("第2天", "07:00 - 12:30", "休息", 5.5, 0.0),
+                new Segment("第2天", "12:30 - 23:00", "上班", 10.5, 1),
+                new Segment("第2天", "23:00 - 06:00", "休息", 7.0, 0.0),
+                new Segment("第3天", "06:00 - 13:00", "上班", 7.0, 1),
         };
-        System.out.println("==================== 晚班排班表（3天一轮） ====================");
+        System.out.println("==================== 早班排班表（3天一轮） ====================");
         System.out.printf("%-8s %-20s %-6s %-10s %-10s%n", "天数", "时间段", "状态", "时长(h)", "吃饭(h)");
         System.out.println("------------------------------------------------------------");
         double workTotal = 0, restTotal = 0, mealTotal = 0;
@@ -89,20 +92,22 @@ class WorkTimeTest {
     }
 
     @Test
-    public void dayShift() {
-        // 早班排班表（3 天一轮：每天由若干“上班/休息”时段组成）
+    public void nightShift() {
+        // 晚班排班表（3 天一轮：每天由若干“上班/休息”时段组成）
+        // meal：该时段内的吃饭时间（小时），默认 0，第二行夜班含 0.5h 吃饭
         record Segment(String day, String period, String status, double hours, double meal) {
         }
         Segment[] schedule = {
-                new Segment("第1天", "07:00 - 18:00", "上班", 11.0, 1),
-                new Segment("第1天", "18:00 - 24:00", "休息", 6.0, 0.0),
-                new Segment("第1天", "24:00 - 07:00", "上班", 7.0, 0.5),
-                new Segment("第2天", "07:00 - 12:30", "休息", 5.5, 0.0),
-                new Segment("第2天", "12:30 - 23:00", "上班", 10.5, 1),
-                new Segment("第2天", "23:00 - 06:00", "休息", 7.0, 0.0),
-                new Segment("第3天", "06:00 - 13:00", "上班", 7.0, 1),
+                new Segment("第1天", "07:00 - 15:00", "休息", 8.0, 0.0),
+                new Segment("第1天", "15:00 - 01:30", "上班", 10.5, 0.5),
+                new Segment("第2天", "01:30 - 07:00", "休息", 5.5, 0.0),
+                new Segment("第2天", "07:00 - 16:30", "上班", 9.5, 1),
+                new Segment("第2天", "16:30 - 22:00", "休息", 5.5, 0.0),
+                new Segment("第2天", "22:00 - 06:00", "上班", 8.0, 0.5),
+                new Segment("第3天", "06:00 - 10:30", "休息", 4.5, 0.0),
+                new Segment("第3天", "10:30 - 22:00", "上班", 11.5, 1),
         };
-        System.out.println("==================== 早班排班表（3天一轮） ====================");
+        System.out.println("==================== 晚班排班表（3天一轮） ====================");
         System.out.printf("%-8s %-20s %-6s %-10s %-10s%n", "天数", "时间段", "状态", "时长(h)", "吃饭(h)");
         System.out.println("------------------------------------------------------------");
         double workTotal = 0, restTotal = 0, mealTotal = 0;

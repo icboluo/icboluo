@@ -111,17 +111,6 @@ public final class SellUtil {
     }
 
     /**
-     * 将金额按手数折算为可买数量（向下取整到 100 股）。
-     */
-    public static int amountToLot(BigDecimal amount, BigDecimal price) {
-        if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
-            return 0;
-        }
-        BigDecimal qty = MathUtil.divide(amount, price, 0, RoundingMode.DOWN);
-        return (qty.intValue() / LOT_SIZE) * LOT_SIZE;
-    }
-
-    /**
      * 计算该账户持有某股票的加权买入成本价（无持仓返回 null）。
      */
     public static BigDecimal costPriceOf(BotExecutionContext context, String stockCode) {

@@ -26,11 +26,11 @@ class ToolTest {
     private static final LocalDate LOAN_START = LocalDate.of(2024, 1, 21);
 
     private static int aRemainPeriod() {
-        return LoanUtil.remainPeriod(LOAN_START, 311) - 1;
+        return LoanUtil.remainPeriod(LOAN_START, 311);
     }
 
     private static int bRemainPeriod() {
-        return LoanUtil.remainPeriod(LOAN_START, 360) - 1;
+        return LoanUtil.remainPeriod(LOAN_START, 360);
     }
 
     @Test
