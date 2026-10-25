@@ -17,7 +17,7 @@ class ToolTest {
     //    1682721 / 827 = 2034.73
     //    1197352 / 827 = 1447.83
     private static final int TOTAL_A = 587727;
-    private static final int TOTAL_B = 609625;
+    private static final int TOTAL_B = 609623;
 
     //   月RATE = 年RATE / 12
     private static final BigDecimal MONTHLY_RATE_A = MathUtil.divide(0.032, 12, 10);
@@ -239,7 +239,7 @@ class ToolTest {
                 new CostItem("交通", BigDecimal.valueOf(100)),
                 new CostItem("停车费", BigDecimal.valueOf(200)),
                 new CostItem("水+燃气", BigDecimal.valueOf(50)),
-                CostItem.ofYearly("取暖费", BigDecimal.valueOf(2500)),
+                CostItem.ofYearly("取暖费", BigDecimal.valueOf(2520)),
                 new CostItem("电费", BigDecimal.valueOf(200)),
                 new CostItem("通讯", BigDecimal.valueOf(70)),
                 new CostItem("物业费", BigDecimal.valueOf(246)),

@@ -16,15 +16,18 @@ public class PersonalMetrics {
             List.of(
                     new PersonalProfile.ExerciseRecord("屈腿（双腿）", "120 LB"),
                     new PersonalProfile.ExerciseRecord("哑铃推肩（单侧）", "8 KG"),
-                    new PersonalProfile.ExerciseRecord("杠铃卧推（两侧）", "7.5 KG x 2 = 15 KG"),
-                    new PersonalProfile.ExerciseRecord("硬拉（两侧）", "15 KG x 2 = 30 KG"),
-                    new PersonalProfile.ExerciseRecord("杠铃深蹲（两侧）", "15 KG x 2 = 30 KG"),
+                    new PersonalProfile.ExerciseRecord("哑铃飞鸟（单侧）", "6 KG"),
+                    new PersonalProfile.ExerciseRecord("杠铃卧推（两侧）", "10 KG x 2 +20KG"),
+                    new PersonalProfile.ExerciseRecord("罗马尼亚硬拉（两侧）", "15 KG x 2 + 20KG"),
+                    new PersonalProfile.ExerciseRecord("杠铃深蹲（两侧）", "17.5 KG x 2 + 20KG"),
+                    new PersonalProfile.ExerciseRecord("杠铃臀推", "10 KG x 2 + 20KG"),
                     new PersonalProfile.ExerciseRecord("正向蝴蝶机夹胸", "36 LB"),
                     new PersonalProfile.ExerciseRecord("反向蝴蝶机夹背", "27 LB"),
-                    new PersonalProfile.ExerciseRecord("龙门架划船", "27 LB"),
+                    new PersonalProfile.ExerciseRecord("龙门架划船", "32 LB"),
+                    new PersonalProfile.ExerciseRecord("面拉", "32 LB"),
+                    new PersonalProfile.ExerciseRecord("辅助引体向上", "20 KG, 12*4 组"),
                     new PersonalProfile.ExerciseRecord("引体向上-正手", "3 个"),
                     new PersonalProfile.ExerciseRecord("引体向上-反手", "5 个"),
-                    new PersonalProfile.ExerciseRecord("辅助引体向上", "20 KG, 12*4 组"),
                     new PersonalProfile.ExerciseRecord("跑步机（速度 7.2）", "跑跑停停 60 分钟，6.6 KM")
             ),
             List.of(
