@@ -6,11 +6,12 @@ import java.util.Arrays;
 
 /**
  * 选择排序：找到未排序部分的最小元素，将该元素与未排序部分的第一个元素交换
+ * 在剩下元素里挑出最小那个，放到当前位置
  *
  * @author icboluo
  */
 class SelectSort {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         int[] arr = {101, 34, 119, 1};
         //selectSort(arr);
         selectSort2(arr);
@@ -21,7 +22,7 @@ class SelectSort {
         for (int i = 0; i < arr.length - 1; i++) {
             int minIdx = i;
             int minEle = arr[i];
-            for (int j = i; j < arr.length; j++) {
+            for (int j = i + 1; j < arr.length; j++) {
                 if (minEle > arr[j]) {
                     minEle = arr[j];
                     minIdx = j;
