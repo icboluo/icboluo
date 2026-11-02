@@ -3,6 +3,7 @@ package com.icboluo.annotation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.icboluo.BaseTest;
 import com.icboluo.object.CodeName;
+import com.icboluo.util.BaseI18n;
 import lombok.Data;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
