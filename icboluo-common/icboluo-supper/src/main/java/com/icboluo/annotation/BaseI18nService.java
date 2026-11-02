@@ -2,9 +2,8 @@ package com.icboluo.annotation;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.icboluo.util.BaseI18n;
 import com.icboluo.util.CacheTemplate;
-import org.ehcache.config.builders.CacheConfigurationBuilder;
-import org.ehcache.config.builders.CacheManagerBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,5 +29,15 @@ public class BaseI18nService implements CacheTemplate<String, BaseI18n> {
     @Override
     public List<BaseI18n> selectByKeys(List<String> ids) {
         return List.of();
+    }
+
+    @Override
+    public String getKey(BaseI18n item) {
+        return item.getKey();
+    }
+
+    @Override
+    public String getName(BaseI18n item) {
+        return item.getName();
     }
 }

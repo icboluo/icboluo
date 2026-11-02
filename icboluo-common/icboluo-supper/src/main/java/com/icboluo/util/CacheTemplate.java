@@ -2,7 +2,6 @@ package com.icboluo.util;
 
 
 import com.github.benmanes.caffeine.cache.Cache;
-import lombok.AllArgsConstructor;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Collections;
@@ -24,7 +23,7 @@ import java.util.stream.Stream;
  * @author icboluo
  * @since 2022-11-26 10:29
  */
-public interface CacheTemplate<K, T extends CacheItem<K>> {
+public interface CacheTemplate<K, T> {
 
     /**
      * 缓存类型
@@ -33,9 +32,25 @@ public interface CacheTemplate<K, T extends CacheItem<K>> {
 
     List<T> selectByKeys(List<K> ids);
 
+    /**
+     * 获取缓存项的key
+     *
+     * @param item 缓存项
+     * @return key
+     */
+    K getKey(T item);
+
+    /**
+     * 获取缓存项的名称
+     *
+     * @param item 缓存项
+     * @return 名称
+     */
+    String getName(T item);
+
     default Optional<String> findNameByCode(K code) {
         Optional<T> item = findByCode(code);
-        return item.map(CacheItem::getName);
+        return item.map(this::getName);
     }
 
     default void findToCache(Stream<K> codeStream) {
@@ -52,7 +67,7 @@ public interface CacheTemplate<K, T extends CacheItem<K>> {
         // 否则将不存在的数据查询出来打进缓存
         List<T> dbList = selectByKeys(cacheNotHave);
         for (T db : dbList) {
-            cache.put(db.getKey(), db);
+            cache.put(getKey(db), db);
         }
     }
 
@@ -73,7 +88,7 @@ public interface CacheTemplate<K, T extends CacheItem<K>> {
         // 缓存中不存在，从db中获取返回
         List<T> items = selectByKeys(Collections.singletonList(id));
         if (!items.isEmpty()) {
-            T db = items.get(0);
+            T db = items.getFirst();
             cache.put(id, db);
             return Optional.of(db);
         }

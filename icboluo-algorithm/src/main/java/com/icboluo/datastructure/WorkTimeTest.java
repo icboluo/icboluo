@@ -13,23 +13,29 @@ import java.time.LocalDate;
 class WorkTimeTest {
     @Test
     public void workTime() {
-        float contribute = 12F;
-        float avg = 9.2F;
+        float contribute = 12F;   // 已累计的“超额工时”（每天 8h 基准之外多干的时间）
+        float avg = 9.5F;
         int totalDays = 18;
+        float target = 9.2F;
 
-        // 达到日均 avg 所需的总加班天数（加班日=10h、不加班日=7h）：a = totalDays*(avg-7)/3
-        float totalOvertimeDays = totalDays * (avg - 7F) / 3F;
-        System.out.println(STR."本月总需要加班的天数 = \{totalOvertimeDays}");
-
+        // 已经上班的天数 = 总贡献工时(相对8h的超额) / (以前每天平均工时 - 8)
         BigDecimal workDay = MathUtil.divide(contribute, avg - 8, 1);
         int workedDays = workDay.intValue();
         System.out.println(STR."已经上班的天数 = \{workDay}");
 
-        // 剩余天数 = 总天数 - 已经上班的天数；再按日均 avg 把剩余天数拆成 剩余加班 / 剩余不加班
+        // 整月需超出的工时(相对8h基准) = totalDays*(target-8)；已上班累计超出 = contribute；剩余需超出 = 二者之差（已扣除以前工作时间）
+        float totalExcess = totalDays * (target - 8F);
+        float remainExcess = totalExcess - contribute;
+        String totalExcessStr = String.format("%.2f", totalExcess);
+        String remainExcessStr = String.format("%.2f", remainExcess);
+        System.out.println(STR."整月需超出工时 = \{totalExcessStr}，已超出 = \{contribute}，剩余需超出 = \{remainExcessStr}");
+
+        // 剩余天数 = 总天数 - 已经上班的天数
         int remainingDays = totalDays - workedDays;
-        float remainingOvertimeTrue = remainingDays * (avg - 7F) / 3F;
         System.out.println(STR."剩余天数 = \{remainingDays}");
 
+        // 剩余加班天数（加班日=10h、不加班日=7h）：(剩余天数 + 剩余需超出工时)/3，已计入以前工作时间
+        float remainingOvertimeTrue = (remainingDays + remainExcess) / 3F;
         // 第一组：剩余加班天数向上取整（剩余不加班天数相应向下凑整）
         int remainingOvertimeUp = (int) Math.ceil(remainingOvertimeTrue);
         int remainingNormalUp = remainingDays - remainingOvertimeUp;
@@ -44,7 +50,6 @@ class WorkTimeTest {
         float excessDown = (remainingOvertimeDown - remainingOvertimeTrue) * 3F;
         System.out.println(STR."本月多余的贡献工时（相对日均工时，向下取整） = \{String.format("%.2f", excessDown)}");
     }
-
 
     @Test
     public void dayShift() {

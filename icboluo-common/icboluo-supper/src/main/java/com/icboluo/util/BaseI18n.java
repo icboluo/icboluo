@@ -1,14 +1,15 @@
-package com.icboluo.annotation;
+package com.icboluo.util;
 
-import com.icboluo.util.CacheItem;
 import lombok.Data;
 
 /**
+ * 国际化缓存项
+ *
  * @author icboluo
  * @since 2024-06-28 上午1:13
  */
 @Data
-public class BaseI18n implements CacheItem<String> {
+public class BaseI18n {
     private String key;
     private String name;
 }
